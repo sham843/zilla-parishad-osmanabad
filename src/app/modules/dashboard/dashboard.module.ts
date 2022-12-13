@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 
 import { DashboardRoutingModule } from './dashboard-routing.module';
 import { DashboardComponent } from './dashboard.component';
+import { AgmCoreModule } from '@agm/core';
 
 
 @NgModule({
@@ -11,7 +12,12 @@ import { DashboardComponent } from './dashboard.component';
   ],
   imports: [
     CommonModule,
-    DashboardRoutingModule
+    DashboardRoutingModule,
+    AgmCoreModule.forRoot({
+      apiKey: 'AIzaSyBhkYI4LMEqVhB6ejq12wpIA6CW5theKJw',
+      language: 'en',
+      libraries: ['places', 'geometry'],
+    }),
   ]
 })
 export class DashboardModule { }
