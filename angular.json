@@ -119,6 +119,7 @@
             "styles": [
               "node_modules/ngx-spinner/animations/ball-scale-multiple.css",
               "@angular/material/prebuilt-themes/indigo-pink.css",
+              "node_modules/ngx-spinner/animations/ball-circus.css",
               "src/styles.scss"
             ],
             "scripts": []

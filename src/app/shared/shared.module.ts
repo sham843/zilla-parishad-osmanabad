@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { DashPipe } from './pipes/dash.pipe';
 import { TableComponent } from './components/table/table.component';
 
+import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 
 
 @NgModule({
@@ -11,7 +12,8 @@ import { TableComponent } from './components/table/table.component';
     TableComponent
   ],
   imports: [
-    CommonModule
+    CommonModule,
+    MatSlideToggleModule
   ],
   exports: [TableComponent]
 })
