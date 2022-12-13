@@ -10,9 +10,7 @@ import { filter } from 'rxjs';
 })
 export class AppComponent {
   title = 'zilla Parishad Osmanabad';
-
-  headerFooterHideFlag: boolean = true;
-  isLoggedIn: boolean = true;
+  isLoggedIn: boolean = false;
 
   constructor(private router: Router, private titleService: Title, private activatedRoute: ActivatedRoute) {
     this.checkBaseUrl();
@@ -23,11 +21,6 @@ export class AppComponent {
     this.router.events.subscribe((event: any) => {
       if (event instanceof NavigationEnd) {
         window.scroll(0, 0);
-        if (event.url == '/login') {
-          this.headerFooterHideFlag = false;
-        } else {
-          this.headerFooterHideFlag = true;
-        }
       }
     });
   }

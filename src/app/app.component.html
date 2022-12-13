@@ -1,4 +1,4 @@
-<app-header *ngIf="headerFooterHideFlag"></app-header>
+<app-header *ngIf="isLoggedIn"></app-header>
 <app-sidebar *ngIf="isLoggedIn"></app-sidebar>
 <router-outlet></router-outlet>
-<app-footer *ngIf="headerFooterHideFlag"></app-footer>
+<app-footer *ngIf="isLoggedIn"></app-footer>
