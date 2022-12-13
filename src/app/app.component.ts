@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { filter } from 'rxjs';
-
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -12,7 +11,9 @@ export class AppComponent {
   title = 'zilla Parishad Osmanabad';
   isLoggedIn: boolean = false;
 
-  constructor(private router: Router, private titleService: Title, private activatedRoute: ActivatedRoute) {
+  constructor(private router: Router, private titleService: Title, private activatedRoute: ActivatedRoute,
+
+    ) {
     this.checkBaseUrl();
     this.setTitle();
   }
