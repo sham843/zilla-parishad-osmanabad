@@ -9,7 +9,8 @@ import { AddUpdateDesignationMasterComponent } from './add-update-designation-ma
 })
 export class DesignationMasterComponent {
   array: any;
-  
+  displayedColumns: string[] = ['userId', 'id', 'title', 'body'];
+  tableData: any;
   constructor(private dialog: MatDialog) {
     this.array = [
       {
@@ -23,7 +24,8 @@ export class DesignationMasterComponent {
         "id": 2,
         "title": "qui est esse",
         "body": "est rerum tempore vitae\nsequi sint nihil reprehenderit dolor beatae ea dolores neque\nfugiat blanditiis voluptate porro vel nihil molestiae ut reiciendis\nqui aperiam non debitis possimus qui neque nisi nulla"
-      }]
+      }];
+    this.tableData = {label:'Bind', col: this.displayedColumns, data: this.array };
   }
 
   addUpdateAgency() {
@@ -35,4 +37,5 @@ export class DesignationMasterComponent {
       autoFocus: false
     })
   }
+
 }

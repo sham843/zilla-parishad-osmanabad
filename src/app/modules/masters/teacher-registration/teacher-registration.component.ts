@@ -2,7 +2,6 @@ import { OverlayContainer } from '@angular/cdk/overlay';
 import { Component, HostBinding } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
-import { NgxSpinnerService } from 'ngx-spinner';
 import { AddUpdateTeacherRegistrationComponent } from './add-update-teacher-registration/add-update-teacher-registration.component';
 
 @Component({
