@@ -17,5 +17,6 @@ import { SidebarComponent } from './sidebar/sidebar.component';
   providers: [
     AuthGuard,
   ],
+  exports: [HeaderComponent, FooterComponent, SidebarComponent]
 })
 export class CoreModule { }
