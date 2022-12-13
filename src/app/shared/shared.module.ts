@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { DashPipe } from './pipes/dash.pipe';
-
+import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 
 
 @NgModule({
@@ -9,7 +9,8 @@ import { DashPipe } from './pipes/dash.pipe';
     DashPipe
   ],
   imports: [
-    CommonModule
+    CommonModule,
+    MatSlideToggleModule
   ]
 })
 export class SharedModule { }

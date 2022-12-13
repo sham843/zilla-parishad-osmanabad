@@ -17,6 +17,8 @@ export class AppComponent {
     this.setTitle();
   }
 
+
+
   checkBaseUrl() {//If base url is log in hide header and footer
     this.router.events.subscribe((event: any) => {
       if (event instanceof NavigationEnd) {
