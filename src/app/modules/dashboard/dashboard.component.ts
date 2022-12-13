@@ -6,5 +6,6 @@ import { Component } from '@angular/core';
   styleUrls: ['./dashboard.component.scss']
 })
 export class DashboardComponent {
-
+  lat: number = 51.673858;
+  lng: number = 7.815982;
 }
