@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { DesignationMasterRoutingModule } from './designation-master-routing.module';
 import { DesignationMasterComponent } from './designation-master.component';
 import { AddUpdateDesignationMasterComponent } from './add-update-designation-master/add-update-designation-master.component';
+import { MatDialogModule } from '@angular/material/dialog';
 
 
 @NgModule({
@@ -13,7 +14,8 @@ import { AddUpdateDesignationMasterComponent } from './add-update-designation-ma
   ],
   imports: [
     CommonModule,
-    DesignationMasterRoutingModule
+    DesignationMasterRoutingModule,
+    MatDialogModule
   ]
 })
 export class DesignationMasterModule { }

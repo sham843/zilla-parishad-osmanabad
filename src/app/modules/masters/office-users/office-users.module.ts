@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 
 import { OfficeUsersRoutingModule } from './office-users-routing.module';
 import { AddUpdateOfficeUsersComponent } from './add-update-office-users/add-update-office-users.component';
+import { MatDialogModule } from '@angular/material/dialog';
 
 
 @NgModule({
@@ -11,7 +12,8 @@ import { AddUpdateOfficeUsersComponent } from './add-update-office-users/add-upd
   ],
   imports: [
     CommonModule,
-    OfficeUsersRoutingModule
+    OfficeUsersRoutingModule,
+    MatDialogModule
   ]
 })
 export class OfficeUsersModule { }

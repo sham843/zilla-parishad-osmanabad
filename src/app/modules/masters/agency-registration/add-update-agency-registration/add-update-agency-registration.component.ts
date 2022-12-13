@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { MatDialogRef } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-add-update-agency-registration',
@@ -6,5 +7,6 @@ import { Component } from '@angular/core';
   styleUrls: ['./add-update-agency-registration.component.scss']
 })
 export class AddUpdateAgencyRegistrationComponent {
-
+  
+  constructor(public dialogRef: MatDialogRef<AddUpdateAgencyRegistrationComponent>) {}
 }

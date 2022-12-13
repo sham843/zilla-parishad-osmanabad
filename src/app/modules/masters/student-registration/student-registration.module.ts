@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 
 import { StudentRegistrationRoutingModule } from './student-registration-routing.module';
 import { AddUpdateStudentRegistrationComponent } from './add-update-student-registration/add-update-student-registration.component';
+import { MatDialogModule } from '@angular/material/dialog';
 
 
 @NgModule({
@@ -11,7 +12,8 @@ import { AddUpdateStudentRegistrationComponent } from './add-update-student-regi
   ],
   imports: [
     CommonModule,
-    StudentRegistrationRoutingModule
+    StudentRegistrationRoutingModule,
+    MatDialogModule
   ]
 })
 export class StudentRegistrationModule { }
