@@ -5,7 +5,7 @@ import { AppComponent } from './app.component';
 import { CoreModule } from './core/core.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgxSpinnerModule } from 'ngx-spinner';
-import { SharedModule } from './shared/shared.module';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -16,7 +16,6 @@ import { SharedModule } from './shared/shared.module';
     CoreModule,
     BrowserAnimationsModule,
     NgxSpinnerModule,
-    SharedModule
   ],
   schemas:[CUSTOM_ELEMENTS_SCHEMA],
   providers: [],

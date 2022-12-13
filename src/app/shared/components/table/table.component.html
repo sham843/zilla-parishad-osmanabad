@@ -1,12 +1,27 @@
-<!-- <table mat-table [dataSource]="dataSource" matSort (matSortChange)="announceSortChange($event)"
-       class="mat-elevation-z8">
-  <ng-container matColumnDef="position">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by number">
-      No.
-    </th>
-    <td mat-cell *matCellDef="let element"> {{element.position}} </td>
-  </ng-container>
-
-  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-</table> -->
+<table mat-table [dataSource]="tableRecords" class="mat-elevation-z8">
+    <ng-container *ngFor="let columns of displayedColumns" matColumnDef="{{columns}}">
+        <ng-container *ngIf="columns !='action'">
+            <th mat-header-cell *matHeaderCellDef>
+                {{columns | titlecase}}
+            </th>
+            <td mat-cell *matCellDef="let element">
+                <ng-container *ngIf="tableInfo?.img != columns && tableInfo?.blink != columns && tableInfo?.badge !=  columns">{{element[columns]}}
+                </ng-container>
+                <ng-container *ngIf="tableInfo?.img == columns"><img src="{{element[columns]}}"></ng-container>
+                <ng-container *ngIf="tableInfo?.blink == columns">{{element[columns]}}</ng-container>
+                <ng-container *ngIf="tableInfo?.badge == columns">{{element[columns]}}</ng-container>
+            </td>
+        </ng-container>
+        <ng-container *ngIf="columns =='action'">
+            <th mat-header-cell *matHeaderCellDef>
+                {{columns | titlecase}}
+            </th>
+            <td mat-cell *matCellDef="let element">
+                <a (click)="action(element, 'Delete')">Delete </a>
+                <a (click)="action(element, 'Edit')"> Edit</a>
+            </td>
+        </ng-container>
+    </ng-container>
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+</table>

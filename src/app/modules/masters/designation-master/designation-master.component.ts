@@ -9,27 +9,28 @@ import { AddUpdateDesignationMasterComponent } from './add-update-designation-ma
 })
 export class DesignationMasterComponent {
   array: any;
-  displayedColumns: string[] = ['userId', 'id', 'title', 'body'];
+  displayedColumns: string[] = ['userId', 'id', 'title', 'body', 'action','img'];
   tableData: any;
   constructor(private dialog: MatDialog) {
     this.array = [
       {
+        "img":'https://angular.io/assets/images/logos/angular/logo-nav@2x.png',
         "userId": 1,
         "id": 1,
         "title": "sunt aut facere repellat provident occaecati excepturi optio reprehenderit",
         "body": "quia et suscipit\nsuscipit recusandae consequuntur expedita et cum\nreprehenderit molestiae ut ut quas totam\nnostrum rerum est autem sunt rem eveniet architecto"
       },
       {
+        "img":'https://angular.io/assets/images/logos/angular/logo-nav@2x.png',
         "userId": 1,
         "id": 2,
         "title": "qui est esse",
         "body": "est rerum tempore vitae\nsequi sint nihil reprehenderit dolor beatae ea dolores neque\nfugiat blanditiis voluptate porro vel nihil molestiae ut reiciendis\nqui aperiam non debitis possimus qui neque nisi nulla"
       }];
-    this.tableData = {label:'Bind', col: this.displayedColumns, data: this.array };
+    this.tableData = { img: 'img',  blink:'', badge: '',  displayedColumns: this.displayedColumns, tableData: this.array };
   }
 
-  addUpdateAgency() {
-    let obj: any;
+  addUpdateAgency(obj?: any) {
     this.dialog.open(AddUpdateDesignationMasterComponent, {
       width: '320px',
       data: obj,
@@ -38,4 +39,7 @@ export class DesignationMasterComponent {
     })
   }
 
+  childCompInfo(obj: any) {
+    obj.label == 'Edit' ? this.addUpdateAgency(obj) : '';
+  }
 }

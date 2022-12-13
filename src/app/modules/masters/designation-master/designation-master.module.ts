@@ -7,7 +7,6 @@ import { AddUpdateDesignationMasterComponent } from './add-update-designation-ma
 import { MatDialogModule } from '@angular/material/dialog';
 import { SharedModule } from 'src/app/shared/shared.module';
 
-
 @NgModule({
   declarations: [
     DesignationMasterComponent,
@@ -17,7 +16,7 @@ import { SharedModule } from 'src/app/shared/shared.module';
     CommonModule,
     DesignationMasterRoutingModule,
     MatDialogModule,
-    SharedModule
+    SharedModule,
   ]
 })
 export class DesignationMasterModule { }
