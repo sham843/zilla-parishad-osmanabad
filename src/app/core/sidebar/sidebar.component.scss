@@ -5,26 +5,23 @@
     left: 0;
     height: 100%;
     width: 260px;
-    background: #11101d;
+    background: #FFFFFF;
     z-index: 100;
     transition: all 0.5s ease;
   }
   .sidebar.close{
-    width: 78px;
+    width: 60px;
   }
   .sidebar .logo-details{
     height: 60px;
     width: 100%;
     display: flex;
     align-items: center;
+    justify-content:center;
   }
-  .sidebar .logo-details i{
-    font-size: 30px;
-    color: #fff;
+  .sidebar .logo-details img{
     height: 50px;
-    min-width: 78px;
-    text-align: center;
-    line-height: 50px;
+    width: 50px;
   }
   .sidebar .logo-details .logo_name{
     font-size: 22px;
@@ -40,7 +37,7 @@
   }
   .sidebar .nav-links{
     height: 100%;
-    padding: 30px 0 150px 0;
+    padding: 0px;
     overflow: auto;
   }
   .sidebar.close .nav-links{
@@ -53,6 +50,8 @@
     position: relative;
     list-style: none;
     transition: all 0.4s ease;
+    padding: 10px 20px;
+    text-align: center;
   }
   .sidebar .nav-links li:hover{
     background: #1d1b31;
@@ -65,20 +64,18 @@
   .sidebar.close .nav-links li .iocn-link{
     display: block
   }
-  .sidebar .nav-links li i{
-    height: 50px;
-    min-width: 78px;
+  .sidebar .nav-links li img{
+    height: 16px;
+    width: 16px;
     text-align: center;
-    line-height: 50px;
-    color: #fff;
-    font-size: 20px;
+    line-height: 16px;
     cursor: pointer;
     transition: all 0.3s ease;
   }
-  .sidebar .nav-links li.showMenu i.arrow{
+  .sidebar .nav-links li.showMenu img.arrow{
     transform: rotate(-180deg);
   }
-  .sidebar.close .nav-links i.arrow{
+  .sidebar.close .nav-links img.arrow{
     display: none;
   }
   .sidebar .nav-links li a{
@@ -89,7 +86,7 @@
   .sidebar .nav-links li a .link_name{
     font-size: 18px;
     font-weight: 400;
-    color: #fff;
+    color: #000;
     transition: all 0.4s ease;
   }
   .sidebar.close .nav-links li a .link_name{
@@ -106,7 +103,7 @@
     display: block;
   }
   .sidebar .nav-links li .sub-menu a{
-    color: #fff;
+    color: #000;
     font-size: 15px;
     padding: 5px 0;
     white-space: nowrap;
