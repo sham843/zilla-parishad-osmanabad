@@ -1,0 +1,26 @@
+.navbar .avatar{
+    width: 40px;
+    border-radius: 50%;
+    cursor: pointer;
+}
+.search .input-group .input-group-text,
+.search .input-group .form-control
+{
+    border: none;
+    font-size: 0.85rem;
+    background-color: transparent;
+    box-shadow: none;
+}
+.search .input-group{
+    border: 1px solid #eee;
+    border-radius: 30px;
+}
+.navbar button.btn{
+    background-color:#f5f5f5;
+}
+.navbar button.btn,
+.navbar button.btn:focus,
+.navbar button.btn:active
+{
+    border: none;
+}
