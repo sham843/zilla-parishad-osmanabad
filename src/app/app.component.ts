@@ -9,7 +9,7 @@ import { filter } from 'rxjs';
 })
 export class AppComponent {
   title = 'zilla Parishad Osmanabad';
-  isLoggedIn: boolean = false;
+  isLoggedIn: boolean = true;
 
   constructor(private router: Router, private titleService: Title, private activatedRoute: ActivatedRoute) {
     this.checkBaseUrl();
