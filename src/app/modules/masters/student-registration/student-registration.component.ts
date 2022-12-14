@@ -13,7 +13,7 @@ export class StudentRegistrationComponent {
   addUpdateAgency() {
     let obj: any;
     this.dialog.open(AddUpdateStudentRegistrationComponent, {
-      width:'320px',
+      width:'820px',
       data: obj,
       disableClose: true,
       autoFocus: false
