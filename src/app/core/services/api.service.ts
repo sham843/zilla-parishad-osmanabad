@@ -20,7 +20,7 @@ export class ApiService {
 
   getBaseurl(url: string) {
     switch (url) {
-      case 'baseUrl': return 'https://samadhan-api.mahamining.com/'; break;
+      case 'baseUrl': return 'https://demozposmanabad.mahamining.com/'; break;
       default: return ''; break;
     }
   }
