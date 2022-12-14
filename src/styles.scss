@@ -47,3 +47,11 @@ body {
 .bg-main-dark{
   background-color:var(--main-dark-color);
 }
+.btn-main{
+  background-color:var(--main-color) !important;
+  color: #fff !important;
+}
+.btn-main:hover{
+  background-color:var(--main-dark-color) !important;
+  color: #fff;
+}
