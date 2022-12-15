@@ -62,7 +62,10 @@ body {
   background-color: var(--main-dark-color) !important;
   color: #fff;
 }
-
+.breadcrumb{
+  font-size: 0.85rem;
+  font-weight: 500;
+}
 .dashboard-table {
   font-family: 'Poppins', sans-serif !important;
 }
