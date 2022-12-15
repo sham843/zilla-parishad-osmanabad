@@ -12,6 +12,7 @@ import {MatInputModule} from '@angular/material/input';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { OfficeUsersComponent } from './office-users.component';
+import { SharedModule } from 'src/app/shared/shared.module';
 
 
 @NgModule({
@@ -29,8 +30,8 @@ import { OfficeUsersComponent } from './office-users.component';
     MatSelectModule,
     MatInputModule,
     MatDatepickerModule,
-    MatNativeDateModule
-    
+    MatNativeDateModule,
+    SharedModule
     
 
 

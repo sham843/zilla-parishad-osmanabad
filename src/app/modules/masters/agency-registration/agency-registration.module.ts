@@ -12,6 +12,7 @@ import {MatInputModule} from '@angular/material/input';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { AgencyRegistrationComponent } from './agency-registration.component';
+import { SharedModule } from 'src/app/shared/shared.module';
 
 
 
@@ -31,7 +32,7 @@ import { AgencyRegistrationComponent } from './agency-registration.component';
     MatInputModule,
     MatDatepickerModule,
     MatNativeDateModule,
-   
+   SharedModule
   ]
 })
 export class AgencyRegistrationModule { }

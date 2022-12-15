@@ -26,7 +26,20 @@ export class TeacherRegistrationComponent {
       }
     });
 }
-
+childCompInfo(_obj: any) {
+  // switch (obj.label) {
+  //   case 'Pagination':
+  //     this.pageNumber = obj.pageNumber;
+  //     this.getTableData();
+  //     break;
+  //   case 'Edit' || 'Delete':
+  //     this.addUpdateAgency(obj);
+  //     break;
+  //   case 'Block':
+  //     this.globalDialogOpen();
+  //     break;
+  // }
+}
   
   addUpdateAgency() {
     let obj: any;
