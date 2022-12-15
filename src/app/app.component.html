@@ -8,7 +8,21 @@
   <p style="font-size: 20px; color: white">Loading...</p>
 </ngx-spinner>
 
-<app-header *ngIf="isLoggedIn"></app-header>
+<!-- <app-header *ngIf="isLoggedIn"></app-header>
 <app-sidebar *ngIf="isLoggedIn"></app-sidebar>
 <router-outlet></router-outlet>
-<app-footer *ngIf="isLoggedIn"></app-footer>
+<app-footer *ngIf="isLoggedIn"></app-footer> -->
+
+
+
+
+<app-sidebar *ngIf="isLoggedIn"></app-sidebar>
+<div class="wrapper">
+    <app-header *ngIf="isLoggedIn"></app-header>
+        <div class="main-content">
+           <div [ngClass]="{'darkMode':this.classname=='darkMode'}">
+            <router-outlet></router-outlet>
+           </div>
+        </div>
+    <app-footer *ngIf="isLoggedIn"></app-footer>
+</div>

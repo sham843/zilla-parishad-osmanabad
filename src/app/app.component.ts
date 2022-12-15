@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { filter } from 'rxjs';
+import { WebStorageService } from './core/services/web-storage.service';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -9,13 +10,21 @@ import { filter } from 'rxjs';
 })
 export class AppComponent {
   title = 'zilla Parishad Osmanabad';
-  isLoggedIn: boolean = false;
-
-  constructor(private router: Router, private titleService: Title, private activatedRoute: ActivatedRoute) {
+  isLoggedIn: boolean = true;
+  classname:any;
+  constructor(private router: Router,
+     private titleService: Title, 
+     private activatedRoute: ActivatedRoute,
+     private webStorage:WebStorageService) {
     this.checkBaseUrl();
     this.setTitle();
   }
 
+  ngOnInit(){
+this.webStorage.getTheme().subscribe((res:any)=>{
+  this.classname=res;
+})
+  }
 
 
   checkBaseUrl() {//If base url is log in hide header and footer
