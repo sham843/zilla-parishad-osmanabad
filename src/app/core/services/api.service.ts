@@ -20,8 +20,8 @@ export class ApiService {
   constructor(private http: HttpClient) { }
 
   getBaseurl(url: string) {
-    switch (url) {
-      case 'baseUrl': return 'https://demozposmanabad.mahamining.com/zp-osmanabad/'; break;
+    switch (url) {     
+      case 'baseUrl': return 'https://demozposmanabad.mahamining.com/'; break;
       default: return ''; break;
     }
   }
