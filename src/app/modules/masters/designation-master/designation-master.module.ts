@@ -37,6 +37,5 @@ import { DesignationMasterService } from './designation-master.service';
 
   ],
   providers:[DesignationMasterService]
->>>>>>> 3050612ed9f4c2dc16931e4e521fb28ee50e5257
 })
 export class DesignationMasterModule { }
