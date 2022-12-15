@@ -93,7 +93,7 @@ export class DesignationMasterComponent {
   //#region -------------------------------------------dialog box open function's start heare----------------------------------------//
   addUpdateAgency(obj?: any) {
     this.dialog.open(AddUpdateDesignationMasterComponent, {
-      width: '820px',
+      width: '420px',
       data: obj,
       disableClose: true,
       autoFocus: false
