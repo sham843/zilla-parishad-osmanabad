@@ -1,3 +1,92 @@
-<p>teacher-registration works!</p>
-<button (click)="addUpdateAgency()">Add</button><br><br>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-12">
+            <mat-card>
+                <mat-card-header>
+                    <div class="row w-100">
+                        <div class="col-sm-4">
+                            <p class="mb-0">Teacher List</p>
+                        </div>
+                        <div class="col-sm-8">
+                            <div class="d-flex align-items-center justify-content-end gap-3">
+                                <button mat-flat-button color="primary">
+                                    <span class="material-symbols-outlined">
+                                        format_list_bulleted
+                                    </span>
+                                </button>
+                                <button mat-flat-button color="primary">
+                                    <span class="material-symbols-outlined">
+                                        grid_view
+                                    </span>
+                                </button>
+                                <button mat-flat-button [matMenuTriggerFor]="menu">
+                                    <span class="material-symbols-outlined">
+                                        download
+                                    </span>
+                                </button>
+                                <mat-menu #menu="matMenu">
+                                    <button mat-menu-item>Item 1</button>
+                                    <button mat-menu-item>Item 2</button>
+                                </mat-menu>
+                                <button class="btn bg-main align-items-center d-flex" (click)="addUpdateAgency()">
+                                    <span class="material-symbols-outlined">
+                                        add
+                                    </span><span> Add New</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </mat-card-header>
+                <mat-card-header>
+                    <div class="row g-3">
+                        <div class="col-sm-4">
+                            <mat-form-field appearance="outline" class="w-100">
+                                <mat-label>Search by Name</mat-label>
+                                <mat-select>
+                                    <mat-option value="one">First option</mat-option>
+                                    <mat-option value="two">Second option</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+                        <div class="col-sm-4">
+                            <mat-form-field appearance="outline" class="w-100">
+                                <mat-label>Search by Contact</mat-label>
+                                <mat-select>
+                                    <mat-option value="one">First option</mat-option>
+                                    <mat-option value="two">Second option</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+                        <div class="col-sm-4">
+                            <mat-form-field appearance="outline" class="w-100">
+                                <mat-label>Search by Email</mat-label>
+                                <mat-select>
+                                    <mat-option value="one">First option</mat-option>
+                                    <mat-option value="two">Second option</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                </mat-card-header>
+
+                <mat-card-content>
+                    <p>table</p>
+                </mat-card-content>
+
+                <mat-card-footer>
+                        <nav class=" d-flex justify-content-end">
+                            <ul class="pagination">
+                                <li class="page-item"><a class="page-link" href="#">Previous</a></li>
+                                <li class="page-item"><a class="page-link" href="#">1</a></li>
+                                <li class="page-item"><a class="page-link" href="#">2</a></li>
+                                <li class="page-item"><a class="page-link" href="#">3</a></li>
+                                <li class="page-item"><a class="page-link" href="#">Next</a></li>
+                            </ul>
+                        </nav>
+                </mat-card-footer>
+            </mat-card>
+        </div>
+    </div>
+</div>
 
