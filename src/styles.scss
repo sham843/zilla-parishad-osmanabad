@@ -55,3 +55,25 @@ body {
   background-color:var(--main-dark-color) !important;
   color: #fff;
 }
+.dashboard-table{
+  font-family: 'Poppins', sans-serif !important;
+}
+.dashboard-table th,
+.dashboard-table mat-header-cell{
+  font-size: 0.85rem !important;
+  font-weight: 600;
+  font-family: 'Poppins', sans-serif !important;
+}
+.dashboard-table td,
+.dashboard-table mat-cell{
+  font-size: 0.85rem !important;
+  font-family: 'Poppins', sans-serif !important;
+}
+.dashboard-table button{
+  height: 40px !important;
+  width: 40px !important;
+  padding: 10px !important;
+}
+.dashboard-table button .material-symbols-outlined{
+  font-size: 18px !important;
+}
