@@ -1,5 +1,7 @@
-import { OnInit, Component, Output, EventEmitter } from '@angular/core';
+import { OnInit, Component, Output, EventEmitter, ViewChild } from '@angular/core';
+import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
+import { take } from 'rxjs';
 import { ApiService } from 'src/app/core/services/api.service';
 
 @Component({
@@ -9,33 +11,35 @@ import { ApiService } from 'src/app/core/services/api.service';
 })
 export class TableComponent implements OnInit {
   @Output() recObjToChild = new EventEmitter<any>();
-  @Output() pageEvent = new EventEmitter<any>();
-  @Output() onSlide = new EventEmitter<any>();
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+
   displayedColumns = new Array();
   tableRecords: any;
   tableSize!: number;
-  pageNumber: number = 1;
+  pageNumber!: number;
   tableInfo: any;
   tableHeaders = new Array();
 
   constructor(private apiService: ApiService) { }
 
   ngOnInit() {
-    this.apiService.tableData.subscribe((x: any) => {
-      this.tableInfo = [];
-      this.tableInfo = x;
+    this.tableInfo = [];
+    this.apiService.tableData.pipe(take(1)).subscribe((res: any) => {
+      this.tableInfo = res;
       if (this.tableInfo) {
         this.displayedColumns = this.tableInfo.displayedColumns;
         this.tableSize = this.tableInfo.tableSize;
         this.tableHeaders = this.tableInfo.tableHeaders
+        this.pageNumber = this.tableInfo.pageNumber;
         this.tableInfo.tableData ? this.tableRecords = new MatTableDataSource(this.tableInfo.tableData) : this.tableRecords = [];
+        // this.pageNumber == 1 ? this.paginator?.firstPage() : '';
       }
     })
   }
 
   action(obj: any, label: string) {
     obj.label = label;
-    obj.pageNumber = this.pageNumber;
+    obj.pageNumber = obj.pageIndex + 1;
     this.recObjToChild.emit(obj);
   }
 

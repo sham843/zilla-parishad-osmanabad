@@ -13,8 +13,7 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatPaginatorModule} from '@angular/material/paginator';
 import {MatMenuModule} from '@angular/material/menu';
 import {MatButtonModule} from '@angular/material/button';
-
-import { DesignationMasterService } from './designation-master.service';
+import { ReactiveFormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -32,10 +31,9 @@ import { DesignationMasterService } from './designation-master.service';
     MatFormFieldModule,
     MatPaginatorModule,
     MatMenuModule,
-    MatButtonModule
-    
-
+    MatButtonModule,
+    ReactiveFormsModule
   ],
-  providers:[DesignationMasterService]
+  providers:[]
 })
 export class DesignationMasterModule { }

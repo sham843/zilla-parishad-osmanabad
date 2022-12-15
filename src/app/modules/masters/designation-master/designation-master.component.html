@@ -1,2 +1,3 @@
-<button (click)="addUpdateAgency()">Add Agency</button>
+<button (click)="addUpdateAgency()">Add Agency</button><br/><br/>
+<input type="text" [formControl] = searchContent><button (click)="getTableData('filter')">Filter</button><br/><br/>
 <app-table   (recObjToChild)="childCompInfo($event)"></app-table>

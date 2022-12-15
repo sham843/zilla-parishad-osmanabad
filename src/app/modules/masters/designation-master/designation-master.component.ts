@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
-import { debounceTime, distinctUntilChanged } from 'rxjs';
 import { ApiService } from 'src/app/core/services/api.service';
 import { ErrorsService } from 'src/app/core/services/errors.service';
 import { GlobalDialogComponent } from 'src/app/shared/components/global-dialog/global-dialog.component';
@@ -13,9 +12,9 @@ import { AddUpdateDesignationMasterComponent } from './add-update-designation-ma
   styleUrls: ['./designation-master.component.scss']
 })
 export class DesignationMasterComponent {
-
-  pageNumber: number = 0;
+  pageNumber: number = 1;
   searchContent = new FormControl('');
+  
 
   constructor(private dialog: MatDialog, private apiService: ApiService, private errors: ErrorsService) { }
 
@@ -23,36 +22,37 @@ export class DesignationMasterComponent {
     this.getTableData()
   }
 
-  ngAfterViewInit() {
-    this.searchContent.valueChanges.pipe(debounceTime(500), distinctUntilChanged()).subscribe(() => {
-      this.getTableData()
-    });
-  }
 
   onPagintion(pageNo: number) {
     this.pageNumber = pageNo;
     this.getTableData()
   }
 
-  getTableData() {
+  getTableData(flag?:string) {
+    this.pageNumber =   flag == 'filter'? 1 :this.pageNumber;
     let tableDataArray = new Array();
     let tableDatasize!: Number;
-    this.searchContent.value ? this.pageNumber = 0 : this.pageNumber;
-    let str = `pageno=1`;
+    let str = `pageno=${this.pageNumber}&TextSearch=${this.searchContent.value}`;
     this.apiService.setHttp('GET', 'zp_osmanabad/pagemaster/GetAll?' + str, false, false, false, 'baseUrl');
     this.apiService.getHttp().subscribe({
 
       next: (res: any) => {
         if (res.statusCode == "200") {
           tableDataArray = res.responseData.responseData1;
-          tableDatasize = res.responseData.responseData2.totalRecords;
+          tableDatasize = res.responseData.responseData2.pageCount;
         } else {
           tableDataArray = [];
           tableDatasize = 0;
         }
-        let displayedColumns = ['srno', 'name', 'mobileNo1', 'roleName', 'isBlock', 'action'];
-        let displayedheaders = ['Sr. No', 'Name', 'Mobile No', 'role Name', 'isBlock', 'action'];
-        let tableData = { srno: 'srno', img: 'img', blink: '', badge: '', isBlock: 'isBlock', displayedColumns: displayedColumns, tableData: tableDataArray, tableSize: tableDatasize, tableHeaders: displayedheaders };
+        let displayedColumns = ['srNo', 'pageName', 'pageNameView', 'action'];
+        let displayedheaders = ['Sr. No', 'Name', 'Page Name','action'];
+        let tableData = {
+          pageNumber: this.pageNumber,
+          img: '', blink: '', badge: '', isBlock: '',
+          displayedColumns: displayedColumns, tableData: tableDataArray,
+          tableSize: tableDatasize,
+          tableHeaders: displayedheaders
+        };
         this.apiService.tableData.next(tableData);
       },
       error: ((err: any) => { this.errors.handelError(err) })
@@ -60,11 +60,10 @@ export class DesignationMasterComponent {
 
   }
 
-
   childCompInfo(obj: any) {
     switch (obj.label) {
       case 'Pagination':
-        this.pageNumber = obj.pageIndex + 1;
+        this.pageNumber = obj.pageNumber;
         this.getTableData();
         break;
       case 'Edit' || 'Delete':
