@@ -1,16 +1,21 @@
-import { OnInit, Component, Output, EventEmitter, ViewChild } from '@angular/core';
+import { OnInit, Component, Output, EventEmitter, ViewChild, AfterViewInit } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { ApiService } from 'src/app/core/services/api.service';
+import {MatSort} from '@angular/material/sort';
+
 
 @Component({
   selector: 'app-table',
   templateUrl: './table.component.html',
   styleUrls: ['./table.component.scss']
 })
-export class TableComponent implements OnInit {
+export class TableComponent implements OnInit, AfterViewInit {
   @Output() recObjToChild = new EventEmitter<any>();
   @ViewChild(MatPaginator) paginator: MatPaginator | any;
+  @ViewChild(MatSort) sort!: MatSort;
+
+
 
   displayedColumns = new Array();
   tableRecords: any;
@@ -21,6 +26,7 @@ export class TableComponent implements OnInit {
   tableHeaders = new Array();
   highlightedRow!:number;
   constructor(private apiService: ApiService) { }
+
 
   ngOnInit() {
     this.tableInfo = [];
@@ -34,8 +40,14 @@ export class TableComponent implements OnInit {
         this.pageNumber = this.tableInfo.pageNumber;
         this.tableInfo.tableData ? this.tableRecords = new MatTableDataSource(this.tableInfo.tableData) : this.tableRecords = [];
         this.paginator?._pageIndex != 0 && this.pageIndex != this.pageNumber ? this.paginator?.firstPage() : '';
+        // this.tableInfo.sort = this.sort;
+
       }
     })
+  }
+
+  ngAfterViewInit() {
+    this.tableInfo.sort = this.sort;
   }
 
   action(obj: any, label: string, i?:any) {
