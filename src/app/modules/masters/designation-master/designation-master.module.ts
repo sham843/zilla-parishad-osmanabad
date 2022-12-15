@@ -6,6 +6,7 @@ import { DesignationMasterComponent } from './designation-master.component';
 import { AddUpdateDesignationMasterComponent } from './add-update-designation-master/add-update-designation-master.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { SharedModule } from 'src/app/shared/shared.module';
+<<<<<<< HEAD
 import {MatSelectModule} from '@angular/material/select';
 import {MatCardModule} from '@angular/material/card';
 import {MatFormFieldModule} from '@angular/material/form-field';
@@ -13,6 +14,9 @@ import {MatPaginatorModule} from '@angular/material/paginator';
 import {MatMenuModule} from '@angular/material/menu';
 import {MatButtonModule} from '@angular/material/button';
 
+=======
+import { DesignationMasterService } from './designation-master.service';
+>>>>>>> 3050612ed9f4c2dc16931e4e521fb28ee50e5257
 
 @NgModule({
   declarations: [
@@ -24,6 +28,7 @@ import {MatButtonModule} from '@angular/material/button';
     DesignationMasterRoutingModule,
     MatDialogModule,
     SharedModule,
+<<<<<<< HEAD
     MatSelectModule,
     MatCardModule,
     MatFormFieldModule,
@@ -32,5 +37,9 @@ import {MatButtonModule} from '@angular/material/button';
     MatButtonModule
     
   ]
+=======
+  ],
+  providers:[DesignationMasterService]
+>>>>>>> 3050612ed9f4c2dc16931e4e521fb28ee50e5257
 })
 export class DesignationMasterModule { }
