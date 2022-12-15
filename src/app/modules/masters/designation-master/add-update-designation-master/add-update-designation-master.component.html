@@ -1,1 +1,64 @@
-<p>add-update-designation-master works!</p>
+<mat-card>
+    <mat-card-header>
+        <div class="d-flex align-items-center justify-content-between w-100">
+            <mat-card-title>
+                Register Designation
+            </mat-card-title>
+            <button mat-icon-button mat-dialog-close>
+                <span class="material-symbols-outlined">
+                    close
+                </span>
+            </button>
+        </div>
+    </mat-card-header>
+
+    <mat-card-content>
+        <mat-card-subtitle>Designation Details</mat-card-subtitle>
+        <div class="row mt-2">
+            <div class="col-sm">
+                <mat-form-field appearance="outline" class="w-100 ">
+                    <mat-label>Designation Level</mat-label>
+                    <mat-select>
+                        <mat-option value="one">option-1</mat-option>
+                        <mat-option value="two">option-2</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <div class="col-sm">
+                <mat-form-field appearance="outline" class="w-100 ">
+                    <mat-label>Designation Type</mat-label>
+                    <mat-select>
+                        <mat-option value="one">option-1</mat-option>
+                        <mat-option value="two">option-2</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm">
+                <mat-form-field appearance="outline" class="w-100 ">
+                    <mat-label>Set Designation Level</mat-label>
+                    <mat-select>
+                        <mat-option value="one">option-1</mat-option>
+                        <mat-option value="two">option-2</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <div class="col-sm">
+                <mat-form-field appearance="outline" class="w-100 ">
+                    <mat-label>Add Designation</mat-label>
+                    <mat-select>
+                        <mat-option value="one">option-1</mat-option>
+                        <mat-option value="two">option-2</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+        </div>
+    </mat-card-content>
+    <mat-card-footer>
+        <mat-card-actions align="end">
+            <button mat-stroked-button class="me-2">Cancel</button>
+            <button mat-flat-button color="primary">Submit</button>
+        </mat-card-actions>
+    </mat-card-footer>
+</mat-card>
