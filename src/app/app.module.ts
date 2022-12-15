@@ -5,10 +5,12 @@ import { AppComponent } from './app.component';
 import { CoreModule } from './core/core.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgxSpinnerModule } from 'ngx-spinner';
-
+import { UserAccessComponent } from './modules/user-access/user-access.component';
+import { ReactiveFormsModule } from '@angular/forms';
 @NgModule({
   declarations: [
     AppComponent,
+    UserAccessComponent,
   ],
   imports: [
     BrowserModule,
@@ -16,6 +18,7 @@ import { NgxSpinnerModule } from 'ngx-spinner';
     CoreModule,
     BrowserAnimationsModule,
     NgxSpinnerModule,
+    ReactiveFormsModule
   ],
   schemas:[CUSTOM_ELEMENTS_SCHEMA],
   providers: [],
