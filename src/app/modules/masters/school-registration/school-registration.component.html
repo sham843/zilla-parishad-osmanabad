@@ -1,7 +1,5 @@
 <app-page-statistics></app-page-statistics>
 
-
-
 <div class="row">
     <div class="col-sm-12">
         <mat-card class="plain-card">
@@ -10,30 +8,39 @@
                     <div>
                         School List
                     </div>
-                    <div class="d-flex align-items-center justify-content-end gap-3">
-                        <button mat-flat-button color="primary">
-                            <span class="material-symbols-outlined">
-                                format_list_bulleted
-                            </span>
+                    <div class="d-flex align-items-center justify-content-end gap-2">
+                        <button mat-flat-button class="btn-main btn-icon">
+                            <mat-icon>
+                                list
+                            </mat-icon>
                         </button>
-                        <button mat-flat-button color="primary">
-                            <span class="material-symbols-outlined">
-                                grid_view
-                            </span>
+                        <button mat-flat-button class="btn-second btn-icon">
+                            <mat-icon>grid_view</mat-icon>
                         </button>
-                        <button mat-flat-button [matMenuTriggerFor]="menu">
-                            <span class="material-symbols-outlined">
+                        <button mat-flat-button class="btn-main btn-icon" [matMenuTriggerFor]="menu">
+                            <mat-icon>
                                 download
-                            </span>
+                            </mat-icon>
                         </button>
-                        <mat-menu #menu="matMenu">
-                            <button mat-menu-item>Item 1</button>
-                            <button mat-menu-item>Item 2</button>
+                        <mat-menu #menu="matMenu" xPosition="before">
+                            <button mat-menu-item>
+                                <div class="d-flex align-items-center justify-content-between w-100">
+                                    <span>PDF</span>
+                                    <i class='bx bxs-file-pdf text-danger'></i>
+                                </div>
+                            </button>
+                            <button mat-menu-item>
+                                <div class="d-flex align-items-center justify-content-between w-100">
+                                    <span>Excel</span>
+                                    <i class='bx bxs-file text-primary'></i>
+                                </div>
+                            </button>
                         </mat-menu>
-                        <button class="btn-main d-flex align-items-center justify-content-between" mat-flat-button (click)="addUpdateAgency()">
-                            <span class="material-symbols-outlined">
+                        <button class="btn-main d-flex align-items-center justify-content-between" mat-flat-button
+                            (click)="addUpdateAgency()">
+                            <mat-icon>
                                 add
-                            </span>
+                            </mat-icon>
                             <span>Add New</span>
                         </button>
                     </div>

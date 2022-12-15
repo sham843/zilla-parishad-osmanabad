@@ -72,15 +72,17 @@ body {
   min-width: 38px !important;
 }
 
-.btn-icon .material-symbols-outlined{
-  font-size: 18px;
-  line-height: unset;
+.btn-icon .material-icons{
+  font-size: 18px !important;
+  line-height: normal !important;
+  overflow: unset;
+  margin:0 !important;
 }
 .btn-modal-close {
   width: 34px !important;
   min-width: 34px !important;
   height: 34px !important;
-  line-height: 34px !important;
+  line-height: 38px !important;
   padding: 3px !important;
 }
 .btn-second{
