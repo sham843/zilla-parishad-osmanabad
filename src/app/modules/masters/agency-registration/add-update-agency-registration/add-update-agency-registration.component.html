@@ -1,1 +1,89 @@
-<p>add-update-agency-registration works!</p>
+<mat-card>
+    
+    <mat-card-header class="d-flex justify-content-between w-100 mb-2">
+        Register Agency
+        <button mat-icon-button mat-dialog-close>
+            <span class="material-symbols-outlined">
+                close
+            </span>
+        </button>
+    </mat-card-header>
+    <mat-card-content>
+       <h6 class="mb-3">Agency Details</h6>
+       <div class="row">
+        <div class="col-sm-4">
+            <mat-form-field appearance="outline" class="w-100">
+                <mat-label>Agency Name</mat-label>
+                <input matInput placeholder="Agency Name">
+
+            </mat-form-field>
+        </div>
+        <div class="col-sm-4">
+            <mat-form-field appearance="outline" class="w-100">
+                <mat-label>Contact Person Name</mat-label>
+                <input matInput placeholder="Contact Person Name">
+
+            </mat-form-field>
+        </div>
+        <div class="col-sm-4">
+            <mat-form-field appearance="outline" class="w-100">
+                <mat-label>Contact No.</mat-label>
+                <input matInput placeholder="Contact No.">
+
+            </mat-form-field>
+    </div>
+    </div>
+        <div class="row">
+            <div class="col-sm-4">
+                <mat-form-field appearance="outline" class="w-100">
+                    <mat-label>Email ID</mat-label>
+                    <input matInput placeholder="Email ID">
+
+                </mat-form-field>
+            </div>
+            <div class="col-sm-4">
+                <mat-form-field appearance="outline" class="w-100">
+                    <mat-label>Agency Mobile No.</mat-label>
+                    <input matInput placeholder="Agency Mobile No..">
+
+                </mat-form-field>
+            </div>
+            <div class="col-sm-4">
+                <mat-form-field appearance="outline" class="w-100">
+                    <mat-label>Agency Email ID</mat-label>
+                    <input matInput placeholder="Agency Email ID">
+
+                </mat-form-field>
+        </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-4">
+                <mat-form-field appearance="outline" class="w-100">
+                    <mat-label>District</mat-label>
+                    <input matInput placeholder="District">
+
+                </mat-form-field>
+            </div>
+            <div class="col-sm-4">
+                <mat-form-field appearance="outline" class="w-100 ">
+                    <mat-label>Taluka</mat-label>
+                    <mat-select placeholder="Select">
+                        <mat-option value="one">First option</mat-option>
+                        <mat-option value="two">Second option</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <div class="col-sm-4">
+                <mat-form-field appearance="outline" class="w-100">
+                    <mat-label>Address</mat-label>
+                    <input matInput placeholder="Address">
+
+                </mat-form-field>
+        </div>
+        </div>
+    </mat-card-content>
+    <mat-card-footer class="text-end p-3">
+        <button class="btn btn-outline-secondary me-2">Cancel</button>
+        <button class="btn btn-main ">Submit</button>
+    </mat-card-footer>
+</mat-card>
