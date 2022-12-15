@@ -13,7 +13,7 @@ export class MasterService {
     return new Observable((obj) => {
       this.apiService.setHttp('GET', 'zp-osmanabad/master/GetAllState?flag_lang='+strPara, false, false, false, 'baseUrl');
       this.apiService.getHttp().subscribe({
-        next: (res: any) => {if (res.statusCode == "200"){ console.log("res",res);obj.next(res)} else { obj.error(res); }},
+        next: (res: any) => {if (res.statusCode == "200"){ obj.next(res)} else { obj.error(res); }},
         error: (e: any) => { obj.error(e) }
       });
     });
@@ -23,7 +23,7 @@ export class MasterService {
     return new Observable((obj) => {
       this.apiService.setHttp('GET', 'zp-osmanabad/master/GetAllDistrict?flag_lang='+strPara, false, false, false, 'baseUrl');
       this.apiService.getHttp().subscribe({
-        next: (res: any) => {if (res.statusCode == "200"){ console.log("res",res);obj.next(res)} else { obj.error(res); }},
+        next: (res: any) => {if (res.statusCode == "200"){ obj.next(res)} else { obj.error(res); }},
         error: (e: any) => { obj.error(e) }
       });
     });
@@ -33,7 +33,7 @@ export class MasterService {
     return new Observable((obj) => {
       this.apiService.setHttp('GET', 'zp-osmanabad/master/GetAllTaluka?flag_lang='+strPara, false, false, false, 'baseUrl');
       this.apiService.getHttp().subscribe({
-        next: (res: any) => {if (res.statusCode == "200"){ console.log("res",res);obj.next(res)} else { obj.error(res); }},
+        next: (res: any) => {if (res.statusCode == "200"){ obj.next(res)} else { obj.error(res); }},
         error: (e: any) => { obj.error(e) }
       });
     });
@@ -43,7 +43,7 @@ export class MasterService {
     return new Observable((obj) => {
       this.apiService.setHttp('GET', 'zp-osmanabad/master/GetAllVillage?flag_lang='+strPara, false, false, false, 'baseUrl');
       this.apiService.getHttp().subscribe({
-        next: (res: any) => {if (res.statusCode == "200"){ console.log("res",res);obj.next(res)} else { obj.error(res); }},
+        next: (res: any) => {if (res.statusCode == "200"){ obj.next(res)} else { obj.error(res); }},
         error: (e: any) => { obj.error(e) }
       });
     });
@@ -53,7 +53,7 @@ export class MasterService {
     return new Observable((obj) => {
       this.apiService.setHttp('GET', 'zp-osmanabad/master/GetAllCenter?flag_lang='+strPara, false, false, false, 'baseUrl');
       this.apiService.getHttp().subscribe({
-        next: (res: any) => {if (res.statusCode == "200"){ console.log("res",res);obj.next(res)} else { obj.error(res); }},
+        next: (res: any) => {if (res.statusCode == "200"){ obj.next(res)} else { obj.error(res); }},
         error: (e: any) => { obj.error(e) }
       });
     });
@@ -63,7 +63,7 @@ export class MasterService {
     return new Observable((obj) => {
       this.apiService.setHttp('GET', 'zp-osmanabad/master/GetAllSchoolType?flag_lang='+strPara, false, false, false, 'baseUrl');
       this.apiService.getHttp().subscribe({
-        next: (res: any) => {if (res.statusCode == "200"){ console.log("res",res);obj.next(res)} else { obj.error(res); }},
+        next: (res: any) => {if (res.statusCode == "200"){ obj.next(res)} else { obj.error(res); }},
         error: (e: any) => { obj.error(e) }
       });
     });
@@ -73,7 +73,7 @@ export class MasterService {
     return new Observable((obj) => {
       this.apiService.setHttp('GET', 'zp-osmanabad/master/GetAllSubject?flag_lang='+strPara, false, false, false, 'baseUrl');
       this.apiService.getHttp().subscribe({
-        next: (res: any) => {if (res.statusCode == "200"){ console.log("res",res);obj.next(res)} else { obj.error(res); }},
+        next: (res: any) => {if (res.statusCode == "200"){ obj.next(res)} else { obj.error(res); }},
         error: (e: any) => { obj.error(e) }
       });
     });
@@ -84,7 +84,7 @@ export class MasterService {
     return new Observable((obj) => {
       this.apiService.setHttp('GET', 'zp-osmanabad/master/GetAllStandard?flag_lang='+strPara, false, false, false, 'baseUrl');
       this.apiService.getHttp().subscribe({
-        next: (res: any) => {if (res.statusCode == "200"){ console.log("res",res);obj.next(res)} else { obj.error(res); }},
+        next: (res: any) => {if (res.statusCode == "200"){ obj.next(res)} else { obj.error(res); }},
         error: (e: any) => { obj.error(e) }
       });
     });
@@ -94,7 +94,7 @@ export class MasterService {
     return new Observable((obj) => {
       this.apiService.setHttp('GET', 'zp-osmanabad/master/GetAllGroupClass?flag_lang='+strPara, false, false, false, 'baseUrl');
       this.apiService.getHttp().subscribe({
-        next: (res: any) => {if (res.statusCode == "200"){ console.log("res",res);obj.next(res)} else { obj.error(res); }},
+        next: (res: any) => {if (res.statusCode == "200"){ obj.next(res)} else { obj.error(res); }},
         error: (e: any) => { obj.error(e) }
       });
     });
@@ -104,7 +104,7 @@ export class MasterService {
     return new Observable((obj) => {
       this.apiService.setHttp('GET', 'zp-osmanabad/master/GetAllGender?flag_lang='+strPara, false, false, false, 'baseUrl');
       this.apiService.getHttp().subscribe({
-        next: (res: any) => {if (res.statusCode == "200"){ console.log("res",res);obj.next(res)} else { obj.error(res); }},
+        next: (res: any) => {if (res.statusCode == "200"){ obj.next(res)} else { obj.error(res); }},
         error: (e: any) => { obj.error(e) }
       });
     });
@@ -114,7 +114,7 @@ export class MasterService {
     return new Observable((obj) => {
       this.apiService.setHttp('GET', 'zp-osmanabad/master/GetAllReligion?flag_lang='+strPara, false, false, false, 'baseUrl');
       this.apiService.getHttp().subscribe({
-        next: (res: any) => {if (res.statusCode == "200"){ console.log("res",res);obj.next(res)} else { obj.error(res); }},
+        next: (res: any) => {if (res.statusCode == "200"){ obj.next(res)} else { obj.error(res); }},
         error: (e: any) => { obj.error(e) }
       });
     });
@@ -124,7 +124,7 @@ export class MasterService {
     return new Observable((obj) => {
       this.apiService.setHttp('GET', 'zp-osmanabad/master/GetAllSpecialization?flag_lang='+strPara, false, false, false, 'baseUrl');
       this.apiService.getHttp().subscribe({
-        next: (res: any) => {if (res.statusCode == "200"){ console.log("res",res);obj.next(res)} else { obj.error(res); }},
+        next: (res: any) => {if (res.statusCode == "200"){ obj.next(res)} else { obj.error(res); }},
         error: (e: any) => { obj.error(e) }
       });
     });
@@ -134,7 +134,7 @@ export class MasterService {
     return new Observable((obj) => {
       this.apiService.setHttp('GET', 'zp-osmanabad/master/GetAllCaste?flag_lang='+strPara, false, false, false, 'baseUrl');
       this.apiService.getHttp().subscribe({
-        next: (res: any) => {if (res.statusCode == "200"){ console.log("res",res);obj.next(res)} else { obj.error(res); }},
+        next: (res: any) => {if (res.statusCode == "200"){ obj.next(res)} else { obj.error(res); }},
         error: (e: any) => { obj.error(e) }
       });
     });
@@ -144,7 +144,7 @@ export class MasterService {
     return new Observable((obj) => {
       this.apiService.setHttp('GET', 'zp-osmanabad/master/GetRoleOfTeacher?flag_lang='+strPara, false, false, false, 'baseUrl');
       this.apiService.getHttp().subscribe({
-        next: (res: any) => {if (res.statusCode == "200"){ console.log("res",res);obj.next(res)} else { obj.error(res); }},
+        next: (res: any) => {if (res.statusCode == "200"){ obj.next(res)} else { obj.error(res); }},
         error: (e: any) => { obj.error(e) }
       });
     });
@@ -154,7 +154,7 @@ export class MasterService {
     return new Observable((obj) => {
       this.apiService.setHttp('GET', 'zp-osmanabad/master/GetAllUserType?flag_lang='+strPara, false, false, false, 'baseUrl');
       this.apiService.getHttp().subscribe({
-        next: (res: any) => {if (res.statusCode == "200"){ console.log("res",res);obj.next(res)} else { obj.error(res); }},
+        next: (res: any) => {if (res.statusCode == "200"){ obj.next(res)} else { obj.error(res); }},
         error: (e: any) => { obj.error(e) }
       });
     });
