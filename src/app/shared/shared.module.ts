@@ -10,6 +10,7 @@ import { MatSortModule } from '@angular/material/sort';
 import {MatButtonModule} from '@angular/material/button';
 import { PageStatisticsComponent } from './components/page-statistics/page-statistics.component';
 import {MatIconModule} from '@angular/material/icon';
+import { MatCardModule } from '@angular/material/card';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,8 @@ import {MatIconModule} from '@angular/material/icon';
     MatPaginatorModule,
     MatSortModule,
     MatButtonModule,
-    MatIconModule
+    MatIconModule,
+    MatCardModule,
   ],
   exports: [TableComponent, PageStatisticsComponent]
 })

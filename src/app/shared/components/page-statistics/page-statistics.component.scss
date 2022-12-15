@@ -1,0 +1,25 @@
+.mat-card-page{
+    display: flex;
+    align-items:stretch;
+}
+
+.text-number {
+    color: #F5A63A;
+    font-size: 2.2rem;
+    font-weight: 500;
+    margin-bottom: 0px;
+}
+
+.image-school {
+    width: 70px;
+    height: 70px;
+    filter: saturate(176.15) hue-rotate(43deg) opacity(0.2);
+}
+
+.school-footer {
+    background: #FCD8A2;
+    padding: 10px;
+    margin-top: 15px;
+    display: flex;
+    text-align: center;
+}
