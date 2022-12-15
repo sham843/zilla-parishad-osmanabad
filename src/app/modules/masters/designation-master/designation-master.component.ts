@@ -6,12 +6,27 @@ import { ErrorsService } from 'src/app/core/services/errors.service';
 import { GlobalDialogComponent } from 'src/app/shared/components/global-dialog/global-dialog.component';
 import { AddUpdateDesignationMasterComponent } from './add-update-designation-master/add-update-designation-master.component';
 
+interface Food {
+  value: string;
+  viewValue: string;
+}
+
 @Component({
   selector: 'app-designation-master',
   templateUrl: './designation-master.component.html',
   styleUrls: ['./designation-master.component.scss']
 })
 export class DesignationMasterComponent {
+
+
+  foods: Food[] = [
+    {value: 'steak-0', viewValue: 'Steak'},
+    {value: 'pizza-1', viewValue: 'Pizza'},
+    {value: 'tacos-2', viewValue: 'Tacos'},
+  ];
+
+
+  
   pageNumber: number = 1;
   searchContent = new FormControl('');
   

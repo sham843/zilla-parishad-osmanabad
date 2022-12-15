@@ -54,8 +54,10 @@ body {
 }
 
 .btn-main {
+  font-family: 'Poppins', sans-serif !important;
   background-color: var(--main-color) !important;
   color: #fff !important;
+  font-size:0.85rem ;
 }
 
 .btn-main:hover {
@@ -103,6 +105,11 @@ body {
   padding: 10px 15px;
   font-size: 0.85rem;
   font-weight: 500;
+}
+.plain-card .card-footer {
+  border-top: 1px solid #eee;
+  padding: 10px 15px;
+  font-size: 0.85rem;
 }
 
 .plain-card .card-body {
