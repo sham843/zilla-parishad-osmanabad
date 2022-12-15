@@ -14,7 +14,7 @@ import { AddUpdateDesignationMasterComponent } from '../../masters/designation-m
 export class PageRightAccessComponent {
   pageNumber: number = 1;
   searchContent = new FormControl('');
-  
+  tableData: any;
 
   constructor(private dialog: MatDialog, private apiService: ApiService, private errors: ErrorsService) { }
 
@@ -28,8 +28,8 @@ export class PageRightAccessComponent {
     this.getTableData()
   }
 
-  getTableData(flag?:string) {
-    this.pageNumber =   flag == 'filter'? 1 :this.pageNumber;
+  getTableData(flag?: string) {
+    this.pageNumber = flag == 'filter' ? 1 : this.pageNumber;
     let tableDataArray = new Array();
     let tableDatasize!: Number;
     let str = `pageno=${this.pageNumber}&TextSearch=${this.searchContent.value}`;
@@ -45,15 +45,15 @@ export class PageRightAccessComponent {
           tableDatasize = 0;
         }
         let displayedColumns = ['srNo', 'pageName', 'pageNameView', 'action'];
-        let displayedheaders = ['Sr. No', 'Name', 'Page Name','action'];
-        let tableData = {
+        let displayedheaders = ['Sr. No', 'Name', 'Page Name', 'action'];
+        this.tableData = {
           pageNumber: this.pageNumber,
           img: '', blink: '', badge: '', isBlock: '',
           displayedColumns: displayedColumns, tableData: tableDataArray,
           tableSize: tableDatasize,
           tableHeaders: displayedheaders
         };
-        this.apiService.tableData.next(tableData);
+        this.apiService.tableData.next(this.tableData);
       },
       error: ((err: any) => { this.errors.handelError(err) })
     });
@@ -77,20 +77,28 @@ export class PageRightAccessComponent {
 
   //#region -------------------------------------------dialog box open function's start heare----------------------------------------//
   addUpdateAgency(obj?: any) {
-    this.dialog.open(AddUpdateDesignationMasterComponent, {
+    const dialog = this.dialog.open(AddUpdateDesignationMasterComponent, {
       width: '320px',
       data: obj,
-      disableClose: true,
+      disableClose: false,
       autoFocus: false
+    })
+    dialog.afterClosed().subscribe(() => {
+      this.tableData.highlightedRow = -1;
+      this.apiService.tableData.next(this.tableData);
     })
   }
 
   globalDialogOpen() {
-    this.dialog.open(GlobalDialogComponent, {
+    const dialog = this.dialog.open(GlobalDialogComponent, {
       width: '320px',
       data: '',
-      disableClose: true,
+      disableClose: false,
       autoFocus: false
+    })
+    dialog.afterClosed().subscribe(() => {
+      this.tableData.highlightedRow = -1;
+      this.apiService.tableData.next(this.tableData);
     })
   }
   //#endregion -------------------------------------------dialog box open function's end heare----------------------------------------//

@@ -19,7 +19,7 @@ export class TableComponent implements OnInit {
   pageIndex!: number;
   tableInfo: any;
   tableHeaders = new Array();
-
+  highlightedRow!:number;
   constructor(private apiService: ApiService) { }
 
   ngOnInit() {
@@ -27,6 +27,7 @@ export class TableComponent implements OnInit {
     this.apiService.tableData.subscribe((res: any) => {
       this.tableInfo = res;
       if (this.tableInfo) {
+        this.highlightedRow = this.tableInfo.highlightedRow;
         this.displayedColumns = this.tableInfo.displayedColumns;
         this.tableSize = this.tableInfo.tableSize;
         this.tableHeaders = this.tableInfo.tableHeaders
@@ -37,7 +38,8 @@ export class TableComponent implements OnInit {
     })
   }
 
-  action(obj: any, label: string) {
+  action(obj: any, label: string, i?:any) {
+    this.highlightedRow = i;
     obj.label = label;
     obj.pageNumber = obj.pageIndex + 1;
     this.pageIndex = obj.pageNumber;
