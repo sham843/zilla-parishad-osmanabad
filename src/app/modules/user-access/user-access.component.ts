@@ -22,7 +22,7 @@ export class UserAccessComponent {
 
   //------------------------------------------------------get user access data----------------------------------------------------
   getUserAccessData(){
- /*   this.apiService.setHttp('get','pagemaster/GetAll?pageno=1&pagesize=10',false,false,false,'zpOsmanabadBaseUrl');
+ /*   this.apiService.setHttp('get','pagemaster/GetAll?pageno=1&pagesize=10',false,false,false,'baseUrl');
     this.apiService.getHttp().subscribe((res:any)=>{
       console.log(res);
     }) */

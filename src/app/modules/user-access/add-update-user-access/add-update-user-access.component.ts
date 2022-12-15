@@ -56,7 +56,7 @@ export class AddUpdateUserAccessComponent {
         "createdDate": new Date(),
         "isDeleted": false
       }
-    this.apiService.setHttp('post', 'pagemaster/AddPage', true, obj, false, 'zpOsmanabadBaseUrl');
+    this.apiService.setHttp('post', 'pagemaster/AddPage', true, obj, false, 'baseUrl');
       this.apiService.getHttp().subscribe((res:any)=>{
         console.log(res);
       }) 

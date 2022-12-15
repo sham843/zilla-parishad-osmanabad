@@ -21,7 +21,7 @@ export class ApiService {
 
   getBaseurl(url: string) {
     switch (url) {
-      case 'zpOsmanabadBaseUrl': return 'https://demozposmanabad.mahamining.com/zp-osmanabad/'; break;
+      case 'baseUrl': return 'https://demozposmanabad.mahamining.com/zp-osmanabad/'; break;
       default: return ''; break;
     }
   }
@@ -33,7 +33,6 @@ export class ApiService {
   }
 
   setHttp(type: string, url: string, isHeader: Boolean, obj: any, params: any, baseUrl: any) {
-    debugger
     try {
       //this.userObj = JSON.parse(sessionStorage.loggedInDetails);
     } catch (e) { }
