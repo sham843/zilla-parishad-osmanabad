@@ -30,50 +30,79 @@ body {
   font-family: 'Poppins', sans-serif;
   background-color: #EEEEEE
 }
-:root{
-  --main-color:rgb(3, 146, 134);
-  --main-light-color:rgb(221, 255, 252);
-  --main-dark-color:rgb(0, 95, 87);
+
+:root {
+  --main-color: rgb(3, 146, 134);
+  --main-light-color: rgb(221, 255, 252);
+  --main-dark-color: rgb(0, 95, 87);
 }
-.text-main{
-  color:var(--main-color);
+
+.text-main {
+  color: var(--main-color);
 }
-.bg-main{
-  background-color:var(--main-color);
+
+.bg-main {
+  background-color: var(--main-color);
 }
-.bg-main-light{
-  background-color:var(--main-color);
+
+.bg-main-light {
+  background-color: var(--main-color);
 }
-.bg-main-dark{
-  background-color:var(--main-dark-color);
+
+.bg-main-dark {
+  background-color: var(--main-dark-color);
 }
-.btn-main{
-  background-color:var(--main-color) !important;
+
+.btn-main {
+  background-color: var(--main-color) !important;
   color: #fff !important;
 }
-.btn-main:hover{
-  background-color:var(--main-dark-color) !important;
+
+.btn-main:hover {
+  background-color: var(--main-dark-color) !important;
   color: #fff;
 }
-.dashboard-table{
+
+.dashboard-table {
   font-family: 'Poppins', sans-serif !important;
 }
+
 .dashboard-table th,
-.dashboard-table mat-header-cell{
+.dashboard-table mat-header-cell {
   font-size: 0.85rem !important;
   font-weight: 600;
   font-family: 'Poppins', sans-serif !important;
 }
+
 .dashboard-table td,
-.dashboard-table mat-cell{
+.dashboard-table mat-cell {
   font-size: 0.85rem !important;
   font-family: 'Poppins', sans-serif !important;
 }
-.dashboard-table button{
+
+.dashboard-table button {
   height: 40px !important;
   width: 40px !important;
   padding: 10px !important;
 }
-.dashboard-table button .material-symbols-outlined{
+
+.dashboard-table button .material-symbols-outlined {
   font-size: 18px !important;
+}
+
+.plain-card {
+  box-shadow: none !important;
+  border-radius: 10px;
+}
+
+.plain-card .card-header {
+  border-bottom: 1px solid #eee;
+  padding: 10px 15px;
+  font-size: 0.85rem;
+  font-weight: 500;
+}
+
+.plain-card .card-body {
+  padding: 10px 15px;
+  font-size: 0.85rem;
 }
