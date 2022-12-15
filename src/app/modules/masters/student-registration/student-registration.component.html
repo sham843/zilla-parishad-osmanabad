@@ -1,75 +1,240 @@
 <mat-card>
-    <mat-card-header>
-        <div class="row w-100 mb-3">
-            <div class="col-sm-8">
-                Student List
-            </div>
-            <div class="col-sm-4 text-end">
-              <button mat-flat-button class="btn-main">
-                <span class="material-symbols-outlined">
-                  toc
-              </span>
-              </button>
-              <button mat-flat-button color="">
-                <span class="material-symbols-outlined">
-                  grid_view
-              </span>
-              </button>
-              <button mat-flat-button class="btn-main">
-                <span class="material-symbols-outlined">
-                  download
-              </span>
-              </button>
-              <button mat-flat-button class="btn-main ms-2" (click)="addUpdateAgency()">
-                Add New
-              </button>
-            </div>
-        </div>
-    </mat-card-header>
-    <mat-card-header>
-        <div class="row w-100 mb-3">
-            <div class="col-sm-3">
-              <mat-form-field appearance="outline" class="w-100">
-                <mat-label>Search by Name</mat-label>
-                <input matInput placeholder="Search by Name">
+  <mat-card-header>
+    <div class="row w-100 mb-3">
+      <div class="col-sm-8">
+        Student List
+      </div>
+      <div class="col-sm-4 text-end">
+        <button mat-flat-button class="btn-main">
+          <span class="material-symbols-outlined">
+            toc
+          </span>
+        </button>
+        <button mat-flat-button color="">
+          <span class="material-symbols-outlined">
+            grid_view
+          </span>
+        </button>
+        <button mat-flat-button class="btn-main">
+          <span class="material-symbols-outlined">
+            download
+          </span>
+        </button>
+        <button mat-flat-button class="btn-main ms-2" (click)="addUpdateAgency()">
+          Add New
+        </button>
+      </div>
+    </div>
+  </mat-card-header>
+  <mat-card-header>
+    <div class="row w-100 mb-3">
+      <div class="col-sm-3">
+        <mat-form-field appearance="outline" class="w-100">
+          <mat-label>Search by Name</mat-label>
+          <input matInput placeholder="Search by Name">
 
-            </mat-form-field>
-            </div>
-            <div class="col-sm-3">
-              <mat-form-field appearance="outline" class="w-100">
-                <mat-label>Search by Contact</mat-label>
-                <input matInput placeholder="Search by Contact">
+        </mat-form-field>
+      </div>
+      <div class="col-sm-3">
+        <mat-form-field appearance="outline" class="w-100">
+          <mat-label>Search by Contact</mat-label>
+          <input matInput placeholder="Search by Contact">
 
-            </mat-form-field>
-            </div>
-            <div class="col-sm-3">
-              <mat-form-field appearance="outline" class="w-100">
-                <mat-label>Search by Email</mat-label>
-                <input matInput placeholder="Search by Email">
+        </mat-form-field>
+      </div>
+      <div class="col-sm-3">
+        <mat-form-field appearance="outline" class="w-100">
+          <mat-label>Search by Email</mat-label>
+          <input matInput placeholder="Search by Email">
 
-            </mat-form-field>
+        </mat-form-field>
+      </div>
+
+    </div>
+  </mat-card-header>
+  <mat-card-content>
+    Table
+
+    <div class="row">
+      <div class="col-sm-4">
+        <mat-card>
+          <mat-card-header class="d-flex justify-content-end">
+            <button mat-flat-button [matMenuTriggerFor]="menu">
+              <span class="material-symbols-outlined">
+                more_horiz
+              </span>
+            </button>
+            <mat-menu #menu="matMenu">
+              <button mat-menu-item>Item 1</button>
+              <button mat-menu-item>Item 2</button>
+            </mat-menu>
+          </mat-card-header>
+          <mat-card-content>
+            <div class="text-center mb-3">
+              <img src="assets/images/user.jpg" alt="" height="60px">
             </div>
-           
-        </div>
-    </mat-card-header>
-    <mat-card-content>
-                        Table
-    </mat-card-content>
-    <mat-card-footer>
-        <nav aria-label="" class="d-flex justify-content-end"> 
-            <ul class="pagination">
-              <li class="page-item disabled">
-                <a class="page-link">Previous</a>
-              </li>
-              <li class="page-item"><a class="page-link" href="#">1</a></li>
-              <li class="page-item active" aria-current="page">
-                <a class="page-link" href="#">2</a>
-              </li>
-              <li class="page-item"><a class="page-link" href="#">3</a></li>
-              <li class="page-item">
-                <a class="page-link" href="#">Next</a>
-              </li>
-            </ul>
-          </nav>
-    </mat-card-footer>
+            <div class="row">
+              <div class="col-sm  form-label">
+                School Name
+              </div>
+              <div class=" col-sm  form-deta">
+                Chaitanya Vidyalaya
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm form-label">
+                Mobile No.
+              </div>
+              <div class="col-sm form-deta">
+                9999999999
+              </div>
+            </div>
+            <div class="row">
+              <div class=" col-sm form-label">
+                Gender
+              </div>
+              <div class="col-sm form-deta">
+                Male
+              </div>
+            </div>
+            <div class="text-center mb-3">
+              <button mat-flat-button class="btn-main">Read More</button>
+            </div>
+          </mat-card-content>
+          <mat-card-footer>
+
+          </mat-card-footer>
+        </mat-card>
+      </div>
+      <div class="col-sm-4">
+        <mat-card>
+          <mat-card-header class="d-flex justify-content-end">
+            <button mat-flat-button [matMenuTriggerFor]="menu">
+              <span class="material-symbols-outlined">
+                more_horiz
+              </span>
+            </button>
+            <mat-menu #menu="matMenu">
+              <button mat-menu-item>Item 1</button>
+              <button mat-menu-item>Item 2</button>
+            </mat-menu>
+          </mat-card-header>
+          <mat-card-content>
+            <div class="text-center mb-3">
+              <img src="assets/images/user.jpg" alt="" height="60px">
+            </div>
+            <div class="row">
+              <div class="col-sm  form-label">
+                School Name
+              </div>
+              <div class=" col-sm  form-deta">
+                Chaitanya Vidyalaya
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm form-label">
+                Mobile No.
+              </div>
+              <div class="col-sm form-deta">
+                9999999999
+              </div>
+            </div>
+            <div class="row">
+              <div class=" col-sm form-label">
+                Gender
+              </div>
+              <div class="col-sm form-deta">
+                Male
+              </div>
+            </div>
+            <div class="text-center mb-3">
+              <button mat-flat-button class="btn-main">Read More</button>
+            </div>
+          </mat-card-content>
+          <mat-card-footer>
+
+          </mat-card-footer>
+        </mat-card>
+      </div>
+      <div class="col-sm-4">
+        <mat-card>
+          <mat-card-header class="d-flex justify-content-end">
+            <mat-card-actions>
+              <button mat-flat-button [matMenuTriggerFor]="menu">
+                <span class="material-symbols-outlined">
+                  more_horiz
+                </span>
+              </button>
+              <mat-menu #menu="matMenu">
+                <button mat-menu-item>
+                  <span>Edit</span>
+                  <span class="material-symbols-outlined">
+                    edit
+                  </span>
+                </button>
+                <button mat-menu-item>
+                  <span>Delete</span>
+                      <span class="material-symbols-outlined">
+                        delete
+                      </span></button>
+              </mat-menu>
+            </mat-card-actions>
+            
+          </mat-card-header>
+          <mat-card-content>
+            <div class="text-center mb-3">
+              <img src="assets/images/user.jpg" alt="" height="60px">
+            </div>
+            <div class="row">
+              <div class="col-sm  form-label">
+                School Name
+              </div>
+              <div class=" col-sm  form-deta">
+                Chaitanya Vidyalaya
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm form-label">
+                Mobile No.
+              </div>
+              <div class="col-sm form-deta">
+                9999999999
+              </div>
+            </div>
+            <div class="row">
+              <div class=" col-sm form-label">
+                Gender
+              </div>
+              <div class="col-sm form-deta">
+                Male
+              </div>
+            </div>
+            <div class="text-center mb-3">
+              <button mat-flat-button class="btn-main">Read More</button>
+            </div>
+          </mat-card-content>
+          <mat-card-footer>
+
+          </mat-card-footer>
+        </mat-card>
+      </div>
+    </div>
+  </mat-card-content>
+  <mat-card-footer>
+    <nav aria-label="" class="d-flex justify-content-end">
+      <ul class="pagination">
+        <li class="page-item disabled">
+          <a class="page-link">Previous</a>
+        </li>
+        <li class="page-item"><a class="page-link" href="#">1</a></li>
+        <li class="page-item active" aria-current="page">
+          <a class="page-link" href="#">2</a>
+        </li>
+        <li class="page-item"><a class="page-link" href="#">3</a></li>
+        <li class="page-item">
+          <a class="page-link" href="#">Next</a>
+        </li>
+      </ul>
+    </nav>
+  </mat-card-footer>
 </mat-card>
