@@ -12,8 +12,7 @@ const routes: Routes = [
 { path: 'school-registration', loadChildren: () => import('./modules/masters/school-registration/school-registration.module').then(m => m.SchoolRegistrationModule), canActivate: [AuthGuard], data: { breadcrumb: [{ title: 'School Registration', active: true }]}},
 { path: 'student-registration', loadChildren: () => import('./modules/masters/student-registration/student-registration.module').then(m => m.StudentRegistrationModule), canActivate: [AuthGuard], data: { breadcrumb: [{ title: 'Student Registration', active: true }]}},
 { path: 'teacher-registration', loadChildren: () => import('./modules/masters/teacher-registration/teacher-registration.module').then(m => m.TeacherRegistrationModule), canActivate: [AuthGuard], data: { breadcrumb: [{ title: 'Teacher Registration', active: true }]}},
-{ path: 'office-users', loadChildren: () => import('./modules/masters/office-users/office-users.module').then(m => m.OfficeUsersModule), canActivate: [AuthGuard], data: { breadcrumb: [{ title: 'Office Users', active: true }]}},
-{ path: 'user-access', loadChildren: () => import('./modules/user-access/user-access.module').then(m => m.UserAccessModule), canActivate: [AuthGuard], data: { breadcrumb: [{ title: 'User Access', active: true }]}},
+{ path: 'office-users', loadChildren: () => import('./modules/masters/office-users/office-users.module').then(m => m.OfficeUsersModule), canActivate: [AuthGuard], data: { breadcrumb: [{ title: 'Office Users', active: true }]}}
 ]
 @NgModule({
   imports: [RouterModule.forRoot(routes)],

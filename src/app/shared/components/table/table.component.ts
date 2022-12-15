@@ -10,12 +10,13 @@ import { ApiService } from 'src/app/core/services/api.service';
 })
 export class TableComponent implements OnInit {
   @Output() recObjToChild = new EventEmitter<any>();
-  @ViewChild(MatPaginator) paginator!: MatPaginator;
+  @ViewChild(MatPaginator) paginator: MatPaginator | any;
 
   displayedColumns = new Array();
   tableRecords: any;
   tableSize!: number;
   pageNumber!: number;
+  pageIndex!: number;
   tableInfo: any;
   tableHeaders = new Array();
 
@@ -31,7 +32,7 @@ export class TableComponent implements OnInit {
         this.tableHeaders = this.tableInfo.tableHeaders
         this.pageNumber = this.tableInfo.pageNumber;
         this.tableInfo.tableData ? this.tableRecords = new MatTableDataSource(this.tableInfo.tableData) : this.tableRecords = [];
-        this.pageNumber == 1 ? this.paginator?.firstPage() : '';
+        this.paginator?._pageIndex != 0 && this.pageIndex != this.pageNumber ? this.paginator?.firstPage() : '';
       }
     })
   }
@@ -39,7 +40,7 @@ export class TableComponent implements OnInit {
   action(obj: any, label: string) {
     obj.label = label;
     obj.pageNumber = obj.pageIndex + 1;
+    this.pageIndex = obj.pageNumber;
     this.recObjToChild.emit(obj);
   }
-
 }
