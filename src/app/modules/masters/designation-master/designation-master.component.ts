@@ -1,10 +1,11 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
-import { MatPaginator } from '@angular/material/paginator';
 import { debounceTime, distinctUntilChanged } from 'rxjs';
+import { ApiService } from 'src/app/core/services/api.service';
+import { ErrorsService } from 'src/app/core/services/errors.service';
+import { GlobalDialogComponent } from 'src/app/shared/components/global-dialog/global-dialog.component';
 import { AddUpdateDesignationMasterComponent } from './add-update-designation-master/add-update-designation-master.component';
-import { DesignationMasterService } from './designation-master.service';
 
 @Component({
   selector: 'app-designation-master',
@@ -12,52 +13,70 @@ import { DesignationMasterService } from './designation-master.service';
   styleUrls: ['./designation-master.component.scss']
 })
 export class DesignationMasterComponent {
-  array: any;
-  displayedColumns = new Array();
-  displayedheaders = new Array();
-  tableData: any;
-  tableDataArray: any;
-  tableDatasixze!: number;
+
   pageNumber: number = 0;
   searchContent = new FormControl('');
-  @ViewChild(MatPaginator) paginator!: MatPaginator;
 
-  constructor(private dialog: MatDialog, private designationService: DesignationMasterService) { }
-  
+  constructor(private dialog: MatDialog, private apiService: ApiService, private errors: ErrorsService) { }
+
   ngOnInit() {
     this.getTableData()
   }
+
   ngAfterViewInit() {
     this.searchContent.valueChanges.pipe(debounceTime(500), distinctUntilChanged()).subscribe(() => {
       this.getTableData()
     });
   }
+
   onPagintion(pageNo: number) {
     this.pageNumber = pageNo;
     this.getTableData()
   }
+
   getTableData() {
+    let tableDataArray = new Array();
+    let tableDatasize!: Number;
     this.searchContent.value ? this.pageNumber = 0 : this.pageNumber;
-    this.designationService.getDesignation(this.pageNumber, this.searchContent.value).subscribe((res: any) => {
+    let str = `pageno=1`;
+    this.apiService.setHttp('GET', 'zp_osmanabad/pagemaster/GetAll?' + str, false, false, false, 'baseUrl');
+    this.apiService.getHttp().subscribe({
 
-      if (res.statusCode == "200") {
-        res.responseData.responseData1.map((x: any) => {
-          x.isBlock = x.isBlock == 1 ? true : false;
-        })
-        this.tableDataArray = res.responseData.responseData1;
-        this.tableDatasixze = res.responseData.responseData2.totalRecords;
-      } else {
-        this.tableDataArray = [];
-      }
-      this.displayedColumns = ['srno', 'name', 'mobileNo1', 'roleName', 'isBlock', 'action'];
-      this.displayedheaders = ['Sr. No', 'Name', 'Mobile No', 'role Name', 'isBlock', 'action'];
-      this.tableData = { srno: 'srno', img: 'img', blink: '', badge: '', isBlock: 'isBlock', displayedColumns: this.displayedColumns, tableData: this.tableDataArray, tableSize: this.tableDatasixze, tableHeaders: this.displayedheaders };
+      next: (res: any) => {
+        if (res.statusCode == "200") {
+          tableDataArray = res.responseData.responseData1;
+          tableDatasize = res.responseData.responseData2.totalRecords;
+        } else {
+          tableDataArray = [];
+          tableDatasize = 0;
+        }
+        let displayedColumns = ['srno', 'name', 'mobileNo1', 'roleName', 'isBlock', 'action'];
+        let displayedheaders = ['Sr. No', 'Name', 'Mobile No', 'role Name', 'isBlock', 'action'];
+        let tableData = { srno: 'srno', img: 'img', blink: '', badge: '', isBlock: 'isBlock', displayedColumns: displayedColumns, tableData: tableDataArray, tableSize: tableDatasize, tableHeaders: displayedheaders };
+        this.apiService.tableData.next(tableData);
+      },
+      error: ((err: any) => { this.errors.handelError(err) })
+    });
 
-      this.designationService.tableData.next(this.tableData);
-
-    })
   }
 
+
+  childCompInfo(obj: any) {
+    switch (obj.label) {
+      case 'Pagination':
+        this.pageNumber = obj.pageIndex + 1;
+        this.getTableData();
+        break;
+      case 'Edit' || 'Delete':
+        this.addUpdateAgency(obj);
+        break;
+      case 'Block':
+        this.globalDialogOpen();
+        break;
+    }
+  }
+
+  //#region -------------------------------------------dialog box open function's start heare----------------------------------------//
   addUpdateAgency(obj?: any) {
     this.dialog.open(AddUpdateDesignationMasterComponent, {
       width: '320px',
@@ -67,16 +86,13 @@ export class DesignationMasterComponent {
     })
   }
 
-  childCompInfo(obj: any) {
-    obj.label == 'Edit' ? this.addUpdateAgency(obj) : '';
+  globalDialogOpen() {
+    this.dialog.open(GlobalDialogComponent, {
+      width: '320px',
+      data: '',
+      disableClose: true,
+      autoFocus: false
+    })
   }
-  openConfirmation(selectedObj?: any) {
-    console.log(selectedObj)
-    // this.dialog.open(AddUpdateDesignationMasterComponent, {
-    //   width: '320px',
-    //   data: selectedObj,
-    //   disableClose: true,
-    //   autoFocus: false
-    // })
-  }
+  //#endregion -------------------------------------------dialog box open function's end heare----------------------------------------//
 }

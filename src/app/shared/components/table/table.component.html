@@ -10,6 +10,10 @@
                 <ng-container *ngIf="tableInfo?.img == columns"><img src="{{element[columns]}}"></ng-container>
                 <ng-container *ngIf="tableInfo?.blink == columns">{{element[columns]}}</ng-container>
                 <ng-container *ngIf="tableInfo?.badge == columns">{{element[columns]}}</ng-container>
+                <ng-container *ngIf="tableInfo?.isBlock == columns">
+                    <mat-slide-toggle (change)="action(element, 'Block')">
+                    </mat-slide-toggle>
+                </ng-container>
             </td>
         </ng-container>
         <ng-container *ngIf="columns =='action'">
@@ -25,3 +29,12 @@
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
 </table>
+<mat-paginator *ngIf="tableInfo?.tableData?.length!=0" showFirstLastButtons [length]="tableSize" (click)="action($event, 'Pagination')"
+    [pageSizeOptions]="[10]" aria-label="Select page">
+</mat-paginator>
+
+<div *ngIf="tableInfo?.tableData?.length ==0">
+    <div class="alert alert-danger text-center py-2 ">
+        Data not available
+    </div>
+</div>

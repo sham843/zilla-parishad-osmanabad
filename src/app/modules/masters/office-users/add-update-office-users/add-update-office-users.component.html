@@ -1,1 +1,77 @@
-<p>add-update-office-users works!</p>
+<mat-card>
+    <button mat-icon-button mat-dialog-close>
+        <span class="material-symbols-outlined">
+            close
+        </span>
+    </button>
+    <mat-card-header class="mb-2">
+        Register Office Users
+    </mat-card-header>
+    <mat-card-content>
+       
+        <div class="row">
+            <div class="col-sm-4">
+                <!-- <mat-form-field appearance="outline" class="w-100 ">
+                    <mat-label>Item Category</mat-label>
+                    <mat-select>
+                        <mat-option value="one">First option</mat-option>
+                        <mat-option value="two">Second option</mat-option>
+                    </mat-select>
+                </mat-form-field> -->
+
+                <mat-form-field appearance="outline" class="w-100 " >
+                    <mat-label>Level</mat-label>
+                    <mat-select placeholder="select">
+                        <mat-option value="one">First option</mat-option>
+                        <mat-option value="two">Second option</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <div class="col-sm-4">
+                <mat-form-field appearance="outline" class="w-100 ">
+                    <mat-label>Designation (Officer)</mat-label>
+                    <mat-select placeholder="select">
+                        <mat-option value="one">First option</mat-option>
+                        <mat-option value="two">Second option</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <div class="col-sm-4">
+                <mat-form-field appearance="outline" class="w-100 ">
+                    <mat-label>District</mat-label>
+                    <mat-select placeholder="select">
+                        <mat-option value="one">First option</mat-option>
+                        <mat-option value="two">Second option</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-4">
+                <mat-form-field appearance="outline" class="w-100">
+                    <mat-label>Name</mat-label>
+                    <input matInput placeholder="Name">
+
+                </mat-form-field>
+            </div>
+            <div class="col-sm-4">
+                <mat-form-field appearance="outline" class="w-100">
+                    <mat-label>Mobile No.</mat-label>
+                    <input matInput placeholder="Mobile No.">
+
+                </mat-form-field>
+            </div>
+            <div class="col-sm-4">
+                <mat-form-field appearance="outline" class="w-100">
+                    <mat-label>Email ID</mat-label>
+                    <input matInput placeholder="Email ID">
+
+                </mat-form-field>
+        </div>
+        </div>
+    </mat-card-content>
+    <mat-card-footer class="text-end p-3">
+        <button class="btn btn-outline-secondary me-2">Cancel</button>
+        <button class="btn btn-main ">Submit</button>
+    </mat-card-footer>
+</mat-card>

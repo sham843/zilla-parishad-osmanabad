@@ -4,10 +4,11 @@
             close
         </span>
     </button>
-    <mat-card-header>
+    <mat-card-header class="mb-2">
         Register Student
     </mat-card-header>
     <mat-card-content>
+        <h6 class="mb-3">Student Details</h6>
         <div class="row">
             <div class="col-sm-4">
                 <!-- <mat-form-field appearance="outline" class="w-100 ">
@@ -18,15 +19,9 @@
                     </mat-select>
                 </mat-form-field> -->
 
-                <mat-form-field appearance="outline" class="w-100">
-                    <mat-label>Item ID</mat-label>
-                    <input matInput placeholder="Item ID">
-                </mat-form-field>
-            </div>
-            <div class="col-sm-4">
-                <mat-form-field appearance="outline" class="w-100 ">
-                    <mat-label>Item Category</mat-label>
-                    <mat-select>
+                <mat-form-field appearance="outline" class="w-100 " >
+                    <mat-label>District</mat-label>
+                    <mat-select placeholder="select">
                         <mat-option value="one">First option</mat-option>
                         <mat-option value="two">Second option</mat-option>
                     </mat-select>
@@ -34,8 +29,17 @@
             </div>
             <div class="col-sm-4">
                 <mat-form-field appearance="outline" class="w-100 ">
-                    <mat-label>Item Category</mat-label>
-                    <mat-select>
+                    <mat-label>Taluka</mat-label>
+                    <mat-select placeholder="select">
+                        <mat-option value="one">First option</mat-option>
+                        <mat-option value="two">Second option</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <div class="col-sm-4">
+                <mat-form-field appearance="outline" class="w-100 ">
+                    <mat-label>Kendra</mat-label>
+                    <mat-select placeholder="select">
                         <mat-option value="one">First option</mat-option>
                         <mat-option value="two">Second option</mat-option>
                     </mat-select>
@@ -45,8 +49,8 @@
         <div class="row">
             <div class="col-sm-4">
                 <mat-form-field appearance="outline" class="w-100 ">
-                    <mat-label>Item Category</mat-label>
-                    <mat-select>
+                    <mat-label>School</mat-label>
+                    <mat-select placeholder="select">
                         <mat-option value="one">First option</mat-option>
                         <mat-option value="two">Second option</mat-option>
                     </mat-select>
@@ -54,8 +58,8 @@
             </div>
             <div class="col-sm-4">
                 <mat-form-field appearance="outline" class="w-100 ">
-                    <mat-label>Item Category</mat-label>
-                    <mat-select>
+                    <mat-label>Standard</mat-label>
+                    <mat-select placeholder="select">
                         <mat-option value="one">First option</mat-option>
                         <mat-option value="two">Second option</mat-option>
                     </mat-select>
@@ -65,41 +69,113 @@
         </div>
         <div class="row">
             <div class="col-sm-4">
-                <!-- <mat-form-field appearance="outline" class="w-100">
+                <mat-form-field appearance="outline" class="w-100">
                     <mat-label>Item ID</mat-label>
                     <input matInput placeholder="Item ID">
-        
-                  </mat-form-field> -->
+                </mat-form-field>
+            </div>
+            <div class="col-sm-4">
+                <mat-form-field appearance="outline" class="w-100">
+                    <mat-label>Middle Name</mat-label>
+                    <input matInput placeholder="Middle Nam">
+
+                </mat-form-field>
+            </div>
+            <div class="col-sm-4">
+                <mat-form-field appearance="outline" class="w-100">
+                    <mat-label>Last Name</mat-label>
+                    <input matInput placeholder="Last Name">
+
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-4">
+                <mat-form-field appearance="outline" class="w-100">
+                    <mat-label>Saral ID</mat-label>
+                    <input matInput placeholder="Saral ID">
+
+                </mat-form-field>
+            </div>
+            <div class="col-sm-4">
                 <mat-form-field appearance="outline" class="w-100 ">
-                    <mat-label>Item Category</mat-label>
-                    <mat-select>
+                    <mat-label>Gender</mat-label>
+                    <mat-select placeholder="Select">
                         <mat-option value="one">First option</mat-option>
                         <mat-option value="two">Second option</mat-option>
                     </mat-select>
                 </mat-form-field>
             </div>
             <div class="col-sm-4">
+                <mat-form-field appearance="outline" class="w-100">
+                    <mat-label>Birth Date</mat-label>
+                    <input matInput [matDatepicker]="datepicker">
+                    <mat-datepicker-toggle matIconSuffix [for]="datepicker"></mat-datepicker-toggle>
+                    <mat-datepicker #datepicker>
+                    </mat-datepicker>
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-4">
+                <mat-form-field appearance="outline" class="w-100">
+                    <mat-label>Aadhar Card</mat-label>
+                    <input matInput placeholder="Aadhar Card">
+
+                </mat-form-field>
+            </div>
+            <div class="col-sm-4">
                 <mat-form-field appearance="outline" class="w-100 ">
-                    <mat-label>Item Category</mat-label>
-                    <mat-select>
+                    <mat-label>Religion</mat-label>
+                    <mat-select placeholder="Select">
                         <mat-option value="one">First option</mat-option>
                         <mat-option value="two">Second option</mat-option>
                     </mat-select>
                 </mat-form-field>
             </div>
             <div class="col-sm-4">
-                <mat-form-field appearance="outline" class="w-100 ">
-                    <mat-label>Item Category</mat-label>
-                    <mat-select>
-                        <mat-option value="one">First option</mat-option>
-                        <mat-option value="two">Second option</mat-option>
-                    </mat-select>
+                <mat-form-field appearance="outline" class="w-100">
+                    <mat-label>Cast</mat-label>
+                    <input matInput placeholder="Cast">
+
+                </mat-form-field>
+            </div>
+        </div>
+        <h6 class="mb-3">Gaurdian Details</h6>
+        <div class="row">
+            <div class="col-sm-4">
+                <mat-form-field appearance="outline" class="w-100">
+                    <mat-label>Father Name</mat-label>
+                    <input matInput placeholder="Father Name">
+
+                </mat-form-field>
+            </div>
+            <div class="col-sm-4">
+                <mat-form-field appearance="outline" class="w-100">
+                    <mat-label>Mother Name</mat-label>
+                    <input matInput placeholder="Mother Name">
+                </mat-form-field>
+            </div>
+            <div class="col-sm-4">
+                <mat-form-field appearance="outline" class="w-100">
+                    <mat-label>Mobile No.</mat-label>
+                    <input matInput placeholder="Mobile No.">
+
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-4">
+                <mat-form-field appearance="outline" class="w-100">
+                    <mat-label>Email ID</mat-label>
+                    <input matInput placeholder="Email ID">
+
                 </mat-form-field>
             </div>
         </div>
     </mat-card-content>
-    <mat-card-footer class="text-end">
-        <button class="btn">Cancel</button>
-        <button class="btn">Submit</button>
+    <mat-card-footer class="text-end p-3">
+        <button class="btn btn-outline-secondary me-2">Cancel</button>
+        <button class="btn btn-main ">Submit</button>
     </mat-card-footer>
 </mat-card>

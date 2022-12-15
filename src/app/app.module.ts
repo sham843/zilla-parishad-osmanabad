@@ -17,7 +17,7 @@ import { HttpClientModule } from '@angular/common/http';
     CoreModule,
     BrowserAnimationsModule,
     NgxSpinnerModule,
-    HttpClientModule
+    HttpClientModule,
   ],
   schemas:[CUSTOM_ELEMENTS_SCHEMA],
   providers: [],

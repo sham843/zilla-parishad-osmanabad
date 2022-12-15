@@ -4,6 +4,8 @@ import { AuthGuard } from './guards/auth.guard';
 import { HeaderComponent } from './header/header.component';
 import { FooterComponent } from './footer/footer.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
+import { RouterModule } from '@angular/router';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 @NgModule({
   declarations: [
@@ -12,7 +14,9 @@ import { SidebarComponent } from './sidebar/sidebar.component';
     SidebarComponent
   ],
   imports: [
-    CommonModule
+    CommonModule,
+    MatSnackBarModule,
+    RouterModule,
   ],
   providers: [
     AuthGuard,
