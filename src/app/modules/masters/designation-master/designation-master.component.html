@@ -1,3 +1,3 @@
 <p>designation-master works!</p>
 <button (click)="addUpdateAgency()">Add Agency</button>
-<app-table  [tableInfo]="tableData" (recObjToChild)="childCompInfo($event)"></app-table>
+<app-table  (pageEvent)="onPagintion($event)"  (recObjToChild)="childCompInfo($event)" (onSlide)="openConfirmation($event)"></app-table>
