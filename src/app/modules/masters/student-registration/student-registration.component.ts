@@ -1,37 +1,82 @@
 import { Component } from '@angular/core';
+import { FormControl } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
-import { AddUpdateStudentRegistrationComponent } from './add-update-student-registration/add-update-student-registration.component';
-
+import { ApiService } from 'src/app/core/services/api.service';
+import { ErrorsService } from 'src/app/core/services/errors.service';
 @Component({
   selector: 'app-student-registration',
   templateUrl: './student-registration.component.html',
   styleUrls: ['./student-registration.component.scss']
 })
 export class StudentRegistrationComponent {
-  constructor(private dialog: MatDialog) { }
+  pageNumber: number = 1;
+  searchContent = new FormControl('');
 
-  childCompInfo(_obj: any) {
-    // switch (obj.label) {
-    //   case 'Pagination':
-    //     this.pageNumber = obj.pageNumber;
-    //     this.getTableData();
-    //     break;
-    //   case 'Edit' || 'Delete':
-    //     this.addUpdateAgency(obj);
-    //     break;
-    //   case 'Block':
-    //     this.globalDialogOpen();
-    //     break;
-    // }
+  constructor(private dialog: MatDialog, private apiService : ApiService, private errors : ErrorsService) { }
+
+  ngOnInit() {
+    this.getTableData()
   }
-  
+
+  onPagintion(pageNo: number) {
+    this.pageNumber = pageNo;
+    this.getTableData()
+  }
+
+  getTableData(flag?: string) {
+    this.pageNumber = flag == 'filter' ? 1 : this.pageNumber;
+    let tableDataArray = new Array();
+    let tableDatasize!: Number;
+
+    // ZP-Osmanabad/School/GetAllSchoolByPagination?pageno=1
+
+    let str = `?pageno=${this.pageNumber}&pagesize=10&DistrictId=1&TalukaId=1&VillageId=1`;
+    this.apiService.setHttp('GET', 'ZP-Osmanabad/School/GetAllSchoolByPagination' + str, false, false, false, 'baseUrl');
+    this.apiService.getHttp().subscribe({
+
+      next: (res: any) => {
+        if (res.statusCode == "200") {
+          tableDataArray = res.responseData.responseData1;
+          tableDatasize = res.responseData.responseData2.pageCount;
+        } else {
+          tableDataArray = [];
+          tableDatasize = 0;
+        }
+        let displayedColumns = ['srNo', 'schoolName', 'action'];
+        let displayedheaders = ['Sr. No', 'Name', 'action'];
+        let tableData = {
+          pageNumber: this.pageNumber,
+          img: '', blink: '', badge: '', isBlock: '', pagintion: true,
+          displayedColumns: displayedColumns, tableData: tableDataArray,
+          tableSize: tableDatasize,
+          tableHeaders: displayedheaders
+        };
+        this.apiService.tableData.next(tableData);
+      },
+      error: ((err: any) => { this.errors.handelError(err) })
+    });
+
+  }
+
   addUpdateAgency() {
     let obj: any;
-    this.dialog.open(AddUpdateStudentRegistrationComponent, {
-      width:'900px',
+    this.dialog.open(StudentRegistrationComponent, {
+      width: '900px',
       data: obj,
       disableClose: true,
       autoFocus: false
     })
+  }
+
+  childCompInfo(obj: any) {
+    switch (obj.label) {
+      case 'Pagination':
+        this.pageNumber = obj.pageNumber;
+        this.getTableData();
+        break;
+      case 'Edit' || 'Delete':
+        // this.addUpdateAgency(obj);
+        break;    
+    }
   }
 }

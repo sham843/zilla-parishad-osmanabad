@@ -47,8 +47,8 @@ export class DesignationMasterComponent {
     this.pageNumber =   flag == 'filter'? 1 :this.pageNumber;
     let tableDataArray = new Array();
     let tableDatasize!: Number;
-    let str = `pageno=${this.pageNumber}&TextSearch=${this.searchContent.value}`;
-    this.apiService.setHttp('GET', 'zp_osmanabad/pagemaster/GetAll?' + str, false, false, false, 'baseUrl');
+    let str = `Id=1&pageno=${this.pageNumber}&pagesize=10`;
+    this.apiService.setHttp('GET', 'zp_osmanabad/designation-master/GetAllDesignationById?' + str, false, false, false, 'baseUrl');
     this.apiService.getHttp().subscribe({
 
       next: (res: any) => {
@@ -59,8 +59,8 @@ export class DesignationMasterComponent {
           tableDataArray = [];
           tableDatasize = 0;
         }
-        let displayedColumns = ['srNo', 'pageName', 'pageNameView', 'action'];
-        let displayedheaders = ['Sr. No', 'Name', 'Page Name','action'];
+        let displayedColumns = ['srNo', 'designationName', 'designationLevel', 'action'];
+        let displayedheaders = ['Sr. No', 'Designation Name', 'Designation Level','action'];
         let tableData = {
           pageNumber: this.pageNumber,
           img: '', blink: '', badge: '', isBlock: '', pagintion:true,
