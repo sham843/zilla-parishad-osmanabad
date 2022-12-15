@@ -1,7 +1,6 @@
 import { OnInit, Component, Output, EventEmitter, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
-import { take } from 'rxjs';
 import { ApiService } from 'src/app/core/services/api.service';
 
 @Component({
@@ -24,7 +23,7 @@ export class TableComponent implements OnInit {
 
   ngOnInit() {
     this.tableInfo = [];
-    this.apiService.tableData.pipe(take(1)).subscribe((res: any) => {
+    this.apiService.tableData.subscribe((res: any) => {
       this.tableInfo = res;
       if (this.tableInfo) {
         this.displayedColumns = this.tableInfo.displayedColumns;
@@ -32,7 +31,7 @@ export class TableComponent implements OnInit {
         this.tableHeaders = this.tableInfo.tableHeaders
         this.pageNumber = this.tableInfo.pageNumber;
         this.tableInfo.tableData ? this.tableRecords = new MatTableDataSource(this.tableInfo.tableData) : this.tableRecords = [];
-        // this.pageNumber == 1 ? this.paginator?.firstPage() : '';
+        this.pageNumber == 1 ? this.paginator?.firstPage() : '';
       }
     })
   }

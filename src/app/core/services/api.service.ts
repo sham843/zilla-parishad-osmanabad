@@ -5,7 +5,7 @@ import { Subject } from 'rxjs';
   providedIn: 'root'
 })
 export class ApiService {
-  tableData = new Subject<any>; //all table set and set data using BehaviorSubject
+  tableData = new Subject<any>(); //all table set and set data using BehaviorSubject
 
   userObj = new Array();
 
