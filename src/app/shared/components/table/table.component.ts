@@ -1,6 +1,5 @@
-import { OnInit, Component, Output, EventEmitter, ViewChild } from '@angular/core';
+import { OnInit, Component, Output, EventEmitter } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
-import { MatPaginator } from '@angular/material/paginator';
 import { ApiService } from 'src/app/core/services/api.service';
 
 @Component({
@@ -9,7 +8,6 @@ import { ApiService } from 'src/app/core/services/api.service';
   styleUrls: ['./table.component.scss']
 })
 export class TableComponent implements OnInit {
-  @ViewChild(MatPaginator) paginator!: MatPaginator;
   @Output() recObjToChild = new EventEmitter<any>();
   @Output() pageEvent = new EventEmitter<any>();
   @Output() onSlide = new EventEmitter<any>();
