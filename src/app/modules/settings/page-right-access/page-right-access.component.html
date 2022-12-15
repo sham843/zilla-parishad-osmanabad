@@ -1,0 +1,10 @@
+<button (click)="addUpdateAgency()">Add Agency</button><br/><br/>
+
+<mat-card>
+    <mat-form-field appearance="fill">
+        <mat-label>Input</mat-label>
+        <input matInput [formControl]="searchContent">
+      </mat-form-field>
+      <button mat-stroked-button (click)="getTableData('filter')">Filter</button>
+    <app-table   (recObjToChild)="childCompInfo($event)"></app-table>
+</mat-card>

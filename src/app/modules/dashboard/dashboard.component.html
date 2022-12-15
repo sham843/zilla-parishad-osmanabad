@@ -1,3 +1,87 @@
-<p>dashboard works!</p>
+<div class="row">
+    <div class="col-sm-4">
+        <mat-form-field appearance="outline" class="w-100">
+            <mat-label>तालुका निवडा</mat-label>
+            <mat-select>
+                <mat-option *ngFor="let food of foods" [value]="food.value">
+                    {{food.viewValue}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+    </div>
+    <div class="col-sm-4">
+        <mat-form-field appearance="outline" class="w-100">
+            <mat-label>केंद्र निवडा</mat-label>
+            <mat-select>
+                <mat-option *ngFor="let food of foods" [value]="food.value">
+                    {{food.viewValue}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+    </div>
+    <div class="col-sm-4">
+        <mat-form-field appearance="outline" class="w-100">
+            <mat-label>शाळा निवडा</mat-label>
+            <mat-select>
+                <mat-option *ngFor="let food of foods" [value]="food.value">
+                    {{food.viewValue}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+    </div>
+</div>
 
-<agm-map [latitude]="lat" [longitude]="lng" [zoom]="12"></agm-map>
+<div class="row">
+    <div class="col-sm-3">
+        <div class="card card-body">
+            <div class="d-flex justify-content-between align-items-center">
+                <div>
+                    <p>School</p>
+                    <h3>7,500</h3>
+                </div>
+                <div>
+                    <img src="assets/images/statistical-icons/School.svg">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-3">
+        <div class="card card-body">
+            <div class="d-flex justify-content-between align-items-center">
+                <div>
+                    <p>Teachers</p>
+                    <h3>4,500</h3>
+                </div>
+                <div>
+                    <img src="assets/images/statistical-icons/Teacher.svg">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-3">
+        <div class="card card-body">
+            <div class="d-flex justify-content-between align-items-center">
+                <div>
+                    <p>Students</p>
+                    <h3>7,500</h3>
+                </div>
+                <div>
+                    <img src="assets/images/statistical-icons/Student.svg">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-3">
+        <div class="card card-body">
+            <div class="d-flex justify-content-between align-items-center">
+                <div>
+                    <p>ZP Officers</p>
+                    <h3>7,500</h3>
+                </div>
+                <div>
+                    <img src="assets/images/statistical-icons/ZP-Officer.svg">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

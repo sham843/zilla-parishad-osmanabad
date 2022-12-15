@@ -7,6 +7,7 @@ import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
+import {MatButtonModule} from '@angular/material/button';
 
 
 @NgModule({
@@ -19,7 +20,8 @@ import { MatSortModule } from '@angular/material/sort';
     MatSlideToggleModule,
     MatTableModule,
     MatPaginatorModule,
-    MatSortModule
+    MatSortModule,
+    MatButtonModule
   ],
   exports: [TableComponent]
 })
