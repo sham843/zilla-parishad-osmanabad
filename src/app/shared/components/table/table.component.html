@@ -29,7 +29,7 @@
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
 </table>
-<mat-paginator *ngIf="tableInfo?.tableData?.length!=0" showFirstLastButtons [length]="tableSize" (page)="action($event,'Pagination')"
+<mat-paginator *ngIf="tableInfo?.tableData?.length!=0" showFirstLastButtons [length]="tableSize" (click)="action($event, 'Pagination')"
     [pageSizeOptions]="[10]" aria-label="Select page">
 </mat-paginator>
 
