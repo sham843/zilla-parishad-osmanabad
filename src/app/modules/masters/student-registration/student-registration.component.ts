@@ -3,6 +3,7 @@ import { FormControl } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { ApiService } from 'src/app/core/services/api.service';
 import { ErrorsService } from 'src/app/core/services/errors.service';
+import { AddUpdateStudentRegistrationComponent } from './add-update-student-registration/add-update-student-registration.component';
 @Component({
   selector: 'app-student-registration',
   templateUrl: './student-registration.component.html',
@@ -57,7 +58,7 @@ export class StudentRegistrationComponent {
 
   addUpdateAgency() {
     let obj: any;
-    this.dialog.open(StudentRegistrationComponent, {
+    this.dialog.open(AddUpdateStudentRegistrationComponent, {
       width: '900px',
       data: obj,
       disableClose: true,
