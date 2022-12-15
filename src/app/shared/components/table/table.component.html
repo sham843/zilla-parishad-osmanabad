@@ -13,7 +13,7 @@
                 <ng-container *ngIf="tableInfo?.blink == columns">{{element[columns]}}</ng-container>
                 <ng-container *ngIf="tableInfo?.badge == columns">{{element[columns]}}</ng-container>
                 <ng-container *ngIf="tableInfo?.isBlock == columns">
-                    <mat-slide-toggle (change)="checkBlock(element)" [(ngModel)]="element[columns]">
+                    <mat-slide-toggle (change)="action(element, 'Block')">
                     </mat-slide-toggle>
                 </ng-container>
             </td>
@@ -31,7 +31,7 @@
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
 </table>
-<mat-paginator *ngIf="tableInfo?.tableData?.length!=0" [length]="tableSize" (page)="onPagintion($event)"
+<mat-paginator *ngIf="tableInfo?.tableData?.length!=0" showFirstLastButtons [length]="tableSize" (page)="action($event,'Pagination')"
     [pageSizeOptions]="[10]" aria-label="Select page">
 </mat-paginator>
 
