@@ -5,7 +5,7 @@ import { Subject } from 'rxjs';
   providedIn: 'root'
 })
 export class ApiService {
-  tableData = new Subject<any>; //all table set and set data using BehaviorSubject
+  tableData = new Subject<any>(); //all table set and set data using BehaviorSubject
 
   userObj = new Array();
 
@@ -20,7 +20,7 @@ export class ApiService {
   constructor(private http: HttpClient) { }
 
   getBaseurl(url: string) {
-    switch (url) {
+    switch (url) {     
       case 'baseUrl': return 'https://demozposmanabad.mahamining.com/'; break;
       default: return ''; break;
     }

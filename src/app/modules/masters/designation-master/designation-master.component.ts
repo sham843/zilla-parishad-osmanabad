@@ -48,7 +48,7 @@ export class DesignationMasterComponent {
         let displayedheaders = ['Sr. No', 'Name', 'Page Name','action'];
         let tableData = {
           pageNumber: this.pageNumber,
-          img: '', blink: '', badge: '', isBlock: '',
+          img: '', blink: '', badge: '', isBlock: '', pagintion:true,
           displayedColumns: displayedColumns, tableData: tableDataArray,
           tableSize: tableDatasize,
           tableHeaders: displayedheaders
