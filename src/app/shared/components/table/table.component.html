@@ -1,4 +1,4 @@
-<table mat-table [dataSource]="tableRecords" class="mat-elevation-z8">
+<table mat-table [dataSource]="tableRecords" class="dashboard-table">
     <ng-container *ngFor="let columns of displayedColumns" matColumnDef="{{columns}}">
         <ng-container *ngIf="columns !='action'">
             <th mat-header-cell *matHeaderCellDef>
