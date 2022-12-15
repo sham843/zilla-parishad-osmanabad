@@ -1,5 +1,9 @@
 import { Component } from '@angular/core';
+import { FormControl } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
+import { ApiService } from 'src/app/core/services/api.service';
+import { ErrorsService } from 'src/app/core/services/errors.service';
+import { GlobalDialogComponent } from 'src/app/shared/components/global-dialog/global-dialog.component';
 import { AddUpdateDesignationMasterComponent } from './add-update-designation-master/add-update-designation-master.component';
 
 @Component({
@@ -8,28 +12,70 @@ import { AddUpdateDesignationMasterComponent } from './add-update-designation-ma
   styleUrls: ['./designation-master.component.scss']
 })
 export class DesignationMasterComponent {
-  array: any;
-  displayedColumns: string[] = ['userId', 'id', 'title', 'body', 'action','img'];
-  tableData: any;
-  constructor(private dialog: MatDialog) {
-    this.array = [
-      {
-        "img":'https://angular.io/assets/images/logos/angular/logo-nav@2x.png',
-        "userId": 1,
-        "id": 1,
-        "title": "sunt aut facere repellat provident occaecati excepturi optio reprehenderit",
-        "body": "quia et suscipit\nsuscipit recusandae consequuntur expedita et cum\nreprehenderit molestiae ut ut quas totam\nnostrum rerum est autem sunt rem eveniet architecto"
-      },
-      {
-        "img":'https://angular.io/assets/images/logos/angular/logo-nav@2x.png',
-        "userId": 1,
-        "id": 2,
-        "title": "qui est esse",
-        "body": "est rerum tempore vitae\nsequi sint nihil reprehenderit dolor beatae ea dolores neque\nfugiat blanditiis voluptate porro vel nihil molestiae ut reiciendis\nqui aperiam non debitis possimus qui neque nisi nulla"
-      }];
-    this.tableData = { img: 'img',  blink:'', badge: '',  displayedColumns: this.displayedColumns, tableData: this.array };
+  pageNumber: number = 1;
+  searchContent = new FormControl('');
+  
+
+  constructor(private dialog: MatDialog, private apiService: ApiService, private errors: ErrorsService) { }
+
+  ngOnInit() {
+    this.getTableData()
   }
 
+
+  onPagintion(pageNo: number) {
+    this.pageNumber = pageNo;
+    this.getTableData()
+  }
+
+  getTableData(flag?:string) {
+    this.pageNumber =   flag == 'filter'? 1 :this.pageNumber;
+    let tableDataArray = new Array();
+    let tableDatasize!: Number;
+    let str = `pageno=${this.pageNumber}&TextSearch=${this.searchContent.value}`;
+    this.apiService.setHttp('GET', 'zp_osmanabad/pagemaster/GetAll?' + str, false, false, false, 'baseUrl');
+    this.apiService.getHttp().subscribe({
+
+      next: (res: any) => {
+        if (res.statusCode == "200") {
+          tableDataArray = res.responseData.responseData1;
+          tableDatasize = res.responseData.responseData2.pageCount;
+        } else {
+          tableDataArray = [];
+          tableDatasize = 0;
+        }
+        let displayedColumns = ['srNo', 'pageName', 'pageNameView', 'action'];
+        let displayedheaders = ['Sr. No', 'Name', 'Page Name','action'];
+        let tableData = {
+          pageNumber: this.pageNumber,
+          img: '', blink: '', badge: '', isBlock: '', pagintion:true,
+          displayedColumns: displayedColumns, tableData: tableDataArray,
+          tableSize: tableDatasize,
+          tableHeaders: displayedheaders
+        };
+        this.apiService.tableData.next(tableData);
+      },
+      error: ((err: any) => { this.errors.handelError(err) })
+    });
+
+  }
+
+  childCompInfo(obj: any) {
+    switch (obj.label) {
+      case 'Pagination':
+        this.pageNumber = obj.pageNumber;
+        this.getTableData();
+        break;
+      case 'Edit' || 'Delete':
+        this.addUpdateAgency(obj);
+        break;
+      case 'Block':
+        this.globalDialogOpen();
+        break;
+    }
+  }
+
+  //#region -------------------------------------------dialog box open function's start heare----------------------------------------//
   addUpdateAgency(obj?: any) {
     this.dialog.open(AddUpdateDesignationMasterComponent, {
       width: '320px',
@@ -39,7 +85,13 @@ export class DesignationMasterComponent {
     })
   }
 
-  childCompInfo(obj: any) {
-    obj.label == 'Edit' ? this.addUpdateAgency(obj) : '';
+  globalDialogOpen() {
+    this.dialog.open(GlobalDialogComponent, {
+      width: '320px',
+      data: '',
+      disableClose: true,
+      autoFocus: false
+    })
   }
+  //#endregion -------------------------------------------dialog box open function's end heare----------------------------------------//
 }

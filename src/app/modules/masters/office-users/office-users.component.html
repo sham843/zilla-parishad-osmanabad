@@ -1,2 +1,65 @@
-<p>office-users works!</p>
-<button (click)="addUpdateAgency()">Add Agency</button>
+<mat-card>
+    <mat-card-header>
+        <div class="row w-100 mb-3">
+            <div class="col-sm-8">
+                Office Users
+            </div>
+            <div class="col-sm-4 text-end">
+              <button mat-flat-button class="btn-main">
+                <span class="material-symbols-outlined">
+                  download
+              </span>
+              </button>
+              <button mat-flat-button class="btn-main ms-2" (click)="addUpdateAgency()">
+                Add New
+              </button>
+            </div>
+        </div>
+    </mat-card-header>
+    <mat-card-header>
+        <div class="row w-100 mb-3">
+            <div class="col-sm-3">
+              <mat-form-field appearance="outline" class="w-100">
+                <mat-label>Search by Name</mat-label>
+                <input matInput placeholder="Search by Name">
+
+            </mat-form-field>
+            </div>
+            <div class="col-sm-3">
+              <mat-form-field appearance="outline" class="w-100">
+                <mat-label>Search by Contact</mat-label>
+                <input matInput placeholder="Search by Contact">
+
+            </mat-form-field>
+            </div>
+            <div class="col-sm-3">
+              <mat-form-field appearance="outline" class="w-100">
+                <mat-label>Search by Email</mat-label>
+                <input matInput placeholder="Search by Email">
+
+            </mat-form-field>
+            </div>
+           
+        </div>
+    </mat-card-header>
+    <mat-card-content>
+                        Table
+    </mat-card-content>
+    <mat-card-footer>
+        <nav aria-label="" class="d-flex justify-content-end"> 
+            <ul class="pagination">
+              <li class="page-item disabled">
+                <a class="page-link">Previous</a>
+              </li>
+              <li class="page-item"><a class="page-link" href="#">1</a></li>
+              <li class="page-item active" aria-current="page">
+                <a class="page-link" href="#">2</a>
+              </li>
+              <li class="page-item"><a class="page-link" href="#">3</a></li>
+              <li class="page-item">
+                <a class="page-link" href="#">Next</a>
+              </li>
+            </ul>
+          </nav>
+    </mat-card-footer>
+</mat-card>

@@ -1,1 +1,109 @@
-<p>add-update-teacher-registration works!</p>
+<mat-card>
+    <mat-card-header>
+        <div class="d-flex align-items-center justify-content-between w-100">
+            <mat-card-title>
+                Register Teacher
+            </mat-card-title>
+            <button mat-icon-button mat-dialog-close>
+                <span class="material-symbols-outlined">
+                    close
+                </span>
+            </button>
+        </div>
+    </mat-card-header>
+
+    <mat-card-content>
+        <mat-card-subtitle>Personal Details</mat-card-subtitle>
+        <div class="row my-3">
+            <div class="col-sm">
+                <mat-form-field appearance="outline" class="w-100">
+                    <mat-label>First Name</mat-label>
+                    <input matInput>
+                </mat-form-field>
+            </div>
+            <div class="col-sm">
+                <mat-form-field appearance="outline" class="w-100">
+                    <mat-label>Middle Name</mat-label>
+                    <input matInput>
+                </mat-form-field>
+            </div>
+            <div class="col-sm">
+                <mat-form-field appearance="outline" class="w-100">
+                    <mat-label>Last Name</mat-label>
+                    <input matInput>
+                </mat-form-field>
+            </div>
+            <div class="col-sm">
+                <mat-form-field appearance="outline" class="w-100 ">
+                    <mat-label>Gender</mat-label>
+                    <mat-select>
+                        <mat-option value="one">Male</mat-option>
+                        <mat-option value="two">Female</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <div class="col-sm">
+                <mat-form-field appearance="outline" class="w-100">
+                    <mat-label>Mobile No.</mat-label>
+                    <input matInput>
+                </mat-form-field>
+            </div>
+            <div class="col-sm">
+                <mat-form-field appearance="outline" class="w-100">
+                    <mat-label>Email ID</mat-label>
+                    <input matInput>
+                </mat-form-field>
+            </div>
+            <div class="col-sm">
+                <mat-form-field appearance="outline" class="w-100">
+                    <mat-label>Birth Date</mat-label>
+                    <input matInput [matDatepicker]="picker">
+                    <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker>
+                  </mat-form-field>
+                  
+            </div>
+            <div class="col-sm">
+                <mat-form-field appearance="outline" class="w-100">
+                    <mat-label>Age</mat-label>
+                    <input matInput>
+                </mat-form-field>
+            </div>
+            <div class="col-sm">
+                <mat-form-field appearance="outline" class="w-100 ">
+                    <mat-label>Upload Photo</mat-label>
+                    <input matInput>
+                    <mat-icon matSuffix>
+                        <span class="material-symbols-outlined">
+                            upload
+                        </span>
+                    </mat-icon>
+                </mat-form-field>
+            </div>
+        </div>
+    </mat-card-content>
+
+    <mat-card-content>
+        <mat-card-subtitle>Address Details</mat-card-subtitle>
+        <div class="row my-3">
+            <div class="col-sm-6">
+                <mat-form-field appearance="outline" class="w-100 ">
+                    <mat-label>Current Address</mat-label>
+                    <textarea matInput></textarea>
+                  </mat-form-field>
+            </div>
+            <div class="col-sm-6">
+                <mat-form-field appearance="outline" class="w-100 ">
+                    <mat-label>Permanent Address</mat-label>
+                    <textarea matInput></textarea>
+                  </mat-form-field>
+            </div>
+        </div>
+    </mat-card-content>
+    <mat-card-footer>
+        <mat-card-actions align="end">
+            <button mat-stroked-button class="me-2">Cancel</button>
+            <button mat-flat-button color="primary">Submit</button>
+        </mat-card-actions>
+    </mat-card-footer>
+</mat-card>

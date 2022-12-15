@@ -7,6 +7,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { UserAccessComponent } from './modules/user-access/user-access.component';
 import { ReactiveFormsModule } from '@angular/forms';
+
 @NgModule({
   declarations: [
     AppComponent,

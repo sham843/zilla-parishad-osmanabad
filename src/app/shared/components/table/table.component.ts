@@ -1,5 +1,7 @@
-import { OnInit, Component, Input, Output, EventEmitter } from '@angular/core';
+import { OnInit, Component, Output, EventEmitter, ViewChild } from '@angular/core';
+import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
+import { ApiService } from 'src/app/core/services/api.service';
 
 @Component({
   selector: 'app-table',
@@ -7,20 +9,36 @@ import { MatTableDataSource } from '@angular/material/table';
   styleUrls: ['./table.component.scss']
 })
 export class TableComponent implements OnInit {
-  @Input() tableInfo!: any;
   @Output() recObjToChild = new EventEmitter<any>();
-  displayedColumns!: string[];
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+
+  displayedColumns = new Array();
   tableRecords: any;
+  tableSize!: number;
+  pageNumber!: number;
+  tableInfo: any;
+  tableHeaders = new Array();
+
+  constructor(private apiService: ApiService) { }
 
   ngOnInit() {
-    if (this.tableInfo) {
-      this.displayedColumns = this.tableInfo.displayedColumns;
-      this.tableInfo.tableData ? this.tableRecords = new MatTableDataSource(this.tableInfo.tableData) : this.tableRecords = [];
-    }
+    this.tableInfo = [];
+    this.apiService.tableData.subscribe((res: any) => {
+      this.tableInfo = res;
+      if (this.tableInfo) {
+        this.displayedColumns = this.tableInfo.displayedColumns;
+        this.tableSize = this.tableInfo.tableSize;
+        this.tableHeaders = this.tableInfo.tableHeaders
+        this.pageNumber = this.tableInfo.pageNumber;
+        this.tableInfo.tableData ? this.tableRecords = new MatTableDataSource(this.tableInfo.tableData) : this.tableRecords = [];
+        this.pageNumber == 1 ? this.paginator?.firstPage() : '';
+      }
+    })
   }
 
-  action(obj: any, label:string) {
+  action(obj: any, label: string) {
     obj.label = label;
+    obj.pageNumber = obj.pageIndex + 1;
     this.recObjToChild.emit(obj);
   }
 

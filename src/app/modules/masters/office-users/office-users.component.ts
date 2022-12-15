@@ -13,7 +13,7 @@ export class OfficeUsersComponent {
   addUpdateAgency() {
     let obj: any;
     this.dialog.open(AddUpdateOfficeUsersComponent, {
-      width:'320px',
+      width:'900px',
       data: obj,
       disableClose: true,
       autoFocus: false
