@@ -1,10 +1,11 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-
+import { BehaviorSubject } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
 export class ApiService {
+  tableData = new BehaviorSubject<any>([]); //all table set and set data using BehaviorSubject
 
   userObj = new Array();
 
