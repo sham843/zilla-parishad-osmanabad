@@ -1,11 +1,11 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { Subject } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
 export class ApiService {
-  tableData = new BehaviorSubject<any>([]); //all table set and set data using BehaviorSubject
+  tableData = new Subject<any>(); //all table set and set data using BehaviorSubject
 
   userObj = new Array();
 
@@ -20,7 +20,7 @@ export class ApiService {
   constructor(private http: HttpClient) { }
 
   getBaseurl(url: string) {
-    switch (url) {
+    switch (url) {     
       case 'baseUrl': return 'https://demozposmanabad.mahamining.com/'; break;
       default: return ''; break;
     }

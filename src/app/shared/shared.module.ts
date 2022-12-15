@@ -7,20 +7,24 @@ import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
+import {MatButtonModule} from '@angular/material/button';
+import { PageStatisticsComponent } from './components/page-statistics/page-statistics.component';
 
 
 @NgModule({
   declarations: [
     DashPipe,
-    TableComponent
+    TableComponent,
+    PageStatisticsComponent
   ],
   imports: [
     CommonModule,
     MatSlideToggleModule,
     MatTableModule,
     MatPaginatorModule,
-    MatSortModule
+    MatSortModule,
+    MatButtonModule
   ],
-  exports: [TableComponent]
+  exports: [TableComponent, PageStatisticsComponent]
 })
 export class SharedModule { }

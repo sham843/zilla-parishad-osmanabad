@@ -11,19 +11,19 @@ import { WebStorageService } from './core/services/web-storage.service';
 export class AppComponent {
   title = 'zilla Parishad Osmanabad';
   isLoggedIn: boolean = true;
-  classname:any;
+  classname: any;
   constructor(private router: Router,
-     private titleService: Title, 
-     private activatedRoute: ActivatedRoute,
-     private webStorage:WebStorageService) {
+    private titleService: Title,
+    private activatedRoute: ActivatedRoute,
+    private webStorage: WebStorageService) {
     this.checkBaseUrl();
     this.setTitle();
   }
 
-  ngOnInit(){
-this.webStorage.getTheme().subscribe((res:any)=>{
-  this.classname=res;
-})
+  ngOnInit() {
+    this.webStorage.getTheme().subscribe((res: any) => {
+      this.classname = res;
+    })
   }
 
 
