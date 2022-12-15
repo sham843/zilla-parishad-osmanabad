@@ -1,4 +1,3 @@
-import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { AddUpdateUserAccessComponent } from './add-update-user-access/add-update-user-access.component';
@@ -13,8 +12,8 @@ export class UserAccessComponent {
   userAccessData = new Array();
   displayedColumns: string[] = ['menuIcon','pageName', 'pageNameView', 'pageURL', 'sortOrder', 'action'];
   tableData: any;
-  constructor( private http:HttpClient
-    ,private dialog:MatDialog) { }
+  constructor(
+    private dialog:MatDialog) { }
 
   ngOnInit() {
     this.getUserAccessData();
@@ -28,11 +27,11 @@ export class UserAccessComponent {
       console.log(res);
     }) */
    
-    let data:any= this.http.get('https://demozposmanabad.mahamining.com/zp_osmanabad/pagemaster/GetAll?pageno=1&pagesize=10');
+   /*  let data:any= this.http.get('https://demozposmanabad.mahamining.com/zp_osmanabad/pagemaster/GetAll?pageno=1&pagesize=10');
     data.subscribe((res:any)=>{
    this.userAccessData=res.responseData.responseData1;
    this.tableData = { img: 'menuIcon',  blink:'', badge: '',  displayedColumns: this.displayedColumns, tableData: this.userAccessData };
-    })
+    }) */
   }
 
   childCompInfo(ev:any){
