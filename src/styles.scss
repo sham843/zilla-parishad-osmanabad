@@ -72,9 +72,12 @@ body {
   min-width: 38px !important;
 }
 
-.btn-icon .material-symbols-outlined{
-  font-size: 18px;
-  line-height: unset;
+.btn-icon .material-icons{
+  font-family: 'Material Icons' !important;
+  font-size: 18px !important;
+  line-height: normal !important;
+  overflow: unset;
+  margin:0 !important;
 }
 .btn-modal-close {
   width: 34px !important;
