@@ -1,6 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
+import { FormControl } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
+import { MatPaginator } from '@angular/material/paginator';
+import { debounceTime, distinctUntilChanged } from 'rxjs';
 import { AddUpdateDesignationMasterComponent } from './add-update-designation-master/add-update-designation-master.component';
+import { DesignationMasterService } from './designation-master.service';
 
 @Component({
   selector: 'app-designation-master',
@@ -9,25 +13,49 @@ import { AddUpdateDesignationMasterComponent } from './add-update-designation-ma
 })
 export class DesignationMasterComponent {
   array: any;
-  displayedColumns: string[] = ['userId', 'id', 'title', 'body', 'action','img'];
+  displayedColumns = new Array();
+  displayedheaders = new Array();
   tableData: any;
-  constructor(private dialog: MatDialog) {
-    this.array = [
-      {
-        "img":'https://angular.io/assets/images/logos/angular/logo-nav@2x.png',
-        "userId": 1,
-        "id": 1,
-        "title": "sunt aut facere repellat provident occaecati excepturi optio reprehenderit",
-        "body": "quia et suscipit\nsuscipit recusandae consequuntur expedita et cum\nreprehenderit molestiae ut ut quas totam\nnostrum rerum est autem sunt rem eveniet architecto"
-      },
-      {
-        "img":'https://angular.io/assets/images/logos/angular/logo-nav@2x.png',
-        "userId": 1,
-        "id": 2,
-        "title": "qui est esse",
-        "body": "est rerum tempore vitae\nsequi sint nihil reprehenderit dolor beatae ea dolores neque\nfugiat blanditiis voluptate porro vel nihil molestiae ut reiciendis\nqui aperiam non debitis possimus qui neque nisi nulla"
-      }];
-    this.tableData = { img: 'img',  blink:'', badge: '',  displayedColumns: this.displayedColumns, tableData: this.array };
+  tableDataArray: any;
+  tableDatasixze!: number;
+  pageNumber: number = 0;
+  searchContent = new FormControl('');
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+
+  constructor(private dialog: MatDialog, private designationService: DesignationMasterService) { }
+  
+  ngOnInit() {
+    this.getTableData()
+  }
+  ngAfterViewInit() {
+    this.searchContent.valueChanges.pipe(debounceTime(500), distinctUntilChanged()).subscribe(() => {
+      this.getTableData()
+    });
+  }
+  onPagintion(pageNo: number) {
+    this.pageNumber = pageNo;
+    this.getTableData()
+  }
+  getTableData() {
+    this.searchContent.value ? this.pageNumber = 0 : this.pageNumber;
+    this.designationService.getDesignation(this.pageNumber, this.searchContent.value).subscribe((res: any) => {
+
+      if (res.statusCode == "200") {
+        res.responseData.responseData1.map((x: any) => {
+          x.isBlock = x.isBlock == 1 ? true : false;
+        })
+        this.tableDataArray = res.responseData.responseData1;
+        this.tableDatasixze = res.responseData.responseData2.totalRecords;
+      } else {
+        this.tableDataArray = [];
+      }
+      this.displayedColumns = ['srno', 'name', 'mobileNo1', 'roleName', 'isBlock', 'action'];
+      this.displayedheaders = ['Sr. No', 'Name', 'Mobile No', 'role Name', 'isBlock', 'action'];
+      this.tableData = { srno: 'srno', img: 'img', blink: '', badge: '', isBlock: 'isBlock', displayedColumns: this.displayedColumns, tableData: this.tableDataArray, tableSize: this.tableDatasixze, tableHeaders: this.displayedheaders };
+
+      this.designationService.tableData.next(this.tableData);
+
+    })
   }
 
   addUpdateAgency(obj?: any) {
@@ -41,5 +69,14 @@ export class DesignationMasterComponent {
 
   childCompInfo(obj: any) {
     obj.label == 'Edit' ? this.addUpdateAgency(obj) : '';
+  }
+  openConfirmation(selectedObj?: any) {
+    console.log(selectedObj)
+    // this.dialog.open(AddUpdateDesignationMasterComponent, {
+    //   width: '320px',
+    //   data: selectedObj,
+    //   disableClose: true,
+    //   autoFocus: false
+    // })
   }
 }
