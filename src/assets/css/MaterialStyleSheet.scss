@@ -7,3 +7,26 @@
     font-size: 0.85rem !important;
     font-family: 'Poppins', sans-serif !important;
 }
+mat-label,
+input.mat-input-element,
+button.mat-menu-item,
+.mat-input-element,
+.mat-select-value-text,
+.mat-option-text,
+textarea.mat-input-element,
+.mat-radio-label,
+.mat-calendar,
+.mat-calendar-body-label,
+.mat-calendar-period-button,
+.mat-tab-label-content{
+    font-family: 'Inter', sans-serif;
+  font-size: 0.85rem;
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+    transition: background-color 5000s ease-in-out 0s;
+    -webkit-text-fill-color: #000 !important;
+}
