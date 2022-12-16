@@ -10,15 +10,14 @@
 
 
 .login-body .image-holder {
-    display: table-cell;
-    width: 200px;
+  display: table-cell;
+    width: 310px;
     height: 88vh;
     background-color: cadetblue;
 }
 
 .login-body .login-width {
     display: table;
-    max-width: 100%;
     width: 100%;
     margin: 0 auto;
    
@@ -26,12 +25,28 @@
 
 .login-body .form-width {
     display: table-cell;
-    width: 400px;
+    width: 0px;
     background-color: #ffffff;
     padding: 10px 60px;
     color: #505e6c
 }
 .form-body{
     margin-top: 100px;
+    padding: 10px 210px;
 }
 
+@media only screen and (max-width: 767px) {
+
+    .form-body{
+        margin-top: 100px;
+        padding: 10px 10px;
+    }
+    .login-body .form-width {
+        display: table-cell;
+        width: 400px;
+        background-color: #ffffff;
+        padding: 12px 12px;
+        color: #505e6c;
+    }
+    
+}

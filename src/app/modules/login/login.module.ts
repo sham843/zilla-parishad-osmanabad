@@ -3,8 +3,12 @@ import { CommonModule } from '@angular/common';
 
 import { LoginRoutingModule } from './login-routing.module';
 import { LoginComponent } from './login.component';
-import {MatFormFieldModule} from '@angular/material/form-field';
+
 import {MatTabsModule} from '@angular/material/tabs';
+import {  MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import {MatButtonModule} from '@angular/material/button';
+
 
 
 @NgModule({
@@ -15,7 +19,9 @@ import {MatTabsModule} from '@angular/material/tabs';
     CommonModule,
     LoginRoutingModule,
     MatFormFieldModule,
-    MatTabsModule
+    MatTabsModule,
+    MatInputModule,
+    MatButtonModule
   ]
 })
 export class LoginModule { }
