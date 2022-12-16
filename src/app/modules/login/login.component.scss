@@ -1,0 +1,37 @@
+
+
+// .logos {
+//     background-color: var(--main-color);
+//     padding: 20px;
+//     border-top-left-radius: 30px;
+//     border-bottom-left-radius: 30px;
+// }
+
+
+
+.login-body .image-holder {
+    display: table-cell;
+    width: 200px;
+    height: 88vh;
+    background-color: cadetblue;
+}
+
+.login-body .login-width {
+    display: table;
+    max-width: 100%;
+    width: 100%;
+    margin: 0 auto;
+   
+}
+
+.login-body .form-width {
+    display: table-cell;
+    width: 400px;
+    background-color: #ffffff;
+    padding: 10px 60px;
+    color: #505e6c
+}
+.form-body{
+    margin-top: 100px;
+}
+
