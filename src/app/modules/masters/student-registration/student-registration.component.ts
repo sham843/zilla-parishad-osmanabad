@@ -12,11 +12,15 @@ import { AddUpdateStudentRegistrationComponent } from './add-update-student-regi
 export class StudentRegistrationComponent {
   pageNumber: number = 1;
   searchContent = new FormControl('');
-
+  viewFlags = {
+    "table": true,
+    "grid": false
+  }
   constructor(private dialog: MatDialog, private apiService : ApiService, private errors : ErrorsService) { }
 
   ngOnInit() {
     this.getTableData()
+    
   }
 
   onPagintion(pageNo: number) {
@@ -41,16 +45,18 @@ export class StudentRegistrationComponent {
           tableDataArray = [];
           tableDatasize = 0;
         }
-        let displayedColumns = ['srNo', 'fullName', 'standard', 'parentMobileNo', 'gender', 'action'];
-        let displayedheaders = ['Sr. No', 'Name', 'Standard', 'Parents Contact No.','Gender','action'];
+        let displayedColumns = ['documentResponse[0].docPath','srNo', 'fullName', 'standard', 'parentMobileNo', 'gender', 'action'];
+        let displayedheaders = ['#','Sr. No', 'Name', 'Standard', 'Parents Contact No.','Gender','action'];
         let tableData = {
           pageNumber: this.pageNumber,
-          img: '', blink: '', badge: '', isBlock: '', pagintion: true,
+          img: 'documentResponse[0].docPath', blink: '', badge: '', isBlock: '', pagintion: true,
           displayedColumns: displayedColumns, tableData: tableDataArray,
           tableSize: tableDatasize,
           tableHeaders: displayedheaders
         };
         this.apiService.tableData.next(tableData);
+        console.log("tableData", tableData);
+        
       },
       error: ((err: any) => { this.errors.handelError(err) })
     });
@@ -76,5 +82,19 @@ export class StudentRegistrationComponent {
         // this.addUpdateAgency(obj);
         break;    
     }
+  }
+
+  loadGridView(){
+    this.viewFlags.grid = true 
+    this.viewFlags.table = false
+    console.log("isGridView",this.viewFlags);
+  }
+
+
+  loadtableView(){
+    this.viewFlags.table = true
+    this.viewFlags.grid = false;
+    this.getTableData()
+
   }
 }
