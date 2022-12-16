@@ -14,7 +14,7 @@ export class SchoolRegistrationComponent {
   pageNumber: number = 1;
   searchContent = new FormControl('');
   
-  constructor(private dialog: MatDialog, private apiService : ApiService, private errors : ErrorsService) { }
+  constructor(private dialog : MatDialog, private apiService : ApiService, private errors : ErrorsService, ) { }
 
   ngOnInit() {
     this.getTableData()
@@ -42,8 +42,8 @@ export class SchoolRegistrationComponent {
           tableDataArray = [];
           tableDatasize = 0;
         }
-        let displayedColumns = ['srNo', 'schoolName', 'action'];
-        let displayedheaders = ['Sr. No', 'Name', 'action'];
+        let displayedColumns = ['srNo', 'schoolName', 'village', 'taluka', 'district', 'action'];
+        let displayedheaders = ['Sr. No', 'Name', 'Village', 'Taluka', 'District', 'action'];
         let tableData = {
           pageNumber: this.pageNumber,
           img: '', blink: '', badge: '', isBlock: '', pagintion: true,
@@ -81,6 +81,5 @@ export class SchoolRegistrationComponent {
       autoFocus: false
     })
   }
-
 
 }

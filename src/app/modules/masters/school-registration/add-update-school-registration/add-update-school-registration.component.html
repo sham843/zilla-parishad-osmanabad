@@ -1,3 +1,4 @@
+<form [formGroup]="schoolRegForm">
 <mat-card class="plain-card">
     <mat-card-header class="card-header">
         <div class="d-flex align-items-center justify-content-between w-100">
@@ -15,34 +16,37 @@
             <div class="col-sm">
                 <mat-form-field appearance="outline" class="w-100">
                     <mat-label>District</mat-label>
-                    <mat-select>
-                        <mat-option value="one">First option</mat-option>
-                        <mat-option value="two">Second option</mat-option>
+                    <mat-select formControlName="districtId">
+                            <mat-option *ngFor="let district of districtArr" [value]="district.id">
+                                {{district.district}}
+                            </mat-option>
                     </mat-select>
                 </mat-form-field>
             </div>
             <div class="col-sm">
                 <mat-form-field appearance="outline" class="w-100 ">
                     <mat-label>Taluka</mat-label>
-                    <mat-select>
-                        <mat-option value="one">First option</mat-option>
-                        <mat-option value="two">Second option</mat-option>
+                    <mat-select formControlName="talukaId">
+                        <mat-option *ngFor="let taluka of talukaArr" [value]="taluka.id">
+                            {{taluka.taluka}}
+                        </mat-option>
                     </mat-select>
                 </mat-form-field>
             </div>
             <div class="col-sm">
                 <mat-form-field appearance="outline" class="w-100 ">
                     <mat-label>Kendra</mat-label>
-                    <mat-select>
-                        <mat-option value="one">First option</mat-option>
-                        <mat-option value="two">Second option</mat-option>
+                    <mat-select formControlName="centerId">
+                        <mat-option *ngFor="let center of centerArr" [value]="center.id">
+                            {{center.center}}
+                        </mat-option>
                     </mat-select>
                 </mat-form-field>
             </div>
             <div class="col-sm">
                 <mat-form-field appearance="outline" class="w-100">
                     <mat-label>School</mat-label>
-                    <input matInput placeholder="Item ID">
+                    <input matInput placeholder="Item ID" formControlName="schoolName">
                 </mat-form-field>
             </div>
             <div class="col-sm">
@@ -72,9 +76,10 @@
             <div class="col-sm">
                 <mat-form-field appearance="outline" class="w-100 ">
                     <mat-label>Group Class</mat-label>
-                    <mat-select>
-                        <mat-option value="one">First option</mat-option>
-                        <mat-option value="two">Second option</mat-option>
+                    <mat-select formControlName="g_ClassId">
+                        <mat-option *ngFor="let groupclass of groupclassArr" [value]="groupclass.id">
+                            {{groupclass.groupClass}}
+                        </mat-option>
                     </mat-select>
                 </mat-form-field>
             </div>
@@ -98,3 +103,4 @@
         </mat-card-actions>
     </mat-card-footer>
 </mat-card>
+</form>

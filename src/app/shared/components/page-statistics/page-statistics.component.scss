@@ -1,25 +1,120 @@
-.mat-card-page{
-    display: flex;
-    align-items:stretch;
-}
-
 .text-number {
     color: #F5A63A;
     font-size: 2.2rem;
     font-weight: 500;
     margin-bottom: 0px;
 }
-
-.image-school {
-    width: 70px;
+.card-agency,
+.card-users,
+.card-designation,
+.card-students,
+.card-teacher,
+.card-school{
+    border-radius: 10px;
+}
+.card-students,
+.card-teacher,
+.card-school{
+    position: relative;
+}
+.card-agency img,
+.card-users img,
+.card-designation img,
+.card-students img,
+.card-teacher img,
+.card-school img{
     height: 70px;
-    filter: saturate(176.15) hue-rotate(43deg) opacity(0.2);
+    opacity:0.278 ;
+}
+.card-students img,
+.card-teacher img,
+.card-school img{
+    position: absolute;
+    right: 10px;
+}
+.card-agency .card-footer,
+.card-users .card-footer,
+.card-designation .card-footer,
+.card-students .card-footer,
+.card-teacher .card-footer,
+.card-school .card-footer{
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+}
+.card-agency h5,
+.card-users h5,
+.card-designation h5,
+.card-students h5,
+.card-teacher h5,
+.card-school h5{
+    font-weight: 600;
+    color: #000311;
+}
+.card-agency p,
+.card-users p,
+.card-designation p,
+.card-students p,
+.card-teacher p,
+.card-school p{
+    color: #727171;
+    font-weight: 500;
+}
+.card-agency .card-footer p,
+.card-users .card-footer p,
+.card-designation .card-footer p,
+.card-students .card-footer p,
+.card-teacher .card-footer p,
+.card-school .card-footer p{
+    color: #000311;
 }
 
-.school-footer {
-    background: #FCD8A2;
-    padding: 10px;
-    margin-top: 15px;
-    display: flex;
-    text-align: center;
+.card-school h1{
+    color: #F5A63A;
+}
+.card-school img{
+    filter: invert(63%) sepia(60%) saturate(499%) hue-rotate(353deg) brightness(98%) contrast(96%);
+}
+.card-school .card-footer{
+    background-color: #FCD8A2;
+}
+
+.card-teacher h1{
+    color: #30A25A;
+}
+.card-teacher .card-footer{
+    background-color: #C0EED1;
+}
+.card-teacher img{
+    filter: invert(43%) sepia(86%) saturate(367%) hue-rotate(89deg) brightness(103%) contrast(86%);
+}
+
+.card-students h1{
+    color: #FD492C;
+}
+.card-students .card-footer{
+    background-color: #FFBCB1;
+}
+.card-students img{
+    filter: invert(36%) sepia(44%) saturate(4627%) hue-rotate(345deg) brightness(107%) contrast(98%);
+}
+
+.card-designation .card-footer{
+    background-color: #FFA8D0;
+}
+.card-designation img{
+    filter: invert(34%) sepia(93%) saturate(1810%) hue-rotate(309deg) brightness(93%) contrast(89%);
+}
+
+.card-users .card-footer{
+    background-color: #C7BFFF;
+}
+.card-users img{
+    filter: invert(50%) sepia(18%) saturate(1926%) hue-rotate(206deg) brightness(98%) contrast(91%);
+}
+
+.card-agency .card-footer{
+    background-color: #B4ECE6;
+}
+.card-agency img{
+    filter: invert(42%) sepia(65%) saturate(4474%) hue-rotate(152deg) brightness(90%) contrast(98%);
 }
