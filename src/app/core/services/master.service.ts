@@ -51,7 +51,7 @@ export class MasterService {
 
   getAllCenter(strPara: string) {
     return new Observable((obj) => {
-      this.apiService.setHttp('GET', 'zp-osmanabad/master/GetAllCenter?flag_lang='+strPara, false, false, false, 'baseUrl');
+      this.apiService.setHttp('GET', 'zp-osmanabad/master/GetAllCenterByTalukaId?flag_lang='+strPara, false, false, false, 'baseUrl');
       this.apiService.getHttp().subscribe({
         next: (res: any) => {if (res.statusCode == "200"){ console.log("res",res);obj.next(res)} else { obj.error(res); }},
         error: (e: any) => { obj.error(e) }

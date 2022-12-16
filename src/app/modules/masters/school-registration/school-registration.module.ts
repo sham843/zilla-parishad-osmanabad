@@ -14,8 +14,7 @@ import { SharedModule } from 'src/app/shared/shared.module';
 import { SchoolRegistrationComponent } from './school-registration.component';
 import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
-
-
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -34,7 +33,8 @@ import { MatIconModule } from '@angular/material/icon';
     MatButtonModule,
     MatInputModule,
     SharedModule,
-    MatIconModule
+    MatIconModule,
+    ReactiveFormsModule
   ]
 })
 export class SchoolRegistrationModule { }
