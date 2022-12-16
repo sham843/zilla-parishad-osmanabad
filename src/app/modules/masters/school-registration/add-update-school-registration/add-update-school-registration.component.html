@@ -1,4 +1,4 @@
-<form [formGroup]="schoolRegForm">
+<form [formGroup]="schoolRegForm" (ngSubmit)="onSubmit()">
 <mat-card class="plain-card">
     <mat-card-header class="card-header">
         <div class="d-flex align-items-center justify-content-between w-100">
@@ -70,7 +70,12 @@
             <div class="col-sm">
                 <mat-form-field appearance="outline" class="w-100">
                     <mat-label>School Type Description</mat-label>
-                    <input matInput placeholder="Item ID">
+                    <!-- <input matInput placeholder="Item ID"> -->
+                    <mat-select formControlName="s_TypeId">
+                        <mat-option *ngFor="let schoolType of schoolTypeArr" [value]="schoolType.id">
+                            {{schoolType.schoolType}}
+                        </mat-option>
+                    </mat-select>
                 </mat-form-field>
             </div>
             <div class="col-sm">
@@ -84,21 +89,21 @@
                 </mat-form-field>
             </div>
             <div class="col-sm">
-                <mat-form-field appearance="outline" class="w-100 ">
-                    <mat-label>Upload Photo</mat-label>
-                    <input matInput>
+                <!-- <mat-form-field appearance="outline" class="w-100 "> -->
+                    <!-- <mat-label>Upload Photo</mat-label>
+                    <input type="file" hidden="hidden" (change)="imgUpload($event)" #img>
                     <mat-icon matSuffix>
-                        <span class="material-symbols-outlined">
+                        <span class="material-symbols-outlined" (click)="img.click()">
                         upload
                         </span>
-                    </mat-icon>
-                  </mat-form-field>
+                    </mat-icon> -->
+                  <!-- </mat-form-field> -->
             </div>
         </div>
     </mat-card-content>
     <mat-card-footer>
         <mat-card-actions align="end" >
-            <button  mat-flat-button class="btn-second me-2">Cancel</button>
+            <button  mat-flat-button class="btn-second me-2" type="button">Cancel</button>
             <button mat-flat-button class="btn-main">Submit</button>
         </mat-card-actions>
     </mat-card-footer>

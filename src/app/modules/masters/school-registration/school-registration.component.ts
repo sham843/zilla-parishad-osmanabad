@@ -3,6 +3,7 @@ import { FormControl } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { ApiService } from 'src/app/core/services/api.service';
 import { ErrorsService } from 'src/app/core/services/errors.service';
+import { MasterService } from 'src/app/core/services/master.service';
 import { AddUpdateSchoolRegistrationComponent } from './add-update-school-registration/add-update-school-registration.component';
 
 @Component({
@@ -13,11 +14,18 @@ import { AddUpdateSchoolRegistrationComponent } from './add-update-school-regist
 export class SchoolRegistrationComponent {
   pageNumber: number = 1;
   searchContent = new FormControl('');
-  
-  constructor(private dialog : MatDialog, private apiService : ApiService, private errors : ErrorsService, ) { }
+  districtId = new FormControl();
+  talukaId = new FormControl('');
+
+  districtArr = new Array();
+  talukaArr = new Array();
+
+  constructor(private dialog : MatDialog, private apiService : ApiService, private errors : ErrorsService,
+    private masterService : MasterService ) { }
 
   ngOnInit() {
-    this.getTableData()
+    this.getTableData();
+    this.getDistrict();
   }
 
   onPagintion(pageNo: number) {
@@ -30,7 +38,7 @@ export class SchoolRegistrationComponent {
     let tableDataArray = new Array();
     let tableDatasize!: Number;
 
-    let str = `?pageno=${this.pageNumber}&pagesize=10&DistrictId=1&TalukaId=1&VillageId=1`;
+    let str = `?pageno=${this.pageNumber}&pagesize=10`;
     this.apiService.setHttp('GET', 'ZP-Osmanabad/School/GetAllSchoolByPagination' + str, false, false, false, 'baseUrl');
     this.apiService.getHttp().subscribe({
 
@@ -58,6 +66,10 @@ export class SchoolRegistrationComponent {
   }
 
   childCompInfo(_obj: any) {
+    console.log(_obj);
+    
+    this.addUpdateAgency(_obj);
+    
     // switch (obj.label) {
     //   case 'Pagination':
     //     this.pageNumber = obj.pageNumber;
@@ -72,14 +84,38 @@ export class SchoolRegistrationComponent {
     // }
   }
 
-  addUpdateAgency() {
-    let obj: any;
+  addUpdateAgency(obj ?: any) {
+    // let obj: any;
     this.dialog.open(AddUpdateSchoolRegistrationComponent, {
       width:'820px',
       data: obj,
       disableClose: true,
       autoFocus: false
-    })
+    });
   }
+
+  getDistrict() {
+    this.masterService.getAllDistrict('EN').subscribe({
+      next: (res: any) => {
+        if (res.statusCode == 200) {
+          this.districtArr = res.responseData;
+        }
+      },
+      error: ((err: any) => { this.errors.handelError(err) })
+    });
+  }
+
+  getTaluka() {
+    this.masterService.getAllTaluka('1').subscribe({
+      next: (res: any) => {
+        if (res.statusCode == 200) {
+          this.talukaArr = res.responseData;
+        }
+      },
+      error: ((err: any) => { this.errors.handelError(err) })
+    });
+  }
+
+  
 
 }
