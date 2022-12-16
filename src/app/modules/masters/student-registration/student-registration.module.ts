@@ -14,6 +14,7 @@ import {MatDatepickerModule} from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import {MatMenuModule} from '@angular/material/menu';
 import { SharedModule } from 'src/app/shared/shared.module';
+import { MatIconModule } from '@angular/material/icon';
 
 @NgModule({
   declarations: [
@@ -32,7 +33,8 @@ import { SharedModule } from 'src/app/shared/shared.module';
     MatDatepickerModule,
     MatNativeDateModule,
     MatMenuModule,
-    SharedModule
+    SharedModule,
+    MatIconModule
   ]
 })
 export class StudentRegistrationModule { }

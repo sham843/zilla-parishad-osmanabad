@@ -11,9 +11,9 @@
             <span class="text-main">Designation Master</span>
             <div class="d-flex gap-2">
                 <button mat-flat-button class="btn-main btn-icon" [matMenuTriggerFor]="menu">
-                    <span class="material-symbols-outlined">
+                    <mat-icon>
                         download
-                        </span>
+                    </mat-icon>
                 </button>
                 <mat-menu #menu="matMenu" xPosition="before">
                     <button mat-menu-item>
@@ -28,8 +28,12 @@
                             <i class='bx bxs-file text-primary'></i>
                         </div>
                     </button>
-                  </mat-menu>
-                <button mat-flat-button class="btn-main" (click)="addUpdateAgency()">Add Designation</button>
+                </mat-menu>
+                <button mat-flat-button class="btn-main" (click)="addUpdateAgency()">
+                    <mat-icon>
+                        add
+                    </mat-icon>
+                    Add Designation</button>
             </div>
         </div>
     </mat-card-header>
@@ -38,11 +42,11 @@
             <mat-form-field appearance="outline" class="w-100">
                 <mat-label>Favorite food</mat-label>
                 <mat-select [formControl]="searchContent">
-                  <mat-option *ngFor="let food of foods" [value]="food.value">
-                    {{food.viewValue}}
-                  </mat-option>
+                    <mat-option *ngFor="let food of foods" [value]="food.value">
+                        {{food.viewValue}}
+                    </mat-option>
                 </mat-select>
-              </mat-form-field>
+            </mat-form-field>
             <button (click)="getTableData('filter')" mat-flat-button class="btn-main">Filter</button>
         </div>
     </mat-card-header>
