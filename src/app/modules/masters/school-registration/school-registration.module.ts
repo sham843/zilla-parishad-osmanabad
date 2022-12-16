@@ -13,6 +13,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { SchoolRegistrationComponent } from './school-registration.component';
 import { MatInputModule } from '@angular/material/input';
+import { MatIconModule } from '@angular/material/icon';
 
 
 
@@ -32,7 +33,8 @@ import { MatInputModule } from '@angular/material/input';
     MatMenuModule,
     MatButtonModule,
     MatInputModule,
-    SharedModule
+    SharedModule,
+    MatIconModule
   ]
 })
 export class SchoolRegistrationModule { }

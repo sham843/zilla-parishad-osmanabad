@@ -1,12 +1,13 @@
-<mat-card>
-   
-    <mat-card-header class="mb-2 d-flex justify-content-between">
-        Register Student
-        <button mat-icon-button mat-dialog-close>
-            <span class="material-symbols-outlined">
-                close
-            </span>
-        </button>
+<mat-card class="plain-card">
+    <mat-card-header class="card-header">
+        <div class="d-flex align-items-center justify-content-between w-100">
+            <h6 class="text-main mb-0">Register Student</h6>
+            <button mat-icon-button mat-dialog-close class="btn-modal-close">
+                <mat-icon>
+                    close
+                </mat-icon>
+            </button>
+        </div>
     </mat-card-header>
     <mat-card-content>
         <h6 class="mb-3">Student Details</h6>
@@ -20,7 +21,7 @@
                     </mat-select>
                 </mat-form-field> -->
 
-                <mat-form-field appearance="outline" class="w-100 " >
+                <mat-form-field appearance="outline" class="w-100 ">
                     <mat-label>District</mat-label>
                     <mat-select placeholder="select">
                         <mat-option value="one">First option</mat-option>
@@ -175,7 +176,7 @@
             </div>
         </div>
     </mat-card-content>
-    <mat-card-footer class="text-end p-3">
+    <mat-card-footer class="card-footer">
         <button class="btn btn-outline-secondary me-2">Cancel</button>
         <button class="btn btn-main ">Submit</button>
     </mat-card-footer>
