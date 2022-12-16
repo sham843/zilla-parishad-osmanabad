@@ -14,6 +14,7 @@ const routes: Routes = [
 { path: 'teacher-registration', loadChildren: () => import('./modules/masters/teacher-registration/teacher-registration.module').then(m => m.TeacherRegistrationModule), canActivate: [AuthGuard], data: { breadcrumb: [{ title: 'Teacher Registration', active: true }]}},
 { path: 'office-users', loadChildren: () => import('./modules/masters/office-users/office-users.module').then(m => m.OfficeUsersModule), canActivate: [AuthGuard], data: { breadcrumb: [{ title: 'Office Users', active: true }]}},
 { path: 'page-right-access', loadChildren: () => import('./modules/settings/page-right-access/page-right-access.module').then(m => m.PageRightAccessModule), canActivate: [AuthGuard], data: { breadcrumb: [{ title: 'Page Right Access', active: true }]}},
+{ path: 'forgot-password', loadChildren: () => import('./modules/forgot-password/forgot-password.module').then(m => m.ForgotPasswordModule) },
 ]
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
