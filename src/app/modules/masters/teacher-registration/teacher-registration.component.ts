@@ -45,6 +45,7 @@ childCompInfo(_obj: any) {
     let obj: any;
     this.dialog.open(AddUpdateTeacherRegistrationComponent, {
       width: '820px',
+      height:'700px',
       data: obj,
       disableClose: true,
       autoFocus: false
