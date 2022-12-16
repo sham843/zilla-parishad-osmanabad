@@ -1,0 +1,52 @@
+
+
+// .logos {
+//     background-color: var(--main-color);
+//     padding: 20px;
+//     border-top-left-radius: 30px;
+//     border-bottom-left-radius: 30px;
+// }
+
+
+
+.login-body .image-holder {
+  display: table-cell;
+    width: 310px;
+    height: 88vh;
+    background-color: cadetblue;
+}
+
+.login-body .login-width {
+    display: table;
+    width: 100%;
+    margin: 0 auto;
+   
+}
+
+.login-body .form-width {
+    display: table-cell;
+    width: 0px;
+    background-color: #ffffff;
+    padding: 10px 60px;
+   
+}
+.form-body{
+    margin-top: 100px;
+    padding: 10px 210px;
+}
+
+@media only screen and (max-width: 767px) {
+
+    .form-body{
+        margin-top: 100px;
+        padding: 10px 10px;
+    }
+    .login-body .form-width {
+        display: table-cell;
+        width: 400px;
+        background-color: #ffffff;
+        padding: 12px 12px;
+        color: #505e6c;
+    }
+    
+}
