@@ -37,4 +37,6 @@ import { MatIconModule } from '@angular/material/icon';
     MatIconModule
   ]
 })
-export class StudentRegistrationModule { }
+export class StudentRegistrationModule {
+  
+ }

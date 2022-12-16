@@ -19,7 +19,7 @@ import { HttpClientModule } from '@angular/common/http';
     BrowserAnimationsModule,
     NgxSpinnerModule,
     ReactiveFormsModule,
-    HttpClientModule 
+    HttpClientModule ,
   ],
   schemas:[CUSTOM_ELEMENTS_SCHEMA],
   providers: [],
