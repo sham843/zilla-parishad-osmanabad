@@ -25,14 +25,14 @@
                 </th>
                 <td mat-cell *matCellDef="let element let i=index">
                     <button mat-icon-button (click)="action(element, 'Edit', i)">
-                        <span class="material-symbols-outlined text-main">
+                        <mat-icon class="text-main">
                             edit
-                        </span>
+                        </mat-icon>
                     </button>
                     <button mat-icon-button (click)="action(element, 'Delete')">
-                        <span class="material-symbols-outlined text-danger">
+                        <mat-icon class="text-danger">
                             delete
-                        </span>
+                        </mat-icon>
                     </button>
                 </td>
             </ng-container>
