@@ -101,18 +101,6 @@ export class StudentRegistrationComponent {
       this.getTableData()
     } else if (label == 'Card')
       this.cardViewFlag = true;
-    let cardTitle = ['School Name', "Mobile No", "Gender"];
-    let arrayOfStuData = new Array();
-    this.tableDataForcard.tableData.find((ele: any) => {
-      let getStudantData = {
-        name: ele?.schoolName,
-        mobileNo: ele?.parentMobileNo,
-        gender: ele?.gender,
-      }
-      arrayOfStuData.push(getStudantData);
-    })
-    this.tableDataForcard.tableData = arrayOfStuData;
-    this.tableDataForcard.cardTitle = cardTitle;
     this.apiService.DataForGrid.next(this.tableDataForcard);
   }
 }
