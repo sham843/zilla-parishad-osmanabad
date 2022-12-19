@@ -99,4 +99,13 @@ export class CommonMethodsService {
     doc.save(objData.topHedingName);
   }
 
+
+  getkeyValueByArrayOfObj(array: any, key: string, val: any) {
+    let res = array.find((ele: any) => {
+      if (ele[key] == val) {
+        return ele
+      }
+    })
+    return res
+  }
 }
