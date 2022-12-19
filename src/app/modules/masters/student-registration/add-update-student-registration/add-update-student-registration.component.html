@@ -62,11 +62,13 @@
                 </mat-form-field>
             </div>
             <div class="col-sm-4">
+                <input type="file" id="real-file" (change)="fileUpload($event,'img')" hidden="hidden"
+                                    #uploadImage />
                 <mat-form-field appearance="outline" class="w-100 ">
                     <mat-label>Upload Photo</mat-label>
                     <input matInput>
                     <mat-icon matSuffix>
-                        <span class="material-symbols-outlined">
+                        <span class="material-symbols-outlined" (click)="uploadImage.click()">
                             upload
                         </span>
                     </mat-icon>
@@ -74,7 +76,7 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-sm-4">
+            <div class="col-sm-4">                
                 <mat-form-field appearance="outline" class="w-100 ">
                     <mat-label>Standard</mat-label>
                     <mat-select placeholder="select" formControlName="standard">
@@ -115,11 +117,13 @@
                 </mat-form-field>
             </div>
             <div class="col-sm-4">
+                <input type="file" id="real-file" (change)="fileUpload($event,'aadhar')" hidden="hidden"
+                                    #uploadAadhar />
                 <mat-form-field appearance="outline" class="w-100 ">
                     <mat-label>Aadhar ID</mat-label>
                     <input matInput >
                     <mat-icon matSuffix>
-                        <span class="material-symbols-outlined">
+                        <span class="material-symbols-outlined" (click)="uploadAadhar.click()">
                             upload
                         </span>
                     </mat-icon>
