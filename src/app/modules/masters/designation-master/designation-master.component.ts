@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { ApiService } from 'src/app/core/services/api.service';
+import { CommonMethodsService } from 'src/app/core/services/common-methods.service';
 import { ErrorsService } from 'src/app/core/services/errors.service';
 import { MasterService } from 'src/app/core/services/master.service';
 import { GlobalDialogComponent } from 'src/app/shared/components/global-dialog/global-dialog.component';
@@ -16,25 +17,42 @@ export class DesignationMasterComponent {
   searchContent = new FormControl('');
   id:any;
   designationArray:any;
+  DesiganationTypeArray:any;
+  deleteObj:any;
 
   constructor(private dialog: MatDialog, private apiService: ApiService, private errors: ErrorsService,
-    private masterService:MasterService) { }
+    private masterService:MasterService, private service: ApiService ,private commonMethod: CommonMethodsService,
+    private errorHandler: ErrorsService) { }
 
   ngOnInit() {
     this.getTableData()
     this.getDesignationData();
+    
   }
 
 getDesignationData(){
   this.masterService.GetAllDesignationLevel('EN').subscribe({
     next: ((res: any) => {
       if (res.statusCode == '200' && res.responseData.length) {
-        this.designationArray= res.responseData;
-        console.log("this.designationArray",res.responseData);               
+        this.designationArray= res.responseData;          
+        this.getDesiganationType();             
       }
-    })             
-    
+    })       
   })
+}
+
+getDesiganationType() {  
+let desigLevelId = this.designationArray?.find((res:any)=>{
+    return res;    
+  })
+  this.masterService.GetDesignationByLevelId('EN', desigLevelId.id).subscribe({
+    next: ((res: any) => {
+      if (res.statusCode == '200' && res.responseData.length) {
+        this.DesiganationTypeArray = res.responseData;              
+      }
+    })
+  })
+ 
 }
   onPagintion(pageNo: number) {
     this.pageNumber = pageNo;
@@ -84,16 +102,19 @@ getDesignationData(){
       case 'Edit' || 'Delete':        
         this.addUpdateAgency(obj);       
         break;
-      case 'Block':
-        this.globalDialogOpen();
+      // case 'Block':
+      //   this.globalDialogOpen();
+      //   break;
+      case 'Delete':
+        this.globalDialogOpen(obj);
         break;
     }
   }
 
   //#region -------------------------------------------dialog box open function's start heare----------------------------------------//
   addUpdateAgency(obj?: any) {   
-    debugger;
-    const dialogRef= this.dialog.open(AddUpdateDesignationMasterComponent, {
+    
+    const dialogRef = this.dialog.open(AddUpdateDesignationMasterComponent, {
       width: '420px',
       data: obj,
       disableClose: true,
@@ -113,13 +134,51 @@ getDesignationData(){
     });
   }
 
-  globalDialogOpen() {
-    this.dialog.open(GlobalDialogComponent, {
+  globalDialogOpen(obj:any) {
+    this.deleteObj = obj;
+    let dialoObj = {
+      header: 'Delete',
+      title: 'Do You Want To Delete The Selected Content ?',
+      cancelButton: 'Cancel',
+      okButton: 'Ok'
+    }
+    const deleteDialogRef = this.dialog.open(GlobalDialogComponent, {
       width: '320px',
-      data: '',
+      data: dialoObj,
       disableClose: true,
       autoFocus: false
     })
-  }
+    deleteDialogRef.afterClosed().subscribe((result: any) => {
+     
+      if(result == 'yes'){
+       
+        this.onClickDelete();
+      }
+  })
+}
   //#endregion -------------------------------------------dialog box open function's end heare----------------------------------------//
+
+  onClickDelete(){   
+     let deleteObj=  [{
+      "id": this.deleteObj.id,
+      "deletedBy": 0,
+      "modifiedDate": new Date(),
+      "lan": "EN"
+    }]
+
+    this.service.setHttp('delete', 'zp_osmanabad/designation-master/Delete', false, deleteObj, false, 'baseUrl');
+    this.service.getHttp().subscribe({
+      next: ((res: any) => {
+        if (res.statusCode == '200') {
+          this.commonMethod.snackBar(res.statusMessage, 0);
+          // this.clearForm();
+          this.getTableData();
+        }
+      }),
+      error: (error: any) => {
+        this.commonMethod.checkEmptyData(error.statusText) == false ? this.errorHandler.handelError(error.statusCode) : this.commonMethod.snackBar(error.statusText, 1);
+      }
+    })
+  }
+
 }
