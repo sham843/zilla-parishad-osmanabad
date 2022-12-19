@@ -15,6 +15,7 @@ import { OfficeUsersComponent } from './office-users.component';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { MatIconModule } from '@angular/material/icon';
 import {MatMenuModule} from '@angular/material/menu';
+import { ReactiveFormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -35,8 +36,9 @@ import {MatMenuModule} from '@angular/material/menu';
     MatNativeDateModule,
     SharedModule,
     MatIconModule,
-    MatMenuModule
-    
+    MatMenuModule,
+    ReactiveFormsModule
+
 
 
   ]

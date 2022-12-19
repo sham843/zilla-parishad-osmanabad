@@ -46,7 +46,7 @@
       <div class="col-sm-3">
         <mat-form-field appearance="outline" class="w-100">
           <mat-label>Search by Name</mat-label>
-          <input matInput placeholder="Search by Name">
+          <input matInput placeholder="Search by Name" [formControl]="searchContent">
 
         </mat-form-field>
       </div>
@@ -57,13 +57,17 @@
 
         </mat-form-field>
       </div>
-      <div class="col-sm-3">
+      <!-- <div class="col-sm-3">
         <mat-form-field appearance="outline" class="w-100">
           <mat-label>Search by Email</mat-label>
           <input matInput placeholder="Search by Email">
-
         </mat-form-field>
-      </div>
+      </div> -->
+
+      <div class="col-sm-4">
+        <button mat-flat-button class="btn-main" (click)="getTableData()">Filter</button>
+        <button  mat-flat-button class="btn-main ms-3" (click)="clearFilterData()">clear</button>
+    </div>
 
     </div>
   </mat-card-header>

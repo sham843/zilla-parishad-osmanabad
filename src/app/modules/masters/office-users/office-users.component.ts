@@ -30,8 +30,7 @@ export class OfficeUsersComponent {
     this.pageNumber = flag == 'filter' ? 1 : this.pageNumber;
     let tableDataArray = new Array();
     let tableDatasize!: Number;
-
-    let str = `?pageno=${this.pageNumber}&pagesize=10&TextSearch=`;
+    let str = `?textSearch=${this.searchContent.value}&pageno=${this.pageNumber}&pagesize=10&lan='mr-IN'`;
     this.apiService.setHttp('GET', 'zp_osmanabad/Office/GetAllOffice' + str, false, false, false, 'baseUrl');
     this.apiService.getHttp().subscribe({
 
@@ -56,7 +55,6 @@ export class OfficeUsersComponent {
       },
       error: ((err: any) => { this.errors.handelError(err) })
     });
-
   }
 
   addUpdateAgency() {
@@ -79,6 +77,13 @@ export class OfficeUsersComponent {
         // this.addUpdateAgency(obj);
         break;    
     }
+  }
+
+
+
+  clearFilterData(){
+    this.searchContent.setValue('');
+    this.getTableData();
   }
 
 
