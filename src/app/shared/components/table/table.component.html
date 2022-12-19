@@ -38,7 +38,7 @@
             </ng-container>
         </ng-container>
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-        <tr mat-row *matRowDef="let row; columns: displayedColumns; let i=index" [ngClass]="{'bg-danger ':highlightedRow == i}"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns; let i=index" [ngClass]="{'highlightedRow ':highlightedRow == i}"></tr>
     </table>
 </div>
 <mat-paginator *ngIf="tableInfo?.tableData?.length!=0 && tableInfo?.pagintion" showFirstLastButtons [length]="tableSize"
