@@ -18,7 +18,7 @@
                     <mat-label>Designation Level</mat-label>
                     <mat-select  formControlName="designationLevelId"
                     (selectionChange)="getDesiganationType()">
-                        <mat-option *ngFor="let designation of DesiganationLevelData" [value]="designation.id">{{designation.designationLevel}}</mat-option>
+                        <mat-option *ngFor="let designation of DesiganationLevelData" [value]="designation.designationLevel">{{designation.designationLevel}}</mat-option>
                         <!-- <mat-option value="two">option-2</mat-option> -->
                     </mat-select>
                 </mat-form-field>
@@ -27,7 +27,7 @@
                 <mat-form-field appearance="outline" class="w-100 ">
                     <mat-label>Designation Type</mat-label>
                     <mat-select  formControlName="designationType">
-                        <mat-option *ngFor="let designationType of DesiganationTypeData" [value]="designationType.id">{{designationType.designationType}}</mat-option>
+                        <mat-option *ngFor="let designationType of DesiganationTypeData" [value]="designationType.designationLevel">{{designationType.designationType}}</mat-option>
                         <!-- <mat-option value="two">option-2</mat-option> -->
                     </mat-select>
                 </mat-form-field>
@@ -44,17 +44,20 @@
                 </mat-form-field>
             </div> -->
             <div class="col-sm">
-                <mat-form-field appearance="outline" class="w-100 ">
-                    <mat-label>Add Designation</mat-label>
-                    <input matInput placeholder="Search by Contact" formControlName="designationType">
-                </mat-form-field>
+                <ng-container *ngIf="DesiganationTypeData == []">
+                    <mat-form-field appearance="outline" class="w-100 ">
+                        <mat-label>Add Designation</mat-label>
+                        <input matInput placeholder="Search by Contact" formControlName="designationType">
+                    </mat-form-field>
+                </ng-container>
+               
             </div>
         </div>
     </mat-card-content>
     <mat-card-footer class="card-footer">
         <mat-card-actions align="end">
             <button mat-flat-button class="btn-second me-2">Cancel</button>
-            <button mat-flat-button class="btn-main">Submit</button>
+            <button mat-flat-button class="btn-main"> {{editFlag ? 'Update' :'Submit'}}</button>
         </mat-card-actions>
     </mat-card-footer>
 </mat-card>
