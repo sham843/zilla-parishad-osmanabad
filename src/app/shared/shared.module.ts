@@ -12,6 +12,7 @@ import { PageStatisticsComponent } from './components/page-statistics/page-stati
 import {MatIconModule} from '@angular/material/icon';
 import { MatCardModule } from '@angular/material/card';
 import { CardGridViewComponent } from './components/card-grid-view/card-grid-view.component';
+import { MatMenuModule } from '@angular/material/menu';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,7 @@ import { CardGridViewComponent } from './components/card-grid-view/card-grid-vie
     MatButtonModule,
     MatIconModule,
     MatCardModule,
-    
+    MatMenuModule
   ],
   exports: [TableComponent, PageStatisticsComponent,CardGridViewComponent]
 })
