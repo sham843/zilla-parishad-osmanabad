@@ -19,8 +19,7 @@ export class StudentRegistrationComponent {
   constructor(private dialog: MatDialog, private apiService : ApiService, private errors : ErrorsService) { }
 
   ngOnInit() {
-    this.getTableData()
-    
+    this.getTableData();
   }
 
   onPagintion(pageNo: number) {

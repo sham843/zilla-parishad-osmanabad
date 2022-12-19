@@ -41,7 +41,9 @@ getTableData(flag?: string) {
   this.pageNumber = flag == 'filter' ? 1 : this.pageNumber;
   let tableDataArray = new Array();
   let tableDatasize!: Number;
-  let str = `?pageno=${this.pageNumber}&pagesize=10&TextSearch=${this.searchContent}&lan='mr-IN'}`;
+  // let str = `?pageno=${this.pageNumber}&pagesize=10&TextSearch=${this.searchContent}&lan='mr-IN'`;
+  let str = `?pageno=${this.pageNumber}&pagesize=10&TextSearch=${this.searchContent.value}&lan=mr-IN`;
+
   this.apiService.setHttp('GET', 'zp_osmanabad/Teacher/GetAllTeacher' + str, false, false, false, 'baseUrl');
   this.apiService.getHttp().subscribe({
 
@@ -68,18 +70,18 @@ getTableData(flag?: string) {
   });
 }
 childCompInfo(_obj: any) {
-  // switch (obj.label) {
-  //   case 'Pagination':
-  //     this.pageNumber = obj.pageNumber;
-  //     this.getTableData();
-  //     break;
-  //   case 'Edit' || 'Delete':
-  //     this.addUpdateAgency(obj);
-  //     break;
-  //   case 'Block':
-  //     this.globalDialogOpen();
-  //     break;
-  // }
+  switch (_obj.label) {
+    case 'Pagination':
+      this.pageNumber = _obj.pageNumber;
+      this.getTableData();
+      break;
+    // case 'Edit' || 'Delete':
+    //   this.addUpdateAgency(_obj);
+    //   break;
+    // case 'Block':
+    //   this.globalDialogOpen();
+    //   break;
+  }
 }
   
   addUpdateAgency() {
@@ -91,5 +93,14 @@ childCompInfo(_obj: any) {
       disableClose: true,
       autoFocus: false
     })
+  }
+
+  onFilterClick(){
+    this.getTableData();
+  }
+
+  clearFilterData(){
+    this.searchContent.setValue('');
+    this.getTableData();
   }
 }

@@ -8,7 +8,7 @@ import { MatSort } from '@angular/material/sort';
 @Component({
   selector: 'app-table',
   templateUrl: './table.component.html',
-  styleUrls: ['./table.component.scss']
+  styleUrls: ['./table.component.scss'],
 })
 export class TableComponent implements OnInit {
   @Output() recObjToChild = new EventEmitter<any>();
