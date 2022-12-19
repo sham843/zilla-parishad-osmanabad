@@ -12,12 +12,10 @@ import { AddUpdateStudentRegistrationComponent } from './add-update-student-regi
 export class StudentRegistrationComponent {
   pageNumber: number = 1;
   searchContent = new FormControl('');
-  viewFlags = {
-    "table": true,
-    "grid": false
-  }
-  tableDataForcard= new Array();
-  constructor(private dialog: MatDialog, private apiService : ApiService, private errors : ErrorsService) { }
+  tableDataForcard: any;
+  cardViewFlag: boolean = false;
+
+  constructor(private dialog: MatDialog, private apiService: ApiService, private errors: ErrorsService) { }
 
   ngOnInit() {
     this.getTableData();
@@ -41,13 +39,12 @@ export class StudentRegistrationComponent {
         if (res.statusCode == "200") {
           tableDataArray = res.responseData.responseData1;
           tableDatasize = res.responseData.responseData2.pageCount;
-          this.tableDataForcard = tableDataArray;
         } else {
           tableDataArray = [];
           tableDatasize = 0;
         }
-        let displayedColumns = ['docPath','srNo', 'fullName', 'standard', 'parentMobileNo', 'gender', 'action'];
-        let displayedheaders = ['#','Sr. No', 'Name', 'Standard', 'Parents Contact No.','Gender','action'];
+        let displayedColumns = ['docPath', 'srNo', 'fullName', 'standard', 'parentMobileNo', 'gender', 'action'];
+        let displayedheaders = ['#', 'Sr. No', 'Name', 'Standard', 'Parents Contact No.', 'Gender', 'action'];
         let tableData = {
           pageNumber: this.pageNumber,
           img: 'docPath', blink: '', badge: '', isBlock: '', pagintion: true,
@@ -55,9 +52,14 @@ export class StudentRegistrationComponent {
           tableSize: tableDatasize,
           tableHeaders: displayedheaders
         };
+
+        this.tableDataForcard = {
+          pageNumber: this.pageNumber,
+          tableData: tableDataArray,
+          tableSize: tableDatasize,
+        };
         this.apiService.tableData.next(tableData);
-        console.log("tableData", tableData);
-        
+
       },
       error: ((err: any) => { this.errors.handelError(err) })
     });
@@ -73,7 +75,7 @@ export class StudentRegistrationComponent {
     })
   }
 
-  childCompInfo(obj: any) {
+  childTableCompInfo(obj: any) {
     switch (obj.label) {
       case 'Pagination':
         this.pageNumber = obj.pageNumber;
@@ -81,21 +83,36 @@ export class StudentRegistrationComponent {
         break;
       case 'Edit' || 'Delete':
         // this.addUpdateAgency(obj);
-        break;    
+        break;
     }
   }
 
-  loadGridView(){
-    this.viewFlags.grid = true 
-    this.viewFlags.table = false
-    console.log("isGridView",this.viewFlags);
+  childGridCompInfo(obj: any) {
+    if (obj.label = 'Pagination') {
+      this.pageNumber = obj.pageNumber;
+      this.getTableData();
+    }
+
   }
 
-
-  loadtableView(){
-    this.viewFlags.table = true
-    this.viewFlags.grid = false;
-    this.getTableData()
-
+  selectGrid(label: string) {
+    if (label == 'Table') {
+      this.cardViewFlag = false;
+      this.getTableData()
+    } else if (label == 'Card')
+      this.cardViewFlag = true;
+    let cardTitle = ['School Name', "Mobile No", "Gender"];
+    let arrayOfStuData = new Array();
+    this.tableDataForcard.tableData.find((ele: any) => {
+      let getStudantData = {
+        name: ele?.schoolName,
+        mobileNo: ele?.parentMobileNo,
+        gender: ele?.gender,
+      }
+      arrayOfStuData.push(getStudantData);
+    })
+    this.tableDataForcard.tableData = arrayOfStuData;
+    this.tableDataForcard.cardTitle = cardTitle;
+    this.apiService.DataForGrid.next(this.tableDataForcard);
   }
 }
