@@ -67,6 +67,7 @@ export class AddUpdateAgencyRegistrationComponent {
 
   onCancel(clear:any) {
     clear.resetForm();
+    this.data = '';
     this.defaultForm();
   }
 
