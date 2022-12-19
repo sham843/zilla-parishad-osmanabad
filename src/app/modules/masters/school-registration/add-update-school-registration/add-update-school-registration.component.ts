@@ -1,5 +1,5 @@
 import { Component, Inject } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ApiService } from 'src/app/core/services/api.service';
 import { CommonMethodsService } from 'src/app/core/services/common-methods.service';
@@ -24,6 +24,7 @@ export class AddUpdateSchoolRegistrationComponent {
   schoolRegForm !: FormGroup;
   uploadImg: any;
   editFlag: boolean = false;
+  schoolDocument!: FormArray;
 
   constructor(private masterService: MasterService, private errors: ErrorsService, private fb: FormBuilder, private fileUpload: FileUploadService,
     private apiService: ApiService, private commonMethod: CommonMethodsService, @Inject(MAT_DIALOG_DATA) public data: any,) { }
@@ -37,17 +38,23 @@ export class AddUpdateSchoolRegistrationComponent {
     }
   }
 
+  get f() {
+    return this.schoolRegForm.controls;
+  }
+
+
+
   formFeild() {
     this.schoolRegForm = this.fb.group({
       "createdBy": 0,
       "modifiedBy": 0,
       "createdDate": new Date(),
       "modifiedDate": new Date(),
-      "isDeleted": true,
+      "isDeleted": false,
       "id": 0,
       "schoolName": [''],
-      "m_SchoolName": [''],
-      "stateId": [''],
+      "m_SchoolName": "string",
+      "stateId": 1,
       "districtId": [''],
       "talukaId": [''],
       "villageId": [''],
@@ -56,22 +63,32 @@ export class AddUpdateSchoolRegistrationComponent {
       "s_ManagementId": [''],
       "s_TypeId": [''],
       "g_ClassId": [''],
-      "uploadImage": [''],
-      "lan": ['EN'],
-      "schoolDocument": [
-        {
-          "createdBy": 0,
-          "modifiedBy": 0,
-          "createdDate": "2022-12-19T06:18:01.268Z",
-          "modifiedDate": "2022-12-19T06:18:01.268Z",
-          "isDeleted": true,
-          "id": 0,
-          "schoolId": 0,
-          "documentId": 3,
-          "docPath": "string"
-        }
-      ]
+      "lan": "string",
+      "localID": 0,
+      "lowestClass": 0,
+      "highestClass": 0,
+      "timesStamp": new Date(),
+      schoolDocument: this.fb.array([
+        this.getGroup()
+      ])
+    });
+  }
+  getGroup(): FormGroup {
+    return this.fb.group({
+      "createdBy": 0,
+      "modifiedBy": 0,
+      "createdDate": new Date(),
+      "modifiedDate": new Date(),
+      "isDeleted": true,
+      "id": 0,
+      "schoolId": 0,
+      "documentId": 3,
+      "docPath": ['']
     })
+  }
+
+  get docForm(): FormArray {
+    return this.schoolRegForm.get('schoolDocument') as FormArray;
   }
 
   getDistrict() {
@@ -79,10 +96,15 @@ export class AddUpdateSchoolRegistrationComponent {
       next: (res: any) => {
         if (res.statusCode == 200) {
           this.districtArr = res.responseData;
+          if (this.editFlag == true) {
+            this.f['districtId'].setValue(this.data.districtId);
+            this.getTaluka();
+          }
         }
       },
       error: ((err: any) => { this.errors.handelError(err) })
     });
+
   }
 
   getTaluka() {
@@ -90,6 +112,10 @@ export class AddUpdateSchoolRegistrationComponent {
       next: (res: any) => {
         if (res.statusCode == 200) {
           this.talukaArr = res.responseData;
+          if (this.editFlag == true) {
+            this.f['talukaId'].setValue(this.data.talukaId);
+            this.getCenter();
+          }
         }
       },
       error: ((err: any) => { this.errors.handelError(err) })
@@ -101,17 +127,25 @@ export class AddUpdateSchoolRegistrationComponent {
       next: (res: any) => {
         if (res.statusCode == 200) {
           this.centerArr = res.responseData;
+          if (this.editFlag == true) {
+            this.f['centerId'].setValue(this.data.centerId);
+            this.getVillage();
+          }
         }
       },
       error: ((err: any) => { this.errors.handelError(err) })
     });
   }
 
-  getGroupClass() {
-    this.masterService.getAllGroupClass('EN').subscribe({
+  getVillage() {
+    this.masterService.getAllVillage('EN', this.schoolRegForm.value.talukaId).subscribe({
       next: (res: any) => {
         if (res.statusCode == 200) {
-          this.groupclassArr = res.responseData;
+          this.villageArr = res.responseData;
+          if (this.editFlag == true) {
+            this.f['villageId'].setValue(this.data.villageId);
+            this.getSchoolType();
+          }
         }
       },
       error: ((err: any) => { this.errors.handelError(err) })
@@ -123,17 +157,10 @@ export class AddUpdateSchoolRegistrationComponent {
       next: (res: any) => {
         if (res.statusCode == 200) {
           this.schoolTypeArr = res.responseData;
-        }
-      },
-      error: ((err: any) => { this.errors.handelError(err) })
-    });
-  }
-
-  getVillage() {
-    this.masterService.getAllVillage('EN', this.schoolRegForm.value.villageId).subscribe({
-      next: (res: any) => {
-        if (res.statusCode == 200) {
-          this.villageArr = res.responseData;
+          if (this.editFlag == true) {
+            this.f['s_TypeId'].setValue(this.data.s_TypeId);
+            this.getCategoryDes();
+          }
         }
       },
       error: ((err: any) => { this.errors.handelError(err) })
@@ -145,6 +172,10 @@ export class AddUpdateSchoolRegistrationComponent {
       next: (res: any) => {
         if (res.statusCode == 200) {
           this.categoryArr = res.responseData;
+          if (this.editFlag == true) {
+            this.f['s_CategoryId'].setValue(this.data.s_CategoryId);
+            this.getSchoolMngDesc();
+          }
         }
       },
       error: ((err: any) => { this.errors.handelError(err) })
@@ -156,6 +187,24 @@ export class AddUpdateSchoolRegistrationComponent {
       next: (res: any) => {
         if (res.statusCode == 200) {
           this.schoolMngArr = res.responseData;
+          if (this.editFlag == true) {
+            this.f['s_ManagementId'].setValue(this.data.s_ManagementId);
+            this.getGroupClass();
+          }
+        }
+      },
+      error: ((err: any) => { this.errors.handelError(err) })
+    });
+  }
+
+  getGroupClass() {
+    this.masterService.getAllGroupClass('EN').subscribe({
+      next: (res: any) => {
+        if (res.statusCode == 200) {
+          this.groupclassArr = res.responseData;
+          if (this.editFlag == true) {
+            this.f['g_ClassId'].setValue(this.data.g_ClassId);
+          }
         }
       },
       error: ((err: any) => { this.errors.handelError(err) })
@@ -165,23 +214,43 @@ export class AddUpdateSchoolRegistrationComponent {
   imgUpload(event: any) {
     this.fileUpload.uploadDocuments(event, 'Upload', 'jpg, jpeg, png').subscribe((res: any) => {
       this.uploadImg = res.responseData;
+      console.log("uploadImg", this.uploadImg);
+
     });
   }
 
   onSubmit() {
     let formValue = this.schoolRegForm.value;
-    formValue.image = this.uploadImg;
+    console.log("formValue : ", formValue);
 
-    this.apiService.setHttp('post', 'ZP-Osmanabad/School/Add', false, formValue, false, 'baseUrl');
-    this.apiService.getHttp().subscribe({
-      next: (res: any) => {
-        // console.log("Post res : ", res);
-        if (res.statusCode == "200") {
-          this.commonMethod.snackBar("Record Added Successfully", 0)
-        }
-      },
-      error: ((err: any) => { this.errors.handelError(err) })
-    });
+    if (this.editFlag == false) {
+    formValue.schoolDocument[0].docPath = this.uploadImg;
+
+      this.apiService.setHttp('post', 'ZP-Osmanabad/School/Add', false, formValue, false, 'baseUrl');
+      this.apiService.getHttp().subscribe({
+        next: (res: any) => {
+          if (res.statusCode == "200") {
+            this.commonMethod.snackBar("Record Added Successfully", 0);
+          }
+        },
+        error: ((err: any) => { this.errors.handelError(err) })
+      });
+    }
+    else {
+      formValue.schoolDocument[0].docPath = this.data.schoolDocument[0].docPath;
+
+      this.apiService.setHttp('put', 'ZP-Osmanabad/School/Update', false, formValue, false, 'baseUrl');
+      this.apiService.getHttp().subscribe({
+        next: (res: any) => {
+          if (res.statusCode == "200") {
+            this.commonMethod.snackBar("Record Update Successfully", 0);
+          }
+        },
+        error: ((err: any) => { this.errors.handelError(err) })
+      });
+
+    }
+
   }
 
   onEdit() {
@@ -194,23 +263,50 @@ export class AddUpdateSchoolRegistrationComponent {
       "isDeleted": false,
       "id": this.data.id,
       "schoolName": this.data.schoolName,
-      "m_SchoolName": [''],
+      "m_SchoolName": "string",
       "stateId": 0,
-      "districtId": this.data.districtId,
-      "talukaId": this.data.talukaId,
-      "villageId": 0,
-      "centerId": this.data.centerId,
-      "s_CategoryId": 0,
-      "s_ManagementId": 0,
-      "s_TypeId": 0,
-      "g_ClassId": this.data.g_ClassId,
-      // "image" : [''],
-      "lan": ['EN']
-    })
+    });
   }
 
-
-
+  clearDropdown(dropdown: string) {
+    console.log(dropdown);
+    if (dropdown == 'Taluka') {
+      this.f['centerId'].setValue('');
+      this.f['villageId'].setValue('');
+      this.f['schoolName'].setValue('');
+      this.f['s_TypeId'].setValue('');
+      this.f['s_CategoryId'].setValue('');
+      this.f['s_ManagementId'].setValue('');
+      this.f['g_ClassId'].setValue('');
+    }
+    else if (dropdown == 'Kendra') {
+      this.f['villageId'].setValue('');
+      this.f['schoolName'].setValue('');
+      this.f['s_TypeId'].setValue('');
+      this.f['s_CategoryId'].setValue('');
+      this.f['s_ManagementId'].setValue('');
+      this.f['g_ClassId'].setValue('');
+    }
+    else if (dropdown == 'Village') {
+      this.f['schoolName'].setValue('');
+      this.f['s_TypeId'].setValue('');
+      this.f['s_CategoryId'].setValue('');
+      this.f['s_ManagementId'].setValue('');
+      this.f['g_ClassId'].setValue('');
+    }
+    else if (dropdown == 'School Type') {
+      this.f['s_CategoryId'].setValue('');
+      this.f['s_ManagementId'].setValue('');
+      this.f['g_ClassId'].setValue('');
+    }
+    else if (dropdown == 'Category Desc') {
+      this.f['s_ManagementId'].setValue('');
+      this.f['g_ClassId'].setValue('');
+    }
+    else if (dropdown == 'Management Desc') {
+      this.f['g_ClassId'].setValue('');
+    }
+  }
 
 
 }
