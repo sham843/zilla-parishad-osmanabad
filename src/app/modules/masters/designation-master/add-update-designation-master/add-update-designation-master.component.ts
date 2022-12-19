@@ -25,7 +25,6 @@ export class AddUpdateDesignationMasterComponent {
 
   ngOnInit() {
     this.formData();
-    // this.data ? this.onClickEdit(this.data) : '';
     !this.data ? this.getDesiganationLevel() : this.onClickEdit(this.data);
   }
 
@@ -56,7 +55,6 @@ export class AddUpdateDesignationMasterComponent {
         this.commonMethod.checkEmptyData(error.statusText) == false ? this.errorHandler.handelError(error.statusCode) : this.commonMethod.snackBar(error.statusText, 1);
       }
     })
-
   }
 
   getDesiganationType() {
@@ -64,34 +62,25 @@ export class AddUpdateDesignationMasterComponent {
     let getDesignationLevelId: any = this.commonMethod.getkeyValueByArrayOfObj(this.DesiganationLevelData, 'designationLevel', getFormVal?.designationLevelId);
     let desigLevelId = getDesignationLevelId?.id
 
-    
     this.masterService.GetDesignationByLevelId(getFormVal.lan, desigLevelId).subscribe({
       next: ((res: any) => {
         if (res.statusCode == '200' && res.responseData.length) {
           this.DesiganationTypeData = res.responseData;
-          // console.log(this.editData, this.DesiganationTypeData)
-          this.editFlag ? (this.designationForm.controls['designationType'].setValue(this.editData.designationLevel), this.getDesiganationType()) : '';
+          this.editFlag ? (this.designationForm.controls['designationType'].setValue(this.editData.designationName)) : '';
         }
       }), error: (error: any) => {
         this.commonMethod.checkEmptyData(error.statusText) == false ? this.errorHandler.handelError(error.statusCode) : this.commonMethod.snackBar(error.statusText, 1);
       }
     })
-    // this.editFlag ? this.designationForm.controls['designationType'].setValue(this.editData.id) : '';
+
   }
   onClickEdit(obj: any) {
     this.editFlag = true;
     this.editData = obj;
-    // console.log("edit", obj);
-
-
     this.designationForm.patchValue({
       id: obj.id,
-      // designationType :obj.designationType
-
     });
-
     this.getDesiganationLevel();
-
   }
   OnSubmit() {
     // let obj={
@@ -103,12 +92,12 @@ export class AddUpdateDesignationMasterComponent {
     //   "lan": ['EN'] , 
     // }
 
+    let getFormVal = this.designationForm.value;
+    let getDesignationLevelId: any = this.commonMethod.getkeyValueByArrayOfObj(this.DesiganationLevelData, 'designationLevel', getFormVal?.designationLevelId);  
+    this.designationForm.value.designationLevelId = getDesignationLevelId.id;
     let postObj = this.designationForm.value;
-    // this.designationForm.value.designationType = postObj.designationType? postObj?.designationType.toString() : '';
-    // console.log("postObj",postObj);
-
+   
     let url;
-
     this.editFlag ? url = 'zp_osmanabad/designation-master/UpdateRecord' : url = 'zp_osmanabad/designation-master/AddDesignation'
     this.service.setHttp(this.editFlag ? 'put' : 'post', url, false, postObj, false, 'baseUrl');
     this.service.getHttp().subscribe({
@@ -116,7 +105,6 @@ export class AddUpdateDesignationMasterComponent {
         // this.ngxspinner.hide();
         if (res.statusCode == '200') {
           this.dialogRef.close('Yes');
-
         } else {
           this.commonMethod.checkEmptyData(res.statusMessage) == false ? this.errorHandler.handelError(res.statusCode) : this.commonMethod.snackBar(res.statusMessage, 1);
         }
@@ -126,6 +114,5 @@ export class AddUpdateDesignationMasterComponent {
         this.commonMethod.checkEmptyData(error.statusMessage) == false ? this.errorHandler.handelError(error.statusCode) : this.commonMethod.snackBar(error.statusMessage, 1);
       }
     })
-
   }
 }

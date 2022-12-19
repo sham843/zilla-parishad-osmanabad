@@ -12,23 +12,21 @@
         </div>
     </mat-card-header>
     <mat-card-content class="card-body">
-
+        <form [formGroup]="officeForm">
         <div class="row">
             <div class="col-sm-4">
                 <mat-form-field appearance="outline" class="w-100 ">
                     <mat-label>Level</mat-label>
-                    <mat-select placeholder="select">
-                        <mat-option value="one">First option</mat-option>
-                        <mat-option value="two">Second option</mat-option>
+                    <mat-select placeholder="select" formControlName="designationLevelId" >
+                        <mat-option [value]="level.id"   *ngFor="let level of levels" (onSelectionChange)="getDesignationByLevelId()">{{level.designationLevel}}</mat-option>
                     </mat-select>
                 </mat-form-field>
             </div>
             <div class="col-sm-4">
                 <mat-form-field appearance="outline" class="w-100 ">
                     <mat-label>Designation (Officer)</mat-label>
-                    <mat-select placeholder="select">
-                        <mat-option value="one">First option</mat-option>
-                        <mat-option value="two">Second option</mat-option>
+                    <mat-select placeholder="select" formControlName="designationId">
+                        <mat-option  [value]="desig.id" *ngFor="let desig of designations">{{desig.designationType}}</mat-option>
                     </mat-select>
                 </mat-form-field>
             </div>
@@ -65,6 +63,7 @@
                 </mat-form-field>
             </div>
         </div>
+    </form>
     </mat-card-content>
     <mat-card-footer class="text-end p-3">
         <button mat-flat-button class="btn-second me-2">Cancel</button>

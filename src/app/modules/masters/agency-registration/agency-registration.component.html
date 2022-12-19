@@ -8,7 +8,7 @@
 
 <mat-card class="plain-card">
   <mat-card-header class="card-header">
-    <div class="d-flex align-items-center justify-content-between w-100">
+    <div class="d-flex flex-wrap align-items-center justify-content-between w-100">
       <div class="text-main fw-bold">
         Agency Registration
       </div>
@@ -38,32 +38,34 @@
       </div>
     </div>
   </mat-card-header>
-  <mat-card-header class="card-header">
-    <div class="row w-100">
-      <div class="col-sm-3">
-        <mat-form-field appearance="outline" class="w-100">
-          <mat-label>Search by Name</mat-label>
-          <input matInput placeholder="Search by Name">
+  <form [formGroup]="filterForm">
+    <mat-card-header class="card-header">
+      <div class="row w-100">
 
-        </mat-form-field>
+        <div class="col-sm-3">
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label>Search by Name</mat-label>
+            <input matInput formControlName="name" (keypress)="getTableData()" (blur)="getTableData()"
+              placeholder="Search by Name">
+          </mat-form-field>
+        </div>
+        <div class="col-sm-3">
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label>Search by Contact</mat-label>
+            <input matInput formControlName="contactNo" (keypress)="getTableData()" (blur)="getTableData()"
+              placeholder="Search by Contact">
+          </mat-form-field>
+        </div>
+        <div class="col-sm-3">
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label>Search by Email</mat-label>
+            <input matInput formControlName="email" (keypress)="getTableData()" (blur)="getTableData()"
+              placeholder="Search by Email">
+          </mat-form-field>
+        </div>
       </div>
-      <div class="col-sm-3">
-        <mat-form-field appearance="outline" class="w-100">
-          <mat-label>Search by Contact</mat-label>
-          <input matInput placeholder="Search by Contact">
-
-        </mat-form-field>
-      </div>
-      <div class="col-sm-3">
-        <mat-form-field appearance="outline" class="w-100">
-          <mat-label>Search by Email</mat-label>
-          <input matInput placeholder="Search by Email">
-
-        </mat-form-field>
-      </div>
-
-    </div>
-  </mat-card-header>
+    </mat-card-header>
+  </form>
   <mat-card-content class="card-body">
     <app-table (recObjToChild)="childCompInfo($event)"></app-table>
   </mat-card-content>

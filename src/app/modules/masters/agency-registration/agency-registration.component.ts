@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { ApiService } from 'src/app/core/services/api.service';
 import { ErrorsService } from 'src/app/core/services/errors.service';
@@ -11,20 +12,32 @@ import { AddUpdateAgencyRegistrationComponent } from './add-update-agency-regist
 })
 export class AgencyRegistrationComponent {
   pageNumber: number = 1;
-  constructor(private dialog: MatDialog, private apiService : ApiService, private errors : ErrorsService ) { }
+  filterForm!: FormGroup;
+  constructor(private dialog: MatDialog, private apiService: ApiService,
+    private errors: ErrorsService, private fb: FormBuilder) { }
 
   ngOnInit() {
-    this.getTableData()
+    this.filterData();
+    this.getTableData();
+
+  }
+
+  filterData() {
+    this.filterForm = this.fb.group({
+      name: '',
+      contactNo: '',
+      email: ''
+    })
   }
 
   getTableData(flag?: string) {
     this.pageNumber = flag == 'filter' ? 1 : this.pageNumber;
     let tableDataArray = new Array();
     let tableDatasize!: Number;
-    let str = `pageno=${this.pageNumber}&pagesize=10`;
+    let obj = this.filterForm.value;
+    let str = `pageno=${this.pageNumber}&pagesize=10&Agency_Name=${obj.name}&Contact_No=${obj.contactNo}&EmailId=${obj.email}`;
     this.apiService.setHttp('GET', 'zp-osmanabad/Agency/GetAll?' + str, false, false, false, 'baseUrl');
     this.apiService.getHttp().subscribe({
-
       next: (res: any) => {
         if (res.statusCode == "200") {
           tableDataArray = res.responseData.responseData1;
@@ -54,27 +67,31 @@ export class AgencyRegistrationComponent {
   }
 
   childCompInfo(_obj: any) {
-    // switch (obj.label) {
-    //   case 'Pagination':
-    //     this.pageNumber = obj.pageNumber;
-    //     this.getTableData();
-    //     break;
-    //   case 'Edit' || 'Delete':
-    //     this.addUpdateAgency(obj);
-    //     break;
-    //   case 'Block':
-    //     this.globalDialogOpen();
-    //     break;
-    // }
+    switch (_obj.label) {
+      case 'Pagination':
+        this.pageNumber = _obj.pageNumber;
+        this.getTableData();
+        break;
+      case 'Edit' || 'Delete':
+        this.addUpdateAgency(_obj);
+        break;
+      case 'Block':
+        // this.globalDialogOpen();
+        break;
+    }
   }
-  
-  addUpdateAgency() {
-    let obj: any;
-    this.dialog.open(AddUpdateAgencyRegistrationComponent, {
-      width:'900px',
-      data: obj,
+
+  addUpdateAgency(_obj?: any) {
+    const dialogRef = this.dialog.open(AddUpdateAgencyRegistrationComponent, {
+      width: '900px',
+      data: _obj,
       disableClose: true,
       autoFocus: false
-    })
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      result == 'Yes' ? this.getTableData() : '';
+    });
   }
 }
+

@@ -12,84 +12,99 @@
             </button>
         </div>
     </mat-card-header>
-    <form [formGroup]="agencyRegisterForm" (ngSubmit)="onSubmit()">
-    <mat-card-content class="card-body">
-        <div class="row">
-            <div class="col-sm-4">
-                <mat-form-field appearance="outline" class="w-100">
-                    <mat-label>Agency Name</mat-label>
-                    <input matInput formControlName="agency_Name" placeholder="Agency Name">
-                    <mat-error *ngIf="fc['agency_Name'].hasError('required')"> Agency Name Is Required</mat-error>
-                </mat-form-field>
+    <form [formGroup]="agencyRegisterForm" (ngSubmit)="onSubmit(clear)" #clear="ngForm">
+        <mat-card-content class="card-body">
+            <div class="row">
+                <div class="col-sm-4">
+                    <mat-form-field appearance="outline" class="w-100">
+                        <mat-label>Agency Name</mat-label>
+                        <input matInput formControlName="agency_Name" placeholder="Agency Name">
+                        <mat-error *ngIf="fc['agency_Name'].hasError('required')"> Agency Name Is Required</mat-error>
+                        <mat-error *ngIf="fc['agency_Name'].hasError('pattern')"> Please Enter Valid Agency Name</mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="col-sm-4">
+                    <mat-form-field appearance="outline" class="w-100">
+                        <mat-label>Contact Person Name</mat-label>
+                        <input matInput formControlName="contactPerson_Name" placeholder="Contact Person Name">
+                        <mat-error *ngIf="fc['contactPerson_Name'].hasError('required')"> Contact Person Name Is
+                            Required</mat-error>
+                        <mat-error *ngIf="fc['contactPerson_Name'].hasError('pattern')"> Please Enter Valid Person
+                            Name</mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="col-sm-4">
+                    <mat-form-field appearance="outline" class="w-100">
+                        <mat-label>Contact No.</mat-label>
+                        <input matInput formControlName="contact_No" maxlength="10" placeholder="Contact No.">
+                        <mat-error *ngIf="fc['contact_No'].hasError('required')"> Contact Number Is Required</mat-error>
+                        <mat-error *ngIf="fc['contact_No'].hasError('pattern')">Enter Valid Contact Number</mat-error>
+                    </mat-form-field>
+                </div>
             </div>
-            <div class="col-sm-4">
-                <mat-form-field appearance="outline" class="w-100">
-                    <mat-label>Contact Person Name</mat-label>
-                    <input matInput formControlName="contactPerson_Name" placeholder="Contact Person Name">
-                    <mat-error *ngIf="fc['contactPerson_Name'].hasError('required')"> Contact Person Name Is Required</mat-error>
-                </mat-form-field>
+            <div class="row">
+                <div class="col-sm-4">
+                    <mat-form-field appearance="outline" class="w-100">
+                        <mat-label>Email ID</mat-label>
+                        <input matInput formControlName="emailId" placeholder="Email ID">
+                        <mat-error *ngIf="fc['emailId'].hasError('required')">Email Id Is Required</mat-error>
+                        <mat-error *ngIf="fc['emailId'].hasError('pattern')">Enter Valid Email Id</mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="col-sm-4">
+                    <mat-form-field appearance="outline" class="w-100">
+                        <mat-label>Agency Mobile No.</mat-label>
+                        <input matInput formControlName="agency_MobileNo" maxlength="10"
+                            placeholder="Agency Mobile No..">
+                        <mat-error *ngIf="fc['agency_MobileNo'].hasError('required')">Agency Mobile Number Is
+                            Required</mat-error>
+                        <mat-error *ngIf="fc['agency_MobileNo'].hasError('pattern')">Enter Valid Mobile
+                            Number</mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="col-sm-4">
+                    <mat-form-field appearance="outline" class="w-100">
+                        <mat-label>Agency Email ID</mat-label>
+                        <input matInput formControlName="agency_EmailId" placeholder="Agency Email ID">
+                        <mat-error *ngIf="fc['agency_EmailId'].hasError('required')">Agency Email Id Is
+                            Required</mat-error>
+                        <mat-error *ngIf="fc['agency_EmailId'].hasError('pattern')">Enter Valid Email Id</mat-error>
+                    </mat-form-field>
+                </div>
             </div>
-            <div class="col-sm-4">
-                <mat-form-field appearance="outline" class="w-100">
-                    <mat-label>Contact No.</mat-label>
-                    <input matInput formControlName="contact_No" placeholder="Contact No.">
-                    <mat-error *ngIf="fc['contact_No'].hasError('required')"> Contact Number Is Required</mat-error>
-                </mat-form-field>
+            <div class="row">
+                <div class="col-sm-4">
+                    <mat-form-field appearance="outline" class="w-100">
+                        <mat-label>District</mat-label>
+                        <mat-select formControlName="districtId" placeholder="Select">
+                            <mat-option *ngFor="let data of districtData"
+                                [value]="data.id">{{data.district}}</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+                <div class="col-sm-4">
+                    <mat-form-field appearance="outline" class="w-100 ">
+                        <mat-label>Taluka</mat-label>
+                        <mat-select formControlName="talukaId" placeholder="Select">
+                            <mat-option *ngFor="let data of talukaData" [value]="data.id">{{data.taluka}}</mat-option>
+                        </mat-select>
+                        <mat-error *ngIf="fc['talukaId'].hasError('required')">Please Select Taluka</mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="col-sm-4">
+                    <mat-form-field appearance="outline" class="w-100">
+                        <mat-label>Address</mat-label>
+                        <input matInput formControlName="address" placeholder="Address">
+                        <mat-error *ngIf="fc['address'].hasError('required')">Address Is Required</mat-error>
+                        <mat-error *ngIf="fc['address'].hasError('maxlength')">Maximumm Length Should Be Less Than 500
+                            Characters</mat-error>
+                    </mat-form-field>
+                </div>
             </div>
-        </div>
-        <div class="row">
-            <div class="col-sm-4">
-                <mat-form-field appearance="outline" class="w-100">
-                    <mat-label>Email ID</mat-label>
-                    <input matInput formControlName="emailId" placeholder="Email ID">
-                    <mat-error *ngIf="fc['emailId'].hasError('required')">Email Id Is Required</mat-error>
-                </mat-form-field>
-            </div>
-            <div class="col-sm-4">
-                <mat-form-field appearance="outline" class="w-100">
-                    <mat-label>Agency Mobile No.</mat-label>
-                    <input matInput formControlName="mobileNo" placeholder="Agency Mobile No..">
-                    <mat-error *ngIf="fc['mobileNo'].hasError('required')">Agency Mobile Number Is Required</mat-error>
-                </mat-form-field>
-            </div>
-            <div class="col-sm-4">
-                <mat-form-field appearance="outline" class="w-100">
-                    <mat-label>Agency Email ID</mat-label>
-                    <input matInput formControlName="emailId" placeholder="Agency Email ID">
-                    <mat-error *ngIf="fc['emailId'].hasError('required')">Agency Email Id Is Required</mat-error>
-                </mat-form-field>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-sm-4">
-                <mat-form-field appearance="outline" class="w-100">
-                    <mat-label>District</mat-label>
-                    <mat-select formControlName="districtId"  placeholder="Select">
-                        <mat-option *ngFor="let data of districtData" [value]="data.id">{{data.district}}</mat-option>
-                    </mat-select>
-                </mat-form-field>
-            </div>
-            <div class="col-sm-4">
-                <mat-form-field appearance="outline" class="w-100 ">
-                    <mat-label>Taluka</mat-label>
-                    <mat-select formControlName="talukaId" placeholder="Select">
-                        <mat-option *ngFor="let data of talukaData" [value]="data.id">{{data.taluka}}</mat-option>
-                    </mat-select>
-                    <mat-error *ngIf="fc['talukaId'].hasError('required')">Please Select Taluka</mat-error>
-                </mat-form-field>
-            </div>
-            <div class="col-sm-4">
-                <mat-form-field appearance="outline" class="w-100">
-                    <mat-label>Address</mat-label>
-                    <input matInput formControlName="address" placeholder="Address">
-                    <mat-error *ngIf="fc['address'].hasError('required')">Address Is Required</mat-error>
-                </mat-form-field>
-            </div>
-        </div>
-    </mat-card-content>
-    <mat-card-footer  align="end" class="card-footer">
-        <button type="button" mat-flat-button class="btn-second me-2" (click)="onCancel()">Cancel</button>
-        <button type="submit" mat-flat-button class="btn-main ">Submit</button>
-    </mat-card-footer>
-   </form>
+        </mat-card-content>
+        <mat-card-footer align="end" class="card-footer">
+            <button type="button" mat-flat-button class="btn-second me-2" (click)="onCancel(clear)">Cancel</button>
+            <button type="submit" mat-flat-button class="btn-main ">{{data ? 'Update' : 'Submit'}}</button>
+        </mat-card-footer>
+    </form>
 </mat-card>

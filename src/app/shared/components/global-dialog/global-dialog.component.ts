@@ -10,8 +10,17 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
   styleUrls: ['./global-dialog.component.scss']
 })
 export class GlobalDialogComponent {
-  
   constructor(
     public dialogRef: MatDialogRef<GlobalDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any) { }
+
+
+    
+  ngOnInit(): void {
+  }
+
+  closeDialog(result:string) {
+    this.dialogRef.close(result);
+  }
+
 }
