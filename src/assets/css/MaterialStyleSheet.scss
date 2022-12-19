@@ -20,6 +20,7 @@ textarea.mat-input-element,
 .mat-calendar-period-button,
 .mat-mdc-select-min-line,
 .mat-mdc-text-field-wrapper.mdc-text-field--outlined .mdc-text-field__input,
+.mat-mdc-icon-button.mat-mdc-button-base,
 .mat-tab-label-content{
     font-family: 'Poppins', sans-serif;
   font-size: 0.85rem;
@@ -47,4 +48,9 @@ input:-webkit-autofill:active {
 }
 .mat-mdc-form-field, .mat-mdc-floating-label{
     letter-spacing: normal !important;
+}
+.mat-mdc-icon-button.mat-mdc-button-base {
+    width: 36px !important;
+    height: 36px !important;
+    padding: 6px !important;
 }
