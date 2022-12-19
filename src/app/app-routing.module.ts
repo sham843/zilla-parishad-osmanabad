@@ -14,7 +14,6 @@ const routes: Routes = [
     loadChildren: () => import('./layouts/secure/secure.module').then(m => m.SecureModule) 
   },
 
-{ path: '', redirectTo: 'home', pathMatch: 'full' },
 ]
 @NgModule({
   imports: [RouterModule.forRoot(routes)],

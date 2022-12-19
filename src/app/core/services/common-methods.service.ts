@@ -69,7 +69,6 @@ downLoadPdf(header: any, values: any, objData: any) {
     margin: { top: 25 },
 
     didDrawPage: function (_data: any) {
-
       var imgWidth = 33;
       var height = 20;
       doc.addImage('../../../../assets/images/.jpeg', 'JPEG', 2, -3, imgWidth, height); //add image

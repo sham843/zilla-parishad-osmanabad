@@ -1,92 +1,83 @@
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item" aria-current="page">Masters</li>
+        <li class="breadcrumb-item active" aria-current="page">Teacher Registration</li>
+    </ol>
+</nav>
+<app-page-statistics></app-page-statistics>
 
-<div class="container-fluid">
-    <div class="row">
-        <div class="col-sm-12">
-            <mat-card>
-                <mat-card-header>
-                    <div class="row w-100">
-                        <div class="col-sm-4">
-                            <p class="mb-0">Teacher List</p>
+<mat-card class="plain-card">
+    <mat-card-header class="card-header">
+        <div class="d-flex align-items-center justify-content-between w-100">
+            <div class="text-main fw-bold">
+                Teacher List
+            </div>
+            <div class="d-flex align-items-center justify-content-end gap-2">
+                <button mat-flat-button class="btn-main btn-icon">
+                    <mat-icon>
+                        format_list_bulleted
+                    </mat-icon>
+                </button>
+                <button mat-flat-button class="btn-second btn-icon">
+                    <mat-icon>
+                        grid_view
+                    </mat-icon>
+                </button>
+                <button mat-flat-button class="btn-main btn-icon" [matMenuTriggerFor]="menu">
+                    <mat-icon>
+                        download
+                    </mat-icon>
+                </button>
+                <mat-menu #menu="matMenu" xPosition="before">
+                    <button mat-menu-item>
+                        <div class="d-flex align-items-center justify-content-between w-100">
+                            <span>PDF</span>
+                            <i class='bx bxs-file-pdf text-danger'></i>
                         </div>
-                        <div class="col-sm-8">
-                            <div class="d-flex align-items-center justify-content-end gap-3">
-                                <button mat-flat-button color="primary">
-                                    <span class="material-symbols-outlined">
-                                        format_list_bulleted
-                                    </span>
-                                </button>
-                                <button mat-flat-button color="primary">
-                                    <span class="material-symbols-outlined">
-                                        grid_view
-                                    </span>
-                                </button>
-                                <button mat-flat-button [matMenuTriggerFor]="menu">
-                                    <span class="material-symbols-outlined">
-                                        download
-                                    </span>
-                                </button>
-                                <mat-menu #menu="matMenu">
-                                    <button mat-menu-item>Item 1</button>
-                                    <button mat-menu-item>Item 2</button>
-                                </mat-menu>
-                                <button class="btn bg-main align-items-center d-flex" (click)="addUpdateAgency()">
-                                    <span class="material-symbols-outlined">
-                                        add
-                                    </span><span> Add New</span>
-                                </button>
-                            </div>
+                    </button>
+                    <button mat-menu-item>
+                        <div class="d-flex align-items-center justify-content-between w-100">
+                            <span>Excel</span>
+                            <i class='bx bxs-file text-primary'></i>
                         </div>
-                    </div>
-                </mat-card-header>
-                <mat-card-header>
-                    <div class="row g-3">
-                        <div class="col-sm-4">
-                            <mat-form-field appearance="outline" class="w-100">
-                                <mat-label>Search by Name</mat-label>
-                                <mat-select>
-                                    <mat-option value="one">First option</mat-option>
-                                    <mat-option value="two">Second option</mat-option>
-                                </mat-select>
-                            </mat-form-field>
-                        </div>
-                        <div class="col-sm-4">
-                            <mat-form-field appearance="outline" class="w-100">
-                                <mat-label>Search by Contact</mat-label>
-                                <mat-select>
-                                    <mat-option value="one">First option</mat-option>
-                                    <mat-option value="two">Second option</mat-option>
-                                </mat-select>
-                            </mat-form-field>
-                        </div>
-                        <div class="col-sm-4">
-                            <mat-form-field appearance="outline" class="w-100">
-                                <mat-label>Search by Email</mat-label>
-                                <mat-select>
-                                    <mat-option value="one">First option</mat-option>
-                                    <mat-option value="two">Second option</mat-option>
-                                </mat-select>
-                            </mat-form-field>
-                        </div>
-                    </div>
-                </mat-card-header>
-
-                <mat-card-content>
-                    <app-table (recObjToChild)="childCompInfo($event)"></app-table>
-                </mat-card-content>
-
-                <mat-card-footer>
-                        <nav class=" d-flex justify-content-end">
-                            <ul class="pagination">
-                                <li class="page-item"><a class="page-link" href="#">Previous</a></li>
-                                <li class="page-item"><a class="page-link" href="#">1</a></li>
-                                <li class="page-item"><a class="page-link" href="#">2</a></li>
-                                <li class="page-item"><a class="page-link" href="#">3</a></li>
-                                <li class="page-item"><a class="page-link" href="#">Next</a></li>
-                            </ul>
-                        </nav>
-                </mat-card-footer>
-            </mat-card>
+                    </button>
+                </mat-menu>
+                <button mat-flat-button class="btn-main" (click)="addUpdateAgency()">
+                    <mat-icon>
+                        add
+                    </mat-icon>Add Teacher
+                </button>
+            </div>
         </div>
-    </div>
-</div>
+    </mat-card-header>
+    <mat-card-header class="card-header">
+        <div class="row g-3">
+            <div class="col-sm-4">
+                <mat-form-field appearance="outline" class="w-100">
+                    <mat-label>Search by Name/Contact/Email</mat-label>
+                    <input matInput [formControl]="searchContent">
+                </mat-form-field>
+            </div>
+            <div class="col-sm-4">
+                <mat-form-field appearance="outline" class="w-100">
+                    <mat-label>Search by Contact</mat-label>
+                    <input matInput>
+                </mat-form-field>
+            </div>
+            <!-- <div class="col-sm-4">
+                <mat-form-field appearance="outline" class="w-100">
+                    <mat-label>Search by Email</mat-label>
+                    <input matInput>
+                </mat-form-field>
+            </div> -->
+            <div class="col-sm-4">
+                <button mat-flat-button class="btn-main" (click)="onFilterClick()">Filter</button>
+                <button  mat-flat-button class="btn-main ms-3" (click)="clearFilterData()">clear</button>
+            </div>
+        </div>
+    </mat-card-header>
 
+    <mat-card-content class="card-body">
+        <app-table (recObjToChild)="childCompInfo($event)"></app-table>
+    </mat-card-content>
+</mat-card>

@@ -3,41 +3,39 @@ import { FormControl } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { ApiService } from 'src/app/core/services/api.service';
 import { ErrorsService } from 'src/app/core/services/errors.service';
+import { MasterService } from 'src/app/core/services/master.service';
 import { GlobalDialogComponent } from 'src/app/shared/components/global-dialog/global-dialog.component';
 import { AddUpdateDesignationMasterComponent } from './add-update-designation-master/add-update-designation-master.component';
-
-interface Food {
-  value: string;
-  viewValue: string;
-}
-
 @Component({
   selector: 'app-designation-master',
   templateUrl: './designation-master.component.html',
   styleUrls: ['./designation-master.component.scss']
 })
 export class DesignationMasterComponent {
-
-
-  foods: Food[] = [
-    {value: 'steak-0', viewValue: 'Steak'},
-    {value: 'pizza-1', viewValue: 'Pizza'},
-    {value: 'tacos-2', viewValue: 'Tacos'},
-  ];
-
-
-  
   pageNumber: number = 1;
   searchContent = new FormControl('');
-  
+  id:any;
+  designationArray:any;
 
-  constructor(private dialog: MatDialog, private apiService: ApiService, private errors: ErrorsService) { }
+  constructor(private dialog: MatDialog, private apiService: ApiService, private errors: ErrorsService,
+    private masterService:MasterService) { }
 
   ngOnInit() {
     this.getTableData()
+    this.getDesignationData();
   }
 
-
+getDesignationData(){
+  this.masterService.GetAllDesignationLevel('EN').subscribe({
+    next: ((res: any) => {
+      if (res.statusCode == '200' && res.responseData.length) {
+        this.designationArray= res.responseData;
+        console.log("this.designationArray",res.responseData);               
+      }
+    })             
+    
+  })
+}
   onPagintion(pageNo: number) {
     this.pageNumber = pageNo;
     this.getTableData()
@@ -47,8 +45,9 @@ export class DesignationMasterComponent {
     this.pageNumber =   flag == 'filter'? 1 :this.pageNumber;
     let tableDataArray = new Array();
     let tableDatasize!: Number;
-    let str = `Id=1&pageno=${this.pageNumber}&pagesize=10`;
-    this.apiService.setHttp('GET', 'zp_osmanabad/designation-master/GetAllDesignationById?' + str, false, false, false, 'baseUrl');
+  // zp_osmanabad/designation-master/GetAll?pageno=1&pagesize=10&lan=EN
+    let str = `Id=${this.searchContent.value?this.searchContent.value:0}&pageno=${this.pageNumber}&pagesize=10&lan=EN`;
+    this.apiService.setHttp('GET', 'zp_osmanabad/designation-master/GetAll?' + str, false, false, false, 'baseUrl');
     this.apiService.getHttp().subscribe({
 
       next: (res: any) => {
@@ -75,14 +74,15 @@ export class DesignationMasterComponent {
 
   }
 
-  childCompInfo(obj: any) {
+  childCompInfo(obj: any) {     
+   
     switch (obj.label) {
       case 'Pagination':
-        this.pageNumber = obj.pageNumber;
+        this.pageNumber = obj.pageNumber;       
         this.getTableData();
         break;
-      case 'Edit' || 'Delete':
-        this.addUpdateAgency(obj);
+      case 'Edit' || 'Delete':        
+        this.addUpdateAgency(obj);       
         break;
       case 'Block':
         this.globalDialogOpen();
@@ -91,7 +91,7 @@ export class DesignationMasterComponent {
   }
 
   //#region -------------------------------------------dialog box open function's start heare----------------------------------------//
-  addUpdateAgency(obj?: any) {
+  addUpdateAgency(obj?: any) {   
     this.dialog.open(AddUpdateDesignationMasterComponent, {
       width: '420px',
       data: obj,

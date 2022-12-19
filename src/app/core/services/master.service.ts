@@ -39,9 +39,9 @@ export class MasterService {
     });
   }
 
-  getAllVillage(strPara: string) {
+  getAllVillage(strPara: string, talukaId : number) {
     return new Observable((obj) => {
-      this.apiService.setHttp('GET', 'zp-osmanabad/master/GetAllVillage?flag_lang='+strPara, false, false, false, 'baseUrl');
+      this.apiService.setHttp('GET', 'zp-osmanabad/master/GetAllVillageByTalukaId?flag_lang='+strPara+'&TalukaId=' + talukaId, false, false, false, 'baseUrl');
       this.apiService.getHttp().subscribe({
         next: (res: any) => {if (res.statusCode == "200"){ console.log("res",res);obj.next(res)} else { obj.error(res); }},
         error: (e: any) => { obj.error(e) }
@@ -51,7 +51,7 @@ export class MasterService {
 
   getAllCenter(strPara: string) {
     return new Observable((obj) => {
-      this.apiService.setHttp('GET', 'zp-osmanabad/master/GetAllCenter?flag_lang='+strPara, false, false, false, 'baseUrl');
+      this.apiService.setHttp('GET', 'zp-osmanabad/master/GetAllCenterByTalukaId?flag_lang='+strPara, false, false, false, 'baseUrl');
       this.apiService.getHttp().subscribe({
         next: (res: any) => {if (res.statusCode == "200"){ console.log("res",res);obj.next(res)} else { obj.error(res); }},
         error: (e: any) => { obj.error(e) }
@@ -153,6 +153,48 @@ export class MasterService {
   getAllUserType(strPara: string) {
     return new Observable((obj) => {
       this.apiService.setHttp('GET', 'zp-osmanabad/master/GetAllUserType?flag_lang='+strPara, false, false, false, 'baseUrl');
+      this.apiService.getHttp().subscribe({
+        next: (res: any) => {if (res.statusCode == "200"){ console.log("res",res);obj.next(res)} else { obj.error(res); }},
+        error: (e: any) => { obj.error(e) }
+      });
+    });
+  }
+
+  
+  GetAllDesignationLevel(strPara: string) {
+    return new Observable((obj) => {
+      this.apiService.setHttp('GET', 'zp-osmanabad/master/GetAllDesignationLevel?flag_lang='+strPara, false, false, false, 'baseUrl');
+      this.apiService.getHttp().subscribe({
+        next: (res: any) => {if (res.statusCode == "200"){ console.log("res",res);obj.next(res)} else { obj.error(res); }},
+        error: (e: any) => { obj.error(e) }
+      });
+    });
+  }
+
+  
+  GetDesignationByLevelId(strPara: string, desigLevelId: number) {
+    return new Observable((obj) => {
+      this.apiService.setHttp('GET', 'zp-osmanabad/master/GetDesignationByLevelId?DesignationLevelId='+desigLevelId+'&flag_lang='+strPara, false, false, false, 'baseUrl');
+      this.apiService.getHttp().subscribe({
+        next: (res: any) => {if (res.statusCode == "200"){ console.log("res",res);obj.next(res)} else { obj.error(res); }},
+        error: (e: any) => { obj.error(e) }
+      });
+    });
+  }
+
+  GetSchoolCategoryDescById(strPara: string) {
+    return new Observable((obj) => {
+      this.apiService.setHttp('GET', 'zp-osmanabad/master/GetSchoolCategoryDescById?flag_lang='+strPara, false, false, false, 'baseUrl');
+      this.apiService.getHttp().subscribe({
+        next: (res: any) => {if (res.statusCode == "200"){ console.log("res",res);obj.next(res)} else { obj.error(res); }},
+        error: (e: any) => { obj.error(e) }
+      });
+    });
+  }
+
+  GetSchoolMngDescById(strPara: string) {
+    return new Observable((obj) => {
+      this.apiService.setHttp('GET', 'zp-osmanabad/master/GetSchoolMngDescById?flag_lang='+strPara, false, false, false, 'baseUrl');
       this.apiService.getHttp().subscribe({
         next: (res: any) => {if (res.statusCode == "200"){ console.log("res",res);obj.next(res)} else { obj.error(res); }},
         error: (e: any) => { obj.error(e) }
