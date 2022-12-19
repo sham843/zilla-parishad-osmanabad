@@ -37,9 +37,8 @@ export class SchoolRegistrationComponent {
     this.pageNumber = flag == 'filter' ? 1 : this.pageNumber;
     let tableDataArray = new Array();
     let tableDatasize!: Number;
-
-    let str = `?pageno=${this.pageNumber}&pagesize=10`;
-    this.apiService.setHttp('GET', 'ZP-Osmanabad/School/GetAllSchoolByPagination' + str, false, false, false, 'baseUrl');
+    let str = `?pageno=${this.pageNumber}&pagesize=10&lan=EN`;
+    this.apiService.setHttp('GET', 'ZP-Osmanabad/School/GetAll' + str, false, false, false, 'baseUrl');
     this.apiService.getHttp().subscribe({
 
       next: (res: any) => {

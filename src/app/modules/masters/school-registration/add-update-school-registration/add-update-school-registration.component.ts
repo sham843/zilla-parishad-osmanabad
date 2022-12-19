@@ -19,22 +19,20 @@ export class AddUpdateSchoolRegistrationComponent {
   groupclassArr = new Array();
   schoolTypeArr = new Array();
   villageArr = new Array();
+  categoryArr = new Array();
+  schoolMngArr = new Array();
   schoolRegForm !: FormGroup;
-  uploadImg : any;
-  editFlag : boolean = false;
+  uploadImg: any;
+  editFlag: boolean = false;
 
-  constructor(private masterService: MasterService, private errors: ErrorsService, private fb: FormBuilder, private fileUpload : FileUploadService,
-    private apiService : ApiService, private commonMethod : CommonMethodsService, @Inject(MAT_DIALOG_DATA) public data: any,) { }
+  constructor(private masterService: MasterService, private errors: ErrorsService, private fb: FormBuilder, private fileUpload: FileUploadService,
+    private apiService: ApiService, private commonMethod: CommonMethodsService, @Inject(MAT_DIALOG_DATA) public data: any,) { }
 
   ngOnInit() {
     this.formFeild();
     this.getDistrict();
-    // this.getTaluka();
-    // this.getCenter();
-    // this.getGroupClass();
-    this.getSchoolType();
-    // this.getVillage();
-    if(this.data){
+
+    if (this.data) {
       this.onEdit();
     }
   }
@@ -45,21 +43,34 @@ export class AddUpdateSchoolRegistrationComponent {
       "modifiedBy": 0,
       "createdDate": new Date(),
       "modifiedDate": new Date(),
-      "isDeleted": false,
+      "isDeleted": true,
       "id": 0,
       "schoolName": [''],
       "m_SchoolName": [''],
-      "stateId": 0,
+      "stateId": [''],
       "districtId": [''],
       "talukaId": [''],
-      "villageId": 0,
+      "villageId": [''],
       "centerId": [''],
-      "s_CategoryId": 0,
-      "s_ManagementId": 0,
-      "s_TypeId": 0,
+      "s_CategoryId": [''],
+      "s_ManagementId": [''],
+      "s_TypeId": [''],
       "g_ClassId": [''],
-      // "image" : [''],
-      "lan": ['EN']
+      "uploadImage": [''],
+      "lan": ['EN'],
+      "schoolDocument": [
+        {
+          "createdBy": 0,
+          "modifiedBy": 0,
+          "createdDate": "2022-12-19T06:18:01.268Z",
+          "modifiedDate": "2022-12-19T06:18:01.268Z",
+          "isDeleted": true,
+          "id": 0,
+          "schoolId": 0,
+          "documentId": 3,
+          "docPath": "string"
+        }
+      ]
     })
   }
 
@@ -107,7 +118,7 @@ export class AddUpdateSchoolRegistrationComponent {
     });
   }
 
-  getSchoolType(){
+  getSchoolType() {
     this.masterService.getAllSchoolType('EN').subscribe({
       next: (res: any) => {
         if (res.statusCode == 200) {
@@ -118,7 +129,7 @@ export class AddUpdateSchoolRegistrationComponent {
     });
   }
 
-  getVillage(){
+  getVillage() {
     this.masterService.getAllVillage('EN', this.schoolRegForm.value.villageId).subscribe({
       next: (res: any) => {
         if (res.statusCode == 200) {
@@ -129,30 +140,51 @@ export class AddUpdateSchoolRegistrationComponent {
     });
   }
 
-  imgUpload(event : any){
-    console.log("event", event);
-    this.fileUpload.uploadDocuments(event, 'Upload', 'jpg, jpeg, png').subscribe((res : any)=>{
-      this.uploadImg = res.responseData;
-    });
-  }
-
-  onSubmit(){
-    let formValue = this.schoolRegForm.value;
-    formValue.image = this.uploadImg;
-    
-    this.apiService.setHttp('post','ZP-Osmanabad/School/AddSchool', false, formValue, false, 'baseUrl');
-    this.apiService.getHttp().subscribe({
-      next : ( res : any )=>{
-        console.log("Post res : ", res);
-        if(res.statusCode == "200"){
-          this.commonMethod.snackBar("Record Added Successfully",0)
+  getCategoryDes() {
+    this.masterService.GetSchoolCategoryDescById('EN').subscribe({
+      next: (res: any) => {
+        if (res.statusCode == 200) {
+          this.categoryArr = res.responseData;
         }
       },
       error: ((err: any) => { this.errors.handelError(err) })
     });
   }
 
-  onEdit(){
+  getSchoolMngDesc() {
+    this.masterService.GetSchoolMngDescById('EN').subscribe({
+      next: (res: any) => {
+        if (res.statusCode == 200) {
+          this.schoolMngArr = res.responseData;
+        }
+      },
+      error: ((err: any) => { this.errors.handelError(err) })
+    });
+  }
+
+  imgUpload(event: any) {
+    this.fileUpload.uploadDocuments(event, 'Upload', 'jpg, jpeg, png').subscribe((res: any) => {
+      this.uploadImg = res.responseData;
+    });
+  }
+
+  onSubmit() {
+    let formValue = this.schoolRegForm.value;
+    formValue.image = this.uploadImg;
+
+    this.apiService.setHttp('post', 'ZP-Osmanabad/School/Add', false, formValue, false, 'baseUrl');
+    this.apiService.getHttp().subscribe({
+      next: (res: any) => {
+        // console.log("Post res : ", res);
+        if (res.statusCode == "200") {
+          this.commonMethod.snackBar("Record Added Successfully", 0)
+        }
+      },
+      error: ((err: any) => { this.errors.handelError(err) })
+    });
+  }
+
+  onEdit() {
     this.editFlag = true;
     this.schoolRegForm.patchValue({
       "createdBy": 0,
@@ -177,7 +209,7 @@ export class AddUpdateSchoolRegistrationComponent {
     })
   }
 
- 
+
 
 
 
