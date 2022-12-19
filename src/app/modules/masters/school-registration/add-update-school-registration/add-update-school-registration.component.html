@@ -26,7 +26,7 @@
             <div class="col-sm">
                 <mat-form-field appearance="outline" class="w-100 ">
                     <mat-label>Taluka</mat-label>
-                    <mat-select formControlName="talukaId" (selectionChange)="getCenter();">
+                    <mat-select formControlName="talukaId" (selectionChange)="clearDropdown('Taluka'); getCenter();">
                         <mat-option *ngFor="let taluka of talukaArr" [value]="taluka.id">
                             {{taluka.taluka}}
                         </mat-option>
@@ -36,7 +36,7 @@
             <div class="col-sm">
                 <mat-form-field appearance="outline" class="w-100 ">
                     <mat-label>Kendra</mat-label>
-                    <mat-select formControlName="centerId" (selectionChange)="getVillage();">
+                    <mat-select formControlName="centerId" (selectionChange)="clearDropdown('Kendra'); getVillage();">
                         <mat-option *ngFor="let center of centerArr" [value]="center.id">
                             {{center.center}}
                         </mat-option>
@@ -46,7 +46,7 @@
             <div class="col-sm">
                 <mat-form-field appearance="outline" class="w-100 ">
                     <mat-label>Village</mat-label>
-                    <mat-select formControlName="villageId" (selectionChange)="getSchoolType();">
+                    <mat-select formControlName="villageId" (selectionChange)="clearDropdown('Village'); getSchoolType();">
                         <mat-option *ngFor="let village of villageArr" [value]="village.id">
                             {{village.village}}
                         </mat-option>
@@ -62,7 +62,7 @@
             <div class="col-sm">
                 <mat-form-field appearance="outline" class="w-100">
                     <mat-label>School Type Description</mat-label>
-                    <mat-select formControlName="s_TypeId" (selectionChange)="getCategoryDes();">
+                    <mat-select formControlName="s_TypeId" (selectionChange)="clearDropdown('School Type'); getCategoryDes();">
                         <mat-option *ngFor="let schoolType of schoolTypeArr" [value]="schoolType.id">
                             {{schoolType.schoolType}}
                         </mat-option>
@@ -73,7 +73,7 @@
                 <mat-form-field appearance="outline" class="w-100">
                     <mat-label>School Category Description</mat-label>
                     <mat-select>
-                        <mat-select formControlName="s_CategoryId" (selectionChange)="getSchoolMngDesc();">
+                        <mat-select formControlName="s_CategoryId" (selectionChange)="clearDropdown('Category Desc'); getSchoolMngDesc();">
                             <mat-option *ngFor="let category of categoryArr" [value]="category.id">
                                 {{category.category_desc}}
                             </mat-option>
@@ -85,7 +85,7 @@
                 <mat-form-field appearance="outline" class="w-100">
                     <mat-label>School Management Description</mat-label>
                     <mat-select>
-                        <mat-select formControlName="s_ManagementId" (selectionChange)="getGroupClass();">
+                        <mat-select formControlName="s_ManagementId" (selectionChange)="clearDropdown('Management Desc'); getGroupClass();">
                             <mat-option *ngFor="let schoolMng of schoolMngArr" [value]="schoolMng.id">
                                 {{schoolMng.management_desc}}
                             </mat-option>
@@ -104,22 +104,30 @@
                     </mat-select>
                 </mat-form-field>
             </div>
-            <div class="col-sm">
-                <!-- <mat-form-field appearance="outline" class="w-100"> -->
-                    <mat-label>Upload Photo</mat-label>
-                    <input type="file" formControlName="uploadImage" hidden="hidden" (change)="imgUpload($event)" #img>
-                    <mat-icon matSuffix>
-                        <span class="material-symbols-outlined" (click)="img.click()">
-                        upload
-                        </span>
-                    </mat-icon>
-                  <!-- </mat-form-field> -->
+
+            <div formArrayName="schoolDocument" >
+                <div *ngFor="let doc of docForm.controls; let i = index;">
+                    <div [formGroupName]="i">
+                        <div class="col-sm">
+                            
+                                <!-- <mat-form-field appearance="outline" class="w-100"> -->
+                                    <mat-label>Upload Photo</mat-label>
+                                    <input type="file" formControlName="docPath" hidden="hidden" (change)="imgUpload($event)" #img>
+                                    <mat-icon matSuffix>
+                                        <span class="material-symbols-outlined" (click)="img.click()">
+                                        upload
+                                        </span>
+                                    </mat-icon>
+                                  <!-- </mat-form-field> -->
+                            </div>
+                        </div>
+                </div>
             </div>
         </div>
     </mat-card-content>
     <mat-card-footer>
         <mat-card-actions align="end" >
-            <button  mat-flat-button class="btn-second me-2" type="button">Cancel</button>
+            <button mat-dialog-close  mat-flat-button class="btn-second me-2" type="button">Cancel</button>
             <button mat-flat-button class="btn-main">Submit</button>
         </mat-card-actions>
     </mat-card-footer>

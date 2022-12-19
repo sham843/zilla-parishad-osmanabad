@@ -13,4 +13,14 @@ export class GlobalDialogComponent {
   constructor(
     public dialogRef: MatDialogRef<GlobalDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any) { }
+
+
+    
+  ngOnInit(): void {
+  }
+
+  closeDialog(result:string) {
+    this.dialogRef.close(result);
+  }
+
 }

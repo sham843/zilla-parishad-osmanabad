@@ -118,3 +118,13 @@
 .card-agency img{
     filter: invert(42%) sepia(65%) saturate(4474%) hue-rotate(152deg) brightness(90%) contrast(98%);
 }
+
+
+@media only screen and (max-width: 478px) {
+    .card-agency .card-footer p{
+        font-size: 0.72rem;
+    }
+    .card-designation .card-body{
+        padding: 5px 14px !important;
+    }
+}

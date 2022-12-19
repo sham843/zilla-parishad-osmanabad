@@ -42,8 +42,8 @@
             <mat-form-field appearance="outline" class="w-100">
                 <mat-label>Select Designation</mat-label>
                 <mat-select [formControl]="searchContent">
-                    <mat-option *ngFor="let designation of designationArray" [value]="designation.id">
-                        {{designation.designationLevel}}
+                    <mat-option *ngFor="let designation of DesiganationTypeArray" [value]="designation.id">
+                        {{designation.designationType}}
                     </mat-option>
                 </mat-select>
             </mat-form-field>

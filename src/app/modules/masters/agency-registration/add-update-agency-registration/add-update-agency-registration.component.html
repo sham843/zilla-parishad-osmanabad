@@ -18,9 +18,9 @@
                 <div class="col-sm-4">
                     <mat-form-field appearance="outline" class="w-100">
                         <mat-label>Agency Name</mat-label>
-                        <input matInput formControlName="agency_Name" (keypress)="validation.noSpacesAtStart($event)"
-                            placeholder="Agency Name">
+                        <input matInput formControlName="agency_Name" placeholder="Agency Name">
                         <mat-error *ngIf="fc['agency_Name'].hasError('required')"> Agency Name Is Required</mat-error>
+                        <mat-error *ngIf="fc['agency_Name'].hasError('pattern')"> Please Enter Valid Agency Name</mat-error>
                     </mat-form-field>
                 </div>
                 <div class="col-sm-4">
@@ -94,8 +94,7 @@
                 <div class="col-sm-4">
                     <mat-form-field appearance="outline" class="w-100">
                         <mat-label>Address</mat-label>
-                        <input matInput formControlName="address" (keypress)="validation.noSpacesAtStart($event)"
-                            placeholder="Address">
+                        <input matInput formControlName="address" placeholder="Address">
                         <mat-error *ngIf="fc['address'].hasError('required')">Address Is Required</mat-error>
                         <mat-error *ngIf="fc['address'].hasError('maxlength')">Maximumm Length Should Be Less Than 500
                             Characters</mat-error>
