@@ -16,7 +16,7 @@
             <div class="col-sm">
                 <mat-form-field appearance="outline" class="w-100">
                     <mat-label>District</mat-label>
-                    <mat-select formControlName="districtId">
+                    <mat-select formControlName="districtId" (selectionChange)="getTaluka();">
                             <mat-option *ngFor="let district of districtArr" [value]="district.id">
                                 {{district.district}}
                             </mat-option>
@@ -26,7 +26,7 @@
             <div class="col-sm">
                 <mat-form-field appearance="outline" class="w-100 ">
                     <mat-label>Taluka</mat-label>
-                    <mat-select formControlName="talukaId">
+                    <mat-select formControlName="talukaId" (selectionChange)="getCenter();">
                         <mat-option *ngFor="let taluka of talukaArr" [value]="taluka.id">
                             {{taluka.taluka}}
                         </mat-option>
@@ -36,9 +36,19 @@
             <div class="col-sm">
                 <mat-form-field appearance="outline" class="w-100 ">
                     <mat-label>Kendra</mat-label>
-                    <mat-select formControlName="centerId">
+                    <mat-select formControlName="centerId" (selectionChange)="getVillage();">
                         <mat-option *ngFor="let center of centerArr" [value]="center.id">
                             {{center.center}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <div class="col-sm">
+                <mat-form-field appearance="outline" class="w-100 ">
+                    <mat-label>Village</mat-label>
+                    <mat-select formControlName="villageId" >
+                        <mat-option *ngFor="let village of villageArr" [value]="village.id">
+                            {{village.village}}
                         </mat-option>
                     </mat-select>
                 </mat-form-field>
@@ -61,7 +71,7 @@
             <div class="col-sm">
                 <mat-form-field appearance="outline" class="w-100 ">
                     <mat-label>School Management Description</mat-label>
-                    <mat-select>
+                    <mat-select (selectionChange)="getGroupClass();">
                         <mat-option value="one">First option</mat-option>
                         <mat-option value="two">Second option</mat-option>
                     </mat-select>

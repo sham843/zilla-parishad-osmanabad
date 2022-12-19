@@ -18,6 +18,7 @@ export class AddUpdateSchoolRegistrationComponent {
   centerArr = new Array();
   groupclassArr = new Array();
   schoolTypeArr = new Array();
+  villageArr = new Array();
   schoolRegForm !: FormGroup;
   uploadImg : any;
   editFlag : boolean = false;
@@ -28,10 +29,11 @@ export class AddUpdateSchoolRegistrationComponent {
   ngOnInit() {
     this.formFeild();
     this.getDistrict();
-    this.getTaluka();
-    this.getCenter();
-    this.getGroupClass();
+    // this.getTaluka();
+    // this.getCenter();
+    // this.getGroupClass();
     this.getSchoolType();
+    // this.getVillage();
     if(this.data){
       this.onEdit();
     }
@@ -116,6 +118,17 @@ export class AddUpdateSchoolRegistrationComponent {
     });
   }
 
+  getVillage(){
+    this.masterService.getAllVillage('EN', this.schoolRegForm.value.villageId).subscribe({
+      next: (res: any) => {
+        if (res.statusCode == 200) {
+          this.villageArr = res.responseData;
+        }
+      },
+      error: ((err: any) => { this.errors.handelError(err) })
+    });
+  }
+
   imgUpload(event : any){
     console.log("event", event);
     this.fileUpload.uploadDocuments(event, 'Upload', 'jpg, jpeg, png').subscribe((res : any)=>{
@@ -163,6 +176,8 @@ export class AddUpdateSchoolRegistrationComponent {
       "lan": ['EN']
     })
   }
+
+ 
 
 
 
