@@ -15,10 +15,10 @@ export class AddUpdateAgencyRegistrationComponent {
   agencyRegisterForm!: FormGroup;
   districtData = new Array();
   talukaData = new Array();
-  editData : any;
-  constructor(public dialogRef: MatDialogRef<AddUpdateAgencyRegistrationComponent>, private api : ApiService,
-    private fb: FormBuilder, private master: MasterService , public validation : ValidationService,
-     private common : CommonMethodsService, @Inject(MAT_DIALOG_DATA) public data:any) {  }
+  editData: any;
+  constructor(public dialogRef: MatDialogRef<AddUpdateAgencyRegistrationComponent>, private api: ApiService,
+    private fb: FormBuilder, private master: MasterService, public validation: ValidationService,
+    private common: CommonMethodsService, @Inject(MAT_DIALOG_DATA) public data: any) { }
 
   ngOnInit() {
     this.editData = this.data
@@ -27,7 +27,7 @@ export class AddUpdateAgencyRegistrationComponent {
     this.getAllTalukas();
   }
 
-  defaultForm(data?:any) {
+  defaultForm(data?: any) {
     this.agencyRegisterForm = this.fb.group({
       "createdBy": 0,
       "modifiedBy": 0,
@@ -35,16 +35,16 @@ export class AddUpdateAgencyRegistrationComponent {
       "modifiedDate": new Date(),
       "isDeleted": true,
       "id": 0,
-      "agency_Name": [data ? data.agency_Name:"", Validators.required],
-      "m_Agency_Name": [data ? data.m_Agency_Name:"", Validators.required],
-      "contactPerson_Name": [data ? data.contactPerson_Name:"", [Validators.required, Validators.pattern(this.validation.fullName)]],
-      "agency_MobileNo": [data ? data.agency_MobileNo:"", [Validators.required, Validators.pattern(this.validation.mobile_No)]],
-      "contact_No": [data ? data.contact_No:"", [Validators.required, Validators.pattern(this.validation.mobile_No)]],
-      "emailId": [data ? data.emailId:"", [Validators.required, Validators.pattern(this.validation.email)]],
-      "agency_EmailId": [data ? data.agency_EmailId:"", [Validators.required, Validators.pattern(this.validation.email)]],
-      "address": [data ? data.address:"", [Validators.required, Validators.maxLength(500)]],
+      "agency_Name": [data ? data.agency_Name : "", [Validators.required, Validators.pattern(this.validation.fullName)]],
+      "m_Agency_Name": [data ? data.m_Agency_Name : ""],
+      "contactPerson_Name": [data ? data.contactPerson_Name : "", [Validators.required, Validators.pattern(this.validation.fullName)]],
+      "agency_MobileNo": [data ? data.agency_MobileNo : "", [Validators.required, Validators.pattern(this.validation.mobile_No)]],
+      "contact_No": [data ? data.contact_No : "", [Validators.required, Validators.pattern(this.validation.mobile_No)]],
+      "emailId": [data ? data.emailId : "", [Validators.required, Validators.pattern(this.validation.email)]],
+      "agency_EmailId": [data ? data.agency_EmailId : "", [Validators.required, Validators.pattern(this.validation.email)]],
+      "address": [data ? data.address : "", [Validators.required, Validators.maxLength(500)]],
       "districtId": [{ value: 1, disabled: true }],
-      "talukaId": [data ? data.talukaId:"", Validators.required],
+      "talukaId": [data ? data.talukaId : "", Validators.required],
       "lan": "",
       "localID": 0,
       "timestamp": new Date()
@@ -65,20 +65,20 @@ export class AddUpdateAgencyRegistrationComponent {
     })
   }
 
-  onCancel(clear:any) {
+  onCancel(clear: any) {
     clear.resetForm();
     this.data = '';
     this.defaultForm();
   }
 
-  onSubmit(clear:any) {
+  onSubmit(clear: any) {
     let obj = this.agencyRegisterForm.value;
     obj.districtId = 1;
-    this.data ? obj.id = this.editData.id :'';
-    this.api.setHttp(this.data ? 'put':'post', this.data ? 'zp-osmanabad/Agency/Update': 'zp-osmanabad/Agency/Add', false, obj, false, 'baseUrl');
+    this.data ? obj.id = this.editData.id : '';
+    this.api.setHttp(this.data ? 'put' : 'post', this.data ? 'zp-osmanabad/Agency/Update' : 'zp-osmanabad/Agency/Add', false, obj, false, 'baseUrl');
     this.api.getHttp().subscribe({
       next: (res: any) => {
-        res.statusCode == 200 ? (this.common.snackBar(res.statusMessage,0), this.dialogRef.close('Yes'), clear.resetForm(), this.defaultForm()): this.common.snackBar(res.statusMessage,1);
+        res.statusCode == 200 ? (this.common.snackBar(res.statusMessage, 0), this.dialogRef.close('Yes'), clear.resetForm(), this.defaultForm()) : this.common.snackBar(res.statusMessage, 1);
       }
     })
   }
