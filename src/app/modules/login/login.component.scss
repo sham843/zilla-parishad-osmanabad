@@ -1,52 +1,51 @@
-
-
-// .logos {
-//     background-color: var(--main-color);
-//     padding: 20px;
-//     border-top-left-radius: 30px;
-//     border-bottom-left-radius: 30px;
-// }
-
-
-
-.login-body .image-holder {
-  display: table-cell;
-    width: 310px;
-    height: 88vh;
-    background-color: cadetblue;
+.login-wrapper{
+    height: 100vh;
+    display: flex;
 }
-
-.login-body .login-width {
-    display: table;
-    width: 100%;
-    margin: 0 auto;
-   
+.login-wrapper .login-left{
+    background: transparent linear-gradient(180deg, #039286 0%, #014642 100%) 0% 0% no-repeat;
+    height: 100%;
+    width: 30%;
 }
-
-.login-body .form-width {
-    display: table-cell;
-    width: 0px;
-    background-color: #ffffff;
-    padding: 10px 60px;
-   
+.login-wrapper .login-right{
+    height: 100%;
+    width: 70%;
 }
-.form-body{
-    margin-top: 100px;
-    padding: 10px 210px;
+.logo img{
+    width: 80px;
+    margin-right: 15px;
 }
-
-@media only screen and (max-width: 767px) {
-
-    .form-body{
-        margin-top: 100px;
-        padding: 10px 10px;
+.logo h1,
+.logo h5{
+   color: var(--main-color);
+   margin-bottom: 0;
+}
+.logo h5{
+   letter-spacing: 4.93px;
+}
+.logo h1{
+    font-weight: 700;
+    font-size: 2rem;
+}
+a{
+    font-size: 0.85rem;
+    text-decoration: none;
+}
+@media only screen and (max-width: 768px){
+    .login-wrapper .login-left{
+        display:none
     }
-    .login-body .form-width {
-        display: table-cell;
-        width: 400px;
-        background-color: #ffffff;
-        padding: 12px 12px;
-        color: #505e6c;
+    .login-wrapper .login-right{
+        height: 100%;
+        width: 100%;
     }
-    
+}
+@media only screen and (max-width: 420px) {
+    .login-wrapper .login-left{
+        display:none
+    }
+    .login-wrapper .login-right{
+        height: 100%;
+        width: 100%;
+    }
 }
