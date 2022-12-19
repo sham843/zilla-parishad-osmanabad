@@ -59,6 +59,25 @@
                 </mat-form-field>
             </div>
             <div class="col-sm-4">
+                <mat-form-field appearance="outline" class="w-100">
+                    <mat-label>Student Name</mat-label>
+                    <input matInput >
+                </mat-form-field>
+            </div>
+            <div class="col-sm-4">
+                <mat-form-field appearance="outline" class="w-100 ">
+                    <mat-label>Upload Photo</mat-label>
+                    <input matInput>
+                    <mat-icon matSuffix>
+                        <span class="material-symbols-outlined">
+                            upload
+                        </span>
+                    </mat-icon>
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-4">
                 <mat-form-field appearance="outline" class="w-100 ">
                     <mat-label>Standard</mat-label>
                     <mat-select placeholder="select">
@@ -67,65 +86,25 @@
                     </mat-select>
                 </mat-form-field>
             </div>
-
-        </div>
-        <div class="row">
             <div class="col-sm-4">
                 <mat-form-field appearance="outline" class="w-100">
-                    <mat-label>Item ID</mat-label>
-                    <input matInput placeholder="Item ID">
-                </mat-form-field>
-            </div>
-            <div class="col-sm-4">
-                <mat-form-field appearance="outline" class="w-100">
-                    <mat-label>Middle Name</mat-label>
-                    <input matInput placeholder="Middle Nam">
-
-                </mat-form-field>
-            </div>
-            <div class="col-sm-4">
-                <mat-form-field appearance="outline" class="w-100">
-                    <mat-label>Last Name</mat-label>
-                    <input matInput placeholder="Last Name">
-
-                </mat-form-field>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-sm-4">
-                <mat-form-field appearance="outline" class="w-100">
-                    <mat-label>Saral ID</mat-label>
-                    <input matInput placeholder="Saral ID">
-
+                    <mat-label>Birth Date</mat-label>
+                    <input matInput [matDatepicker]="picker">
+                    <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker>
                 </mat-form-field>
             </div>
             <div class="col-sm-4">
                 <mat-form-field appearance="outline" class="w-100 ">
                     <mat-label>Gender</mat-label>
-                    <mat-select placeholder="Select">
-                        <mat-option value="one">First option</mat-option>
-                        <mat-option value="two">Second option</mat-option>
+                    <mat-select>
+                        <mat-option value="one">Male</mat-option>
+                        <mat-option value="two">Female</mat-option>
                     </mat-select>
-                </mat-form-field>
-            </div>
-            <div class="col-sm-4">
-                <mat-form-field appearance="outline" class="w-100">
-                    <mat-label>Birth Date</mat-label>
-                    <input matInput [matDatepicker]="datepicker">
-                    <mat-datepicker-toggle matIconSuffix [for]="datepicker"></mat-datepicker-toggle>
-                    <mat-datepicker #datepicker>
-                    </mat-datepicker>
                 </mat-form-field>
             </div>
         </div>
         <div class="row">
-            <div class="col-sm-4">
-                <mat-form-field appearance="outline" class="w-100">
-                    <mat-label>Aadhar Card</mat-label>
-                    <input matInput placeholder="Aadhar Card">
-
-                </mat-form-field>
-            </div>
             <div class="col-sm-4">
                 <mat-form-field appearance="outline" class="w-100 ">
                     <mat-label>Religion</mat-label>
@@ -139,7 +118,25 @@
                 <mat-form-field appearance="outline" class="w-100">
                     <mat-label>Cast</mat-label>
                     <input matInput placeholder="Cast">
-
+                </mat-form-field>
+            </div>
+            <div class="col-sm-4">
+                <mat-form-field appearance="outline" class="w-100 ">
+                    <mat-label>Aadhar ID</mat-label>
+                    <input matInput>
+                    <mat-icon matSuffix>
+                        <span class="material-symbols-outlined">
+                            upload
+                        </span>
+                    </mat-icon>
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-4">
+                <mat-form-field appearance="outline" class="w-100">
+                    <mat-label>Saral ID</mat-label>
+                    <input matInput placeholder="Aadhar Card">
                 </mat-form-field>
             </div>
         </div>
@@ -147,37 +144,37 @@
         <div class="row">
             <div class="col-sm-4">
                 <mat-form-field appearance="outline" class="w-100">
-                    <mat-label>Father Name</mat-label>
-                    <input matInput placeholder="Father Name">
-
-                </mat-form-field>
-            </div>
-            <div class="col-sm-4">
-                <mat-form-field appearance="outline" class="w-100">
-                    <mat-label>Mother Name</mat-label>
-                    <input matInput placeholder="Mother Name">
-                </mat-form-field>
-            </div>
-            <div class="col-sm-4">
-                <mat-form-field appearance="outline" class="w-100">
-                    <mat-label>Mobile No.</mat-label>
-                    <input matInput placeholder="Mobile No.">
-
+                    <mat-label>Parents Mobile No.</mat-label>
+                    <input matInput>
                 </mat-form-field>
             </div>
         </div>
         <div class="row">
             <div class="col-sm-4">
                 <mat-form-field appearance="outline" class="w-100">
-                    <mat-label>Email ID</mat-label>
-                    <input matInput placeholder="Email ID">
+                    <mat-label>Father Name</mat-label>
+                    <input matInput>
 
+                </mat-form-field>
+            </div>
+            <div class="col-sm-4">
+                <mat-form-field appearance="outline" class="w-100">
+                    <mat-label>Mother Name</mat-label>
+                    <input matInput >
+                </mat-form-field>
+            </div>
+            <div class="col-sm-4">
+                <mat-form-field appearance="outline" class="w-100">
+                    <mat-label>Email ID</mat-label>
+                    <input matInput>
                 </mat-form-field>
             </div>
         </div>
     </mat-card-content>
     <mat-card-footer class="card-footer">
-        <button class="btn btn-outline-secondary me-2">Cancel</button>
-        <button class="btn btn-main ">Submit</button>
+        <mat-card-actions align="end">
+            <button class="btn btn-outline-secondary me-2">Cancel</button>
+            <button class="btn btn-main ">Submit</button>
+        </mat-card-actions>
     </mat-card-footer>
 </mat-card>
