@@ -12,13 +12,18 @@
       <div class="text-main fw-bold">
         Student List
       </div>
+<<<<<<< HEAD
       <div class="d-flex  align-items-center justify-content-between gap-2">
         <button mat-flat-button class="btn-main btn-icon" (click)="loadtableView()">
+=======
+      <div class="d-flex align-items-center justify-content-end gap-2">
+        <button mat-flat-button class="btn-main btn-icon" (click)="selectGrid('Table')">
+>>>>>>> e57a93a5bbedd40b6ca022ee671d0a15fa1b1c53
           <mat-icon>
             format_list_bulleted
           </mat-icon>
         </button>
-        <button mat-flat-button class="btn-second btn-icon" (click)="loadGridView()">
+        <button mat-flat-button class="btn-second btn-icon" (click)="selectGrid('Card')">
           <mat-icon>
             grid_view
           </mat-icon>
@@ -44,7 +49,7 @@
         </mat-menu>
         <button mat-flat-button class="btn-main" (click)="addUpdateAgency()">
           <mat-icon>add</mat-icon>
-           Add Student
+          Add Student
         </button>
       </div>
     </div>
@@ -75,12 +80,12 @@
     </div>
   </mat-card-header>
   <mat-card-content class="card-body">
-    <ng-container *ngIf="this.viewFlags.table">
-      <app-table (recObjToChild)="childCompInfo($event)"></app-table>
+    <ng-container *ngIf="!cardViewFlag">
+      <app-table (recObjToChild)="childTableCompInfo($event)"></app-table>
     </ng-container>
 
-    <ng-container *ngIf="this.viewFlags.grid">
-      <app-card-grid-view></app-card-grid-view>
+    <ng-container *ngIf="cardViewFlag">
+      <app-card-grid-view (recObjToChild)="childGridCompInfo($event)"></app-card-grid-view>
     </ng-container>
   </mat-card-content>
 </mat-card>

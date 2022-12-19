@@ -1,52 +1,56 @@
-<div class="login-body">
-    <div class="login-width">
-        <div class="image-holder">
-
-        </div>
-        <div class="form-width h-100">
-            <div class="d-flex justify-content-end">
-                <a routerLink="../home" class="text-decoration-none d-flex align-items-center text-black">
-                    <span class="material-symbols-outlined">
-                        arrow_back_ios
-                    </span>Go To Home Page</a>
-            </div>
-            <div class=" form-body h-100">
-                <div class="d-flex gap-2 justify-content-center mb-4">
-                    <img src="../../../assets/images/logo.png" alt="logo" height="70px">
-                    <div>
-                        <h2>जिल्हा परिषद</h2>
-                        <h5>उस्मानाबाद</h5>
-                    </div>
+<div class="login-wrapper">
+    <div class="login-left"></div>
+    <div class="login-right">
+        <div class="d-flex justify-content-end py-2 pe-4">
+            <a routerLink="../home" class="text-main text-decoration-none">
+                <div class="d-flex w-100">
+                    <mat-icon>keyboard_double_arrow_left</mat-icon>
+                    <span>Go to Home Page</span>
                 </div>
-                <mat-tab-group animationDuration="400ms">
-                    <mat-tab label="Admin">
-                        <mat-form-field appearance="outline" class="w-100 mt-3">
-                            <mat-label>User Name</mat-label>
-                            <input matInput placeholder="User Name">
-                        </mat-form-field>
-                        <mat-form-field appearance="outline" class="w-100">
-                            <mat-label>Password</mat-label>
-                            <input matInput placeholder="Password">
-                        </mat-form-field>
+            </a>
+        </div>
 
-                    </mat-tab>
-                    <mat-tab label="Officer">
-                        <mat-form-field appearance="outline" class="w-100 mt-3">
-                            <mat-label>User Name</mat-label>
-                            <input matInput placeholder="User Name">
-                        </mat-form-field>
-                        <mat-form-field appearance="outline" class="w-100 ">
-                            <mat-label>Password</mat-label>
-                            <input matInput placeholder="Password">
-                        </mat-form-field> </mat-tab>
-                </mat-tab-group>
-                <button mat-flat-button class="btn-main me-2">
-                    Submit
-                </button>
-                <a href="#">Resend OTP</a>
+        <div class="container">
+            <div class="row justify-content-center mt-5">
+                <div class="col-sm-8 col-12 col-md-8 col-lg-4">
+                    <div class="logo d-flex align-items-center mb-5">
+                        <img src="assets/images/logo.png">
+                        <div>
+                            <h1>जिल्हा परिषद</h1>
+                            <h5>उस्मानाबाद</h5>
+                        </div>
+                    </div>
 
+                    <mat-tab-group class="p-2">
+                        <mat-tab label="Admin">
+                            <div class="overflow-hidden">
+                                <div class="mb-2 text-center mt-5">
+                                    <mat-form-field appearance="outline" class="w-100">
+                                        <mat-label>User Name</mat-label>
+                                        <input matInput placeholder="User Name">
+                                    </mat-form-field>
+                                </div>
+                                <div class="mb-3 text-center">
+                                    <mat-form-field appearance="outline" class="w-100">
+                                        <mat-label>Password</mat-label>
+                                        <input matInput [type]="hide ? 'password' : 'text'">
+                                        <button mat-icon-button matSuffix (click)="hide = !hide"
+                                            [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+                                            <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                                        </button>
+                                    </mat-form-field>
+                                </div>
+                                <div class="d-flex align-items-center justify-content-between">
+                                    <button mat-flat-button class="btn-main">Submit</button>
+                                    <a routerLink="../forgot-password" class="text-main">Forgot Password</a>
+                                </div>
+                            </div>
+                        </mat-tab>
+                        <mat-tab label="Officer"> Content 2 </mat-tab>
+                    </mat-tab-group>
+
+                </div>
             </div>
-
-
         </div>
     </div>
+</div>
