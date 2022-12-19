@@ -11,12 +11,14 @@ import {MatButtonModule} from '@angular/material/button';
 import { PageStatisticsComponent } from './components/page-statistics/page-statistics.component';
 import {MatIconModule} from '@angular/material/icon';
 import { MatCardModule } from '@angular/material/card';
+import { CardGridViewComponent } from './components/card-grid-view/card-grid-view.component';
 
 @NgModule({
   declarations: [
     DashPipe,
     TableComponent,
-    PageStatisticsComponent
+    PageStatisticsComponent,
+    CardGridViewComponent
   ],
   imports: [
     CommonModule,
@@ -27,7 +29,8 @@ import { MatCardModule } from '@angular/material/card';
     MatButtonModule,
     MatIconModule,
     MatCardModule,
+    
   ],
-  exports: [TableComponent, PageStatisticsComponent]
+  exports: [TableComponent, PageStatisticsComponent,CardGridViewComponent]
 })
 export class SharedModule { }
