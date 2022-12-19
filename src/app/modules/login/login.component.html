@@ -46,7 +46,30 @@
                                 </div>
                             </div>
                         </mat-tab>
-                        <mat-tab label="Officer"> Content 2 </mat-tab>
+                        <mat-tab label="Officer"> 
+                            <div class="overflow-hidden">
+                                <div class="mb-2 text-center mt-5">
+                                    <mat-form-field appearance="outline" class="w-100">
+                                        <mat-label>Mobile No.</mat-label>
+                                        <input matInput placeholder="Mobile No.">
+                                    </mat-form-field>
+                                </div>
+                                <div class="mb-3 text-center">
+                                    <mat-form-field appearance="outline" class="w-100">
+                                        <mat-label>Password</mat-label>
+                                        <input matInput [type]="hide ? 'password' : 'text'">
+                                        <button mat-icon-button matSuffix (click)="hide = !hide"
+                                            [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+                                            <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                                        </button>
+                                    </mat-form-field>
+                                </div>
+                                <div class="d-flex align-items-center justify-content-between">
+                                    <button mat-flat-button class="btn-main">Submit</button>
+                                    <a routerLink="../forgot-password" class="text-main">Forgot Password</a>
+                                </div>
+                            </div>
+                        </mat-tab>
                     </mat-tab-group>
 
                 </div>
