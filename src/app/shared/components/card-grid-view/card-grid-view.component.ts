@@ -29,12 +29,10 @@ export class CardGridViewComponent {
     // this.tableInfo = [];
     this.apiService.DataForGrid.subscribe({
       next: (resp: any) => {
-        console.log("response is ", resp);
         this.tableInfo = resp;
+        console.log(this.tableInfo);
         this.tableInfo.tableData ? this.tableRecords = new MatTableDataSource(this.tableInfo.tableData) : this.tableRecords = [];
         this.tableSize = this.tableInfo.tableSize;
-        // this.tableInfo.tableData ? this.tableRecords = (this.tableInfo.tableData) : this.tableRecords = [];
-        console.log("jdcdckj", this.tableRecords);
       },
       error: (error: any) => {
         console.log("error is ", error);
@@ -47,4 +45,5 @@ export class CardGridViewComponent {
     this.pageIndex = obj.pageNumber;
     this.recObjToChild.emit(obj);
   }
+  
 }
