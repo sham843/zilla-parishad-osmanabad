@@ -92,12 +92,25 @@ getDesignationData(){
 
   //#region -------------------------------------------dialog box open function's start heare----------------------------------------//
   addUpdateAgency(obj?: any) {   
-    this.dialog.open(AddUpdateDesignationMasterComponent, {
+    debugger;
+    const dialogRef= this.dialog.open(AddUpdateDesignationMasterComponent, {
       width: '420px',
       data: obj,
       disableClose: true,
       autoFocus: false
-    })
+    })  
+     dialogRef.afterClosed().subscribe((result: any) => {
+     
+      if(result == 'Yes'){
+       
+        this.getTableData();
+      }
+      // else if(result == 'Yes'){
+      //   this.currentPage =0;
+      //   this.getTableData();
+      // }  
+
+    });
   }
 
   globalDialogOpen() {
