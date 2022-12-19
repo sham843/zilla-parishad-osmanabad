@@ -7,7 +7,7 @@ import { MasterService } from 'src/app/core/services/master.service';
   styleUrls: ['./add-update-office-users.component.scss']
 })
 export class AddUpdateOfficeUsersComponent implements OnInit {
-
+  levels = new Array();
   constructor(private masterService: MasterService){}
 
 
@@ -19,6 +19,7 @@ export class AddUpdateOfficeUsersComponent implements OnInit {
     this.masterService.GetAllDesignationLevel('mr-IN').subscribe({
       next: (resp: any)=>{
         console.log(" all getLevelDrop:", resp);    
+        this.levels = resp.responseData;
       },
       error: ( error : any)=>{
         console.log("error is :", error);  
