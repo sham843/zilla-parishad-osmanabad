@@ -8,7 +8,7 @@ import { MatSort } from '@angular/material/sort';
 @Component({
   selector: 'app-table',
   templateUrl: './table.component.html',
-  styleUrls: ['./table.component.scss']
+  styleUrls: ['./table.component.scss'],
 })
 export class TableComponent implements OnInit {
   @Output() recObjToChild = new EventEmitter<any>();
@@ -41,7 +41,6 @@ export class TableComponent implements OnInit {
         this.tableInfo.tableData ? this.tableRecords = new MatTableDataSource(this.tableInfo.tableData) : this.tableRecords = [];
         this.paginator?._pageIndex != 0 && this.pageIndex != this.pageNumber ? this.paginator?.firstPage() : '';
         this.tableRecords.sort = this.sort;
-
       }
     })
   }

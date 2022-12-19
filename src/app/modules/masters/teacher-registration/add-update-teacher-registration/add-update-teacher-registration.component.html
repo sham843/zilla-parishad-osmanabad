@@ -79,7 +79,7 @@
             </div>
         </div>
         <mat-card-subtitle>Address Details</mat-card-subtitle>
-        <div class="row">
+        <div class="row mt-2">
             <div class="col-sm-6">
                 <mat-form-field appearance="outline" class="w-100 ">
                     <mat-label>Current Address</mat-label>
@@ -93,9 +93,109 @@
                 </mat-form-field>
             </div>
         </div>
+
+        <mat-card-subtitle>Educational and Professional Details</mat-card-subtitle>
+        <div class="row mt-2">
+            <div class="col-sm-4">
+                <mat-form-field appearance="outline" class="w-100 ">
+                    <mat-label>Educational Qualification</mat-label>
+                    <mat-select>
+                        <mat-option value="one">B.tech</mat-option>
+                        <mat-option value="two">Bsc</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <div class="col-sm-4">
+                <mat-form-field appearance="outline" class="w-100 ">
+                    <mat-label>Specialization</mat-label>
+                    <mat-select>
+                        <mat-option value="one">Bsc Computer</mat-option>
+                        <mat-option value="two"> B.Tech Computer</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <div class="col-sm-4">
+                <mat-form-field appearance="outline" class="w-100 ">
+                    <mat-label>Professional Qualification</mat-label>
+                    <mat-select>
+                        <mat-option value="one">MSc</mat-option>
+                        <mat-option value="two">M.tech</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+        </div>
+
+        <mat-card-subtitle>Job Assignment</mat-card-subtitle>
+        <div class="row my-2">
+            <div class="col-sm-4">
+                <mat-form-field appearance="outline" class="w-100 ">
+                    <mat-label>District</mat-label>
+                    <mat-select>
+                        <mat-option value="one">Dhule</mat-option>
+                        <mat-option value="two">Jalgaon</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <div class="col-sm-4">
+                <mat-form-field appearance="outline" class="w-100 ">
+                    <mat-label>Taluka</mat-label>
+                    <mat-select>
+                        <mat-option value="one">Shindkheda</mat-option>
+                        <mat-option value="two">Shirpur</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <div class="col-sm-4">
+                <mat-form-field appearance="outline" class="w-100 ">
+                    <mat-label>Role Of Teacher</mat-label>
+                    <mat-select>
+                        <mat-option value="one">MSc</mat-option>
+                        <mat-option value="two">M.tech</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <div class="col-sm-4">
+                <mat-form-field appearance="outline" class="w-100 ">
+                    <mat-label>School</mat-label>
+                    <mat-select>
+                        <mat-option value="one">Nutan School</mat-option>
+                        <mat-option value="two">R.C.patel</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <div class="col-sm-4">
+                <mat-form-field appearance="outline" class="w-100">
+                    <mat-label>Select Subject</mat-label>
+                    <input matInput>
+                </mat-form-field>
+            </div>
+            <div class="col-sm-4">
+                <mat-form-field appearance="outline" class="w-100">
+                    <mat-label>Assigned Class</mat-label>
+                    <input matInput>
+                </mat-form-field>
+            </div>
+        </div>
+        <mat-card-actions align="end">
+            <div class="d-flex align-items-center justify-content-end gap-2">
+                <button mat-flat-button class="btn-main btn-icon">
+                   <span>1</span>
+                </button>
+                <button mat-flat-button class="btn-second btn-icon">
+                    <span>2</span>
+                </button>
+                <button mat-flat-button class="btn-second btn-icon">
+                    <span>3</span>
+                </button>
+                <button mat-flat-button class="btn-second btn-icon">
+                    <span>4</span>
+                </button>
+                <button mat-flat-button class="btn-second btn-icon">
+                    <span>5</span>
+                </button>
+            </div>
+        </mat-card-actions>
     </mat-card-content>
-
-
     <mat-card-footer class="card-footer">
         <mat-card-actions align="end">
             <button mat-flat-button class="btn-second me-2">Cancel</button>

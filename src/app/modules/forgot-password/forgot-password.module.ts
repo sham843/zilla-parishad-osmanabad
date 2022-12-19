@@ -1,30 +1,29 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { SchoolRegistrationRoutingModule } from './school-registration-routing.module';
-import { AddUpdateSchoolRegistrationComponent } from './add-update-school-registration/add-update-school-registration.component';
-import { MatDialogModule } from '@angular/material/dialog';
+import { ForgotPasswordRoutingModule } from './forgot-password-routing.module';
+import { ForgotPasswordComponent } from './forgot-password.component';
+import { SharedModule } from 'src/app/shared/shared.module';
 import { MatSelectModule } from '@angular/material/select';
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatButtonModule } from '@angular/material/button';
-import { SharedModule } from 'src/app/shared/shared.module';
-import { SchoolRegistrationComponent } from './school-registration.component';
 import { MatInputModule } from '@angular/material/input';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
 import { MatIconModule } from '@angular/material/icon';
-import { ReactiveFormsModule } from '@angular/forms';
+
 
 @NgModule({
   declarations: [
-    AddUpdateSchoolRegistrationComponent,
-    SchoolRegistrationComponent
+    ForgotPasswordComponent
   ],
   imports: [
     CommonModule,
-    SchoolRegistrationRoutingModule,
-    MatDialogModule,
+    ForgotPasswordRoutingModule,
+    SharedModule,
     MatSelectModule,
     MatCardModule,
     MatFormFieldModule,
@@ -32,9 +31,9 @@ import { ReactiveFormsModule } from '@angular/forms';
     MatMenuModule,
     MatButtonModule,
     MatInputModule,
-    SharedModule,
-    MatIconModule,
-    ReactiveFormsModule
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatIconModule
   ]
 })
-export class SchoolRegistrationModule { }
+export class ForgotPasswordModule { }
