@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { ApiService } from 'src/app/core/services/api.service';
+import { CommonMethodsService } from 'src/app/core/services/common-methods.service';
 import { ErrorsService } from 'src/app/core/services/errors.service';
 import { AddUpdateOfficeUsersComponent } from './add-update-office-users/add-update-office-users.component';
 
@@ -15,7 +16,7 @@ export class OfficeUsersComponent {
   pageNumber: number = 1;
   searchContent = new FormControl('');
 
-  constructor(private apiService: ApiService, private errors: ErrorsService, private dialog: MatDialog) { }
+  constructor(private apiService: ApiService, private errors: ErrorsService, private dialog: MatDialog, private commonService: CommonMethodsService) { }
 
   ngOnInit() {
     this.getTableData()
@@ -30,14 +31,14 @@ export class OfficeUsersComponent {
     this.pageNumber = flag == 'filter' ? 1 : this.pageNumber;
     let tableDataArray = new Array();
     let tableDatasize!: Number;
-    let str = `?textSearch=${this.searchContent.value}&pageno=${this.pageNumber}&pagesize=10&lan='mr-IN'`;
+    let str = `?textSearch=${this.searchContent.value}&pageno=${this.pageNumber}&pagesize=10&l=mr-IN`;
     this.apiService.setHttp('GET', 'zp_osmanabad/Office/GetAllOffice' + str, false, false, false, 'baseUrl');
     this.apiService.getHttp().subscribe({
-
       next: (res: any) => {
         if (res.statusCode == "200") {
           tableDataArray = res.responseData.responseData1;
           tableDatasize = res.responseData.responseData2.pageCount;
+          this.commonService.snackBar(res.statusMessage, 0);
         } else {
           tableDataArray = [];
           tableDatasize = 0;
@@ -78,7 +79,6 @@ export class OfficeUsersComponent {
         break;    
     }
   }
-
 
 
   clearFilterData(){

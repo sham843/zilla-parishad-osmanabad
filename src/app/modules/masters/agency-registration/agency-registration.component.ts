@@ -12,21 +12,21 @@ import { AddUpdateAgencyRegistrationComponent } from './add-update-agency-regist
 })
 export class AgencyRegistrationComponent {
   pageNumber: number = 1;
-  filterForm! : FormGroup;
-  constructor(private dialog: MatDialog, private apiService : ApiService,
-     private errors : ErrorsService, private fb : FormBuilder) { }
+  filterForm!: FormGroup;
+  constructor(private dialog: MatDialog, private apiService: ApiService,
+    private errors: ErrorsService, private fb: FormBuilder) { }
 
   ngOnInit() {
     this.filterData();
     this.getTableData();
-    
+
   }
 
-  filterData(){
+  filterData() {
     this.filterForm = this.fb.group({
-      name : '',
-      contactNo :'',
-      email : '' 
+      name: '',
+      contactNo: '',
+      email: ''
     })
   }
 
@@ -38,7 +38,6 @@ export class AgencyRegistrationComponent {
     let str = `pageno=${this.pageNumber}&pagesize=10&Agency_Name=${obj.name}&Contact_No=${obj.contactNo}&EmailId=${obj.email}`;
     this.apiService.setHttp('GET', 'zp-osmanabad/Agency/GetAll?' + str, false, false, false, 'baseUrl');
     this.apiService.getHttp().subscribe({
-
       next: (res: any) => {
         if (res.statusCode == "200") {
           tableDataArray = res.responseData.responseData1;
@@ -81,19 +80,18 @@ export class AgencyRegistrationComponent {
         break;
     }
   }
-  
-  addUpdateAgency(_obj?:any) {
+
+  addUpdateAgency(_obj?: any) {
     const dialogRef = this.dialog.open(AddUpdateAgencyRegistrationComponent, {
-      width:'900px',
+      width: '900px',
       data: _obj,
       disableClose: true,
       autoFocus: false
     });
 
     dialogRef.afterClosed().subscribe(result => {
-     result=='Yes' ? this.getTableData() : '' ;
+      result == 'Yes' ? this.getTableData() : '';
     });
   }
-
-  }
+}
 
