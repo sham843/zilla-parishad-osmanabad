@@ -43,7 +43,7 @@ export class AgencyRegistrationComponent {
           tableDataArray = [];
           tableDatasize = 0;
         }
-        let displayedColumns = ['srNo', 'agency_Name', 'contact_No', 'emailId', 'action'];
+        let displayedColumns = ['srNo', 'agency_Name', 'contact_No', 'agency_EmailId', 'action'];
         let displayedheaders = ['Sr. No.', 'Name', 'Contact No.', 'Email ID', 'Action'];
         let tableData = {
           pageNumber: this.pageNumber,
