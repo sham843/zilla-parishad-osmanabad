@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ApiService } from 'src/app/core/services/api.service';
 import { CommonMethodsService } from 'src/app/core/services/common-methods.service';
+import { ErrorsService } from 'src/app/core/services/errors.service';
 import { MasterService } from 'src/app/core/services/master.service';
 import { ValidationService } from 'src/app/core/services/validation.service';
 
@@ -18,7 +19,7 @@ export class AddUpdateAgencyRegistrationComponent {
   editData: any;
   constructor(public dialogRef: MatDialogRef<AddUpdateAgencyRegistrationComponent>, private api: ApiService,
     private fb: FormBuilder, private master: MasterService, public validation: ValidationService,
-    private common: CommonMethodsService, @Inject(MAT_DIALOG_DATA) public data: any) { }
+    private common: CommonMethodsService, @Inject(MAT_DIALOG_DATA) public data: any, private errors : ErrorsService) { }
 
   ngOnInit() {
     this.editData = this.data
@@ -44,11 +45,12 @@ export class AddUpdateAgencyRegistrationComponent {
       "agency_EmailId": [data ? data.agency_EmailId : "", [Validators.required, Validators.pattern(this.validation.email)]],
       "address": [data ? data.address : "", [Validators.required, Validators.maxLength(500)]],
       "districtId": [{ value: 1, disabled: true }],
-      "talukaId": [data ? data.talukaId : "", Validators.required],
+      "talukaId": ["", Validators.required],
       "lan": "",
       "localID": 0,
       "timestamp": new Date()
     })
+    data ? this.getAllTalukas() : ''
   }
 
   get fc() { return this.agencyRegisterForm.controls }
@@ -61,7 +63,7 @@ export class AddUpdateAgencyRegistrationComponent {
 
   getAllTalukas() {
     this.master.getAllTaluka('').subscribe((res: any) => {
-      res.statusCode == 200 ? this.talukaData = res.responseData : this.talukaData = [];
+      res.statusCode == 200 ? (this.talukaData = res.responseData, this.editData ? this.fc['talukaId'].setValue(this.editData.talukaId):'') : this.talukaData = [];
     })
   }
 
@@ -79,7 +81,9 @@ export class AddUpdateAgencyRegistrationComponent {
     this.api.getHttp().subscribe({
       next: (res: any) => {
         res.statusCode == 200 ? (this.common.snackBar(res.statusMessage, 0), this.dialogRef.close('Yes'), clear.resetForm(), this.defaultForm()) : this.common.snackBar(res.statusMessage, 1);
-      }
+      },
+      error: ((err: any) => { this.errors.handelError(err) })
     })
   }
+  
 }
