@@ -68,6 +68,7 @@ export class AgencyRegistrationComponent {
   onClear() {
     this.filterForm.reset();
     this.filterData();
+    this.pageNumber = 1;
     this.getTableData();
   }
 
