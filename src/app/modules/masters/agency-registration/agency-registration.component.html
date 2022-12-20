@@ -39,30 +39,30 @@
     </div>
   </mat-card-header>
   <form [formGroup]="filterForm">
-    <mat-card-header class="card-header">
-      <div class="row w-100">
-
-        <div class="col-sm-3">
+    <mat-card-header class="card-header mb-0 pb-0">
+      <div class="row w-100 mt-2">
+        <div class="col-sm-auto">
           <mat-form-field appearance="outline" class="w-100">
-            <mat-label>Search by Name</mat-label>
-            <input matInput formControlName="name" (keypress)="getTableData()" (blur)="getTableData()"
-              placeholder="Search by Name">
+            <mat-label>Search</mat-label>
+            <input matInput formControlName="searchText" placeholder="Search by Agency Name / Contact No. / Email ID">
           </mat-form-field>
         </div>
-        <div class="col-sm-3">
+        <!-- <div class="col-sm-auto">
           <mat-form-field appearance="outline" class="w-100">
             <mat-label>Search by Contact</mat-label>
-            <input matInput formControlName="contactNo" (keypress)="getTableData()" (blur)="getTableData()"
-              placeholder="Search by Contact">
+            <input matInput formControlName="contactNo" placeholder="Search by Contact">
           </mat-form-field>
         </div>
-        <div class="col-sm-3">
+        <div class="col-sm-auto">
           <mat-form-field appearance="outline" class="w-100">
             <mat-label>Search by Email</mat-label>
-            <input matInput formControlName="email" (keypress)="getTableData()" (blur)="getTableData()"
-              placeholder="Search by Email">
+            <input matInput formControlName="email" placeholder="Search by Email">
           </mat-form-field>
-        </div>
+        </div> -->
+        <div class="col-sm-auto">
+          <button type="button" mat-flat-button class="btn-main" (click)="getTableData()">Filter</button>
+          <button type="button"  mat-flat-button class="btn-second ms-3" (click)="onClear()">Clear</button>
+         </div>
       </div>
     </mat-card-header>
   </form>

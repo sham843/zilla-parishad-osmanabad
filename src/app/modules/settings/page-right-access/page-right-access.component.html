@@ -1,11 +1,12 @@
 <mat-card>
-    <mat-card-header>
+    <mat-card-header class="mb-0 pb-0">
         <div class="d-flex">
             <mat-form-field appearance="outline" class="w-100 me-2">
-                <mat-label>Input</mat-label>
-                <input matInput [formControl]="searchContent">
+                <mat-label>Search</mat-label>
+                <input matInput [formControl]="searchContent" placeholder="Search">
             </mat-form-field>
-            <button mat-stroked-button (click)="getTableData('filter')">Filter</button>
+            <button mat-stroked-button (click)="getTableData('filter')" class="btn-main">Filter</button>
+            <button  mat-flat-button class="btn-second ms-2">Clear</button>
         </div>
     </mat-card-header>
     <mat-card-content>
