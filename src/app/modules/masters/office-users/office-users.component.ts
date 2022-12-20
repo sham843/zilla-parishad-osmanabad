@@ -66,7 +66,6 @@ export class OfficeUsersComponent {
       disableClose: true,
       autoFocus: false
     })
-
     dialogRef.afterClosed().subscribe(result => {
       result == 'Yes' ? this.getTableData() : '';
     });
@@ -87,10 +86,29 @@ export class OfficeUsersComponent {
   }
 
 
+deleteOffice(obj: any){
+ let deleteObj = [{
+    "id": obj.id,
+    "deletedBy": 1,
+    "modifiedDate": new Date(),
+    "lan": "mr-IN"
+  }]
+
+  this.apiService.setHttp('DELETE', 'zp_osmanabad/Office/DeleteOffice', false, deleteObj, false, 'baseUrl');
+  this.apiService.getHttp().subscribe({
+    next: (resp: any)=>{
+      console.log(resp);
+      resp.statusCode === "200" ? (console.log(resp),this.commonService.snackBar(resp.statusMessage, 0)):this.commonService.checkEmptyData(resp.statusMessage) == false ? this.errors.handelError(resp.statusCode) : this.commonService.snackBar(resp.statusMessage, 1);
+    },
+    error: (err: any)=> {
+      this.errors.handelError(err.status);
+      this.commonService.checkEmptyData(err.status) == false ? this.errors.handelError(err.status) : this.commonService.snackBar(err.status, 1);
+    }
+  })
+}
+
   clearFilterData(){
     this.searchContent.setValue('');
     this.getTableData();
   }
-
-
 }
