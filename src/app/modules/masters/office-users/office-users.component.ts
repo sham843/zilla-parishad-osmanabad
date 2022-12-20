@@ -86,7 +86,6 @@ export class OfficeUsersComponent {
   }
 
 
-<<<<<<< HEAD
 deleteOffice(obj: any){
  let deleteObj = [{
     "id": obj.id,
@@ -108,14 +107,8 @@ deleteOffice(obj: any){
   })
 }
 
-
-clearFilterData(){
-=======
   clearFilterData(){
->>>>>>> b791fe1b2c3dfb93bfba004c8f0addd415881739
     this.searchContent.setValue('');
     this.getTableData();
   }
-
-
 }
