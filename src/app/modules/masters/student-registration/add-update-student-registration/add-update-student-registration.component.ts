@@ -48,12 +48,12 @@ export class AddUpdateStudentRegistrationComponent {
     this.getReligion();
     this.getStandard();
     this.getCaste();
-    this.data ? this.getBtId(this.data) : ''
+    this.data ? this.getById(this.data) : ''
   }
 
   formData() {
     this.stuRegistrationForm = this.fb.group({
-      districtId: [1],
+      districtId: [{ value: 1, disabled: true }],
       talukaId: [''],
       centerId: [''],
       schoolId: [''],
@@ -191,7 +191,7 @@ export class AddUpdateStudentRegistrationComponent {
     });
   }
 
-  getBtId(obj: any) {
+  getById(obj: any) {
     this.apiService.setHttp('get', 'zp-osmanabad/Student/GetById?Id=' + obj.id, false, false, false, 'baseUrl');
     this.apiService.getHttp().subscribe({
       next: (res: any) => {
@@ -208,7 +208,7 @@ export class AddUpdateStudentRegistrationComponent {
 
   patchValue() {
     this.stuRegistrationForm.patchValue({
-      districtId: this.editObj.districtId,
+      districtId: 1,
       fullName: this.editObj.fullName,
       saralId: this.editObj.saralId,
       mobileNo: this.editObj.gaurdianModel.mobileNo,
