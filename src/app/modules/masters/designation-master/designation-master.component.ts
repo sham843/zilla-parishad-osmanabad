@@ -21,7 +21,7 @@ export class DesignationMasterComponent {
   deleteObj:any;
 
   constructor(private dialog: MatDialog, private apiService: ApiService, private errors: ErrorsService,
-    private masterService:MasterService, private service: ApiService ,private commonMethod: CommonMethodsService,
+    private masterService:MasterService ,private commonMethod: CommonMethodsService,
     private errorHandler: ErrorsService) { }
 
   ngOnInit() {
@@ -62,8 +62,7 @@ let desigLevelId = this.designationArray?.find((res:any)=>{
   getTableData(flag?:string) {
     this.pageNumber =   flag == 'filter'? 1 :this.pageNumber;
     let tableDataArray = new Array();
-    let tableDatasize!: Number;
-  // zp_osmanabad/designation-master/GetAll?pageno=1&pagesize=10&lan=EN
+    let tableDatasize!: Number; 
     let str = `Id=${this.searchContent.value?this.searchContent.value:0}&pageno=${this.pageNumber}&pagesize=10&lan=EN`;
     this.apiService.setHttp('GET', 'zp_osmanabad/designation-master/GetAll?' + str, false, false, false, 'baseUrl');
     this.apiService.getHttp().subscribe({
@@ -122,15 +121,9 @@ let desigLevelId = this.designationArray?.find((res:any)=>{
     })  
      dialogRef.afterClosed().subscribe((result: any) => {
      
-      if(result == 'Yes'){
-       
+      if(result == 'Yes'){       
         this.getTableData();
-      }
-      // else if(result == 'Yes'){
-      //   this.currentPage =0;
-      //   this.getTableData();
-      // }  
-
+      }     
     });
   }
 
@@ -166,8 +159,8 @@ let desigLevelId = this.designationArray?.find((res:any)=>{
       "lan": "EN"
     }]
 
-    this.service.setHttp('delete', 'zp_osmanabad/designation-master/Delete', false, deleteObj, false, 'baseUrl');
-    this.service.getHttp().subscribe({
+    this.apiService.setHttp('delete', 'zp_osmanabad/designation-master/Delete', false, deleteObj, false, 'baseUrl');
+    this.apiService.getHttp().subscribe({
       next: ((res: any) => {
         if (res.statusCode == '200') {
           this.commonMethod.snackBar(res.statusMessage, 0);
@@ -181,4 +174,12 @@ let desigLevelId = this.designationArray?.find((res:any)=>{
     })
   }
 
+  downloadPdf(){
+
+  }
+
+  clearForm(){
+    this.searchContent.setValue('');
+    this.getTableData();
+  }
 }
