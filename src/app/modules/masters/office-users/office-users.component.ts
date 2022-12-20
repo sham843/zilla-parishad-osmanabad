@@ -58,10 +58,10 @@ export class OfficeUsersComponent {
     });
   }
 
-  addUpdateAgency() {
-    let obj: any;
+  addUpdateOffice(obj?: any) {
     const dialogRef = this.dialog.open(AddUpdateOfficeUsersComponent, {
       width: '900px',
+      height: '300px',
       data: obj,
       disableClose: true,
       autoFocus: false
@@ -78,9 +78,11 @@ export class OfficeUsersComponent {
         this.pageNumber = obj.pageNumber;
         this.getTableData();
         break;
-      case 'Edit' || 'Delete':
-        // this.addUpdateAgency(obj);
-        break;    
+      case 'Edit':
+        this.addUpdateOffice(obj);
+        break; 
+      case 'Delete':
+          break;    
     }
   }
 
