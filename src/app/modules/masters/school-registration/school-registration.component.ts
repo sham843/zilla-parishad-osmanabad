@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { ApiService } from 'src/app/core/services/api.service';
+import { CommonMethodsService } from 'src/app/core/services/common-methods.service';
 import { ErrorsService } from 'src/app/core/services/errors.service';
 import { MasterService } from 'src/app/core/services/master.service';
 import { GlobalDialogComponent } from 'src/app/shared/components/global-dialog/global-dialog.component';
@@ -17,6 +18,7 @@ export class SchoolRegistrationComponent {
   searchContent = new FormControl('');
   districtId = new FormControl();
   talukaId = new FormControl('');
+  villageId = new FormControl();
 
   districtArr = new Array();
   talukaArr = new Array();
@@ -24,7 +26,7 @@ export class SchoolRegistrationComponent {
   deleteObj: any;
 
   constructor(private dialog: MatDialog, private apiService: ApiService, private errors: ErrorsService,
-    private masterService: MasterService) { }
+    private masterService: MasterService, private commonMethod: CommonMethodsService) { }
 
   ngOnInit() {
     this.getTableData();
@@ -40,7 +42,10 @@ export class SchoolRegistrationComponent {
     this.pageNumber = flag == 'filter' ? 1 : this.pageNumber;
     let tableDataArray = new Array();
     let tableDatasize!: Number;
-    let str = `?pageno=${this.pageNumber}&pagesize=10&lan=EN`;
+    
+    let str = `?pageno=${this.pageNumber}&pagesize=10&DistrictId=${this.districtId.value ? this.districtId.value : 0}
+    &TalukaId=${this.talukaId.value ? this.talukaId.value : 0}&VillageId=${this.villageId.value ? this.villageId.value : 0}&lan=EN`;
+
     this.apiService.setHttp('GET', 'ZP-Osmanabad/School/GetAll' + str, false, false, false, 'baseUrl');
     this.apiService.getHttp().subscribe({
 
@@ -68,8 +73,6 @@ export class SchoolRegistrationComponent {
   }
 
   childCompInfo(obj: any) {
-    console.log(obj);
-
     this.addUpdateAgency(obj);
 
     switch (obj.label) {
@@ -91,11 +94,17 @@ export class SchoolRegistrationComponent {
 
   addUpdateAgency(obj?: any) {
     // let obj: any;
-    this.dialog.open(AddUpdateSchoolRegistrationComponent, {
+    const dialogRef = this.dialog.open(AddUpdateSchoolRegistrationComponent, {
       width: '820px',
       data: obj,
       disableClose: true,
       autoFocus: false
+    });
+    dialogRef.afterClosed().subscribe((result: any) => {
+     
+      if(result == 'yes'){
+        this.getTableData();
+      }
     });
   }
 
@@ -115,11 +124,17 @@ export class SchoolRegistrationComponent {
       autoFocus: false
     })
     deleteDialogRef.afterClosed().subscribe((result: any) => {
-
       if (result == 'yes') {
         this.onClickDelete();
       }
     })
+  }
+
+  onClear(){
+    this.districtId.reset();
+    this.talukaId.reset();
+    this.villageId.reset();
+    this.getTableData();
   }
 
   getDistrict() {
@@ -145,23 +160,36 @@ export class SchoolRegistrationComponent {
   }
 
   getVillage() {
-    // this.masterService.getAllVillage('EN', this.talukaId.).subscribe({
-    //   next: (res: any) => {
-    //     if (res.statusCode == 200) {
-    //       this.villageArr = res.responseData;
-    //     }
-    //   },
-    //   error: ((err: any) => { this.errors.handelError(err) })
-    // });
+    let talukaId = this.talukaId.value;
+    this.masterService.getAllVillage('EN',talukaId ).subscribe({
+      next: (res: any) => {
+        if (res.statusCode == 200) {
+          this.villageArr = res.responseData;
+        }
+      },
+      error: ((err: any) => { this.errors.handelError(err) })
+    });
   }
 
   onClickDelete() {
-    // let deleteObj = [{
-    //   "id": this.deleteObj.id,
-    //   "modifiedBy": 0,
-    //   "modifiedDate": new Date(),
-    //   "lan": "EN"
-    // }]
+    let deleteObj = {
+      "id": this.deleteObj.id,
+      "modifiedBy": 0,
+      "modifiedDate": new Date(),
+      "lan": "EN"
+    }
+    this.apiService.setHttp('delete','ZP-Osmanabad/School/Delete', false, deleteObj, false, 'baseUrl');
+    this.apiService.getHttp().subscribe({
+      next : ( res : any )=>{
+        if(res.statusCode == "200"){
+          this.commonMethod.snackBar(res.statusMessage, 0);
+          this.getTableData();
+        }
+      }
+    })
+    error: (error: any) => {
+      this.commonMethod.checkEmptyData(error.statusText) == false ? this.errors.handelError(error.statusCode) : this.commonMethod.snackBar(error.statusText, 1);
+    }
   }
 
 
