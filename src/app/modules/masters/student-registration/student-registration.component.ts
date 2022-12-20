@@ -65,8 +65,7 @@ export class StudentRegistrationComponent {
     });
   }
 
-  addUpdateAgency() {
-    let obj: any;
+  addUpdateAgency(obj?:any) {    
     this.dialog.open(AddUpdateStudentRegistrationComponent, {
       width: '900px',
       data: obj,
@@ -82,7 +81,7 @@ export class StudentRegistrationComponent {
         this.getTableData();
         break;
       case 'Edit' || 'Delete':
-        // this.addUpdateAgency(obj);
+        this.addUpdateAgency(obj);
         break;
     }
   }
