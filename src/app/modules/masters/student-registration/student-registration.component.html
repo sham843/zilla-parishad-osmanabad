@@ -80,7 +80,175 @@
     </ng-container>
 
     <ng-container *ngIf="cardViewFlag">
-      <app-card-grid-view (recObjToChild)="childGridCompInfo($event)"></app-card-grid-view>
+      <!-- <app-card-grid-view (recObjToChild)="childGridCompInfo($event)"></app-card-grid-view> -->
+      <div class="row">
+              <div class="col-sm-4">
+                <mat-card>
+                  <mat-card-header class="d-flex justify-content-end">
+                    <button mat-flat-button [matMenuTriggerFor]="menu">
+                      <span class="material-symbols-outlined">
+                        more_horiz
+                      </span>
+                    </button>
+                    <mat-menu #menu="matMenu">
+                      <button mat-menu-item>Item 1</button>
+                      <button mat-menu-item>Item 2</button>
+                    </mat-menu>
+                  </mat-card-header>
+                  <mat-card-content>
+                    <div class="text-center mb-3">
+                      <img src="assets/images/user.jpg" alt="" height="60px">
+                    </div>
+                    <div style="text-align: center;">name</div>
+                    <div class="row">
+                      <div class="col-sm  form-label">
+                        School Name
+                      </div>
+                      <div class=" col-sm  form-deta">
+                     name
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-sm form-label">
+                        Mobile No.
+                      </div>
+                      <div class="col-sm form-deta">
+                        mobileNo
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class=" col-sm form-label">
+                        Gender
+                      </div>
+                      <div class="col-sm form-deta">
+                        gender
+                      </div>
+                    </div>
+                    <div class="text-center mb-3">
+                      <button mat-flat-button class="btn-main">Read More</button>
+                    </div>
+                  </mat-card-content>
+                  <mat-card-footer>
+        
+                  </mat-card-footer>
+                </mat-card>
+                     
+          </div>
+                  
+              <div class="col-sm-4">
+                <mat-card>
+                  <mat-card-header class="d-flex justify-content-end">
+                    <button mat-flat-button [matMenuTriggerFor]="menu">
+                      <span class="material-symbols-outlined">
+                        more_horiz
+                      </span>
+                    </button>
+                    <mat-menu #menu="matMenu">
+                      <button mat-menu-item>Item 1</button>
+                      <button mat-menu-item>Item 2</button>
+                    </mat-menu>
+                  </mat-card-header>
+                  <mat-card-content>
+                    <div class="text-center mb-3">
+                      <img src="assets/images/user.jpg" alt="" height="60px">
+                    </div>
+                    <div class="row">
+                      <div class="col-sm  form-label">
+                        School Name
+                      </div>
+                      <div class=" col-sm  form-deta">
+                        Chaitanya Vidyalaya
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-sm form-label">
+                        Mobile No.
+                      </div>
+                      <div class="col-sm form-deta">
+                        9999999999
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class=" col-sm form-label">
+                        Gender
+                      </div>
+                      <div class="col-sm form-deta">
+                        Male
+                      </div>
+                    </div>
+                    <div class="text-center mb-3">
+                      <button mat-flat-button class="btn-main">Read More</button>
+                    </div>
+                  </mat-card-content>
+                  <mat-card-footer>
+        
+                  </mat-card-footer>
+                </mat-card>
+              </div>
+              <div class="col-sm-4">
+                <mat-card>
+                  <mat-card-header class="d-flex justify-content-end">
+                    <mat-card-actions>
+                      <button mat-flat-button [matMenuTriggerFor]="menu">
+                        <span class="material-symbols-outlined">
+                          more_horiz
+                        </span>
+                      </button>
+                      <mat-menu #menu="matMenu">
+                        <button mat-menu-item>
+                          <span>Edit</span>
+                          <span class="material-symbols-outlined">
+                            edit
+                          </span>
+                        </button>
+                        <button mat-menu-item>
+                          <span>Delete</span>
+                          <span class="material-symbols-outlined">
+                            delete
+                          </span></button>
+                      </mat-menu>
+                    </mat-card-actions>
+        
+                  </mat-card-header>
+                  <mat-card-content>
+                    <div class="text-center mb-3">
+                      <img src="assets/images/user.jpg" alt="" height="60px">
+                    </div>
+                    <div class="row">
+                      <div class="col-sm  form-label">
+                        School Name
+                      </div>
+                      <div class=" col-sm  form-deta">
+                        Chaitanya Vidyalaya
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-sm form-label">
+                        Mobile No.
+                      </div>
+                      <div class="col-sm form-deta">
+                        9999999999
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class=" col-sm form-label">
+                        Gender
+                      </div>
+                      <div class="col-sm form-deta">
+                        Male
+                      </div>
+                    </div>
+                    <div class="text-center mb-3">
+                      <button mat-flat-button class="btn-main">Read More</button>
+                    </div>
+                  </mat-card-content>
+                  <mat-card-footer>
+        
+                  </mat-card-footer>
+                </mat-card>
+              </div>
+            </div>
+
     </ng-container>
   </mat-card-content>
 </mat-card>

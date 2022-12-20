@@ -1,5 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { MatDialogRef } from '@angular/material/dialog';
+import { ApiService } from 'src/app/core/services/api.service';
+import { CommonMethodsService } from 'src/app/core/services/common-methods.service';
+import { ErrorsService } from 'src/app/core/services/errors.service';
 import { MasterService } from 'src/app/core/services/master.service';
 
 @Component({
@@ -11,13 +15,19 @@ export class AddUpdateOfficeUsersComponent implements OnInit {
   levels = new Array();
   designations = new Array();
   officeForm!: FormGroup;
+  districts = new Array();
   constructor(private masterService: MasterService,
-              private fb: FormBuilder){}
+              private fb: FormBuilder,
+              private apiService: ApiService,
+              private commonService: CommonMethodsService,
+              private error: ErrorsService,
+              private dialogRef: MatDialogRef<AddUpdateOfficeUsersComponent>){}
 
 
   ngOnInit(){
+    this.defaultForm();
     this.getLevelDrop();
-    this.defaultForm()
+    this.getDistrictDrop();
   }
 
   defaultForm(){
@@ -44,7 +54,7 @@ export class AddUpdateOfficeUsersComponent implements OnInit {
         "kendraMobileNo": [""],
         "kendraEmailId": [""],
         "centerId": [0],
-        "lan": [""]
+        "lan": ["mr-IN"]
     })
   }
 
@@ -66,13 +76,44 @@ export class AddUpdateOfficeUsersComponent implements OnInit {
 
     this.masterService.GetDesignationByLevelId('mr-IN', 1).subscribe({
       next: (resp: any)=>{
-        console.log(" all getLevelDrop:", resp);    
+        console.log(" all getDesignationByLevelId:", resp);    
         this.designations = resp.responseData;
       },
       error: ( error : any)=>{
         console.log("error is :", error);  
       }
     }) 
+  }
+
+  getDistrictDrop(){
+    this.masterService.getAllDistrict('mr-IN').subscribe({
+      next: (resp: any)=>{
+        console.log(" all getDistrictDrop:", resp);    
+        this.districts = resp.responseData;
+      },
+      error: ( error : any)=>{
+        console.log("error is :", error);  
+      }
+    });
+  }
+
+  submitOfficeData(){
+    console.log("all data submitted:", this.officeForm.value);
+    this.apiService.setHttp('POST', 'zp_osmanabad/Office/AddOffice', false, this.officeForm.value, false, 'baseUrl');
+    this.apiService.getHttp().subscribe({
+      next: (res: any) => {
+        if (res.statusCode === "200") {
+          this.commonService.snackBar(res.statusMessage, 0);
+        }
+        else {
+          this.commonService.checkEmptyData(res.statusMessage) == false ? this.error.handelError(res.statusCode) : this.commonService.snackBar(res.statusMessage, 1);
+        }
+        this.dialogRef.close('Yes')
+      },
+      error: ((error: any) => {
+        this.error.handelError(error.status);
+      })
+    })
   }
 
 

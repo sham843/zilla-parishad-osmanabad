@@ -60,12 +60,16 @@ export class OfficeUsersComponent {
 
   addUpdateAgency() {
     let obj: any;
-    this.dialog.open(AddUpdateOfficeUsersComponent, {
+    const dialogRef = this.dialog.open(AddUpdateOfficeUsersComponent, {
       width: '900px',
       data: obj,
       disableClose: true,
       autoFocus: false
     })
+
+    dialogRef.afterClosed().subscribe(result => {
+      result == 'Yes' ? this.getTableData() : '';
+    });
   }
 
   childCompInfo(obj: any) {

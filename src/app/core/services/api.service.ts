@@ -1,11 +1,11 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Subject } from 'rxjs';
+import { Subject } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
 export class ApiService {
-  DataForGrid = new BehaviorSubject<any>([]); //all table set and set data using BehaviorSubject
+  // DataForGrid = new BehaviorSubject<any>([]); //all table set and set data using BehaviorSubject
   tableData = new Subject<any>(); //all table set and set data using BehaviorSubject
 
   userObj = new Array();

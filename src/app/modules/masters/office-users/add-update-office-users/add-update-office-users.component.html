@@ -11,8 +11,8 @@
             </button>
         </div>
     </mat-card-header>
+    <form [formGroup]="officeForm" (ngSubmit)="submitOfficeData()">
     <mat-card-content class="card-body">
-        <form [formGroup]="officeForm">
         <div class="row">
             <div class="col-sm-4">
                 <mat-form-field appearance="outline" class="w-100 ">
@@ -33,9 +33,8 @@
             <div class="col-sm-4">
                 <mat-form-field appearance="outline" class="w-100 ">
                     <mat-label>District</mat-label>
-                    <mat-select placeholder="select">
-                        <mat-option value="one">First option</mat-option>
-                        <mat-option value="two">Second option</mat-option>
+                    <mat-select placeholder="select" formArrayName="districtId">
+                        <mat-option [value]="dist.id" *ngFor="let dist of districts">{{dist.district}}</mat-option>
                     </mat-select>
                 </mat-form-field>
             </div>
@@ -44,29 +43,27 @@
             <div class="col-sm-4">
                 <mat-form-field appearance="outline" class="w-100">
                     <mat-label>Name</mat-label>
-                    <input matInput placeholder="Name">
+                    <input matInput placeholder="Name" formControlName="name">
 
                 </mat-form-field>
             </div>
             <div class="col-sm-4">
                 <mat-form-field appearance="outline" class="w-100">
                     <mat-label>Mobile No.</mat-label>
-                    <input matInput placeholder="Mobile No.">
-
+                    <input matInput placeholder="Mobile No." formControlName="mobileNo">
                 </mat-form-field>
             </div>
             <div class="col-sm-4">
                 <mat-form-field appearance="outline" class="w-100">
                     <mat-label>Email ID</mat-label>
-                    <input matInput placeholder="Email ID">
-
+                    <input matInput placeholder="Email ID" formControlName="emailId">
                 </mat-form-field>
             </div>
         </div>
-    </form>
     </mat-card-content>
     <mat-card-footer class="text-end p-3">
-        <button mat-flat-button class="btn-second me-2">Cancel</button>
-        <button mat-flat-button class="btn-main">Submit</button>
+        <button mat-flat-button type="button" mat-dialog-close class="btn-second me-2">Cancel</button>
+        <button mat-flat-button type="submit" class="btn-main">Submit</button>
     </mat-card-footer>
+</form>
 </mat-card>
