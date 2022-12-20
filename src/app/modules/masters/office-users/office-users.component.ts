@@ -4,6 +4,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { ApiService } from 'src/app/core/services/api.service';
 import { CommonMethodsService } from 'src/app/core/services/common-methods.service';
 import { ErrorsService } from 'src/app/core/services/errors.service';
+import { GlobalDialogComponent } from 'src/app/shared/components/global-dialog/global-dialog.component';
 import { AddUpdateOfficeUsersComponent } from './add-update-office-users/add-update-office-users.component';
 
 @Component({
@@ -44,7 +45,7 @@ export class OfficeUsersComponent {
           tableDatasize = 0;
         }
         let displayedColumns = ['srNo', 'name', 'designationId', 'mobileNo', 'emailId', 'm_Name', 'action'];
-        let displayedheaders = ['Sr. No', 'Name', 'Designation', 'Contact No', 'Email ID', 'Office Name', 'action'];
+        let displayedheaders = ['Sr. No.', 'Name', 'Designation', 'Contact No', 'Email ID', 'Office Name', 'action'];
         let tableData = {
           pageNumber: this.pageNumber,
           img: '', blink: '', badge: '', isBlock: '', pagintion: true,
@@ -82,11 +83,23 @@ export class OfficeUsersComponent {
         this.addUpdateOffice(obj);
         break; 
       case 'Delete':
+          this.ConfirmDelete(obj);
           break;    
     }
   }
 
+  ConfirmDelete(obj:any){
+    const dialogRef = this.dialog.open(GlobalDialogComponent, {
+      width: '450px',
+      data: obj,
+      disableClose: true,
+      autoFocus: false
+    })
 
+    dialogRef.afterClosed().subscribe(result => {
+      result == 'Yes' ? this.getTableData() : '';
+    });
+  }
   clearFilterData(){
     this.searchContent.setValue('');
     this.getTableData();
