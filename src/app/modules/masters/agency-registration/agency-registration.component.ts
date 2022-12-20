@@ -19,7 +19,6 @@ export class AgencyRegistrationComponent {
   ngOnInit() {
     this.filterData();
     this.getTableData();
-
   }
 
   filterData() {
@@ -47,7 +46,7 @@ export class AgencyRegistrationComponent {
           tableDatasize = 0;
         }
         let displayedColumns = ['srNo', 'agency_Name', 'contact_No', 'emailId', 'action'];
-        let displayedheaders = ['Sr.No', 'Name', 'Contact No.', 'Email ID', 'Action'];
+        let displayedheaders = ['Sr. No.', 'Name', 'Contact No.', 'Email ID', 'Action'];
         let tableData = {
           pageNumber: this.pageNumber,
           img: '', blink: '', badge: '', isBlock: '', pagintion: true,
@@ -64,6 +63,13 @@ export class AgencyRegistrationComponent {
   onPagintion(pageNo: number) {
     this.pageNumber = pageNo;
     this.getTableData()
+  }
+
+  onClear() {
+    this.filterForm.reset();
+    this.filterData();
+    this.pageNumber = 1;
+    this.getTableData();
   }
 
   childCompInfo(_obj: any) {

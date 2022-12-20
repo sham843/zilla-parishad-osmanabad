@@ -32,7 +32,7 @@
             </div>
           </button>
         </mat-menu>
-        <button mat-flat-button class="btn-main ms-2" (click)="addUpdateAgency()">
+        <button mat-flat-button class="btn-main ms-2" (click)="addUpdateOffice()">
           <mat-icon>
             add
           </mat-icon>
@@ -41,9 +41,9 @@
       </div>
     </div>
   </mat-card-header>
-  <mat-card-header class="card-header">
-    <div class="row w-100">
-      <div class="col-sm-3">
+  <mat-card-header class="card-header mb-0 pb-0">
+    <div class="row w-100 mt-1">
+      <div class="col-sm-auto">
         <mat-form-field appearance="outline" class="w-100">
           <mat-label>Search by Name</mat-label>
           <input matInput placeholder="Search by Name" [formControl]="searchContent">
@@ -66,7 +66,7 @@
 
       <div class="col-sm-4">
         <button mat-flat-button class="btn-main" (click)="getTableData()">Filter</button>
-        <button  mat-flat-button class="btn-main ms-3" (click)="clearFilterData()">clear</button>
+        <button  mat-flat-button class="btn-second ms-3" (click)="clearFilterData()">Clear</button>
     </div>
 
     </div>
