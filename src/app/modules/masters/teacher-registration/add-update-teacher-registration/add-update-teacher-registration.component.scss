@@ -8,7 +8,7 @@
     left: 0;
     color: #2c2c2c;
     background-color: #e6454500;
-    font-family: Lato;
+    font-family: "Poppins", sans-serif !important;
     padding: 3px 10px;
     border-radius: 6px;
     transition: background-color 0.5s, top 0.1s;
@@ -27,11 +27,7 @@
 .teacherForm > label:hover{
   top: -3px;
 }
-
-
-.plain-card .card-header {
-    position: sticky;
-    top: 0px;
-    z-index: 1;
-    background: #fff;
+.card-height{
+    height: 79vh;
+    overflow-y: auto;
 }
