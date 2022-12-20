@@ -101,6 +101,5 @@ export class StudentRegistrationComponent {
       this.getTableData()
     } else if (label == 'Card')
       this.cardViewFlag = true;
-    this.apiService.DataForGrid.next(this.tableDataForcard);
   }
 }
