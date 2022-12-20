@@ -1,8 +1,9 @@
+<p>global-dialog works!</p>
 <h1 mat-dialog-title>Delete file</h1>
 <div mat-dialog-content>
   Would you like to delete 
 </div>
 <div mat-dialog-actions>
-  <button mat-button (click)="closeDialog('cancel')">{{data.cancelButton}}</button>
-  <button mat-button cdkFocusInitial type="submit" (click)="closeDialog('yes')">{{data.okButton}}</button>
+  <button mat-button mat-dialog-close>{{data.cancelButton}}</button>
+  <button mat-button  cdkFocusInitial  type="submit" (click)="closeDialog('yes')">{{data.okButton}}</button>
 </div>

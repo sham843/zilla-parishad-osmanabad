@@ -4,7 +4,6 @@ import { MatDialog } from '@angular/material/dialog';
 import { ApiService } from 'src/app/core/services/api.service';
 import { CommonMethodsService } from 'src/app/core/services/common-methods.service';
 import { ErrorsService } from 'src/app/core/services/errors.service';
-import { GlobalDialogComponent } from 'src/app/shared/components/global-dialog/global-dialog.component';
 import { AddUpdateOfficeUsersComponent } from './add-update-office-users/add-update-office-users.component';
 
 @Component({
@@ -82,35 +81,12 @@ export class OfficeUsersComponent {
         this.addUpdateOffice(obj);
         break; 
       case 'Delete':
-        this.globalDialogOpen(obj);
           break;    
     }
   }
 
-  globalDialogOpen(obj:any) {
-    let dialoObj = {
-      header: 'Delete',
-      title: 'Do You Want To Delete ?',
-      cancelButton: 'Cancel',
-      okButton: 'Ok'
-    }
-    const deleteDialogRef = this.dialog.open(GlobalDialogComponent, {
-      width: '320px',
-      data: dialoObj,
-      disableClose: true,
-      autoFocus: false
-    })
-    deleteDialogRef.afterClosed().subscribe((result: any) => {
-      if(result == 'yes'){
-        console.log("click yes");
-        this.deleteOffice(obj);
-      }
-      if(result == 'No'){
-        console.log("click no");
-      }
-  })
-}
 
+<<<<<<< HEAD
 deleteOffice(obj: any){
  let deleteObj = [{
     "id": obj.id,
@@ -134,6 +110,9 @@ deleteOffice(obj: any){
 
 
 clearFilterData(){
+=======
+  clearFilterData(){
+>>>>>>> b791fe1b2c3dfb93bfba004c8f0addd415881739
     this.searchContent.setValue('');
     this.getTableData();
   }

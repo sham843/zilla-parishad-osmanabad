@@ -20,8 +20,8 @@
                             <h5>उस्मानाबाद</h5>
                         </div>
                     </div>
-                    <form [formGroup]="adminLoginForm">
-                    <mat-tab-group class="p-2" (focusChange)="checklogin($event)" >
+                    <form [formGroup]="adminLoginForm" (ngSubmit)="onSubmit()" #clear="ngForm">
+                    <mat-tab-group class="p-2" (focusChange)="checklogin($event,clear)" >
                        
                         <mat-tab label="Admin">
                             <div class="overflow-hidden">
@@ -41,10 +41,11 @@
                                             <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
                                         </button>
                                         <mat-error *ngIf="fc['password'].hasError('required')"> Password Is Required</mat-error>
+                                       
                                     </mat-form-field>
                                 </div>
                                 <div class="d-flex align-items-center justify-content-between">
-                                    <button mat-flat-button class="btn-main" type="button" (click)="onSubmit()">Submit</button>
+                                    <button mat-flat-button class="btn-main" type="submit" >Submit</button>
                                     <a routerLink="../forgot-password" class="text-main">Forgot Password</a>
                                 </div>
                             </div>
@@ -54,8 +55,12 @@
                                 <div class="mb-2 text-center mt-5">
                                     <mat-form-field appearance="outline" class="w-100">
                                         <mat-label>Mobile No.</mat-label>
-                                        <input matInput placeholder="Mobile No." formControlName="mobileNo">
+                                        <input matInput placeholder="Mobile No." formControlName="mobileNo" maxlength="10" minlength="10"
+                                        (keypress)="validators.onlyDigits($event)">
                                         <mat-error *ngIf="fc['mobileNo'].hasError('required')"> Mobile No Is Required</mat-error>
+                                        <mat-error *ngIf="fc['mobileNo'].hasError('pattern')"> Enter Valid Mobile Number</mat-error>
+                                        <!-- <mat-error *ngIf="fc['mobileNo'].hasError('maxLength')"> Enter 10 Digit Number</mat-error>
+                                        <mat-error *ngIf="fc['mobileNo'].hasError('minLength')"> Enter 10 Digit Number</mat-error> -->
                                     </mat-form-field>
                                 </div>
                                 <div class="mb-3 text-center">
@@ -70,7 +75,7 @@
                                     </mat-form-field>
                                 </div>
                                 <div class="d-flex align-items-center justify-content-between">
-                                    <button mat-flat-button class="btn-main" type="button" (click)="onSubmit()">Submit</button>
+                                    <button mat-flat-button class="btn-main" type="submit">Submit</button>
                                     <a routerLink="../forgot-password" class="text-main">Forgot Password</a>
                                 </div>
                             </div>
