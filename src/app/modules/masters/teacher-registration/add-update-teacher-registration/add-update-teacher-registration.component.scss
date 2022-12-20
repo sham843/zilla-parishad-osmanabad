@@ -27,3 +27,11 @@
 .teacherForm > label:hover{
   top: -3px;
 }
+
+
+.plain-card .card-header {
+    position: sticky;
+    top: 0px;
+    z-index: 1;
+    background: #fff;
+}
