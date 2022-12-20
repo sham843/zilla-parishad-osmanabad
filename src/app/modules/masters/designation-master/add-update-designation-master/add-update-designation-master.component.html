@@ -17,19 +17,23 @@
                 <mat-form-field appearance="outline" class="w-100 ">
                     <mat-label>Designation Level</mat-label>
                     <mat-select  formControlName="designationLevelId"
-                    (selectionChange)="getDesiganationType()">
+                    (selectionChange)="getDesiganationType();clearForm('designationLevelId')">
                         <mat-option *ngFor="let designation of DesiganationLevelData" [value]="designation.designationLevel">{{designation.designationLevel}}</mat-option>
                         <!-- <mat-option value="two">option-2</mat-option> -->
                     </mat-select>
+                    <mat-error *ngIf="f['designationLevelId'].hasError('required') || f['designationLevelId'].hasError('touched')">Company
+                        Designation Level is Required</mat-error>
                 </mat-form-field>
             </div>
             <div class="col-sm">
                 <mat-form-field appearance="outline" class="w-100 ">
                     <mat-label>Designation Type</mat-label>
                     <mat-select  formControlName="designationType">
-                        <mat-option *ngFor="let designationType of DesiganationTypeData" [value]="designationType.designationType">{{designationType.designationType}}</mat-option>
+                        <mat-option *ngFor="let designationType of desiganationTypeData" [value]="designationType.designationType">{{designationType.designationType}}</mat-option>
                         <!-- <mat-option value="two">option-2</mat-option> -->
                     </mat-select>
+                    <mat-error *ngIf="f['designationType'].hasError('required') || f['designationType'].hasError('touched')">Company
+                        Designation Type is Required</mat-error>
                 </mat-form-field>
             </div>
         </div>
@@ -44,10 +48,10 @@
                 </mat-form-field>
             </div> -->
             <div class="col-sm">
-                <ng-container *ngIf="DesiganationTypeData == []">
+                <ng-container *ngIf="desiganationTypeData == []">
                     <mat-form-field appearance="outline" class="w-100 ">
                         <mat-label>Add Designation</mat-label>
-                        <input matInput placeholder="Search by Contact" formControlName="designationType">
+                        <input matInput placeholder="Search by Contact" formControlName="designationType" maxlength="30">
                     </mat-form-field>
                 </ng-container>
                

@@ -1,5 +1,5 @@
 import { Component, Inject } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ApiService } from 'src/app/core/services/api.service';
 import { CommonMethodsService } from 'src/app/core/services/common-methods.service';
@@ -15,7 +15,7 @@ export class AddUpdateDesignationMasterComponent {
 
   designationForm!: FormGroup;
   DesiganationLevelData: any;
-  DesiganationTypeData: any;
+  desiganationTypeData: any;
   editFlag: boolean = false;
   editData: any;
   constructor(private masterService: MasterService, private fb: FormBuilder, private service: ApiService,
@@ -28,6 +28,8 @@ export class AddUpdateDesignationMasterComponent {
     !this.data ? this.getDesiganationLevel() : this.onClickEdit(this.data);
   }
 
+  get f() { return this.designationForm.controls }
+
   formData() {
     this.designationForm = this.fb.group({
       "createdBy": [0],
@@ -37,9 +39,9 @@ export class AddUpdateDesignationMasterComponent {
       "isDeleted": false,
       "lan": [''],
       "id": [0],
-      "designationType": [''],
+      "designationType": ['',Validators.required],
       "m_DesignationType": [''],
-      "designationLevelId": [''],
+      "designationLevelId": ['',Validators.required],
     })
   }
 
@@ -65,7 +67,7 @@ export class AddUpdateDesignationMasterComponent {
     this.masterService.GetDesignationByLevelId(getFormVal.lan, desigLevelId).subscribe({
       next: ((res: any) => {
         if (res.statusCode == '200' && res.responseData.length) {
-          this.DesiganationTypeData = res.responseData;
+          this.desiganationTypeData = res.responseData;
           this.editFlag ? (this.designationForm.controls['designationType'].setValue(this.editData.designationName)) : '';
         }
       }), error: (error: any) => {
@@ -114,5 +116,11 @@ export class AddUpdateDesignationMasterComponent {
         this.commonMethod.checkEmptyData(error.statusMessage) == false ? this.errorHandler.handelError(error.statusCode) : this.commonMethod.snackBar(error.statusMessage, 1);
       }
     })
+  }
+
+   clearForm(formControlName: any) {
+    if (formControlName == 'designationLevelId') {
+      this.designationForm.controls['designationType'].setValue('');
+    } 
   }
 }
