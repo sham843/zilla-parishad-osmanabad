@@ -43,11 +43,11 @@ export class StudentRegistrationComponent {
           tableDataArray = [];
           tableDatasize = 0;
         }
-        let displayedColumns = ['docPath', 'srNo', 'fullName', 'standard', 'parentMobileNo', 'gender', 'action'];
-        let displayedheaders = ['#', 'Sr. No', 'Name', 'Standard', 'Parents Contact No.', 'Gender', 'action'];
+        let displayedColumns = ['srNo', 'fullName', 'standard', 'parentMobileNo', 'gender', 'action'];
+        let displayedheaders = ['Sr. No', 'Name', 'Standard', 'Parents Contact No.', 'Gender', 'action'];
         let tableData = {
           pageNumber: this.pageNumber,
-          img: 'docPath', blink: '', badge: '', isBlock: '', pagintion: true,
+          img: '', blink: '', badge: '', isBlock: '', pagintion: true,
           displayedColumns: displayedColumns, tableData: tableDataArray,
           tableSize: tableDatasize,
           tableHeaders: displayedheaders
