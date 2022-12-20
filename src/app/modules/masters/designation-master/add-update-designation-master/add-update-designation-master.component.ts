@@ -12,7 +12,6 @@ import { ErrorsService } from 'src/app/core/services/errors.service';
   styleUrls: ['./add-update-designation-master.component.scss']
 })
 export class AddUpdateDesignationMasterComponent {
-
   designationForm!: FormGroup;
   DesiganationLevelData: any;
   DesiganationTypeData: any;
