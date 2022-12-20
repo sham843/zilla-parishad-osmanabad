@@ -44,27 +44,24 @@
         <div class="col-sm-auto">
           <mat-form-field appearance="outline" class="w-100">
             <mat-label>Search by Name</mat-label>
-            <input matInput formControlName="name" (keypress)="getTableData()" (blur)="getTableData()"
-              placeholder="Search by Name">
+            <input matInput formControlName="name" placeholder="Search by Name">
           </mat-form-field>
         </div>
         <div class="col-sm-auto">
           <mat-form-field appearance="outline" class="w-100">
             <mat-label>Search by Contact</mat-label>
-            <input matInput formControlName="contactNo" (keypress)="getTableData()" (blur)="getTableData()"
-              placeholder="Search by Contact">
+            <input matInput formControlName="contactNo" placeholder="Search by Contact">
           </mat-form-field>
         </div>
         <div class="col-sm-auto">
           <mat-form-field appearance="outline" class="w-100">
             <mat-label>Search by Email</mat-label>
-            <input matInput formControlName="email" (keypress)="getTableData()" (blur)="getTableData()"
-              placeholder="Search by Email">
+            <input matInput formControlName="email" placeholder="Search by Email">
           </mat-form-field>
         </div>
         <div class="col-sm-auto">
-          <button mat-flat-button class="btn-main">Filter</button>
-          <button  mat-flat-button class="btn-second ms-3">Clear</button>
+          <button type="button" mat-flat-button class="btn-main" (click)="getTableData()">Filter</button>
+          <button type="button"  mat-flat-button class="btn-second ms-3" (click)="onClear()">Clear</button>
          </div>
       </div>
     </mat-card-header>
