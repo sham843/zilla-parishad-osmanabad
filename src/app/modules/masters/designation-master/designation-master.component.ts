@@ -14,8 +14,7 @@ import { AddUpdateDesignationMasterComponent } from './add-update-designation-ma
 })
 export class DesignationMasterComponent {
   pageNumber: number = 1;
-  searchContent = new FormControl('');
-  id:any;
+  searchContent = new FormControl('');  
   designationArray:any;
   DesiganationTypeArray:any;
   deleteObj:any;
@@ -29,7 +28,7 @@ export class DesignationMasterComponent {
     this.getDesignationData();
     
   }
-
+//#region ------------------------------------- Designation-Master Dropdown ------------------------------- //
 getDesignationData(){
   this.masterService.GetAllDesignationLevel('EN').subscribe({
     next: ((res: any) => {
@@ -51,14 +50,16 @@ let desigLevelId = this.designationArray?.find((res:any)=>{
         this.DesiganationTypeArray = res.responseData;              
       }
     })
-  })
- 
+  }) 
 }
+//#endregion ------------------------------------ End Designation-Master Dropdown --------------------------//
+
   onPagintion(pageNo: number) {
     this.pageNumber = pageNo;
     this.getTableData()
   }
 
+  //#region ------------------------------------- Designation-Master Table-Data ------------------------------- //
   getTableData(flag?:string) {
     this.pageNumber =   flag == 'filter'? 1 :this.pageNumber;
     let tableDataArray = new Array();
@@ -90,7 +91,7 @@ let desigLevelId = this.designationArray?.find((res:any)=>{
     });
 
   }
-
+  //#endregion -------------------------------------End Designation-Master Table-Data ------------------------------- //
   childCompInfo(obj: any) {     
    
     switch (obj.label) {
@@ -179,7 +180,7 @@ let desigLevelId = this.designationArray?.find((res:any)=>{
   }
 
   clearForm(){
-    this.searchContent.setValue('');
+    this.searchContent.reset();
     this.getTableData();
   }
 }

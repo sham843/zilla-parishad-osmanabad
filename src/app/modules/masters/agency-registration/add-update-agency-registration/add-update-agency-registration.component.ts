@@ -76,7 +76,11 @@ export class AddUpdateAgencyRegistrationComponent {
   onSubmit(clear: any) {
     let obj = this.agencyRegisterForm.value;
     obj.districtId = 1;
-    this.data ? obj.id = this.editData.id : '';
+    if(this.agencyRegisterForm.invalid){
+      return;
+    }
+    else{
+      this.data ? obj.id = this.editData.id : '';
     this.api.setHttp(this.data ? 'put' : 'post', this.data ? 'zp-osmanabad/Agency/Update' : 'zp-osmanabad/Agency/Add', false, obj, false, 'baseUrl');
     this.api.getHttp().subscribe({
       next: (res: any) => {
@@ -84,6 +88,8 @@ export class AddUpdateAgencyRegistrationComponent {
       },
       error: ((err: any) => { this.errors.handelError(err) })
     })
+    }
+    
   }
   
 }

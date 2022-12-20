@@ -1,0 +1,35 @@
+.teacherForm{
+    padding-top:7px ;
+}
+.teacherForm>label,
+.teacherForm>span {
+    position: relative;
+    top: 0;
+    left: 0;
+    color: #2c2c2c;
+    padding: 3px 10px;
+    margin-right: 7px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    background-color: #e6454500;
+    transition: background-color 0.5s, top 0.1s;
+}
+.teacherForm>input[type=checkbox] {
+    height: 0px;
+    width: 0px;
+}
+.teacherForm>input[type=checkbox]:checked+label,
+.teacherForm>input[type=checkbox]:checked+span {
+    background-color: var(--main-dark-color);
+    color: #ccc;
+}
+.teacherForm > label:hover{
+  top: -3px;
+}
+
+.plain-card .card-header {
+    position: sticky;
+    top: 0px;
+    z-index: 1;
+    background: #fff;
+}

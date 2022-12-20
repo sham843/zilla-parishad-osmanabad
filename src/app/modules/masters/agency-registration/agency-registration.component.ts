@@ -23,9 +23,7 @@ export class AgencyRegistrationComponent {
 
   filterData() {
     this.filterForm = this.fb.group({
-      name: '',
-      contactNo: '',
-      email: ''
+      searchText: '',
     })
   }
 
@@ -34,7 +32,7 @@ export class AgencyRegistrationComponent {
     let tableDataArray = new Array();
     let tableDatasize!: Number;
     let obj = this.filterForm.value;
-    let str = `pageno=${this.pageNumber}&pagesize=10&Agency_Name=${obj.name}&Contact_No=${obj.contactNo}&EmailId=${obj.email}`;
+    let str = `pageno=${this.pageNumber}&pagesize=10&&TextSearch=${obj.searchText}`;
     this.apiService.setHttp('GET', 'zp-osmanabad/Agency/GetAll?' + str, false, false, false, 'baseUrl');
     this.apiService.getHttp().subscribe({
       next: (res: any) => {
@@ -45,8 +43,8 @@ export class AgencyRegistrationComponent {
           tableDataArray = [];
           tableDatasize = 0;
         }
-        let displayedColumns = ['srNo', 'agency_Name', 'contact_No', 'emailId', 'action'];
-        let displayedheaders = ['Sr.No', 'Name', 'Contact No.', 'Email ID', 'Action'];
+        let displayedColumns = ['srNo', 'agency_Name', 'contact_No', 'agency_EmailId', 'action'];
+        let displayedheaders = ['Sr. No.', 'Name', 'Contact No.', 'Email ID', 'Action'];
         let tableData = {
           pageNumber: this.pageNumber,
           img: '', blink: '', badge: '', isBlock: '', pagintion: true,
@@ -68,6 +66,7 @@ export class AgencyRegistrationComponent {
   onClear() {
     this.filterForm.reset();
     this.filterData();
+    this.pageNumber = 1;
     this.getTableData();
   }
 
