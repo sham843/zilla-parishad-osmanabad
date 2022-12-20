@@ -4,6 +4,8 @@ import { MatDialog } from '@angular/material/dialog';
 import { ApiService } from 'src/app/core/services/api.service';
 import { CommonMethodsService } from 'src/app/core/services/common-methods.service';
 import { ErrorsService } from 'src/app/core/services/errors.service';
+import { WebStorageService } from 'src/app/core/services/web-storage.service';
+import { GlobalDialogComponent } from 'src/app/shared/components/global-dialog/global-dialog.component';
 import { AddUpdateOfficeUsersComponent } from './add-update-office-users/add-update-office-users.component';
 
 @Component({
@@ -16,7 +18,8 @@ export class OfficeUsersComponent {
   pageNumber: number = 1;
   searchContent = new FormControl('');
 
-  constructor(private apiService: ApiService, private errors: ErrorsService, private dialog: MatDialog, private commonService: CommonMethodsService) { }
+  constructor(private apiService: ApiService, private errors: ErrorsService, private dialog: MatDialog, private commonService: CommonMethodsService,
+              private webStorageService: WebStorageService) { }
 
   ngOnInit() {
     this.getTableData()
@@ -43,7 +46,7 @@ export class OfficeUsersComponent {
           tableDataArray = [];
           tableDatasize = 0;
         }
-        let displayedColumns = ['srNo', 'name', 'designationId', 'mobileNo', 'emailId', 'm_Name', 'action'];
+        let displayedColumns = ['srNo', 'name', 'designation', 'mobileNo', 'emailId', 'm_Name', 'action'];
         let displayedheaders = ['Sr. No', 'Name', 'Designation', 'Contact No', 'Email ID', 'Office Name', 'action'];
         let tableData = {
           pageNumber: this.pageNumber,
@@ -81,8 +84,27 @@ export class OfficeUsersComponent {
         this.addUpdateOffice(obj);
         break; 
       case 'Delete':
+        this.openDeleteDialog(obj);
           break;    
     }
+  }
+
+  openDeleteDialog(obj?: any){
+    let dialoObj = {
+      header: 'Delete',
+      title: 'Do You Want To Delete The Selected Content ?',
+      cancelButton: 'Cancel',
+      okButton: 'Ok'
+    }
+    const deleteDialogRef = this.dialog.open(GlobalDialogComponent, {
+      width: '320px',
+      data: dialoObj,
+      disableClose: true,
+      autoFocus: false
+    })
+    deleteDialogRef.afterClosed().subscribe((result: any) => {
+      result == 'yes'? this.deleteOffice(obj) : ''
+  })
   }
 
 
@@ -91,13 +113,14 @@ deleteOffice(obj: any){
     "id": obj.id,
     "deletedBy": 1,
     "modifiedDate": new Date(),
-    "lan": "mr-IN"
+    "lan": this.webStorageService.languageFlag
   }]
+  console.log("deleteObj",deleteObj);
+  
 
   this.apiService.setHttp('DELETE', 'zp_osmanabad/Office/DeleteOffice', false, deleteObj, false, 'baseUrl');
   this.apiService.getHttp().subscribe({
     next: (resp: any)=>{
-      console.log(resp);
       resp.statusCode === "200" ? (console.log(resp),this.commonService.snackBar(resp.statusMessage, 0)):this.commonService.checkEmptyData(resp.statusMessage) == false ? this.errors.handelError(resp.statusCode) : this.commonService.snackBar(resp.statusMessage, 1);
     },
     error: (err: any)=> {
