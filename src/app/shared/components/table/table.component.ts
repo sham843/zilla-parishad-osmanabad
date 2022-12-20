@@ -3,8 +3,6 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { ApiService } from 'src/app/core/services/api.service';
 import { MatSort } from '@angular/material/sort';
-
-
 @Component({
   selector: 'app-table',
   templateUrl: './table.component.html',
@@ -14,8 +12,6 @@ export class TableComponent implements OnInit {
   @Output() recObjToChild = new EventEmitter<any>();
   @ViewChild(MatPaginator) paginator: MatPaginator | any;
   @ViewChild(MatSort) sort!: MatSort;
-
-
 
   displayedColumns = new Array();
   tableRecords: any;

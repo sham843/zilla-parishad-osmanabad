@@ -4,6 +4,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { ApiService } from 'src/app/core/services/api.service';
 import { ErrorsService } from 'src/app/core/services/errors.service';
 import { MasterService } from 'src/app/core/services/master.service';
+import { GlobalDialogComponent } from 'src/app/shared/components/global-dialog/global-dialog.component';
 import { AddUpdateSchoolRegistrationComponent } from './add-update-school-registration/add-update-school-registration.component';
 
 @Component({
@@ -19,6 +20,7 @@ export class SchoolRegistrationComponent {
 
   districtArr = new Array();
   talukaArr = new Array();
+  villageArr = new Array();
 
   constructor(private dialog : MatDialog, private apiService : ApiService, private errors : ErrorsService,
     private masterService : MasterService ) { }
@@ -64,23 +66,23 @@ export class SchoolRegistrationComponent {
     });
   }
 
-  childCompInfo(_obj: any) {
-    console.log(_obj);
+  childCompInfo(obj: any) {
+    console.log(obj);
     
-    this.addUpdateAgency(_obj);
+    this.addUpdateAgency(obj);
     
-    // switch (obj.label) {
-    //   case 'Pagination':
-    //     this.pageNumber = obj.pageNumber;
-    //     this.getTableData();
-    //     break;
-    //   case 'Edit' || 'Delete':
-    //     this.addUpdateAgency(obj);
-    //     break;
-    //   case 'Block':
-    //     this.globalDialogOpen();
-    //     break;
-    // }
+    switch (obj.label) {
+      case 'Pagination':
+        this.pageNumber = obj.pageNumber;
+        this.getTableData();
+        break;
+      case 'Edit' || 'Delete':
+        this.addUpdateAgency(obj);
+        break;
+      case 'Block':
+        this.globalDialogOpen();
+        break;
+    }
   }
 
   addUpdateAgency(obj ?: any) {
@@ -91,6 +93,15 @@ export class SchoolRegistrationComponent {
       disableClose: true,
       autoFocus: false
     });
+  }
+
+  globalDialogOpen() {
+    this.dialog.open(GlobalDialogComponent, {
+      width: '320px',
+      data: '',
+      disableClose: true,
+      autoFocus: false
+    })
   }
 
   getDistrict() {
@@ -115,6 +126,16 @@ export class SchoolRegistrationComponent {
     });
   }
 
+  getVillage() {
+    // this.masterService.getAllVillage('EN', this.talukaId.).subscribe({
+    //   next: (res: any) => {
+    //     if (res.statusCode == 200) {
+    //       this.villageArr = res.responseData;
+    //     }
+    //   },
+    //   error: ((err: any) => { this.errors.handelError(err) })
+    // });
+  }
   
 
 }

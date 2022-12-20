@@ -103,14 +103,14 @@ body {
 }
 
 .dashboard-table th,
-.dashboard-table mat-header-cell {
+.dashboard-table .mat-mdc-header-cell{
   font-size: 0.85rem !important;
   font-weight: 600;
   font-family: 'Poppins', sans-serif !important;
 }
 
 .dashboard-table td,
-.dashboard-table mat-cell {
+.dashboard-table .mat-mdc-cell {
   font-size: 0.85rem !important;
   font-family: 'Poppins', sans-serif !important;
 }
@@ -121,8 +121,13 @@ body {
   padding: 10px !important;
 }
 
-.dashboard-table button .material-symbols-outlined {
+.dashboard-table button mat-icon{
   font-size: 18px !important;
+}
+.dashboard-table .mat-mdc-row:hover,
+.dashboard-table .highlightedRow{
+  background-color: var(--main-light-color) !important;
+  color: var(--main-color) !important;
 }
 
 .plain-card {
