@@ -1,7 +1,9 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ApiService } from 'src/app/core/services/api.service';
+import { CommonMethodsService } from 'src/app/core/services/common-methods.service';
 import { ErrorsService } from 'src/app/core/services/errors.service';
+import { ValidationService } from 'src/app/core/services/validation.service';
 
 @Component({
   selector: 'app-login',
@@ -10,44 +12,38 @@ import { ErrorsService } from 'src/app/core/services/errors.service';
 })
 export class LoginComponent {
   hide = true;
-  adminLoginForm!:FormGroup;
-  loginUser:string = 'Admin';
+  adminLoginForm!: FormGroup;
+  loginUser: string = 'Admin';
 
   constructor(
-    private fb : FormBuilder,
+    private fb: FormBuilder,
     private api: ApiService,
-    private errors : ErrorsService) { }
+    private errors: ErrorsService,
+    private commonMethods: CommonMethodsService,
+    public validators : ValidationService) { }
 
   ngOnInit() {
     this.formData();
-   }
+  }
 
-  formData(){
+  formData() {
     this.adminLoginForm = this.fb.group({
-      userName:['',[Validators.required]],
-      password:['',[Validators.required]],
-      mobileNo:['',[Validators.required]],
-      passwordOff:['',[Validators.required]]
+      userName: ['', [Validators.required]],
+      password: ['', [Validators.required]],
+      mobileNo: ['', [Validators.required,Validators.pattern(this.validators.mobile_No)]],
+      passwordOff: ['', [Validators.required]]
     })
   }
 
   get fc() { return this.adminLoginForm.controls }
 
-  checklogin(event:any){
-    this.loginUser = event.tab.textLabel;
-    console.log(this.loginUser);
-    
-    if(this.loginUser == 'Admin'){
-      this.adminLoginForm.controls['mobileNo'].setValue('');
-      this.adminLoginForm.controls['passwordOff'].setValue('');
-    }else{
-      this.adminLoginForm.controls['userName'].setValue('');
-      this.adminLoginForm.controls['password'].setValue('');
-    }
-    
+  checklogin(event: any,clear:any) {
+    this.loginUser = event.tab.textLabel;;
+    clear.resetForm();
+
   }
 
-  updateValidations(){
+  updateValidations() {
     if (this.loginUser == 'Admin') {
       this.adminLoginForm.controls['userName'].setValidators([Validators.required]);
       this.adminLoginForm.controls['userName'].updateValueAndValidity();
@@ -71,27 +67,29 @@ export class LoginComponent {
     }
   }
 
-  onSubmit(){
+  onSubmit() {
     let formValue = this.adminLoginForm.value;
     this.updateValidations();
-   if(this.adminLoginForm.valid){
-    let url = this.loginUser == 'Admin' ? 'zp_osmanabad/user-registration/'+formValue.userName+'/'+formValue.password : 'zp_osmanabad/user-registration/'+formValue.mobileNo+'/'+formValue.passwordOff
-    
-    this.api.setHttp('get', url, false, false, false, 'baseUrl');
-    this.api.getHttp().subscribe({
-      next: ((res: any) => {
-        if(res.statusCode == '200'){
-          let logObj = res.responseData;
-          localStorage.setItem('loggedInData',JSON.stringify(logObj));
-          sessionStorage.setItem('loggedIn','true');
-        }
-      }),
-      error: ((err: any) => { this.errors.handelError(err) })
-    })
-   }else{
-    return
-   }
-   
+    if (this.adminLoginForm.invalid) {
+      return
+    } else {
+      let url = this.loginUser == 'Admin' ? 'zp_osmanabad/user-registration/' + formValue.userName + '/' + formValue.password : 'zp_osmanabad/user-registration/' + formValue.mobileNo + '/' + formValue.passwordOff
+
+      this.api.setHttp('get', url, false, false, false, 'baseUrl');
+      this.api.getHttp().subscribe({
+        next: ((res: any) => {
+          if (res.statusCode == '200') {
+            let logObj = res.responseData;
+            localStorage.setItem('loggedInData', JSON.stringify(logObj));
+            sessionStorage.setItem('loggedIn', 'true');
+          } else {
+            this.commonMethods.snackBar(res.statusMessage, 1)
+          }
+        }),
+        error: ((err: any) => { this.errors.handelError(err) })
+      })
+    }
+
 
   }
 }
