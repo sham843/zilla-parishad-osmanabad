@@ -21,9 +21,10 @@ export class SchoolRegistrationComponent {
   districtArr = new Array();
   talukaArr = new Array();
   villageArr = new Array();
+  deleteObj: any;
 
-  constructor(private dialog : MatDialog, private apiService : ApiService, private errors : ErrorsService,
-    private masterService : MasterService ) { }
+  constructor(private dialog: MatDialog, private apiService: ApiService, private errors: ErrorsService,
+    private masterService: MasterService) { }
 
   ngOnInit() {
     this.getTableData();
@@ -68,9 +69,9 @@ export class SchoolRegistrationComponent {
 
   childCompInfo(obj: any) {
     console.log(obj);
-    
+
     this.addUpdateAgency(obj);
-    
+
     switch (obj.label) {
       case 'Pagination':
         this.pageNumber = obj.pageNumber;
@@ -79,28 +80,45 @@ export class SchoolRegistrationComponent {
       case 'Edit' || 'Delete':
         this.addUpdateAgency(obj);
         break;
-      case 'Block':
-        this.globalDialogOpen();
+      // case 'Block':
+      //   this.globalDialogOpen();
+      //   break;
+      case 'Delete':
+        this.globalDialogOpen(obj);
         break;
     }
   }
 
-  addUpdateAgency(obj ?: any) {
+  addUpdateAgency(obj?: any) {
     // let obj: any;
     this.dialog.open(AddUpdateSchoolRegistrationComponent, {
-      width:'820px',
+      width: '820px',
       data: obj,
       disableClose: true,
       autoFocus: false
     });
   }
 
-  globalDialogOpen() {
-    this.dialog.open(GlobalDialogComponent, {
+  globalDialogOpen(obj: any) {
+    this.deleteObj = obj;
+    let dialoObj = {
+      header: 'Delete',
+      title: 'Do You Want To Delete The Selected Content ?',
+      cancelButton: 'Cancel',
+      okButton: 'Ok'
+    }
+
+    const deleteDialogRef = this.dialog.open(GlobalDialogComponent, {
       width: '320px',
-      data: '',
+      data: dialoObj,
       disableClose: true,
       autoFocus: false
+    })
+    deleteDialogRef.afterClosed().subscribe((result: any) => {
+
+      if (result == 'yes') {
+        this.onClickDelete();
+      }
     })
   }
 
@@ -136,6 +154,15 @@ export class SchoolRegistrationComponent {
     //   error: ((err: any) => { this.errors.handelError(err) })
     // });
   }
-  
+
+  onClickDelete() {
+    // let deleteObj = [{
+    //   "id": this.deleteObj.id,
+    //   "modifiedBy": 0,
+    //   "modifiedDate": new Date(),
+    //   "lan": "EN"
+    // }]
+  }
+
 
 }

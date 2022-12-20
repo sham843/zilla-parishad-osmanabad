@@ -19,7 +19,6 @@ export class AgencyRegistrationComponent {
   ngOnInit() {
     this.filterData();
     this.getTableData();
-
   }
 
   filterData() {
@@ -64,6 +63,12 @@ export class AgencyRegistrationComponent {
   onPagintion(pageNo: number) {
     this.pageNumber = pageNo;
     this.getTableData()
+  }
+
+  onClear() {
+    this.filterForm.reset();
+    this.filterData();
+    this.getTableData();
   }
 
   childCompInfo(_obj: any) {

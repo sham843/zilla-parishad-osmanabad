@@ -129,7 +129,14 @@ body {
   background-color: var(--main-light-color) !important;
   color: var(--main-color) !important;
 }
-
+.dashboard-table .srno{
+  max-width: 80px !important;
+  width: 80px !important;
+}
+.dashboard-table .action{
+  max-width: 120px !important;
+  width: 120px !important;
+}
 .plain-card {
   box-shadow: none !important;
   border-radius: 10px;
@@ -151,8 +158,4 @@ body {
 .plain-card .card-body {
   padding: 10px 15px;
   font-size: 0.85rem;
-}
-
-.dashboard-table .action{
-  min-width: 120px;
 }
