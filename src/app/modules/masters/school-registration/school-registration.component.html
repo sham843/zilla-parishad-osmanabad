@@ -52,9 +52,9 @@
                     </div>
                 </div>
             </mat-card-header>
-            <mat-card-header class="card-header">
-                <div class="row g-3">
-                    <div class="col-sm-3">
+            <mat-card-header class="card-header pb-0">
+                <div class="row gx-3 mt-2">
+                    <div class="col-sm-auto">
                         <mat-form-field appearance="outline" class="w-100">
                             <mat-label>Select District</mat-label>
                             <mat-select [formControl]="districtId" (selectionChange)="getTaluka();">
@@ -64,7 +64,7 @@
                             </mat-select>
                         </mat-form-field>
                     </div>
-                    <div class="col-sm-3">
+                    <div class="col-sm-auto">
                         <mat-form-field appearance="outline" class="w-100">
                             <mat-label>Select Taluka</mat-label>
                             <mat-select [formControl]="talukaId">
@@ -74,7 +74,7 @@
                             </mat-select>
                         </mat-form-field>
                     </div>
-                    <div class="col-sm-3">
+                    <div class="col-sm-auto">
                         <mat-form-field appearance="outline" class="w-100">
                             <mat-label>Select Village</mat-label>
                             <mat-select>
@@ -83,9 +83,9 @@
                             </mat-select>
                         </mat-form-field>
                     </div>
-                   <div class="col-sm-3">
+                   <div class="col-sm-auto">
                     <button mat-flat-button class="btn-main">Filter</button>
-                    <button  mat-flat-button class="btn-main ms-3">clear</button>
+                    <button  mat-flat-button class="btn-second ms-3">Clear</button>
                    </div>
                 </div>
             </mat-card-header>
