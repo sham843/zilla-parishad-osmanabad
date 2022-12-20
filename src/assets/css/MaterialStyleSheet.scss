@@ -62,3 +62,12 @@ input:-webkit-autofill:active {
 .mat-mdc-paginator-page-size {
     display: none !important;
   }
+
+
+@media only screen and (max-width: 478px){
+   
+    .mat-mdc-unelevated-button .mdc-button__label
+    {
+        font-size: 12px !important;
+    }
+  }
