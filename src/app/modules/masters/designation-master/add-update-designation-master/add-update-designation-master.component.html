@@ -48,7 +48,7 @@
                 </mat-form-field>
             </div> -->
             <div class="col-sm">
-                <ng-container *ngIf="desiganationTypeData == []">
+                <ng-container >
                     <mat-form-field appearance="outline" class="w-100 ">
                         <mat-label>Add Designation</mat-label>
                         <input matInput placeholder="Search by Contact" formControlName="designationType" maxlength="30">
@@ -60,7 +60,7 @@
     </mat-card-content>
     <mat-card-footer class="card-footer">
         <mat-card-actions align="end">
-            <button mat-flat-button class="btn-second me-2">Cancel</button>
+            <button mat-dialog-close mat-flat-button class="btn-second me-2">Cancel</button>
             <button mat-flat-button class="btn-main"> {{editFlag ? 'Update' :'Submit'}}</button>
         </mat-card-actions>
     </mat-card-footer>
