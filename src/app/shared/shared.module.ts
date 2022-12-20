@@ -11,7 +11,6 @@ import {MatButtonModule} from '@angular/material/button';
 import { PageStatisticsComponent } from './components/page-statistics/page-statistics.component';
 import {MatIconModule} from '@angular/material/icon';
 import { MatCardModule } from '@angular/material/card';
-import { CardGridViewComponent } from './components/card-grid-view/card-grid-view.component';
 import { MatMenuModule } from '@angular/material/menu';
 
 @NgModule({
@@ -19,7 +18,6 @@ import { MatMenuModule } from '@angular/material/menu';
     DashPipe,
     TableComponent,
     PageStatisticsComponent,
-    CardGridViewComponent
   ],
   imports: [
     CommonModule,
@@ -32,6 +30,6 @@ import { MatMenuModule } from '@angular/material/menu';
     MatCardModule,
     MatMenuModule
   ],
-  exports: [TableComponent, PageStatisticsComponent,CardGridViewComponent]
+  exports: [TableComponent, PageStatisticsComponent]
 })
 export class SharedModule { }

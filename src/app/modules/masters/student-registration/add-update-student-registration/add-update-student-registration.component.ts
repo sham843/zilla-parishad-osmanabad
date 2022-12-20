@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ErrorsService } from 'src/app/core/services/errors.service';
+import { FileUploadService } from 'src/app/core/services/file-upload.service';
 import { MasterService } from 'src/app/core/services/master.service';
 
 @Component({
@@ -18,10 +19,16 @@ export class AddUpdateStudentRegistrationComponent {
   religionArr = new Array();
   standardArr = new Array();
 
+  @ViewChild('uploadImage') imageFile!: ElementRef;
+  @ViewChild('uploadAadhar') aadharFile!: ElementRef;
+  uploadImg: any;
+  uploadAadhar: any;
+
   constructor(
     private fb : FormBuilder,
     private masterService: MasterService,
-    private errors: ErrorsService) { }
+    private errors: ErrorsService,
+    private fileUpl: FileUploadService,) { }
 
   ngOnInit() {
     this.formData();
@@ -144,6 +151,14 @@ export class AddUpdateStudentRegistrationComponent {
       },
       error: ((err: any) => { this.errors.handelError(err) })
     });
+  }
+
+  fileUpload(event:any,name:string){
+  console.log(event);
+   this.fileUpl.uploadDocuments(event, 'Upload', 'jpg, jpeg, png').subscribe((res: any) => {
+    name == 'img' ? this.uploadImg = res.responseData : this.uploadAadhar = res.responseData;    
+  });
+
   }
 
   onSubmit(){
