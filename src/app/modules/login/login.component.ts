@@ -40,36 +40,30 @@ export class LoginComponent {
   checklogin(event: any,clear:any) {
     this.loginUser = event.tab.textLabel;;
     clear.resetForm();
-
+    this.updateValidations();
   }
 
   updateValidations() {
     if (this.loginUser == 'Admin') {
       this.adminLoginForm.controls['userName'].setValidators([Validators.required]);
-      this.adminLoginForm.controls['userName'].updateValueAndValidity();
-      this.adminLoginForm.controls['password'].setValidators([Validators.required]);
-      this.adminLoginForm.controls['password'].updateValueAndValidity();
-
+      this.adminLoginForm.controls['password'].setValidators([Validators.required]); 
       this.adminLoginForm.controls['mobileNo'].setValidators([]);
-      this.adminLoginForm.controls['mobileNo'].updateValueAndValidity();
-      this.adminLoginForm.controls['passwordOff'].setValidators([]);
-      this.adminLoginForm.controls['passwordOff'].updateValueAndValidity();
+      this.adminLoginForm.controls['passwordOff'].setValidators([]);      
     } else {
-      this.adminLoginForm.controls['mobileNo'].setValidators([Validators.required]);
-      this.adminLoginForm.controls['mobileNo'].updateValueAndValidity();
+      this.adminLoginForm.controls['mobileNo'].setValidators([Validators.required,Validators.pattern(this.validators.mobile_No)]);
       this.adminLoginForm.controls['passwordOff'].setValidators([Validators.required]);
-      this.adminLoginForm.controls['passwordOff'].updateValueAndValidity();
-
       this.adminLoginForm.controls['userName'].setValidators([]);
-      this.adminLoginForm.controls['userName'].updateValueAndValidity();
       this.adminLoginForm.controls['password'].setValidators([]);
-      this.adminLoginForm.controls['password'].updateValueAndValidity();
     }
+    this.adminLoginForm.controls['userName'].updateValueAndValidity();
+    this.adminLoginForm.controls['password'].updateValueAndValidity();
+    this.adminLoginForm.controls['mobileNo'].updateValueAndValidity();
+    this.adminLoginForm.controls['passwordOff'].updateValueAndValidity();
   }
 
   onSubmit() {
     let formValue = this.adminLoginForm.value;
-    this.updateValidations();
+   
     if (this.adminLoginForm.invalid) {
       return
     } else {
