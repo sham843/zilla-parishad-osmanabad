@@ -12,12 +12,14 @@ import { PageStatisticsComponent } from './components/page-statistics/page-stati
 import {MatIconModule} from '@angular/material/icon';
 import { MatCardModule } from '@angular/material/card';
 import { MatMenuModule } from '@angular/material/menu';
+import { GlobalDialogComponent } from './components/global-dialog/global-dialog.component';
 
 @NgModule({
   declarations: [
     DashPipe,
     TableComponent,
     PageStatisticsComponent,
+    GlobalDialogComponent
   ],
   imports: [
     CommonModule,
