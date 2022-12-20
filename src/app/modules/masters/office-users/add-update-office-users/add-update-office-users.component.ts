@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { MatDialogRef } from '@angular/material/dialog';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ApiService } from 'src/app/core/services/api.service';
 import { CommonMethodsService } from 'src/app/core/services/common-methods.service';
 import { ErrorsService } from 'src/app/core/services/errors.service';
@@ -21,13 +21,14 @@ export class AddUpdateOfficeUsersComponent implements OnInit {
               private apiService: ApiService,
               private commonService: CommonMethodsService,
               private error: ErrorsService,
-              private dialogRef: MatDialogRef<AddUpdateOfficeUsersComponent>){}
-
-
+              private dialogRef: MatDialogRef<AddUpdateOfficeUsersComponent>,
+              @Inject(MAT_DIALOG_DATA) public data: any){}
+              
   ngOnInit(){
     this.defaultForm();
-    this.getLevelDrop();
-    this.getDistrictDrop();
+    !this.data ? this.getLevelDrop(): '';
+    !this.data ? this.getDistrictDrop(): '';
+    console.log("dataa",this.data);
   }
 
   defaultForm(){

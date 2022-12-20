@@ -47,18 +47,6 @@ export class CommonMethodsService {
     }
   }
 
-  downLoadFile(data: any, type: string, filename: string) {
-    var a = document.createElement("a");
-    a.setAttribute('style', 'display:none;');
-    document.body.appendChild(a);
-    var blob = new Blob([data], { type: type });
-    var url = window.URL.createObjectURL(blob);
-    a.href = url;
-    a.download = filename;
-    a.click();
-  }
-
-
   downLoadPdf(header: any, values: any, objData: any) {
     // let doc: any = new jsPDF();
     let doc: any;
