@@ -1,11 +1,12 @@
 import { Component, Inject } from '@angular/core';
-import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
-import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ApiService } from 'src/app/core/services/api.service';
 import { CommonMethodsService } from 'src/app/core/services/common-methods.service';
 import { ErrorsService } from 'src/app/core/services/errors.service';
 import { FileUploadService } from 'src/app/core/services/file-upload.service';
 import { MasterService } from 'src/app/core/services/master.service';
+import { ValidationService } from 'src/app/core/services/validation.service';
 
 @Component({
   selector: 'app-add-update-school-registration',
@@ -27,7 +28,8 @@ export class AddUpdateSchoolRegistrationComponent {
   schoolDocument!: FormArray;
 
   constructor(private masterService: MasterService, private errors: ErrorsService, private fb: FormBuilder, private fileUpload: FileUploadService,
-    private apiService: ApiService, private commonMethod: CommonMethodsService, @Inject(MAT_DIALOG_DATA) public data: any,) { }
+    private apiService: ApiService, private commonMethod: CommonMethodsService, @Inject(MAT_DIALOG_DATA) public data: any,
+    public dialogRef: MatDialogRef<AddUpdateSchoolRegistrationComponent>, public validationService : ValidationService) { }
 
   ngOnInit() {
     this.formFeild();
@@ -42,8 +44,6 @@ export class AddUpdateSchoolRegistrationComponent {
     return this.schoolRegForm.controls;
   }
 
-
-
   formFeild() {
     this.schoolRegForm = this.fb.group({
       "createdBy": 0,
@@ -52,17 +52,17 @@ export class AddUpdateSchoolRegistrationComponent {
       "modifiedDate": new Date(),
       "isDeleted": false,
       "id": 0,
-      "schoolName": [''],
+      "schoolName": ['', Validators.required],
       "m_SchoolName": "string",
       "stateId": 1,
-      "districtId": [''],
-      "talukaId": [''],
-      "villageId": [''],
-      "centerId": [''],
-      "s_CategoryId": [''],
-      "s_ManagementId": [''],
-      "s_TypeId": [''],
-      "g_ClassId": [''],
+      "districtId": ['', Validators.required],
+      "talukaId": ['', Validators.required],
+      "villageId": ['', Validators.required],
+      "centerId": ['', Validators.required],
+      "s_CategoryId": ['', Validators.required],
+      "s_ManagementId": ['', Validators.required],
+      "s_TypeId": ['', Validators.required],
+      "g_ClassId": ['', Validators.required],
       "lan": "string",
       "localID": 0,
       "lowestClass": 0,
@@ -104,7 +104,6 @@ export class AddUpdateSchoolRegistrationComponent {
       },
       error: ((err: any) => { this.errors.handelError(err) })
     });
-
   }
 
   getTaluka() {
@@ -231,6 +230,7 @@ export class AddUpdateSchoolRegistrationComponent {
         next: (res: any) => {
           if (res.statusCode == "200") {
             this.commonMethod.snackBar("Record Added Successfully", 0);
+            this.dialogRef.close('yes');
           }
         },
         error: ((err: any) => { this.errors.handelError(err) })
@@ -244,13 +244,12 @@ export class AddUpdateSchoolRegistrationComponent {
         next: (res: any) => {
           if (res.statusCode == "200") {
             this.commonMethod.snackBar("Record Update Successfully", 0);
+            this.dialogRef.close('yes');
           }
         },
         error: ((err: any) => { this.errors.handelError(err) })
       });
-
     }
-
   }
 
   onEdit() {
