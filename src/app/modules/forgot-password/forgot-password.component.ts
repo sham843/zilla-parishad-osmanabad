@@ -17,8 +17,8 @@ export class ForgotPasswordComponent {
   otpField: boolean = false;
   passwordField: boolean = false;
   mobileForm!: FormGroup;
-  otpForm! : FormGroup;
-  passwordForm! : FormGroup;
+  otpForm!: FormGroup;
+  passwordForm!: FormGroup;
   timeLeft: number = 60;
   interval: any;
   otpStatus: boolean = false;
@@ -37,7 +37,7 @@ export class ForgotPasswordComponent {
     "email": ""
   }
 
-  constructor(private apiService: ApiService, private common: CommonMethodsService, private router :Router,
+  constructor(private apiService: ApiService, private common: CommonMethodsService, private router: Router,
     private errors: ErrorsService, public validation: ValidationService, private fb: FormBuilder) { }
 
 
@@ -47,23 +47,23 @@ export class ForgotPasswordComponent {
     });
 
     this.otpForm = this.fb.group({
-      digitOne : ['',Validators.required],
-      digitTwo : ['',Validators.required],
-      digitThree : ['',Validators.required],
-      digitFour :['',Validators.required],
-      digitFive :['',Validators.required]
+      digitOne: ['', Validators.required],
+      digitTwo: ['', Validators.required],
+      digitThree: ['', Validators.required],
+      digitFour: ['', Validators.required],
+      digitFive: ['', Validators.required]
     });
 
     this.passwordForm = this.fb.group({
-      newPassword : ['',[Validators.required,Validators.pattern(this.validation.valPassword)]],
-      confirmPassword : ['',[Validators.required,Validators.pattern(this.validation.valPassword)]]
+      newPassword: ['', [Validators.required, Validators.pattern(this.validation.valPassword)]],
+      confirmPassword: ['', [Validators.required, Validators.pattern(this.validation.valPassword)]]
     })
 
   }
 
   get fcMobile() { return this.mobileForm.controls };
-  get fcOtp(){ return this.otpForm.controls};
-  get fcPass(){ return this.passwordForm.controls};
+  get fcOtp() { return this.otpForm.controls };
+  get fcPass() { return this.passwordForm.controls };
 
   startTimer() {
     this.timeLeft = 60;
@@ -80,23 +80,23 @@ export class ForgotPasswordComponent {
     }, 1000);
   }
 
-  sendOtp(flag:any) {
-    this.mobileForm.invalid  ? this.common.snackBar('Please Enter Mobile Number',1):'';
+  sendOtp(flag: any) {
+    this.mobileForm.invalid ? this.common.snackBar('Please Enter Mobile Number', 1) : '';
     let obj = this.mobileForm.value;
     this.obj.mobileNo = obj.mobileNo;
-    if (this.mobileForm.invalid && flag=='send') {
+    if (this.mobileForm.invalid && flag == 'send') {
       return
     }
-    else{
-    this.apiService.setHttp('post', 'api/OtpTran', false, this.obj, false, 'baseUrl');
-    this.apiService.getHttp().subscribe({
-      next: (res: any) => {
-        res.statusCode == 200 ? (this.common.snackBar(res.statusMessage, 0), this.mobileField = false,
-         this.otpField = true, this.otpStatus = true, this.startTimer()) : this.common.snackBar(res.statusMessage, 1);
-      },
-      error: ((err: any) => { this.errors.handelError(err) })
-    })
-   }
+    else {
+      this.apiService.setHttp('post', 'api/OtpTran', false, this.obj, false, 'baseUrl');
+      this.apiService.getHttp().subscribe({
+        next: (res: any) => {
+          res.statusCode == 200 ? (this.common.snackBar(res.statusMessage, 0), this.mobileField = false,
+            this.otpField = true, this.otpStatus = true, this.startTimer()) : this.common.snackBar(res.statusMessage, 1);
+        },
+        error: ((err: any) => { this.errors.handelError(err) })
+      })
+    }
   }
 
   pauseTimer() {
@@ -104,43 +104,41 @@ export class ForgotPasswordComponent {
     this.mobileForm.value.mobileNo.setValue('');
   }
 
-  verifyOtp(){
+  verifyOtp() {
     let obj = this.otpForm.value;
     let otp = obj.digitOne + obj.digitTwo + obj.digitThree + obj.digitFour + obj.digitFive;
     this.obj.otp = otp;
     this.obj.mobileNo = this.mobileForm.value.mobileNo;
-    if(this.otpForm.valid){
+    if (this.otpForm.valid) {
       this.apiService.setHttp('post', 'api/OtpTran/VerifyOTP', false, this.obj, false, 'baseUrl');
       this.apiService.getHttp().subscribe({
         next: (res: any) => {
           res.statusCode == 200 ? (this.common.snackBar(res.statusMessage, 0), this.mobileField = false,
-           this.otpField = false, this.passwordField = true,clearInterval(this.interval),this.pauseTimer()) : (this.common.snackBar(res.statusMessage, 1), this.timeLeft = 0);
+            this.otpField = false, this.passwordField = true, clearInterval(this.interval), this.pauseTimer()) : (this.common.snackBar(res.statusMessage, 1), this.timeLeft = 0);
         },
         error: ((err: any) => { this.errors.handelError(err) })
       })
     }
-    else{
+    else {
       this.common.snackBar('Please Enter OTP', 1)
     }
-   
   }
 
-  onSubmit(){
+  onSubmit() {
     let obj = this.passwordForm.value;
-     if(obj.newPassword == obj.confirmPassword && this.passwordForm.valid){
+    if (obj.newPassword == obj.confirmPassword && this.passwordForm.valid) {
       let str = `Password=${obj.newPassword}&NewPassword=${obj.confirmPassword}&MobileNo=${this.mobileForm.value.mobileNo}`;
-      this.apiService.setHttp('put', 'zp_osmanabad/user-registration/ForgotPassword?'+ str, false, obj, false, 'baseUrl');
+      this.apiService.setHttp('put', 'zp_osmanabad/user-registration/ForgotPassword?' + str, false, obj, false, 'baseUrl');
       this.apiService.getHttp().subscribe({
         next: (res: any) => {
-          res.statusCode == 200 ? (this.common.snackBar(res.statusMessage,0), this.router.navigate(['/login'])) :this.common.snackBar(res.statusMessage,1)
+          res.statusCode == 200 ? (this.common.snackBar(res.statusMessage, 0), this.router.navigate(['/login'])) : this.common.snackBar(res.statusMessage, 1)
         },
         error: ((err: any) => { this.errors.handelError(err) })
       })
     }
-    else{
+    else {
       this.common.snackBar('New Password & Confirm Password Did Not Match', 1)
     }
-     }
-
   }
+}
 
