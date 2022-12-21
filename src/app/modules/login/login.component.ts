@@ -73,7 +73,7 @@ export class LoginComponent {
       this.api.setHttp('get', url, false, false, false, 'baseUrl');
       this.api.getHttp().subscribe({
         next: ((res: any) => {
-          if (res.statusCode == '200') {
+          if (res.statusCode == 200) {
             let logObj = res.responseData;
             localStorage.setItem('loggedInData', JSON.stringify(logObj));
             sessionStorage.setItem('loggedIn', 'true');
