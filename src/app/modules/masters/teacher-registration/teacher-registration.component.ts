@@ -41,10 +41,10 @@ getTableData(flag?: string) {
   this.pageNumber = flag == 'filter' ? 1 : this.pageNumber;
   let tableDataArray = new Array();
   let tableDatasize!: Number;
-  // let str = `?pageno=${this.pageNumber}&pagesize=10&TextSearch=${this.searchContent}&lan='mr-IN'`;
-  let str = `?pageno=${this.pageNumber}&pagesize=10&TextSearch=${this.searchContent.value}&lan=mr-IN`;
+  //zp_osmanabad/Teacher/GetAll?pageno=1&pagesize=10&Name=hh&MobileNo=7777777777&EmailId=rfrf&lan=EN
+  let str = `pageno=${this.pageNumber}&pagesize=10&lan=mr-IN`;
 
-  this.apiService.setHttp('GET', 'zp_osmanabad/Teacher/GetAllTeacher' + str, false, false, false, 'baseUrl');
+  this.apiService.setHttp('GET', 'zp_osmanabad/Teacher/GetAll?' + str, false, false, false, 'baseUrl');
   this.apiService.getHttp().subscribe({
 
     next: (res: any) => {
