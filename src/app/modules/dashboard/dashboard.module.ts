@@ -6,6 +6,7 @@ import { DashboardComponent } from './dashboard.component';
 import { AgmCoreModule } from '@agm/core';
 import {MatSelectModule} from '@angular/material/select';
 import {MatCardModule} from '@angular/material/card';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
   declarations: [
@@ -16,6 +17,7 @@ import {MatCardModule} from '@angular/material/card';
     DashboardRoutingModule,
     MatSelectModule,
     MatCardModule,
+    TranslateModule,
     AgmCoreModule.forRoot({
       apiKey: 'AIzaSyBhkYI4LMEqVhB6ejq12wpIA6CW5theKJw',
       language: 'en',
