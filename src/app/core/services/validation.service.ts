@@ -57,6 +57,12 @@ export class ValidationService {
     }
 }
 
+noFirstSpaceAllow(event: any) {  // for First Space Not Allow
+  if (event.target.selectionStart === 0 && (event.code === 'Space')) {
+    event.preventDefault();
+  }
+}
+
 
   emailRegex(event: any) { //Email Validation
     if (!this.noSpacesAtStart(event)) return false; // First Space not Accept
