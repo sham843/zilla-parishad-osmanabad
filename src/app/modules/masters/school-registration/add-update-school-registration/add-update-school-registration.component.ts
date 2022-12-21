@@ -49,7 +49,7 @@ export class AddUpdateSchoolRegistrationComponent {
     this.schoolRegForm = this.fb.group({
       "id": 0,
       "schoolName": [''],
-      "m_SchoolName": "string",
+      "m_SchoolName": [''],
       "stateId": 0,
       "districtId": ['', Validators.required],
       "talukaId": ['', Validators.required],
@@ -236,7 +236,7 @@ export class AddUpdateSchoolRegistrationComponent {
     this.schoolRegForm.patchValue({
       "id": this.data.id,
       "schoolName": this.data.schoolName,
-      "m_SchoolName": "string",
+      "m_SchoolName": [''],
       "lan": "EN",
       "localID": 0,
       "lowestClass": 0,
