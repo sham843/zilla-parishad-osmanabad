@@ -29,7 +29,7 @@
                                     <mat-form-field appearance="outline" class="w-100">
                                         <mat-label>User Name</mat-label>
                                         <input matInput placeholder="User Name" formControlName="userName">
-                                        <mat-error *ngIf="fc['userName'].hasError('required')"> User Name Is Required</mat-error>
+                                        <mat-error *ngIf="fc['userName'].hasError('required')">User Name Is Required</mat-error>
                                     </mat-form-field>
                                 </div>
                                 <div class="mb-3 text-center">
@@ -40,7 +40,7 @@
                                             [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
                                             <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
                                         </button>
-                                        <mat-error *ngIf="fc['password'].hasError('required')"> Password Is Required</mat-error>
+                                        <mat-error *ngIf="fc['password'].hasError('required')">Password Is Required</mat-error>
                                        
                                     </mat-form-field>
                                 </div>
@@ -57,8 +57,8 @@
                                         <mat-label>Mobile No.</mat-label>
                                         <input matInput placeholder="Mobile No." formControlName="mobileNo" maxlength="10" minlength="10"
                                         (keypress)="validators.onlyDigits($event)">
-                                        <mat-error *ngIf="fc['mobileNo'].hasError('required')"> Mobile No Is Required</mat-error>
-                                        <mat-error *ngIf="fc['mobileNo'].hasError('pattern')"> Enter Valid Mobile Number</mat-error>
+                                        <mat-error *ngIf="fc['mobileNo'].hasError('required')">Mobile No Is Required</mat-error>
+                                        <mat-error *ngIf="fc['mobileNo'].hasError('pattern')">Enter Valid Mobile Number</mat-error>
                                         <!-- <mat-error *ngIf="fc['mobileNo'].hasError('maxLength')"> Enter 10 Digit Number</mat-error>
                                         <mat-error *ngIf="fc['mobileNo'].hasError('minLength')"> Enter 10 Digit Number</mat-error> -->
                                     </mat-form-field>
@@ -67,11 +67,11 @@
                                     <mat-form-field appearance="outline" class="w-100">
                                         <mat-label>Password</mat-label>
                                         <input matInput [type]="hide ? 'password' : 'text'" formControlName="passwordOff">
-                                        <button mat-icon-button matSuffix (click)="hide = !hide"
+                                        <button mat-icon-button matSuffix type="button" (click)="hide = !hide"
                                             [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
                                             <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
                                         </button>
-                                        <mat-error *ngIf="fc['passwordOff'].hasError('required')"> Password Is Required</mat-error>
+                                        <mat-error *ngIf="fc['passwordOff'].hasError('required')">Password Is Required</mat-error>
                                     </mat-form-field>
                                 </div>
                                 <div class="d-flex align-items-center justify-content-between">

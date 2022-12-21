@@ -107,7 +107,6 @@ export class OfficeUsersComponent {
   })
   }
 
-
 deleteOffice(obj: any){
  let deleteObj = [{
     "id": obj.id,

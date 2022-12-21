@@ -24,7 +24,7 @@
 
                     <mat-form-field appearance="outline" class="w-100 ">
                         <mat-label>District</mat-label>
-                        <mat-select placeholder="select" formControlName="districtId">
+                        <mat-select placeholder="select" formControlName="districtId" >
                             <mat-option *ngFor="let dist of districtArr"
                                 [value]="dist.id">{{dist.district}}</mat-option>
                         </mat-select>
@@ -117,7 +117,7 @@
                     <mat-form-field appearance="outline" class="w-100">
                         <mat-label>Cast</mat-label>
                         <mat-select formControlName="castId">
-                            <mat-option>option-1</mat-option>
+                            <mat-option *ngFor="let cast of casteArr" [value]="cast.id" >{{cast.caste}}</mat-option>
                         </mat-select>
                     </mat-form-field>
                 </div>
