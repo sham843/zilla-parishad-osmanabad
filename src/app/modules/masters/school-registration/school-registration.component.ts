@@ -8,6 +8,7 @@ import { GlobalDialogComponent } from 'src/app/shared/components/global-dialog/g
 import { AddUpdateSchoolRegistrationComponent } from './add-update-school-registration/add-update-school-registration.component';
 import { CommonMethodsService } from 'src/app/core/services/common-methods.service';
 import { WebStorageService } from 'src/app/core/services/web-storage.service';
+import { DownloadPdfExcelService } from 'src/app/core/services/download-pdf-excel.service';
 
 @Component({
   selector: 'app-school-registration',
@@ -21,6 +22,7 @@ export class SchoolRegistrationComponent {
   districtId = new FormControl();
   talukaId = new FormControl('');
   villageId = new FormControl();
+  resultDownloadArr = new Array();
 
   districtArr = new Array();
   talukaArr = new Array();
@@ -32,11 +34,13 @@ export class SchoolRegistrationComponent {
   cardCurrentPage: number = 0;
 
   constructor(private dialog: MatDialog, private apiService: ApiService, private errors: ErrorsService,
-    private masterService: MasterService,private commonMethodS: CommonMethodsService, private webStorageS : WebStorageService) { }
+    private masterService: MasterService,private commonMethodS: CommonMethodsService, private webStorageS : WebStorageService, 
+    private downloadFileService : DownloadPdfExcelService) { }
 
   ngOnInit() {
     this.getTableData();
     this.getDistrict();
+    this.getofficeReport();
   }
 
   onPagintion(pageNo: number) {
@@ -213,5 +217,52 @@ export class SchoolRegistrationComponent {
       this.cardCurrentPage = 0;
       this.getTableData();
   }
+
+  getofficeReport(){
+  //   let pageNo = this.cardViewFlag ? (this.cardCurrentPage + 1) : this.pageNumber; 
+  //   let str = `?pageno=${pageNo}&pagesize=10&DistrictId=${this.districtId.value ? this.districtId.value : 0}
+  //   &TalukaId=${this.talukaId.value ? this.talukaId.value : 0}&VillageId=${this.villageId.value ? this.villageId.value : 0}&lan=${this.webStorageS.languageFlag}`;
+  //   this.apiService.setHttp('GET', 'ZP-Osmanabad/School/GetAll' + str, false, false, false, 'baseUrl');
+
+    let str = `&DistrictId=${this.districtId.value ? this.districtId.value : 0}
+     &TalukaId=${this.talukaId.value ? this.talukaId.value : 0}&VillageId=${this.villageId.value ? this.villageId.value : 0}&lan=${this.webStorageS.languageFlag}`;
+    this.apiService.setHttp('GET', 'ZP-Osmanabad/School/GetAll' + str, false, false, false, 'baseUrl');
+    this.apiService.getHttp().subscribe({
+      next: (res: any) => {
+        if (res.statusCode == 200) {
+          // console.log(res);
+          let data:[] = res.responseData.responseData1;
+          data.map((ele: any, i: any)=>{
+            let obj = {
+              "Sr.No": i+1,
+              "Name": ele.schoolName,
+              "District": ele.district,
+              "Taluka": ele.taluka,
+              "Village": ele.village,
+            }
+            this.resultDownloadArr.push(obj);
+          });
+        }
+      },
+      error: ((err: any) => { this.errors.handelError(err.message) })
+    });
+  }
+
+  downloadPdf() {
+    let keyPDFHeader = ['SrNo', "Name", "District", "Taluka","Village"];
+        let ValueData =
+          this.resultDownloadArr.reduce(
+            (acc: any, obj: any) => [...acc, Object.values(obj).map((value) => value)], []
+          );// Value Name
+          console.log("ValueData", ValueData);
+          
+          let objData:any = {
+            'topHedingName': 'School Registration Data',
+            'createdDate':'Created on:'+new Date()
+          }
+        this.downloadFileService.downLoadPdf(keyPDFHeader, ValueData, objData);
+  }
+
+ 
 
 }

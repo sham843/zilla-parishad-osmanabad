@@ -1,4 +1,4 @@
-import { Component, Inject } from '@angular/core';
+import { Component, ElementRef, Inject, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ApiService } from 'src/app/core/services/api.service';
@@ -15,6 +15,8 @@ import { WebStorageService } from 'src/app/core/services/web-storage.service';
   styleUrls: ['./add-update-school-registration.component.scss']
 })
 export class AddUpdateSchoolRegistrationComponent {
+
+  @ViewChild('img') img!: ElementRef;
   districtArr = new Array();
   talukaArr = new Array();
   centerArr = new Array();
@@ -246,9 +248,14 @@ export class AddUpdateSchoolRegistrationComponent {
       "modifiedDate": new Date(),
       "isDeleted": false
     });
+    // this.img.nativeElement.value = this.data.docPath;
+
+    // this.schoolRegForm.value.docPath = this.data.docPath;
+    // this.f['docPath'].setValue(this.data.docPath);
   }
 
   clearImg(){
+    this.img.nativeElement.value = '';
     this.schoolRegForm.value.docPath = '';
   }
 
