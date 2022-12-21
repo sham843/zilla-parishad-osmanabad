@@ -41,7 +41,6 @@ export class OfficeUsersComponent {
         if (res.statusCode == "200") {
           tableDataArray = res.responseData.responseData1;
           tableDatasize = res.responseData.responseData2.pageCount;
-          this.commonService.snackBar(res.statusMessage, 0);
         } else {
           tableDataArray = [];
           tableDatasize = 0;
