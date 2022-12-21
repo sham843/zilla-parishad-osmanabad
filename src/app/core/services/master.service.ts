@@ -130,9 +130,9 @@ export class MasterService {
     });
   }
 
-  getAllCaste(strPara: string) {
+  getAllCaste(strPara: string, religionId: number) {
     return new Observable((obj) => {
-      this.apiService.setHttp('GET', 'zp-osmanabad/master/GetAllCaste?flag_lang=' + strPara, false, false, false, 'baseUrl');
+      this.apiService.setHttp('GET', 'zp-osmanabad/master/GetAllCaste?flag_lang='+strPara+'&ReligionId='+religionId, false, false, false, 'baseUrl');
       this.apiService.getHttp().subscribe({
         next: (res: any) => { if (res.statusCode == "200") {obj.next(res) } else { obj.error(res); } },
         error: (e: any) => { obj.error(e) }
@@ -206,4 +206,6 @@ export class MasterService {
       });
     });
   }
+
+
 }

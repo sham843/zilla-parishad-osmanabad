@@ -22,7 +22,7 @@ export class AddUpdateStudentRegistrationComponent {
   religionArr = new Array();
   standardArr = new Array();
   casteArr = new Array();
-
+  editFlag: boolean = false
   physicallyDisabled = [
     { id: 1, name: 'Yes' },
     { id: 2, name: 'No' }
@@ -47,16 +47,18 @@ export class AddUpdateStudentRegistrationComponent {
 
   ngOnInit() {
     this.languageFlag = this.webService.languageFlag;
-    this.formData();
-    this.getDistrict();
-    this.getTaluka();
-    this.getCenter();
-    this.getSchool();
-    this.getGender();
-    this.getReligion();
-    this.getStandard();
-    this.getCaste();
-    this.data ? this.getById(this.data) : ''
+    this.formData(),
+    this.data ? this.getById(this.data) : (
+    this.getDistrict(),
+    this.getTaluka(),
+    this.getCenter(),
+    this.getSchool(),
+    this.getGender(),
+    this.getReligion(),
+    this.getStandard(),
+    this.getCaste()
+    )
+   
   }
 
   formData() {
@@ -79,7 +81,9 @@ export class AddUpdateStudentRegistrationComponent {
       saralId: [''],
       mobileNo: [''],
       fatherFullName: [''],
+      m_FatherFullName:[''],      
       motherName: [''],
+      m_MotherName :[''],
       aadharNo: [''],
       // emailID:[''],
       physicallyDisabled: ['']
@@ -185,7 +189,7 @@ export class AddUpdateStudentRegistrationComponent {
   }
 
   getCaste() {
-    this.masterService.getAllCaste(this.languageFlag).subscribe({
+    this.masterService.getAllCaste(this.languageFlag,1).subscribe({
       next: (res: any) => {
         if (res.statusCode == 200) {
           this.casteArr = res.responseData;
@@ -220,14 +224,24 @@ export class AddUpdateStudentRegistrationComponent {
   }
 
   patchValue() {
+    this.editFlag = true;
     this.stuRegistrationForm.patchValue({
       districtId: 1,
-      fullName: this.editObj.fullName,
-      saralId: this.editObj.saralId,
-      mobileNo: this.editObj.gaurdianModel.mobileNo,
-      fatherFullName: this.editObj.gaurdianModel.fatherFullName,
-      motherName: this.editObj.gaurdianModel.motherName,
-      dob: this.editObj.dob.split('T')[0]
+      fName: this.editObj?.fName,
+      mName: this.editObj?.mName,
+      lName: this.editObj?.lName,
+      f_MName: this.editObj?.f_MName,
+      m_MName: this.editObj?.m_MName,
+      l_MName: this.editObj?.l_MName,
+      saralId: this.editObj?.saralId,
+      mobileNo: this.editObj?.gaurdianModel?.mobileNo,
+      fatherFullName: this.editObj?.gaurdianModel?.fatherFullName,
+      m_FatherFullName: this.editObj?.gaurdianModel?.m_FatherFullName,
+      motherName: this.editObj?.gaurdianModel?.motherName,
+      m_MotherName: this.editObj?.gaurdianModel?.m_MotherName,
+      aadharNo: this.editObj?.aadharNo,
+      dob: this.editObj?.dob?.split('T')[0],
+      physicallyDisabled: this.editObj?.isHandicaped ? 1:2
     })
     this.getTaluka();
     this.getCenter();
@@ -247,7 +261,7 @@ export class AddUpdateStudentRegistrationComponent {
       "createdDate": "2022-12-21T07:11:24.503Z",
       "modifiedDate": "2022-12-21T07:11:24.503Z",
       "isDeleted": true,
-      "id": 0,
+      "id": this.editFlag ? this.editObj.id: 0,
       "fName": obj.fName,
       "f_MName": obj.f_MName,
       "mName": obj.mName,
@@ -279,7 +293,7 @@ export class AddUpdateStudentRegistrationComponent {
       "mobileNo": obj.mobileNo,
       "gaurdianModel": {
         "id": 0,
-        "studentId": 0,
+        "studentId": this.editFlag ? this.editObj.id: 0,
         "fatherFullName": obj.fatherFullName,
         "m_FatherFullName": obj.m_FatherFullName,
         "motherName": obj.motherName,
@@ -289,21 +303,22 @@ export class AddUpdateStudentRegistrationComponent {
       "documentModel": [
         {
           "id": 0,
-          "studentId": 0,
+          "studentId":this.editFlag ? this.editObj.id: 0,
           "documentId": 1,
           "docPath": this.uploadImg
         },
         {
           "id": 0,
-          "studentId": 0,
+          "studentId": this.editFlag ? this.editObj.id: 0,
           "documentId": 2,
           "docPath": this.uploadAadhar
         }
       ],
       "lan": "string"
     }
-
-    this.apiService.setHttp('post', 'zp-osmanabad/Student/AddStudent', false, postObj, false, 'baseUrl');
+    
+    let url = this.editFlag ? 'AddStudent' : 'UpdateStudent'
+    this.apiService.setHttp('post', 'zp-osmanabad/Student/'+url, false, postObj, false, 'baseUrl');
     this.apiService.getHttp().subscribe({
       next: (res: any) => {
         if (res.statusCode == "200") {
