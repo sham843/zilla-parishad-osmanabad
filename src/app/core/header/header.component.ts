@@ -1,5 +1,6 @@
 import { OverlayContainer } from '@angular/cdk/overlay';
 import { Component, HostBinding } from '@angular/core';
+import { TranslateService } from '@ngx-translate/core';
 import { WebStorageService } from '../services/web-storage.service';
 
 @Component({
@@ -10,8 +11,10 @@ import { WebStorageService } from '../services/web-storage.service';
 export class HeaderComponent {
   @HostBinding('class') className = '';
 
-  constructor(private overlay: OverlayContainer, private webStorage: WebStorageService) { }
-  ngOnInit(): void {}
+  constructor(private overlay: OverlayContainer, private webStorage: WebStorageService, public translate: TranslateService) { }
+  ngOnInit(): void {
+    this.translateLanguage(sessionStorage.getItem('language') ? sessionStorage.getItem('language') : 'English');
+  }
   
   changeTheme(darkMode: any) {
     let darkClassName: any
@@ -24,6 +27,12 @@ export class HeaderComponent {
       this.overlay.getContainerElement().classList.add('darkMode');
       this.overlay.getContainerElement().classList.remove('darkMode');
     }
+  }
+
+  translateLanguage(lang: any){
+    this.webStorage.setLanguage(lang);
+    sessionStorage.setItem('language', lang);
+    this.translate.use(lang);
   }
 
 }

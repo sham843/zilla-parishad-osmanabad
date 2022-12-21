@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { MatSnackBar, } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
+import { jsPDF } from "jspdf";
 
 @Injectable({
   providedIn: 'root'
@@ -48,9 +49,7 @@ export class CommonMethodsService {
   }
 
   downLoadPdf(header: any, values: any, objData: any) {
-    // let doc: any = new jsPDF();
-    let doc: any;
-
+    let doc: any = new jsPDF();
     doc.autoTable(header, values, {
       startY: 25,
       // margin: { horizontal: 7 , verticle: 10},

@@ -19,7 +19,7 @@ export class OfficeUsersComponent {
   searchContent = new FormControl('');
 
   constructor(private apiService: ApiService, private errors: ErrorsService, private dialog: MatDialog, private commonService: CommonMethodsService,
-              private webStorageService: WebStorageService) { }
+    private webStorageService: WebStorageService) { }
 
   ngOnInit() {
     this.getTableData()
@@ -81,14 +81,14 @@ export class OfficeUsersComponent {
         break;
       case 'Edit':
         this.addUpdateOffice(obj);
-        break; 
+        break;
       case 'Delete':
         this.openDeleteDialog(obj);
-          break;    
+        break;
     }
   }
 
-  openDeleteDialog(obj?: any){
+  openDeleteDialog(obj?: any) {
     let dialoObj = {
       header: 'Delete Office',
       title: 'Do You Want To Delete The Selected Office ?',
@@ -102,33 +102,64 @@ export class OfficeUsersComponent {
       autoFocus: false
     })
     deleteDialogRef.afterClosed().subscribe((result: any) => {
-      result == 'yes'? this.deleteOffice(obj) : ''
-  })
+      result == 'yes' ? this.deleteOffice(obj) : ''
+    })
   }
 
-deleteOffice(obj: any){
- let deleteObj = [{
-    "id": obj.id,
-    "deletedBy": 1,
-    "modifiedDate": new Date(),
-    "lan": this.webStorageService.languageFlag
-  }]
-  console.log("deleteObj",deleteObj);
-  
+  deleteOffice(obj: any) {
+    let deleteObj = [{
+      "id": obj.id,
+      "deletedBy": 1,
+      "modifiedDate": new Date(),
+      "lan": this.webStorageService.languageFlag
+    }]
+    console.log("deleteObj", deleteObj);
 
-  this.apiService.setHttp('DELETE', 'zp_osmanabad/Office/DeleteOffice', false, deleteObj, false, 'baseUrl');
-  this.apiService.getHttp().subscribe({
-    next: (resp: any)=>{
-      resp.statusCode === "200" ? (console.log(resp),this.commonService.snackBar(resp.statusMessage, 0),this.getTableData()  ):this.commonService.checkEmptyData(resp.statusMessage) == false ? this.errors.handelError(resp.statusCode) : this.commonService.snackBar(resp.statusMessage, 1);
-    },
-    error: (err: any)=> {
-      this.errors.handelError(err.status);
-      this.commonService.checkEmptyData(err.status) == false ? this.errors.handelError(err.status) : this.commonService.snackBar(err.status, 1);
-    }
-  })
-}
 
-  clearFilterData(){
+    this.apiService.setHttp('DELETE', 'zp_osmanabad/Office/DeleteOffice', false, deleteObj, false, 'baseUrl');
+    this.apiService.getHttp().subscribe({
+      next: (resp: any) => {
+        resp.statusCode === "200" ? (console.log(resp), this.commonService.snackBar(resp.statusMessage, 0), this.getTableData()) : this.commonService.checkEmptyData(resp.statusMessage) == false ? this.errors.handelError(resp.statusCode) : this.commonService.snackBar(resp.statusMessage, 1);
+      },
+      error: (err: any) => {
+        this.errors.handelError(err.status);
+        this.commonService.checkEmptyData(err.status) == false ? this.errors.handelError(err.status) : this.commonService.snackBar(err.status, 1);
+      }
+    })
+  }
+
+  downLoadPdf(){
+    // let header = 'office data';
+    // let objData:any = {
+    //   'topHedingName': 'Office Report',
+    //   'createdDate':'Created on:'+ new Date()
+    // }
+    let str = `?textSearch=${this.searchContent.value}&lan=${this.webStorageService.languageFlag}`;
+    this.apiService.setHttp('GET', 'zp_osmanabad/Office/GetAllOffice' + str, false, false, false, 'baseUrl');
+    this.apiService.getHttp().subscribe({
+      next: (res: any) => {
+        if (res.statusCode == "200") {
+          console.log(res);
+          // let data = res.responseData.responseData1;
+          // for(let i = 0;  i< data.length; i++){
+          //   result.push({
+          //     "Sr. No": i+1,
+          //     "Name": data[i].name,
+          //     "Designation": data[i].designation,
+          //     "Contact No": data[i].mobileNo,
+          //     "Email ID": data[i].mobileNo,
+          //     "Office Name": data[i].m_Name,
+          //   })
+          // }
+
+          // this.commonService.downLoadPdf(header, result, objData);
+        }
+      },
+      error: ((err: any) => { this.errors.handelError(err.message) })
+    });
+  }
+
+  clearFilterData() {
     this.searchContent.setValue('');
     this.getTableData();
   }

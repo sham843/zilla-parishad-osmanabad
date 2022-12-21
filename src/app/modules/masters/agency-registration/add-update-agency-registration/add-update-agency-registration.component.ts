@@ -6,6 +6,7 @@ import { CommonMethodsService } from 'src/app/core/services/common-methods.servi
 import { ErrorsService } from 'src/app/core/services/errors.service';
 import { MasterService } from 'src/app/core/services/master.service';
 import { ValidationService } from 'src/app/core/services/validation.service';
+import { WebStorageService } from 'src/app/core/services/web-storage.service';
 
 @Component({
   selector: 'app-add-update-agency-registration',
@@ -18,7 +19,7 @@ export class AddUpdateAgencyRegistrationComponent {
   talukaData = new Array();
   editData: any;
   constructor(public dialogRef: MatDialogRef<AddUpdateAgencyRegistrationComponent>, private api: ApiService,
-    private fb: FormBuilder, private master: MasterService, public validation: ValidationService,
+    private fb: FormBuilder, private master: MasterService, public validation: ValidationService, private webStorageService : WebStorageService,
     private common: CommonMethodsService, @Inject(MAT_DIALOG_DATA) public data: any, private errors : ErrorsService) { }
 
   ngOnInit() {
@@ -56,13 +57,13 @@ export class AddUpdateAgencyRegistrationComponent {
   get fc() { return this.agencyRegisterForm.controls }
 
   getAllDistricts() {
-    this.master.getAllDistrict('').subscribe((res: any) => {
+    this.master.getAllDistrict(this.webStorageService.languageFlag).subscribe((res: any) => {
       res.statusCode == 200 ? this.districtData = res.responseData : this.districtData = [];
     })
   }
 
   getAllTalukas() {
-    this.master.getAllTaluka('').subscribe((res: any) => {
+    this.master.getAllTaluka(this.webStorageService.languageFlag).subscribe((res: any) => {
       res.statusCode == 200 ? (this.talukaData = res.responseData, this.editData ? this.fc['talukaId'].setValue(this.editData.talukaId):'') : this.talukaData = [];
     })
   }
