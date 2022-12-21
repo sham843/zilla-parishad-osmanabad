@@ -18,8 +18,9 @@ export class WebStorageService {
     this.theme.next(className);
   }
 
-  setLanguage(className:any){
-    this.language.next(className);
+  setLanguage(lang:any){
+    this.language.next(lang);
+    lang == 'English' ? this.languageFlag = 'EN' : this.languageFlag = 'MR';
   }
 
   getLangauge(){
