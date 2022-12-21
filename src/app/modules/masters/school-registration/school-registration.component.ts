@@ -19,7 +19,7 @@ export class SchoolRegistrationComponent {
   pageNumber: number = 1;
   tableDataArray = new Array();
   searchContent = new FormControl('');
-  districtId = new FormControl();
+  districtId = new FormControl('0');
   talukaId = new FormControl('');
   villageId = new FormControl();
   resultDownloadArr = new Array();
@@ -224,7 +224,7 @@ export class SchoolRegistrationComponent {
   //   &TalukaId=${this.talukaId.value ? this.talukaId.value : 0}&VillageId=${this.villageId.value ? this.villageId.value : 0}&lan=${this.webStorageS.languageFlag}`;
   //   this.apiService.setHttp('GET', 'ZP-Osmanabad/School/GetAll' + str, false, false, false, 'baseUrl');
 
-    let str = `&DistrictId=${this.districtId.value ? this.districtId.value : 0}
+    let str = `?&DistrictId=${this.districtId.value ? this.districtId.value : 0}
      &TalukaId=${this.talukaId.value ? this.talukaId.value : 0}&VillageId=${this.villageId.value ? this.villageId.value : 0}&lan=${this.webStorageS.languageFlag}`;
     this.apiService.setHttp('GET', 'ZP-Osmanabad/School/GetAll' + str, false, false, false, 'baseUrl');
     this.apiService.getHttp().subscribe({
