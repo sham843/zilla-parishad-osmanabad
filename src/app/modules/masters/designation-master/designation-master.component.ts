@@ -3,6 +3,7 @@ import { FormControl } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { ApiService } from 'src/app/core/services/api.service';
 import { CommonMethodsService } from 'src/app/core/services/common-methods.service';
+import { DownloadPdfExcelService } from 'src/app/core/services/download-pdf-excel.service';
 import { ErrorsService } from 'src/app/core/services/errors.service';
 import { MasterService } from 'src/app/core/services/master.service';
 import { WebStorageService } from 'src/app/core/services/web-storage.service';
@@ -17,14 +18,16 @@ export class DesignationMasterComponent {
   pageNumber: number = 1;
   searchContent = new FormControl('');  
   DesiganationTypeArray:any;
+  resultDownloadArr = new Array();
 
   constructor(private dialog: MatDialog, private apiService: ApiService, private errors: ErrorsService,
     private masterService:MasterService ,private commonMethod: CommonMethodsService, private webStorage : WebStorageService,
-    private errorHandler: ErrorsService) { }
+    private errorHandler: ErrorsService ,private downloadFileService : DownloadPdfExcelService) { }
 
   ngOnInit() {
     this.getTableData(); 
-    this.getDesiganationType();    
+    this.getDesiganationType();     
+    this.getofficeReport()
   }
 //#region ------------------------------------- Designation-Master Dropdown ------------------------------- //
 
@@ -46,6 +49,10 @@ getDesiganationType() {
 
   //#region ------------------------------------- Designation-Master Table-Data ------------------------------- //
   getTableData(flag?:string) {
+    if(localStorage.getItem('currentPage')){
+      this.pageNumber = JSON.parse(localStorage.getItem('currentPage')||'');
+      localStorage.removeItem('currentPage');
+    }
     this.pageNumber =   flag == 'filter'? 1 :this.pageNumber;
     let tableDataArray = new Array();
     let tableDatasize!: Number; 
@@ -83,7 +90,7 @@ getDesiganationType() {
         this.pageNumber = obj.pageNumber;       
         this.getTableData();
         break;
-      case 'Edit' || 'Delete':        
+      case 'Edit':        
         this.addUpdateAgency(obj);       
         break;
       // case 'Block':
@@ -105,18 +112,18 @@ getDesiganationType() {
     })  
      dialogRef.afterClosed().subscribe((result: any) => {
      
-      if(result == 'yes'){
-        this.getDesiganationType();       
+      if(result == 'yes' && obj){   
+        console.log("hiiiiiiiiii",obj);   
+        console.log("this.pageNumber",this.pageNumber);             
         this.clearForm();
-        // this.pageNumber = this.pageNumber;
-        // console.log("pageNumber",this.pageNumber);
+        this.pageNumber = this.pageNumber;
+        localStorage.setItem('currentPage',JSON.stringify(this.pageNumber));
       }
-      // else if(result == 'yes' ){
-      //   this.pageNumber = 1 ;
-      //   console.log("pageNumber",this.pageNumber);
-        
-      // }
-       
+      else if(result == 'yes' ){
+        console.log("byeeeeeee",obj);
+        this.clearForm();
+        this.pageNumber = 1 ;   
+      }    
     });
   }
 
@@ -164,8 +171,39 @@ getDesiganationType() {
     })
   }
 
-  downloadPdf(){
+  getofficeReport(){
+    let str = `Id=${this.searchContent.value?this.searchContent.value:0}&lan=${this.webStorage.languageFlag}`;
+    this.apiService.setHttp('GET', 'zp_osmanabad/designation-master/GetAll?' + str, false, false, false, 'baseUrl');
+    this.apiService.getHttp().subscribe({
+      next: (res: any) => {
+        if (res.statusCode == "200") {          
+          let data:[] = res.responseData.responseData1;   
+          data.map((ele: any, i: any)=>{
+            let obj = {
+              "Sr.No": i+1,
+              "Designation Name": ele.designationName,
+              "Designation Level": ele.designationLevel,
+            }
+            this.resultDownloadArr.push(obj);
+          });
+        }
+      },
+      error: ((err: any) => { this.errors.handelError(err.message) })
+    });
+  }
 
+  downloadPdf() {
+    let keyPDFHeader = ['srNo', 'designationName', 'designationLevel'];
+        let ValueData =
+          this.resultDownloadArr.reduce(
+            (acc: any, obj: any) => [...acc, Object.values(obj).map((value) => value)], []
+          );// Value Name
+          console.log("ValueData", ValueData);          
+          let objData:any = {
+            'topHedingName': 'Designation Data',
+            'createdDate':'Created on:'+new Date()
+          }
+         this.downloadFileService.downLoadPdf(keyPDFHeader, ValueData, objData);
   }
 
   clearForm(){
