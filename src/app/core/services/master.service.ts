@@ -163,7 +163,7 @@ export class MasterService {
 
   GetAllDesignationLevel(strPara: string) {
     return new Observable((obj) => {
-      this.apiService.setHttp('GET', 'zp-osmanabad/master/GetAllDesignationLevel?flag_lang=' + strPara, false, false, false, 'baseUrl');
+      this.apiService.setHttp('GET', 'zp-osmanabad/master/GetAllDesignationLevel?flag_lang='+ strPara, false, false, false, 'baseUrl');
       this.apiService.getHttp().subscribe({
         next: (res: any) => {
           if (res.statusCode == "200") {
