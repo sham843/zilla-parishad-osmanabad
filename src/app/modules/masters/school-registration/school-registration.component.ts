@@ -32,7 +32,7 @@ export class SchoolRegistrationComponent {
   cardCurrentPage: number = 0;
 
   constructor(private dialog: MatDialog, private apiService: ApiService, private errors: ErrorsService,
-    private masterService: MasterService,private commonMethod: CommonMethodsService, private webStorageS : WebStorageService) { }
+    private masterService: MasterService,private commonMethodS: CommonMethodsService, private webStorageS : WebStorageService) { }
 
   ngOnInit() {
     this.getTableData();
@@ -63,7 +63,7 @@ export class SchoolRegistrationComponent {
           this.tableDataArray = [];
           tableDatasize = 0;
         }
-        let displayedColumns = ['imgPath','srNo', 'schoolName', 'village', 'taluka', 'district', 'action'];
+        let displayedColumns = ['#','srNo', 'schoolName', 'village', 'taluka', 'district', 'action'];
         let displayedheaders = ['#','Sr. No', 'Name', 'Village', 'Taluka', 'District', 'action'];
         let tableData = {
           pageNumber: this.pageNumber,
@@ -188,22 +188,20 @@ export class SchoolRegistrationComponent {
     this.apiService.getHttp().subscribe({
       next : ( res : any )=>{
         if(res.statusCode == "200"){
-          this.commonMethod.snackBar(res.statusMessage, 0);
+          this.commonMethodS.snackBar(res.statusMessage, 0);
           this.getTableData();
         }
       }
     })
     error: (error: any) => {
-      this.commonMethod.checkEmptyData(error.statusText) == false ? this.errors.handelError(error.statusCode) : this.commonMethod.snackBar(error.statusText, 1);
+      this.commonMethodS.checkEmptyData(error.statusText) == false ? this.errors.handelError(error.statusCode) : this.commonMethodS.snackBar(error.statusText, 1);
     }
   }
-
   
   onPageChanged(event: any) {
     this.cardCurrentPage = event.pageIndex;
     this.selectGrid('Card');
   }
-
 
   selectGrid(label: string) {
     if (label == 'Table') {
@@ -214,7 +212,6 @@ export class SchoolRegistrationComponent {
       this.cardViewFlag = true;
       this.cardCurrentPage = 0;
       this.getTableData();
-
   }
 
 }

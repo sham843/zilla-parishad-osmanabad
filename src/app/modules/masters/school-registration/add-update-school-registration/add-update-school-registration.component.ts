@@ -1,5 +1,5 @@
 import { Component, Inject } from '@angular/core';
-import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ApiService } from 'src/app/core/services/api.service';
 import { CommonMethodsService } from 'src/app/core/services/common-methods.service';
@@ -26,7 +26,6 @@ export class AddUpdateSchoolRegistrationComponent {
   schoolRegForm !: FormGroup;
   uploadImg: any;
   editFlag: boolean = false;
-  schoolDocument!: FormArray;
 
   constructor(private masterService: MasterService, private errors: ErrorsService, private fb: FormBuilder, private fileUpload: FileUploadService,
     private apiService: ApiService, private commonMethod: CommonMethodsService, @Inject(MAT_DIALOG_DATA) public data: any,
@@ -72,10 +71,6 @@ export class AddUpdateSchoolRegistrationComponent {
       "isDeleted": false
     })
   }
-
-  // get docForm(): FormArray {
-  //   return this.schoolRegForm.get('schoolDocument') as FormArray;
-  // }
 
   getDistrict() {
     this.masterService.getAllDistrict(this.webStorageS.languageFlag).subscribe({
@@ -211,9 +206,11 @@ export class AddUpdateSchoolRegistrationComponent {
       formValue.docPath ? formValue.docPath = this.uploadImg : '';
     }
     else {
-      this.data.docPath ? (!formValue.docPath ? formValue.docPath = this.data.docPath : formValue.docPath = this.uploadImg) : '';
+      this.data.docPath ? (formValue.docPath =='' ? formValue.docPath = this.data.docPath : formValue.docPath = this.uploadImg) : '';
     }
 
+    console.log("Form Value Image Path : ", formValue.docPath);
+    
     let url;
     this.editFlag ? url = 'ZP-Osmanabad/School/Update' : url = 'ZP-Osmanabad/School/Add';
 
@@ -236,19 +233,23 @@ export class AddUpdateSchoolRegistrationComponent {
     this.schoolRegForm.patchValue({
       "id": this.data.id,
       "schoolName": this.data.schoolName,
-      "m_SchoolName": [''],
+      "m_SchoolName": this.data.m_SchoolName,
       "lan": "EN",
       "localID": 0,
       "lowestClass": 0,
       "highestClass": 0,
       "timesStamp": new Date(),
-      "docPath": this.data.docPath,
+      // "docPath": this.data.docPath,
       "createdBy": 0,
       "createdDate": new Date(),
       "modifiedBy": 0,
       "modifiedDate": new Date(),
       "isDeleted": false
     });
+  }
+
+  clearImg(){
+    this.schoolRegForm.value.docPath = '';
   }
 
   clearDropdown(dropdown: string) {
