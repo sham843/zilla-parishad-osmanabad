@@ -5,8 +5,10 @@ import { BehaviorSubject } from 'rxjs';
   providedIn: 'root'
 })
 export class WebStorageService {
-languageFlag =  'EN'
-private theme=new BehaviorSubject('');
+  languageFlag =  'EN';
+  language = new BehaviorSubject('');
+  private theme=new BehaviorSubject('');
+
   constructor() { }
 
   getTheme(){
@@ -14,5 +16,13 @@ private theme=new BehaviorSubject('');
   }
   setTheme(className:any){
     this.theme.next(className);
+  }
+
+  setLanguage(className:any){
+    this.language.next(className);
+  }
+
+  getLangauge(){
+    return this.language.asObservable();
   }
 }
