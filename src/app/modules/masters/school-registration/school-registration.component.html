@@ -102,8 +102,8 @@
 
                 <ng-container *ngIf="cardViewFlag">
                     <div class="row">
-                        <div class="col-sm-4">
-                            <mat-card *ngFor="let data of tableDataArray">
+                        <div class="col-sm-4 mb-3" *ngFor="let data of tableDataArray">
+                            <mat-card >
                               <mat-card-header class="d-flex justify-content-end">
                                 <button mat-flat-button [matMenuTriggerFor]="menu">
                                   <span class="material-symbols-outlined">
