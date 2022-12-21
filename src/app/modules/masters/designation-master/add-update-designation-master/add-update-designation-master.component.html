@@ -10,7 +10,6 @@
             </button>
         </div>
     </mat-card-header>
-
     <mat-card-content class="card-body">
         <div class="row mt-2">
             <div class="col-sm">
@@ -51,17 +50,17 @@
                 <ng-container *ngIf="designationForm.value.designationName == 'Other' " >
                     <mat-form-field appearance="outline" class="w-100 ">
                         <mat-label>Add Designation</mat-label>
-                        <input matInput placeholder="Enter Desiganation Type" formControlName="designationType" maxlength="30" (keypress)="validation.noSpacesAtStart($event);validation.onlyAlphabets($event)">
+                        <input matInput placeholder="Enter Desiganation Type" formControlName="designationType" maxlength="30" (keypress)="validation.noFirstSpaceAllow($event);validation.onlyAlphabets($event)">
                     </mat-form-field>
                 </ng-container>               
             </div>          
         </div>
         <div class="row">
             <div class="col-sm">
-                <ng-container  >
+                <ng-container *ngIf="designationForm.value.designationName =='Other'">
                     <mat-form-field appearance="outline" class="w-100 ">
-                        <mat-label>Add Designation</mat-label>
-                        <input matInput placeholder="Enter Desiganation Type Marathi" formControlName="m_DesignationType" maxlength="30" (keypress)="validation.noSpacesAtStart($event);validation.onlyAlphabets($event)">
+                        <mat-label>Add Designation (Marathi)</mat-label>
+                        <input matInput placeholder="Enter Desiganation Type Marathi" formControlName="m_DesignationType" maxlength="30" (keypress)="validation.noFirstSpaceAllow($event);validation.onlyAlphabets($event)">
                     </mat-form-field>
                 </ng-container>               
             </div>

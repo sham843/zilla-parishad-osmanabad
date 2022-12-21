@@ -14,6 +14,8 @@ import { ValidationService } from 'src/app/core/services/validation.service';
 export class ForgotPasswordComponent {
   hide = true;
   hide1 = true;
+  sendOtpFlag : boolean = false;
+  verifyOtpflag : boolean = false;
   mobileField: boolean = true;
   otpField: boolean = false;
   passwordField: boolean = false;
@@ -30,7 +32,7 @@ export class ForgotPasswordComponent {
     "modifiedDate": new Date(),
     "isDeleted": true,
     "id": 0,
-    "mobileNo": "8975545372",
+    "mobileNo": "",
     "otp": "",
     "pageName": "",
     "otpExpireDate": new Date(),
@@ -82,6 +84,7 @@ export class ForgotPasswordComponent {
   }
 
   sendOtp(flag: any) {
+    this.sendOtpFlag = true;
     this.mobileForm.invalid ? this.common.snackBar('Please Enter Mobile Number', 1) : '';
     let obj = this.mobileForm.value;
     this.obj.mobileNo = obj.mobileNo;
@@ -92,8 +95,7 @@ export class ForgotPasswordComponent {
       this.apiService.setHttp('post', 'api/OtpTran', false, this.obj, false, 'baseUrl');
       this.apiService.getHttp().subscribe({
         next: (res: any) => {
-          res.statusCode == 200 ? (this.common.snackBar(res.statusMessage, 0), this.mobileField = false,
-            this.otpField = true, this.otpStatus = true, this.startTimer()) : this.common.snackBar(res.statusMessage, 1);
+          res.statusCode == 200 ? (this.common.snackBar(res.statusMessage, 0),this.setFlag(), this.startTimer()) : this.common.snackBar(res.statusMessage, 1);
         },
         error: ((err: any) => { this.errors.handelError(err) })
       })
@@ -105,7 +107,13 @@ export class ForgotPasswordComponent {
     this.mobileForm.value.mobileNo.setValue('');
   }
 
+  setFlag(){
+   this.sendOtpFlag ?(this.mobileField = false, this.otpField = true, this.otpStatus = true) :'';
+   this.verifyOtpflag ? (this.mobileField = false, this.otpField = false, this.passwordField = true):'';
+  }
+
   verifyOtp() {
+    this.verifyOtpflag = true;
     let obj = this.otpForm.value;
     let otp = obj.digitOne + obj.digitTwo + obj.digitThree + obj.digitFour + obj.digitFive;
     this.obj.otp = otp;
@@ -114,8 +122,7 @@ export class ForgotPasswordComponent {
       this.apiService.setHttp('post', 'api/OtpTran/VerifyOTP', false, this.obj, false, 'baseUrl');
       this.apiService.getHttp().subscribe({
         next: (res: any) => {
-          res.statusCode == 200 ? (this.common.snackBar(res.statusMessage, 0), this.mobileField = false,
-            this.otpField = false, this.passwordField = true, clearInterval(this.interval), this.pauseTimer()) : (this.common.snackBar(res.statusMessage, 1), this.timeLeft = 0);
+          res.statusCode == 200 ? (this.common.snackBar(res.statusMessage, 0), this.setFlag(), clearInterval(this.interval), this.pauseTimer()) : (this.common.snackBar(res.statusMessage, 1), this.timeLeft = 0);
         },
         error: ((err: any) => { this.errors.handelError(err) })
       })

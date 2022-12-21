@@ -36,7 +36,7 @@ export class AddUpdateAgencyRegistrationComponent {
       "createdDate": new Date(),
       "modifiedDate": new Date(),
       "isDeleted": true,
-      "id": 0,
+      "id": data ? data.id : 0,
       "agency_Name": [data ? data.agency_Name : "", [Validators.required, Validators.pattern(this.validation.fullName)]],
       "m_Agency_Name": [data ? data.m_Agency_Name : ""],
       "contactPerson_Name": [data ? data.contactPerson_Name : "", [Validators.required, Validators.pattern(this.validation.fullName)]],
@@ -77,7 +77,7 @@ export class AddUpdateAgencyRegistrationComponent {
   onSubmit(clear: any) {
     let obj = this.agencyRegisterForm.value;
     obj.districtId = 1;
-    this.data ? obj.id = this.editData.id : '';
+    if(this.agencyRegisterForm.valid){
     this.api.setHttp(this.data ? 'put' : 'post', this.data ? 'zp-osmanabad/Agency/Update' : 'zp-osmanabad/Agency/Add', false, obj, false, 'baseUrl');
     this.api.getHttp().subscribe({
       next: (res: any) => {
@@ -85,6 +85,10 @@ export class AddUpdateAgencyRegistrationComponent {
       },
       error: ((err: any) => { this.errors.handelError(err) })
     })
+  }
+  else{
+    return;
+  }
   }
   
 }
