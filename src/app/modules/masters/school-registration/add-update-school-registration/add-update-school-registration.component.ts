@@ -7,6 +7,7 @@ import { ErrorsService } from 'src/app/core/services/errors.service';
 import { FileUploadService } from 'src/app/core/services/file-upload.service';
 import { MasterService } from 'src/app/core/services/master.service';
 import { ValidationService } from 'src/app/core/services/validation.service';
+import { WebStorageService } from 'src/app/core/services/web-storage.service';
 
 @Component({
   selector: 'app-add-update-school-registration',
@@ -29,7 +30,7 @@ export class AddUpdateSchoolRegistrationComponent {
 
   constructor(private masterService: MasterService, private errors: ErrorsService, private fb: FormBuilder, private fileUpload: FileUploadService,
     private apiService: ApiService, private commonMethod: CommonMethodsService, @Inject(MAT_DIALOG_DATA) public data: any,
-    public dialogRef: MatDialogRef<AddUpdateSchoolRegistrationComponent>, public validationService : ValidationService) { }
+    public dialogRef: MatDialogRef<AddUpdateSchoolRegistrationComponent>, public validationService : ValidationService, private webStorageS : WebStorageService) { }
 
   ngOnInit() {
     this.formFeild();
@@ -94,7 +95,7 @@ export class AddUpdateSchoolRegistrationComponent {
   }
 
   getDistrict() {
-    this.masterService.getAllDistrict('EN').subscribe({
+    this.masterService.getAllDistrict(this.webStorageS.languageFlag).subscribe({
       next: (res: any) => {
         if (res.statusCode == 200) {
           this.districtArr = res.responseData;
@@ -110,7 +111,7 @@ export class AddUpdateSchoolRegistrationComponent {
   }
 
   getTaluka() {
-    this.masterService.getAllTaluka('EN').subscribe({
+    this.masterService.getAllTaluka(this.webStorageS.languageFlag).subscribe({
       next: (res: any) => {
         if (res.statusCode == 200) {
           this.talukaArr = res.responseData;
@@ -125,8 +126,10 @@ export class AddUpdateSchoolRegistrationComponent {
   }
 
   getCenter() {
-    this.masterService.getAllCenter('EN').subscribe({
+    this.masterService.getAllCenter(this.webStorageS.languageFlag).subscribe({
       next: (res: any) => {
+        console.log("center : ",res);
+        
         if (res.statusCode == 200) {
           this.centerArr = res.responseData;
           if (this.editFlag == true) {
@@ -140,7 +143,7 @@ export class AddUpdateSchoolRegistrationComponent {
   }
 
   getVillage() {
-    this.masterService.getAllVillage('EN', this.schoolRegForm.value.talukaId).subscribe({
+    this.masterService.getAllVillage(this.webStorageS.languageFlag, this.schoolRegForm.value.talukaId).subscribe({
       next: (res: any) => {
         if (res.statusCode == 200) {
           this.villageArr = res.responseData;
@@ -155,7 +158,7 @@ export class AddUpdateSchoolRegistrationComponent {
   }
 
   getSchoolType() {
-    this.masterService.getAllSchoolType('EN').subscribe({
+    this.masterService.getAllSchoolType(this.webStorageS.languageFlag).subscribe({
       next: (res: any) => {
         if (res.statusCode == 200) {
           this.schoolTypeArr = res.responseData;
@@ -170,7 +173,7 @@ export class AddUpdateSchoolRegistrationComponent {
   }
 
   getCategoryDes() {
-    this.masterService.GetSchoolCategoryDescById('EN').subscribe({
+    this.masterService.GetSchoolCategoryDescById(this.webStorageS.languageFlag).subscribe({
       next: (res: any) => {
         if (res.statusCode == 200) {
           this.categoryArr = res.responseData;
@@ -185,7 +188,7 @@ export class AddUpdateSchoolRegistrationComponent {
   }
 
   getSchoolMngDesc() {
-    this.masterService.GetSchoolMngDescById('EN').subscribe({
+    this.masterService.GetSchoolMngDescById(this.webStorageS.languageFlag).subscribe({
       next: (res: any) => {
         if (res.statusCode == 200) {
           this.schoolMngArr = res.responseData;
@@ -200,7 +203,7 @@ export class AddUpdateSchoolRegistrationComponent {
   }
 
   getGroupClass() {
-    this.masterService.getAllGroupClass('EN').subscribe({
+    this.masterService.getAllGroupClass(this.webStorageS.languageFlag).subscribe({
       next: (res: any) => {
         if (res.statusCode == 200) {
           this.groupclassArr = res.responseData;
@@ -263,41 +266,44 @@ export class AddUpdateSchoolRegistrationComponent {
   clearDropdown(dropdown: string) {
     this.editFlag = false;
     if (dropdown == 'Taluka') {
+      this.villageArr = [];
+      this.schoolTypeArr = [];
+      this.categoryArr = [];
+      this.schoolMngArr = [];
+      this.groupclassArr = [];
       this.f['centerId'].setValue('');
-      this.f['villageId'].setValue('');
       this.f['schoolName'].setValue('');
-      this.f['s_TypeId'].setValue('');
-      this.f['s_CategoryId'].setValue('');
-      this.f['s_ManagementId'].setValue('');
-      this.f['g_ClassId'].setValue('');
     }
     else if (dropdown == 'Kendra') {
       this.f['villageId'].setValue('');
       this.f['schoolName'].setValue('');
-      this.f['s_TypeId'].setValue('');
-      this.f['s_CategoryId'].setValue('');
-      this.f['s_ManagementId'].setValue('');
-      this.f['g_ClassId'].setValue('');
+      this.schoolTypeArr = [];
+      this.categoryArr = [];
+      this.schoolMngArr = [];
+      this.groupclassArr = [];
     }
     else if (dropdown == 'Village') {
       this.f['schoolName'].setValue('');
       this.f['s_TypeId'].setValue('');
-      this.f['s_CategoryId'].setValue('');
-      this.f['s_ManagementId'].setValue('');
-      this.f['g_ClassId'].setValue('');
+      this.schoolTypeArr = [];
+      this.categoryArr = [];
+      this.schoolMngArr = [];
+      this.groupclassArr = [];
     }
     else if (dropdown == 'School Type') {
       this.f['s_CategoryId'].setValue('');
-      this.f['s_ManagementId'].setValue('');
-      this.f['g_ClassId'].setValue('');
+      this.categoryArr = [];
+      this.schoolMngArr = [];
+      this.groupclassArr = [];
     }
     else if (dropdown == 'Category Desc') {
-      
       this.f['s_ManagementId'].setValue('');
-      this.f['g_ClassId'].setValue('');
+      this.schoolMngArr = [];
+      this.groupclassArr = [];
     }
     else if (dropdown == 'Management Desc') {
       this.f['g_ClassId'].setValue('');
+      this.groupclassArr = [];
     }
   }
 

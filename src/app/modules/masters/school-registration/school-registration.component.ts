@@ -7,6 +7,7 @@ import { MasterService } from 'src/app/core/services/master.service';
 import { GlobalDialogComponent } from 'src/app/shared/components/global-dialog/global-dialog.component';
 import { AddUpdateSchoolRegistrationComponent } from './add-update-school-registration/add-update-school-registration.component';
 import { CommonMethodsService } from 'src/app/core/services/common-methods.service';
+import { WebStorageService } from 'src/app/core/services/web-storage.service';
 
 @Component({
   selector: 'app-school-registration',
@@ -29,7 +30,7 @@ export class SchoolRegistrationComponent {
   imgPath : any;
 
   constructor(private dialog: MatDialog, private apiService: ApiService, private errors: ErrorsService,
-    private masterService: MasterService,private commonMethod: CommonMethodsService) { }
+    private masterService: MasterService,private commonMethod: CommonMethodsService, private webStorageS : WebStorageService) { }
 
   ngOnInit() {
     this.getTableData();
@@ -112,7 +113,7 @@ export class SchoolRegistrationComponent {
     this.deleteObj = obj;
     let dialoObj = {
       header: 'Delete',
-      title: 'Do You Want To Delete The Selected Content ?',
+      title: 'Do you want to delete School record?',
       cancelButton: 'Cancel',
       okButton: 'Ok'
     }
@@ -139,7 +140,7 @@ export class SchoolRegistrationComponent {
   }
 
   getDistrict() {
-    this.masterService.getAllDistrict('EN').subscribe({
+    this.masterService.getAllDistrict(this.webStorageS.languageFlag).subscribe({
       next: (res: any) => {
         if (res.statusCode == 200) {
           this.districtArr = res.responseData;
@@ -150,7 +151,7 @@ export class SchoolRegistrationComponent {
   }
 
   getTaluka() {
-    this.masterService.getAllTaluka('1').subscribe({
+    this.masterService.getAllTaluka(this.webStorageS.languageFlag).subscribe({
       next: (res: any) => {
         if (res.statusCode == 200) {
           this.talukaArr = res.responseData;
@@ -162,7 +163,7 @@ export class SchoolRegistrationComponent {
 
   getVillage() {
     let talukaId = this.talukaId.value;
-    this.masterService.getAllVillage('EN', talukaId).subscribe({
+    this.masterService.getAllVillage(this.webStorageS.languageFlag, talukaId).subscribe({
       next: (res: any) => {
         if (res.statusCode == 200) {
           this.villageArr = res.responseData;
