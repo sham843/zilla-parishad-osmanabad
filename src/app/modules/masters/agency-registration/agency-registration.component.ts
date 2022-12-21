@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { ApiService } from 'src/app/core/services/api.service';
 import { CommonMethodsService } from 'src/app/core/services/common-methods.service';
+import { DownloadPdfExcelService } from 'src/app/core/services/download-pdf-excel.service';
 import { ErrorsService } from 'src/app/core/services/errors.service';
 import { ValidationService } from 'src/app/core/services/validation.service';
 import { WebStorageService } from 'src/app/core/services/web-storage.service';
@@ -17,7 +18,8 @@ import { AddUpdateAgencyRegistrationComponent } from './add-update-agency-regist
 export class AgencyRegistrationComponent {
   pageNumber: number = 1;
   filterForm!: FormGroup;
-  constructor(private dialog: MatDialog, private apiService: ApiService, private webStroageService : WebStorageService,
+  agencyReport = new Array();
+  constructor(private dialog: MatDialog, private apiService: ApiService, private webStroageService : WebStorageService, private downloadPdfservice : DownloadPdfExcelService,
     private errors: ErrorsService, private fb: FormBuilder, private common : CommonMethodsService, public validation : ValidationService) { }
 
   ngOnInit() {
@@ -37,12 +39,23 @@ export class AgencyRegistrationComponent {
     let tableDatasize!: Number;
     let obj = this.filterForm.value;
     let str = `pageno=${this.pageNumber}&pagesize=10&&TextSearch=${obj.searchText}&lan=${this.webStroageService.languageFlag}`;
-    this.apiService.setHttp('GET', 'zp-osmanabad/Agency/GetAll?' + str, false, false, false, 'baseUrl');
+    let reportStr = `TextSearch=${obj.searchText}`
+    this.apiService.setHttp('GET', 'zp-osmanabad/Agency/GetAll?'  + (flag=='reportFlag' ? reportStr : str), false, false, false, 'baseUrl');
     this.apiService.getHttp().subscribe({
       next: (res: any) => {
         if (res.statusCode == "200") {
           tableDataArray = res.responseData.responseData1;
           tableDatasize = res.responseData.responseData2.pageCount;
+          let data:[] = res.responseData.responseData1;
+          data.map((ele: any, i: any)=>{
+            let obj = {
+              "Sr.No": i+1,
+              "Name": ele.agency_Name,
+              "Contact No": ele.contact_No,
+              "Email ID": ele.agency_EmailId,
+            }
+            this.agencyReport.push(obj);
+          });
         } else {
           tableDataArray = [];
           tableDatasize = 0;
@@ -65,6 +78,22 @@ export class AgencyRegistrationComponent {
   onPagintion(pageNo: number) {
     this.pageNumber = pageNo;
     this.getTableData()
+  }
+
+  downloadPdf() { 
+    this.getTableData('reportFlag')
+    let keyPDFHeader = ['SrNo', "Name", "Contact No.","Email Id"];
+        let ValueData =
+          this.agencyReport.reduce(
+            (acc: any, obj: any) => [...acc, Object.values(obj).map((value) => value)], []
+          );// Value Name
+          console.log("ValueData", ValueData);
+          
+          let objData:any = {
+            'topHedingName': 'Agency Report',
+            'createdDate':'Created on:'+new Date()
+          }
+        this.downloadPdfservice.downLoadPdf(keyPDFHeader, ValueData, objData);
   }
 
   onClear() {
@@ -101,7 +130,7 @@ export class AgencyRegistrationComponent {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      result == 'Yes' ? this.getTableData() : '';
+      result == 'Yes' ? (this.getTableData()) : '';
     });
   }
 
@@ -116,7 +145,7 @@ export class AgencyRegistrationComponent {
     this.apiService.setHttp('delete', 'zp-osmanabad/Agency/Delete', false, obj, false, 'baseUrl');
     this.apiService.getHttp().subscribe({
       next: (res: any) => {
-        res.statusCode == 200 ? this.common.snackBar(res.statusMessage, 0): this.common.snackBar(res.statusMessage, 1);
+        res.statusCode == 200 ? (this.common.snackBar(res.statusMessage, 0),this.getTableData()): this.common.snackBar(res.statusMessage, 1);
       },
       error: ((err: any) => { this.errors.handelError(err) })
     })
@@ -137,7 +166,7 @@ export class AgencyRegistrationComponent {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      result == 'yes' ? (this.deleteAgencyRow(_obj),this.getTableData() ): '';
+      result == 'yes' ? this.deleteAgencyRow(_obj) : '';
     });
   }
 }
