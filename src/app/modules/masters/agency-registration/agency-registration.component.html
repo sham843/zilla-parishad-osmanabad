@@ -19,7 +19,7 @@
           </mat-icon>
         </button>
         <mat-menu #menu="matMenu" xPosition="before">
-          <button mat-menu-item>
+          <button type="button" mat-menu-item>
             <div class="d-flex align-items-center justify-content-between w-100">
               <span>PDF</span>
               <i class='bx bxs-file-pdf text-danger'></i>
@@ -46,8 +46,8 @@
       <div class="row w-100 mt-2">
         <div class="col-sm-auto">
           <mat-form-field appearance="outline" class="w-100">
-            <mat-label>Search</mat-label>
-            <input matInput formControlName="searchText" placeholder="Search by Agency Name / Contact No. / Email ID" (keypress)="validation.noFirstSpaceAllow($event)">
+            <mat-label>Search by Name/Contact/Email</mat-label>
+            <input matInput formControlName="searchText" placeholder="Search by Name/Contact/Email" (keypress)="validation.noFirstSpaceAllow($event)">
           </mat-form-field>
         </div>
         <!-- <div class="col-sm-auto">

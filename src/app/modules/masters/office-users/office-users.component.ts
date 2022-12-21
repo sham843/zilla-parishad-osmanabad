@@ -3,6 +3,7 @@ import { FormControl } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { ApiService } from 'src/app/core/services/api.service';
 import { CommonMethodsService } from 'src/app/core/services/common-methods.service';
+import { DownloadPdfExcelService } from 'src/app/core/services/download-pdf-excel.service';
 import { ErrorsService } from 'src/app/core/services/errors.service';
 import { WebStorageService } from 'src/app/core/services/web-storage.service';
 import { GlobalDialogComponent } from 'src/app/shared/components/global-dialog/global-dialog.component';
@@ -16,13 +17,15 @@ import { AddUpdateOfficeUsersComponent } from './add-update-office-users/add-upd
 export class OfficeUsersComponent {
 
   pageNumber: number = 1;
+  resultDownloadArr = new Array();
   searchContent = new FormControl('');
 
   constructor(private apiService: ApiService, private errors: ErrorsService, private dialog: MatDialog, private commonService: CommonMethodsService,
-    private webStorageService: WebStorageService) { }
+    private webStorageService: WebStorageService, private downloadFileService: DownloadPdfExcelService) { }
 
   ngOnInit() {
-    this.getTableData()
+    this.getTableData();
+    this.getofficeReport();
   }
 
   onPagintion(pageNo: number) {
@@ -128,35 +131,43 @@ export class OfficeUsersComponent {
     })
   }
 
-  downLoadPdf(){
-    // let header = 'office data';
-    // let objData:any = {
-    //   'topHedingName': 'Office Report',
-    //   'createdDate':'Created on:'+ new Date()
-    // }
+  getofficeReport(){
     let str = `?textSearch=${this.searchContent.value}&lan=${this.webStorageService.languageFlag}`;
     this.apiService.setHttp('GET', 'zp_osmanabad/Office/GetAllOffice' + str, false, false, false, 'baseUrl');
     this.apiService.getHttp().subscribe({
       next: (res: any) => {
         if (res.statusCode == "200") {
           console.log(res);
-          // let data = res.responseData.responseData1;
-          // for(let i = 0;  i< data.length; i++){
-          //   result.push({
-          //     "Sr. No": i+1,
-          //     "Name": data[i].name,
-          //     "Designation": data[i].designation,
-          //     "Contact No": data[i].mobileNo,
-          //     "Email ID": data[i].mobileNo,
-          //     "Office Name": data[i].m_Name,
-          //   })
-          // }
-
-          // this.commonService.downLoadPdf(header, result, objData);
+          let data:[] = res.responseData.responseData1;
+          data.map((ele: any, i: any)=>{
+            let obj = {
+              "Sr.No": i+1,
+              "Name": ele.name,
+              "Designation": ele.designation,
+              "Contact No": ele.mobileNo,
+              "Email ID": ele.emailId,
+            }
+            this.resultDownloadArr.push(obj);
+          });
         }
       },
       error: ((err: any) => { this.errors.handelError(err.message) })
     });
+  }
+
+  downloadPdf() {
+    let keyPDFHeader = ['SrNo', "Name", "Designation", "MobileNo","EmailId"];
+        let ValueData =
+          this.resultDownloadArr.reduce(
+            (acc: any, obj: any) => [...acc, Object.values(obj).map((value) => value)], []
+          );// Value Name
+          console.log("ValueData", ValueData);
+          
+          let objData:any = {
+            'topHedingName': 'Office Data',
+            'createdDate':'Created on:'+new Date()
+          }
+        this.downloadFileService.downLoadPdf(keyPDFHeader, ValueData, objData);
   }
 
   clearFilterData() {
