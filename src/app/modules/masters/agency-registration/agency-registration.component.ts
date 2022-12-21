@@ -4,6 +4,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { ApiService } from 'src/app/core/services/api.service';
 import { CommonMethodsService } from 'src/app/core/services/common-methods.service';
 import { ErrorsService } from 'src/app/core/services/errors.service';
+import { ValidationService } from 'src/app/core/services/validation.service';
 import { WebStorageService } from 'src/app/core/services/web-storage.service';
 import { GlobalDialogComponent } from 'src/app/shared/components/global-dialog/global-dialog.component';
 import { AddUpdateAgencyRegistrationComponent } from './add-update-agency-registration/add-update-agency-registration.component';
@@ -17,7 +18,7 @@ export class AgencyRegistrationComponent {
   pageNumber: number = 1;
   filterForm!: FormGroup;
   constructor(private dialog: MatDialog, private apiService: ApiService, private webStroageService : WebStorageService,
-    private errors: ErrorsService, private fb: FormBuilder, private common : CommonMethodsService) { }
+    private errors: ErrorsService, private fb: FormBuilder, private common : CommonMethodsService, public validation : ValidationService) { }
 
   ngOnInit() {
     this.filterData();

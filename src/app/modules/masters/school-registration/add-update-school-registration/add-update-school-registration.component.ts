@@ -30,7 +30,7 @@ export class AddUpdateSchoolRegistrationComponent {
 
   constructor(private masterService: MasterService, private errors: ErrorsService, private fb: FormBuilder, private fileUpload: FileUploadService,
     private apiService: ApiService, private commonMethod: CommonMethodsService, @Inject(MAT_DIALOG_DATA) public data: any,
-    public dialogRef: MatDialogRef<AddUpdateSchoolRegistrationComponent>, public validationService : ValidationService, private webStorageS : WebStorageService) { }
+    public dialogRef: MatDialogRef<AddUpdateSchoolRegistrationComponent>, public validationService: ValidationService, private webStorageS: WebStorageService) { }
 
   ngOnInit() {
     this.formFeild();
@@ -45,19 +45,12 @@ export class AddUpdateSchoolRegistrationComponent {
     return this.schoolRegForm.controls;
   }
 
-
-
   formFeild() {
     this.schoolRegForm = this.fb.group({
-      "createdBy": 0,
-      "modifiedBy": 0,
-      "createdDate": new Date(),
-      "modifiedDate": new Date(),
-      "isDeleted": false,
       "id": 0,
-      "schoolName": ['', Validators.required],
-      "m_SchoolName": "string",
-      "stateId": 1,
+      "schoolName": [''],
+      "m_SchoolName": [''],
+      "stateId": 0,
       "districtId": ['', Validators.required],
       "talukaId": ['', Validators.required],
       "villageId": ['', Validators.required],
@@ -66,33 +59,23 @@ export class AddUpdateSchoolRegistrationComponent {
       "s_ManagementId": ['', Validators.required],
       "s_TypeId": ['', Validators.required],
       "g_ClassId": ['', Validators.required],
-      "lan": "string",
+      "lan": "EN",
       "localID": 0,
       "lowestClass": 0,
       "highestClass": 0,
       "timesStamp": new Date(),
-      schoolDocument: this.fb.array([
-        this.getGroup()
-      ])
-    });
-  }
-  getGroup(): FormGroup {
-    return this.fb.group({
+      "docPath": [''],
       "createdBy": 0,
-      "modifiedBy": 0,
       "createdDate": new Date(),
+      "modifiedBy": 0,
       "modifiedDate": new Date(),
-      "isDeleted": true,
-      "id": 0,
-      "schoolId": 0,
-      "documentId": 3,
-      "docPath": ['']
+      "isDeleted": false
     })
   }
 
-  get docForm(): FormArray {
-    return this.schoolRegForm.get('schoolDocument') as FormArray;
-  }
+  // get docForm(): FormArray {
+  //   return this.schoolRegForm.get('schoolDocument') as FormArray;
+  // }
 
   getDistrict() {
     this.masterService.getAllDistrict(this.webStorageS.languageFlag).subscribe({
@@ -128,8 +111,6 @@ export class AddUpdateSchoolRegistrationComponent {
   getCenter() {
     this.masterService.getAllCenter(this.webStorageS.languageFlag).subscribe({
       next: (res: any) => {
-        console.log("center : ",res);
-        
         if (res.statusCode == 200) {
           this.centerArr = res.responseData;
           if (this.editFlag == true) {
@@ -227,39 +208,46 @@ export class AddUpdateSchoolRegistrationComponent {
     console.log("formValue : ", formValue);
 
     if (this.editFlag == false) {
-      formValue.schoolDocument[0].docPath ? formValue.schoolDocument[0].docPath = this.uploadImg : '';
+      formValue.docPath ? formValue.docPath = this.uploadImg : '';
     }
     else {
-      this.data.schoolDocument[0].docPath ? formValue.schoolDocument[0].docPath = this.data.schoolDocument[0].docPath  : '';
+      this.data.docPath ? (!formValue.docPath ? formValue.docPath = this.data.docPath : formValue.docPath = this.uploadImg) : '';
     }
 
     let url;
     this.editFlag ? url = 'ZP-Osmanabad/School/Update' : url = 'ZP-Osmanabad/School/Add';
 
     this.apiService.setHttp(this.editFlag ? 'put' : 'post', url, false, formValue, false, 'baseUrl');
-      this.apiService.getHttp().subscribe({
-        next: (res: any) => {
-          if (res.statusCode == "200") {
-            this.editFlag ? this.commonMethod.snackBar("Record Update Successfully", 0) : this.commonMethod.snackBar("Record Added Successfully", 0);
-            this.dialogRef.close('yes');
-          }
-        },
-        error: ((err: any) => { this.errors.handelError(err) })
-      });
+    this.apiService.getHttp().subscribe({
+      next: (res: any) => {
+        if (res.statusCode == "200") {
+          this.editFlag ? this.commonMethod.snackBar("Record Update Successfully", 0) : this.commonMethod.snackBar("Record Added Successfully", 0);
+          this.dialogRef.close('yes');
+        }
+      },
+      error: ((err: any) => { this.errors.handelError(err) })
+    });
   }
 
   onEdit() {
     this.editFlag = true;
+    console.log("editObj : ", this.data);
+
     this.schoolRegForm.patchValue({
-      "createdBy": 0,
-      "modifiedBy": 0,
-      "createdDate": new Date(),
-      "modifiedDate": new Date(),
-      "isDeleted": false,
       "id": this.data.id,
       "schoolName": this.data.schoolName,
-      "m_SchoolName": "string",
-      "stateId": 0,
+      "m_SchoolName": [''],
+      "lan": "EN",
+      "localID": 0,
+      "lowestClass": 0,
+      "highestClass": 0,
+      "timesStamp": new Date(),
+      "docPath": this.data.docPath,
+      "createdBy": 0,
+      "createdDate": new Date(),
+      "modifiedBy": 0,
+      "modifiedDate": new Date(),
+      "isDeleted": false
     });
   }
 
