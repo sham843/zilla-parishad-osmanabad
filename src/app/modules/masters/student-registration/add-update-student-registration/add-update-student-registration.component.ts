@@ -5,6 +5,7 @@ import { ApiService } from 'src/app/core/services/api.service';
 import { ErrorsService } from 'src/app/core/services/errors.service';
 import { FileUploadService } from 'src/app/core/services/file-upload.service';
 import { MasterService } from 'src/app/core/services/master.service';
+import { WebStorageService } from 'src/app/core/services/web-storage.service';
 
 @Component({
   selector: 'app-add-update-student-registration',
@@ -22,12 +23,17 @@ export class AddUpdateStudentRegistrationComponent {
   standardArr = new Array();
   casteArr = new Array();
 
+  physicallyDisabled = [
+    { id: 1, name: 'Yes' },
+    { id: 2, name: 'No' }
+  ]
+
   @ViewChild('uploadImage') imageFile!: ElementRef;
   @ViewChild('uploadAadhar') aadharFile!: ElementRef;
   uploadImg: any;
   uploadAadhar: any;
-
-  editObj: any
+  editObj: any;
+  languageFlag!: string
 
   constructor(
     private fb: FormBuilder,
@@ -35,10 +41,12 @@ export class AddUpdateStudentRegistrationComponent {
     private errors: ErrorsService,
     private fileUpl: FileUploadService,
     private apiService: ApiService,
+    private webService: WebStorageService,
     public dialogRef: MatDialogRef<AddUpdateStudentRegistrationComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any) { }
 
   ngOnInit() {
+    this.languageFlag = this.webService.languageFlag;
     this.formData();
     this.getDistrict();
     this.getTaluka();
@@ -57,7 +65,12 @@ export class AddUpdateStudentRegistrationComponent {
       talukaId: [''],
       centerId: [''],
       schoolId: [''],
-      fullName: [''],
+      fName: [''],
+      mName: [''],
+      lName: [''],
+      f_MName: [''],
+      m_MName: [''],
+      l_MName: [''],
       standard: [''],
       dob: [''],
       gender: [''],
@@ -67,6 +80,7 @@ export class AddUpdateStudentRegistrationComponent {
       mobileNo: [''],
       fatherFullName: [''],
       motherName: [''],
+      aadharNo: [''],
       // emailID:[''],
       physicallyDisabled: ['']
 
@@ -74,7 +88,7 @@ export class AddUpdateStudentRegistrationComponent {
   }
 
   getDistrict() {
-    this.masterService.getAllDistrict('EN').subscribe({
+    this.masterService.getAllDistrict(this.languageFlag).subscribe({
       next: (res: any) => {
         if (res.statusCode == 200) {
           this.districtArr = res.responseData;
@@ -87,7 +101,7 @@ export class AddUpdateStudentRegistrationComponent {
   }
 
   getTaluka() {
-    this.masterService.getAllTaluka('EN').subscribe({
+    this.masterService.getAllTaluka(this.languageFlag).subscribe({
       next: (res: any) => {
         if (res.statusCode == 200) {
           this.talukaArr = res.responseData;
@@ -101,7 +115,7 @@ export class AddUpdateStudentRegistrationComponent {
   }
 
   getCenter() {
-    this.masterService.getAllCenter('EN').subscribe({
+    this.masterService.getAllCenter(this.languageFlag).subscribe({
       next: (res: any) => {
         if (res.statusCode == 200) {
           this.centerArr = res.responseData;
@@ -115,7 +129,7 @@ export class AddUpdateStudentRegistrationComponent {
   }
 
   getSchool() {
-    this.masterService.getAllSchoolType('EN').subscribe({
+    this.masterService.getAllSchoolType(this.languageFlag).subscribe({
       next: (res: any) => {
         if (res.statusCode == 200) {
           this.schoolArr = res.responseData;
@@ -129,7 +143,7 @@ export class AddUpdateStudentRegistrationComponent {
   }
 
   getStandard() {
-    this.masterService.getAllStandard('EN').subscribe({
+    this.masterService.getAllStandard(this.languageFlag).subscribe({
       next: (res: any) => {
         if (res.statusCode == 200) {
           this.standardArr = res.responseData;
@@ -143,7 +157,7 @@ export class AddUpdateStudentRegistrationComponent {
   }
 
   getGender() {
-    this.masterService.getAllGender('EN').subscribe({
+    this.masterService.getAllGender(this.languageFlag).subscribe({
       next: (res: any) => {
         if (res.statusCode == 200) {
           this.genderArr = res.responseData;
@@ -157,7 +171,7 @@ export class AddUpdateStudentRegistrationComponent {
   }
 
   getReligion() {
-    this.masterService.getAllReligion('EN').subscribe({
+    this.masterService.getAllReligion(this.languageFlag).subscribe({
       next: (res: any) => {
         if (res.statusCode == 200) {
           this.religionArr = res.responseData;
@@ -171,7 +185,7 @@ export class AddUpdateStudentRegistrationComponent {
   }
 
   getCaste() {
-    this.masterService.getAllCaste('EN').subscribe({
+    this.masterService.getAllCaste(this.languageFlag).subscribe({
       next: (res: any) => {
         if (res.statusCode == 200) {
           this.casteArr = res.responseData;
@@ -198,7 +212,6 @@ export class AddUpdateStudentRegistrationComponent {
         if (res.statusCode == "200") {
           this.editObj = res.responseData;
           console.log(this.editObj);
-
           this.patchValue();
         }
       },
@@ -214,7 +227,7 @@ export class AddUpdateStudentRegistrationComponent {
       mobileNo: this.editObj.gaurdianModel.mobileNo,
       fatherFullName: this.editObj.gaurdianModel.fatherFullName,
       motherName: this.editObj.gaurdianModel.motherName,
-      dob : this.editObj.dob.split('T')[0]
+      dob: this.editObj.dob.split('T')[0]
     })
     this.getTaluka();
     this.getCenter();
@@ -231,13 +244,17 @@ export class AddUpdateStudentRegistrationComponent {
     let postObj = {
       "createdBy": 0,
       "modifiedBy": 0,
-      "createdDate": "2022-12-19T07:08:17.290Z",
-      "modifiedDate": "2022-12-19T07:08:17.290Z",
+      "createdDate": "2022-12-21T07:11:24.503Z",
+      "modifiedDate": "2022-12-21T07:11:24.503Z",
       "isDeleted": true,
       "id": 0,
-      "fullName": obj.fullName,
-      "m_FullName": "",
-      "stateId": 0,
+      "fName": obj.fName,
+      "f_MName": obj.f_MName,
+      "mName": obj.mName,
+      "m_MName": obj.m_MName,
+      "lName": obj.lName,
+      "l_MName": obj.l_MName,
+      "stateId": obj.stateId,
       "districtId": obj.districtId,
       "talukaId": obj.talukaId,
       "centerId": obj.centerId,
@@ -245,16 +262,28 @@ export class AddUpdateStudentRegistrationComponent {
       "standard": obj.standard,
       "saralId": obj.saralId,
       "gender": obj.gender,
-      "dob": obj.dob,
+      "dob": "2022-12-21T07:11:24.503Z",
       "religionId": obj.religionId,
       "castId": obj.castId,
+      "aadharNo": obj.aadharNo,
+      "isCastCertificate": true,
+      "isParentsAlive": true,
+      "isOnlyFatherAlive": true,
+      "isOnlyMotherAlive": true,
+      "isHandicaped": obj.physicallyDisabled == 1 ? true : false,
+      "isHandicapedCertificate": true,
+      "timestamp": "2022-12-21T07:11:24.503Z",
+      "localId": 0,
+      "fatherFullName": obj.fatherFullName,
+      "motherName": obj.motherName,
+      "mobileNo": obj.mobileNo,
       "gaurdianModel": {
         "id": 0,
         "studentId": 0,
         "fatherFullName": obj.fatherFullName,
-        "m_FatherFullName": "",
+        "m_FatherFullName": obj.m_FatherFullName,
         "motherName": obj.motherName,
-        "m_MotherName": "",
+        "m_MotherName": obj.m_MotherName,
         "mobileNo": obj.mobileNo
       },
       "documentModel": [
@@ -274,7 +303,7 @@ export class AddUpdateStudentRegistrationComponent {
       "lan": "string"
     }
 
-    this.apiService.setHttp('post', 'ZP-Osmanabad/School/Add', false, postObj, false, 'baseUrl');
+    this.apiService.setHttp('post', 'zp-osmanabad/Student/AddStudent', false, postObj, false, 'baseUrl');
     this.apiService.getHttp().subscribe({
       next: (res: any) => {
         if (res.statusCode == "200") {

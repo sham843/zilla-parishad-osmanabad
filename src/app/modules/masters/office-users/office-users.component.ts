@@ -130,8 +130,33 @@ export class OfficeUsersComponent {
 
   downLoadPdf(){
     // let header = 'office data';
-    // let officeData = [];
-    // for(let i = 0; i< this.)
+    // let objData:any = {
+    //   'topHedingName': 'Office Report',
+    //   'createdDate':'Created on:'+ new Date()
+    // }
+    let str = `?textSearch=${this.searchContent.value}&lan=${this.webStorageService.languageFlag}`;
+    this.apiService.setHttp('GET', 'zp_osmanabad/Office/GetAllOffice' + str, false, false, false, 'baseUrl');
+    this.apiService.getHttp().subscribe({
+      next: (res: any) => {
+        if (res.statusCode == "200") {
+          console.log(res);
+          // let data = res.responseData.responseData1;
+          // for(let i = 0;  i< data.length; i++){
+          //   result.push({
+          //     "Sr. No": i+1,
+          //     "Name": data[i].name,
+          //     "Designation": data[i].designation,
+          //     "Contact No": data[i].mobileNo,
+          //     "Email ID": data[i].mobileNo,
+          //     "Office Name": data[i].m_Name,
+          //   })
+          // }
+
+          // this.commonService.downLoadPdf(header, result, objData);
+        }
+      },
+      error: ((err: any) => { this.errors.handelError(err.message) })
+    });
   }
 
   clearFilterData() {

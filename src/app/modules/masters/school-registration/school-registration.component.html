@@ -102,70 +102,67 @@
 
                 <ng-container *ngIf="cardViewFlag">
                     <div class="row">
-                        <div class="col-sm-4">
-                            <mat-card *ngFor="let data of tableDataArray">
-                              <mat-card-header class="d-flex justify-content-end">
-                                <button mat-flat-button [matMenuTriggerFor]="menu">
-                                  <span class="material-symbols-outlined">
-                                    more_horiz
-                                  </span>
-                                </button>
-                                <mat-menu #menu="matMenu">
-                                  <button mat-menu-item>Edit
-                                    <span class="material-symbols-outlined">
-                                    create
-                                    </span>
-                                </button>
-                                  <button mat-menu-item>Delete
-                                    <span class="material-symbols-outlined">
-                                        delete
+                        <div class="col-sm-4 mb-3" *ngFor="let data of tableDataArray">
+                            <mat-card>
+                                <mat-card-header class="d-flex justify-content-end">
+                                    <button mat-flat-button [matMenuTriggerFor]="menu">
+                                        <span class="material-symbols-outlined">
+                                            more_horiz
                                         </span>
-                                  </button>
-                                </mat-menu>
-                              </mat-card-header>
-                              <mat-card-content>
-                                <div class="text-center mb-3">
-                                  <img src="assets/images/user.jpg" alt="" height="60px">
-                                </div>
-                                <div style="text-align: center;">{{data.schoolName}}</div>
-                                <div class="row">
-                                  <div class="col-sm  form-label">
-                                    Village
-                                  </div>
-                                  <div class=" col-sm  form-deta">
-                                    {{data.village}}
-                                  </div>
-                                </div>
-                                <div class="row">
-                                  <div class="col-sm form-label">
-                                    Taluka
-                                  </div>
-                                  <div class="col-sm form-deta">
-                                    {{data.taluka}}
-                                  </div>
-                                </div>
-                                <div class="row">
-                                  <div class=" col-sm form-label">
-                                    District
-                                  </div>
-                                  <div class="col-sm form-deta">
-                                    {{data.district}}
-                                  </div>
-                                </div>
-                                <div class="text-center mb-3">
-                                  <button mat-flat-button class="btn-main">Read More</button>
-                                </div>
-                              </mat-card-content>
-                              <mat-card-footer>
-                    
-                              </mat-card-footer>
+                                    </button>
+                                    <mat-menu #menu="matMenu">
+                                        <button mat-menu-item>Edit
+                                            <span class="material-symbols-outlined">
+                                                create
+                                            </span>
+                                        </button>
+                                        <button mat-menu-item>Delete
+                                            <span class="material-symbols-outlined">
+                                                delete
+                                            </span>
+                                        </button>
+                                    </mat-menu>
+                                </mat-card-header>
+                                <mat-card-content>
+                                    <div class="text-center">
+                                        <img src="assets/images/user.jpg" height="60px">
+                                        <p>{{data.schoolName}}</p>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-6 col-sm  form-label">
+                                            Village
+                                        </div>
+                                        <div class="col-6 col-sm  form-deta">
+                                            {{data.village}}
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-6 col-sm form-label">
+                                            Taluka
+                                        </div>
+                                        <div class="col-6 col-sm form-deta">
+                                            {{data.taluka}}
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-6 col-sm form-label">
+                                            District
+                                        </div>
+                                        <div class="col-6 col-sm form-deta">
+                                            {{data.district}}
+                                        </div>
+                                    </div>
+                                    <div class="text-center mb-3">
+                                        <button mat-flat-button class="btn-main">Read More</button>
+                                    </div>
+                                </mat-card-content>
                             </mat-card>
-                                 
-                      </div>
-
+                        </div>
                     </div>
+                    <mat-paginator [length]="totalCount" [pageIndex]="cardCurrentPage" [pageSize]="10"
+                        [pageSizeOptions]="[10]" [showFirstLastButtons]="true" (page)="onPageChanged($event)">
+                    </mat-paginator>
                 </ng-container>
-            
             </mat-card-content>
         </mat-card>
     </div>

@@ -58,8 +58,38 @@
                 </div>
                 <div class="col-sm-4">
                     <mat-form-field appearance="outline" class="w-100">
-                        <mat-label>Student Name</mat-label>
-                        <input matInput formControlName="fullName">
+                        <mat-label>Student First Name</mat-label>
+                        <input matInput formControlName="fName"> 
+                    </mat-form-field>
+                </div>
+                <div class="col-sm-4">
+                    <mat-form-field appearance="outline" class="w-100">
+                        <mat-label>Student Middel Name</mat-label>
+                        <input matInput formControlName="mName">
+                    </mat-form-field>
+                </div>
+                 <div class="col-sm-4">
+                    <mat-form-field appearance="outline" class="w-100">
+                        <mat-label>Student Last Name</mat-label>
+                        <input matInput formControlName="lName">
+                    </mat-form-field>
+                </div>
+                <div class="col-sm-4">
+                    <mat-form-field appearance="outline" class="w-100">
+                        <mat-label>Student Marathi First Name</mat-label>
+                        <input matInput formControlName="f_MName">
+                    </mat-form-field>
+                </div>
+                <div class="col-sm-4">
+                    <mat-form-field appearance="outline" class="w-100">
+                        <mat-label>Student Marathi Middel Name</mat-label>
+                        <input matInput formControlName="m_MName">
+                    </mat-form-field>
+                </div>
+                 <div class="col-sm-4">
+                    <mat-form-field appearance="outline" class="w-100">
+                        <mat-label>Student Marathi Last Name</mat-label>
+                        <input matInput formControlName="l_MName">
                     </mat-form-field>
                 </div>
                 <div class="col-sm-4">
@@ -125,7 +155,7 @@
                     <mat-form-field appearance="outline" class="w-100 ">
                         <mat-label>physically Disabled</mat-label>
                         <mat-select formControlName="physicallyDisabled">
-                            <mat-option>option-1</mat-option>
+                            <mat-option *ngFor="let phy of physicallyDisabled" [value]="phy.id">{{phy.name}}</mat-option>
                         </mat-select>
                     </mat-form-field>
                 </div>
@@ -138,7 +168,7 @@
                 <div class="col-sm-4">
                     <mat-form-field appearance="outline" class="w-100 ">
                         <mat-label>Aadhar No.</mat-label>
-                        <input matInput>
+                        <input matInput formControlName="aadharNo">
                     </mat-form-field>
                 </div>
                 <div class="col-sm-4">
@@ -173,8 +203,20 @@
                 </div>
                 <div class="col-sm-4">
                     <mat-form-field appearance="outline" class="w-100">
+                        <mat-label>Father Marathi Name</mat-label>
+                        <input matInput formControlName="m_FatherFullName">
+                    </mat-form-field>
+                </div>
+                <div class="col-sm-4">
+                    <mat-form-field appearance="outline" class="w-100">
                         <mat-label>Mother Name</mat-label>
                         <input matInput formControlName="motherName">
+                    </mat-form-field>
+                </div>
+                <div class="col-sm-4">
+                    <mat-form-field appearance="outline" class="w-100">
+                        <mat-label>Mother Marathi Name</mat-label>
+                        <input matInput formControlName="m_MotherName">
                     </mat-form-field>
                 </div>
                 <!-- <div class="col-sm-4">
