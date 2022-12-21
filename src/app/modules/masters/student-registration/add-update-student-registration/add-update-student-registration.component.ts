@@ -1,5 +1,5 @@
 import { Component, ElementRef, Inject, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ApiService } from 'src/app/core/services/api.service';
 import { CommonMethodsService } from 'src/app/core/services/common-methods.service';
@@ -59,38 +59,39 @@ export class AddUpdateStudentRegistrationComponent {
         this.getReligion(),
         this.getStandard()
       )
-
   }
 
   formData() {
     this.stuRegistrationForm = this.fb.group({
       districtId: [{ value: 1, disabled: true }],
-      talukaId: [''],
-      centerId: [''],
-      schoolId: [''],
-      fName: [''],
-      mName: [''],
-      lName: [''],
-      f_MName: [''],
-      m_MName: [''],
-      l_MName: [''],
-      standard: [''],
-      dob: [''],
-      gender: [''],
-      religionId: [''],
-      castId: [''],
-      saralId: [''],
-      mobileNo: [''],
-      fatherFullName: [''],
-      m_FatherFullName: [''],
-      motherName: [''],
-      m_MotherName: [''],
-      aadharNo: [''],
+      talukaId: ['',Validators.required],
+      centerId: ['',Validators.required],
+      schoolId: ['',Validators.required],
+      fName: ['',Validators.required],
+      mName: ['',Validators.required],
+      lName: ['',Validators.required],
+      f_MName: ['',Validators.required],
+      m_MName: ['',Validators.required],
+      l_MName: ['',Validators.required],
+      standard: ['',Validators.required],
+      dob: ['',Validators.required],
+      gender: ['',Validators.required],
+      religionId: ['',Validators.required],
+      castId: ['',Validators.required],
+      saralId: ['',Validators.required],
+      mobileNo: ['',Validators.required],
+      fatherFullName: ['',Validators.required],
+      m_FatherFullName: ['',Validators.required],
+      motherName: ['',Validators.required],
+      m_MotherName: ['',Validators.required],
+      aadharNo: ['',Validators.required],
       // emailID:[''],
-      physicallyDisabled: ['']
+      physicallyDisabled: ['',Validators.required]
 
     })
   }
+
+  get fc() { return this.stuRegistrationForm.controls }
 
   getDistrict() {
     this.masterService.getAllDistrict(this.languageFlag).subscribe({
@@ -312,17 +313,25 @@ export class AddUpdateStudentRegistrationComponent {
       "lan": "string"
     }
 
-    let url = this.editFlag ? 'UpdateStudent' : 'AddStudent'
-    this.apiService.setHttp(this.editFlag ? 'put' : 'post', 'zp-osmanabad/Student/' + url, false, postObj, false, 'baseUrl');
-    this.apiService.getHttp().subscribe({
-      next: (res: any) => {
-        if (res.statusCode == "200") {
-          this.commonMethods.snackBar(res.statusMessage,0);
-          this.dialogRef.close('yes')
-        }
-      },
-      error: ((err: any) => { this.errors.handelError(err) })
-    });
+    if(this.stuRegistrationForm.invalid){
+      return
+    }else{
+      let url = this.editFlag ? 'UpdateStudent' : 'AddStudent'
+      this.apiService.setHttp(this.editFlag ? 'put' : 'post', 'zp-osmanabad/Student/' + url, false, postObj, false, 'baseUrl');
+      this.apiService.getHttp().subscribe({
+        next: (res: any) => {
+          if (res.statusCode == "200") {
+            this.commonMethods.snackBar(res.statusMessage,0);
+            this.dialogRef.close('yes')
+          }else{
+            this.commonMethods.snackBar(res.statusMessage,1);
+          }
+        },
+        error: ((err: any) => { this.errors.handelError(err) })
+      });
+    }
+
+    
 
 
   }

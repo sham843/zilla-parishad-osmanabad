@@ -28,6 +28,7 @@
                             <mat-option *ngFor="let dist of districtArr"
                                 [value]="dist.id">{{dist.district}}</mat-option>
                         </mat-select>
+                        <mat-error *ngIf="fc['districtId'].hasError('required')">User Name Is Required</mat-error>
                     </mat-form-field>
                 </div>
                 <div class="col-sm-4">
@@ -36,6 +37,7 @@
                         <mat-select placeholder="select" formControlName="talukaId">
                             <mat-option *ngFor="let tal of talukaArr" [value]="tal.id">{{tal.taluka}}</mat-option>
                         </mat-select>
+                        <mat-error *ngIf="fc['talukaId'].hasError('required')">Select Taluka</mat-error>
                     </mat-form-field>
                 </div>
                 <div class="col-sm-4">
@@ -44,6 +46,7 @@
                         <mat-select placeholder="select" formControlName="centerId">
                             <mat-option *ngFor="let cen of centerArr" [value]="cen.id">{{cen.center}}</mat-option>
                         </mat-select>
+                        <mat-error *ngIf="fc['centerId'].hasError('required')">Select Kendra</mat-error>
                     </mat-form-field>
                 </div>
             </div>
@@ -54,42 +57,49 @@
                         <mat-select placeholder="select" formControlName="schoolId">
                             <mat-option *ngFor="let sch of schoolArr" [value]="sch.id">{{sch.schoolType}}</mat-option>
                         </mat-select>
+                        <mat-error *ngIf="fc['schoolId'].hasError('required')">Select School</mat-error>
                     </mat-form-field>
                 </div>
                 <div class="col-sm-4">
                     <mat-form-field appearance="outline" class="w-100">
                         <mat-label>Student First Name</mat-label>
                         <input matInput formControlName="fName"> 
+                        <mat-error *ngIf="fc['fName'].hasError('required')">Enter First Name</mat-error>
                     </mat-form-field>
                 </div>
                 <div class="col-sm-4">
                     <mat-form-field appearance="outline" class="w-100">
                         <mat-label>Student Middel Name</mat-label>
                         <input matInput formControlName="mName">
+                        <mat-error *ngIf="fc['mName'].hasError('required')">Enter Middel Name</mat-error>
                     </mat-form-field>
                 </div>
                  <div class="col-sm-4">
                     <mat-form-field appearance="outline" class="w-100">
                         <mat-label>Student Last Name</mat-label>
                         <input matInput formControlName="lName">
+                        <mat-error *ngIf="fc['lName'].hasError('required')">Enter Last Name</mat-error>
                     </mat-form-field>
                 </div>
                 <div class="col-sm-4">
                     <mat-form-field appearance="outline" class="w-100">
                         <mat-label>Student Marathi First Name</mat-label>
                         <input matInput formControlName="f_MName">
+                        <mat-error *ngIf="fc['f_MName'].hasError('required')">Enter Marathi First Name</mat-error>
                     </mat-form-field>
                 </div>
                 <div class="col-sm-4">
                     <mat-form-field appearance="outline" class="w-100">
                         <mat-label>Student Marathi Middel Name</mat-label>
                         <input matInput formControlName="m_MName">
+                        <mat-error *ngIf="fc['m_MName'].hasError('required')">Enter Marathi Middel Name</mat-error>
                     </mat-form-field>
                 </div>
                  <div class="col-sm-4">
                     <mat-form-field appearance="outline" class="w-100">
                         <mat-label>Student Marathi Last Name</mat-label>
                         <input matInput formControlName="l_MName">
+                        <mat-error *ngIf="fc['l_MName'].hasError('required')">Enter Marathi Last Name</mat-error>
                     </mat-form-field>
                 </div>
                 <div class="col-sm-4">
@@ -114,6 +124,7 @@
                             <mat-option *ngFor="let stan of standardArr"
                                 [value]="stan.id">{{stan.standard}}</mat-option>
                         </mat-select>
+                        <mat-error *ngIf="fc['standard'].hasError('required')">Select standard</mat-error>
                     </mat-form-field>
                 </div>
                 <div class="col-sm-4">
@@ -122,6 +133,7 @@
                         <input matInput [matDatepicker]="picker" formControlName="dob">
                         <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
                         <mat-datepicker #picker></mat-datepicker>
+                        <mat-error *ngIf="fc['dob'].hasError('required')">Select Date Of Birth</mat-error>
                     </mat-form-field>
                 </div>
                 <div class="col-sm-4">
@@ -130,6 +142,7 @@
                         <mat-select formControlName="gender">
                             <mat-option *ngFor="let gen of genderArr" [value]="gen.id">{{gen.gender}}</mat-option>
                         </mat-select>
+                        <mat-error *ngIf="fc['gender'].hasError('required')">Select Gender</mat-error>
                     </mat-form-field>
                 </div>
             </div>
@@ -141,6 +154,7 @@
                             <mat-option *ngFor="let reli of religionArr"
                                 [value]="reli.id">{{reli.religion}}</mat-option>
                         </mat-select>
+                        <mat-error *ngIf="fc['religionId'].hasError('required')">Select Religion</mat-error>
                     </mat-form-field>
                 </div>
                 <div class="col-sm-4">
@@ -149,6 +163,7 @@
                         <mat-select formControlName="castId">
                             <mat-option *ngFor="let cast of casteArr" [value]="cast.id" >{{cast.caste}}</mat-option>
                         </mat-select>
+                        <mat-error *ngIf="fc['castId'].hasError('required')">Select Caste</mat-error>
                     </mat-form-field>
                 </div>
                 <div class="col-sm-4">
@@ -157,18 +172,21 @@
                         <mat-select formControlName="physicallyDisabled">
                             <mat-option *ngFor="let phy of physicallyDisabled" [value]="phy.id">{{phy.name}}</mat-option>
                         </mat-select>
+                        <mat-error *ngIf="fc['physicallyDisabled'].hasError('required')">Select Physically Disabled</mat-error>
                     </mat-form-field>
                 </div>
                 <div class="col-sm-4">
                     <mat-form-field appearance="outline" class="w-100">
                         <mat-label>Saral ID</mat-label>
                         <input matInput placeholder="Aadhar Card" formControlName="saralId">
+                        <mat-error *ngIf="fc['saralId'].hasError('required')">Enter Saral Id</mat-error>
                     </mat-form-field>
                 </div>
                 <div class="col-sm-4">
                     <mat-form-field appearance="outline" class="w-100 ">
                         <mat-label>Aadhar No.</mat-label>
                         <input matInput formControlName="aadharNo">
+                        <mat-error *ngIf="fc['aadharNo'].hasError('required')">Enter Aadhar No</mat-error>
                     </mat-form-field>
                 </div>
                 <div class="col-sm-4">
@@ -191,6 +209,7 @@
                     <mat-form-field appearance="outline" class="w-100">
                         <mat-label>Parents Mobile No.</mat-label>
                         <input matInput formControlName="mobileNo">
+                        <mat-error *ngIf="fc['mobileNo'].hasError('required')">Enter Mobile No</mat-error>
                     </mat-form-field>
                 </div>
             </div>
@@ -199,24 +218,28 @@
                     <mat-form-field appearance="outline" class="w-100">
                         <mat-label>Father Name</mat-label>
                         <input matInput formControlName="fatherFullName">
+                        <mat-error *ngIf="fc['fatherFullName'].hasError('required')">Enter Father Full Name</mat-error>
                     </mat-form-field>
                 </div>
                 <div class="col-sm-4">
                     <mat-form-field appearance="outline" class="w-100">
                         <mat-label>Father Marathi Name</mat-label>
                         <input matInput formControlName="m_FatherFullName"> 
+                        <mat-error *ngIf="fc['m_FatherFullName'].hasError('required')">Enter Father Full Name </mat-error>
                     </mat-form-field>
                 </div>
                 <div class="col-sm-4">
                     <mat-form-field appearance="outline" class="w-100">
                         <mat-label>Mother Name</mat-label>
                         <input matInput formControlName="motherName">
+                        <mat-error *ngIf="fc['motherName'].hasError('required')">Enter Mother Name </mat-error>
                     </mat-form-field>
                 </div>
                 <div class="col-sm-4">
                     <mat-form-field appearance="outline" class="w-100">
                         <mat-label>Mother Marathi Name</mat-label>
                         <input matInput formControlName="m_MotherName">
+                        <mat-error *ngIf="fc['m_MotherName'].hasError('required')">Enter Mother Name </mat-error>
                     </mat-form-field>
                 </div>
                 <!-- <div class="col-sm-4">

@@ -53,7 +53,7 @@ export class StudentRegistrationComponent {
         let displayedheaders = ['#', 'Sr. No', 'Name', 'Standard', 'Parents Contact No.', 'Gender', 'action'];
         let tableData = {
           pageNumber: this.pageNumber,
-          img: 'docPath', blink: '', badge: '', isBlock: '', pagintion: true,
+          img: 'docPath', blink: '', badge: '', isBlock: '', pagintion: tableDatasize > 10 ? true :false,
           displayedColumns: displayedColumns, tableData: this.tableDataArray,
           tableSize: tableDatasize,
           tableHeaders: displayedheaders
