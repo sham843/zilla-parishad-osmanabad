@@ -67,10 +67,10 @@ export class AddUpdateStudentRegistrationComponent {
       talukaId: ['',Validators.required],
       centerId: ['',Validators.required],
       schoolId: ['',Validators.required],
-      fName: ['',Validators.required],
+      fName: ['',Validators.required], 
       mName: ['',Validators.required],
       lName: ['',Validators.required],
-      f_MName: ['',Validators.required],
+      f_MName: ['',Validators.required], 
       m_MName: ['',Validators.required],
       l_MName: ['',Validators.required],
       standard: ['',Validators.required],
@@ -80,8 +80,8 @@ export class AddUpdateStudentRegistrationComponent {
       castId: ['',Validators.required],
       saralId: ['',Validators.required],
       mobileNo: ['',Validators.required],
-      fatherFullName: ['',Validators.required],
-      m_FatherFullName: ['',Validators.required],
+      fatherFullName: ['',Validators.required], 
+      m_FatherFullName: ['',Validators.required], 
       motherName: ['',Validators.required],
       m_MotherName: ['',Validators.required],
       aadharNo: ['',Validators.required],
@@ -216,8 +216,7 @@ export class AddUpdateStudentRegistrationComponent {
 
   patchValue() {
     this.editFlag = true;
-    console.log(this.editObj);
-    
+    console.log(this.editObj);    
     this.stuRegistrationForm.patchValue({
       fName: this.editObj?.fName,
       mName: this.editObj?.mName,
@@ -249,7 +248,7 @@ export class AddUpdateStudentRegistrationComponent {
 
   onSubmit() {
     console.log(this.editFlag);
-
+    this.updateValidation();
     let obj = this.stuRegistrationForm.value;
     let postObj = {
       "createdBy": 0,
@@ -330,10 +329,49 @@ export class AddUpdateStudentRegistrationComponent {
         error: ((err: any) => { this.errors.handelError(err) })
       });
     }
+  }
 
-    
+  updateValidation(){
+    if (this.languageFlag == 'EN') {
+      this.stuRegistrationForm.controls['fName'].setValidators([Validators.required]);
+      this.stuRegistrationForm.controls['mName'].setValidators([Validators.required]); 
+      this.stuRegistrationForm.controls['lName'].setValidators([Validators.required]);
+      this.stuRegistrationForm.controls['fatherFullName'].setValidators([Validators.required]); 
+      this.stuRegistrationForm.controls['motherName'].setValidators([Validators.required]);
+      
+      this.stuRegistrationForm.controls['f_MName'].setValidators([]);
+      this.stuRegistrationForm.controls['m_MName'].setValidators([]);    
+      this.stuRegistrationForm.controls['l_MName'].setValidators([]);   
+      this.stuRegistrationForm.controls['m_FatherFullName'].setValidators([]);    
+      this.stuRegistrationForm.controls['m_MotherName'].setValidators([]);   
+    } else {
+      this.stuRegistrationForm.controls['f_MName'].setValidators([Validators.required]);
+      this.stuRegistrationForm.controls['m_MName'].setValidators([Validators.required]);
+      this.stuRegistrationForm.controls['l_MName'].setValidators([Validators.required]);
+      this.stuRegistrationForm.controls['m_FatherFullName'].setValidators([Validators.required]);
+      this.stuRegistrationForm.controls['m_MotherName'].setValidators([Validators.required]);
 
+      this.stuRegistrationForm.controls['fName'].setValidators([]);
+      this.stuRegistrationForm.controls['mName'].setValidators([]);
+      this.stuRegistrationForm.controls['lName'].setValidators([]);
+      this.stuRegistrationForm.controls['fatherFullName'].setValidators([]);
+      this.stuRegistrationForm.controls['motherName'].setValidators([]);
 
+    }
+    this.stuRegistrationForm.controls['fName'].updateValueAndValidity();
+    this.stuRegistrationForm.controls['lName'].updateValueAndValidity();
+    this.stuRegistrationForm.controls['mName'].updateValueAndValidity();
+    this.stuRegistrationForm.controls['f_MName'].updateValueAndValidity();
+    this.stuRegistrationForm.controls['m_MName'].updateValueAndValidity();
+    this.stuRegistrationForm.controls['l_MName'].updateValueAndValidity();
+    this.stuRegistrationForm.controls['fatherFullName'].updateValueAndValidity();
+    this.stuRegistrationForm.controls['motherName'].updateValueAndValidity();
+    this.stuRegistrationForm.controls['m_FatherFullName'].updateValueAndValidity();
+    this.stuRegistrationForm.controls['m_MotherName'].updateValueAndValidity();
+  }
+
+  clearForm(clear:any){
+    clear.resetForm();   
   }
 
 }

@@ -1,3 +1,5 @@
+
+<form [formGroup]="stuRegistrationForm" #clear="ngForm">
 <mat-card class="plain-card">
     <mat-card-header class="card-header">
         <div class="d-flex align-items-center justify-content-between w-100">
@@ -9,7 +11,7 @@
             </button>
         </div>
     </mat-card-header>
-    <form [formGroup]="stuRegistrationForm">
+    
         <mat-card-content>
             <h6 class="mb-3">Student Details</h6>
             <div class="row">
@@ -252,9 +254,9 @@
         </mat-card-content>
         <mat-card-footer class="card-footer">
             <mat-card-actions align="end">
-                <button class="btn btn-outline-secondary me-2">Cancel</button>
+                <button class="btn btn-outline-secondary me-2" type="button" mat-dialog-close >Cancel</button>
                 <button class="btn btn-main " (click)="onSubmit()">{{editFlag ? 'Update':'Submit'}}</button>
             </mat-card-actions>
         </mat-card-footer>
-    </form>
 </mat-card>
+</form>
