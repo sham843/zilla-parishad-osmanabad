@@ -91,8 +91,8 @@ export class OfficeUsersComponent {
 
   openDeleteDialog(obj?: any){
     let dialoObj = {
-      header: 'Delete',
-      title: 'Do You Want To Delete The Selected Content ?',
+      header: 'Delete Office',
+      title: 'Do You Want To Delete The Selected Office ?',
       cancelButton: 'Cancel',
       okButton: 'Ok'
     }
@@ -120,7 +120,7 @@ deleteOffice(obj: any){
   this.apiService.setHttp('DELETE', 'zp_osmanabad/Office/DeleteOffice', false, deleteObj, false, 'baseUrl');
   this.apiService.getHttp().subscribe({
     next: (resp: any)=>{
-      resp.statusCode === "200" ? (console.log(resp),this.commonService.snackBar(resp.statusMessage, 0)):this.commonService.checkEmptyData(resp.statusMessage) == false ? this.errors.handelError(resp.statusCode) : this.commonService.snackBar(resp.statusMessage, 1);
+      resp.statusCode === "200" ? (console.log(resp),this.commonService.snackBar(resp.statusMessage, 0),this.getTableData()  ):this.commonService.checkEmptyData(resp.statusMessage) == false ? this.errors.handelError(resp.statusCode) : this.commonService.snackBar(resp.statusMessage, 1);
     },
     error: (err: any)=> {
       this.errors.handelError(err.status);
