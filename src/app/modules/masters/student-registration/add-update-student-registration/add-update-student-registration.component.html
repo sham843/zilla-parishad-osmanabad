@@ -9,12 +9,12 @@
             </button>
         </div>
     </mat-card-header>
-   <form [formGroup]="stuRegistrationForm">
-    <mat-card-content>
-        <h6 class="mb-3">Student Details</h6>
-        <div class="row">
-            <div class="col-sm-4">
-                <!-- <mat-form-field appearance="outline" class="w-100 ">
+    <form [formGroup]="stuRegistrationForm">
+        <mat-card-content>
+            <h6 class="mb-3">Student Details</h6>
+            <div class="row">
+                <div class="col-sm-4">
+                    <!-- <mat-form-field appearance="outline" class="w-100 ">
                     <mat-label>Item Category</mat-label>
                     <mat-select>
                         <mat-option value="one">First option</mat-option>
@@ -22,158 +22,174 @@
                     </mat-select>
                 </mat-form-field> -->
 
-                <mat-form-field appearance="outline" class="w-100 ">
-                    <mat-label>District</mat-label>
-                    <mat-select placeholder="select" formControlName="districtId">
-                        <mat-option *ngFor="let dist of districtArr" [value]="dist.id">{{dist.district}}</mat-option>
-                    </mat-select>
-                </mat-form-field>
+                    <mat-form-field appearance="outline" class="w-100 ">
+                        <mat-label>District</mat-label>
+                        <mat-select placeholder="select" formControlName="districtId" >
+                            <mat-option *ngFor="let dist of districtArr"
+                                [value]="dist.id">{{dist.district}}</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+                <div class="col-sm-4">
+                    <mat-form-field appearance="outline" class="w-100 ">
+                        <mat-label>Taluka</mat-label>
+                        <mat-select placeholder="select" formControlName="talukaId">
+                            <mat-option *ngFor="let tal of talukaArr" [value]="tal.id">{{tal.taluka}}</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+                <div class="col-sm-4">
+                    <mat-form-field appearance="outline" class="w-100 ">
+                        <mat-label>Kendra</mat-label>
+                        <mat-select placeholder="select" formControlName="centerId">
+                            <mat-option *ngFor="let cen of centerArr" [value]="cen.id">{{cen.center}}</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
             </div>
-            <div class="col-sm-4">
-                <mat-form-field appearance="outline" class="w-100 ">
-                    <mat-label>Taluka</mat-label>
-                    <mat-select placeholder="select" formControlName="talukaId">
-                        <mat-option *ngFor="let tal of talukaArr"  [value]="tal.id">{{tal.taluka}}</mat-option>
-                    </mat-select>
-                </mat-form-field>
+            <div class="row">
+                <div class="col-sm-4">
+                    <mat-form-field appearance="outline" class="w-100 ">
+                        <mat-label>School</mat-label>
+                        <mat-select placeholder="select" formControlName="schoolId">
+                            <mat-option *ngFor="let sch of schoolArr" [value]="sch.id">{{sch.schoolType}}</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+                <div class="col-sm-4">
+                    <mat-form-field appearance="outline" class="w-100">
+                        <mat-label>Student Name</mat-label>
+                        <input matInput formControlName="fullName">
+                    </mat-form-field>
+                </div>
+                <div class="col-sm-4">
+                    <input type="file" id="real-file" (change)="fileUpload($event,'img')" hidden="hidden"
+                        #uploadImage />
+                    <mat-form-field appearance="outline" class="w-100 ">
+                        <mat-label>Upload Photo</mat-label>
+                        <input matInput>
+                        <mat-icon matSuffix>
+                            <span class="material-symbols-outlined" (click)="uploadImage.click()">
+                                upload
+                            </span>
+                        </mat-icon>
+                    </mat-form-field>
+                </div>
             </div>
-            <div class="col-sm-4">
-                <mat-form-field appearance="outline" class="w-100 ">
-                    <mat-label>Kendra</mat-label>
-                    <mat-select placeholder="select" formControlName="centerId">
-                        <mat-option *ngFor="let cen of centerArr"  [value]="cen.id">{{cen.center}}</mat-option>
-                    </mat-select>
-                </mat-form-field>
+            <div class="row">
+                <div class="col-sm-4">
+                    <mat-form-field appearance="outline" class="w-100 ">
+                        <mat-label>Standard</mat-label>
+                        <mat-select placeholder="select" formControlName="standard">
+                            <mat-option *ngFor="let stan of standardArr"
+                                [value]="stan.id">{{stan.standard}}</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+                <div class="col-sm-4">
+                    <mat-form-field appearance="outline" class="w-100">
+                        <mat-label>Birth Date</mat-label>
+                        <input matInput [matDatepicker]="picker" formControlName="dob">
+                        <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                        <mat-datepicker #picker></mat-datepicker>
+                    </mat-form-field>
+                </div>
+                <div class="col-sm-4">
+                    <mat-form-field appearance="outline" class="w-100 ">
+                        <mat-label>Gender</mat-label>
+                        <mat-select formControlName="gender">
+                            <mat-option *ngFor="let gen of genderArr" [value]="gen.id">{{gen.gender}}</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
             </div>
-        </div>
-        <div class="row">
-            <div class="col-sm-4">
-                <mat-form-field appearance="outline" class="w-100 ">
-                    <mat-label>School</mat-label>
-                    <mat-select placeholder="select" formControlName="schoolId">
-                        <mat-option *ngFor="let sch of schoolArr"  [value]="sch.id">{{sch.schoolType}}</mat-option>
-                    </mat-select>
-                </mat-form-field>
+            <div class="row">
+                <div class="col-sm-4">
+                    <mat-form-field appearance="outline" class="w-100 ">
+                        <mat-label>Religion</mat-label>
+                        <mat-select placeholder="Select" formControlName="religionId">
+                            <mat-option *ngFor="let reli of religionArr"
+                                [value]="reli.id">{{reli.religion}}</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+                <div class="col-sm-4">
+                    <mat-form-field appearance="outline" class="w-100">
+                        <mat-label>Cast</mat-label>
+                        <mat-select formControlName="castId">
+                            <mat-option *ngFor="let cast of casteArr" [value]="cast.id" >{{cast.caste}}</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+                <div class="col-sm-4">
+                    <mat-form-field appearance="outline" class="w-100 ">
+                        <mat-label>physically Disabled</mat-label>
+                        <mat-select formControlName="physicallyDisabled">
+                            <mat-option>option-1</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+                <div class="col-sm-4">
+                    <mat-form-field appearance="outline" class="w-100">
+                        <mat-label>Saral ID</mat-label>
+                        <input matInput placeholder="Aadhar Card" formControlName="saralId">
+                    </mat-form-field>
+                </div>
+                <div class="col-sm-4">
+                    <mat-form-field appearance="outline" class="w-100 ">
+                        <mat-label>Aadhar No.</mat-label>
+                        <input matInput>
+                    </mat-form-field>
+                </div>
+                <div class="col-sm-4">
+                    <input type="file" id="real-file" (change)="fileUpload($event,'aadhar')" hidden="hidden"
+                        #uploadAadhar />
+                    <mat-form-field appearance="outline" class="w-100 ">
+                        <mat-label>Aadhar Photo</mat-label>
+                        <input matInput>
+                        <mat-icon matSuffix>
+                            <span class="material-symbols-outlined" (click)="uploadAadhar.click()">
+                                upload
+                            </span>
+                        </mat-icon>
+                    </mat-form-field>
+                </div>
             </div>
-            <div class="col-sm-4">
-                <mat-form-field appearance="outline" class="w-100">
-                    <mat-label>Student Name</mat-label>
-                    <input matInput formControlName="fullName">
-                </mat-form-field>
+            <h6 class="mb-3">Gaurdian Details</h6>
+            <div class="row">
+                <div class="col-sm-4">
+                    <mat-form-field appearance="outline" class="w-100">
+                        <mat-label>Parents Mobile No.</mat-label>
+                        <input matInput formControlName="mobileNo">
+                    </mat-form-field>
+                </div>
             </div>
-            <div class="col-sm-4">
-                <input type="file" id="real-file" (change)="fileUpload($event,'img')" hidden="hidden"
-                                    #uploadImage />
-                <mat-form-field appearance="outline" class="w-100 ">
-                    <mat-label>Upload Photo</mat-label>
-                    <input matInput>
-                    <mat-icon matSuffix>
-                        <span class="material-symbols-outlined" (click)="uploadImage.click()">
-                            upload
-                        </span>
-                    </mat-icon>
-                </mat-form-field>
+            <div class="row">
+                <div class="col-sm-4">
+                    <mat-form-field appearance="outline" class="w-100">
+                        <mat-label>Father Name</mat-label>
+                        <input matInput formControlName="fatherFullName">
+                    </mat-form-field>
+                </div>
+                <div class="col-sm-4">
+                    <mat-form-field appearance="outline" class="w-100">
+                        <mat-label>Mother Name</mat-label>
+                        <input matInput formControlName="motherName">
+                    </mat-form-field>
+                </div>
+                <!-- <div class="col-sm-4">
+                    <mat-form-field appearance="outline" class="w-100">
+                        <mat-label>Email ID</mat-label>
+                        <input matInput formControlName="emailID">
+                    </mat-form-field>
+                </div> -->
             </div>
-        </div>
-        <div class="row">
-            <div class="col-sm-4">                
-                <mat-form-field appearance="outline" class="w-100 ">
-                    <mat-label>Standard</mat-label>
-                    <mat-select placeholder="select" formControlName="standard">
-                        <mat-option *ngFor="let stan of standardArr" [value]="stan.id">{{stan.standard}}</mat-option>
-                    </mat-select>
-                </mat-form-field>
-            </div>
-            <div class="col-sm-4">
-                <mat-form-field appearance="outline" class="w-100">
-                    <mat-label>Birth Date</mat-label>
-                    <input matInput [matDatepicker]="picker" formControlName="dob">
-                    <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
-                    <mat-datepicker #picker></mat-datepicker>
-                </mat-form-field>
-            </div>
-            <div class="col-sm-4">
-                <mat-form-field appearance="outline" class="w-100 ">
-                    <mat-label>Gender</mat-label>
-                    <mat-select formControlName="gender">
-                        <mat-option *ngFor="let gen of genderArr"  [value]="gen.id">{{gen.gender}}</mat-option>
-                    </mat-select>
-                </mat-form-field>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-sm-4">
-                <mat-form-field appearance="outline" class="w-100 ">
-                    <mat-label>Religion</mat-label>
-                    <mat-select placeholder="Select" formControlName="religionId">
-                        <mat-option *ngFor="let reli of religionArr" [value]="reli.id">{{reli.religion}}</mat-option>
-                    </mat-select>
-                </mat-form-field>
-            </div>
-            <div class="col-sm-4">
-                <mat-form-field appearance="outline" class="w-100">
-                    <mat-label>Cast</mat-label>
-                    <input matInput placeholder="Cast" formControlName="castId">
-                </mat-form-field>
-            </div>
-            <div class="col-sm-4">
-                <input type="file" id="real-file" (change)="fileUpload($event,'aadhar')" hidden="hidden"
-                                    #uploadAadhar />
-                <mat-form-field appearance="outline" class="w-100 ">
-                    <mat-label>Aadhar ID</mat-label>
-                    <input matInput >
-                    <mat-icon matSuffix>
-                        <span class="material-symbols-outlined" (click)="uploadAadhar.click()">
-                            upload
-                        </span>
-                    </mat-icon>
-                </mat-form-field>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-sm-4">
-                <mat-form-field appearance="outline" class="w-100">
-                    <mat-label>Saral ID</mat-label>
-                    <input matInput placeholder="Aadhar Card" formControlName="saralId">
-                </mat-form-field>
-            </div>
-        </div>
-        <h6 class="mb-3">Gaurdian Details</h6>
-        <div class="row">
-            <div class="col-sm-4">
-                <mat-form-field appearance="outline" class="w-100">
-                    <mat-label>Parents Mobile No.</mat-label>
-                    <input matInput formControlName="mobileNo">
-                </mat-form-field>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-sm-4">
-                <mat-form-field appearance="outline" class="w-100">
-                    <mat-label>Father Name</mat-label>
-                    <input matInput formControlName="fatherFullName">
-
-                </mat-form-field>
-            </div>
-            <div class="col-sm-4">
-                <mat-form-field appearance="outline" class="w-100">
-                    <mat-label>Mother Name</mat-label>
-                    <input matInput formControlName="motherName">
-                </mat-form-field>
-            </div>
-            <div class="col-sm-4">
-                <mat-form-field appearance="outline" class="w-100">
-                    <mat-label>Email ID</mat-label>
-                    <input matInput formControlName="emailID">
-                </mat-form-field>
-            </div>
-        </div>
-    </mat-card-content>
-    <mat-card-footer class="card-footer">
-        <mat-card-actions align="end">
-            <button class="btn btn-outline-secondary me-2">Cancel</button>
-            <button class="btn btn-main " (click)="onSubmit()">Submit</button>
-        </mat-card-actions>
-    </mat-card-footer>
-   </form>
+        </mat-card-content>
+        <mat-card-footer class="card-footer">
+            <mat-card-actions align="end">
+                <button class="btn btn-outline-secondary me-2">Cancel</button>
+                <button class="btn btn-main " (click)="onSubmit()">Submit</button>
+            </mat-card-actions>
+        </mat-card-footer>
+    </form>
 </mat-card>

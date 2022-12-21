@@ -44,6 +44,8 @@ export class AddUpdateSchoolRegistrationComponent {
     return this.schoolRegForm.controls;
   }
 
+
+
   formFeild() {
     this.schoolRegForm = this.fb.group({
       "createdBy": 0,
@@ -104,10 +106,11 @@ export class AddUpdateSchoolRegistrationComponent {
       },
       error: ((err: any) => { this.errors.handelError(err) })
     });
+
   }
 
   getTaluka() {
-    this.masterService.getAllTaluka('1').subscribe({
+    this.masterService.getAllTaluka('EN').subscribe({
       next: (res: any) => {
         if (res.statusCode == 200) {
           this.talukaArr = res.responseData;
@@ -213,8 +216,6 @@ export class AddUpdateSchoolRegistrationComponent {
   imgUpload(event: any) {
     this.fileUpload.uploadDocuments(event, 'Upload', 'jpg, jpeg, png').subscribe((res: any) => {
       this.uploadImg = res.responseData;
-      console.log("uploadImg", this.uploadImg);
-
     });
   }
 
@@ -223,33 +224,25 @@ export class AddUpdateSchoolRegistrationComponent {
     console.log("formValue : ", formValue);
 
     if (this.editFlag == false) {
-    formValue.schoolDocument[0].docPath = this.uploadImg;
-
-      this.apiService.setHttp('post', 'ZP-Osmanabad/School/Add', false, formValue, false, 'baseUrl');
-      this.apiService.getHttp().subscribe({
-        next: (res: any) => {
-          if (res.statusCode == "200") {
-            this.commonMethod.snackBar("Record Added Successfully", 0);
-            this.dialogRef.close('yes');
-          }
-        },
-        error: ((err: any) => { this.errors.handelError(err) })
-      });
+      formValue.schoolDocument[0].docPath ? formValue.schoolDocument[0].docPath = this.uploadImg : '';
     }
     else {
-      formValue.schoolDocument[0].docPath = this.data.schoolDocument[0].docPath;
+      this.data.schoolDocument[0].docPath ? formValue.schoolDocument[0].docPath = this.data.schoolDocument[0].docPath  : '';
+    }
 
-      this.apiService.setHttp('put', 'ZP-Osmanabad/School/Update', false, formValue, false, 'baseUrl');
+    let url;
+    this.editFlag ? url = 'ZP-Osmanabad/School/Update' : url = 'ZP-Osmanabad/School/Add';
+
+    this.apiService.setHttp(this.editFlag ? 'put' : 'post', url, false, formValue, false, 'baseUrl');
       this.apiService.getHttp().subscribe({
         next: (res: any) => {
           if (res.statusCode == "200") {
-            this.commonMethod.snackBar("Record Update Successfully", 0);
+            this.editFlag ? this.commonMethod.snackBar("Record Update Successfully", 0) : this.commonMethod.snackBar("Record Added Successfully", 0);
             this.dialogRef.close('yes');
           }
         },
         error: ((err: any) => { this.errors.handelError(err) })
       });
-    }
   }
 
   onEdit() {
@@ -268,7 +261,7 @@ export class AddUpdateSchoolRegistrationComponent {
   }
 
   clearDropdown(dropdown: string) {
-    console.log(dropdown);
+    this.editFlag = false;
     if (dropdown == 'Taluka') {
       this.f['centerId'].setValue('');
       this.f['villageId'].setValue('');
@@ -299,6 +292,7 @@ export class AddUpdateSchoolRegistrationComponent {
       this.f['g_ClassId'].setValue('');
     }
     else if (dropdown == 'Category Desc') {
+      
       this.f['s_ManagementId'].setValue('');
       this.f['g_ClassId'].setValue('');
     }

@@ -2,11 +2,11 @@ import { Component } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { ApiService } from 'src/app/core/services/api.service';
-import { CommonMethodsService } from 'src/app/core/services/common-methods.service';
 import { ErrorsService } from 'src/app/core/services/errors.service';
 import { MasterService } from 'src/app/core/services/master.service';
 import { GlobalDialogComponent } from 'src/app/shared/components/global-dialog/global-dialog.component';
 import { AddUpdateSchoolRegistrationComponent } from './add-update-school-registration/add-update-school-registration.component';
+import { CommonMethodsService } from 'src/app/core/services/common-methods.service';
 
 @Component({
   selector: 'app-school-registration',
@@ -15,6 +15,7 @@ import { AddUpdateSchoolRegistrationComponent } from './add-update-school-regist
 })
 export class SchoolRegistrationComponent {
   pageNumber: number = 1;
+  tableDataArray = new Array();
   searchContent = new FormControl('');
   districtId = new FormControl();
   talukaId = new FormControl('');
@@ -24,9 +25,11 @@ export class SchoolRegistrationComponent {
   talukaArr = new Array();
   villageArr = new Array();
   deleteObj: any;
+  cardViewFlag : boolean = false;
+  imgPath : any;
 
   constructor(private dialog: MatDialog, private apiService: ApiService, private errors: ErrorsService,
-    private masterService: MasterService, private commonMethod: CommonMethodsService) { }
+    private masterService: MasterService,private commonMethod: CommonMethodsService) { }
 
   ngOnInit() {
     this.getTableData();
@@ -40,29 +43,28 @@ export class SchoolRegistrationComponent {
 
   getTableData(flag?: string) {
     this.pageNumber = flag == 'filter' ? 1 : this.pageNumber;
-    let tableDataArray = new Array();
     let tableDatasize!: Number;
-    
     let str = `?pageno=${this.pageNumber}&pagesize=10&DistrictId=${this.districtId.value ? this.districtId.value : 0}
     &TalukaId=${this.talukaId.value ? this.talukaId.value : 0}&VillageId=${this.villageId.value ? this.villageId.value : 0}&lan=EN`;
-
     this.apiService.setHttp('GET', 'ZP-Osmanabad/School/GetAll' + str, false, false, false, 'baseUrl');
     this.apiService.getHttp().subscribe({
 
       next: (res: any) => {
         if (res.statusCode == "200") {
-          tableDataArray = res.responseData.responseData1;
+          this.tableDataArray = res.responseData.responseData1;
+          console.log("tableDataArray : ",this.tableDataArray);
+          
           tableDatasize = res.responseData.responseData2.pageCount;
         } else {
-          tableDataArray = [];
+          this.tableDataArray = [];
           tableDatasize = 0;
         }
-        let displayedColumns = ['srNo', 'schoolName', 'village', 'taluka', 'district', 'action'];
-        let displayedheaders = ['Sr. No', 'Name', 'Village', 'Taluka', 'District', 'action'];
+        let displayedColumns = ['imgPath','srNo', 'schoolName', 'village', 'taluka', 'district', 'action'];
+        let displayedheaders = ['#','Sr. No', 'Name', 'Village', 'Taluka', 'District', 'action'];
         let tableData = {
           pageNumber: this.pageNumber,
-          img: '', blink: '', badge: '', isBlock: '', pagintion: true,
-          displayedColumns: displayedColumns, tableData: tableDataArray,
+          img: '#', blink: '', badge: '', isBlock: '', pagintion: true,
+          displayedColumns: displayedColumns, tableData: this.tableDataArray,
           tableSize: tableDatasize,
           tableHeaders: displayedheaders
         };
@@ -73,8 +75,6 @@ export class SchoolRegistrationComponent {
   }
 
   childCompInfo(obj: any) {
-    this.addUpdateAgency(obj);
-
     switch (obj.label) {
       case 'Pagination':
         this.pageNumber = obj.pageNumber;
@@ -93,7 +93,7 @@ export class SchoolRegistrationComponent {
   }
 
   addUpdateAgency(obj?: any) {
-    // let obj: any;
+    
     const dialogRef = this.dialog.open(AddUpdateSchoolRegistrationComponent, {
       width: '820px',
       data: obj,
@@ -124,6 +124,7 @@ export class SchoolRegistrationComponent {
       autoFocus: false
     })
     deleteDialogRef.afterClosed().subscribe((result: any) => {
+
       if (result == 'yes') {
         this.onClickDelete();
       }
@@ -161,7 +162,7 @@ export class SchoolRegistrationComponent {
 
   getVillage() {
     let talukaId = this.talukaId.value;
-    this.masterService.getAllVillage('EN',talukaId ).subscribe({
+    this.masterService.getAllVillage('EN', talukaId).subscribe({
       next: (res: any) => {
         if (res.statusCode == 200) {
           this.villageArr = res.responseData;
@@ -192,5 +193,12 @@ export class SchoolRegistrationComponent {
     }
   }
 
+  selectGrid(label: string) {
+    if (label == 'Table') {
+      this.cardViewFlag = false;
+      this.getTableData()
+    } else if (label == 'Card')
+      this.cardViewFlag = true;
+  }
 
 }

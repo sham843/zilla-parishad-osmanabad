@@ -12,6 +12,7 @@ export class ValidationService {
   mobile_No=('[6-9]\\d{9}');
   age=('[0-9]{2,}|[5-9]{1}$');
   aadhar_card=('^[2-9][0-9]{11}$');
+  valPassword = '^(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$_!%^*?&])[A-Za-z0-9\d@#$_!%^*?&]{8,20}$';
 
 
   alphabetsWithSpaces(event: any) {
@@ -49,6 +50,12 @@ export class ValidationService {
     }
     return temp
   }
+
+  noSpaceAllow(event: any) {  // for All Space Not Allow
+    if (event.code === 'Space') {
+        event.preventDefault();
+    }
+}
 
 
   emailRegex(event: any) { //Email Validation

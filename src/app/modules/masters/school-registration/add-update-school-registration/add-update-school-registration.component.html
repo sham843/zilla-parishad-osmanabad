@@ -1,22 +1,22 @@
 <form [formGroup]="schoolRegForm" (ngSubmit)="onSubmit()">
-    <mat-card class="plain-card">
-        <mat-card-header class="card-header">
-            <div class="d-flex align-items-center justify-content-between w-100">
-                <h6 class="text-main mb-0">Register School</h6>
-                <button mat-icon-button mat-dialog-close class="btn-modal-close">
-                    <mat-icon>
-                        close
-                    </mat-icon>
-                </button>
-            </div>
-        </mat-card-header>
+<mat-card class="plain-card">
+    <mat-card-header class="card-header">
+        <div class="d-flex align-items-center justify-content-between w-100">
+            <h6 class="text-main mb-0">Register School</h6>
+            <button mat-icon-button mat-dialog-close class="btn-modal-close">
+                <mat-icon>
+                    close
+                </mat-icon>
+            </button>
+        </div>
+    </mat-card-header>
 
-        <mat-card-content class="card-body">
-            <div class="row my-3">
-                <div class="col-sm">
-                    <mat-form-field appearance="outline" class="w-100">
-                        <mat-label>District</mat-label>
-                        <mat-select formControlName="districtId" (selectionChange)="getTaluka();">
+    <mat-card-content class="card-body">
+        <div class="row my-3">
+            <div class="col-sm">
+                <mat-form-field appearance="outline" class="w-100">
+                    <mat-label>District</mat-label>
+                    <mat-select formControlName="districtId" (selectionChange)="getTaluka();">
                             <mat-option *ngFor="let district of districtArr" [value]="district.id">
                                 {{district.district}}
                             </mat-option>
@@ -71,7 +71,8 @@
                 <div class="col-sm">
                     <mat-form-field appearance="outline" class="w-100">
                         <mat-label>School</mat-label>
-                        <input matInput placeholder="School" formControlName="schoolName" maxlength="50" (keypress)="validationService.alphabetsWithSpaces($event);">
+                        <input matInput placeholder="School" formControlName="schoolName" maxlength="50">
+                        <!-- (keypress)="validationService.noSpacesAtStart($event);" -->
                         <mat-error *ngIf="f['schoolName'].hasError('required') || f['schoolName'].hasError('touched')">
                             School is required
                         </mat-error>
@@ -114,52 +115,45 @@
                                     {{schoolMng.management_desc}}
                                 </mat-option>
                         </mat-select>
-                        <mat-error *ngIf="f['s_ManagementId'].hasError('required') || f['s_ManagementId'].hasError('touched')">
-                            School Management is required
-                        </mat-error>
-                    </mat-form-field>
-                </div>
+                </mat-form-field>
+            </div>
+            
+            <div class="col-sm">
+                <mat-form-field appearance="outline" class="w-100">
+                    <mat-label>Group Class</mat-label>
+                    <mat-select formControlName="g_ClassId">
+                        <mat-option *ngFor="let groupclass of groupclassArr" [value]="groupclass.id">
+                            {{groupclass.groupClass}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
 
-                <div class="col-sm">
-                    <mat-form-field appearance="outline" class="w-100">
-                        <mat-label>Group Class</mat-label>
-                        <mat-select formControlName="g_ClassId">
-                            <mat-option *ngFor="let groupclass of groupclassArr" [value]="groupclass.id">
-                                {{groupclass.groupClass}}
-                            </mat-option>
-                        </mat-select>
-                        <mat-error *ngIf="f['g_ClassId'].hasError('required') || f['g_ClassId'].hasError('touched')">
-                            Group Class is required
-                        </mat-error>
-                    </mat-form-field>
-                </div>
-
-                <div formArrayName="schoolDocument">
-                    <div *ngFor="let doc of docForm.controls; let i = index;">
-                        <div [formGroupName]="i">
-                            <div class="col-sm">
-
+            <div formArrayName="schoolDocument" >
+                <div *ngFor="let doc of docForm.controls; let i = index;">
+                    <div [formGroupName]="i">
+                        <div class="col-sm">
+                            
                                 <!-- <mat-form-field appearance="outline" class="w-100"> -->
-                                <mat-label>Upload Photo</mat-label>
-                                <input type="file" formControlName="docPath" hidden="hidden"
-                                    (change)="imgUpload($event)" #img>
-                                <mat-icon matSuffix>
-                                    <span class="material-symbols-outlined" (click)="img.click()">
+                                    <mat-label>Upload Photo</mat-label>
+                                    <input type="file" formControlName="docPath" hidden="hidden" (change)="imgUpload($event)" #img>
+                                    <mat-icon matSuffix>
+                                        <span class="material-symbols-outlined" (click)="img.click()">
                                         upload
-                                    </span>
-                                </mat-icon>
-                                <!-- </mat-form-field> -->
+                                        </span>
+                                    </mat-icon>
+                                  <!-- </mat-form-field> -->
                             </div>
                         </div>
-                    </div>
                 </div>
             </div>
-        </mat-card-content>
-        <mat-card-footer>
-            <mat-card-actions align="end">
-                <button mat-dialog-close mat-flat-button class="btn-second me-2" type="button">Cancel</button>
-                <button mat-flat-button class="btn-main">{{editFlag ? 'Update' : 'Submit'}}</button>
-            </mat-card-actions>
-        </mat-card-footer>
-    </mat-card>
+        </div>
+    </mat-card-content>
+    <mat-card-footer>
+        <mat-card-actions align="end" >
+            <button mat-dialog-close  mat-flat-button class="btn-second me-2" type="button">Cancel</button>
+            <button mat-flat-button class="btn-main">Submit</button>
+        </mat-card-actions>
+    </mat-card-footer>
+</mat-card>
 </form>

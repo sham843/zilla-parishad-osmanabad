@@ -22,7 +22,6 @@ textarea.mat-input-element,
 .mat-mdc-select-min-line,
 .mat-mdc-text-field-wrapper.mdc-text-field--outlined .mdc-text-field__input,
 .mat-mdc-icon-button.mat-mdc-button-base,
-.mat-mdc-card-subtitle,
 .mat-tab-label-content{
     font-family: 'Poppins', sans-serif;
   font-size: 0.85rem;
@@ -63,7 +62,12 @@ input:-webkit-autofill:active {
 .mat-mdc-paginator-page-size {
     display: none !important;
   }
-.mat-mdc-card-subtitle{
-    color: #000;
-    font-weight: 600;
-}
+
+
+@media only screen and (max-width: 478px){
+   
+    .mat-mdc-unelevated-button .mdc-button__label
+    {
+        font-size: 12px !important;
+    }
+  }

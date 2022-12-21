@@ -1,8 +1,15 @@
-<h1 mat-dialog-title>Delete file</h1>
-<div mat-dialog-content>
-  Would you like to delete 
-</div>
-<div mat-dialog-actions>
-  <button mat-button (click)="closeDialog('cancel')">{{data.cancelButton}}</button>
-  <button mat-button cdkFocusInitial type="submit" (click)="closeDialog('yes')">{{data.okButton}}</button>
-</div>
+<mat-card class="plain-card">
+  <mat-card-header class="card-header">
+    <h6 class="text-main fw-bold mb-0">{{data.header}}</h6>
+  </mat-card-header>
+  <mat-card-content class="card-body text-center">
+    <img src="assets/images/trash.gif" class="w-25">
+    <h6 mat-dialog-content class="my-4">
+     {{data.title}}
+    </h6>
+    <div mat-dialog-actions align="end">
+      <button mat-flat-button mat-dialog-close class="btn-second me-2" (click)="closeDialog('No')">{{data.cancelButton}}</button>
+      <button mat-flat-button cdkFocusInitial type="submit" class="btn-main" (click)="closeDialog('yes')">{{data.okButton}}</button>
+    </div>
+  </mat-card-content>
+</mat-card>

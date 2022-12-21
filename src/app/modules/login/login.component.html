@@ -20,31 +20,35 @@
                             <h5>उस्मानाबाद</h5>
                         </div>
                     </div>
-                    <form [formGroup]="adminLoginForm">
-                    <mat-tab-group class="p-2" (focusChange)="checklogin($event)" >
+                    <form [formGroup]="adminLoginForm" (ngSubmit)="onSubmit()" #clear="ngForm">
+                    <mat-tab-group class="p-2" (focusChange)="checklogin($event,clear)" >
                        
                         <mat-tab label="Admin">
                             <div class="overflow-hidden">
                                 <div class="mb-2 text-center mt-5">
                                     <mat-form-field appearance="outline" class="w-100">
                                         <mat-label>User Name</mat-label>
-                                        <input matInput placeholder="User Name" formControlName="userName">
-                                        <mat-error *ngIf="fc['userName'].hasError('required')"> User Name Is Required</mat-error>
+                                        <input matInput placeholder="User Name" formControlName="userName"
+                                        (keypress)="validators.noSpaceAllow($event)" >
+                                        <mat-error *ngIf="fc['userName'].hasError('required')">User Name Is Required</mat-error>
                                     </mat-form-field>
                                 </div>
                                 <div class="mb-3 text-center">
                                     <mat-form-field appearance="outline" class="w-100">
                                         <mat-label>Password</mat-label>
-                                        <input matInput [type]="hide ? 'password' : 'text'" formControlName="password">
-                                        <button mat-icon-button matSuffix (click)="hide = !hide"
+                                        <input matInput [type]="hide ? 'password' : 'text'" formControlName="password"
+                                        (keypress)="validators.noSpaceAllow($event)">
+                                        <button mat-icon-button matSuffix (click)="hide = !hide" type="button"
                                             [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
                                             <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
                                         </button>
-                                        <mat-error *ngIf="fc['password'].hasError('required')"> Password Is Required</mat-error>
+                                        <mat-error *ngIf="fc['password'].hasError('required')">Password Is Required</mat-error>
+                                        <mat-error *ngIf="fc['password'].hasError('pattern')">Enter Valid Password</mat-error>
+                                       
                                     </mat-form-field>
                                 </div>
                                 <div class="d-flex align-items-center justify-content-between">
-                                    <button mat-flat-button class="btn-main" type="button" (click)="onSubmit()">Submit</button>
+                                    <button mat-flat-button class="btn-main" type="submit" >Submit</button>
                                     <a routerLink="../forgot-password" class="text-main">Forgot Password</a>
                                 </div>
                             </div>
@@ -54,23 +58,29 @@
                                 <div class="mb-2 text-center mt-5">
                                     <mat-form-field appearance="outline" class="w-100">
                                         <mat-label>Mobile No.</mat-label>
-                                        <input matInput placeholder="Mobile No." formControlName="mobileNo">
-                                        <mat-error *ngIf="fc['mobileNo'].hasError('required')"> Mobile No Is Required</mat-error>
+                                        <input matInput placeholder="Mobile No." formControlName="mobileNo" maxlength="10" minlength="10"
+                                        (keypress)="validators.onlyDigits($event)">                                        
+                                        <mat-error *ngIf="fc['mobileNo'].hasError('required')">Mobile No Is Required</mat-error>
+                                        <mat-error *ngIf="fc['mobileNo'].hasError('pattern')">Enter Valid Mobile Number</mat-error>
+                                        <!-- <mat-error *ngIf="fc['mobileNo'].hasError('maxLength')"> Enter 10 Digit Number</mat-error>
+                                        <mat-error *ngIf="fc['mobileNo'].hasError('minLength')"> Enter 10 Digit Number</mat-error> -->
                                     </mat-form-field>
                                 </div>
                                 <div class="mb-3 text-center">
                                     <mat-form-field appearance="outline" class="w-100">
                                         <mat-label>Password</mat-label>
-                                        <input matInput [type]="hide ? 'password' : 'text'" formControlName="passwordOff">
-                                        <button mat-icon-button matSuffix (click)="hide = !hide"
+                                        <input matInput [type]="hide ? 'password' : 'text'" formControlName="passwordOff"
+                                        (keypress)="validators.noSpaceAllow($event)">
+                                        <button mat-icon-button matSuffix type="button" (click)="hide = !hide"
                                             [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
                                             <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
                                         </button>
-                                        <mat-error *ngIf="fc['passwordOff'].hasError('required')"> Password Is Required</mat-error>
+                                        <mat-error *ngIf="fc['passwordOff'].hasError('required')">Password Is Required</mat-error>
+                                        <mat-error *ngIf="fc['passwordOff'].hasError('pattern')">Enter Valid Password</mat-error>
                                     </mat-form-field>
                                 </div>
                                 <div class="d-flex align-items-center justify-content-between">
-                                    <button mat-flat-button class="btn-main" type="button" (click)="onSubmit()">Submit</button>
+                                    <button mat-flat-button class="btn-main" type="submit">Submit</button>
                                     <a routerLink="../forgot-password" class="text-main">Forgot Password</a>
                                 </div>
                             </div>
