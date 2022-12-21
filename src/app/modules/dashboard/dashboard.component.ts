@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { TranslateService } from '@ngx-translate/core';
 
 interface Food {
   value: string;
@@ -16,4 +17,8 @@ export class DashboardComponent {
     {value: 'pizza-1', viewValue: 'Pizza'},
     {value: 'tacos-2', viewValue: 'Tacos'},
   ];
+
+  constructor(public translate: TranslateService){
+
+  }
 }

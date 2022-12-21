@@ -6,7 +6,11 @@ import { CoreModule } from './core/core.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core';import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+export function httpTranslateLoaderFactory(http: HttpClient) {
+  return new TranslateHttpLoader(http);
+}
 
 @NgModule({
   declarations: [
@@ -20,7 +24,13 @@ import { HttpClientModule } from '@angular/common/http';
     NgxSpinnerModule,
     ReactiveFormsModule,
     HttpClientModule ,
-    
+    TranslateModule.forRoot({
+      loader: {
+        provide: TranslateLoader,
+        useFactory: httpTranslateLoaderFactory,
+        deps: [HttpClient]
+      }
+    }),
   ],
   schemas:[CUSTOM_ELEMENTS_SCHEMA],
   providers: [],
