@@ -39,7 +39,7 @@ export class MasterService {
     });
   }
 
-  getAllVillage(strPara: string, talukaId: number) {
+  getAllVillage(strPara: string, talukaId: any) {
     return new Observable((obj) => {
       this.apiService.setHttp('GET', 'zp-osmanabad/master/GetAllVillageByTalukaId?flag_lang=' + strPara + '&TalukaId=' + talukaId, false, false, false, 'baseUrl');
       this.apiService.getHttp().subscribe({

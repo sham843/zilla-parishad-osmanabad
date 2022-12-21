@@ -1,11 +1,12 @@
 import { Component, Inject } from '@angular/core';
-import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
-import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ApiService } from 'src/app/core/services/api.service';
 import { CommonMethodsService } from 'src/app/core/services/common-methods.service';
 import { ErrorsService } from 'src/app/core/services/errors.service';
 import { FileUploadService } from 'src/app/core/services/file-upload.service';
 import { MasterService } from 'src/app/core/services/master.service';
+import { ValidationService } from 'src/app/core/services/validation.service';
 
 @Component({
   selector: 'app-add-update-school-registration',
@@ -27,7 +28,8 @@ export class AddUpdateSchoolRegistrationComponent {
   schoolDocument!: FormArray;
 
   constructor(private masterService: MasterService, private errors: ErrorsService, private fb: FormBuilder, private fileUpload: FileUploadService,
-    private apiService: ApiService, private commonMethod: CommonMethodsService, @Inject(MAT_DIALOG_DATA) public data: any,) { }
+    private apiService: ApiService, private commonMethod: CommonMethodsService, @Inject(MAT_DIALOG_DATA) public data: any,
+    public dialogRef: MatDialogRef<AddUpdateSchoolRegistrationComponent>, public validationService : ValidationService) { }
 
   ngOnInit() {
     this.formFeild();
@@ -52,17 +54,17 @@ export class AddUpdateSchoolRegistrationComponent {
       "modifiedDate": new Date(),
       "isDeleted": false,
       "id": 0,
-      "schoolName": [''],
+      "schoolName": ['', Validators.required],
       "m_SchoolName": "string",
       "stateId": 1,
-      "districtId": [''],
-      "talukaId": [''],
-      "villageId": [''],
-      "centerId": [''],
-      "s_CategoryId": [''],
-      "s_ManagementId": [''],
-      "s_TypeId": [''],
-      "g_ClassId": [''],
+      "districtId": ['', Validators.required],
+      "talukaId": ['', Validators.required],
+      "villageId": ['', Validators.required],
+      "centerId": ['', Validators.required],
+      "s_CategoryId": ['', Validators.required],
+      "s_ManagementId": ['', Validators.required],
+      "s_TypeId": ['', Validators.required],
+      "g_ClassId": ['', Validators.required],
       "lan": "string",
       "localID": 0,
       "lowestClass": 0,
@@ -108,7 +110,7 @@ export class AddUpdateSchoolRegistrationComponent {
   }
 
   getTaluka() {
-    this.masterService.getAllTaluka('1').subscribe({
+    this.masterService.getAllTaluka('EN').subscribe({
       next: (res: any) => {
         if (res.statusCode == 200) {
           this.talukaArr = res.responseData;
@@ -214,8 +216,6 @@ export class AddUpdateSchoolRegistrationComponent {
   imgUpload(event: any) {
     this.fileUpload.uploadDocuments(event, 'Upload', 'jpg, jpeg, png').subscribe((res: any) => {
       this.uploadImg = res.responseData;
-      console.log("uploadImg", this.uploadImg);
-
     });
   }
 
@@ -224,33 +224,25 @@ export class AddUpdateSchoolRegistrationComponent {
     console.log("formValue : ", formValue);
 
     if (this.editFlag == false) {
-    formValue.schoolDocument[0].docPath = this.uploadImg;
-
-      this.apiService.setHttp('post', 'ZP-Osmanabad/School/Add', false, formValue, false, 'baseUrl');
-      this.apiService.getHttp().subscribe({
-        next: (res: any) => {
-          if (res.statusCode == "200") {
-            this.commonMethod.snackBar("Record Added Successfully", 0);
-          }
-        },
-        error: ((err: any) => { this.errors.handelError(err) })
-      });
+      formValue.schoolDocument[0].docPath ? formValue.schoolDocument[0].docPath = this.uploadImg : '';
     }
     else {
-      formValue.schoolDocument[0].docPath = this.data.schoolDocument[0].docPath;
+      this.data.schoolDocument[0].docPath ? formValue.schoolDocument[0].docPath = this.data.schoolDocument[0].docPath  : '';
+    }
 
-      this.apiService.setHttp('put', 'ZP-Osmanabad/School/Update', false, formValue, false, 'baseUrl');
+    let url;
+    this.editFlag ? url = 'ZP-Osmanabad/School/Update' : url = 'ZP-Osmanabad/School/Add';
+
+    this.apiService.setHttp(this.editFlag ? 'put' : 'post', url, false, formValue, false, 'baseUrl');
       this.apiService.getHttp().subscribe({
         next: (res: any) => {
           if (res.statusCode == "200") {
-            this.commonMethod.snackBar("Record Update Successfully", 0);
+            this.editFlag ? this.commonMethod.snackBar("Record Update Successfully", 0) : this.commonMethod.snackBar("Record Added Successfully", 0);
+            this.dialogRef.close('yes');
           }
         },
         error: ((err: any) => { this.errors.handelError(err) })
       });
-
-    }
-
   }
 
   onEdit() {
@@ -269,7 +261,7 @@ export class AddUpdateSchoolRegistrationComponent {
   }
 
   clearDropdown(dropdown: string) {
-    console.log(dropdown);
+    this.editFlag = false;
     if (dropdown == 'Taluka') {
       this.f['centerId'].setValue('');
       this.f['villageId'].setValue('');
@@ -300,6 +292,7 @@ export class AddUpdateSchoolRegistrationComponent {
       this.f['g_ClassId'].setValue('');
     }
     else if (dropdown == 'Category Desc') {
+      
       this.f['s_ManagementId'].setValue('');
       this.f['g_ClassId'].setValue('');
     }
