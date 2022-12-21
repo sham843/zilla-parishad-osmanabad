@@ -13,6 +13,7 @@ import { ValidationService } from 'src/app/core/services/validation.service';
 })
 export class ForgotPasswordComponent {
   hide = true;
+  hide1 = true;
   mobileField: boolean = true;
   otpField: boolean = false;
   passwordField: boolean = false;
@@ -137,7 +138,7 @@ export class ForgotPasswordComponent {
       })
     }
     else {
-      this.common.snackBar('New Password & Confirm Password Did Not Match', 1)
+      this.passwordForm.invalid? this.common.snackBar('Please Enter New Password & Confirm Password', 1): this.common.snackBar('New Password & Confirm Password Did Not Match', 1)
     }
   }
 }
