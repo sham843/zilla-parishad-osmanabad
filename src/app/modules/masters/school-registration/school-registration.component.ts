@@ -219,11 +219,6 @@ export class SchoolRegistrationComponent {
   }
 
   getofficeReport(){
-  //   let pageNo = this.cardViewFlag ? (this.cardCurrentPage + 1) : this.pageNumber; 
-  //   let str = `?pageno=${pageNo}&pagesize=10&DistrictId=${this.districtId.value ? this.districtId.value : 0}
-  //   &TalukaId=${this.talukaId.value ? this.talukaId.value : 0}&VillageId=${this.villageId.value ? this.villageId.value : 0}&lan=${this.webStorageS.languageFlag}`;
-  //   this.apiService.setHttp('GET', 'ZP-Osmanabad/School/GetAll' + str, false, false, false, 'baseUrl');
-
     let str = `?&DistrictId=${this.districtId.value ? this.districtId.value : 0}
      &TalukaId=${this.talukaId.value ? this.talukaId.value : 0}&VillageId=${this.villageId.value ? this.villageId.value : 0}&lan=${this.webStorageS.languageFlag}`;
     this.apiService.setHttp('GET', 'ZP-Osmanabad/School/GetAll' + str, false, false, false, 'baseUrl');
