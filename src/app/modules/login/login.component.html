@@ -28,15 +28,17 @@
                                 <div class="mb-2 text-center mt-5">
                                     <mat-form-field appearance="outline" class="w-100">
                                         <mat-label>User Name</mat-label>
-                                        <input matInput placeholder="User Name" formControlName="userName">
+                                        <input matInput placeholder="User Name" formControlName="userName"
+                                        (keypress)="validators.noSpaceAllow($event)" >
                                         <mat-error *ngIf="fc['userName'].hasError('required')">User Name Is Required</mat-error>
                                     </mat-form-field>
                                 </div>
                                 <div class="mb-3 text-center">
                                     <mat-form-field appearance="outline" class="w-100">
                                         <mat-label>Password</mat-label>
-                                        <input matInput [type]="hide ? 'password' : 'text'" formControlName="password">
-                                        <button mat-icon-button matSuffix (click)="hide = !hide"
+                                        <input matInput [type]="hide ? 'password' : 'text'" formControlName="password"
+                                        (keypress)="validators.noSpaceAllow($event)">
+                                        <button mat-icon-button matSuffix (click)="hide = !hide" type="button"
                                             [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
                                             <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
                                         </button>
@@ -56,7 +58,7 @@
                                     <mat-form-field appearance="outline" class="w-100">
                                         <mat-label>Mobile No.</mat-label>
                                         <input matInput placeholder="Mobile No." formControlName="mobileNo" maxlength="10" minlength="10"
-                                        (keypress)="validators.onlyDigits($event)">
+                                        (keypress)="validators.onlyDigits($event)">                                        
                                         <mat-error *ngIf="fc['mobileNo'].hasError('required')">Mobile No Is Required</mat-error>
                                         <mat-error *ngIf="fc['mobileNo'].hasError('pattern')">Enter Valid Mobile Number</mat-error>
                                         <!-- <mat-error *ngIf="fc['mobileNo'].hasError('maxLength')"> Enter 10 Digit Number</mat-error>
@@ -66,7 +68,8 @@
                                 <div class="mb-3 text-center">
                                     <mat-form-field appearance="outline" class="w-100">
                                         <mat-label>Password</mat-label>
-                                        <input matInput [type]="hide ? 'password' : 'text'" formControlName="passwordOff">
+                                        <input matInput [type]="hide ? 'password' : 'text'" formControlName="passwordOff"
+                                        (keypress)="validators.noSpaceAllow($event)">
                                         <button mat-icon-button matSuffix type="button" (click)="hide = !hide"
                                             [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
                                             <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>

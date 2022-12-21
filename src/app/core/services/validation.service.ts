@@ -50,6 +50,12 @@ export class ValidationService {
     return temp
   }
 
+  noSpaceAllow(event: any) {  // for All Space Not Allow
+    if (event.code === 'Space') {
+        event.preventDefault();
+    }
+}
+
 
   emailRegex(event: any) { //Email Validation
     if (!this.noSpacesAtStart(event)) return false; // First Space not Accept
