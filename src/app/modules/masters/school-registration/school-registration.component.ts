@@ -28,6 +28,8 @@ export class SchoolRegistrationComponent {
   deleteObj: any;
   cardViewFlag : boolean = false;
   imgPath : any;
+  totalCount: number = 0;
+  cardCurrentPage: number = 0;
 
   constructor(private dialog: MatDialog, private apiService: ApiService, private errors: ErrorsService,
     private masterService: MasterService,private commonMethod: CommonMethodsService, private webStorageS : WebStorageService) { }
@@ -39,21 +41,22 @@ export class SchoolRegistrationComponent {
 
   onPagintion(pageNo: number) {
     this.pageNumber = pageNo;
-    this.getTableData()
+    this.getTableData();
   }
 
   getTableData(flag?: string) {
     this.pageNumber = flag == 'filter' ? 1 : this.pageNumber;
     let tableDatasize!: Number;
-    let str = `?pageno=${this.pageNumber}&pagesize=10&DistrictId=${this.districtId.value ? this.districtId.value : 0}
-    &TalukaId=${this.talukaId.value ? this.talukaId.value : 0}&VillageId=${this.villageId.value ? this.villageId.value : 0}&lan=EN`;
+    let pageNo = this.cardViewFlag ? (this.cardCurrentPage + 1) : this.pageNumber; 
+    let str = `?pageno=${pageNo}&pagesize=10&DistrictId=${this.districtId.value ? this.districtId.value : 0}
+    &TalukaId=${this.talukaId.value ? this.talukaId.value : 0}&VillageId=${this.villageId.value ? this.villageId.value : 0}&lan=${this.webStorageS.languageFlag}`;
     this.apiService.setHttp('GET', 'ZP-Osmanabad/School/GetAll' + str, false, false, false, 'baseUrl');
     this.apiService.getHttp().subscribe({
 
       next: (res: any) => {
         if (res.statusCode == "200") {
           this.tableDataArray = res.responseData.responseData1;
-          console.log("tableDataArray : ",this.tableDataArray);
+          this.totalCount = res.responseData.responseData2.totalPages;
           
           tableDatasize = res.responseData.responseData2.pageCount;
         } else {
@@ -74,6 +77,7 @@ export class SchoolRegistrationComponent {
       error: ((err: any) => { this.errors.handelError(err) })
     });
   }
+
 
   childCompInfo(obj: any) {
     switch (obj.label) {
@@ -194,12 +198,23 @@ export class SchoolRegistrationComponent {
     }
   }
 
+  
+  onPageChanged(event: any) {
+    this.cardCurrentPage = event.pageIndex;
+    this.selectGrid('Card');
+  }
+
+
   selectGrid(label: string) {
     if (label == 'Table') {
       this.cardViewFlag = false;
+      this.pageNumber = 1;
       this.getTableData()
     } else if (label == 'Card')
       this.cardViewFlag = true;
+      this.cardCurrentPage = 0;
+      this.getTableData();
+
   }
 
 }
