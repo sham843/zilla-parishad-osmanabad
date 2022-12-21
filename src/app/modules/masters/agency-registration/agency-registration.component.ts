@@ -2,7 +2,9 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { ApiService } from 'src/app/core/services/api.service';
+import { CommonMethodsService } from 'src/app/core/services/common-methods.service';
 import { ErrorsService } from 'src/app/core/services/errors.service';
+import { GlobalDialogComponent } from 'src/app/shared/components/global-dialog/global-dialog.component';
 import { AddUpdateAgencyRegistrationComponent } from './add-update-agency-registration/add-update-agency-registration.component';
 
 @Component({
@@ -14,7 +16,7 @@ export class AgencyRegistrationComponent {
   pageNumber: number = 1;
   filterForm!: FormGroup;
   constructor(private dialog: MatDialog, private apiService: ApiService,
-    private errors: ErrorsService, private fb: FormBuilder) { }
+    private errors: ErrorsService, private fb: FormBuilder, private common : CommonMethodsService) { }
 
   ngOnInit() {
     this.filterData();
@@ -76,8 +78,11 @@ export class AgencyRegistrationComponent {
         this.pageNumber = _obj.pageNumber;
         this.getTableData();
         break;
-      case 'Edit' || 'Delete':
+      case 'Edit':
         this.addUpdateAgency(_obj);
+        break;
+        case 'Delete' :
+        this.deleteAgency(_obj);
         break;
       case 'Block':
         // this.globalDialogOpen();
@@ -95,6 +100,42 @@ export class AgencyRegistrationComponent {
 
     dialogRef.afterClosed().subscribe(result => {
       result == 'Yes' ? this.getTableData() : '';
+    });
+  }
+
+  deleteAgencyRow(_obj:any){
+    let obj = {
+      "id": _obj.id,
+      "modifiedBy": 0,
+      "modifiedDate": new Date(),
+      "lan": ""
+    }
+   
+    this.apiService.setHttp('delete', 'zp-osmanabad/Agency/Delete', false, obj, false, 'baseUrl');
+    this.apiService.getHttp().subscribe({
+      next: (res: any) => {
+        res.statusCode == 200 ? this.common.snackBar(res.statusMessage, 0): this.common.snackBar(res.statusMessage, 1);
+      },
+      error: ((err: any) => { this.errors.handelError(err) })
+    })
+  }
+
+  deleteAgency(_obj:any){
+    let dialoObj = {
+      header: 'Delete',
+      title: 'Do You Want To Delete The Selected Agency ?',
+      cancelButton: 'Cancel',
+      okButton: 'Ok'
+    }
+    const dialogRef = this.dialog.open(GlobalDialogComponent, {
+      width: '320px',
+      data: dialoObj,
+      disableClose: true,
+      autoFocus: false
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      result == 'yes' ? (this.deleteAgencyRow(_obj),this.getTableData() ): '';
     });
   }
 }
