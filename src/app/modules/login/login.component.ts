@@ -73,10 +73,11 @@ export class LoginComponent {
       this.api.setHttp('get', url, false, false, false, 'baseUrl');
       this.api.getHttp().subscribe({
         next: ((res: any) => {
-          if (res.statusCode == '200') {
+          if (res.statusCode == 200) {
             let logObj = res.responseData;
             localStorage.setItem('loggedInData', JSON.stringify(logObj));
             sessionStorage.setItem('loggedIn', 'true');
+            this.commonMethods.snackBar(res.statusMessage, 0)
             this.router.navigateByUrl('/dashboard');
           } else {
             this.commonMethods.snackBar(res.statusMessage, 1)
