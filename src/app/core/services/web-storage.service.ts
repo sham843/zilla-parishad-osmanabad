@@ -5,7 +5,7 @@ import { BehaviorSubject } from 'rxjs';
   providedIn: 'root'
 })
 export class WebStorageService {
-languageFlag =  'mr-IN'
+languageFlag =  'EN'
 private theme=new BehaviorSubject('');
   constructor() { }
 
