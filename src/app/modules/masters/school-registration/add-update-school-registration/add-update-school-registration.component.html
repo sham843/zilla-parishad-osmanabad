@@ -20,77 +20,101 @@
                             <mat-option *ngFor="let district of districtArr" [value]="district.id">
                                 {{district.district}}
                             </mat-option>
-                    </mat-select>
-                </mat-form-field>
-            </div>
-            <div class="col-sm">
-                <mat-form-field appearance="outline" class="w-100 ">
-                    <mat-label>Taluka</mat-label>
-                    <mat-select formControlName="talukaId" (selectionChange)="clearDropdown('Taluka'); getCenter();">
-                        <mat-option *ngFor="let taluka of talukaArr" [value]="taluka.id">
-                            {{taluka.taluka}}
-                        </mat-option>
-                    </mat-select>
-                </mat-form-field>
-            </div>
-            <div class="col-sm">
-                <mat-form-field appearance="outline" class="w-100 ">
-                    <mat-label>Kendra</mat-label>
-                    <mat-select formControlName="centerId" (selectionChange)="clearDropdown('Kendra'); getVillage();">
-                        <mat-option *ngFor="let center of centerArr" [value]="center.id">
-                            {{center.center}}
-                        </mat-option>
-                    </mat-select>
-                </mat-form-field>
-            </div>
-            <div class="col-sm">
-                <mat-form-field appearance="outline" class="w-100 ">
-                    <mat-label>Village</mat-label>
-                    <mat-select formControlName="villageId" (selectionChange)="clearDropdown('Village'); getSchoolType();">
-                        <mat-option *ngFor="let village of villageArr" [value]="village.id">
-                            {{village.village}}
-                        </mat-option>
-                    </mat-select>
-                </mat-form-field>
-            </div>
-            <div class="col-sm">
-                <mat-form-field appearance="outline" class="w-100">
-                    <mat-label>School</mat-label>
-                    <input matInput placeholder="Item ID" formControlName="schoolName">
-                </mat-form-field>
-            </div>
-            <div class="col-sm">
-                <mat-form-field appearance="outline" class="w-100">
-                    <mat-label>School Type Description</mat-label>
-                    <mat-select formControlName="s_TypeId" (selectionChange)="clearDropdown('School Type'); getCategoryDes();">
-                        <mat-option *ngFor="let schoolType of schoolTypeArr" [value]="schoolType.id">
-                            {{schoolType.schoolType}}
-                        </mat-option>
-                    </mat-select>
-                </mat-form-field>
-            </div>
-            <div class="col-sm">
-                <mat-form-field appearance="outline" class="w-100">
-                    <mat-label>School Category Description</mat-label>
-                    <mat-select>
-                        <mat-select formControlName="s_CategoryId" (selectionChange)="clearDropdown('Category Desc'); getSchoolMngDesc();">
-                            <mat-option *ngFor="let category of categoryArr" [value]="category.id">
-                                {{category.category_desc}}
+                        </mat-select>
+                        <mat-error *ngIf="f['districtId'].hasError('required') || f['districtId'].hasError('touched')">
+                            District is required
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="col-sm">
+                    <mat-form-field appearance="outline" class="w-100 ">
+                        <mat-label>Taluka</mat-label>
+                        <mat-select formControlName="talukaId"
+                            (selectionChange)="clearDropdown('Taluka'); getCenter();">
+                            <mat-option *ngFor="let taluka of talukaArr" [value]="taluka.id">
+                                {{taluka.taluka}}
                             </mat-option>
                         </mat-select>
-                    </mat-select>
-                </mat-form-field>
-            </div>
-            <div class="col-sm">
-                <mat-form-field appearance="outline" class="w-100">
-                    <mat-label>School Management Description</mat-label>
-                    <mat-select>
-                        <mat-select formControlName="s_ManagementId" (selectionChange)="clearDropdown('Management Desc'); getGroupClass();">
-                            <mat-option *ngFor="let schoolMng of schoolMngArr" [value]="schoolMng.id">
-                                {{schoolMng.management_desc}}
+                        <mat-error *ngIf="f['talukaId'].hasError('required') || f['talukaId'].hasError('touched')">
+                            Taluka is required
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="col-sm">
+                    <mat-form-field appearance="outline" class="w-100 ">
+                        <mat-label>Kendra</mat-label>
+                        <mat-select formControlName="centerId"
+                            (selectionChange)="clearDropdown('Kendra'); getVillage();">
+                            <mat-option *ngFor="let center of centerArr" [value]="center.id">
+                                {{center.center}}
                             </mat-option>
                         </mat-select>
-                    </mat-select>
+                        <mat-error *ngIf="f['centerId'].hasError('required') || f['centerId'].hasError('touched')">
+                            Kendra is required
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="col-sm">
+                    <mat-form-field appearance="outline" class="w-100 ">
+                        <mat-label>Village</mat-label>
+                        <mat-select formControlName="villageId"
+                            (selectionChange)="clearDropdown('Village'); getSchoolType();">
+                            <mat-option *ngFor="let village of villageArr" [value]="village.id">
+                                {{village.village}}
+                            </mat-option>
+                        </mat-select>
+                        <mat-error *ngIf="f['villageId'].hasError('required') || f['villageId'].hasError('touched')">
+                            Village is required
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="col-sm">
+                    <mat-form-field appearance="outline" class="w-100">
+                        <mat-label>School</mat-label>
+                        <input matInput placeholder="School" formControlName="schoolName" maxlength="50">
+                        <!-- (keypress)="validationService.noSpacesAtStart($event);" -->
+                        <mat-error *ngIf="f['schoolName'].hasError('required') || f['schoolName'].hasError('touched')">
+                            School is required
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="col-sm">
+                    <mat-form-field appearance="outline" class="w-100">
+                        <mat-label>School Type Description</mat-label>
+                        <mat-select formControlName="s_TypeId"
+                            (selectionChange)="clearDropdown('School Type'); getCategoryDes();">
+                            <mat-option *ngFor="let schoolType of schoolTypeArr" [value]="schoolType.id">
+                                {{schoolType.schoolType}}
+                            </mat-option>
+                        </mat-select>
+                        <mat-error *ngIf="f['s_TypeId'].hasError('required') || f['s_TypeId'].hasError('touched')">
+                            School Type Description is required
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="col-sm">
+                    <mat-form-field appearance="outline" class="w-100">
+                        <mat-label>School Category Description</mat-label>
+                            <mat-select formControlName="s_CategoryId"
+                                (selectionChange)="clearDropdown('Category Desc'); getSchoolMngDesc();">
+                                <mat-option *ngFor="let category of categoryArr" [value]="category.id">
+                                    {{category.category_desc}}
+                                </mat-option>
+                            </mat-select>
+                        <mat-error *ngIf="f['s_CategoryId'].hasError('required') || f['s_CategoryId'].hasError('touched')">
+                            School Category is required
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="col-sm">
+                    <mat-form-field appearance="outline" class="w-100">
+                        <mat-label>School Management Description</mat-label>
+                            <mat-select formControlName="s_ManagementId"
+                                (selectionChange)="clearDropdown('Management Desc'); getGroupClass();">
+                                <mat-option *ngFor="let schoolMng of schoolMngArr" [value]="schoolMng.id">
+                                    {{schoolMng.management_desc}}
+                                </mat-option>
+                        </mat-select>
                 </mat-form-field>
             </div>
             

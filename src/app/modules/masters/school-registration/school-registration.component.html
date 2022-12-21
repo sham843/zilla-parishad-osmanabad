@@ -15,12 +15,16 @@
                         School List
                     </div>
                     <div class="d-flex align-items-center justify-content-end gap-2">
-                        <button mat-flat-button class="btn-main btn-icon">
+                        <button mat-flat-button class="btn-main btn-icon"
+                            [ngClass]="{'btn-main':!this.cardViewFlag, 'btn-second':this.cardViewFlag}"
+                            (click)="selectGrid('Table')">
                             <mat-icon>
                                 list
                             </mat-icon>
                         </button>
-                        <button mat-flat-button class="btn-second btn-icon">
+                        <button mat-flat-button class="btn-second btn-icon"
+                            [ngClass]="{'btn-main':this.cardViewFlag, 'btn-second':!this.cardViewFlag}"
+                            (click)="selectGrid('Card')">
                             <mat-icon>grid_view</mat-icon>
                         </button>
                         <button mat-flat-button class="btn-main btn-icon" [matMenuTriggerFor]="menu">
@@ -67,7 +71,7 @@
                     <div class="col-sm-auto">
                         <mat-form-field appearance="outline" class="w-100">
                             <mat-label>Select Taluka</mat-label>
-                            <mat-select [formControl]="talukaId">
+                            <mat-select [formControl]="talukaId" (selectionChange)="getVillage();">
                                 <mat-option *ngFor="let taluka of talukaArr" [value]="taluka.id">
                                     {{taluka.taluka}}
                                 </mat-option>
@@ -77,21 +81,91 @@
                     <div class="col-sm-auto">
                         <mat-form-field appearance="outline" class="w-100">
                             <mat-label>Select Village</mat-label>
-                            <mat-select>
-                                <mat-option value="one">First option</mat-option>
-                                <mat-option value="two">Second option</mat-option>
+                            <mat-select [formControl]="villageId">
+                                <mat-option *ngFor="let village of villageArr" [value]="village.id">
+                                    {{village.village}}
+                                </mat-option>
                             </mat-select>
                         </mat-form-field>
                     </div>
-                   <div class="col-sm-auto">
-                    <button mat-flat-button class="btn-main">Filter</button>
-                    <button  mat-flat-button class="btn-second ms-3">Clear</button>
-                   </div>
+                    <div class="col-sm-auto">
+                        <button mat-flat-button class="btn-main" (click)="getTableData()">Filter</button>
+                        <button mat-flat-button class="btn-second ms-3" (click)="onClear()">Clear</button>
+                    </div>
                 </div>
             </mat-card-header>
 
             <mat-card-content class=card-body>
-                <app-table (recObjToChild)="childCompInfo($event)"></app-table>
+                <ng-container *ngIf="!cardViewFlag">
+                    <app-table (recObjToChild)="childCompInfo($event)"></app-table>
+                </ng-container>
+
+                <ng-container *ngIf="cardViewFlag">
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <mat-card *ngFor="let data of tableDataArray">
+                              <mat-card-header class="d-flex justify-content-end">
+                                <button mat-flat-button [matMenuTriggerFor]="menu">
+                                  <span class="material-symbols-outlined">
+                                    more_horiz
+                                  </span>
+                                </button>
+                                <mat-menu #menu="matMenu">
+                                  <button mat-menu-item>Edit
+                                    <span class="material-symbols-outlined">
+                                    create
+                                    </span>
+                                </button>
+                                  <button mat-menu-item>Delete
+                                    <span class="material-symbols-outlined">
+                                        delete
+                                        </span>
+                                  </button>
+                                </mat-menu>
+                              </mat-card-header>
+                              <mat-card-content>
+                                <div class="text-center mb-3">
+                                  <img src="assets/images/user.jpg" alt="" height="60px">
+                                </div>
+                                <div style="text-align: center;">{{data.schoolName}}</div>
+                                <div class="row">
+                                  <div class="col-sm  form-label">
+                                    Village
+                                  </div>
+                                  <div class=" col-sm  form-deta">
+                                    {{data.village}}
+                                  </div>
+                                </div>
+                                <div class="row">
+                                  <div class="col-sm form-label">
+                                    Taluka
+                                  </div>
+                                  <div class="col-sm form-deta">
+                                    {{data.taluka}}
+                                  </div>
+                                </div>
+                                <div class="row">
+                                  <div class=" col-sm form-label">
+                                    District
+                                  </div>
+                                  <div class="col-sm form-deta">
+                                    {{data.district}}
+                                  </div>
+                                </div>
+                                <div class="text-center mb-3">
+                                  <button mat-flat-button class="btn-main">Read More</button>
+                                </div>
+                              </mat-card-content>
+                              <mat-card-footer>
+                    
+                              </mat-card-footer>
+                            </mat-card>
+                                 
+                      </div>
+
+                    </div>
+                </ng-container>
+            
             </mat-card-content>
         </mat-card>
     </div>

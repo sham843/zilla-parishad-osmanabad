@@ -43,6 +43,7 @@
                                             <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
                                         </button>
                                         <mat-error *ngIf="fc['password'].hasError('required')">Password Is Required</mat-error>
+                                        <mat-error *ngIf="fc['password'].hasError('pattern')">Enter Valid Password</mat-error>
                                        
                                     </mat-form-field>
                                 </div>
@@ -75,6 +76,7 @@
                                             <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
                                         </button>
                                         <mat-error *ngIf="fc['passwordOff'].hasError('required')">Password Is Required</mat-error>
+                                        <mat-error *ngIf="fc['passwordOff'].hasError('pattern')">Enter Valid Password</mat-error>
                                     </mat-form-field>
                                 </div>
                                 <div class="d-flex align-items-center justify-content-between">

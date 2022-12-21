@@ -14,9 +14,12 @@ import { ErrorsService } from 'src/app/core/services/errors.service';
 export class AddUpdateDesignationMasterComponent {
   designationForm!: FormGroup;
   DesiganationLevelData: any;
-  desiganationTypeData: any;
+  desiganationTypeData = new Array();
   editFlag: boolean = false;
   editData: any;
+  // designationName = new FormControl();
+
+  obj = {id : 0 ,designationType : 'Other'};
   constructor(private masterService: MasterService, private fb: FormBuilder, private service: ApiService,
     private commonMethod: CommonMethodsService, private errorHandler: ErrorsService,
     public dialogRef: MatDialogRef<AddUpdateDesignationMasterComponent>,
@@ -27,23 +30,25 @@ export class AddUpdateDesignationMasterComponent {
     !this.data ? this.getDesiganationLevel() : this.onClickEdit(this.data);
   }
 
+  
+
   get f() { return this.designationForm.controls }
 //#region -------------------------------------- Desiganation-Master Formdata --------------------------//
   formData() {
     this.designationForm = this.fb.group({
-      "createdBy": [0],
-      "modifiedBy": [0],
-      "createdDate": new Date(),
-      "modifiedDate": new Date(),
-      "isDeleted": false,
+      // "createdBy": [0],
+      // "modifiedBy": [0],
+      // "createdDate": new Date(),
+      // "modifiedDate": new Date(),
+      // "isDeleted": false,
       "lan": ['EN'],
       "id": [0],
       "designationType": ['',Validators.required],
       "m_DesignationType": [''],
       "designationLevelId": ['',Validators.required],
-      "timestamp": new Date(),
-      "localId": 0,
-   
+      // "timestamp": new Date(),
+      // "localId": 0,
+      "designationName":['']
     })
   }
   //#endregion  ---------------------------- End Desiganation-Master Formdata ------------------------------- //
@@ -54,6 +59,7 @@ export class AddUpdateDesignationMasterComponent {
       next: ((res: any) => {
         if (res.statusCode == '200' && res.responseData.length) {
           this.DesiganationLevelData = res.responseData;
+          console.log(this.DesiganationLevelData);      
           this.editFlag ? (this.designationForm.controls['designationLevelId'].setValue(this.editData.designationLevel), this.getDesiganationType()) : '';
         }
       }), error: (error: any) => {
@@ -70,8 +76,14 @@ export class AddUpdateDesignationMasterComponent {
     this.masterService.GetDesignationByLevelId(getFormVal.lan, desigLevelId).subscribe({
       next: ((res: any) => {
         if (res.statusCode == '200' && res.responseData.length) {
+
           this.desiganationTypeData = res.responseData;
-          this.editFlag ? (this.designationForm.controls['designationType'].setValue(this.editData.designationName)) : '';
+          this.desiganationTypeData.push(this.obj);
+
+
+          console.log("desiganationTypeData",this.desiganationTypeData);
+          
+          this.editFlag ? (this.designationForm.controls['designationName'].setValue(this.editData.designationName)) : '';
         }
       }), error: (error: any) => {
         this.commonMethod.checkEmptyData(error.statusText) == false ? this.errorHandler.handelError(error.statusCode) : this.commonMethod.snackBar(error.statusText, 1);
@@ -86,16 +98,32 @@ export class AddUpdateDesignationMasterComponent {
     let getFormVal = this.designationForm.value;
     let getDesignationLevelId: any = this.commonMethod.getkeyValueByArrayOfObj(this.DesiganationLevelData, 'designationLevel', getFormVal?.designationLevelId);  
     this.designationForm.value.designationLevelId = getDesignationLevelId.id;
-    let postObj = this.designationForm.value;
-   
+    let formValue = this.designationForm.value;
+    
+    
+  //  return;
+    let postObj={
+      "createdBy": 0,
+      "modifiedBy": 0,
+      "createdDate": new Date(),
+      "modifiedDate": new Date(),
+      "isDeleted": false,
+      "lan":formValue.lan,
+      "id": formValue.designationName != 'Other'?this.editData.id : formValue.id,
+      "designationType":formValue.designationName == 'Other' ? formValue.designationType :formValue.designationName,
+      "m_DesignationType": '',
+      "designationLevelId": formValue.designationLevelId,
+      "timestamp": new Date(),
+      "localId": 0,
+    }
     let url;
-    this.editFlag ? url = 'zp_osmanabad/designation-master/UpdateRecord' : url = 'zp_osmanabad/designation-master/AddDesignation'
+    this.editFlag || formValue.designationName != 'Other' ? url = 'zp_osmanabad/designation-master/UpdateRecord' : url = 'zp_osmanabad/designation-master/AddDesignation'
     this.service.setHttp(this.editFlag ? 'put' : 'post', url, false, postObj, false, 'baseUrl');
     this.service.getHttp().subscribe({
       next: ((res: any) => {
         // this.ngxspinner.hide();
         if (res.statusCode == '200') {
-          this.dialogRef.close('Yes');
+          this.dialogRef.close('yes');
         } else {
           this.commonMethod.checkEmptyData(res.statusMessage) == false ? this.errorHandler.handelError(res.statusCode) : this.commonMethod.snackBar(res.statusMessage, 1);
         }
@@ -121,7 +149,7 @@ export class AddUpdateDesignationMasterComponent {
 //#region  ------------------------------------- Desiganation-Master Clear ---------------------------------//
    clearForm(formControlName: any) {
     if (formControlName == 'designationLevelId') {
-      this.designationForm.controls['designationType'].setValue('');
+      this.designationForm.controls['designationType'].setValue(null);
     } 
   }
  // #endregion -------------------------------------End Desiganation-Master Clear ---------------------------------//

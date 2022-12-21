@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { ApiService } from 'src/app/core/services/api.service';
 import { CommonMethodsService } from 'src/app/core/services/common-methods.service';
 import { ErrorsService } from 'src/app/core/services/errors.service';
@@ -20,7 +21,8 @@ export class LoginComponent {
     private api: ApiService,
     private errors: ErrorsService,
     private commonMethods: CommonMethodsService,
-    public validators : ValidationService) { }
+    public validators : ValidationService,
+    private router: Router) { }
 
   ngOnInit() {
     this.formData();
@@ -29,9 +31,9 @@ export class LoginComponent {
   formData() {
     this.adminLoginForm = this.fb.group({
       userName: ['', [Validators.required]],
-      password: ['', [Validators.required]],
+      password: ['', [Validators.required,Validators.pattern(this.validators.valPassword)]],
       mobileNo: ['', [Validators.required,Validators.pattern(this.validators.mobile_No)]],
-      passwordOff: ['', [Validators.required]]
+      passwordOff: ['', [Validators.required,Validators.pattern(this.validators.valPassword)]]
     })
   }
 
@@ -39,19 +41,18 @@ export class LoginComponent {
 
   checklogin(event: any,clear:any) {
     this.loginUser = event.tab.textLabel;;
-    clear.resetForm();
-    this.updateValidations();
+    clear.resetForm();    
   }
 
   updateValidations() {
     if (this.loginUser == 'Admin') {
       this.adminLoginForm.controls['userName'].setValidators([Validators.required]);
-      this.adminLoginForm.controls['password'].setValidators([Validators.required]); 
+      this.adminLoginForm.controls['password'].setValidators([Validators.required,Validators.pattern(this.validators.valPassword)]); 
       this.adminLoginForm.controls['mobileNo'].setValidators([]);
       this.adminLoginForm.controls['passwordOff'].setValidators([]);      
     } else {
       this.adminLoginForm.controls['mobileNo'].setValidators([Validators.required,Validators.pattern(this.validators.mobile_No)]);
-      this.adminLoginForm.controls['passwordOff'].setValidators([Validators.required]);
+      this.adminLoginForm.controls['passwordOff'].setValidators([Validators.required,Validators.pattern(this.validators.valPassword)]);
       this.adminLoginForm.controls['userName'].setValidators([]);
       this.adminLoginForm.controls['password'].setValidators([]);
     }
@@ -63,7 +64,7 @@ export class LoginComponent {
 
   onSubmit() {
     let formValue = this.adminLoginForm.value;
-   
+    this.updateValidations();
     if (this.adminLoginForm.invalid) {
       return
     } else {
@@ -76,6 +77,7 @@ export class LoginComponent {
             let logObj = res.responseData;
             localStorage.setItem('loggedInData', JSON.stringify(logObj));
             sessionStorage.setItem('loggedIn', 'true');
+            this.router.navigateByUrl('/dashboard');
           } else {
             this.commonMethods.snackBar(res.statusMessage, 1)
           }
