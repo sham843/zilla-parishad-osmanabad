@@ -17,34 +17,19 @@ export class DesignationMasterComponent {
   searchContent = new FormControl('');  
   designationArray:any;
   DesiganationTypeArray:any;
-  deleteObj:any;
 
   constructor(private dialog: MatDialog, private apiService: ApiService, private errors: ErrorsService,
     private masterService:MasterService ,private commonMethod: CommonMethodsService,
     private errorHandler: ErrorsService) { }
 
   ngOnInit() {
-    this.getTableData()
-    this.getDesignationData();
-    
+    this.getTableData(); 
+    this.getDesiganationType();    
   }
 //#region ------------------------------------- Designation-Master Dropdown ------------------------------- //
-getDesignationData(){
-  this.masterService.GetAllDesignationLevel('EN').subscribe({
-    next: ((res: any) => {
-      if (res.statusCode == '200' && res.responseData.length) {
-        this.designationArray= res.responseData;          
-        this.getDesiganationType();             
-      }
-    })       
-  })
-}
 
 getDesiganationType() {  
-let desigLevelId = this.designationArray?.find((res:any)=>{
-    return res;    
-  })
-  this.masterService.GetDesignationByLevelId('EN', desigLevelId.id).subscribe({
+  this.masterService.GetDesignationByLevelId('EN',0).subscribe({
     next: ((res: any) => {
       if (res.statusCode == '200' && res.responseData.length) {
         this.DesiganationTypeArray = res.responseData;              
@@ -92,8 +77,7 @@ let desigLevelId = this.designationArray?.find((res:any)=>{
 
   }
   //#endregion -------------------------------------End Designation-Master Table-Data ------------------------------- //
-  childCompInfo(obj: any) {     
-   
+  childCompInfo(obj: any) {        
     switch (obj.label) {
       case 'Pagination':
         this.pageNumber = obj.pageNumber;       
@@ -112,8 +96,7 @@ let desigLevelId = this.designationArray?.find((res:any)=>{
   }
 
   //#region -------------------------------------------dialog box open function's start heare----------------------------------------//
-  addUpdateAgency(obj?: any) {   
-    
+  addUpdateAgency(obj?: any) {  
     const dialogRef = this.dialog.open(AddUpdateDesignationMasterComponent, {
       width: '420px',
       data: obj,
@@ -122,14 +105,22 @@ let desigLevelId = this.designationArray?.find((res:any)=>{
     })  
      dialogRef.afterClosed().subscribe((result: any) => {
      
-      if(result == 'Yes'){       
-        this.getTableData();
-      }     
+      if(result == 'yes' && obj){
+        this.getDesiganationType();       
+        this.clearForm();
+        // this.pageNumber = this.pageNumber;
+        // console.log("pageNumber",this.pageNumber);
+      }
+      // else if(result == 'yes' ){
+      //   this.pageNumber = 1 ;
+      //   console.log("pageNumber",this.pageNumber);
+        
+      // }
+       
     });
   }
 
   globalDialogOpen(obj:any) {
-    this.deleteObj = obj;
     let dialoObj = {
       header: 'Delete',
       title: 'Do You Want To Delete The Selected Content ?',
@@ -144,17 +135,16 @@ let desigLevelId = this.designationArray?.find((res:any)=>{
     })
     deleteDialogRef.afterClosed().subscribe((result: any) => {
      
-      if(result == 'yes'){
-       
-        this.onClickDelete();
+      if(result == 'yes'){     
+        this.onClickDelete(obj);
       }
   })
 }
   //#endregion -------------------------------------------dialog box open function's end heare----------------------------------------//
 
-  onClickDelete(){   
+  onClickDelete(obj:any){   
      let deleteObj=  [{
-      "id": this.deleteObj.id,
+      "id": obj.id,
       "deletedBy": 0,
       "modifiedDate": new Date(),
       "lan": "EN"
@@ -165,8 +155,7 @@ let desigLevelId = this.designationArray?.find((res:any)=>{
       next: ((res: any) => {
         if (res.statusCode == '200') {
           this.commonMethod.snackBar(res.statusMessage, 0);
-          // this.clearForm();
-          this.getTableData();
+          this.clearForm();
         }
       }),
       error: (error: any) => {
@@ -182,5 +171,6 @@ let desigLevelId = this.designationArray?.find((res:any)=>{
   clearForm(){
     this.searchContent.reset();
     this.getTableData();
+    this.getDesiganationType();
   }
 }
