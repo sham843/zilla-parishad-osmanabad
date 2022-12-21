@@ -51,10 +51,19 @@
                 <ng-container *ngIf="designationForm.value.designationName == 'Other' " >
                     <mat-form-field appearance="outline" class="w-100 ">
                         <mat-label>Add Designation</mat-label>
-                        <input matInput placeholder="Enter Desiganation Type" formControlName="designationType" maxlength="30">
+                        <input matInput placeholder="Enter Desiganation Type" formControlName="designationType" maxlength="30" (keypress)="validation.noSpacesAtStart($event);validation.onlyAlphabets($event)">
                     </mat-form-field>
-                </ng-container>
-               
+                </ng-container>               
+            </div>          
+        </div>
+        <div class="row">
+            <div class="col-sm">
+                <ng-container  >
+                    <mat-form-field appearance="outline" class="w-100 ">
+                        <mat-label>Add Designation</mat-label>
+                        <input matInput placeholder="Enter Desiganation Type Marathi" formControlName="m_DesignationType" maxlength="30" (keypress)="validation.noSpacesAtStart($event);validation.onlyAlphabets($event)">
+                    </mat-form-field>
+                </ng-container>               
             </div>
         </div>
     </mat-card-content>

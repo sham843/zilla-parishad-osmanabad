@@ -5,6 +5,7 @@ import { ApiService } from 'src/app/core/services/api.service';
 import { CommonMethodsService } from 'src/app/core/services/common-methods.service';
 import { ErrorsService } from 'src/app/core/services/errors.service';
 import { MasterService } from 'src/app/core/services/master.service';
+import { WebStorageService } from 'src/app/core/services/web-storage.service';
 import { GlobalDialogComponent } from 'src/app/shared/components/global-dialog/global-dialog.component';
 import { AddUpdateDesignationMasterComponent } from './add-update-designation-master/add-update-designation-master.component';
 @Component({
@@ -15,11 +16,10 @@ import { AddUpdateDesignationMasterComponent } from './add-update-designation-ma
 export class DesignationMasterComponent {
   pageNumber: number = 1;
   searchContent = new FormControl('');  
-  designationArray:any;
   DesiganationTypeArray:any;
 
   constructor(private dialog: MatDialog, private apiService: ApiService, private errors: ErrorsService,
-    private masterService:MasterService ,private commonMethod: CommonMethodsService,
+    private masterService:MasterService ,private commonMethod: CommonMethodsService, private webStorage : WebStorageService,
     private errorHandler: ErrorsService) { }
 
   ngOnInit() {
@@ -29,7 +29,7 @@ export class DesignationMasterComponent {
 //#region ------------------------------------- Designation-Master Dropdown ------------------------------- //
 
 getDesiganationType() {  
-  this.masterService.GetDesignationByLevelId('EN',0).subscribe({
+  this.masterService.GetDesignationByLevelId(this.webStorage.languageFlag,0).subscribe({
     next: ((res: any) => {
       if (res.statusCode == '200' && res.responseData.length) {
         this.DesiganationTypeArray = res.responseData;              
@@ -49,7 +49,7 @@ getDesiganationType() {
     this.pageNumber =   flag == 'filter'? 1 :this.pageNumber;
     let tableDataArray = new Array();
     let tableDatasize!: Number; 
-    let str = `Id=${this.searchContent.value?this.searchContent.value:0}&pageno=${this.pageNumber}&pagesize=10&lan=EN`;
+    let str = `Id=${this.searchContent.value?this.searchContent.value:0}&pageno=${this.pageNumber}&pagesize=10&lan=${this.webStorage.languageFlag}`;
     this.apiService.setHttp('GET', 'zp_osmanabad/designation-master/GetAll?' + str, false, false, false, 'baseUrl');
     this.apiService.getHttp().subscribe({
 
@@ -105,7 +105,7 @@ getDesiganationType() {
     })  
      dialogRef.afterClosed().subscribe((result: any) => {
      
-      if(result == 'yes' && obj){
+      if(result == 'yes'){
         this.getDesiganationType();       
         this.clearForm();
         // this.pageNumber = this.pageNumber;
