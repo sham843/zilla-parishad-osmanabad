@@ -6,12 +6,12 @@ import { Injectable } from '@angular/core';
 export class ValidationService {
 
   constructor() { }
-  name=('^[a-zA-Z]+$');
-  fullName=('^[a-zA-Z][a-zA-Z ]*$');
-  email= ('^[a-zA-Z0-9._%+-]+@([a-z0-9.]+[.])+[a-z]{2,5}$');
-  mobile_No=('[6-9]\\d{9}');
-  age=('[0-9]{2,}|[5-9]{1}$');
-  aadhar_card=('^[2-9][0-9]{11}$');
+  name = ('^[a-zA-Z]+$');
+  fullName = ('^[a-zA-Z][a-zA-Z ]*$');
+  email = ('^[a-zA-Z0-9._%+-]+@([a-z0-9.]+[.])+[a-z]{2,5}$');
+  mobile_No = ('[6-9]\\d{9}');
+  age = ('[0-9]{2,}|[5-9]{1}$');
+  aadhar_card = ('^[2-9][0-9]{11}$');
   valPassword = '^(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$_!%^*?&])[A-Za-z0-9\d@#$_!%^*?&]{8,20}$';
 
 
@@ -28,8 +28,8 @@ export class ValidationService {
     const maskSeperator = new RegExp('^([0-9])', 'g');
     return maskSeperator.test(event.key);
   }
-  
- onlyAlphabets(event: any) {
+
+  onlyAlphabets(event: any) {
     if (!this.noSpacesAtStart(event)) {
       return false
     }
@@ -53,25 +53,19 @@ export class ValidationService {
 
   noSpaceAllow(event: any) {  // for All Space Not Allow
     if (event.code === 'Space') {
-        event.preventDefault();
+      event.preventDefault();
     }
-}
-
-noFirstSpaceAllow(event: any) {  // for First Space Not Allow
-  if (event.target.selectionStart === 0 && (event.code === 'Space')) {
-    event.preventDefault();
   }
-}
 
-unicodeMarathiValidation(event: any) {
-  const maskSeperator = new RegExp('[^\u0900-\u0965 ]+', 'm');
-  return !maskSeperator.test(event.key);
-}
-
-
-
-
-
+  noFirstSpaceAllow(event: any) {  // for First Space Not Allow
+    if (event.target.selectionStart === 0 && (event.code === 'Space')) {
+      event.preventDefault();
+    }
+  }
+  unicodeMarathiValidation(event: any) {
+    const maskSeperator = new RegExp('[^\u0900-\u0965 ]+', 'm');
+    return !maskSeperator.test(event.key);
+  }
 
   emailRegex(event: any) { //Email Validation
     if (!this.noSpacesAtStart(event)) return false; // First Space not Accept
