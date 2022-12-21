@@ -137,7 +137,7 @@
                 <div class="col-sm-4">
                     <mat-form-field appearance="outline" class="w-100 ">
                         <mat-label>Religion</mat-label>
-                        <mat-select placeholder="Select" formControlName="religionId">
+                        <mat-select placeholder="Select" formControlName="religionId" (selectionChange)="getCaste()">
                             <mat-option *ngFor="let reli of religionArr"
                                 [value]="reli.id">{{reli.religion}}</mat-option>
                         </mat-select>
@@ -230,7 +230,7 @@
         <mat-card-footer class="card-footer">
             <mat-card-actions align="end">
                 <button class="btn btn-outline-secondary me-2">Cancel</button>
-                <button class="btn btn-main " (click)="onSubmit()">Submit</button>
+                <button class="btn btn-main " (click)="onSubmit()">{{editFlag ? 'Update':'Submit'}}</button>
             </mat-card-actions>
         </mat-card-footer>
     </form>
