@@ -130,29 +130,28 @@
                     </mat-form-field>
                 </div>
 
-                <div formArrayName="schoolDocument">
-                    <div *ngFor="let doc of docForm.controls; let i = index;">
-                        <div [formGroupName]="i">
-                            <div class="col-sm">
+                <!-- <div formArrayName="schoolDocument"> -->
+                <!-- <div *ngFor="let doc of docForm.controls; let i = index;">
+                        <div [formGroupName]="i"> -->
+                <div class="col-sm">
 
-                                <!-- <mat-form-field appearance="outline" class="w-100"> -->
-                                <mat-label>Upload Photo</mat-label>
-                                <input type="file" formControlName="docPath" hidden="hidden"
-                                    (change)="imgUpload($event)" #img>
-                                <mat-icon matSuffix>
-                                    <span class="material-symbols-outlined" (click)="img.click()">
-                                        upload
-                                    </span>
-                                </mat-icon>
-                                <!-- </mat-form-field> -->
-                                <span class="mx-3">
-                                    <mat-icon class="text-danger">highlight_off</mat-icon>
-                                    <mat-icon class="text-success">check_circle_outline</mat-icon>
-                                </span>
-                            </div>
-                        </div>
-                    </div>
+                    <!-- <mat-form-field appearance="outline" class="w-100"> -->
+                    <mat-label>Upload Photo</mat-label>
+                    <input type="file" formControlName="docPath" hidden="hidden" (change)="imgUpload($event)" #img>
+                    <mat-icon matSuffix>
+                        <span class="material-symbols-outlined" (click)="img.click()">
+                            upload
+                        </span>
+                    </mat-icon>
+                    <!-- </mat-form-field> -->
+                    <span class="mx-3">
+                        <mat-icon class="text-danger">highlight_off</mat-icon>
+                        <mat-icon class="text-success">check_circle_outline</mat-icon>
+                    </span>
                 </div>
+                <!-- </div>
+                    </div> -->
+                <!-- </div> -->
             </div>
         </mat-card-content>
         <mat-card-footer>
