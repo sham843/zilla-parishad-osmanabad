@@ -63,6 +63,15 @@ noFirstSpaceAllow(event: any) {  // for First Space Not Allow
   }
 }
 
+unicodeMarathiValidation(event: any) {
+  const maskSeperator = new RegExp('[^\u0900-\u0965 ]+', 'm');
+  return !maskSeperator.test(event.key);
+}
+
+
+
+
+
 
   emailRegex(event: any) { //Email Validation
     if (!this.noSpacesAtStart(event)) return false; // First Space not Accept
