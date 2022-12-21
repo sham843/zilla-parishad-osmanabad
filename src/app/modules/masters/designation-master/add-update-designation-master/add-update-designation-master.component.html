@@ -28,7 +28,7 @@
             <div class="col-sm">
                 <mat-form-field appearance="outline" class="w-100 ">
                     <mat-label>Designation Type</mat-label>
-                    <mat-select  formControlName="designationType">
+                    <mat-select formControlName="designationName">
                         <mat-option *ngFor="let designationType of desiganationTypeData" [value]="designationType.designationType">{{designationType.designationType}}</mat-option>
                         <!-- <mat-option value="two">option-2</mat-option> -->
                     </mat-select>
@@ -44,14 +44,14 @@
                     <mat-select>
                         <mat-option value="one">option-1</mat-option>
                         <mat-option value="two">option-2</mat-option>
-                    </mat-select>
+                    </mat-select>              
                 </mat-form-field>
             </div> -->
             <div class="col-sm">
-                <ng-container >
+                <ng-container *ngIf="designationForm.value.designationName == 'Other' " >
                     <mat-form-field appearance="outline" class="w-100 ">
                         <mat-label>Add Designation</mat-label>
-                        <input matInput placeholder="Search by Contact" formControlName="designationType" maxlength="30">
+                        <input matInput placeholder="Enter Desiganation Type" formControlName="designationType" maxlength="30">
                     </mat-form-field>
                 </ng-container>
                
