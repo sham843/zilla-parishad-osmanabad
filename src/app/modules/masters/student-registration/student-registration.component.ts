@@ -12,8 +12,11 @@ import { AddUpdateStudentRegistrationComponent } from './add-update-student-regi
 export class StudentRegistrationComponent {
   pageNumber: number = 1;
   searchContent = new FormControl('');
+  tableDataArray = new Array();
   tableDataForcard: any;
   cardViewFlag: boolean = false;
+  totalCount: number = 0;
+  cardCurrentPage: number = 0;
 
   constructor(private dialog: MatDialog, private apiService: ApiService, private errors: ErrorsService) { }
 
@@ -28,19 +31,25 @@ export class StudentRegistrationComponent {
 
   getTableData(flag?: string) {
     this.pageNumber = flag == 'filter' ? 1 : this.pageNumber;
-    let tableDataArray = new Array();
+    this.tableDataArray = new Array();
     let tableDatasize!: Number;
 
-    let str = `?pageno=${this.pageNumber}&pagesize=10&textSearch=${this.searchContent.value || ''}`;
+    let pageNo = this.cardViewFlag ? (this.cardCurrentPage + 1) : this.pageNumber; 
+    let str = `?pageno=${pageNo}&pagesize=10&textSearch=${this.searchContent.value || ''}`;
     this.apiService.setHttp('GET', 'zp-osmanabad/Student/GetAll' + str, false, false, false, 'baseUrl');
     this.apiService.getHttp().subscribe({
 
       next: (res: any) => {
         if (res.statusCode == "200") {
-          tableDataArray = res.responseData.responseData1;
+          console.log("student",res);
+          
+          this.tableDataArray = res.responseData.responseData1;
+          this.totalCount = res.responseData.responseData2.pageCount;
+
           tableDatasize = res.responseData.responseData2.pageCount;
+
         } else {
-          tableDataArray = [];
+          this.tableDataArray = [];
           tableDatasize = 0;
         }
         let displayedColumns = ['docPath', 'srNo', 'fullName', 'standard', 'parentMobileNo', 'gender', 'action'];
@@ -48,14 +57,14 @@ export class StudentRegistrationComponent {
         let tableData = {
           pageNumber: this.pageNumber,
           img: 'docPath', blink: '', badge: '', isBlock: '', pagintion: true,
-          displayedColumns: displayedColumns, tableData: tableDataArray,
+          displayedColumns: displayedColumns, tableData: this.tableDataArray,
           tableSize: tableDatasize,
           tableHeaders: displayedheaders
         };
 
         this.tableDataForcard = {
           pageNumber: this.pageNumber,
-          tableData: tableDataArray,
+          tableData: this.tableDataArray,
           tableSize: tableDatasize,
         };
         this.apiService.tableData.next(tableData);
@@ -94,12 +103,20 @@ export class StudentRegistrationComponent {
 
   }
 
+  onPageChanged(event: any) {
+    this.cardCurrentPage = event.pageIndex;
+    this.selectGrid('Card');
+  }
+
   selectGrid(label: string) {
     if (label == 'Table') {
       this.cardViewFlag = false;
+      this.pageNumber = 1;
       this.getTableData()
     } else if (label == 'Card')
       this.cardViewFlag = true;
+      this.cardCurrentPage = 0;
+      this.getTableData();
   }
 
   clearForm(){

@@ -16,6 +16,7 @@ import {MatMenuModule} from '@angular/material/menu';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { MatIconModule } from '@angular/material/icon';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatPaginatorModule } from '@angular/material/paginator';
 
 @NgModule({
   declarations: [
@@ -37,7 +38,9 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     SharedModule,
     MatIconModule,
     ReactiveFormsModule,
-    FormsModule
+    FormsModule,
+    MatPaginatorModule,
+    
   ]
 })
 export class StudentRegistrationModule {
