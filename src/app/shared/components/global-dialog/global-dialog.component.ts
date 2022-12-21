@@ -14,6 +14,8 @@ export class GlobalDialogComponent {
 
     
   ngOnInit(): void {
+    console.log("data", this.data);
+    
   }
 
   closeDialog(result:string) {
