@@ -132,11 +132,6 @@ export class OfficeUsersComponent {
   }
 
   getofficeReport(){
-    // let header = 'office data';
-    // let objData:any = {
-    //   'topHedingName': 'Office Report',
-    //   'createdDate':'Created on:'+ new Date()
-    // }
     let str = `?textSearch=${this.searchContent.value}&lan=${this.webStorageService.languageFlag}`;
     this.apiService.setHttp('GET', 'zp_osmanabad/Office/GetAllOffice' + str, false, false, false, 'baseUrl');
     this.apiService.getHttp().subscribe({
@@ -150,8 +145,7 @@ export class OfficeUsersComponent {
               "Name": ele.name,
               "Designation": ele.designation,
               "Contact No": ele.mobileNo,
-              "Email ID": ele.mobileNo,
-              "Office Name": ele.m_Name,
+              "Email ID": ele.emailId,
             }
             this.resultDownloadArr.push(obj);
           });
@@ -162,20 +156,19 @@ export class OfficeUsersComponent {
   }
 
   downloadPdf() {
-    let keyPDFHeader = ['srNo', "name", "designation", "mobileNo","emailId"];
+    let keyPDFHeader = ['SrNo', "Name", "Designation", "MobileNo","EmailId"];
         let ValueData =
           this.resultDownloadArr.reduce(
             (acc: any, obj: any) => [...acc, Object.values(obj).map((value) => value)], []
           );// Value Name
+          console.log("ValueData", ValueData);
+          
           let objData:any = {
-            'topHedingName': 'Office',
+            'topHedingName': 'Office Data',
             'createdDate':'Created on:'+new Date()
           }
         this.downloadFileService.downLoadPdf(keyPDFHeader, ValueData, objData);
   }
-
-
-
 
   clearFilterData() {
     this.searchContent.setValue('');

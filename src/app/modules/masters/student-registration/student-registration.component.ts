@@ -41,11 +41,8 @@ export class StudentRegistrationComponent {
 
       next: (res: any) => {
         if (res.statusCode == "200") {
-          console.log("student",res);
-          
           this.tableDataArray = res.responseData.responseData1;
           this.totalCount = res.responseData.responseData2.pageCount;
-
           tableDatasize = res.responseData.responseData2.pageCount;
 
         } else {
@@ -75,12 +72,19 @@ export class StudentRegistrationComponent {
   }
 
   addUpdateAgency(obj?:any) {    
-    this.dialog.open(AddUpdateStudentRegistrationComponent, {
+  const dialogRef =  this.dialog.open(AddUpdateStudentRegistrationComponent, {
       width: '900px',
       data: obj,
       disableClose: true,
       autoFocus: false
-    })
+    });
+    dialogRef.afterClosed().subscribe((result: any) => {
+      console.log(result);
+      
+      if(result == 'yes'){
+        this.getTableData();
+      }
+    });
   }
 
   childTableCompInfo(obj: any) {
