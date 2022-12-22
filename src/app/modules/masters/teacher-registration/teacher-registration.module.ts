@@ -3,7 +3,6 @@ import { CommonModule } from '@angular/common';
 import { TeacherRegistrationRoutingModule } from './teacher-registration-routing.module';
 import { AddUpdateTeacherRegistrationComponent } from './add-update-teacher-registration/add-update-teacher-registration.component';
 import { MatDialogModule } from '@angular/material/dialog';
-import { SharedModule } from 'src/app/shared/shared.module';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatMenuModule } from '@angular/material/menu';
@@ -16,6 +15,9 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatIconModule } from '@angular/material/icon';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { GlobalDialogComponent } from 'src/app/shared/components/global-dialog/global-dialog.component';
+import { TableComponent } from 'src/app/shared/components/table/table.component';
+import { PageStatisticsComponent } from 'src/app/shared/components/page-statistics/page-statistics.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +28,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     CommonModule,
     TeacherRegistrationRoutingModule,
     MatDialogModule,
-    SharedModule,
     MatSelectModule,
     MatCardModule,
     MatFormFieldModule,
@@ -38,7 +39,10 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     MatNativeDateModule,
     MatIconModule,
     ReactiveFormsModule,
-    FormsModule
+    FormsModule,
+    GlobalDialogComponent,
+    TableComponent,
+    PageStatisticsComponent,
   ]
 })
 export class TeacherRegistrationModule { }

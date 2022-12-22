@@ -19,8 +19,8 @@ export class AddUpdateAgencyRegistrationComponent {
   talukaData = new Array();
   editData: any;
   constructor(public dialogRef: MatDialogRef<AddUpdateAgencyRegistrationComponent>, private api: ApiService,
-    private fb: FormBuilder, private master: MasterService, public validation: ValidationService, private webStorageService : WebStorageService,
-    private common: CommonMethodsService, @Inject(MAT_DIALOG_DATA) public data: any, private errors : ErrorsService) { }
+    private fb: FormBuilder, private master: MasterService, public validation: ValidationService, private webStorageService: WebStorageService,
+    private common: CommonMethodsService, @Inject(MAT_DIALOG_DATA) public data: any, private errors: ErrorsService) { }
 
   ngOnInit() {
     this.editData = this.data
@@ -38,7 +38,7 @@ export class AddUpdateAgencyRegistrationComponent {
       "isDeleted": true,
       "id": data ? data.id : 0,
       "agency_Name": [data ? data.agency_Name : "", [Validators.required, Validators.pattern(this.validation.fullName)]],
-      "m_Agency_Name": [data ? data.m_Agency_Name : ""],
+      "m_Agency_Name": [data ? data.m_Agency_Name : "", Validators.required],
       "contactPerson_Name": [data ? data.contactPerson_Name : "", [Validators.required, Validators.pattern(this.validation.fullName)]],
       "agency_MobileNo": [data ? data.agency_MobileNo : "", [Validators.required, Validators.pattern(this.validation.mobile_No)]],
       "contact_No": [data ? data.contact_No : "", [Validators.required, Validators.pattern(this.validation.mobile_No)]],
@@ -64,31 +64,31 @@ export class AddUpdateAgencyRegistrationComponent {
 
   getAllTalukas() {
     this.master.getAllTaluka(this.webStorageService.languageFlag).subscribe((res: any) => {
-      res.statusCode == 200 ? (this.talukaData = res.responseData, this.editData ? this.fc['talukaId'].setValue(this.editData.talukaId):'') : this.talukaData = [];
+      res.statusCode == 200 ? (this.talukaData = res.responseData, this.editData ? this.fc['talukaId'].setValue(this.editData.talukaId) : '') : this.talukaData = [];
     })
   }
 
   onCancel(clear: any) {
     clear.resetForm();
     this.data = '';
+    this.editData = '';
     this.defaultForm();
   }
 
   onSubmit(clear: any) {
     let obj = this.agencyRegisterForm.value;
     obj.districtId = 1;
-    if(this.agencyRegisterForm.valid){
-    this.api.setHttp(this.data ? 'put' : 'post', this.data ? 'zp-osmanabad/Agency/Update' : 'zp-osmanabad/Agency/Add', false, obj, false, 'baseUrl');
-    this.api.getHttp().subscribe({
-      next: (res: any) => {
-        res.statusCode == 200 ? (this.common.snackBar(res.statusMessage, 0), this.dialogRef.close('Yes'), clear.resetForm(), this.defaultForm()) : this.common.snackBar(res.statusMessage, 1);
-      },
-      error: ((err: any) => { this.errors.handelError(err) })
-    })
+    if (this.agencyRegisterForm.valid) {
+      this.api.setHttp(this.data ? 'put' : 'post', this.data ? 'zp-osmanabad/Agency/Update' : 'zp-osmanabad/Agency/Add', false, obj, false, 'baseUrl');
+      this.api.getHttp().subscribe({
+        next: (res: any) => {
+          res.statusCode == 200 ? (this.common.snackBar(res.statusMessage, 0), this.dialogRef.close('Yes'), clear.resetForm(), this.defaultForm()) : this.common.snackBar(res.statusMessage, 1);
+        },
+        error: ((err: any) => { this.errors.handelError(err) })
+      })
+    }
+    else {
+      return;
+    }
   }
-  else{
-    return;
-  }
-  }
-  
 }

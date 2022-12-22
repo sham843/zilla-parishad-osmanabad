@@ -12,10 +12,12 @@ import {MatInputModule} from '@angular/material/input';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { OfficeUsersComponent } from './office-users.component';
-import { SharedModule } from 'src/app/shared/shared.module';
 import { MatIconModule } from '@angular/material/icon';
 import {MatMenuModule} from '@angular/material/menu';
 import { ReactiveFormsModule } from '@angular/forms';
+import { TableComponent } from 'src/app/shared/components/table/table.component';
+import { PageStatisticsComponent } from 'src/app/shared/components/page-statistics/page-statistics.component';
+import { GlobalDialogComponent } from 'src/app/shared/components/global-dialog/global-dialog.component';
 
 
 @NgModule({
@@ -34,13 +36,12 @@ import { ReactiveFormsModule } from '@angular/forms';
     MatInputModule,
     MatDatepickerModule,
     MatNativeDateModule,
-    SharedModule,
     MatIconModule,
     MatMenuModule,
-    ReactiveFormsModule
-
-
-
+    ReactiveFormsModule,
+    GlobalDialogComponent,
+    TableComponent,
+    PageStatisticsComponent,
   ]
 })
 export class OfficeUsersModule { }

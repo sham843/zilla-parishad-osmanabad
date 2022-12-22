@@ -1,7 +1,8 @@
 import { Pipe, PipeTransform } from '@angular/core';
 
 @Pipe({
-  name: 'dash'
+  name: 'dash',
+  standalone: true
 })
 export class DashPipe implements PipeTransform {
 
