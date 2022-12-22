@@ -51,6 +51,8 @@
                     <mat-form-field appearance="outline" class="w-100 ">
                         <mat-label>Add Designation</mat-label>
                         <input matInput placeholder="Enter Desiganation Type" formControlName="designationType" maxlength="30" (keypress)="validation.noFirstSpaceAllow($event);validation.onlyAlphabets($event)">
+                        <mat-error *ngIf="f['designationType'].hasError('required') || f['designationType'].hasError('touched')">Company
+                            Designation Type is Required</mat-error>
                     </mat-form-field>
                 </ng-container>               
             </div>          
@@ -61,6 +63,8 @@
                     <mat-form-field appearance="outline" class="w-100 ">
                         <mat-label>Add Designation (Marathi)</mat-label>
                         <input matInput placeholder="Enter Desiganation Type Marathi" formControlName="m_DesignationType" maxlength="30" (keypress)="validation.noFirstSpaceAllow($event);validation.onlyAlphabets($event)">
+                        <mat-error *ngIf="f['m_DesignationType'].hasError('required') || f['m_DesignationType'].hasError('touched')">Company
+                            Designation Type Marathi is Required</mat-error>
                     </mat-form-field>
                 </ng-container>               
             </div>
