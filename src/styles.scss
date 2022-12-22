@@ -72,12 +72,13 @@ body {
   min-width: 38px !important;
 }
 
-.btn-icon .material-icons{
+.btn-icon .material-icons {
   font-size: 18px !important;
   line-height: normal !important;
   overflow: unset;
-  margin:0 !important;
+  margin: 0 !important;
 }
+
 .btn-modal-close {
   width: 34px !important;
   min-width: 34px !important;
@@ -85,14 +86,16 @@ body {
   line-height: 38px !important;
   padding: 3px !important;
 }
-.btn-second{
+
+.btn-second {
   font-size: 0.85rem !important;
-  color:#A8A8A8 !important;
+  color: #A8A8A8 !important;
   border: solid 1px #A8A8A8 !important;
-  border-radius:0.375rem !important;
+  border-radius: 0.375rem !important;
   background-color: transparent !important;
   font-family: 'Poppins', sans-serif !important;
 }
+
 .breadcrumb {
   font-size: 0.85rem;
   font-weight: 500;
@@ -103,7 +106,7 @@ body {
 }
 
 .dashboard-table th,
-.dashboard-table .mat-mdc-header-cell{
+.dashboard-table .mat-mdc-header-cell {
   font-size: 0.85rem !important;
   font-weight: 600;
   font-family: 'Poppins', sans-serif !important;
@@ -121,22 +124,31 @@ body {
   padding: 10px !important;
 }
 
-.dashboard-table button mat-icon{
+.dashboard-table button mat-icon {
   font-size: 18px !important;
 }
+
 .dashboard-table .mat-mdc-row:hover,
-.dashboard-table .highlightedRow{
+.dashboard-table .highlightedRow {
   background-color: var(--main-light-color) !important;
   color: var(--main-color) !important;
 }
-.dashboard-table .srno{
+
+.dashboard-table .srno {
   max-width: 80px !important;
   width: 80px !important;
 }
-.dashboard-table .action{
+
+.dashboard-table .action {
   max-width: 120px !important;
   width: 120px !important;
 }
+
+.dashboard-table .table-img {
+  height: 50px;
+  width: 50px;
+}
+
 .plain-card {
   box-shadow: none !important;
   border-radius: 10px;
