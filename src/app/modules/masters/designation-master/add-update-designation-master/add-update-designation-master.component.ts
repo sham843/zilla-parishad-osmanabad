@@ -144,9 +144,7 @@ export class AddUpdateDesignationMasterComponent {
   //#region  ------------------------------------- Desiganation-Master Edit ---------------------------------//
   onClickEdit(obj: any) {
     this.editFlag = true;
-    this.editData = obj;
-    console.log(obj);
-    
+    this.editData = obj;    
     this.designationForm.patchValue({
       id: obj.id,
       m_DesignationType:obj.m_DesignationType
