@@ -18,7 +18,13 @@ export class DesignationMasterComponent {
   pageNumber: number = 1;
   searchContent = new FormControl('');  
   DesiganationTypeArray:any;
-  resultDownloadArr = new Array();
+  resultDownloadArr = new Array();tableData: any;
+  tableDataArray = new Array();
+  tableDatasize!: Number;
+  displayedColumns = new Array();
+  displayedheaders = ['Sr. No.', 'Name', 'Contact No.', 'Email ID', 'Action'];
+  displayedheadersMarathi = ['Sr. No', 'पदनाम', 'Designation Level','action'];
+  langTypeName: any
 
   constructor(private dialog: MatDialog, private apiService: ApiService, private errors: ErrorsService,
     private masterService:MasterService ,private commonMethod: CommonMethodsService, private webStorage : WebStorageService,
@@ -28,6 +34,18 @@ export class DesignationMasterComponent {
     this.getTableData(); 
     this.getDesiganationType();     
     this.getofficeReport()
+    this.webStorage.langNameOnChange.subscribe(lang => {
+      this.langTypeName = lang;
+      this.displayedColumns = ['srNo', this.langTypeName == 'English' ? 'designationName' : 'm_DesignationType', 'designationLevel', 'action'];
+        this.tableData = {
+          pageNumber: this.pageNumber,
+          img: '', blink: '', badge: '', isBlock: '', pagintion: true,
+          displayedColumns: this.displayedColumns, tableData: this.tableDataArray,
+          tableSize: this.tableDatasize,
+          tableHeaders: this.langTypeName == 'English' ? this.displayedheaders : this.displayedheadersMarathi,
+        };
+      this.apiService.tableData.next(this.tableData);
+     });
   }
 //#region ------------------------------------- Designation-Master Dropdown ------------------------------- //
 
@@ -54,28 +72,28 @@ getDesiganationType() {
       localStorage.removeItem('designation');
     }
     this.pageNumber =   flag == 'filter'? 1 :this.pageNumber;
-    let tableDataArray = new Array();
-    let tableDatasize!: Number; 
+    // let tableDataArray = new Array();
+    // let tableDatasize!: Number; 
     let str = `Id=${this.searchContent.value?this.searchContent.value:0}&pageno=${this.pageNumber}&pagesize=10&lan=${this.webStorage.languageFlag}`;
     this.apiService.setHttp('GET', 'zp_osmanabad/designation-master/GetAll?' + str, false, false, false, 'baseUrl');
     this.apiService.getHttp().subscribe({
 
       next: (res: any) => {
         if (res.statusCode == "200") {
-          tableDataArray = res.responseData.responseData1;
-          tableDatasize = res.responseData.responseData2.pageCount;
+          this.tableDataArray = res.responseData.responseData1;
+          this.tableDatasize = res.responseData.responseData2.pageCount;
         } else {
-          tableDataArray = [];
-          tableDatasize = 0;
+          this.tableDataArray = [];
+          this.tableDatasize = 0;
         }
-        let displayedColumns = ['srNo', 'designationName', 'designationLevel', 'action'];
-        let displayedheaders = ['Sr. No', 'Designation Name', 'Designation Level','action'];
+        this.displayedColumns = ['srNo', 'designationName', 'designationLevel', 'action'];
+        // let displayedheaders = ['Sr. No', 'Designation Name', 'Designation Level','action'];
         let tableData = {
           pageNumber: this.pageNumber,
           img: '', blink: '', badge: '', isBlock: '', pagintion:true,
-          displayedColumns: displayedColumns, tableData: tableDataArray,
-          tableSize: tableDatasize,
-          tableHeaders: displayedheaders
+          displayedColumns: this.displayedColumns, tableData: this.tableDataArray,
+          tableSize: this.tableDatasize,
+          tableHeaders: this.displayedheaders
         };
         this.apiService.tableData.next(tableData);
       },
