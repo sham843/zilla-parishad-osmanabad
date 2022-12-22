@@ -3,6 +3,7 @@ import { FormControl } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { ApiService } from 'src/app/core/services/api.service';
 import { CommonMethodsService } from 'src/app/core/services/common-methods.service';
+import { DownloadPdfExcelService } from 'src/app/core/services/download-pdf-excel.service';
 import { ErrorsService } from 'src/app/core/services/errors.service';
 import { GlobalDialogComponent } from 'src/app/shared/components/global-dialog/global-dialog.component';
 import { AddUpdateStudentRegistrationComponent } from './add-update-student-registration/add-update-student-registration.component';
@@ -19,12 +20,14 @@ export class StudentRegistrationComponent {
   cardViewFlag: boolean = false;
   totalCount: number = 0;
   cardCurrentPage: number = 0;
+  studentData = new Array();
 
   constructor(
     private dialog: MatDialog,
     private apiService: ApiService,
     private errors: ErrorsService,
-    private commonMethods: CommonMethodsService) { }
+    private commonMethods: CommonMethodsService,
+    private downloadPdfservice: DownloadPdfExcelService,) { }
 
   ngOnInit() {
     this.getTableData();
@@ -42,14 +45,30 @@ export class StudentRegistrationComponent {
     let tableDatasize!: Number;
     let pageNo
     this.cardViewFlag ? pageNo = (this.cardCurrentPage + 1) : (pageNo = this.pageNumber, this.cardCurrentPage = 0);
-    let str = `?pageno=${pageNo}&pagesize=10&textSearch=${this.searchContent.value || ''}`;
-    this.apiService.setHttp('GET', 'zp-osmanabad/Student/GetAll' + str, false, false, false, 'baseUrl');
+    let str = `?pageno=${pageNo}&pagesize=10&textSearch=${this.searchContent.value || ''}&lan=en`;
+    let reportStr = `?TextSearch=${this.searchContent.value}`
+    this.apiService.setHttp('GET', 'zp-osmanabad/Student/GetAll' + (flag == 'reportFlag' ? reportStr : str), false, false, false, 'baseUrl');
     this.apiService.getHttp().subscribe({
       next: (res: any) => {
         if (res.statusCode == "200") {
           this.tableDataArray = res.responseData.responseData1;
           this.totalCount = res.responseData.responseData2.pageCount;
           tableDatasize = res.responseData.responseData2.pageCount;
+          let data: [] = res.responseData.responseData1;
+          data.find((ele: any, i: any) => {
+            let obj = {
+              srNo: i + 1,
+              id: ele.id,
+              fullName: ele.fullName,
+              gender: ele.gender,
+              mobileNo:ele.parentMobileNo,
+              standard: ele.standard,
+              schoolName: ele.schoolName,
+              caste:ele.caste,
+              taluka: ele.taluka,
+            }
+            this.studentData.push(obj);
+          });
 
         } else {
           this.tableDataArray = [];
@@ -81,20 +100,20 @@ export class StudentRegistrationComponent {
     console.log(obj);
     const dialogRef = this.dialog.open(AddUpdateStudentRegistrationComponent, {
       width: '900px',
-      height:'650px',
+      height: '650px',
       data: obj,
       disableClose: true,
       autoFocus: false
     });
     dialogRef.afterClosed().subscribe((result: any) => {
       console.log(this.pageNumber);
-      
+
       console.log(result);
       if (result == 'yes' && obj) {
-        this.pageNumber = obj.pageNumber;        
-      }else if (result == 'yes'){
+        this.pageNumber = obj.pageNumber;
+      } else if (result == 'yes') {
         this.pageNumber = 1
-      }     
+      }
       this.getTableData();
 
     });
@@ -144,8 +163,6 @@ export class StudentRegistrationComponent {
   }
 
   childTableCompInfo(obj: any) {
-    console.log(obj);
-    
     switch (obj.label) {
       case 'Pagination':
         this.pageNumber = obj.pageNumber;
@@ -187,5 +204,22 @@ export class StudentRegistrationComponent {
   clearForm() {
     this.searchContent.setValue('');
     this.getTableData();
+  }
+
+  downloadPdf() {
+    this.getTableData('reportFlag')
+    let keyPDFHeader = ['SrNo',"ID", "Full Name", "Gender","Contact No.", "Standard",  "School Name","Caste","Taluka"];
+    let ValueData =
+      this.studentData.reduce(
+        (acc: any, obj: any) => [...acc, Object.values(obj).map((value) => value)], []
+      );// Value Name
+    console.log("ValueData", ValueData);
+
+    let objData: any = {
+      'topHedingName': 'Student Report',
+      'createdDate': 'Created on:' + new Date()
+    }
+    this.downloadPdfservice.downLoadPdf(keyPDFHeader, ValueData, objData);
+
   }
 }
