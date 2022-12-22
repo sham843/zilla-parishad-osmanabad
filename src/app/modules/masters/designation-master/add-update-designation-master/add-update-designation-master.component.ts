@@ -9,6 +9,7 @@ import { WebStorageService } from 'src/app/core/services/web-storage.service';
 import { ValidationService } from 'src/app/core/services/validation.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 
+
 @Component({
   selector: 'app-add-update-designation-master',
   templateUrl: './add-update-designation-master.component.html',
@@ -20,7 +21,7 @@ export class AddUpdateDesignationMasterComponent {
   desiganationTypeData = new Array();
   editFlag: boolean = false;
   editData: any;
-  obj = { id: 0, designationType: 'Other' };
+  obj = { id: 0, designationType: 'Other' ,m_DesignationType :'इतर'};
    
   constructor(private masterService: MasterService, private fb: FormBuilder, private service: ApiService,
     private commonMethod: CommonMethodsService, private errorHandler: ErrorsService,public webStorage : WebStorageService,
@@ -60,7 +61,7 @@ export class AddUpdateDesignationMasterComponent {
   }
   //#region ----------------------------------Desiganation-Master Dropdown ------------------------------- //
   getDesiganationLevel() {
-    let lan = this.designationForm.value.lan;
+    let lan = '';
     this.masterService.GetAllDesignationLevel(lan).subscribe({
       next: ((res: any) => {
         if (res.statusCode == '200' && res.responseData.length) {
@@ -74,6 +75,7 @@ export class AddUpdateDesignationMasterComponent {
   }
 
   getDesiganationType() {
+    this.desiganationTypeData=[];
     let getFormVal = this.designationForm.value;
     let getDesignationLevelId: any = this.commonMethod.getkeyValueByArrayOfObj(this.DesiganationLevelData, 'designationLevel', getFormVal?.designationLevelId);
     let desigLevelId = getDesignationLevelId?.id
@@ -149,6 +151,7 @@ export class AddUpdateDesignationMasterComponent {
     this.editData = obj;    
     this.designationForm.patchValue({
       id: obj.id,
+      designationType:obj.designationName,
       m_DesignationType:obj.m_DesignationType
     });
     this.getDesiganationLevel();
