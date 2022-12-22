@@ -17,11 +17,12 @@
             <div class="col-sm-4">
                 <mat-form-field appearance="outline" class="w-100 ">
                     <mat-label>Level</mat-label>
-                    <mat-select placeholder="select" formControlName="designationLevelId" >
-                        <mat-option [value]="level.id"   *ngFor="let level of levels" (onSelectionChange)="getDesignationByLevelId()">{{level.designationLevel}}</mat-option>
+                    <mat-select placeholder="select" formControlName="designationLevelId" (selectionChange)="getDesignationByLevelId()">
+                        <mat-option [value]="level.id"   *ngFor="let level of levels">{{level.designationLevel}}</mat-option>
                     </mat-select>
                 </mat-form-field>
             </div>
+
             <div class="col-sm-4">
                 <mat-form-field appearance="outline" class="w-100 ">
                     <mat-label>Designation (Officer)</mat-label>
@@ -41,16 +42,40 @@
         </div>
 
         <div class="row">
-            <div class="col-sm-4">
-                <mat-form-field appearance="outline" class="w-100">
-                    <mat-label>Taluka</mat-label>
-                    <mat-select placeholder="select" formControlName="talukaId">
-                        <mat-option [value]="taluka.id" *ngFor="let taluka of talukas">{{taluka.taluka}}</mat-option>
-                    </mat-select>
+            <ng-container *ngIf="officeForm.value.designationLevelId == 1 || officeForm.value.designationLevelId == 2">
+                <div class="col-sm-4">
+                    <mat-form-field appearance="outline" class="w-100">
+                        <mat-label>Taluka</mat-label>
+                        <mat-select placeholder="select" formControlName="talukaId">
+                            <mat-option [value]="taluka.id" *ngFor="let taluka of talukas">{{taluka.taluka}}</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+            </ng-container>
 
-                </mat-form-field>
-            </div>
-            <div class="col-sm-4">
+            <ng-container *ngIf="officeForm.value.designationId == 110">
+                <div class="col-sm-4">
+                    <mat-form-field appearance="outline" class="w-100">
+                        <mat-label>Kendra</mat-label>
+                        <mat-select placeholder="select" formControlName="centerId">
+                            <mat-option [value]="center.id" *ngFor="let center of centers">{{center.center}}</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+            </ng-container>
+
+            <ng-container *ngIf="officeForm.value.designationLevelId == 2">
+                <div class="col-sm-4">
+                    <mat-form-field appearance="outline" class="w-100">
+                        <mat-label>School</mat-label>
+                        <mat-select placeholder="select" formControlName=""> 
+                            <mat-option>School</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+            </ng-container>
+
+            <!-- <div class="col-sm-4">
                 <mat-form-field appearance="outline" class="w-100">
                     <mat-label>Contact No.(BEO Office)</mat-label>
                     <input matInput placeholder="Contact No.(BEO Office)" formControlName="kendraMobileNo">
@@ -61,9 +86,13 @@
                     <mat-label>Email ID(BEO Office)</mat-label>
                     <input matInput placeholder="Email ID(BEO Office)" formControlName="kendraEmailId">
                 </mat-form-field>
-            </div>
+            </div> -->
         </div>
 
+
+
+
+        <!-- Same for all level -->
         <div class="row">
             <div class="col-sm-4">
                 <mat-form-field appearance="outline" class="w-100">

@@ -20,7 +20,18 @@
         "submit" : "प्रस्तुत करणे",
         "update" : "अपडेट करा",
         "agencyNameIsRequired" : "एजन्सीचे नाव आवश्यक आहे",
-        "contactPersonNameIsRequired" : "संपर्क व्यक्तीचे नाव आवश्यक आहे"
+        "contactPersonNameIsRequired" : "संपर्क व्यक्तीचे नाव आवश्यक आहे",
+        "agencyMobileNumberIsRequired" : "एजन्सीचा मोबाईल नंबर आवश्यक आहे",
+        "pleaseEnterValidAgencyName" : "कृपया वैध एजन्सी नाव प्रविष्ट करा",
+        "pleaseEnterValidPersonName" : "कृपया वैध व्यक्तीचे नाव प्रविष्ट करा",
+        "agencyEmailIdIsRequired" : "एजन्सीचा ईमेल आयडी आवश्यक आहे",
+        "pleaseEnterValidMobileNumber" : "कृपया वैध मोबाईल क्रमांक प्रविष्ट करा",
+        "pleaseEnterValidEmailId" : "कृपया वैध ईमेल आयडी प्रविष्ट करा",
+        "contactNumberIsRequired" : "संपर्क क्रमांक आवश्यक आहे",
+        "emailIdIsRequired" :"ईमेल आयडी आवश्यक आहे",
+        "pleaseSelectTaluka" : "कृपया तालुका निवडा",
+        "addressIsRequired" : "पत्ता आवश्यक आहे",
+        "maximummLength500Characters": "कमाल लांबी 500 वर्णांपेक्षा कमी असावी"
        
 
     }

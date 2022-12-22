@@ -18,6 +18,13 @@ export class AddUpdateTeacherRegistrationComponent {
   districtArray = new Array();
   talukaArray = new Array();
   villageArray =new Array();
+  clusterArray  =new Array();
+  designationArray = new Array();
+  GradateTeacherSubjectArray = new Array();
+  payScaleArray = new Array();
+  twelveBranchArray  = new Array();
+  optionalSubjectArray = new Array();
+  degreeUniversityArray = new Array();
 
   constructor(private masterService :MasterService, private commonMethod :CommonMethodsService, private errorHandler :ErrorsService,
    private fb : FormBuilder, public dialogRef: MatDialogRef<AddUpdateTeacherRegistrationComponent>,
@@ -33,8 +40,7 @@ export class AddUpdateTeacherRegistrationComponent {
   }
 
   formData(){
-    this.teacherRegForm =this.fb.group({      
-      
+    this.teacherRegForm =this.fb.group({            
         "createdBy": 0,
         "modifiedBy": 0,
         "createdDate": "2022-12-22T06:44:26.229Z",
@@ -105,7 +111,6 @@ export class AddUpdateTeacherRegistrationComponent {
             "namesAndTalukasAllSchoolsWorkedEarlier": "string"
           })
         ]),
-
         "teacherDocument": [
           {
             "createdBy": 0,
@@ -180,7 +185,149 @@ export class AddUpdateTeacherRegistrationComponent {
     })
   }
 
+  getCluster() { 
+    this.masterService.getClusterCategoryDescById('EN').subscribe({
+      next: ((res: any) => {
+        if (res.statusCode == '200' && res.responseData.length) {
+          this.clusterArray = res.responseData;
+          console.log("clusterArray", this.clusterArray);   
+        }
+      }), error: (error: any) => {
+        this.commonMethod.checkEmptyData(error.statusText) == false ? this.errorHandler.handelError(error.statusCode) : this.commonMethod.snackBar(error.statusText, 1);
+      }
+    })
+  }
 
+   getDesignation() { 
+    this.masterService.GetDesignationByLevelId('EN',0).subscribe({
+      next: ((res: any) => {
+        if (res.statusCode == '200' && res.responseData.length) {
+          this.designationArray = res.responseData;
+          console.log("designationArray", this.designationArray);   
+        }
+      }), error: (error: any) => {
+        this.commonMethod.checkEmptyData(error.statusText) == false ? this.errorHandler.handelError(error.statusCode) : this.commonMethod.snackBar(error.statusText, 1);
+      }
+    })
+  }
+
+     getGraduateTeacherSubject() { 
+    this.masterService.getAllSubject('EN').subscribe({
+      next: ((res: any) => {
+        if (res.statusCode == '200' && res.responseData.length) {
+          this.GradateTeacherSubjectArray = res.responseData;
+          console.log("GradateTeacherSubjectArray", this.GradateTeacherSubjectArray);   
+        }
+      }), error: (error: any) => {
+        this.commonMethod.checkEmptyData(error.statusText) == false ? this.errorHandler.handelError(error.statusCode) : this.commonMethod.snackBar(error.statusText, 1);
+      }
+    })
+  }
+
+  getGraduatepayScale() { 
+    this.masterService.getPayscaleCategoryDescById('EN').subscribe({
+      next: ((res: any) => {
+        if (res.statusCode == '200' && res.responseData.length) {
+          this.payScaleArray = res.responseData;
+          console.log("GradateTeacherSubjectArray", this.GradateTeacherSubjectArray);   
+        }
+      }), error: (error: any) => {
+        this.commonMethod.checkEmptyData(error.statusText) == false ? this.errorHandler.handelError(error.statusCode) : this.commonMethod.snackBar(error.statusText, 1);
+      }
+    })
+  }
+
+  getCaste() { 
+    this.masterService.getAllCaste('EN',1).subscribe({
+      next: ((res: any) => {
+        if (res.statusCode == '200' && res.responseData.length) {
+          this.payScaleArray = res.responseData;
+          console.log("GradateTeacherSubjectArray", this.GradateTeacherSubjectArray);   
+        }
+      }), error: (error: any) => {
+        this.commonMethod.checkEmptyData(error.statusText) == false ? this.errorHandler.handelError(error.statusCode) : this.commonMethod.snackBar(error.statusText, 1);
+      }
+    })
+  }
+
+  
+  // getCasteCategory() { 
+  //   this.masterService.getAllCaste('EN',1).subscribe({
+  //     next: ((res: any) => {
+  //       if (res.statusCode == '200' && res.responseData.length) {
+  //         this.castCategoryArray = res.responseData;
+  //         console.log("GradateTeacherSubjectArray", this.GradateTeacherSubjectArray);   
+  //       }
+  //     }), error: (error: any) => {
+  //       this.commonMethod.checkEmptyData(error.statusText) == false ? this.errorHandler.handelError(error.statusCode) : this.commonMethod.snackBar(error.statusText, 1);
+  //     }
+  //   })
+  // }
+
+  // getEducationQualification() { 
+  //   this.masterService.getAllCaste('EN',1).subscribe({
+  //     next: ((res: any) => {
+  //       if (res.statusCode == '200' && res.responseData.length) {
+  //         this.payScaleArray = res.responseData;
+  //         console.log("GradateTeacherSubjectArray", this.GradateTeacherSubjectArray);   
+  //       }
+  //     }), error: (error: any) => {
+  //       this.commonMethod.checkEmptyData(error.statusText) == false ? this.errorHandler.handelError(error.statusCode) : this.commonMethod.snackBar(error.statusText, 1);
+  //     }
+  //   })
+  // }
+
+  getTwelveBranch() { 
+    this.masterService.getTwelveBranchCategoryDescById('EN',).subscribe({
+      next: ((res: any) => {
+        if (res.statusCode == '200' && res.responseData.length) {
+          this.twelveBranchArray = res.responseData;
+          console.log("twelveBranchArray", this.twelveBranchArray);   
+        }
+      }), error: (error: any) => {
+        this.commonMethod.checkEmptyData(error.statusText) == false ? this.errorHandler.handelError(error.statusCode) : this.commonMethod.snackBar(error.statusText, 1);
+      }
+    })
+  }
+
+  getOptionalSubject() { 
+    this.masterService.getOptionalSubjectCategoryDescById('EN',).subscribe({
+      next: ((res: any) => {
+        if (res.statusCode == '200' && res.responseData.length) {
+          this.optionalSubjectArray = res.responseData;
+          console.log("optionalSubjectArray", this.optionalSubjectArray);   
+        }
+      }), error: (error: any) => {
+        this.commonMethod.checkEmptyData(error.statusText) == false ? this.errorHandler.handelError(error.statusCode) : this.commonMethod.snackBar(error.statusText, 1);
+      }
+    })
+  }
+
+  getDegreeUniversity() { 
+    this.masterService.getUniversityCategoryDescById('EN',).subscribe({
+      next: ((res: any) => {
+        if (res.statusCode == '200' && res.responseData.length) {
+          this.degreeUniversityArray = res.responseData;
+          console.log("degreeUniversityArray", this.degreeUniversityArray);   
+        }
+      }), error: (error: any) => {
+        this.commonMethod.checkEmptyData(error.statusText) == false ? this.errorHandler.handelError(error.statusCode) : this.commonMethod.snackBar(error.statusText, 1);
+      }
+    })
+  }
+
+  // getProfesionalQualification() { 
+  //   this.masterService.getUniversityCategoryDescById('EN',).subscribe({
+  //     next: ((res: any) => {
+  //       if (res.statusCode == '200' && res.responseData.length) {
+  //         this.degreeUniversityArray = res.responseData;
+  //         console.log("degreeUniversityArray", this.degreeUniversityArray);   
+  //       }
+  //     }), error: (error: any) => {
+  //       this.commonMethod.checkEmptyData(error.statusText) == false ? this.errorHandler.handelError(error.statusCode) : this.commonMethod.snackBar(error.statusText, 1);
+  //     }
+  //   })
+  // }
 
 
   OnSubmit(){

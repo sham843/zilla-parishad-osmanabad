@@ -31,7 +31,7 @@
           </mat-icon>
         </button>
         <mat-menu #menu="matMenu" xPosition="before">
-          <button mat-menu-item>
+          <button mat-menu-item (click)="downloadPdf()">
             <div class="d-flex align-items-center justify-content-between w-100">
               <span>PDF</span>
               <i class='bx bxs-file-pdf text-danger'></i>
@@ -112,9 +112,9 @@
             </mat-card-header>
             <mat-card-content>
               <div class="text-center mb-3">
-                <img src="assets/images/user.jpg" alt="" height="60px">
+                <img [src]="data.documentResponse[0]?.docPath" alt="" height="60px">
+                <p>{{data.fullName}}</p>
               </div>
-              <div style="text-align: center;">{{data.fullName}}</div>
               <div class="row">
                 <div class="col-sm  form-label">
                   School Name
