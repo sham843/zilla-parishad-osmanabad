@@ -7,6 +7,7 @@ import { SidebarComponent } from './sidebar/sidebar.component';
 import { RouterModule } from '@angular/router';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import {MatIconModule} from '@angular/material/icon';
+import { MatDialogModule } from '@angular/material/dialog';
 
 
 @NgModule({
@@ -19,7 +20,8 @@ import {MatIconModule} from '@angular/material/icon';
     CommonModule,
     MatSnackBarModule,
     RouterModule,
-    MatIconModule
+    MatIconModule,
+    MatDialogModule
   ],
   providers: [
     AuthGuard,

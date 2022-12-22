@@ -84,7 +84,8 @@
                 <div class="col-sm-4">
                     <mat-form-field appearance="outline" class="w-100">
                         <mat-label>Student Marathi First Name</mat-label>
-                        <input matInput formControlName="f_MName">
+                        <input matInput formControlName="f_MName"
+                        (keypress)="validators.unicodeMarathiValidation($event)">
                         <mat-error *ngIf="fc['f_MName'].hasError('required')">Enter Marathi First Name</mat-error>
                     </mat-form-field>
                 </div>
@@ -241,14 +242,14 @@
                         <mat-error *ngIf="fc['fatherFullName'].hasError('required')">Enter Father Full Name</mat-error>
                     </mat-form-field>
                 </div>
-                <div class="col-sm-4">
+                <!-- <div class="col-sm-4">
                     <mat-form-field appearance="outline" class="w-100">
                         <mat-label>Father Marathi Name</mat-label>
                         <input matInput formControlName="m_FatherFullName">
                         <mat-error *ngIf="fc['m_FatherFullName'].hasError('required')">Enter Father Full Name
                         </mat-error>
                     </mat-form-field>
-                </div>
+                </div> -->
                 <div class="col-sm-4">
                     <mat-form-field appearance="outline" class="w-100">
                         <mat-label>Mother Name</mat-label>
@@ -256,13 +257,13 @@
                         <mat-error *ngIf="fc['motherName'].hasError('required')">Enter Mother Name </mat-error>
                     </mat-form-field>
                 </div>
-                <div class="col-sm-4">
+                <!-- <div class="col-sm-4">
                     <mat-form-field appearance="outline" class="w-100">
                         <mat-label>Mother Marathi Name</mat-label>
                         <input matInput formControlName="m_MotherName">
                         <mat-error *ngIf="fc['m_MotherName'].hasError('required')">Enter Mother Name </mat-error>
                     </mat-form-field>
-                </div>
+                </div> -->
                 <!-- <div class="col-sm-4">
                     <mat-form-field appearance="outline" class="w-100">
                         <mat-label>Email ID</mat-label>

@@ -63,6 +63,7 @@
         "SchoolTypeDescriptionIsRequired" : "शाळेचा प्रकार आवश्यक आहे",
         "SchoolCategoryIsRequired" : "School Category is required",
         "SchoolManagementIsRequired" : "शाळा व्यवस्थापन आवश्यक आहे",
-        "GroupClassIsRequired" : "गट वर्ग आवश्यक आहे"
+        "GroupClassIsRequired" : "गट वर्ग आवश्यक आहे",
+        "searchbyNameContactEmail" : "नाव/संपर्क/ईमेल द्वारे शोधा"
     }
 }
