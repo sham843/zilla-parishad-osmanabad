@@ -145,8 +145,10 @@ body {
 }
 
 .dashboard-table .table-img {
-  height: 50px;
-  width: 50px;
+  height: 40px;
+    width: 40px;
+    margin-block: 5px;
+    border-radius: 50%;
 }
 
 .plain-card {

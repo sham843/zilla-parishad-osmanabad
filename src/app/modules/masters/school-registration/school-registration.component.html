@@ -6,164 +6,160 @@
 </nav>
 <app-page-statistics></app-page-statistics>
 
-<div class="row">
-    <div class="col-sm-12">
-        <mat-card class="plain-card">
-            <mat-card-header class="card-header">
-                <div class="d-flex align-items-center justify-content-between flex-wrap w-100">
-                    <div class="text-main fw-bold mb-2">
-                        School List
-                    </div>
-                    <div class="d-flex align-items-center justify-content-end gap-2">
-                        <button mat-flat-button class="btn-main btn-icon"
-                            [ngClass]="{'btn-main':!this.cardViewFlag, 'btn-second':this.cardViewFlag}"
-                            (click)="selectGrid('Table')">
-                            <mat-icon>
-                                list
-                            </mat-icon>
-                        </button>
-                        <button mat-flat-button class="btn-second btn-icon"
-                            [ngClass]="{'btn-main':this.cardViewFlag, 'btn-second':!this.cardViewFlag}"
-                            (click)="selectGrid('Card')">
-                            <mat-icon>grid_view</mat-icon>
-                        </button>
-                        <button mat-flat-button class="btn-main btn-icon" [matMenuTriggerFor]="menu">
-                            <mat-icon>
-                                download
-                            </mat-icon>
-                        </button>
-                        <mat-menu #menu="matMenu" xPosition="before">
-                            <button mat-menu-item (click)="downloadPdf()">
-                                <div class="d-flex align-items-center justify-content-between w-100">
-                                    <span>PDF</span>
-                                    <i class='bx bxs-file-pdf text-danger'></i>
-                                </div>
-                            </button>
-                            <!-- <button mat-menu-item>
-                                <div class="d-flex align-items-center justify-content-between w-100">
-                                    <span>Excel</span>
-                                    <i class='bx bxs-file text-primary'></i>
-                                </div>
-                            </button> -->
-                        </mat-menu>
-                        <button class="btn-main d-flex align-items-center justify-content-between" mat-flat-button
-                            (click)="addUpdateAgency()">
-                            <mat-icon>
-                                add
-                            </mat-icon>
-                            <span>Add School</span>
-                        </button>
-                    </div>
-                </div>
-            </mat-card-header>
-            <mat-card-header class="card-header pb-0">
-                <div class="row gx-2 mt-2">
-                    <div class="col-sm-auto">
-                        <mat-form-field appearance="outline" class="w-100">
-                            <mat-label>Select District</mat-label>
-                            <mat-select [formControl]="districtId" (selectionChange)="getTaluka();">
-                                <mat-option *ngFor="let district of districtArr" [value]="district.id">
-                                    {{district.district}}
-                                </mat-option>
-                            </mat-select>
-                        </mat-form-field>
-                    </div>
-                    <div class="col-sm-auto">
-                        <mat-form-field appearance="outline" class="w-100">
-                            <mat-label>Select Taluka</mat-label>
-                            <mat-select [formControl]="talukaId" (selectionChange)="getVillage();">
-                                <mat-option *ngFor="let taluka of talukaArr" [value]="taluka.id">
-                                    {{taluka.taluka}}
-                                </mat-option>
-                            </mat-select>
-                        </mat-form-field>
-                    </div>
-                    <div class="col-sm-auto">
-                        <mat-form-field appearance="outline" class="w-100">
-                            <mat-label>Select Village</mat-label>
-                            <mat-select [formControl]="villageId">
-                                <mat-option *ngFor="let village of villageArr" [value]="village.id">
-                                    {{village.village}}
-                                </mat-option>
-                            </mat-select>
-                        </mat-form-field>
-                    </div>
-                    <div class="col-sm-auto">
-                        <button mat-flat-button class="btn-main" (click)="getTableData()">Filter</button>
-                        <button mat-flat-button class="btn-second ms-2" (click)="onClear()">Clear</button>
-                    </div>
-                </div>
-            </mat-card-header>
-
-            <mat-card-content class=card-body>
-                <ng-container *ngIf="!cardViewFlag">
-                    <app-table (recObjToChild)="childCompInfo($event)"></app-table>
-                </ng-container>
-
-                <ng-container *ngIf="cardViewFlag">
-                    <div class="row">
-                        <div class="col-sm-4 mb-3" *ngFor="let data of tableDataArray">
-                            <mat-card>
-                                <mat-card-header class="d-flex justify-content-end">
-                                    <button mat-flat-button [matMenuTriggerFor]="menu">
-                                        <span class="material-symbols-outlined">
-                                            more_horiz
-                                        </span>
-                                    </button>
-                                    <mat-menu #menu="matMenu">
-                                        <button mat-menu-item>Edit
-                                            <span class="material-symbols-outlined">
-                                                create
-                                            </span>
-                                        </button>
-                                        <button mat-menu-item>Delete
-                                            <span class="material-symbols-outlined">
-                                                delete
-                                            </span>
-                                        </button>
-                                    </mat-menu>
-                                </mat-card-header>
-                                <mat-card-content>
-                                    <div class="text-center">
-                                        <img src="assets/images/user.jpg" height="60px">
-                                        <p>{{data.schoolName}}</p>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-6 col-sm  form-label">
-                                            Village
-                                        </div>
-                                        <div class="col-6 col-sm  form-deta">
-                                            {{data.village}}
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-6 col-sm form-label">
-                                            Taluka
-                                        </div>
-                                        <div class="col-6 col-sm form-deta">
-                                            {{data.taluka}}
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-6 col-sm form-label">
-                                            District
-                                        </div>
-                                        <div class="col-6 col-sm form-deta">
-                                            {{data.district}}
-                                        </div>
-                                    </div>
-                                    <div class="text-center mb-3">
-                                        <button mat-flat-button class="btn-main">Read More</button>
-                                    </div>
-                                </mat-card-content>
-                            </mat-card>
+<mat-card class="plain-card">
+    <mat-card-header class="card-header">
+        <div class="d-flex align-items-center justify-content-between w-100">
+            <div class="text-main fw-bold">
+                School List
+            </div>
+            <div class="d-flex align-items-center justify-content-end gap-2">
+                <button mat-flat-button class="btn-main btn-icon"
+                    [ngClass]="{'btn-main':!this.cardViewFlag, 'btn-second':this.cardViewFlag}"
+                    (click)="selectGrid('Table')">
+                    <mat-icon>
+                        list
+                    </mat-icon>
+                </button>
+                <button mat-flat-button class="btn-second btn-icon"
+                    [ngClass]="{'btn-main':this.cardViewFlag, 'btn-second':!this.cardViewFlag}"
+                    (click)="selectGrid('Card')">
+                    <mat-icon>grid_view</mat-icon>
+                </button>
+                <button mat-flat-button class="btn-main btn-icon" [matMenuTriggerFor]="menu">
+                    <mat-icon>
+                        download
+                    </mat-icon>
+                </button>
+                <mat-menu #menu="matMenu" xPosition="before">
+                    <button mat-menu-item (click)="downloadPdf()">
+                        <div class="d-flex align-items-center justify-content-between w-100">
+                            <span>PDF</span>
+                            <i class='bx bxs-file-pdf text-danger'></i>
                         </div>
-                    </div>
-                    <mat-paginator [length]="totalCount" [pageIndex]="cardCurrentPage" [pageSize]="10"
-                        [pageSizeOptions]="[10]" [showFirstLastButtons]="true" (page)="onPageChanged($event)">
-                    </mat-paginator>
-                </ng-container>
-            </mat-card-content>
-        </mat-card>
-    </div>
-</div>
+                    </button>
+                    <!-- <button mat-menu-item>
+                        <div class="d-flex align-items-center justify-content-between w-100">
+                            <span>Excel</span>
+                            <i class='bx bxs-file text-primary'></i>
+                        </div>
+                    </button> -->
+                </mat-menu>
+                <button class="btn-main d-flex align-items-center justify-content-between" mat-flat-button
+                    (click)="addUpdateAgency()">
+                    <mat-icon>
+                        add
+                    </mat-icon>
+                    <span>Add School</span>
+                </button>
+            </div>
+        </div>
+    </mat-card-header>
+    <mat-card-header class="card-header pb-0">
+        <div class="row gx-2">
+            <div class="col-sm-auto">
+                <mat-form-field appearance="outline" class="w-100">
+                    <mat-label>Select District</mat-label>
+                    <mat-select [formControl]="districtId" (selectionChange)="getTaluka();">
+                        <mat-option *ngFor="let district of districtArr" [value]="district.id">
+                            {{district.district}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <div class="col-sm-auto">
+                <mat-form-field appearance="outline" class="w-100">
+                    <mat-label>Select Taluka</mat-label>
+                    <mat-select [formControl]="talukaId" (selectionChange)="getVillage();">
+                        <mat-option *ngFor="let taluka of talukaArr" [value]="taluka.id">
+                            {{taluka.taluka}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <div class="col-sm-auto">
+                <mat-form-field appearance="outline" class="w-100">
+                    <mat-label>Select Village</mat-label>
+                    <mat-select [formControl]="villageId">
+                        <mat-option *ngFor="let village of villageArr" [value]="village.id">
+                            {{village.village}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <div class="col-sm-auto">
+                <button mat-flat-button class="btn-main" (click)="getTableData()">Filter</button>
+                <button mat-flat-button class="btn-second ms-2" (click)="onClear()">Clear</button>
+            </div>
+        </div>
+    </mat-card-header>
+
+    <mat-card-content class="card-body">
+        <ng-container *ngIf="!cardViewFlag">
+            <app-table (recObjToChild)="childCompInfo($event)"></app-table>
+        </ng-container>
+
+        <ng-container *ngIf="cardViewFlag">
+            <div class="row">
+                <div class="col-sm-4 mb-3" *ngFor="let data of tableDataArray">
+                    <mat-card>
+                        <mat-card-header class="d-flex justify-content-end">
+                            <button mat-flat-button [matMenuTriggerFor]="menu">
+                                <span class="material-symbols-outlined">
+                                    more_horiz
+                                </span>
+                            </button>
+                            <mat-menu #menu="matMenu">
+                                <button mat-menu-item>Edit
+                                    <span class="material-symbols-outlined">
+                                        create
+                                    </span>
+                                </button>
+                                <button mat-menu-item>Delete
+                                    <span class="material-symbols-outlined">
+                                        delete
+                                    </span>
+                                </button>
+                            </mat-menu>
+                        </mat-card-header>
+                        <mat-card-content>
+                            <div class="text-center">
+                                <img src="assets/images/user.jpg" height="60px">
+                                <p>{{data.schoolName}}</p>
+                            </div>
+                            <div class="row">
+                                <div class="col-6 col-sm  form-label">
+                                    Village
+                                </div>
+                                <div class="col-6 col-sm  form-deta">
+                                    {{data.village}}
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-6 col-sm form-label">
+                                    Taluka
+                                </div>
+                                <div class="col-6 col-sm form-deta">
+                                    {{data.taluka}}
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-6 col-sm form-label">
+                                    District
+                                </div>
+                                <div class="col-6 col-sm form-deta">
+                                    {{data.district}}
+                                </div>
+                            </div>
+                            <div class="text-center mb-3">
+                                <button mat-flat-button class="btn-main">Read More</button>
+                            </div>
+                        </mat-card-content>
+                    </mat-card>
+                </div>
+            </div>
+            <mat-paginator [length]="totalCount" [pageIndex]="cardCurrentPage" [pageSize]="10"
+                [pageSizeOptions]="[10]" [showFirstLastButtons]="true" (page)="onPageChanged($event)">
+            </mat-paginator>
+        </ng-container>
+    </mat-card-content>
+</mat-card>
