@@ -18,7 +18,7 @@ import { GlobalDialogComponent } from 'src/app/shared/components/global-dialog/g
 import { TableComponent } from 'src/app/shared/components/table/table.component';
 import { PageStatisticsComponent } from 'src/app/shared/components/page-statistics/page-statistics.component';
 import { GlobalImgComponent } from 'src/app/shared/components/global-img/global-img.component';
-
+import { TranslateModule } from '@ngx-translate/core';
 @NgModule({
   declarations: [
     AddUpdateSchoolRegistrationComponent,
@@ -40,7 +40,8 @@ import { GlobalImgComponent } from 'src/app/shared/components/global-img/global-
     GlobalDialogComponent,
     TableComponent,
     PageStatisticsComponent,
-    GlobalImgComponent
-  ]
+    GlobalImgComponent,
+    TranslateModule
+]
 })
 export class SchoolRegistrationModule { }

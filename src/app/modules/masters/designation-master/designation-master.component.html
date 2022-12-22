@@ -7,8 +7,8 @@
 
 <mat-card class="plain-card">
     <mat-card-header class="card-header">
-        <div class="d-flex fw-bold justify-content-between align-items-center flex-wrap w-100">
-            <span class="text-main mb-2">Designation Master</span>
+        <div class="d-flex fw-bold justify-content-between align-items-center w-100">
+            <span class="text-main">{{'Labels.DesignationMaster' | translate}}</span>
             <div class="d-flex gap-2">
                 <button mat-flat-button class="btn-main btn-icon" [matMenuTriggerFor]="menu">
                     <mat-icon>
@@ -33,7 +33,7 @@
                     <mat-icon>
                         add
                     </mat-icon>
-                    Add Designation</button>
+                   {{'Labels.AddDesignation'| translate}} </button>
             </div>
         </div>
     </mat-card-header>
@@ -41,18 +41,17 @@
        <div class="row gx-2 mt-2">
         <div class="col-sm-auto">
             <mat-form-field appearance="outline" class="w-100">
-                <mat-label>Select Designation</mat-label>
+                <mat-label>{{'Labels.SelectDesignation'| translate}}</mat-label>
                 <mat-select [formControl]="searchContent">
                     <mat-option *ngFor="let designation of DesiganationTypeArray" [value]="designation.id">
-                        {{designation.designationType}}
+                        {{webStorage.getLangauge() == 'EN' ? designation.designationType : designation.m_DesignationType}}
                     </mat-option>
                 </mat-select>
             </mat-form-field>
         </div>
         <div class="col-sm-auto">
-            <button (click)="getTableData('filter')" mat-flat-button class="btn-main">Filter</button>
-            <button  mat-flat-button class="btn-second ms-2" (click)="clearForm()">Clear</button>
-           
+            <button (click)="getTableData('filter')" mat-flat-button class="btn-main">{{'Labels.filter' | translate}}</button>
+            <button  mat-flat-button class="btn-second ms-2" (click)="clearForm()">{{'Labels.clear' | translate}}</button>           
         </div>
        </div>
     </mat-card-header>

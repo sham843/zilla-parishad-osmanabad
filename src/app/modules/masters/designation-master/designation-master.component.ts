@@ -23,11 +23,11 @@ export class DesignationMasterComponent {
   tableDatasize!: Number;
   displayedColumns = new Array();
   displayedheaders = ['Sr. No.', 'Name', 'Contact No.', 'Email ID', 'Action'];
-  displayedheadersMarathi = ['Sr. No', 'पदनाम', 'Designation Level','action'];
+  displayedheadersMarathi = ['अनुक्रमांक', 'पदनाम', 'पदनाम स्तर','कृती',];
   langTypeName: any
 
   constructor(private dialog: MatDialog, private apiService: ApiService, private errors: ErrorsService,
-    private masterService:MasterService ,private commonMethod: CommonMethodsService, private webStorage : WebStorageService,
+    private masterService:MasterService ,private commonMethod: CommonMethodsService, public webStorage : WebStorageService,
     private errorHandler: ErrorsService ,private downloadFileService : DownloadPdfExcelService) { }
 
   ngOnInit() {
@@ -36,7 +36,7 @@ export class DesignationMasterComponent {
     this.getofficeReport()
     this.webStorage.langNameOnChange.subscribe(lang => {
       this.langTypeName = lang;
-      this.displayedColumns = ['srNo', this.langTypeName == 'English' ? 'designationName' : 'm_DesignationType', 'designationLevel', 'action'];
+      this.displayedColumns = ['srNo', this.langTypeName == 'English' ? 'designationName' : 'm_DesignationType', this.langTypeName == 'English' ?'designationLevel':'m_DesignationLevel', 'action'];
         this.tableData = {
           pageNumber: this.pageNumber,
           img: '', blink: '', badge: '', isBlock: '', pagintion: true,

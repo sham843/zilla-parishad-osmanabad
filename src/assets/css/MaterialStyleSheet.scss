@@ -7,6 +7,7 @@
     font-size: 0.85rem !important;
     font-family: 'Poppins', sans-serif !important;
 }
+
 mat-label,
 .mdc-tab__text-label,
 input.mat-input-element,
@@ -22,9 +23,9 @@ textarea.mat-input-element,
 .mat-mdc-select-min-line,
 .mat-mdc-text-field-wrapper.mdc-text-field--outlined .mdc-text-field__input,
 .mat-mdc-icon-button.mat-mdc-button-base,
-.mat-tab-label-content{
+.mat-tab-label-content {
     font-family: 'Poppins', sans-serif;
-  font-size: 0.85rem;
+    font-size: 0.85rem;
 }
 
 input:-webkit-autofill,
@@ -34,40 +35,60 @@ input:-webkit-autofill:active {
     transition: background-color 5000s ease-in-out 0s !important;
     -webkit-text-fill-color: #000 !important;
 }
-.mat-mdc-form-field-infix{
+
+.mat-mdc-form-field-infix {
     min-height: 36px !important;
 }
+
 .mat-mdc-text-field-wrapper.mdc-text-field--outlined .mat-mdc-form-field-infix {
     padding-top: 6px !important;
     padding-bottom: 6px !important;
 }
+
 .mat-mdc-text-field-wrapper .mat-mdc-form-field-flex .mat-mdc-floating-label {
     top: 17px !important;
 }
+
 .mat-mdc-text-field-wrapper.mdc-text-field--outlined .mdc-notched-outline--upgraded .mdc-floating-label--float-above {
-    transform: translateY( -23.75px) scale(0.75, 0.75) !important;
+    transform: translateY(-23.75px) scale(0.75, 0.75) !important;
 }
-.mat-mdc-form-field, .mat-mdc-floating-label{
+
+.mat-mdc-form-field,
+.mat-mdc-floating-label {
     letter-spacing: normal !important;
 }
+
 .mat-mdc-icon-button.mat-mdc-button-base {
     width: 36px !important;
     height: 36px !important;
     padding: 6px !important;
 }
+
 .mat-mdc-paginator-range-label {
     margin: 0px !important;
-  }
-  
+}
+
 .mat-mdc-paginator-page-size {
     display: none !important;
-  }
+}
 
+.mat-mdc-table .mat-mdc-header-row,
+.mat-mdc-table .mdc-data-table__row {
+    height: 42px !important;
+}
 
-@media only screen and (max-width: 478px){
-   
-    .mat-mdc-unelevated-button .mdc-button__label
-    {
+@media only screen and (max-width: 478px) {
+
+    .mat-mdc-unelevated-button .mdc-button__label {
         font-size: 12px !important;
     }
+}
+.mat-mdc-form-field-hint-wrapper, .mat-mdc-form-field-error-wrapper{
+    padding: 0 !important;
+  }
+  .mat-mdc-form-field-error{
+    margin: 0 !important;
+    font-family: 'Poppins', sans-serif !important;
+    font-size: 0.7rem;
+    letter-spacing: normal;
   }
