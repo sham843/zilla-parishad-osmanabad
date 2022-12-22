@@ -1,4 +1,4 @@
-import { Component, ElementRef, Inject, ViewChild } from '@angular/core';
+import { Component, Inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ApiService } from 'src/app/core/services/api.service';
@@ -16,7 +16,7 @@ import { WebStorageService } from 'src/app/core/services/web-storage.service';
 })
 export class AddUpdateSchoolRegistrationComponent {
 
-  @ViewChild('img') img!: ElementRef;
+  // @ViewChild('img') img!: ElementRef;
   districtArr = new Array();
   talukaArr = new Array();
   centerArr = new Array();
@@ -28,6 +28,8 @@ export class AddUpdateSchoolRegistrationComponent {
   schoolRegForm !: FormGroup;
   uploadImg: any;
   editFlag: boolean = false;
+  showAddRemImg: boolean = false;
+
 
   constructor(private masterService: MasterService, private errors: ErrorsService, private fb: FormBuilder, private fileUpload: FileUploadService,
     private apiService: ApiService, private commonMethod: CommonMethodsService, @Inject(MAT_DIALOG_DATA) public data: any,
@@ -47,9 +49,12 @@ export class AddUpdateSchoolRegistrationComponent {
   }
 
   formFeild() {
+    // let data = this.webStorageS.createdByProps();
+    // console.log("data : ",data);
+
     this.schoolRegForm = this.fb.group({
       "id": 0,
-      "schoolName": [''],
+      "schoolName": ['', Validators.required],
       "m_SchoolName": [''],
       "stateId": 0,
       "districtId": ['', Validators.required],
@@ -77,13 +82,15 @@ export class AddUpdateSchoolRegistrationComponent {
   getDistrict() {
     this.masterService.getAllDistrict(this.webStorageS.languageFlag).subscribe({
       next: (res: any) => {
-        if (res.statusCode == 200) {
-          this.districtArr = res.responseData;
-          if (this.editFlag == true) {
-            this.f['districtId'].setValue(this.data.districtId);
-            this.getTaluka();
-          }
-        }
+        res.statusCode == "200" ? this.districtArr = res.responseData : this.districtArr = [];
+        this.editFlag ? (this.f['districtId'].setValue(this.data.districtId), this.getTaluka()) : '';
+        // if (res.statusCode == 200) {
+        //   this.districtArr = res.responseData;
+          // if (this.editFlag == true) {
+          //   this.f['districtId'].setValue(this.data.districtId);
+          //   this.getTaluka();
+          // }
+        // }
       },
       error: ((err: any) => { this.errors.handelError(err) })
     });
@@ -93,13 +100,15 @@ export class AddUpdateSchoolRegistrationComponent {
   getTaluka() {
     this.masterService.getAllTaluka(this.webStorageS.languageFlag).subscribe({
       next: (res: any) => {
-        if (res.statusCode == 200) {
-          this.talukaArr = res.responseData;
-          if (this.editFlag == true) {
-            this.f['talukaId'].setValue(this.data.talukaId);
-            this.getCenter();
-          }
-        }
+        res.statusCode == "200" ? this.talukaArr = res.responseData : this.talukaArr = [];
+        this.editFlag ? (this.f['talukaId'].setValue(this.data.talukaId), this.getCenter()) : '';
+        // if (res.statusCode == 200) {
+        //   this.talukaArr = res.responseData;
+        //   if (this.editFlag == true) {
+        //     this.f['talukaId'].setValue(this.data.talukaId);
+        //     this.getCenter();
+        //   }
+        // }
       },
       error: ((err: any) => { this.errors.handelError(err) })
     });
@@ -108,13 +117,15 @@ export class AddUpdateSchoolRegistrationComponent {
   getCenter() {
     this.masterService.getAllCenter(this.webStorageS.languageFlag).subscribe({
       next: (res: any) => {
-        if (res.statusCode == 200) {
-          this.centerArr = res.responseData;
-          if (this.editFlag == true) {
-            this.f['centerId'].setValue(this.data.centerId);
-            this.getVillage();
-          }
-        }
+        res.statusCode == "200" ? this.centerArr = res.responseData : this.centerArr = [];
+        this.editFlag ? (this.f['centerId'].setValue(this.data.centerId), this.getVillage()) : '';
+        // if (res.statusCode == 200) {
+        //   this.centerArr = res.responseData;
+        //   if (this.editFlag == true) {
+        //     this.f['centerId'].setValue(this.data.centerId);
+        //     this.getVillage();
+        //   }
+        // }
       },
       error: ((err: any) => { this.errors.handelError(err) })
     });
@@ -197,6 +208,7 @@ export class AddUpdateSchoolRegistrationComponent {
   imgUpload(event: any) {
     this.fileUpload.uploadDocuments(event, 'Upload', 'jpg, jpeg, png').subscribe((res: any) => {
       this.uploadImg = res.responseData;
+      this.showAddRemImg = true;
     });
   }
 
@@ -204,14 +216,15 @@ export class AddUpdateSchoolRegistrationComponent {
     let formValue = this.schoolRegForm.value;
     console.log("formValue : ", formValue);
 
-    if (this.editFlag == false) {
+    // if (this.editFlag == false) {
       formValue.docPath ? formValue.docPath = this.uploadImg : '';
-    }
-    else {
-      this.data.docPath ? (formValue.docPath =='' ? formValue.docPath = this.data.docPath : formValue.docPath = this.uploadImg) : '';
-    }
-
-    console.log("Form Value Image Path : ", formValue.docPath);
+    // }
+    // else {
+      // this.data.docPath ? (formValue.docPath =='' ? formValue.docPath = this.data.docPath : formValue.docPath = this.uploadImg) : '';
+      // formValue.docPath = this.data.docPath;
+        // this.data.docPath ? formValue.docPath ?
+      !this.showAddRemImg ? formValue.docPath = '' : formValue.docPath = formValue.docPath;
+    // }
     
     let url;
     this.editFlag ? url = 'ZP-Osmanabad/School/Update' : url = 'ZP-Osmanabad/School/Add';
@@ -232,6 +245,13 @@ export class AddUpdateSchoolRegistrationComponent {
     this.editFlag = true;
     console.log("editObj : ", this.data);
 
+    this.data.docPath ? this.schoolRegForm.value.docPath = this.data.docPath : '';
+    console.log("docPath : ", this.data.docPath);
+    console.log("Form docPath : ", this.schoolRegForm.value.docPath);
+    
+    
+    this.data.docPath ? this.showAddRemImg = true :  this.showAddRemImg = false; 
+
     this.schoolRegForm.patchValue({
       "id": this.data.id,
       "schoolName": this.data.schoolName,
@@ -241,22 +261,19 @@ export class AddUpdateSchoolRegistrationComponent {
       "lowestClass": 0,
       "highestClass": 0,
       "timesStamp": new Date(),
-      // "docPath": this.data.docPath,
       "createdBy": 0,
       "createdDate": new Date(),
       "modifiedBy": 0,
       "modifiedDate": new Date(),
       "isDeleted": false
     });
-    // this.img.nativeElement.value = this.data.docPath;
-
-    // this.schoolRegForm.value.docPath = this.data.docPath;
-    // this.f['docPath'].setValue(this.data.docPath);
   }
 
   clearImg(){
-    this.img.nativeElement.value = '';
+    // this.img.nativeElement.value = '';
     this.schoolRegForm.value.docPath = '';
+    this.f['docPath'].setValue('');
+    this.showAddRemImg = false;
   }
 
   clearDropdown(dropdown: string) {

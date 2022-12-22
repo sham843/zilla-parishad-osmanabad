@@ -51,7 +51,8 @@ export class SchoolRegistrationComponent {
   getTableData(flag?: string) {
     this.pageNumber = flag == 'filter' ? 1 : this.pageNumber;
     let tableDatasize!: Number;
-    let pageNo = this.cardViewFlag ? (this.cardCurrentPage + 1) : this.pageNumber; 
+    let pageNo = this.cardViewFlag ? (this.cardCurrentPage + 1)  : this.pageNumber; 
+    
     let str = `?pageno=${pageNo}&pagesize=10&DistrictId=${this.districtId.value ? this.districtId.value : 0}
     &TalukaId=${this.talukaId.value ? this.talukaId.value : 0}&VillageId=${this.villageId.value ? this.villageId.value : 0}&lan=${this.webStorageS.languageFlag}`;
     this.apiService.setHttp('GET', 'ZP-Osmanabad/School/GetAll' + str, false, false, false, 'baseUrl');
@@ -102,7 +103,6 @@ export class SchoolRegistrationComponent {
   }
 
   addUpdateAgency(obj?: any) {
-    
     const dialogRef = this.dialog.open(AddUpdateSchoolRegistrationComponent, {
       width: '820px',
       data: obj,
@@ -110,7 +110,6 @@ export class SchoolRegistrationComponent {
       autoFocus: false
     });
     dialogRef.afterClosed().subscribe((result: any) => {
-     
       if(result == 'yes'){
         this.getTableData();
       }
@@ -211,10 +210,11 @@ export class SchoolRegistrationComponent {
     if (label == 'Table') {
       this.cardViewFlag = false;
       this.pageNumber = 1;
-      this.getTableData()
+      this.cardCurrentPage = 0;
+
+      this.getTableData();
     } else if (label == 'Card')
       this.cardViewFlag = true;
-      this.cardCurrentPage = 0;
       this.getTableData();
   }
 
@@ -225,7 +225,6 @@ export class SchoolRegistrationComponent {
     this.apiService.getHttp().subscribe({
       next: (res: any) => {
         if (res.statusCode == 200) {
-          // console.log(res);
           let data:[] = res.responseData.responseData1;
           data.map((ele: any, i: any)=>{
             let obj = {
