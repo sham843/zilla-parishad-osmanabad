@@ -1,12 +1,32 @@
 import { OnInit, Component, Output, EventEmitter, ViewChild } from '@angular/core';
-import { MatPaginator } from '@angular/material/paginator';
-import { MatTableDataSource } from '@angular/material/table';
+import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
+import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { ApiService } from 'src/app/core/services/api.service';
-import { MatSort } from '@angular/material/sort';
+import { MatSort, MatSortModule } from '@angular/material/sort';
+import { CommonModule } from '@angular/common';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { MatCardModule } from '@angular/material/card';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { DashPipe } from 'src/app/core/pipes/dash.pipe';
 @Component({
   selector: 'app-table',
   templateUrl: './table.component.html',
   styleUrls: ['./table.component.scss'],
+  standalone: true,
+  imports: [CommonModule, MatSlideToggleModule, MatTableModule, MatPaginatorModule, MatSortModule, MatButtonModule, MatIconModule, MatCardModule, MatMenuModule, CommonModule,
+    MatSlideToggleModule,
+    MatTableModule,
+    MatPaginatorModule,
+    MatSortModule,
+    MatButtonModule,
+    MatIconModule,
+    MatCardModule,
+    MatMenuModule,
+    DashPipe
+    ],
+
 })
 export class TableComponent implements OnInit {
   @Output() recObjToChild = new EventEmitter<any>();
@@ -20,7 +40,7 @@ export class TableComponent implements OnInit {
   pageIndex!: number;
   tableInfo: any;
   tableHeaders = new Array();
-  highlightedRow!:number;
+  highlightedRow!: number;
   constructor(private apiService: ApiService) { }
 
 
@@ -45,7 +65,7 @@ export class TableComponent implements OnInit {
   //   this.tableInfo.sort = this.sort;
   // }
 
-  action(obj: any, label: string, i?:any) {
+  action(obj: any, label: string, i?: any) {
     this.highlightedRow = i;
     obj.label = label;
     obj.pageNumber = obj.pageIndex + 1;
