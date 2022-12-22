@@ -45,7 +45,7 @@ export class AddUpdateStudentRegistrationComponent {
     private apiService: ApiService,
     private webService: WebStorageService,
     private commonMethods: CommonMethodsService,
-    public validators : ValidationService,
+    public validators: ValidationService,
     public dialogRef: MatDialogRef<AddUpdateStudentRegistrationComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any) { }
 
@@ -66,31 +66,31 @@ export class AddUpdateStudentRegistrationComponent {
   formData() {
     this.stuRegistrationForm = this.fb.group({
       districtId: [{ value: 1, disabled: true }],
-      talukaId: ['',Validators.required],
-      centerId: ['',Validators.required],
-      schoolId: ['',Validators.required],
-      fName: ['',Validators.required], 
-      mName: ['',Validators.required],
-      lName: ['',Validators.required],
-      f_MName: ['',Validators.required], 
-      m_MName: ['',Validators.required],
-      l_MName: ['',Validators.required],
-      standard: ['',Validators.required],
-      dob: ['',Validators.required],
-      gender: ['',Validators.required],
-      religionId: ['',Validators.required],
-      castId: ['',Validators.required],
-      saralId: ['',Validators.required],
-      mobileNo: ['',[Validators.required,Validators.pattern(this.validators.mobile_No)]],
-      fatherFullName: ['',Validators.required], 
-      m_FatherFullName: ['',Validators.required], 
-      motherName: ['',Validators.required],
-      m_MotherName: ['',Validators.required],
-      aadharNo: ['',[Validators.required,Validators.pattern(this.validators.aadhar_card)]],
+      talukaId: ['', Validators.required],
+      centerId: ['', Validators.required],
+      schoolId: ['', Validators.required],
+      fName: ['', Validators.required],
+      mName: ['', Validators.required],
+      lName: ['', Validators.required],
+      f_MName: ['', Validators.required],
+      m_MName: ['', Validators.required],
+      l_MName: ['', Validators.required],
+      standard: ['', Validators.required],
+      dob: ['', Validators.required],
+      gender: ['', Validators.required],
+      religionId: ['', Validators.required],
+      castId: ['', Validators.required],
+      saralId: ['', Validators.required],
+      mobileNo: ['', [Validators.required, Validators.pattern(this.validators.mobile_No)]],
+      fatherFullName: ['', Validators.required],
+      m_FatherFullName: ['', Validators.required],
+      motherName: ['', Validators.required],
+      m_MotherName: ['', Validators.required],
+      aadharNo: ['', [Validators.required, Validators.pattern(this.validators.aadhar_card)]],
       // emailID:[''],
-      physicallyDisabled: ['',Validators.required],
-      photo:[''],
-      aadharPhoto:['']
+      physicallyDisabled: ['', Validators.required],
+      photo: [''],
+      aadharPhoto: ['']
 
     })
   }
@@ -212,14 +212,14 @@ export class AddUpdateStudentRegistrationComponent {
 
   fileUpload(event: any, name: string) {
     this.fileUpl.uploadDocuments(event, 'Upload', 'jpg, jpeg, png').subscribe((res: any) => {
-      name == 'img' ? (this.uploadImg = res.responseData,this.stuRegistrationForm.controls['photo'].setValue(this.uploadImg.split('/').pop())) : (
-        this.uploadAadhar = res.responseData,this.stuRegistrationForm.controls['aadharPhoto'].setValue(this.uploadAadhar.split('/').pop()) );
+      name == 'img' ? (this.uploadImg = res.responseData, this.stuRegistrationForm.controls['photo'].setValue(this.uploadImg.split('/').pop())) : (
+        this.uploadAadhar = res.responseData, this.stuRegistrationForm.controls['aadharPhoto'].setValue(this.uploadAadhar.split('/').pop()));
     });
   }
 
   patchValue() {
     this.editFlag = true;
-    console.log(this.editObj);    
+    console.log(this.editObj);
     this.stuRegistrationForm.patchValue({
       fName: this.editObj?.fName,
       mName: this.editObj?.mName,
@@ -239,6 +239,8 @@ export class AddUpdateStudentRegistrationComponent {
     });
     this.uploadAadhar = this.editObj.documentResponse[1]?.docPath;
     this.uploadImg = this.editObj.documentResponse[0]?.docPath;
+    this.stuRegistrationForm.controls['photo'].setValue(this.uploadImg.split('/').pop());
+    this.stuRegistrationForm.controls['aadharPhoto'].setValue(this.uploadAadhar.split('/').pop());
     this.getDistrict();
     this.getTaluka();
     this.getCenter();
@@ -313,28 +315,48 @@ export class AddUpdateStudentRegistrationComponent {
       "lan": "string"
     }
 
-    if(this.stuRegistrationForm.invalid){
+    if (this.stuRegistrationForm.invalid) {
       return
-    }else{
+    } else {
       console.log(postObj);
-      
+
       let url = this.editFlag ? 'UpdateStudent' : 'AddStudent'
       this.apiService.setHttp(this.editFlag ? 'put' : 'post', 'zp-osmanabad/Student/' + url, false, postObj, false, 'baseUrl');
       this.apiService.getHttp().subscribe({
         next: (res: any) => {
           if (res.statusCode == "200") {
-            this.commonMethods.snackBar(res.statusMessage,0);
+            this.commonMethods.snackBar(res.statusMessage, 0);
             this.dialogRef.close('yes')
-          }else{
-            this.commonMethods.snackBar(res.statusMessage,1);
+          } else {
+            this.commonMethods.snackBar(res.statusMessage, 1);
           }
         },
         error: ((err: any) => { this.errors.handelError(err) })
       });
     }
   }
-  clearForm(clear:any){
-    clear.resetForm();   
+  clearForm(clear: any) {
+    clear.resetForm();
+  }
+
+  viewImages(name: string) {
+    if (name == 'aadharPhoto') {
+      window.open(this.uploadAadhar, 'blank');
+    } else if (name == 'photo') {
+      window.open(this.uploadImg, 'blank')
+    }
+  }
+
+  deleteImage(name: string) {
+    if (name == 'aadharPhoto') {
+      this.uploadAadhar = '';
+      this.aadharFile.nativeElement.value = '';
+      this.stuRegistrationForm.controls['aadharPhoto'].setValue('');
+    } else if (name == 'photo') {
+      this.uploadImg = '';
+      this.imageFile.nativeElement.value = '';
+      this.stuRegistrationForm.controls['photo'].setValue('');
+    }
   }
 
 }
