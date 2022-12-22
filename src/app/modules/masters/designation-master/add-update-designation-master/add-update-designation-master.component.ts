@@ -40,12 +40,24 @@ export class AddUpdateDesignationMasterComponent {
       "lan": [''],
       "id": [0],
       "designationType": [''],
-      "m_DesignationType": ['',Validators.required],
+      "m_DesignationType": [''],
       "designationLevelId": ['', Validators.required],
       "designationName": ['', Validators.required]
-    })
+    }) 
   }
   //#endregion  ---------------------------- End Desiganation-Master Formdata ------------------------------- //
+
+  changeValidators(obj:any){
+  if(obj.value == 'Other'){
+    this.f["designationType"].setValidators(Validators.required);
+    this.f["m_DesignationType"].setValidators(Validators.required);
+  }else{
+    this.f["designationType"].clearValidators();
+    this.f["m_DesignationType"].clearValidators();
+  }
+   this.f["designationType"].updateValueAndValidity();
+   this.f["m_DesignationType"].updateValueAndValidity();
+  }
   //#region ----------------------------------Desiganation-Master Dropdown ------------------------------- //
   getDesiganationLevel() {
     let lan = this.designationForm.value.lan;
@@ -84,7 +96,7 @@ export class AddUpdateDesignationMasterComponent {
 
   //#region ------------------------------------- Desiganation-Master Submit ---------------------------------// 
   OnSubmit() {
-    // if(this.designationForm.valid){
+    if(this.designationForm.valid){
       let getFormVal = this.designationForm.value;
       let getDesignationLevelId: any = this.commonMethod.getkeyValueByArrayOfObj(this.DesiganationLevelData, 'designationLevel', getFormVal?.designationLevelId);
       this.designationForm.value.designationLevelId = getDesignationLevelId?.id;
@@ -122,9 +134,9 @@ export class AddUpdateDesignationMasterComponent {
           this.commonMethod.checkEmptyData(error.statusMessage) == false ? this.errorHandler.handelError(error.statusCode) : this.commonMethod.snackBar(error.statusMessage, 1);
         }
       })
-    // }else{
-    //   return;
-    // }
+    }else{
+      return;
+    }
    
   }
   //#endregion -------------------------------------End Desiganation-Master Submit ---------------------------------//

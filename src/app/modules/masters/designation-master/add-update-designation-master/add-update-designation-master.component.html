@@ -27,7 +27,7 @@
             <div class="col-sm">
                 <mat-form-field appearance="outline" class="w-100 ">
                     <mat-label>Designation Type</mat-label>
-                    <mat-select formControlName="designationName">
+                    <mat-select formControlName="designationName" (selectionChange)="changeValidators($event)">
                         <mat-option *ngFor="let designationType of desiganationTypeData" [value]="designationType.designationType">{{designationType.designationType}}</mat-option>
                         <!-- <mat-option value="two">option-2</mat-option> -->
                     </mat-select>
