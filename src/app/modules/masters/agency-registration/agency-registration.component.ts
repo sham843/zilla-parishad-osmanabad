@@ -9,7 +9,6 @@ import { ValidationService } from 'src/app/core/services/validation.service';
 import { WebStorageService } from 'src/app/core/services/web-storage.service';
 import { GlobalDialogComponent } from 'src/app/shared/components/global-dialog/global-dialog.component';
 import { AddUpdateAgencyRegistrationComponent } from './add-update-agency-registration/add-update-agency-registration.component';
-// import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-agency-registration',
@@ -30,7 +29,7 @@ export class AgencyRegistrationComponent {
 
   constructor(private dialog: MatDialog, private apiService: ApiService, private webStroageService: WebStorageService, private downloadPdfservice: DownloadPdfExcelService,
     private errors: ErrorsService, private fb: FormBuilder, private common: CommonMethodsService, public validation: ValidationService,
-    ) { }
+  ) { }
 
   ngOnInit() {
     this.filterData();
@@ -44,26 +43,24 @@ export class AgencyRegistrationComponent {
     })
   }
 
-  getTableDataMarathi(){
+  getTableDataMarathi() {
     this.webStroageService.langNameOnChange.subscribe(lang => {
       this.langTypeName = lang;
-      this.displayedColumns = ['srNo', this.langTypeName == 'English' ? 'agency_Name' : 'm_Agency_Name', 'contact_No','agency_EmailId','action'];
-        this.tableData = {
-          pageNumber: this.pageNumber,
-          img: '', blink: '', badge: '', isBlock: '', pagintion: true,
-          displayedColumns: this.displayedColumns, tableData: this.tableDataArray,
-          tableSize: this.tableDatasize,
-          tableHeaders: this.langTypeName == 'English' ? this.displayedheadersEnglish : this.displayedheadersMarathi,
-        };
+      this.displayedColumns = ['srNo', this.langTypeName == 'English' ? 'agency_Name' : 'm_Agency_Name', 'contact_No', 'agency_EmailId', 'action'];
+      this.tableData = {
+        pageNumber: this.pageNumber,
+        img: '', blink: '', badge: '', isBlock: '', pagintion: true,
+        displayedColumns: this.displayedColumns, tableData: this.tableDataArray,
+        tableSize: this.tableDatasize,
+        tableHeaders: this.langTypeName == 'English' ? this.displayedheadersEnglish : this.displayedheadersMarathi,
+      };
       this.apiService.tableData.next(this.tableData);
-     });
+    });
   }
 
   getTableData(flag?: string) {
     this.pageNumber = flag == 'filter' ? 1 : this.pageNumber;
     flag == 'filter' ? this.agencyReport = [] : ''
-    // let tableDataArray = new Array();
-    // let tableDatasize!: Number;
     let obj = this.filterForm.value;
     let str = `pageno=${this.pageNumber}&pagesize=10&&TextSearch=${obj.searchText}&lan=${this.webStroageService.languageFlag}`;
     let reportStr = `TextSearch=${obj.searchText}`
@@ -71,6 +68,7 @@ export class AgencyRegistrationComponent {
     this.apiService.getHttp().subscribe({
       next: (res: any) => {
         if (res.statusCode == "200") {
+          this.agencyReport = [];
           this.tableDataArray = res.responseData.responseData1;
           this.tableDatasize = res.responseData.responseData2.pageCount;
           let data: [] = res.responseData.responseData1;
@@ -87,8 +85,7 @@ export class AgencyRegistrationComponent {
           this.tableDataArray = [];
           this.tableDatasize = 0;
         }
-        // let displayedColumns = ['srNo', 'agency_Name', 'contact_No', 'agency_EmailId', 'action'];
-        // let displayedheaders = ['Sr. No.', 'Name', 'Contact No.', 'Email ID', 'Action'];
+
         let tableData = {
           pageNumber: this.pageNumber,
           img: '', blink: '', badge: '', isBlock: '', pagintion: true,
@@ -113,8 +110,7 @@ export class AgencyRegistrationComponent {
     let ValueData =
       this.agencyReport.reduce(
         (acc: any, obj: any) => [...acc, Object.values(obj).map((value) => value)], []
-      );// Value Name
-    console.log("ValueData", ValueData);
+      );
 
     let objData: any = {
       'topHedingName': 'Agency Report',
@@ -129,7 +125,6 @@ export class AgencyRegistrationComponent {
     this.filterData();
     this.pageNumber = 1;
     this.getTableData();
-    this.agencyReport = [];
   }
 
   childCompInfo(_obj: any) {
@@ -145,7 +140,6 @@ export class AgencyRegistrationComponent {
         this.deleteAgency(_obj);
         break;
       case 'Block':
-        // this.globalDialogOpen();
         break;
     }
   }
