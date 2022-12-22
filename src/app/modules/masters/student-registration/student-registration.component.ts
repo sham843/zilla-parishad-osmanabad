@@ -32,7 +32,7 @@ export class StudentRegistrationComponent {
 
   onPagintion(pageNo: number) {
     this.pageNumber = pageNo;
-    // this.getTableData();
+    this.getTableData();
   }
 
   getTableData(flag?: string) {
@@ -81,11 +81,14 @@ export class StudentRegistrationComponent {
     console.log(obj);
     const dialogRef = this.dialog.open(AddUpdateStudentRegistrationComponent, {
       width: '900px',
+      height:'650px',
       data: obj,
       disableClose: true,
       autoFocus: false
     });
     dialogRef.afterClosed().subscribe((result: any) => {
+      console.log(this.pageNumber);
+      
       console.log(result);
       if (result == 'yes' && obj) {
         this.pageNumber = obj.pageNumber;        

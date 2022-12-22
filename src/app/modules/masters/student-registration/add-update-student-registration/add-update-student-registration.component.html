@@ -1,5 +1,3 @@
-
-<form [formGroup]="stuRegistrationForm" #clear="ngForm">
 <mat-card class="plain-card">
     <mat-card-header class="card-header">
         <div class="d-flex align-items-center justify-content-between w-100">
@@ -11,7 +9,7 @@
             </button>
         </div>
     </mat-card-header>
-    
+    <form [formGroup]="stuRegistrationForm" #clear="ngForm">
         <mat-card-content>
             <h6 class="mb-3">Student Details</h6>
             <div class="row">
@@ -26,7 +24,7 @@
 
                     <mat-form-field appearance="outline" class="w-100 ">
                         <mat-label>District</mat-label>
-                        <mat-select placeholder="select" formControlName="districtId" >
+                        <mat-select placeholder="select" formControlName="districtId">
                             <mat-option *ngFor="let dist of districtArr"
                                 [value]="dist.id">{{dist.district}}</mat-option>
                         </mat-select>
@@ -65,24 +63,21 @@
                 <div class="col-sm-4">
                     <mat-form-field appearance="outline" class="w-100">
                         <mat-label>Student First Name</mat-label>
-                        <input matInput formControlName="fName"
-                        (keypress)="validators.onlyAlphabets($event)"> 
+                        <input matInput formControlName="fName" (keypress)="validators.onlyAlphabets($event)">
                         <mat-error *ngIf="fc['fName'].hasError('required')">Enter First Name</mat-error>
                     </mat-form-field>
                 </div>
                 <div class="col-sm-4">
                     <mat-form-field appearance="outline" class="w-100">
                         <mat-label>Student Middel Name</mat-label>
-                        <input matInput formControlName="mName"
-                        (keypress)="validators.onlyAlphabets($event)">
+                        <input matInput formControlName="mName" (keypress)="validators.onlyAlphabets($event)">
                         <mat-error *ngIf="fc['mName'].hasError('required')">Enter Middel Name</mat-error>
                     </mat-form-field>
                 </div>
-                 <div class="col-sm-4">
+                <div class="col-sm-4">
                     <mat-form-field appearance="outline" class="w-100">
                         <mat-label>Student Last Name</mat-label>
-                        <input matInput formControlName="lName"
-                        (keypress)="validators.onlyAlphabets($event)">
+                        <input matInput formControlName="lName" (keypress)="validators.onlyAlphabets($event)">
                         <mat-error *ngIf="fc['lName'].hasError('required')">Enter Last Name</mat-error>
                     </mat-form-field>
                 </div>
@@ -100,7 +95,7 @@
                         <mat-error *ngIf="fc['m_MName'].hasError('required')">Enter Marathi Middel Name</mat-error>
                     </mat-form-field>
                 </div>
-                 <div class="col-sm-4">
+                <div class="col-sm-4">
                     <mat-form-field appearance="outline" class="w-100">
                         <mat-label>Student Marathi Last Name</mat-label>
                         <input matInput formControlName="l_MName">
@@ -113,9 +108,17 @@
                     <mat-form-field appearance="outline" class="w-100 ">
                         <mat-label>Upload Photo</mat-label>
                         <input matInput formControlName="photo">
-                        <mat-icon matSuffix>
+                        <mat-icon matSuffix *ngIf="!stuRegistrationForm.value.photo">
                             <span class="material-symbols-outlined" (click)="uploadImage.click()">
                                 upload
+                            </span>
+                        </mat-icon>
+                        <mat-icon matSuffix *ngIf="stuRegistrationForm.value.photo">
+                            <span class="material-symbols-outlined" (click)="viewImages('photo')">
+                                visibility
+                            </span>
+                            <span class="material-symbols-outlined" (click)="deleteImage('photo')">
+                                clear
                             </span>
                         </mat-icon>
                     </mat-form-field>
@@ -166,7 +169,7 @@
                     <mat-form-field appearance="outline" class="w-100">
                         <mat-label>Cast</mat-label>
                         <mat-select formControlName="castId">
-                            <mat-option *ngFor="let cast of casteArr" [value]="cast.id" >{{cast.caste}}</mat-option>
+                            <mat-option *ngFor="let cast of casteArr" [value]="cast.id">{{cast.caste}}</mat-option>
                         </mat-select>
                         <mat-error *ngIf="fc['castId'].hasError('required')">Select Caste</mat-error>
                     </mat-form-field>
@@ -175,9 +178,11 @@
                     <mat-form-field appearance="outline" class="w-100 ">
                         <mat-label>physically Disabled</mat-label>
                         <mat-select formControlName="physicallyDisabled">
-                            <mat-option *ngFor="let phy of physicallyDisabled" [value]="phy.id">{{phy.name}}</mat-option>
+                            <mat-option *ngFor="let phy of physicallyDisabled"
+                                [value]="phy.id">{{phy.name}}</mat-option>
                         </mat-select>
-                        <mat-error *ngIf="fc['physicallyDisabled'].hasError('required')">Select Physically Disabled</mat-error>
+                        <mat-error *ngIf="fc['physicallyDisabled'].hasError('required')">Select Physically
+                            Disabled</mat-error>
                     </mat-form-field>
                 </div>
                 <div class="col-sm-4">
@@ -201,9 +206,17 @@
                     <mat-form-field appearance="outline" class="w-100 ">
                         <mat-label>Aadhar Photo</mat-label>
                         <input matInput formControlName="aadharPhoto">
-                        <mat-icon matSuffix>
+                        <mat-icon matSuffix *ngIf="!stuRegistrationForm.value.aadharPhoto">
                             <span class="material-symbols-outlined" (click)="uploadAadhar.click()">
                                 upload
+                            </span>
+                        </mat-icon>
+                        <mat-icon matSuffix *ngIf="stuRegistrationForm.value.aadharPhoto">
+                            <span class="material-symbols-outlined" (click)="viewImages('aadharPhoto')">
+                                visibility
+                            </span>
+                            <span class="material-symbols-outlined" (click)="deleteImage('aadharPhoto')">
+                                clear
                             </span>
                         </mat-icon>
                     </mat-form-field>
@@ -224,23 +237,22 @@
                 <div class="col-sm-4">
                     <mat-form-field appearance="outline" class="w-100">
                         <mat-label>Father Name</mat-label>
-                        <input matInput formControlName="fatherFullName"
-                        (keypress)="validators.onlyAlphabets($event)">
+                        <input matInput formControlName="fatherFullName" (keypress)="validators.onlyAlphabets($event)">
                         <mat-error *ngIf="fc['fatherFullName'].hasError('required')">Enter Father Full Name</mat-error>
                     </mat-form-field>
                 </div>
                 <div class="col-sm-4">
                     <mat-form-field appearance="outline" class="w-100">
                         <mat-label>Father Marathi Name</mat-label>
-                        <input matInput formControlName="m_FatherFullName"> 
-                        <mat-error *ngIf="fc['m_FatherFullName'].hasError('required')">Enter Father Full Name </mat-error>
+                        <input matInput formControlName="m_FatherFullName">
+                        <mat-error *ngIf="fc['m_FatherFullName'].hasError('required')">Enter Father Full Name
+                        </mat-error>
                     </mat-form-field>
                 </div>
                 <div class="col-sm-4">
                     <mat-form-field appearance="outline" class="w-100">
                         <mat-label>Mother Name</mat-label>
-                        <input matInput formControlName="motherName"
-                        (keypress)="validators.onlyAlphabets($event)">
+                        <input matInput formControlName="motherName" (keypress)="validators.onlyAlphabets($event)">
                         <mat-error *ngIf="fc['motherName'].hasError('required')">Enter Mother Name </mat-error>
                     </mat-form-field>
                 </div>
@@ -261,9 +273,9 @@
         </mat-card-content>
         <mat-card-footer class="card-footer">
             <mat-card-actions align="end">
-                <button class="btn btn-outline-secondary me-2" type="button" mat-dialog-close >Cancel</button>
+                <button class="btn btn-outline-secondary me-2" type="button" mat-dialog-close>Cancel</button>
                 <button class="btn btn-main " (click)="onSubmit()">{{editFlag ? 'Update':'Submit'}}</button>
             </mat-card-actions>
         </mat-card-footer>
+    </form>
 </mat-card>
-</form>
