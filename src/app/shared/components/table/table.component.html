@@ -10,7 +10,7 @@
                     <ng-container
                         *ngIf="'srNo' !=columns && tableInfo?.img != columns && tableInfo?.blink != columns && tableInfo?.badge !=  columns">{{element[columns] | dash}}
                     </ng-container>
-                    <ng-container *ngIf="tableInfo?.img == columns"><img src="{{element[columns]}}"></ng-container>
+                    <ng-container *ngIf="tableInfo?.img == columns"><img src="{{element[columns] ? element[columns] : 'assets/images/user.jpg'}}"></ng-container>
                     <ng-container *ngIf="tableInfo?.blink == columns">{{element[columns] }}</ng-container>
                     <ng-container *ngIf="tableInfo?.badge == columns">{{element[columns] }}</ng-container>
                     <ng-container *ngIf="tableInfo?.isBlock == columns">

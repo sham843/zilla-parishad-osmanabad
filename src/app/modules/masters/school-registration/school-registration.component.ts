@@ -32,6 +32,12 @@ export class SchoolRegistrationComponent {
   imgPath : any;
   totalCount: number = 0;
   cardCurrentPage: number = 0;
+  langTypeName : any;
+  displayedColumns = new Array();
+  tableDatasize!: Number;
+  tableData: any;
+  displayedheaders = ['#','Sr. No', 'Name', 'Village', 'Taluka', 'District', 'Action'];
+  displayedheadersMarathi = ['#','अनुक्रमांक', 'शाळेचे नाव', 'गाव', 'तालुका', 'जिल्हा', 'कृती'];
 
   constructor(private dialog: MatDialog, private apiService: ApiService, private errors: ErrorsService,
     private masterService: MasterService,private commonMethodS: CommonMethodsService, private webStorageS : WebStorageService, 
@@ -41,6 +47,7 @@ export class SchoolRegistrationComponent {
     this.getTableData();
     this.getDistrict();
     this.getofficeReport();
+    this.languageChange();
   }
 
   onPagintion(pageNo: number) {
@@ -62,25 +69,40 @@ export class SchoolRegistrationComponent {
         if (res.statusCode == "200") {
           this.tableDataArray = res.responseData.responseData1;
           this.totalCount = res.responseData.responseData2.totalPages;
-          
           tableDatasize = res.responseData.responseData2.pageCount;
         } else {
           this.tableDataArray = [];
           tableDatasize = 0;
         }
-        let displayedColumns = ['#','srNo', 'schoolName', 'village', 'taluka', 'district', 'action'];
-        let displayedheaders = ['#','Sr. No', 'Name', 'Village', 'Taluka', 'District', 'action'];
+        // let displayedColumns = ['docPath','srNo', 'schoolName', 'village', 'taluka', 'district', 'action'];
+        // let displayedheaders = ['#','Sr. No', 'Name', 'Village', 'Taluka', 'District', 'action'];
         let tableData = {
           pageNumber: this.pageNumber,
-          img: '#', blink: '', badge: '', isBlock: '', pagintion: true,
-          displayedColumns: displayedColumns, tableData: this.tableDataArray,
+          img: 'docPath', blink: '', badge: '', isBlock: '', pagintion: true,
+          displayedColumns: this.displayedColumns, tableData: this.tableDataArray,
           tableSize: tableDatasize,
-          tableHeaders: displayedheaders
+          tableHeaders: this.langTypeName == 'English' ? this.displayedheaders : this.displayedheadersMarathi
         };
         this.apiService.tableData.next(tableData);
       },
       error: ((err: any) => { this.errors.handelError(err) })
     });
+  }
+
+  languageChange(){
+    this.webStorageS.langNameOnChange.subscribe(lang =>{
+      this.langTypeName = lang;
+      this.displayedColumns = ['#','Sr. No', this.langTypeName == 'English' ? 'schoolName' : 'm_SchoolName', 'Village', 'Taluka', 'District', 'Action'];
+      this.tableData = {
+        pageNumber: this.pageNumber,
+        img: 'docPath', blink: '', badge: '', isBlock: '', pagintion: true,
+        displayedColumns: this.displayedColumns, tableData: this.tableDataArray,
+        tableSize: this.tableDatasize,
+        tableHeaders: this.langTypeName == 'English' ? this.displayedheaders : this.displayedheadersMarathi
+      };
+      this.apiService.tableData.next(this.tableData);
+
+    })
   }
 
 
