@@ -27,13 +27,12 @@ export class AddUpdateOfficeUsersComponent implements OnInit {
               private error: ErrorsService,
               private dialogRef: MatDialogRef<AddUpdateOfficeUsersComponent>,
               @Inject(MAT_DIALOG_DATA) public data: any, 
-              private webStorageS : WebStorageService){}
+              private webStorageService : WebStorageService){}
               
   ngOnInit(){
     this.defaultForm();
     !this.data ? this.getLevelDrop(): '';
     !this.data ? this.getDistrictDrop(): '';
-    // console.log("dataa",this.data);
     this.getCenterDrop();
   }
 
@@ -61,7 +60,7 @@ export class AddUpdateOfficeUsersComponent implements OnInit {
         "kendraMobileNo": [""],
         "kendraEmailId": [""],
         "centerId": [0],
-        "lan": ["mr-IN"]
+        "lan": [this.webStorageService.languageFlag]
     })
     // this.getLevelDrop();
     // this.getDistrictDrop();
@@ -69,7 +68,7 @@ export class AddUpdateOfficeUsersComponent implements OnInit {
   }
 
   getLevelDrop(){
-    this.masterService.GetAllDesignationLevel(this.webStorageS.languageFlag).subscribe({
+    this.masterService.GetAllDesignationLevel(this.webStorageService.languageFlag).subscribe({
       next: (resp: any)=>{
         console.log("level",resp);
         
@@ -83,7 +82,7 @@ export class AddUpdateOfficeUsersComponent implements OnInit {
 
   getDesignationByLevelId(){
     let levelId = this.officeForm.value.designationLevelId;
-    this.masterService.GetDesignationByLevelId(this.webStorageS.languageFlag, levelId).subscribe({
+    this.masterService.GetDesignationByLevelId(this.webStorageService.languageFlag, levelId).subscribe({
       next: (resp: any)=>{
         console.log("designation : ",resp);
 
@@ -96,7 +95,7 @@ export class AddUpdateOfficeUsersComponent implements OnInit {
   }
 
   getDistrictDrop(){
-    this.masterService.getAllDistrict(this.webStorageS.languageFlag).subscribe({
+    this.masterService.getAllDistrict(this.webStorageService.languageFlag).subscribe({
       next: (resp: any)=>{
         resp.statusCode == "200" ? this.districts = resp.responseData : this.districts = [];
       },
@@ -107,7 +106,7 @@ export class AddUpdateOfficeUsersComponent implements OnInit {
   }
 
   getTalukaDrop(){
-    this.masterService.getAllTaluka(this.webStorageS.languageFlag).subscribe({
+    this.masterService.getAllTaluka(this.webStorageService.languageFlag).subscribe({
       next: (resp: any)=>{
         resp.statusCode == "200" ? this.talukas = resp.responseData : this.talukas = [];
       },
@@ -118,7 +117,7 @@ export class AddUpdateOfficeUsersComponent implements OnInit {
   }
 
   getCenterDrop(){
-    this.masterService.getAllCenter(this.webStorageS.languageFlag).subscribe({
+    this.masterService.getAllCenter(this.webStorageService.languageFlag).subscribe({
       next: (resp: any)=>{
         resp.statusCode == "200" ? this.centers = resp.responseData : this.centers = [];
       },

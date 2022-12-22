@@ -19,9 +19,6 @@ export class OfficeUsersComponent {
   pageNumber: number = 1;
   resultDownloadArr = new Array();
   searchContent = new FormControl('');
-
-  variablename: any;
-
   constructor(private apiService: ApiService, private errors: ErrorsService, private dialog: MatDialog, private commonService: CommonMethodsService,
     private webStorageService: WebStorageService, private downloadFileService: DownloadPdfExcelService) { }
 
@@ -138,8 +135,8 @@ export class OfficeUsersComponent {
     this.apiService.setHttp('GET', 'zp_osmanabad/Office/GetAllOffice' + str, false, false, false, 'baseUrl');
     this.apiService.getHttp().subscribe({
       next: (res: any) => {
+        this.resultDownloadArr = [];
         if (res.statusCode == "200") {
-          console.log("data coming",res);
           let data = res.responseData.responseData1;
           data.map((ele: any, i: any)=>{
             let obj = {
@@ -151,7 +148,6 @@ export class OfficeUsersComponent {
             }
             this.resultDownloadArr.push(obj);
           });
-          console.log("push array",this.resultDownloadArr);
         }
       },
       error: ((err: any) => { this.errors.handelError(err.message) })
@@ -163,9 +159,7 @@ export class OfficeUsersComponent {
         let ValueData =
           this.resultDownloadArr.reduce(
             (acc: any, obj: any) => [...acc, Object.values(obj).map((value) => value)], []
-          );// Value Name
-          console.log("ValueData", ValueData);
-          
+          );       
           let objData:any = {
             'topHedingName': 'Office Data',
             'createdDate':'Created on:'+new Date()
@@ -175,13 +169,12 @@ export class OfficeUsersComponent {
 
   filterData(){
     this.getTableData();
-    this.resultDownloadArr = [];
     this.getofficeReport();
   }
 
   clearFilterData() {
     this.searchContent.setValue('');
     this.getTableData();
-
+    this.getofficeReport();
   }
 }
