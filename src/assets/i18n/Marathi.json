@@ -6,6 +6,7 @@
         "addAgency" : "एजन्सी जोडा",
         "filter" : "",
         "updateAgency" : "अपडेट एजन्सी",
-        "agencyName" : "एजन्सीचे नाव"
+        "agencyName" : "एजन्सीचे नाव",
+        "agencyName(Marathi)" : "एजन्सीचे नाव (मराठी)"
     }
 }

@@ -5,6 +5,7 @@ import { ApiService } from 'src/app/core/services/api.service';
 import { CommonMethodsService } from 'src/app/core/services/common-methods.service';
 import { ErrorsService } from 'src/app/core/services/errors.service';
 import { ValidationService } from 'src/app/core/services/validation.service';
+import { WebStorageService } from 'src/app/core/services/web-storage.service';
 
 @Component({
   selector: 'app-forgot-password',
@@ -25,12 +26,13 @@ export class ForgotPasswordComponent {
   timeLeft: number = 60;
   interval: any;
   otpStatus: boolean = false;
+  webData = this.webStorage.createdByProps();
   obj = {
-    "createdBy": 0,
-    "modifiedBy": 0,
-    "createdDate": new Date(),
-    "modifiedDate": new Date(),
-    "isDeleted": true,
+    "createdBy": this.webData.createdBy,
+    "modifiedBy": this.webData.modifiedBy,
+    "createdDate": this.webData.createdDate,
+    "modifiedDate": this.webData.modifiedDate,
+    "isDeleted": this.webData.isDeleted,
     "id": 0,
     "mobileNo": "",
     "otp": "",
@@ -41,7 +43,7 @@ export class ForgotPasswordComponent {
   }
 
   constructor(private apiService: ApiService, private common: CommonMethodsService, private router: Router,
-    private errors: ErrorsService, public validation: ValidationService, private fb: FormBuilder) { }
+    private errors: ErrorsService, public validation: ValidationService, private fb: FormBuilder, public webStorage : WebStorageService) { }
 
 
   ngOnInit() {
@@ -77,7 +79,6 @@ export class ForgotPasswordComponent {
         this.otpField = true;
       }
       else {
-        // this.otpField = false;
         this.timeLeft = --this.timeLeft
       }
     }, 1000);
@@ -95,7 +96,7 @@ export class ForgotPasswordComponent {
       this.apiService.setHttp('post', 'api/OtpTran', false, this.obj, false, 'baseUrl');
       this.apiService.getHttp().subscribe({
         next: (res: any) => {
-          res.statusCode == 200 ? (this.common.snackBar(res.statusMessage, 0),this.setFlag(), this.startTimer()) : this.common.snackBar(res.statusMessage, 1);
+          res.statusCode == 200 ? (this.common.snackBar(res.statusMessage, 0),this.setFlag(flag), this.startTimer()) : this.common.snackBar(res.statusMessage, 1);
         },
         error: ((err: any) => { this.errors.handelError(err) })
       })
@@ -104,11 +105,11 @@ export class ForgotPasswordComponent {
 
   pauseTimer() {
     clearInterval(this.interval);
-    this.mobileForm.value.mobileNo.setValue('');
+   this.fcMobile['mobileNo'].setValue('');
   }
 
-  setFlag(){
-   this.sendOtpFlag ?(this.mobileField = false, this.otpField = true, this.otpStatus = true) :'';
+  setFlag(flag? :any){
+   this.sendOtpFlag || flag == 'resend' ?(this.mobileField = false, this.otpField = true, this.otpStatus = true) :'';
    this.verifyOtpflag ? (this.mobileField = false, this.otpField = false, this.passwordField = true):'';
   }
 

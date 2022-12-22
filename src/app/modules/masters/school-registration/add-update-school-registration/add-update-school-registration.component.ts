@@ -49,8 +49,8 @@ export class AddUpdateSchoolRegistrationComponent {
   }
 
   formFeild() {
-    // let data = this.webStorageS.createdByProps();
-    // console.log("data : ",data);
+    let data = this.webStorageS.createdByProps();
+    console.log("data : ",data);
 
     this.schoolRegForm = this.fb.group({
       "id": 0,
@@ -71,11 +71,11 @@ export class AddUpdateSchoolRegistrationComponent {
       "highestClass": 0,
       "timesStamp": new Date(),
       "docPath": [''],
-      "createdBy": 0,
-      "createdDate": new Date(),
-      "modifiedBy": 0,
-      "modifiedDate": new Date(),
-      "isDeleted": false
+      "createdBy": data.createdBy,
+      "createdDate": data.createdDate,
+      "modifiedBy": data.modifiedBy,
+      "modifiedDate": data.modifiedDate,
+      "isDeleted": data.isDeleted
     })
   }
 
@@ -134,13 +134,15 @@ export class AddUpdateSchoolRegistrationComponent {
   getVillage() {
     this.masterService.getAllVillage(this.webStorageS.languageFlag, this.schoolRegForm.value.talukaId).subscribe({
       next: (res: any) => {
-        if (res.statusCode == 200) {
-          this.villageArr = res.responseData;
-          if (this.editFlag == true) {
-            this.f['villageId'].setValue(this.data.villageId);
-            this.getSchoolType();
-          }
-        }
+        res.statusCode == "200" ? this.villageArr = res.responseData : this.villageArr = [];
+        this.editFlag ? (this.f['villageId'].setValue(this.data.villageId), this.getSchoolType()) : '';
+        // if (res.statusCode == 200) {
+        //   this.villageArr = res.responseData;
+        //   if (this.editFlag == true) {
+        //     this.f['villageId'].setValue(this.data.villageId);
+        //     this.getSchoolType();
+        //   }
+        // }
       },
       error: ((err: any) => { this.errors.handelError(err) })
     });
@@ -149,13 +151,15 @@ export class AddUpdateSchoolRegistrationComponent {
   getSchoolType() {
     this.masterService.getAllSchoolType(this.webStorageS.languageFlag).subscribe({
       next: (res: any) => {
-        if (res.statusCode == 200) {
-          this.schoolTypeArr = res.responseData;
-          if (this.editFlag == true) {
-            this.f['s_TypeId'].setValue(this.data.s_TypeId);
-            this.getCategoryDes();
-          }
-        }
+        res.statusCode == "200" ? this.schoolTypeArr = res.responseData : this.schoolTypeArr = [];
+        this.editFlag ? (this.f['s_TypeId'].setValue(this.data.s_TypeId), this.getCategoryDes()) : '';
+        // if (res.statusCode == 200) {
+        //   this.schoolTypeArr = res.responseData;
+        //   if (this.editFlag == true) {
+        //     this.f['s_TypeId'].setValue(this.data.s_TypeId);
+        //     this.getCategoryDes();
+        //   }
+        // }
       },
       error: ((err: any) => { this.errors.handelError(err) })
     });
@@ -164,13 +168,15 @@ export class AddUpdateSchoolRegistrationComponent {
   getCategoryDes() {
     this.masterService.GetSchoolCategoryDescById(this.webStorageS.languageFlag).subscribe({
       next: (res: any) => {
-        if (res.statusCode == 200) {
-          this.categoryArr = res.responseData;
-          if (this.editFlag == true) {
-            this.f['s_CategoryId'].setValue(this.data.s_CategoryId);
-            this.getSchoolMngDesc();
-          }
-        }
+        res.statusCode == "200" ? this.categoryArr = res.responseData : this.categoryArr = [];
+        this.editFlag ? (this.f['s_CategoryId'].setValue(this.data.s_CategoryId), this.getSchoolMngDesc()) : '';
+        // if (res.statusCode == 200) {
+        //   this.categoryArr = res.responseData;
+        //   if (this.editFlag == true) {
+        //     this.f['s_CategoryId'].setValue(this.data.s_CategoryId);
+        //     this.getSchoolMngDesc();
+        //   }
+        // }
       },
       error: ((err: any) => { this.errors.handelError(err) })
     });
@@ -179,13 +185,15 @@ export class AddUpdateSchoolRegistrationComponent {
   getSchoolMngDesc() {
     this.masterService.GetSchoolMngDescById(this.webStorageS.languageFlag).subscribe({
       next: (res: any) => {
-        if (res.statusCode == 200) {
-          this.schoolMngArr = res.responseData;
-          if (this.editFlag == true) {
-            this.f['s_ManagementId'].setValue(this.data.s_ManagementId);
-            this.getGroupClass();
-          }
-        }
+        res.statusCode == "200" ? this.schoolMngArr = res.responseData : this.schoolMngArr = [];
+        this.editFlag ? (this.f['s_ManagementId'].setValue(this.data.s_ManagementId), this.getGroupClass()) : '';
+        // if (res.statusCode == 200) {
+        //   this.schoolMngArr = res.responseData;
+        //   if (this.editFlag == true) {
+        //     this.f['s_ManagementId'].setValue(this.data.s_ManagementId);
+        //     this.getGroupClass();
+        //   }
+        // }
       },
       error: ((err: any) => { this.errors.handelError(err) })
     });
@@ -194,12 +202,14 @@ export class AddUpdateSchoolRegistrationComponent {
   getGroupClass() {
     this.masterService.getAllGroupClass(this.webStorageS.languageFlag).subscribe({
       next: (res: any) => {
-        if (res.statusCode == 200) {
-          this.groupclassArr = res.responseData;
-          if (this.editFlag == true) {
-            this.f['g_ClassId'].setValue(this.data.g_ClassId);
-          }
-        }
+        res.statusCode == "200" ? this.groupclassArr = res.responseData : this.groupclassArr = [];
+        this.editFlag ? this.f['g_ClassId'].setValue(this.data.g_ClassId) : '';
+        // if (res.statusCode == 200) {
+        //   this.groupclassArr = res.responseData;
+        //   if (this.editFlag == true) {
+        //     this.f['g_ClassId'].setValue(this.data.g_ClassId);
+        //   }
+        // }
       },
       error: ((err: any) => { this.errors.handelError(err) })
     });
@@ -244,11 +254,8 @@ export class AddUpdateSchoolRegistrationComponent {
   onEdit() {
     this.editFlag = true;
     console.log("editObj : ", this.data);
-
-    this.data.docPath ? this.schoolRegForm.value.docPath = this.data.docPath : '';
-    console.log("docPath : ", this.data.docPath);
-    console.log("Form docPath : ", this.schoolRegForm.value.docPath);
     
+    this.data.docPath ? this.schoolRegForm.value.docPath = this.data.docPath : '';
     
     this.data.docPath ? this.showAddRemImg = true :  this.showAddRemImg = false; 
 

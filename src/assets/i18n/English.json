@@ -6,7 +6,8 @@
         "addAgency" : "Add Agency" ,
         "filter" : "Filter",
         "updateAgency" :"Update Agency",
-        "agencyName" : "Agency Name"
+        "agencyName" : "Agency Name",
+        "agencyName(Marathi)" : "Agency Name(Marathi)"
 
     }
 }

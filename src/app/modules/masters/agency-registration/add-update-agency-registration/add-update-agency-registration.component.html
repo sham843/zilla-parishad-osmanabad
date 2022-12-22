@@ -17,16 +17,16 @@
             <div class="row">
                 <div class="col-sm-4">
                     <mat-form-field appearance="outline" class="w-100">
-                        <mat-label>Agency Name</mat-label>
-                        <input matInput formControlName="agency_Name" placeholder="Agency Name" maxlength="50" (keypress)="validation.noFirstSpaceAllow($event)">
+                        <mat-label>{{'Labels.agencyName' | translate}}</mat-label>
+                        <input matInput formControlName="agency_Name" placeholder="{{'Labels.agencyName' | translate}}" maxlength="50" (keypress)="validation.noFirstSpaceAllow($event)">
                         <mat-error *ngIf="fc['agency_Name'].hasError('required')"> Agency Name Is Required</mat-error>
                         <mat-error *ngIf="fc['agency_Name'].hasError('pattern')"> Please Enter Valid Agency Name</mat-error>
                     </mat-form-field>
                 </div>
                 <div class="col-sm-4">
                     <mat-form-field appearance="outline" class="w-100">
-                        <mat-label>Agency Name(Marathi)</mat-label>
-                        <input matInput formControlName="m_Agency_Name" placeholder="Agency Name(Marathi)" maxlength="50" (keypress)="validation.noFirstSpaceAllow($event)">
+                        <mat-label>{{'Labels.agencyName(Marathi)' | translate}}</mat-label>
+                        <input matInput formControlName="m_Agency_Name" placeholder="{{'Labels.agencyName(Marathi)' | translate}}" maxlength="50" (keypress)="validation.noFirstSpaceAllow($event)">
                         <mat-error *ngIf="fc['m_Agency_Name'].hasError('required')"> Agency Name Is Required</mat-error>
                         <!-- <mat-error *ngIf="fc['m_Agency_Name'].hasError('pattern')"> Please Enter Valid Agency Name</mat-error> -->
                     </mat-form-field>
