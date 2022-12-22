@@ -112,11 +112,31 @@
                 </div>
             </div>
 
-            <mat-card-subtitle>Educational and Professional Details</mat-card-subtitle>
+            <mat-card-subtitle class="mb-2">Educational and Professional Details</mat-card-subtitle>
 
             <div formArrayName="teacherDetails" *ngFor="let item of itemsForm.controls;let i = index;">
             <div [formGroupName]="i">
-            <div class="row mt-2">
+                <div class="row">
+                    <div class="col-sm-4">
+                        <mat-form-field appearance="outline" class="w-100 ">
+                            <mat-label>District</mat-label>
+                            <mat-select placeholder="Select">
+                                <mat-option value="one">Bsc Computer</mat-option>
+                                <mat-option value="two"> B.Tech Computer</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-sm-4">
+                        <mat-form-field appearance="outline" class="w-100 ">
+                            <mat-label>Taluka</mat-label>
+                            <mat-select placeholder="Select">
+                                <mat-option value="one">Bsc Computer</mat-option>
+                                <mat-option value="two"> B.Tech Computer</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                </div>
+            <div class="row">
                 <div class="col-sm-4">
                     <mat-form-field appearance="outline" class="w-100 ">
                         <mat-label>Working School Name</mat-label>

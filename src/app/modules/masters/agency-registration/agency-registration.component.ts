@@ -20,6 +20,14 @@ export class AgencyRegistrationComponent {
   pageNumber: number = 1;
   filterForm!: FormGroup;
   agencyReport = new Array();
+  displayedColumns = new Array();
+  tableData: any;
+  tableDataArray = new Array();
+  tableDatasize!: Number;
+  displayedheadersEnglish = ['Sr. No.', 'Name', 'Contact No.', 'Email ID', 'Action'];
+  displayedheadersMarathi = ['अनुक्रमांक', 'नाव', 'संपर्क क्र.', 'ई - मेल आयडी', 'कृती'];
+  langTypeName: any;
+
   constructor(private dialog: MatDialog, private apiService: ApiService, private webStroageService: WebStorageService, private downloadPdfservice: DownloadPdfExcelService,
     private errors: ErrorsService, private fb: FormBuilder, private common: CommonMethodsService, public validation: ValidationService,
     ) { }
@@ -27,6 +35,7 @@ export class AgencyRegistrationComponent {
   ngOnInit() {
     this.filterData();
     this.getTableData();
+    this.getTableDataMarathi();
   }
 
   filterData() {
@@ -35,11 +44,26 @@ export class AgencyRegistrationComponent {
     })
   }
 
+  getTableDataMarathi(){
+    this.webStroageService.langNameOnChange.subscribe(lang => {
+      this.langTypeName = lang;
+      this.displayedColumns = ['srNo', this.langTypeName == 'English' ? 'agency_Name' : 'm_Agency_Name', 'contact_No','agency_EmailId','action'];
+        this.tableData = {
+          pageNumber: this.pageNumber,
+          img: '', blink: '', badge: '', isBlock: '', pagintion: true,
+          displayedColumns: this.displayedColumns, tableData: this.tableDataArray,
+          tableSize: this.tableDatasize,
+          tableHeaders: this.langTypeName == 'English' ? this.displayedheadersEnglish : this.displayedheadersMarathi,
+        };
+      this.apiService.tableData.next(this.tableData);
+     });
+  }
+
   getTableData(flag?: string) {
     this.pageNumber = flag == 'filter' ? 1 : this.pageNumber;
     flag == 'filter' ? this.agencyReport = [] : ''
-    let tableDataArray = new Array();
-    let tableDatasize!: Number;
+    // let tableDataArray = new Array();
+    // let tableDatasize!: Number;
     let obj = this.filterForm.value;
     let str = `pageno=${this.pageNumber}&pagesize=10&&TextSearch=${obj.searchText}&lan=${this.webStroageService.languageFlag}`;
     let reportStr = `TextSearch=${obj.searchText}`
@@ -47,8 +71,8 @@ export class AgencyRegistrationComponent {
     this.apiService.getHttp().subscribe({
       next: (res: any) => {
         if (res.statusCode == "200") {
-          tableDataArray = res.responseData.responseData1;
-          tableDatasize = res.responseData.responseData2.pageCount;
+          this.tableDataArray = res.responseData.responseData1;
+          this.tableDatasize = res.responseData.responseData2.pageCount;
           let data: [] = res.responseData.responseData1;
           data.map((ele: any, i: any) => {
             let obj = {
@@ -60,17 +84,17 @@ export class AgencyRegistrationComponent {
             this.agencyReport.push(obj);
           });
         } else {
-          tableDataArray = [];
-          tableDatasize = 0;
+          this.tableDataArray = [];
+          this.tableDatasize = 0;
         }
-        let displayedColumns = ['srNo', 'agency_Name', 'contact_No', 'agency_EmailId', 'action'];
-        let displayedheaders = ['Sr. No.', 'Name', 'Contact No.', 'Email ID', 'Action'];
+        // let displayedColumns = ['srNo', 'agency_Name', 'contact_No', 'agency_EmailId', 'action'];
+        // let displayedheaders = ['Sr. No.', 'Name', 'Contact No.', 'Email ID', 'Action'];
         let tableData = {
           pageNumber: this.pageNumber,
           img: '', blink: '', badge: '', isBlock: '', pagintion: true,
-          displayedColumns: displayedColumns, tableData: tableDataArray,
-          tableSize: tableDatasize,
-          tableHeaders: displayedheaders
+          displayedColumns: this.displayedColumns, tableData: this.tableDataArray,
+          tableSize: this.tableDatasize,
+          tableHeaders: this.langTypeName == 'English' ? this.displayedheadersEnglish : this.displayedheadersMarathi
         };
         this.apiService.tableData.next(tableData);
       },
