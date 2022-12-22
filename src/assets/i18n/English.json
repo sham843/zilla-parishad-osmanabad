@@ -1,5 +1,8 @@
 {
     "Labels": {
-        "dashboard": "Dashboard"
+        "dashboard": "Dashboard",
+        "agencyRegistration" : "Agency Registration",
+        "DesignationMaster": "Designation Master"
+
     }
 }
