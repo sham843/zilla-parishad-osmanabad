@@ -36,7 +36,7 @@ export class SchoolRegistrationComponent {
   displayedColumns = new Array();
   tableDatasize!: Number;
   tableData: any;
-  displayedheaders = ['#','Sr. No', 'Name', 'Village', 'Taluka', 'District', 'Action'];
+  displayedheadersEnglish = ['#','Sr. No', 'Name', 'Village', 'Taluka', 'District', 'Action'];
   displayedheadersMarathi = ['#','अनुक्रमांक', 'शाळेचे नाव', 'गाव', 'तालुका', 'जिल्हा', 'कृती'];
 
   constructor(private dialog: MatDialog, private apiService: ApiService, private errors: ErrorsService,
@@ -81,7 +81,7 @@ export class SchoolRegistrationComponent {
           img: 'docPath', blink: '', badge: '', isBlock: '', pagintion: true,
           displayedColumns: this.displayedColumns, tableData: this.tableDataArray,
           tableSize: tableDatasize,
-          tableHeaders: this.langTypeName == 'English' ? this.displayedheaders : this.displayedheadersMarathi
+          tableHeaders: this.langTypeName == 'English' ? this.displayedheadersEnglish : this.displayedheadersMarathi
         };
         this.apiService.tableData.next(tableData);
       },
@@ -92,13 +92,13 @@ export class SchoolRegistrationComponent {
   languageChange(){
     this.webStorageS.langNameOnChange.subscribe(lang =>{
       this.langTypeName = lang;
-      this.displayedColumns = ['#','Sr. No', this.langTypeName == 'English' ? 'schoolName' : 'm_SchoolName', 'Village', 'Taluka', 'District', 'Action'];
+      this.displayedColumns = ['#','srNo', this.langTypeName == 'English' ? 'schoolName' : 'm_SchoolName', 'village', 'taluka', 'district', 'action'];
       this.tableData = {
         pageNumber: this.pageNumber,
         img: 'docPath', blink: '', badge: '', isBlock: '', pagintion: true,
         displayedColumns: this.displayedColumns, tableData: this.tableDataArray,
         tableSize: this.tableDatasize,
-        tableHeaders: this.langTypeName == 'English' ? this.displayedheaders : this.displayedheadersMarathi
+        tableHeaders: this.langTypeName == 'English' ? this.displayedheadersEnglish : this.displayedheadersMarathi
       };
       this.apiService.tableData.next(this.tableData);
 
