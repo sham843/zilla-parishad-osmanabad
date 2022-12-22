@@ -16,8 +16,11 @@
         "district" : "District",
         "taluka" : "Taluka",
         "address" : "Address",
+        "cancel": "Cancel",
         "submit" : "Submit",
-        "update" : "Update"
+        "update" : "Update",
+        "agencyNameIsRequired" : "Agency Name Is Required",
+        "contactPersonNameIsRequired" : "Contact Person Name Is Required"
 
     }
 }
