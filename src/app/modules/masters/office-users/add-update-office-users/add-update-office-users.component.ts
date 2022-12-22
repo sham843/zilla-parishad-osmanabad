@@ -18,6 +18,8 @@ export class AddUpdateOfficeUsersComponent implements OnInit {
   officeForm!: FormGroup;
   districts = new Array();
   talukas = new Array();
+  centers = new Array();
+
   constructor(private masterService: MasterService,
               private fb: FormBuilder,
               private apiService: ApiService,
@@ -31,7 +33,8 @@ export class AddUpdateOfficeUsersComponent implements OnInit {
     this.defaultForm();
     !this.data ? this.getLevelDrop(): '';
     !this.data ? this.getDistrictDrop(): '';
-    console.log("dataa",this.data);
+    // console.log("dataa",this.data);
+    this.getCenterDrop();
   }
 
   defaultForm(){
@@ -82,6 +85,8 @@ export class AddUpdateOfficeUsersComponent implements OnInit {
     let levelId = this.officeForm.value.designationLevelId;
     this.masterService.GetDesignationByLevelId(this.webStorageS.languageFlag, levelId).subscribe({
       next: (resp: any)=>{
+        console.log("designation : ",resp);
+
         resp.statusCode == "200" ? this.designations = resp.responseData : this.designations = [];
       },
       error: ( error : any)=>{
@@ -105,6 +110,17 @@ export class AddUpdateOfficeUsersComponent implements OnInit {
     this.masterService.getAllTaluka(this.webStorageS.languageFlag).subscribe({
       next: (resp: any)=>{
         resp.statusCode == "200" ? this.talukas = resp.responseData : this.talukas = [];
+      },
+      error: ( error : any)=>{
+        console.log("error is :", error);  
+      }
+    });
+  }
+
+  getCenterDrop(){
+    this.masterService.getAllCenter(this.webStorageS.languageFlag).subscribe({
+      next: (resp: any)=>{
+        resp.statusCode == "200" ? this.centers = resp.responseData : this.centers = [];
       },
       error: ( error : any)=>{
         console.log("error is :", error);  

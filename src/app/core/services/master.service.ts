@@ -257,5 +257,50 @@ export class MasterService {
     });
   }
 
+  getCastCategoryDescById(langFlag: string){
+    return new Observable((obj) => {
+      this.apiService.setHttp('GET', 'zp-osmanabad/master/GetCastCategoryDescById?flag_lang=' + langFlag, false, false, false, 'baseUrl');
+      this.apiService.getHttp().subscribe({
+        next: (res: any) => { if (res.statusCode == "200") {obj.next(res) } else { obj.error(res); } },
+        error: (e: any) => { obj.error(e) }
+      });
+    });
+  }
+
+  getAllSchoolByCriteria(langFlag: string, TalukaId: number, VillageId: number, CenterId: number  ){
+    return new Observable((obj) => {
+      this.apiService.setHttp('GET', 'zp-osmanabad/master/GetAllSchoolByCriteria?flag_lang='+langFlag+'+&TalukaId='+TalukaId+'&VillageId='+VillageId+'&CenterId='+CenterId+'', false, false, false, 'baseUrl');
+      this.apiService.getHttp().subscribe({
+        next: (res: any) => { if (res.statusCode == "200") {obj.next(res) } else { obj.error(res); } },
+        error: (e: any) => { obj.error(e) }
+      });
+    });
+  }
+
+  getEducationalQualificationById(langFlag: string){
+    return new Observable((obj) => {
+      this.apiService.setHttp('GET', 'zp-osmanabad/master/GetEducationalQualificationById?flag_lang=' +langFlag, false, false, false, 'baseUrl');
+      this.apiService.getHttp().subscribe({
+        next: (res: any) => { if (res.statusCode == "200") {obj.next(res) } else { obj.error(res); } },
+        error: (e: any) => { obj.error(e) }
+      });
+    });
+  }
+
+  
+  getProfessinalQualificationById(langFlag: string){
+    return new Observable((obj) => {
+      this.apiService.setHttp('GET', 'zp-osmanabad/master/GetProfessinalQualificationById?flag_lang=' +langFlag, false, false, false, 'baseUrl');
+      this.apiService.getHttp().subscribe({
+        next: (res: any) => { if (res.statusCode == "200") {obj.next(res) } else { obj.error(res); } },
+        error: (e: any) => { obj.error(e) }
+      });
+    });
+  }
+
+
+  
+
+  
 
 }

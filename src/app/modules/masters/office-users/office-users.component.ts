@@ -20,6 +20,8 @@ export class OfficeUsersComponent {
   resultDownloadArr = new Array();
   searchContent = new FormControl('');
 
+  variablename: any;
+
   constructor(private apiService: ApiService, private errors: ErrorsService, private dialog: MatDialog, private commonService: CommonMethodsService,
     private webStorageService: WebStorageService, private downloadFileService: DownloadPdfExcelService) { }
 
@@ -137,18 +139,19 @@ export class OfficeUsersComponent {
     this.apiService.getHttp().subscribe({
       next: (res: any) => {
         if (res.statusCode == "200") {
-          console.log(res);
-          let data:[] = res.responseData.responseData1;
+          console.log("data coming",res);
+          let data = res.responseData.responseData1;
           data.map((ele: any, i: any)=>{
             let obj = {
               "Sr.No": i+1,
-              "Name": ele.name,
-              "Designation": ele.designation,
-              "Contact No": ele.mobileNo,
-              "Email ID": ele.emailId,
+              "name": ele.name,
+              "designation": ele.designation,
+              "mobileNo": ele.mobileNo,
+              "emailId": ele.emailId,
             }
             this.resultDownloadArr.push(obj);
           });
+          console.log("push array",this.resultDownloadArr);
         }
       },
       error: ((err: any) => { this.errors.handelError(err.message) })
@@ -170,8 +173,15 @@ export class OfficeUsersComponent {
         this.downloadFileService.downLoadPdf(keyPDFHeader, ValueData, objData);
   }
 
+  filterData(){
+    this.getTableData();
+    this.resultDownloadArr = [];
+    this.getofficeReport();
+  }
+
   clearFilterData() {
     this.searchContent.setValue('');
     this.getTableData();
+
   }
 }
