@@ -31,7 +31,17 @@
         "emailIdIsRequired" : "Email Id Is Required",
         "pleaseSelectTaluka" : "Please Select Taluka",
         "addressIsRequired" :"Address Is Required",
-        "maximummLength500Characters" : "Maximumm Length Should Be Less Than 500 Characters"
+        "maximummLength500Characters" : "Maximumm Length Should Be Less Than 500 Characters",
+        "clear":"Clear",
+        "AddDesignation":"Add Designation",
+        "SelectDesignation": "Select Designation",
+        "RegisterDesignation":"Register Designation",
+        "DesignationLevel":"Designation Level",
+        "DesignationLevelReq":"Designation Level Required",
+        "DesignationType":"DesignationType",
+        "DesignationTypeReq":"Designation Type is Required",
+        "AddDesignation(Marathi)":"Add Designation (Marathi)",
+        "DesignationTypeMarathiReq":"Designation Type Marathi Required"
 
     }
 }

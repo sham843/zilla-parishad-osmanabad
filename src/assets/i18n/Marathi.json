@@ -4,7 +4,7 @@
         "agencyRegistration" : "एजन्सी नोंदणी",
         "DesignationMaster": "पदनाम मास्टर",
         "addAgency" : "एजन्सी जोडा",
-        "filter" : "",
+        "filter" : "शोधत आहे",
         "updateAgency" : "अपडेट एजन्सी",
         "agencyName" : "एजन्सीचे नाव",
         "agencyName(Marathi)" : "एजन्सीचे नाव (मराठी)",
@@ -31,7 +31,19 @@
         "emailIdIsRequired" :"ईमेल आयडी आवश्यक आहे",
         "pleaseSelectTaluka" : "कृपया तालुका निवडा",
         "addressIsRequired" : "पत्ता आवश्यक आहे",
-        "maximummLength500Characters": "कमाल लांबी 500 वर्णांपेक्षा कमी असावी"
+        "maximummLength500Characters": "कमाल लांबी 500 वर्णांपेक्षा कमी असावी",
+        "clear":"स्पष्ट केले",
+        "AddDesignation":"पदनाम जोडा",
+        "SelectDesignation": "पदनाम निवडा",
+        "RegisterDesignation":"नोंदणी पदनाम",
+        "DesignationLevel":"पदनाम स्तर",
+        "DesignationLevelReq":"पदनाम स्तर आवश्यक आहे",
+        "DesignationType":"पदनाम प्रकार",
+        "DesignationTypeReq":"पदनाम प्रकार आवश्यक आहे",
+        "AddDesignation(Marathi)":"पदनाम जोडा (मराठी)",
+        "DesignationTypeMarathiReq":"पदनाम प्रकार मराठी आवश्यक आहे"
+
+
        
 
     }

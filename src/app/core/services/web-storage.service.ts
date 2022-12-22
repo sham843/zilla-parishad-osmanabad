@@ -25,7 +25,7 @@ export class WebStorageService {
   }
 
   getLangauge(){
-    return this.language.asObservable();
+    return this.languageFlag;
   }
 
   checkUserIsLoggedIn() { // check user isLoggedIn or not
