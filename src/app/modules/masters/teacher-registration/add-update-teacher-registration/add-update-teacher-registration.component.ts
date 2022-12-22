@@ -18,13 +18,19 @@ export class AddUpdateTeacherRegistrationComponent {
   districtArray = new Array();
   talukaArray = new Array();
   villageArray =new Array();
+  schoolArray = new Array();
   clusterArray  =new Array();
   designationArray = new Array();
   GradateTeacherSubjectArray = new Array();
   payScaleArray = new Array();
+  casteArray = new Array();
   twelveBranchArray  = new Array();
   optionalSubjectArray = new Array();
   degreeUniversityArray = new Array();
+  educationQualificationArray = new Array();
+  profesionalQualificationArray = new Array();
+  castCategoryArray = new Array();
+  casteVerification:any=[{id : 1 ,name :'yes' , isDisabled :'true'},{id : 2 ,name :'no' , isDisabled :'false'}] ;
 
   constructor(private masterService :MasterService, private commonMethod :CommonMethodsService, private errorHandler :ErrorsService,
    private fb : FormBuilder, public dialogRef: MatDialogRef<AddUpdateTeacherRegistrationComponent>,
@@ -32,8 +38,10 @@ export class AddUpdateTeacherRegistrationComponent {
 
   ngOnInit() {
     this.formData();
-    //  this.getGender();
+     this.getGender();
   }
+
+ 
 
   get itemsForm(): FormArray {
     return this.teacherRegForm.get('teacherDetails') as FormArray;
@@ -173,11 +181,25 @@ export class AddUpdateTeacherRegistrationComponent {
   }
 
   getVillage() { 
-    this.masterService.getAllTaluka('EN').subscribe({
+    this.masterService.getAllVillage('EN',0).subscribe({
       next: ((res: any) => {
         if (res.statusCode == '200' && res.responseData.length) {
           this.villageArray = res.responseData;
-          console.log("villageArray", this.villageArray);   
+          console.log("villageArray", this.villageArray);  
+          this.getAllSchool(); 
+        }
+      }), error: (error: any) => {
+        this.commonMethod.checkEmptyData(error.statusText) == false ? this.errorHandler.handelError(error.statusCode) : this.commonMethod.snackBar(error.statusText, 1);
+      }
+    })
+  }
+  getAllSchool() { 
+    this.masterService.getAllSchoolType('EN').subscribe({
+      next: ((res: any) => {
+        if (res.statusCode == '200' && res.responseData.length) {
+          this.schoolArray = res.responseData;
+          console.log("schoolArray", this.schoolArray);
+          this.getCluster();
         }
       }), error: (error: any) => {
         this.commonMethod.checkEmptyData(error.statusText) == false ? this.errorHandler.handelError(error.statusCode) : this.commonMethod.snackBar(error.statusText, 1);
@@ -190,7 +212,8 @@ export class AddUpdateTeacherRegistrationComponent {
       next: ((res: any) => {
         if (res.statusCode == '200' && res.responseData.length) {
           this.clusterArray = res.responseData;
-          console.log("clusterArray", this.clusterArray);   
+          console.log("clusterArray", this.clusterArray);
+          this.getDesignation();
         }
       }), error: (error: any) => {
         this.commonMethod.checkEmptyData(error.statusText) == false ? this.errorHandler.handelError(error.statusCode) : this.commonMethod.snackBar(error.statusText, 1);
@@ -204,6 +227,7 @@ export class AddUpdateTeacherRegistrationComponent {
         if (res.statusCode == '200' && res.responseData.length) {
           this.designationArray = res.responseData;
           console.log("designationArray", this.designationArray);   
+          this.getGraduateTeacherSubject();
         }
       }), error: (error: any) => {
         this.commonMethod.checkEmptyData(error.statusText) == false ? this.errorHandler.handelError(error.statusCode) : this.commonMethod.snackBar(error.statusText, 1);
@@ -216,7 +240,9 @@ export class AddUpdateTeacherRegistrationComponent {
       next: ((res: any) => {
         if (res.statusCode == '200' && res.responseData.length) {
           this.GradateTeacherSubjectArray = res.responseData;
-          console.log("GradateTeacherSubjectArray", this.GradateTeacherSubjectArray);   
+          console.log("GradateTeacherSubjectArray", this.GradateTeacherSubjectArray);  
+          // this.getGraduatepayScale();
+          this.getCaste();
         }
       }), error: (error: any) => {
         this.commonMethod.checkEmptyData(error.statusText) == false ? this.errorHandler.handelError(error.statusCode) : this.commonMethod.snackBar(error.statusText, 1);
@@ -224,25 +250,27 @@ export class AddUpdateTeacherRegistrationComponent {
     })
   }
 
-  getGraduatepayScale() { 
-    this.masterService.getPayscaleCategoryDescById('EN').subscribe({
-      next: ((res: any) => {
-        if (res.statusCode == '200' && res.responseData.length) {
-          this.payScaleArray = res.responseData;
-          console.log("GradateTeacherSubjectArray", this.GradateTeacherSubjectArray);   
-        }
-      }), error: (error: any) => {
-        this.commonMethod.checkEmptyData(error.statusText) == false ? this.errorHandler.handelError(error.statusCode) : this.commonMethod.snackBar(error.statusText, 1);
-      }
-    })
-  }
+  // getGraduatepayScale() { 
+  //   this.masterService.getPayscaleCategoryDescById('EN').subscribe({
+  //     next: ((res: any) => {
+  //       if (res.statusCode == '200' && res.responseData.length) {
+  //         this.payScaleArray = res.responseData;
+  //         console.log("GradateTeacherSubjectArray", this.GradateTeacherSubjectArray);   
+  //         this.getCaste();
+  //       }
+  //     }), error: (error: any) => {
+  //       this.commonMethod.checkEmptyData(error.statusText) == false ? this.errorHandler.handelError(error.statusCode) : this.commonMethod.snackBar(error.statusText, 1);
+  //     }
+  //   })
+  // }
 
   getCaste() { 
     this.masterService.getAllCaste('EN',1).subscribe({
       next: ((res: any) => {
         if (res.statusCode == '200' && res.responseData.length) {
-          this.payScaleArray = res.responseData;
-          console.log("GradateTeacherSubjectArray", this.GradateTeacherSubjectArray);   
+          this.casteArray = res.responseData;
+          console.log("casteArray", this.casteArray);  
+          this.getCasteCategory(); 
         }
       }), error: (error: any) => {
         this.commonMethod.checkEmptyData(error.statusText) == false ? this.errorHandler.handelError(error.statusCode) : this.commonMethod.snackBar(error.statusText, 1);
@@ -250,39 +278,41 @@ export class AddUpdateTeacherRegistrationComponent {
     })
   }
 
-  
-  // getCasteCategory() { 
-  //   this.masterService.getAllCaste('EN',1).subscribe({
-  //     next: ((res: any) => {
-  //       if (res.statusCode == '200' && res.responseData.length) {
-  //         this.castCategoryArray = res.responseData;
-  //         console.log("GradateTeacherSubjectArray", this.GradateTeacherSubjectArray);   
-  //       }
-  //     }), error: (error: any) => {
-  //       this.commonMethod.checkEmptyData(error.statusText) == false ? this.errorHandler.handelError(error.statusCode) : this.commonMethod.snackBar(error.statusText, 1);
-  //     }
-  //   })
-  // }
+  getCasteCategory() { 
+    this.masterService.getCastCategoryDescById('EN').subscribe({
+      next: ((res: any) => {
+        if (res.statusCode == '200' && res.responseData.length) {
+          this.castCategoryArray = res.responseData;
+          console.log("castCategoryArray", this.castCategoryArray);   
+          this.getEducationQualification(); 
+        }
+      }), error: (error: any) => {
+        this.commonMethod.checkEmptyData(error.statusText) == false ? this.errorHandler.handelError(error.statusCode) : this.commonMethod.snackBar(error.statusText, 1);
+      }
+    })
+  }
 
-  // getEducationQualification() { 
-  //   this.masterService.getAllCaste('EN',1).subscribe({
-  //     next: ((res: any) => {
-  //       if (res.statusCode == '200' && res.responseData.length) {
-  //         this.payScaleArray = res.responseData;
-  //         console.log("GradateTeacherSubjectArray", this.GradateTeacherSubjectArray);   
-  //       }
-  //     }), error: (error: any) => {
-  //       this.commonMethod.checkEmptyData(error.statusText) == false ? this.errorHandler.handelError(error.statusCode) : this.commonMethod.snackBar(error.statusText, 1);
-  //     }
-  //   })
-  // }
+  getEducationQualification() { 
+    this.masterService.getEducationalQualificationById('EN').subscribe({
+      next: ((res: any) => {
+        if (res.statusCode == '200' && res.responseData.length) {
+          this.educationQualificationArray = res.responseData;
+          console.log("educationQualificationArray", this.educationQualificationArray); 
+          this.getTwelveBranch();   
+        }
+      }), error: (error: any) => {
+        this.commonMethod.checkEmptyData(error.statusText) == false ? this.errorHandler.handelError(error.statusCode) : this.commonMethod.snackBar(error.statusText, 1);
+      }
+    })
+  }
 
   getTwelveBranch() { 
     this.masterService.getTwelveBranchCategoryDescById('EN',).subscribe({
       next: ((res: any) => {
         if (res.statusCode == '200' && res.responseData.length) {
           this.twelveBranchArray = res.responseData;
-          console.log("twelveBranchArray", this.twelveBranchArray);   
+          console.log("twelveBranchArray", this.twelveBranchArray); 
+          this.getOptionalSubject();
         }
       }), error: (error: any) => {
         this.commonMethod.checkEmptyData(error.statusText) == false ? this.errorHandler.handelError(error.statusCode) : this.commonMethod.snackBar(error.statusText, 1);
@@ -295,7 +325,8 @@ export class AddUpdateTeacherRegistrationComponent {
       next: ((res: any) => {
         if (res.statusCode == '200' && res.responseData.length) {
           this.optionalSubjectArray = res.responseData;
-          console.log("optionalSubjectArray", this.optionalSubjectArray);   
+          console.log("optionalSubjectArray", this.optionalSubjectArray); 
+          this.getDegreeUniversity();  
         }
       }), error: (error: any) => {
         this.commonMethod.checkEmptyData(error.statusText) == false ? this.errorHandler.handelError(error.statusCode) : this.commonMethod.snackBar(error.statusText, 1);
@@ -308,7 +339,8 @@ export class AddUpdateTeacherRegistrationComponent {
       next: ((res: any) => {
         if (res.statusCode == '200' && res.responseData.length) {
           this.degreeUniversityArray = res.responseData;
-          console.log("degreeUniversityArray", this.degreeUniversityArray);   
+          console.log("degreeUniversityArray", this.degreeUniversityArray); 
+          this.getProfesionalQualification();   
         }
       }), error: (error: any) => {
         this.commonMethod.checkEmptyData(error.statusText) == false ? this.errorHandler.handelError(error.statusCode) : this.commonMethod.snackBar(error.statusText, 1);
@@ -316,18 +348,18 @@ export class AddUpdateTeacherRegistrationComponent {
     })
   }
 
-  // getProfesionalQualification() { 
-  //   this.masterService.getUniversityCategoryDescById('EN',).subscribe({
-  //     next: ((res: any) => {
-  //       if (res.statusCode == '200' && res.responseData.length) {
-  //         this.degreeUniversityArray = res.responseData;
-  //         console.log("degreeUniversityArray", this.degreeUniversityArray);   
-  //       }
-  //     }), error: (error: any) => {
-  //       this.commonMethod.checkEmptyData(error.statusText) == false ? this.errorHandler.handelError(error.statusCode) : this.commonMethod.snackBar(error.statusText, 1);
-  //     }
-  //   })
-  // }
+  getProfesionalQualification() { 
+    this.masterService.getProfessinalQualificationById('EN',).subscribe({
+      next: ((res: any) => {
+        if (res.statusCode == '200' && res.responseData.length) {
+          this.profesionalQualificationArray = res.responseData;
+          console.log("profesionalQualificationArray", this.profesionalQualificationArray);   
+        }
+      }), error: (error: any) => {
+        this.commonMethod.checkEmptyData(error.statusText) == false ? this.errorHandler.handelError(error.statusCode) : this.commonMethod.snackBar(error.statusText, 1);
+      }
+    })
+  }
 
 
   OnSubmit(){
