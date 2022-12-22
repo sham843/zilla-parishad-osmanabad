@@ -92,7 +92,7 @@ export class SchoolRegistrationComponent {
   languageChange(){
     this.webStorageS.langNameOnChange.subscribe(lang =>{
       this.langTypeName = lang;
-      this.displayedColumns = ['#','srNo', this.langTypeName == 'English' ? 'schoolName' : 'm_SchoolName', 'village', 'taluka', 'district', 'action'];
+      this.displayedColumns = ['docPath','srNo', this.langTypeName == 'English' ? 'schoolName' : 'm_SchoolName', 'village', 'taluka', 'district', 'action'];
       this.tableData = {
         pageNumber: this.pageNumber,
         img: 'docPath', blink: '', badge: '', isBlock: '', pagintion: true,
