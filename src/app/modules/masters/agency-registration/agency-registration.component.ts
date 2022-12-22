@@ -19,8 +19,8 @@ export class AgencyRegistrationComponent {
   pageNumber: number = 1;
   filterForm!: FormGroup;
   agencyReport = new Array();
-  constructor(private dialog: MatDialog, private apiService: ApiService, private webStroageService : WebStorageService, private downloadPdfservice : DownloadPdfExcelService,
-    private errors: ErrorsService, private fb: FormBuilder, private common : CommonMethodsService, public validation : ValidationService) { }
+  constructor(private dialog: MatDialog, private apiService: ApiService, private webStroageService: WebStorageService, private downloadPdfservice: DownloadPdfExcelService,
+    private errors: ErrorsService, private fb: FormBuilder, private common: CommonMethodsService, public validation: ValidationService) { }
 
   ngOnInit() {
     this.filterData();
@@ -35,21 +35,22 @@ export class AgencyRegistrationComponent {
 
   getTableData(flag?: string) {
     this.pageNumber = flag == 'filter' ? 1 : this.pageNumber;
+    flag == 'filter' ? this.agencyReport = [] : ''
     let tableDataArray = new Array();
     let tableDatasize!: Number;
     let obj = this.filterForm.value;
     let str = `pageno=${this.pageNumber}&pagesize=10&&TextSearch=${obj.searchText}&lan=${this.webStroageService.languageFlag}`;
     let reportStr = `TextSearch=${obj.searchText}`
-    this.apiService.setHttp('GET', 'zp-osmanabad/Agency/GetAll?'  + (flag=='reportFlag' ? reportStr : str), false, false, false, 'baseUrl');
+    this.apiService.setHttp('GET', 'zp-osmanabad/Agency/GetAll?' + (flag == 'reportFlag' ? reportStr : str), false, false, false, 'baseUrl');
     this.apiService.getHttp().subscribe({
       next: (res: any) => {
         if (res.statusCode == "200") {
           tableDataArray = res.responseData.responseData1;
           tableDatasize = res.responseData.responseData2.pageCount;
-          let data:[] = res.responseData.responseData1;
-          data.map((ele: any, i: any)=>{
+          let data: [] = res.responseData.responseData1;
+          data.map((ele: any, i: any) => {
             let obj = {
-              "Sr.No": i+1,
+              "Sr.No": i + 1,
               "Name": ele.agency_Name,
               "Contact No": ele.contact_No,
               "Email ID": ele.agency_EmailId,
@@ -80,20 +81,21 @@ export class AgencyRegistrationComponent {
     this.getTableData()
   }
 
-  downloadPdf() { 
+  downloadPdf() {
     this.getTableData('reportFlag')
-    let keyPDFHeader = ['SrNo', "Name", "Contact No.","Email Id"];
-        let ValueData =
-          this.agencyReport.reduce(
-            (acc: any, obj: any) => [...acc, Object.values(obj).map((value) => value)], []
-          );// Value Name
-          console.log("ValueData", ValueData);
-          
-          let objData:any = {
-            'topHedingName': 'Agency Report',
-            'createdDate':'Created on:'+new Date()
-          }
-        this.downloadPdfservice.downLoadPdf(keyPDFHeader, ValueData, objData);
+    let keyPDFHeader = ['SrNo', "Name", "Contact No.", "Email Id"];
+    let ValueData =
+      this.agencyReport.reduce(
+        (acc: any, obj: any) => [...acc, Object.values(obj).map((value) => value)], []
+      );// Value Name
+    console.log("ValueData", ValueData);
+
+    let objData: any = {
+      'topHedingName': 'Agency Report',
+      'createdDate': 'Created on:' + new Date()
+    }
+    this.downloadPdfservice.downLoadPdf(keyPDFHeader, ValueData, objData);
+
   }
 
   onClear() {
@@ -101,6 +103,7 @@ export class AgencyRegistrationComponent {
     this.filterData();
     this.pageNumber = 1;
     this.getTableData();
+    this.agencyReport = [];
   }
 
   childCompInfo(_obj: any) {
@@ -112,7 +115,7 @@ export class AgencyRegistrationComponent {
       case 'Edit':
         this.addUpdateAgency(_obj);
         break;
-        case 'Delete' :
+      case 'Delete':
         this.deleteAgency(_obj);
         break;
       case 'Block':
@@ -134,24 +137,24 @@ export class AgencyRegistrationComponent {
     });
   }
 
-  deleteAgencyRow(_obj:any){
+  deleteAgencyRow(_obj: any) {
     let obj = {
       "id": _obj.id,
       "modifiedBy": 0,
       "modifiedDate": new Date(),
       "lan": ""
     }
-   
+
     this.apiService.setHttp('delete', 'zp-osmanabad/Agency/Delete', false, obj, false, 'baseUrl');
     this.apiService.getHttp().subscribe({
       next: (res: any) => {
-        res.statusCode == 200 ? (this.common.snackBar(res.statusMessage, 0),this.getTableData()): this.common.snackBar(res.statusMessage, 1);
+        res.statusCode == 200 ? (this.common.snackBar(res.statusMessage, 0), this.getTableData()) : this.common.snackBar(res.statusMessage, 1);
       },
       error: ((err: any) => { this.errors.handelError(err) })
     })
   }
 
-  deleteAgency(_obj:any){
+  deleteAgency(_obj: any) {
     let dialoObj = {
       header: 'Delete',
       title: 'Do You Want To Delete The Selected Agency ?',

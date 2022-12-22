@@ -3,7 +3,7 @@
     <mat-card-header class="card-header">
         <div class="d-flex align-items-center justify-content-between w-100">
             <h6 class="text-main mb-0">
-                Register Agency
+                {{editData ? 'Update Agency': 'Register Agency'}}
             </h6>
             <button mat-icon-button mat-dialog-close class="btn-modal-close">
                 <mat-icon>
@@ -21,6 +21,14 @@
                         <input matInput formControlName="agency_Name" placeholder="Agency Name" maxlength="50" (keypress)="validation.noFirstSpaceAllow($event)">
                         <mat-error *ngIf="fc['agency_Name'].hasError('required')"> Agency Name Is Required</mat-error>
                         <mat-error *ngIf="fc['agency_Name'].hasError('pattern')"> Please Enter Valid Agency Name</mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="col-sm-4">
+                    <mat-form-field appearance="outline" class="w-100">
+                        <mat-label>Agency Name(Marathi)</mat-label>
+                        <input matInput formControlName="m_Agency_Name" placeholder="Agency Name(Marathi)" maxlength="50" (keypress)="validation.noFirstSpaceAllow($event)">
+                        <mat-error *ngIf="fc['m_Agency_Name'].hasError('required')"> Agency Name Is Required</mat-error>
+                        <!-- <mat-error *ngIf="fc['m_Agency_Name'].hasError('pattern')"> Please Enter Valid Agency Name</mat-error> -->
                     </mat-form-field>
                 </div>
                 <div class="col-sm-4">
@@ -76,7 +84,7 @@
                 <div class="col-sm-4">
                     <mat-form-field appearance="outline" class="w-100">
                         <mat-label>District</mat-label>
-                        <mat-select formControlName="districtId" placeholder="Select">
+                        <mat-select formControlName="districtId"  placeholder="Select">
                             <mat-option *ngFor="let data of districtData"
                                 [value]="data.id">{{data.district}}</mat-option>
                         </mat-select>
