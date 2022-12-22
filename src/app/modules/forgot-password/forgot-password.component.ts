@@ -79,7 +79,6 @@ export class ForgotPasswordComponent {
         this.otpField = true;
       }
       else {
-        // this.otpField = false;
         this.timeLeft = --this.timeLeft
       }
     }, 1000);
@@ -87,7 +86,6 @@ export class ForgotPasswordComponent {
 
   sendOtp(flag: any) {
     this.sendOtpFlag = true;
-   
     this.mobileForm.invalid ? this.common.snackBar('Please Enter Mobile Number', 1) : '';
     let obj = this.mobileForm.value;
     this.obj.mobileNo = obj.mobileNo;
@@ -107,11 +105,10 @@ export class ForgotPasswordComponent {
 
   pauseTimer() {
     clearInterval(this.interval);
-  //  this.fcMobile['mobileNo'].setValue('');
+   this.fcMobile['mobileNo'].setValue('');
   }
 
   setFlag(flag? :any){
-    // flag == 'resend' ? (this.mobileField=false, this.otpField= true, this.otpStatus = true ) : ''
    this.sendOtpFlag || flag == 'resend' ?(this.mobileField = false, this.otpField = true, this.otpStatus = true) :'';
    this.verifyOtpflag ? (this.mobileField = false, this.otpField = false, this.passwordField = true):'';
   }
