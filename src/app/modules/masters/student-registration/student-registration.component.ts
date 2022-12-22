@@ -5,6 +5,7 @@ import { ApiService } from 'src/app/core/services/api.service';
 import { CommonMethodsService } from 'src/app/core/services/common-methods.service';
 import { DownloadPdfExcelService } from 'src/app/core/services/download-pdf-excel.service';
 import { ErrorsService } from 'src/app/core/services/errors.service';
+import { WebStorageService } from 'src/app/core/services/web-storage.service';
 import { GlobalDialogComponent } from 'src/app/shared/components/global-dialog/global-dialog.component';
 import { AddUpdateStudentRegistrationComponent } from './add-update-student-registration/add-update-student-registration.component';
 @Component({
@@ -21,28 +22,52 @@ export class StudentRegistrationComponent {
   totalCount: number = 0;
   cardCurrentPage: number = 0;
   studentData = new Array();
+  languageFlag!: string
+  tableDatasize!: Number;
 
+  displayedColumns = ['docPath', 'srNo', 'fullName', 'standard', 'parentMobileNo', 'gender', 'action'];
+  marathiDisplayedColumns = ['docPath', 'srNo', 'm_FullName', 'm_Standard', 'parentMobileNo', 'm_Gender', 'action'];
+  displayedheaders = ['#', 'Sr.No', 'Name', 'Standard', 'Parents Contact No.', 'Gender', 'action'];
+  marathiDisplayedheaders = ['#', 'अनुक्रमांक', 'नाव', 'वर्ग', 'पालक संपर्क क्र', 'लिंग', 'क्रिया'];
   constructor(
     private dialog: MatDialog,
     private apiService: ApiService,
     private errors: ErrorsService,
     private commonMethods: CommonMethodsService,
-    private downloadPdfservice: DownloadPdfExcelService,) { }
+    private webService: WebStorageService,
+    private downloadPdfservice: DownloadPdfExcelService) { }
 
   ngOnInit() {
+    this.languageFlag = this.webService.languageFlag;
     this.getTableData();
+    this.languageChange();
   }
 
   onPagintion(pageNo: number) {
     this.pageNumber = pageNo;
     this.getTableData();
+    
+  }
+
+  languageChange() {
+    this.webService.langNameOnChange.subscribe(lang => {
+      this.languageFlag = lang;    //  
+      let tableData = {
+        pageNumber: this.pageNumber,
+        img: '', blink: '', badge: '', isBlock: '', pagintion: true,
+        displayedColumns: this.languageFlag == 'English' ? this.displayedColumns : this.marathiDisplayedColumns,
+        tableData: this.tableDataArray,
+        tableSize: this.tableDatasize,
+        tableHeaders: this.languageFlag == 'English' ? this.displayedheaders : this.marathiDisplayedheaders
+      };
+      this.apiService.tableData.next(tableData);
+    });
   }
 
   getTableData(flag?: string) {
 
     this.pageNumber = flag == 'filter' ? 1 : this.pageNumber;
     this.tableDataArray = new Array();
-    let tableDatasize!: Number;
     let pageNo
     this.cardViewFlag ? pageNo = (this.cardCurrentPage + 1) : (pageNo = this.pageNumber, this.cardCurrentPage = 0);
     let str = `?pageno=${pageNo}&pagesize=10&textSearch=${this.searchContent.value || ''}&lan=en`;
@@ -53,43 +78,44 @@ export class StudentRegistrationComponent {
         if (res.statusCode == "200") {
           this.tableDataArray = res.responseData.responseData1;
           this.totalCount = res.responseData.responseData2.pageCount;
-          tableDatasize = res.responseData.responseData2.pageCount;
+          this.tableDatasize = res.responseData.responseData2.pageCount;
           let data: [] = res.responseData.responseData1;
           data.find((ele: any, i: any) => {
             let obj = {
               srNo: i + 1,
               id: ele.id,
-              fullName: ele.fullName,
-              gender: ele.gender,
-              mobileNo:ele.parentMobileNo,
-              standard: ele.standard,
-              schoolName: ele.schoolName,
-              caste:ele.caste,
-              taluka: ele.taluka,
-            }
+              fullName: this.languageFlag == 'English' ? ele.fullName : ele.m_FullName,
+              gender: this.languageFlag == 'English' ? ele.gender : ele.m_Gender,
+              mobileNo: ele.parentMobileNo,
+              standard: this.languageFlag == 'English' ? ele.standard : ele.m_Standard,
+              schoolName: this.languageFlag == 'English' ? ele.schoolName : ele.m_SchoolName,
+              caste: this.languageFlag == 'English' ? ele.caste : ele.m_Caste,
+              taluka: this.languageFlag == 'English' ? ele.taluka : ele.m_Taluka,
+              center: this.languageFlag == 'English' ? ele.center : ele.m_Center,
+            }            
             this.studentData.push(obj);
           });
 
         } else {
           this.tableDataArray = [];
-          tableDatasize = 0;
+          this.tableDatasize = 0;
         }
-        let displayedColumns = ['docPath', 'srNo', 'fullName', 'standard', 'parentMobileNo', 'gender', 'action'];
-        let displayedheaders = ['#', 'Sr. No', 'Name', 'Standard', 'Parents Contact No.', 'Gender', 'action'];
-        let tableData = {
-          pageNumber: this.pageNumber,
-          img: 'docPath', blink: '', badge: '', isBlock: '', pagintion: tableDatasize > 10 ? true : false,
-          displayedColumns: displayedColumns, tableData: this.tableDataArray,
-          tableSize: tableDatasize,
-          tableHeaders: displayedheaders
-        };
-
-        this.tableDataForcard = {
-          pageNumber: this.pageNumber,
-          tableData: this.tableDataArray,
-          tableSize: tableDatasize,
-        };
-        this.apiService.tableData.next(tableData);
+        
+          let tableData = {
+            pageNumber: this.pageNumber,
+            img: 'docPath', blink: '', badge: '', isBlock: '', pagintion: this.tableDatasize > 10 ? true : false,
+            displayedColumns: this.languageFlag == 'English' ? this.displayedColumns : this.marathiDisplayedColumns,
+            tableData: this.tableDataArray,
+            tableSize: this.tableDatasize,
+            tableHeaders: this.languageFlag == 'English' ? this.displayedheaders : this.marathiDisplayedheaders
+          };
+  
+          this.tableDataForcard = {
+            pageNumber: this.pageNumber,
+            tableData: this.tableDataArray,
+            tableSize: this.tableDatasize,
+          };
+          this.apiService.tableData.next(tableData);     
 
       },
       error: ((err: any) => { this.errors.handelError(err) })
@@ -110,9 +136,9 @@ export class StudentRegistrationComponent {
 
       console.log(result);
       if (result == 'yes' && obj) {
-        this.pageNumber = obj.pageNumber;
+        this.pageNumber = obj.pageNumber || 1;
       } else if (result == 'yes') {
-        this.pageNumber = 1
+        this.pageNumber = 1;
       }
       this.getTableData();
 
@@ -208,7 +234,7 @@ export class StudentRegistrationComponent {
 
   downloadPdf() {
     this.getTableData('reportFlag')
-    let keyPDFHeader = ['SrNo',"ID", "Full Name", "Gender","Contact No.", "Standard",  "School Name","Caste","Taluka"];
+    let keyPDFHeader = ['SrNo', "ID", "Full Name", "Gender", "Contact No.", "Standard", "School Name", "Caste", "Taluka","Center"];
     let ValueData =
       this.studentData.reduce(
         (acc: any, obj: any) => [...acc, Object.values(obj).map((value) => value)], []

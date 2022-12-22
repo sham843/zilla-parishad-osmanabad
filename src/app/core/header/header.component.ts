@@ -1,6 +1,9 @@
 import { OverlayContainer } from '@angular/cdk/overlay';
 import { Component, HostBinding } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
+import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
+import { GlobalDialogComponent } from 'src/app/shared/components/global-dialog/global-dialog.component';
 import { WebStorageService } from '../services/web-storage.service';
 
 @Component({
@@ -11,7 +14,12 @@ import { WebStorageService } from '../services/web-storage.service';
 export class HeaderComponent {
   @HostBinding('class') className = '';
 
-  constructor(private overlay: OverlayContainer, private webStorage: WebStorageService, public translate: TranslateService) { }
+  constructor(
+    private overlay: OverlayContainer, 
+    private dialog: MatDialog, 
+    private webStorage: WebStorageService,
+    private router: Router, 
+    public translate: TranslateService) { }
   ngOnInit(): void {
     this.translateLanguage(sessionStorage.getItem('language') ? sessionStorage.getItem('language') : 'English');
   }
@@ -33,6 +41,29 @@ export class HeaderComponent {
     this.webStorage.setLanguage(lang);
     sessionStorage.setItem('language', lang);
     this.translate.use(lang);
+  }
+
+  logOut() {
+    let dialoObj = {
+      header: 'Confirmation',
+      title: 'Do You Want To Logout ?',
+      cancelButton: 'Cancel',
+      okButton: 'Ok'
+    }
+    const dialogRef = this.dialog.open(GlobalDialogComponent, {
+      width: '320px',
+      data: dialoObj,
+      disableClose: true,
+      autoFocus: false
+    })
+    dialogRef.afterClosed().subscribe((result: any) => {      
+      if (result == 'yes') {
+        localStorage.clear();
+        sessionStorage.clear();
+        sessionStorage.setItem('language', "English");
+        this.router.navigate(['/home']);
+      }
+    });
   }
 
 }
