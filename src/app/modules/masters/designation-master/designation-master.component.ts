@@ -86,14 +86,14 @@ getDesiganationType() {
           this.tableDataArray = [];
           this.tableDatasize = 0;
         }
-        this.displayedColumns = ['srNo', 'designationName', 'designationLevel', 'action'];
+        // this.displayedColumns = ['srNo', 'designationName', 'designationLevel', 'action'];
         // let displayedheaders = ['Sr. No', 'Designation Name', 'Designation Level','action'];
         let tableData = {
           pageNumber: this.pageNumber,
           img: '', blink: '', badge: '', isBlock: '', pagintion:true,
           displayedColumns: this.displayedColumns, tableData: this.tableDataArray,
           tableSize: this.tableDatasize,
-          tableHeaders: this.displayedheaders
+          tableHeaders: this.langTypeName == 'English' ? this.displayedheaders : this.displayedheadersMarathi
         };
         this.apiService.tableData.next(tableData);
       },
