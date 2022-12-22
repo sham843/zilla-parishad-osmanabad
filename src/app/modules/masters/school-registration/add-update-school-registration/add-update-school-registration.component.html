@@ -71,7 +71,7 @@
                 <div class="col-sm">
                     <mat-form-field appearance="outline" class="w-100">
                         <mat-label>School</mat-label>
-                        <input matInput placeholder="School" formControlName="schoolName" maxlength="50" (keypress)="validationService.noFirstSpaceAllow($event)">
+                        <input matInput placeholder="School" formControlName="schoolName" maxlength="50" (keypress)="validationService.noFirstSpaceAllow($event);">
                         <mat-error *ngIf="f['schoolName'].hasError('required') || f['schoolName'].hasError('touched')">
                             School is required
                         </mat-error>
@@ -83,7 +83,7 @@
                 <div class="col-sm">
                     <mat-form-field appearance="outline" class="w-100">
                         <mat-label>School (Marathi)</mat-label>
-                        <input matInput placeholder="School (Marathi)" formControlName="m_SchoolName" maxlength="50">
+                        <input matInput placeholder="School (Marathi)" formControlName="m_SchoolName" maxlength="50" (keypress)="validationService.unicodeMarathiValidation($event);">
                         <mat-error *ngIf="f['m_SchoolName'].hasError('required') || f['m_SchoolName'].hasError('touched')">
                             School name is required
                         </mat-error>
