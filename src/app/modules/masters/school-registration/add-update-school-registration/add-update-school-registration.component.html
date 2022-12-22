@@ -71,8 +71,7 @@
                 <div class="col-sm">
                     <mat-form-field appearance="outline" class="w-100">
                         <mat-label>School</mat-label>
-                        <input matInput placeholder="School" formControlName="schoolName" maxlength="50">
-                        <!-- (keypress)="validationService.noSpacesAtStart($event);" -->
+                        <input matInput placeholder="School" formControlName="schoolName" maxlength="50" (keypress)="validationService.alphabetsWithSpaces($event); validationService.noFirstSpaceAllow($event)">
                         <mat-error *ngIf="f['schoolName'].hasError('required') || f['schoolName'].hasError('touched')">
                             School is required
                         </mat-error>
@@ -151,10 +150,10 @@
                     </mat-icon>
                     <!-- </mat-form-field> -->
                     <span class="mx-3">
-                        <mat-icon class="text-danger" type="button" *ngIf="img.value"
+                        <mat-icon class="text-danger" type="button" *ngIf="showAddRemImg"
                             (click)="clearImg()">highlight_off</mat-icon>
                         <mat-icon class="text-success"
-                            *ngIf="img.value">check_circle_outline</mat-icon>
+                            *ngIf="showAddRemImg">check_circle_outline</mat-icon>
                     </span>
                 </div>
             </div>
