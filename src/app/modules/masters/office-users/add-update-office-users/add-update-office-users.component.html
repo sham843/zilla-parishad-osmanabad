@@ -39,6 +39,31 @@
                 </mat-form-field>
             </div>
         </div>
+
+        <div class="row">
+            <div class="col-sm-4">
+                <mat-form-field appearance="outline" class="w-100">
+                    <mat-label>Taluka</mat-label>
+                    <mat-select placeholder="select" formControlName="talukaId">
+                        <mat-option [value]="taluka.id" *ngFor="let taluka of talukas">{{taluka.taluka}}</mat-option>
+                    </mat-select>
+
+                </mat-form-field>
+            </div>
+            <div class="col-sm-4">
+                <mat-form-field appearance="outline" class="w-100">
+                    <mat-label>Contact No.(BEO Office)</mat-label>
+                    <input matInput placeholder="Contact No.(BEO Office)" formControlName="kendraMobileNo">
+                </mat-form-field>
+            </div>
+            <div class="col-sm-4">
+                <mat-form-field appearance="outline" class="w-100">
+                    <mat-label>Email ID(BEO Office)</mat-label>
+                    <input matInput placeholder="Email ID(BEO Office)" formControlName="kendraEmailId">
+                </mat-form-field>
+            </div>
+        </div>
+
         <div class="row">
             <div class="col-sm-4">
                 <mat-form-field appearance="outline" class="w-100">

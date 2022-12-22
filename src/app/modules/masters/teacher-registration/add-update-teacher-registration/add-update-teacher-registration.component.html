@@ -1,415 +1,394 @@
-<mat-card class="plain-card">
-    <mat-card-header class="card-header">
-        <div class="d-flex align-items-center justify-content-between w-100">
-            <h6 class="text-main mb-0">Register Teacher</h6>
-            <button mat-icon-button mat-dialog-close class="btn-modal-close">
-                <mat-icon>
-                    close
-                </mat-icon>
-            </button>
-        </div>
-    </mat-card-header>
-
-    <mat-card-content class="card-body">
-        <mat-card-subtitle class="mb-2">Personal Details</mat-card-subtitle>
-        <div class="row">
-            <div class="col-sm">
-                <mat-form-field appearance="outline" class="w-100">
-                    <mat-label>Teacher Name</mat-label>
-                    <input matInput>
-                </mat-form-field>
-            </div>
-            <div class="col-sm">
-                <mat-form-field appearance="outline" class="w-100">
-                    <mat-label>Teacher Name (Marathi)</mat-label>
-                    <input matInput>
-                </mat-form-field>
-            </div>
-            <div class="col-sm">
-                <mat-form-field appearance="outline" class="w-100 ">
-                    <mat-label>Gender</mat-label>
-                    <mat-select>
-                        <mat-option value="one">Male</mat-option>
-                        <mat-option value="two">Female</mat-option>
-                    </mat-select>
-                </mat-form-field>
-            </div>
-            <div class="col-sm">
-                <mat-form-field appearance="outline" class="w-100">
-                    <mat-label>Mobile No.</mat-label>
-                    <input matInput>
-                </mat-form-field>
-            </div>
-            <div class="col-sm">
-                <mat-form-field appearance="outline" class="w-100">
-                    <mat-label>Email ID</mat-label>
-                    <input matInput>
-                </mat-form-field>
-            </div>
-            <div class="col-sm">
-                <mat-form-field appearance="outline" class="w-100 ">
-                    <mat-label>Upload Photo</mat-label>
-                    <input matInput>
-                    <mat-icon matSuffix>
-                        <span class="material-symbols-outlined">
-                            upload
-                        </span>
+<form [formGroup]="teacherRegForm" (ngSubmit)="OnSubmit()">
+    <mat-card class="plain-card">
+        <mat-card-header class="card-header">
+            <div class="d-flex align-items-center justify-content-between w-100">
+                <h6 class="text-main mb-0">Register Teacher</h6>
+                <button mat-icon-button mat-dialog-close class="btn-modal-close">
+                    <mat-icon>
+                        close
                     </mat-icon>
-                </mat-form-field>
+                </button>
             </div>
-            <div class="col-sm-4">
-                <mat-form-field appearance="outline" class="w-100">
-                    <mat-label>Birth Date</mat-label>
-                    <input matInput [matDatepicker]="picker">
-                    <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
-                    <mat-datepicker #picker></mat-datepicker>
-                </mat-form-field>
-            </div>
-        </div>
-        <mat-card-subtitle class="mb-2">Address Details</mat-card-subtitle>
-        <div class="row">
-            <div class="col-sm-4">
-                <mat-form-field appearance="outline" class="w-100 ">
-                    <mat-label>District</mat-label>
-                    <mat-select placeholder="Select">
-                        <mat-option value="one">Male</mat-option>
-                        <mat-option value="two">Female</mat-option>
-                    </mat-select>
-                </mat-form-field>
-            </div>
-            <div class="col-sm-4">
-                <mat-form-field appearance="outline" class="w-100 ">
-                    <mat-label>Taluka</mat-label>
-                    <mat-select placeholder="Select">
-                        <mat-option value="one">Male</mat-option>
-                        <mat-option value="two">Female</mat-option>
-                    </mat-select>
-                </mat-form-field>
-            </div>
-            <div class="col-sm-4">
-                <mat-form-field appearance="outline" class="w-100 ">
-                    <mat-label>Village</mat-label>
-                    <mat-select placeholder="Select">
-                        <mat-option value="one">Male</mat-option>
-                        <mat-option value="two">Female</mat-option>
-                    </mat-select>
-                </mat-form-field>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-sm-6">
-                <mat-form-field appearance="outline" class="w-100 ">
-                    <mat-label>Current Address</mat-label>
-                    <textarea matInput></textarea>
-                </mat-form-field>
-            </div>
-            <div class="col-sm-6">
-                <mat-form-field appearance="outline" class="w-100 ">
-                    <mat-label>Permanent Address</mat-label>
-                    <textarea matInput></textarea>
-                </mat-form-field>
-            </div>
-        </div>
+        </mat-card-header>
 
-        <mat-card-subtitle>Educational and Professional Details</mat-card-subtitle>
-        <div class="row mt-2">
-            <div class="col-sm-4">
-                <mat-form-field appearance="outline" class="w-100 ">
-                    <mat-label>Working School Name</mat-label>
-                    <mat-select>
-                        <mat-option value="one">B.tech</mat-option>
-                        <mat-option value="two">Bsc</mat-option>
-                    </mat-select>
-                </mat-form-field>
+        <mat-card-content class="card-body">
+            <mat-card-subtitle class="mb-2">Personal Details</mat-card-subtitle>
+            <div class="row">
+                <div class="col-sm">
+                    <mat-form-field appearance="outline" class="w-100">
+                        <mat-label>Teacher Name</mat-label>
+                        <input matInput formControlName="name">
+                    </mat-form-field>
+                </div>
+                <div class="col-sm">
+                    <mat-form-field appearance="outline" class="w-100">
+                        <mat-label>Teacher Name (Marathi)</mat-label>
+                        <input matInput formControlName="m_Name">
+                    </mat-form-field>
+                </div>
+                <div class="col-sm">
+                    <mat-form-field appearance="outline" class="w-100 ">
+                        <mat-label>Gender</mat-label>
+                        <mat-select formControlName="genderId">
+                            <mat-option value="one">Male</mat-option>
+                            <mat-option value="two">Female</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+                <div class="col-sm">
+                    <mat-form-field appearance="outline" class="w-100">
+                        <mat-label>Mobile No.</mat-label>
+                        <input matInput formControlName="mobileNo">
+                    </mat-form-field>
+                </div>
+                <div class="col-sm">
+                    <mat-form-field appearance="outline" class="w-100">
+                        <mat-label>Email ID</mat-label>
+                        <input matInput formControlName="emailId">
+                    </mat-form-field>
+                </div>
+                <div class="col-sm">
+                    <mat-form-field appearance="outline" class="w-100 ">
+                        <mat-label>Upload Photo</mat-label>
+                        <input matInput>
+                        <mat-icon matSuffix>
+                            <span class="material-symbols-outlined">
+                                upload
+                            </span>
+                        </mat-icon>
+                    </mat-form-field>
+                </div>
+                <div class="col-sm">
+                    <mat-form-field appearance="outline" class="w-100">
+                        <mat-label>Birth Date</mat-label>
+                        <input matInput [matDatepicker]="picker" formControlName="birthDate">
+                        <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                        <mat-datepicker #picker></mat-datepicker>
+                    </mat-form-field>
+                </div>
             </div>
-            <div class="col-sm-4">
-                <mat-form-field appearance="outline" class="w-100 ">
-                    <mat-label>Cluster Name</mat-label>
-                    <mat-select>
-                        <mat-option value="one">Bsc Computer</mat-option>
-                        <mat-option value="two"> B.Tech Computer</mat-option>
-                    </mat-select>
-                </mat-form-field>
+            <mat-card-subtitle>Address Details</mat-card-subtitle>
+            <div class="row mt-2">
+                <div class="col-sm-6">
+                    <mat-form-field appearance="outline" class="w-100 ">
+                        <mat-label>Current Address</mat-label>
+                        <textarea matInput formControlName="currentAddress"></textarea>
+                    </mat-form-field>
+                </div>
+                <div class="col-sm-6">
+                    <mat-form-field appearance="outline" class="w-100 ">
+                        <mat-label>Permanent Address</mat-label>
+                        <textarea matInput formControlName="permentAddress"></textarea>
+                    </mat-form-field>
+                </div>
             </div>
-            <div class="col-sm-4">
-                <mat-form-field appearance="outline" class="w-100 ">
-                    <mat-label>Designation</mat-label>
-                    <mat-select>
-                        <mat-option value="one">MSc</mat-option>
-                        <mat-option value="two">M.tech</mat-option>
-                    </mat-select>
-                </mat-form-field>
-            </div>
-            <div class="col-sm-4">
-                <mat-form-field appearance="outline" class="w-100 ">
-                    <mat-label>Graduate Teacher Subject</mat-label>
-                    <mat-select>
-                        <mat-option value="one">B.tech</mat-option>
-                        <mat-option value="two">Bsc</mat-option>
-                    </mat-select>
-                </mat-form-field>
-            </div>
-            <div class="col-sm-4">
-                <mat-form-field appearance="outline" class="w-100 ">
-                    <mat-label>Taking Graduate Pay Scale</mat-label>
-                    <mat-select>
-                        <mat-option value="one">Bsc Computer</mat-option>
-                        <mat-option value="two"> B.Tech Computer</mat-option>
-                    </mat-select>
-                </mat-form-field>
-            </div>
-            <div class="col-sm-4">
-                <mat-form-field appearance="outline" class="w-100 ">
-                    <mat-label>Caste</mat-label>
-                    <mat-select>
-                        <mat-option value="one">MSc</mat-option>
-                        <mat-option value="two">M.tech</mat-option>
-                    </mat-select>
-                </mat-form-field>
-            </div>
-            <div class="col-sm-4">
-                <mat-form-field appearance="outline" class="w-100 ">
-                    <mat-label>Caste Category</mat-label>
-                    <mat-select>
-                        <mat-option value="one">B.tech</mat-option>
-                        <mat-option value="two">Bsc</mat-option>
-                    </mat-select>
-                </mat-form-field>
-            </div>
-            <div class="col-sm-4">
-                <mat-form-field appearance="outline" class="w-100">
-                    <mat-label>Caste Certificate Date & Number</mat-label>
-                    <input matInput>
-                </mat-form-field>
-            </div>
-            <div class="col-sm-4">
-                <mat-form-field appearance="outline" class="w-100">
-                    <mat-label>Caste Certificate Office</mat-label>
-                    <input matInput>
-                </mat-form-field>
-            </div>
-            <div class="col-sm-4">
-                <mat-form-field appearance="outline" class="w-100 ">
-                    <mat-label>Caste Verification Done?</mat-label>
-                    <mat-select>
-                        <mat-option value="one">B.tech</mat-option>
-                        <mat-option value="two">Bsc</mat-option>
-                    </mat-select>
-                </mat-form-field>
-            </div>
-            <div class="col-sm-4">
-                <mat-form-field appearance="outline" class="w-100">
-                    <mat-label>Caste vailidity Date & Number</mat-label>
-                    <input matInput>
-                </mat-form-field>
-            </div>
-            <div class="col-sm-4">
-                <mat-form-field appearance="outline" class="w-100 ">
-                    <mat-label>Caste Verification Committee Name</mat-label>
-                    <input matInput>
-                </mat-form-field>
-            </div>
-            <div class="col-sm-4">
-                <mat-form-field appearance="outline" class="w-100">
-                    <mat-label>1st appointment Date in Service</mat-label>
-                    <input matInput [matDatepicker]="dateService">
-                    <mat-datepicker-toggle matIconSuffix [for]="dateService"></mat-datepicker-toggle>
-                    <mat-datepicker #dateService></mat-datepicker>
-                </mat-form-field>
-            </div>
-            <div class="col-sm-4">
-                <mat-form-field appearance="outline" class="w-100">
-                    <mat-label>Current School Joining Date</mat-label>
-                    <input matInput [matDatepicker]="JoiningDate">
-                    <mat-datepicker-toggle matIconSuffix [for]="JoiningDate"></mat-datepicker-toggle>
-                    <mat-datepicker #JoiningDate></mat-datepicker>
-                </mat-form-field>
-            </div>
-            <div class="col-sm-4">
-                <mat-form-field appearance="outline" class="w-100">
-                    <mat-label>Current Taluka Present Date</mat-label>
-                    <input matInput [matDatepicker]="TalukaPresentDate">
-                    <mat-datepicker-toggle matIconSuffix [for]="TalukaPresentDate"></mat-datepicker-toggle>
-                    <mat-datepicker #TalukaPresentDate></mat-datepicker>
-                </mat-form-field>
-            </div>
-            <div class="col-sm-4">
-                <mat-form-field appearance="outline" class="w-100">
-                    <mat-label>Retirement Date</mat-label>
-                    <input matInput [matDatepicker]="RetirementDate">
-                    <mat-datepicker-toggle matIconSuffix [for]="RetirementDate"></mat-datepicker-toggle>
-                    <mat-datepicker #RetirementDate></mat-datepicker>
-                </mat-form-field>
-            </div>
-            <div class="col-sm-4">
-                <mat-form-field appearance="outline" class="w-100 ">
-                    <mat-label>Educational Qualification</mat-label>
-                    <mat-select>
-                        <mat-option value="one">Bsc Computer</mat-option>
-                        <mat-option value="two"> B.Tech Computer</mat-option>
-                    </mat-select>
-                </mat-form-field>
-            </div>
-            <div class="col-sm-4">
-                <mat-form-field appearance="outline" class="w-100 ">
-                    <mat-label>12th Branch</mat-label>
-                    <mat-select>
-                        <mat-option value="one">MSc</mat-option>
-                        <mat-option value="two">M.tech</mat-option>
-                    </mat-select>
-                </mat-form-field>
-            </div>
-            <div class="col-sm-4">
-                <mat-form-field appearance="outline" class="w-100 ">
-                    <mat-label>Degree Optional Subjects</mat-label>
-                    <mat-select>
-                        <mat-option value="one">B.tech</mat-option>
-                        <mat-option value="two">Bsc</mat-option>
-                    </mat-select>
-                </mat-form-field>
-            </div>
-            <div class="col-sm-4">
-                <mat-form-field appearance="outline" class="w-100 ">
-                    <mat-label>Degree University</mat-label>
-                    <mat-select>
-                        <mat-option value="one">Bsc Computer</mat-option>
-                        <mat-option value="two"> B.Tech Computer</mat-option>
-                    </mat-select>
-                </mat-form-field>
-            </div>
-            <div class="col-sm-4">
-                <mat-form-field appearance="outline" class="w-100 ">
-                    <mat-label>Professional Qualification</mat-label>
-                    <mat-select>
-                        <mat-option value="one">MSc</mat-option>
-                        <mat-option value="two">M.tech</mat-option>
-                    </mat-select>
-                </mat-form-field>
-            </div>
-            <div class="col-sm-4">
-                <mat-form-field appearance="outline" class="w-100 ">
-                    <mat-label>B.Ed. Percentages</mat-label>
-                    <input matInput>
-                </mat-form-field>
-            </div>
-            <div class="col-sm-4">
-                <mat-form-field appearance="outline" class="w-100 ">
-                    <mat-label>B.Ed. University</mat-label>
-                    <input matInput>
-                </mat-form-field>
-            </div>
-            <div class="col-sm-4">
-                <mat-form-field appearance="outline" class="w-100 ">
-                    <mat-label>Husband-Wife both are in Service</mat-label>
-                    <mat-select>
-                        <mat-option value="one">MSc</mat-option>
-                        <mat-option value="two">M.tech</mat-option>
-                    </mat-select>
-                </mat-form-field>
-            </div>
-            <div class="col-sm-4">
-                <mat-form-field appearance="outline" class="w-100 ">
-                    <mat-label>If Yes then name and office name</mat-label>
-                    <input matInput>
-                </mat-form-field>
-            </div>
-            <div class="col-sm-4">
-                <mat-form-field appearance="outline" class="w-100 ">
-                    <mat-label>Are you Disabled</mat-label>
-                    <mat-select>
-                        <mat-option value="one">Bsc Computer</mat-option>
-                        <mat-option value="two"> B.Tech Computer</mat-option>
-                    </mat-select>
-                </mat-form-field>
-            </div>
-            <div class="col-sm-4">
-                <mat-form-field appearance="outline" class="w-100 ">
-                    <mat-label>Inter District transferred</mat-label>
-                    <mat-select>
-                        <mat-option value="one">MSc</mat-option>
-                        <mat-option value="two">M.tech</mat-option>
-                    </mat-select>
-                </mat-form-field>
-            </div>
-            <div class="col-sm-4">
-                <mat-form-field appearance="outline" class="w-100">
-                    <mat-label>Date of presence by inter district transfer</mat-label>
-                    <input matInput [matDatepicker]=" DistrictTransfer">
-                    <mat-datepicker-toggle matIconSuffix [for]="DistrictTransfer"></mat-datepicker-toggle>
-                    <mat-datepicker #DistrictTransfer></mat-datepicker>
-                </mat-form-field>
-            </div>
-            <div class="col-sm-4">
-                <mat-form-field appearance="outline" class="w-100 ">
-                    <mat-label>Inter district transfer type*</mat-label>
-                    <mat-select>
-                        <mat-option value="one">Bsc Computer</mat-option>
-                        <mat-option value="two"> B.Tech Computer</mat-option>
-                    </mat-select>
-                </mat-form-field>
-            </div>
-            <div class="col-sm-4">
-                <mat-form-field appearance="outline" class="w-100 ">
-                    <mat-label>The original district of inter-district transfer</mat-label>
-                    <mat-select>
-                        <mat-option value="one">MSc</mat-option>
-                        <mat-option value="two">M.tech</mat-option>
-                    </mat-select>
-                </mat-form-field>
-            </div>
-            <div class="col-sm-4">
-                <mat-form-field appearance="outline" class="w-100">
-                    <mat-label>Date of Seniority</mat-label>
-                    <input matInput [matDatepicker]=" DateSeniority">
-                    <mat-datepicker-toggle matIconSuffix [for]="DateSeniority"></mat-datepicker-toggle>
-                    <mat-datepicker #DateSeniority></mat-datepicker>
-                </mat-form-field>
-            </div>
-            <div class="col-sm-4">
-                <mat-form-field appearance="outline" class="w-100 ">
-                    <mat-label>Have you passed Computer exam</mat-label>
-                    <mat-select>
-                        <mat-option value="one">Bsc Computer</mat-option>
-                        <mat-option value="two"> B.Tech Computer</mat-option>
-                    </mat-select>
-                </mat-form-field>
-            </div>
-            <div class="col-sm-4">
-                <mat-form-field appearance="outline" class="w-100 ">
-                    <mat-label>School names & Taluka work earlier</mat-label>
-                    <mat-select>
-                        <mat-option value="one">MSc</mat-option>
-                        <mat-option value="two">M.tech</mat-option>
-                    </mat-select>
-                </mat-form-field>
-            </div>
-            <div class="col-sm-6">
-                <mat-card-subtitle>Assigned Class</mat-card-subtitle>
-                <form class="teacherForm">
-                    <input type="checkbox" name="check" id="check1" value="1"/>
-                    <label for="check1">1</label>
-                    <input type="checkbox" name="check" id="check2" value="2"/>
-                    <label for="check2">2</label>
-                    <input type="checkbox" name="check" id="check3" value="3"/>
-                    <label for="check3">3</label>
-                    <input type="checkbox" name="check" id="check4" value="4"/>
-                    <label for="check4">4</label>
-                    <input type="checkbox" name="check" id="check5" value="5"/>
-                    <label for="check5">5</label>
-                    <input type="checkbox" name="check" id="check6" value="6"/>
-                    <label for="check6">6</label>
-                    <input type="checkbox" name="check" id="check7" value="7"/>
-                    <label for="check7">7</label>
-                    <input type="checkbox" name="check" id="check8" value="8"/>
-                    <label for="check8">8</label>
-                </form>
+
+            <mat-card-subtitle>Educational and Professional Details</mat-card-subtitle>
+
+            <div formArrayName="teacherDetails" *ngFor="let item of itemsForm.controls;let i = index;">
+            <div [formGroupName]="i">
+            <div class="row mt-2">
+                <div class="col-sm-4">
+                    <mat-form-field appearance="outline" class="w-100 ">
+                        <mat-label>Working School Name</mat-label>
+                        <mat-select formControlName="schoolId">
+                            <mat-option value="one">B.tech</mat-option>
+                            <mat-option value="two">Bsc</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+                <div class="col-sm-4">
+                    <mat-form-field appearance="outline" class="w-100 ">
+                        <mat-label>Cluster Name</mat-label>
+                        <mat-select formControlName="clusterId">
+                            <mat-option value="one">Bsc Computer</mat-option>
+                            <mat-option value="two"> B.Tech Computer</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+                <div class="col-sm-4">
+                    <mat-form-field appearance="outline" class="w-100 ">
+                        <mat-label>Designation</mat-label>
+                        <mat-select formControlName="designationId">
+                            <mat-option value="one">MSc</mat-option>
+                            <mat-option value="two">M.tech</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+                <div class="col-sm-4">
+                    <mat-form-field appearance="outline" class="w-100 ">
+                        <mat-label>Graduate Teacher Subject</mat-label>
+                        <mat-select formControlName="graduate_SubjectId">
+                            <mat-option value="one">B.tech</mat-option>
+                            <mat-option value="two">Bsc</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+                <div class="col-sm-4">
+                    <mat-form-field appearance="outline" class="w-100 ">
+                        <mat-label>Taking Graduate Pay Scale</mat-label>
+                        <mat-select formControlName="isGraduate_PayScale">
+                            <mat-option value="one">Bsc Computer</mat-option>
+                            <mat-option value="two"> B.Tech Computer</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+                <div class="col-sm-4">
+                    <mat-form-field appearance="outline" class="w-100 ">
+                        <mat-label>Caste</mat-label>
+                        <mat-select formControlName="castId">
+                            <mat-option value="one">MSc</mat-option>
+                            <mat-option value="two">M.tech</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+                <div class="col-sm-4">
+                    <mat-form-field appearance="outline" class="w-100 ">
+                        <mat-label>Caste Category</mat-label>
+                        <mat-select formControlName="castCategoryId">
+                            <mat-option value="one">B.tech</mat-option>
+                            <mat-option value="two">Bsc</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+                <div class="col-sm-4">
+                    <mat-form-field appearance="outline" class="w-100">
+                        <mat-label>Caste Certificate Date & Number</mat-label>
+                        <input matInput formControlName="castCertificateNo">
+                    </mat-form-field>
+                </div>
+                <div class="col-sm-4">
+                    <mat-form-field appearance="outline" class="w-100">
+                        <mat-label>Caste Certificate Office</mat-label>
+                        <input matInput formControlName="castCertificateOffice">
+                    </mat-form-field>
+                </div>
+                <div class="col-sm-4">
+                    <mat-form-field appearance="outline" class="w-100 ">
+                        <mat-label>Caste Verification Done?</mat-label>
+                        <mat-select formControlName="isCastVarificationDone">
+                            <mat-option value="one">B.tech</mat-option>
+                            <mat-option value="two">Bsc</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+                <div class="col-sm-4">
+                    <mat-form-field appearance="outline" class="w-100">
+                        <mat-label>Caste vailidity Date & Number</mat-label>
+                        <input matInput formControlName="castValidityNoDate">
+                    </mat-form-field>
+                </div>
+                <div class="col-sm-4">
+                    <mat-form-field appearance="outline" class="w-100 ">
+                        <mat-label>Caste Verification Committee Name</mat-label>
+                        <input matInput formControlName="castverificationCommitteeName">
+                    </mat-form-field>
+                </div>
+                <div class="col-sm-4">
+                    <mat-form-field appearance="outline" class="w-100">
+                        <mat-label>1st appointment Date in Service</mat-label>
+                        <input matInput [matDatepicker]="dateService" formControlName="dateOfFirstAppoinmentService">
+                        <mat-datepicker-toggle matIconSuffix [for]="dateService"></mat-datepicker-toggle>
+                        <mat-datepicker #dateService></mat-datepicker>
+                    </mat-form-field>
+                </div>
+                <div class="col-sm-4">
+                    <mat-form-field appearance="outline" class="w-100">
+                        <mat-label>Current School Joining Date</mat-label>
+                        <input matInput [matDatepicker]="JoiningDate" formControlName="currentSchoolJoiningDate">
+                        <mat-datepicker-toggle matIconSuffix [for]="JoiningDate"></mat-datepicker-toggle>
+                        <mat-datepicker #JoiningDate></mat-datepicker>
+                    </mat-form-field>
+                </div>
+                <div class="col-sm-4">
+                    <mat-form-field appearance="outline" class="w-100">
+                        <mat-label>Current Taluka Present Date</mat-label>
+                        <input matInput [matDatepicker]="TalukaPresentDate" formControlName="currentTalukaPresentDate">
+                        <mat-datepicker-toggle matIconSuffix [for]="TalukaPresentDate"></mat-datepicker-toggle>
+                        <mat-datepicker #TalukaPresentDate></mat-datepicker>
+                    </mat-form-field>
+                </div>
+                <div class="col-sm-4">
+                    <mat-form-field appearance="outline" class="w-100">
+                        <mat-label>Retirement Date</mat-label>
+                        <input matInput [matDatepicker]="RetirementDate" formControlName="retirementDate">
+                        <mat-datepicker-toggle matIconSuffix [for]="RetirementDate"></mat-datepicker-toggle>
+                        <mat-datepicker #RetirementDate></mat-datepicker>
+                    </mat-form-field>
+                </div>
+                <div class="col-sm-4">
+                    <mat-form-field appearance="outline" class="w-100 ">
+                        <mat-label>Educational Qualification</mat-label>
+                        <mat-select formControlName="educationalQualificationId">
+                            <mat-option value="one">Bsc Computer</mat-option>
+                            <mat-option value="two"> B.Tech Computer</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+                <div class="col-sm-4">
+                    <mat-form-field appearance="outline" class="w-100 ">
+                        <mat-label>12th Branch</mat-label>
+                        <mat-select formControlName="branchId12th">
+                            <mat-option value="one">MSc</mat-option>
+                            <mat-option value="two">M.tech</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+                <div class="col-sm-4">
+                    <mat-form-field appearance="outline" class="w-100 ">
+                        <mat-label>Degree Optional Subjects</mat-label>
+                        <mat-select formControlName="degreeOptionalSubjectsId">
+                            <mat-option value="one">B.tech</mat-option>
+                            <mat-option value="two">Bsc</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+                <div class="col-sm-4">
+                    <mat-form-field appearance="outline" class="w-100 ">
+                        <mat-label>Degree University</mat-label>
+                        <mat-select formControlName="degreeUniversityId">
+                            <mat-option value="one">Bsc Computer</mat-option>
+                            <mat-option value="two"> B.Tech Computer</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+                <div class="col-sm-4">
+                    <mat-form-field appearance="outline" class="w-100 ">
+                        <mat-label>Professional Qualification</mat-label>
+                        <mat-select formControlName="professionalQualificationId">
+                            <mat-option value="one">MSc</mat-option>
+                            <mat-option value="two">M.tech</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+                <div class="col-sm-4">
+                    <mat-form-field appearance="outline" class="w-100 ">
+                        <mat-label>B.Ed. Percentages</mat-label>
+                        <input matInput formControlName="bEdPercentages">
+                    </mat-form-field>
+                </div>
+                <div class="col-sm-4">
+                    <mat-form-field appearance="outline" class="w-100 ">
+                        <mat-label>B.Ed. University</mat-label>
+                        <input matInput formControlName="bEdUniversityId">
+                    </mat-form-field>
+                </div>
+                <div class="col-sm-4">
+                    <mat-form-field appearance="outline" class="w-100 ">
+                        <mat-label>Husband-Wife both are in Service</mat-label>
+                        <mat-select formControlName="husbandWife_Both_Service">
+                            <mat-option value="one">MSc</mat-option>
+                            <mat-option value="two">M.tech</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+                <div class="col-sm-4">
+                    <mat-form-field appearance="outline" class="w-100 ">
+                        <mat-label>If Yes then name and office name</mat-label>
+                        <input matInput formControlName="husbandWife_OfficeName">
+                    </mat-form-field>
+                </div>
+                <div class="col-sm-4">
+                    <mat-form-field appearance="outline" class="w-100 ">
+                        <mat-label>Are you Disabled</mat-label>
+                        <mat-select formControlName="isDisabled">
+                            <mat-option value="one">Bsc Computer</mat-option>
+                            <mat-option value="two"> B.Tech Computer</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+                <div class="col-sm-4">
+                    <mat-form-field appearance="outline" class="w-100 ">
+                        <mat-label>Inter District transferred</mat-label>
+                        <mat-select formControlName="interDistrictTransferred">
+                            <mat-option value="one">MSc</mat-option>
+                            <mat-option value="two">M.tech</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+                <div class="col-sm-4">
+                    <mat-form-field appearance="outline" class="w-100">
+                        <mat-label>Date of presence by inter district transfer</mat-label>
+                        <input matInput [matDatepicker]=" DistrictTransfer"
+                            formControlName="dateOFPresenceInterDistrictTransfer">
+                        <mat-datepicker-toggle matIconSuffix [for]="DistrictTransfer"></mat-datepicker-toggle>
+                        <mat-datepicker #DistrictTransfer></mat-datepicker>
+                    </mat-form-field>
+                </div>
+                <div class="col-sm-4">
+                    <mat-form-field appearance="outline" class="w-100 ">
+                        <mat-label>Inter district transfer type*</mat-label>
+                        <mat-select formControlName="interDistrictTransferType">
+                            <mat-option value="one">Bsc Computer</mat-option>
+                            <mat-option value="two"> B.Tech Computer</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+                <div class="col-sm-4">
+                    <mat-form-field appearance="outline" class="w-100 ">
+                        <mat-label>The original district of inter-district transfer</mat-label>
+                        <mat-select formControlName="theOriginalDistrictInterDistrictTransfer">
+                            <mat-option value="one">MSc</mat-option>
+                            <mat-option value="two">M.tech</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+                <div class="col-sm-4">
+                    <mat-form-field appearance="outline" class="w-100">
+                        <mat-label>Date of Seniority</mat-label>
+                        <input matInput [matDatepicker]=" DateSeniority" formControlName="dateOfSeniority">
+                        <mat-datepicker-toggle matIconSuffix [for]="DateSeniority"></mat-datepicker-toggle>
+                        <mat-datepicker #DateSeniority></mat-datepicker>
+                    </mat-form-field>
+                </div>
+                <div class="col-sm-4">
+                    <mat-form-field appearance="outline" class="w-100 ">
+                        <mat-label>Have you passed Computer exam</mat-label>
+                        <mat-select formControlName="haveYouPassedComputerExam">
+                            <mat-option value="one">Bsc Computer</mat-option>
+                            <mat-option value="two"> B.Tech Computer</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+                <div class="col-sm-4">
+                    <mat-form-field appearance="outline" class="w-100 ">
+                        <mat-label>School names & Taluka work earlier</mat-label>
+                        <mat-select formControlName="namesAndTalukasAllSchoolsWorkedEarlier">
+                            <mat-option value="one">MSc</mat-option>
+                            <mat-option value="two">M.tech</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+                <div class="col-sm-6">
+                    <mat-card-subtitle>Assigned Class</mat-card-subtitle>
+                    <form class="teacherForm">
+                        <input type="checkbox" name="check" id="check1" value="1" />
+                        <label for="check1">1</label>
+                        <input type="checkbox" name="check" id="check2" value="2" />
+                        <label for="check2">2</label>
+                        <input type="checkbox" name="check" id="check3" value="3" />
+                        <label for="check3">3</label>
+                        <input type="checkbox" name="check" id="check4" value="4" />
+                        <label for="check4">4</label>
+                        <input type="checkbox" name="check" id="check5" value="5" />
+                        <label for="check5">5</label>
+                        <input type="checkbox" name="check" id="check6" value="6" />
+                        <label for="check6">6</label>
+                        <input type="checkbox" name="check" id="check7" value="7" />
+                        <label for="check7">7</label>
+                        <input type="checkbox" name="check" id="check8" value="8" />
+                        <label for="check8">8</label>
+                    </form>
+                </div>
             </div>
         </div>
-    </mat-card-content>
-    <mat-card-footer class="card-footer">
-        <mat-card-actions align="end">
-            <button mat-flat-button class="btn-second me-2">Cancel</button>
-            <button mat-flat-button class="btn-main">Submit</button>
-        </mat-card-actions>
-    </mat-card-footer>
-</mat-card>
+    </div>
+        </mat-card-content>
+        <mat-card-footer class="card-footer">
+            <mat-card-actions align="end">
+                <button mat-flat-button class="btn-second me-2">Cancel</button>
+                <button mat-flat-button class="btn-main">Submit</button>
+            </mat-card-actions>
+        </mat-card-footer>
+    </mat-card>
+</form>

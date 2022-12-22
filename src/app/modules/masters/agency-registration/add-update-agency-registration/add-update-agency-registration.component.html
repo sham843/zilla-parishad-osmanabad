@@ -17,34 +17,33 @@
             <div class="row">
                 <div class="col-sm-4">
                     <mat-form-field appearance="outline" class="w-100">
-                        <mat-label>Agency Name</mat-label>
-                        <input matInput formControlName="agency_Name" placeholder="Agency Name" maxlength="50" (keypress)="validation.noFirstSpaceAllow($event)">
-                        <mat-error *ngIf="fc['agency_Name'].hasError('required')"> Agency Name Is Required</mat-error>
+                        <mat-label>{{'Labels.agencyName' | translate}}</mat-label>
+                        <input matInput formControlName="agency_Name" placeholder="{{'Labels.agencyName' | translate}}" maxlength="50" (keypress)="validation.noFirstSpaceAllow($event)">
+                        <mat-error *ngIf="fc['agency_Name'].hasError('required')"> {{'Labels.agencyNameIsRequired' | translate}}</mat-error>
                         <mat-error *ngIf="fc['agency_Name'].hasError('pattern')"> Please Enter Valid Agency Name</mat-error>
                     </mat-form-field>
                 </div>
                 <div class="col-sm-4">
                     <mat-form-field appearance="outline" class="w-100">
-                        <mat-label>Agency Name(Marathi)</mat-label>
-                        <input matInput formControlName="m_Agency_Name" placeholder="Agency Name(Marathi)" maxlength="50" (keypress)="validation.noFirstSpaceAllow($event)">
-                        <mat-error *ngIf="fc['m_Agency_Name'].hasError('required')"> Agency Name Is Required</mat-error>
+                        <mat-label>{{'Labels.agencyName(Marathi)' | translate}}</mat-label>
+                        <input matInput formControlName="m_Agency_Name" placeholder="{{'Labels.agencyName(Marathi)' | translate}}" maxlength="50" (keypress)="validation.noFirstSpaceAllow($event)">
+                        <mat-error *ngIf="fc['m_Agency_Name'].hasError('required')">{{'Labels.agencyNameIsRequired' | translate}}</mat-error>
                         <!-- <mat-error *ngIf="fc['m_Agency_Name'].hasError('pattern')"> Please Enter Valid Agency Name</mat-error> -->
                     </mat-form-field>
                 </div>
                 <div class="col-sm-4">
                     <mat-form-field appearance="outline" class="w-100">
-                        <mat-label>Contact Person Name</mat-label>
-                        <input matInput formControlName="contactPerson_Name" placeholder="Contact Person Name" maxlength="50" (keypress)="validation.noFirstSpaceAllow($event)">
-                        <mat-error *ngIf="fc['contactPerson_Name'].hasError('required')"> Contact Person Name Is
-                            Required</mat-error>
+                        <mat-label>{{'Labels.contactPersonName' | translate}}</mat-label>
+                        <input matInput formControlName="contactPerson_Name" placeholder="{{'Labels.contactPersonName' | translate}}" maxlength="50" (keypress)="validation.noFirstSpaceAllow($event)">
+                        <mat-error *ngIf="fc['contactPerson_Name'].hasError('required')">{{'Labels.contactPersonNameIsRequired' | translate}}</mat-error>
                         <mat-error *ngIf="fc['contactPerson_Name'].hasError('pattern')"> Please Enter Valid Person
                             Name</mat-error>
                     </mat-form-field>
                 </div>
                 <div class="col-sm-4">
                     <mat-form-field appearance="outline" class="w-100">
-                        <mat-label>Contact No.</mat-label>
-                        <input matInput formControlName="contact_No" maxlength="10" placeholder="Contact No." (keypress)="validation.onlyDigits($event)">
+                        <mat-label>{{'Labels.contactNo.' | translate}}</mat-label>
+                        <input matInput formControlName="contact_No" maxlength="10" placeholder="{{'Labels.contactNo.' | translate}}" (keypress)="validation.onlyDigits($event)">
                         <mat-error *ngIf="fc['contact_No'].hasError('required')"> Contact Number Is Required</mat-error>
                         <mat-error *ngIf="fc['contact_No'].hasError('pattern')">Please Enter Valid Contact Number</mat-error>
                     </mat-form-field>
@@ -53,17 +52,17 @@
             <div class="row">
                 <div class="col-sm-4">
                     <mat-form-field appearance="outline" class="w-100">
-                        <mat-label>Email ID</mat-label>
-                        <input matInput formControlName="emailId" placeholder="Email ID" maxlength="50" (keypress)="validation.noFirstSpaceAllow($event)">
+                        <mat-label>{{'Labels.emailID' | translate}}</mat-label>
+                        <input matInput formControlName="emailId" placeholder="{{'Labels.emailID' | translate}}" maxlength="50" (keypress)="validation.noFirstSpaceAllow($event)">
                         <mat-error *ngIf="fc['emailId'].hasError('required')">Email Id Is Required</mat-error>
                         <mat-error *ngIf="fc['emailId'].hasError('pattern')">Please Enter Valid Email Id</mat-error>
                     </mat-form-field>
                 </div>
                 <div class="col-sm-4">
                     <mat-form-field appearance="outline" class="w-100">
-                        <mat-label>Agency Mobile No.</mat-label>
+                        <mat-label>{{'Labels.agencyMobileNo' | translate}}</mat-label>
                         <input matInput formControlName="agency_MobileNo" maxlength="10"
-                            placeholder="Agency Mobile No.." (keypress)="validation.onlyDigits($event)">
+                            placeholder="{{'Labels.agencyMobileNo' | translate}}" (keypress)="validation.onlyDigits($event)">
                         <mat-error *ngIf="fc['agency_MobileNo'].hasError('required')">Agency Mobile Number Is
                             Required</mat-error>
                         <mat-error *ngIf="fc['agency_MobileNo'].hasError('pattern')">Please Enter Valid Mobile
@@ -72,8 +71,8 @@
                 </div>
                 <div class="col-sm-4">
                     <mat-form-field appearance="outline" class="w-100">
-                        <mat-label>Agency Email ID</mat-label>
-                        <input matInput formControlName="agency_EmailId" placeholder="Agency Email ID" maxlength="50" (keypress)="validation.noFirstSpaceAllow($event)">
+                        <mat-label>{{'Labels.agencyEmailID' | translate}}</mat-label>
+                        <input matInput formControlName="agency_EmailId" placeholder="{{'Labels.agencyEmailID' | translate}}" maxlength="50" (keypress)="validation.noFirstSpaceAllow($event)">
                         <mat-error *ngIf="fc['agency_EmailId'].hasError('required')">Agency Email Id Is
                             Required</mat-error>
                         <mat-error *ngIf="fc['agency_EmailId'].hasError('pattern')">Please Enter Valid Email Id</mat-error>
@@ -83,8 +82,8 @@
             <div class="row">
                 <div class="col-sm-4">
                     <mat-form-field appearance="outline" class="w-100">
-                        <mat-label>District</mat-label>
-                        <mat-select formControlName="districtId"  placeholder="Select">
+                        <mat-label>{{'Labels.district' | translate}}</mat-label>
+                        <mat-select formControlName="districtId"  placeholder="{{'Labels.district' | translate}}">
                             <mat-option *ngFor="let data of districtData"
                                 [value]="data.id">{{data.district}}</mat-option>
                         </mat-select>
@@ -92,8 +91,8 @@
                 </div>
                 <div class="col-sm-4">
                     <mat-form-field appearance="outline" class="w-100 ">
-                        <mat-label>Taluka</mat-label>
-                        <mat-select formControlName="talukaId" placeholder="Select">
+                        <mat-label>{{'Labels.taluka' | translate}}</mat-label>
+                        <mat-select formControlName="talukaId" placeholder="{{'Labels.taluka' | translate}}">
                             <mat-option *ngFor="let data of talukaData" [value]="data.id">{{data.taluka}}</mat-option>
                         </mat-select>
                         <mat-error *ngIf="fc['talukaId'].hasError('required')">Please Select Taluka</mat-error>
@@ -101,8 +100,8 @@
                 </div>
                 <div class="col-sm-4">
                     <mat-form-field appearance="outline" class="w-100">
-                        <mat-label>Address</mat-label>
-                        <input matInput formControlName="address" placeholder="Address" (keypress)="validation.noFirstSpaceAllow($event)">
+                        <mat-label>{{'Labels.address' | translate}}</mat-label>
+                        <input matInput formControlName="address" placeholder="{{'Labels.address' | translate}}" (keypress)="validation.noFirstSpaceAllow($event)">
                         <mat-error *ngIf="fc['address'].hasError('required')">Address Is Required</mat-error>
                         <mat-error *ngIf="fc['address'].hasError('maxlength')">Maximumm Length Should Be Less Than 500 Characters</mat-error>                   
                     </mat-form-field>
@@ -110,8 +109,8 @@
             </div>
         </mat-card-content>
         <mat-card-footer align="end" class="card-footer d-flex justify-content-end">
-            <button type="button" mat-flat-button class="btn-second me-2" (click)="onCancel(clear)">Cancel</button>
-            <button type="submit" mat-flat-button class="btn-main ">{{data ? 'Update' : 'Submit'}}</button>
+            <button type="button" mat-flat-button class="btn-second me-2" (click)="onCancel(clear)">{{'Labels.cancel' | translate}}</button>
+            <button type="submit" mat-flat-button class="btn-main ">{{data ? ('Labels.update' | translate) : ('Labels.submit' | translate)}}</button>
         </mat-card-footer>
     </form>
 </mat-card>

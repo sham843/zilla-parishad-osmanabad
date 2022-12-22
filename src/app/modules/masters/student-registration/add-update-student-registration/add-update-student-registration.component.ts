@@ -6,6 +6,7 @@ import { CommonMethodsService } from 'src/app/core/services/common-methods.servi
 import { ErrorsService } from 'src/app/core/services/errors.service';
 import { FileUploadService } from 'src/app/core/services/file-upload.service';
 import { MasterService } from 'src/app/core/services/master.service';
+import { ValidationService } from 'src/app/core/services/validation.service';
 import { WebStorageService } from 'src/app/core/services/web-storage.service';
 
 @Component({
@@ -44,6 +45,7 @@ export class AddUpdateStudentRegistrationComponent {
     private apiService: ApiService,
     private webService: WebStorageService,
     private commonMethods: CommonMethodsService,
+    public validators : ValidationService,
     public dialogRef: MatDialogRef<AddUpdateStudentRegistrationComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any) { }
 
@@ -79,14 +81,16 @@ export class AddUpdateStudentRegistrationComponent {
       religionId: ['',Validators.required],
       castId: ['',Validators.required],
       saralId: ['',Validators.required],
-      mobileNo: ['',Validators.required],
+      mobileNo: ['',[Validators.required,Validators.pattern(this.validators.mobile_No)]],
       fatherFullName: ['',Validators.required], 
       m_FatherFullName: ['',Validators.required], 
       motherName: ['',Validators.required],
       m_MotherName: ['',Validators.required],
-      aadharNo: ['',Validators.required],
+      aadharNo: ['',[Validators.required,Validators.pattern(this.validators.aadhar_card)]],
       // emailID:[''],
-      physicallyDisabled: ['',Validators.required]
+      physicallyDisabled: ['',Validators.required],
+      photo:[''],
+      aadharPhoto:['']
 
     })
   }
@@ -98,8 +102,7 @@ export class AddUpdateStudentRegistrationComponent {
       next: (res: any) => {
         if (res.statusCode == 200) {
           this.districtArr = res.responseData;
-          this.stuRegistrationForm.controls['districtId'].setValue(1)
-          // districtId: 1,    
+          this.stuRegistrationForm.controls['districtId'].setValue(1);
         } else {
           this.districtArr = [];
         }
@@ -208,9 +211,9 @@ export class AddUpdateStudentRegistrationComponent {
   }
 
   fileUpload(event: any, name: string) {
-    console.log(event);
     this.fileUpl.uploadDocuments(event, 'Upload', 'jpg, jpeg, png').subscribe((res: any) => {
-      name == 'img' ? this.uploadImg = res.responseData : this.uploadAadhar = res.responseData;
+      name == 'img' ? (this.uploadImg = res.responseData,this.stuRegistrationForm.controls['photo'].setValue(this.uploadImg.split('/').pop())) : (
+        this.uploadAadhar = res.responseData,this.stuRegistrationForm.controls['aadharPhoto'].setValue(this.uploadAadhar.split('/').pop()) );
     });
   }
 
@@ -247,8 +250,6 @@ export class AddUpdateStudentRegistrationComponent {
   }
 
   onSubmit() {
-    console.log(this.editFlag);
-    this.updateValidation();
     let obj = this.stuRegistrationForm.value;
     let postObj = {
       "createdBy": 0,
@@ -257,12 +258,12 @@ export class AddUpdateStudentRegistrationComponent {
       "modifiedDate": "2022-12-21T07:11:24.503Z",
       "isDeleted": true,
       "id": this.editFlag ? this.editObj.id : 0,
-      "fName": obj.fName,
-      "f_MName": obj.f_MName,
-      "mName": obj.mName,
-      "m_MName": obj.m_MName,
-      "lName": obj.lName,
-      "l_MName": obj.l_MName,
+      "fName": obj.fName || '',
+      "f_MName": obj.f_MName || '',
+      "mName": obj.mName || '',
+      "m_MName": obj.m_MName || '',
+      "lName": obj.lName || '',
+      "l_MName": obj.l_MName || '',
       "stateId": obj.stateId,
       "districtId": obj.districtId,
       "talukaId": obj.talukaId,
@@ -289,10 +290,10 @@ export class AddUpdateStudentRegistrationComponent {
       "gaurdianModel": {
         "id": 0,
         "studentId": this.editFlag ? this.editObj.id : 0,
-        "fatherFullName": obj.fatherFullName,
-        "m_FatherFullName": obj.m_FatherFullName,
-        "motherName": obj.motherName,
-        "m_MotherName": obj.m_MotherName,
+        "fatherFullName": obj.fatherFullName || '',
+        "m_FatherFullName": obj.m_FatherFullName || '',
+        "motherName": obj.motherName || '',
+        "m_MotherName": obj.m_MotherName || '',
         "mobileNo": obj.mobileNo
       },
       "documentModel": [
@@ -300,13 +301,13 @@ export class AddUpdateStudentRegistrationComponent {
           "id": 0,
           "studentId": this.editFlag ? this.editObj.id : 0,
           "documentId": 1,
-          "docPath": this.uploadImg
+          "docPath": this.uploadImg || ''
         },
         {
           "id": 0,
           "studentId": this.editFlag ? this.editObj.id : 0,
           "documentId": 2,
-          "docPath": this.uploadAadhar
+          "docPath": this.uploadAadhar || ''
         }
       ],
       "lan": "string"
@@ -315,6 +316,8 @@ export class AddUpdateStudentRegistrationComponent {
     if(this.stuRegistrationForm.invalid){
       return
     }else{
+      console.log(postObj);
+      
       let url = this.editFlag ? 'UpdateStudent' : 'AddStudent'
       this.apiService.setHttp(this.editFlag ? 'put' : 'post', 'zp-osmanabad/Student/' + url, false, postObj, false, 'baseUrl');
       this.apiService.getHttp().subscribe({
@@ -330,46 +333,6 @@ export class AddUpdateStudentRegistrationComponent {
       });
     }
   }
-
-  updateValidation(){
-    if (this.languageFlag == 'EN') {
-      this.stuRegistrationForm.controls['fName'].setValidators([Validators.required]);
-      this.stuRegistrationForm.controls['mName'].setValidators([Validators.required]); 
-      this.stuRegistrationForm.controls['lName'].setValidators([Validators.required]);
-      this.stuRegistrationForm.controls['fatherFullName'].setValidators([Validators.required]); 
-      this.stuRegistrationForm.controls['motherName'].setValidators([Validators.required]);
-      
-      this.stuRegistrationForm.controls['f_MName'].setValidators([]);
-      this.stuRegistrationForm.controls['m_MName'].setValidators([]);    
-      this.stuRegistrationForm.controls['l_MName'].setValidators([]);   
-      this.stuRegistrationForm.controls['m_FatherFullName'].setValidators([]);    
-      this.stuRegistrationForm.controls['m_MotherName'].setValidators([]);   
-    } else {
-      this.stuRegistrationForm.controls['f_MName'].setValidators([Validators.required]);
-      this.stuRegistrationForm.controls['m_MName'].setValidators([Validators.required]);
-      this.stuRegistrationForm.controls['l_MName'].setValidators([Validators.required]);
-      this.stuRegistrationForm.controls['m_FatherFullName'].setValidators([Validators.required]);
-      this.stuRegistrationForm.controls['m_MotherName'].setValidators([Validators.required]);
-
-      this.stuRegistrationForm.controls['fName'].setValidators([]);
-      this.stuRegistrationForm.controls['mName'].setValidators([]);
-      this.stuRegistrationForm.controls['lName'].setValidators([]);
-      this.stuRegistrationForm.controls['fatherFullName'].setValidators([]);
-      this.stuRegistrationForm.controls['motherName'].setValidators([]);
-
-    }
-    this.stuRegistrationForm.controls['fName'].updateValueAndValidity();
-    this.stuRegistrationForm.controls['lName'].updateValueAndValidity();
-    this.stuRegistrationForm.controls['mName'].updateValueAndValidity();
-    this.stuRegistrationForm.controls['f_MName'].updateValueAndValidity();
-    this.stuRegistrationForm.controls['m_MName'].updateValueAndValidity();
-    this.stuRegistrationForm.controls['l_MName'].updateValueAndValidity();
-    this.stuRegistrationForm.controls['fatherFullName'].updateValueAndValidity();
-    this.stuRegistrationForm.controls['motherName'].updateValueAndValidity();
-    this.stuRegistrationForm.controls['m_FatherFullName'].updateValueAndValidity();
-    this.stuRegistrationForm.controls['m_MotherName'].updateValueAndValidity();
-  }
-
   clearForm(clear:any){
     clear.resetForm();   
   }

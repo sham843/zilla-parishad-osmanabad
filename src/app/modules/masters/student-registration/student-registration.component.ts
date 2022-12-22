@@ -32,19 +32,19 @@ export class StudentRegistrationComponent {
 
   onPagintion(pageNo: number) {
     this.pageNumber = pageNo;
-    this.getTableData()
+    // this.getTableData();
   }
 
   getTableData(flag?: string) {
+
     this.pageNumber = flag == 'filter' ? 1 : this.pageNumber;
     this.tableDataArray = new Array();
     let tableDatasize!: Number;
     let pageNo
-     this.cardViewFlag ? pageNo = (this.cardCurrentPage + 1) : (pageNo = this.pageNumber,this.cardCurrentPage=0);
+    this.cardViewFlag ? pageNo = (this.cardCurrentPage + 1) : (pageNo = this.pageNumber, this.cardCurrentPage = 0);
     let str = `?pageno=${pageNo}&pagesize=10&textSearch=${this.searchContent.value || ''}`;
     this.apiService.setHttp('GET', 'zp-osmanabad/Student/GetAll' + str, false, false, false, 'baseUrl');
     this.apiService.getHttp().subscribe({
-
       next: (res: any) => {
         if (res.statusCode == "200") {
           this.tableDataArray = res.responseData.responseData1;
@@ -78,6 +78,7 @@ export class StudentRegistrationComponent {
   }
 
   addUpdateAgency(obj?: any) {
+    console.log(obj);
     const dialogRef = this.dialog.open(AddUpdateStudentRegistrationComponent, {
       width: '900px',
       data: obj,
@@ -86,10 +87,13 @@ export class StudentRegistrationComponent {
     });
     dialogRef.afterClosed().subscribe((result: any) => {
       console.log(result);
+      if (result == 'yes' && obj) {
+        this.pageNumber = obj.pageNumber;        
+      }else if (result == 'yes'){
+        this.pageNumber = 1
+      }     
+      this.getTableData();
 
-      if (result == 'yes') {
-        this.getTableData();
-      }
     });
   }
 
@@ -125,10 +129,10 @@ export class StudentRegistrationComponent {
     this.apiService.getHttp().subscribe({
       next: (res: any) => {
         if (res.statusCode == "200") {
-          this.commonMethods.snackBar(res.statusMessage,0);
-          this.getTableData()
+          this.commonMethods.snackBar(res.statusMessage, 0);
+          this.getTableData();
         } else {
-          this.commonMethods.snackBar(res.statusMessage,1);
+          this.commonMethods.snackBar(res.statusMessage, 1);
         }
       },
       error: ((err: any) => { this.errors.handelError(err) })
@@ -137,6 +141,8 @@ export class StudentRegistrationComponent {
   }
 
   childTableCompInfo(obj: any) {
+    console.log(obj);
+    
     switch (obj.label) {
       case 'Pagination':
         this.pageNumber = obj.pageNumber;

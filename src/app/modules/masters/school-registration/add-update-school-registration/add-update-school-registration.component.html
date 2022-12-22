@@ -71,9 +71,12 @@
                 <div class="col-sm">
                     <mat-form-field appearance="outline" class="w-100">
                         <mat-label>School</mat-label>
-                        <input matInput placeholder="School" formControlName="schoolName" maxlength="50" (keypress)="validationService.alphabetsWithSpaces($event); validationService.noFirstSpaceAllow($event)">
+                        <input matInput placeholder="School" formControlName="schoolName" maxlength="50" (keypress)="validationService.noFirstSpaceAllow($event)">
                         <mat-error *ngIf="f['schoolName'].hasError('required') || f['schoolName'].hasError('touched')">
                             School is required
+                        </mat-error>
+                        <mat-error *ngIf="f['schoolName'].hasError('pattern')">
+                           Invalid School Name
                         </mat-error>
                     </mat-form-field>
                 </div>
@@ -124,6 +127,10 @@
                                 {{schoolMng.management_desc}}
                             </mat-option>
                         </mat-select>
+                        <mat-error
+                            *ngIf="f['s_ManagementId'].hasError('required') || f['s_ManagementId'].hasError('touched')">
+                            School Management is required
+                        </mat-error>
                     </mat-form-field>
                 </div>
 
@@ -135,6 +142,10 @@
                                 {{groupclass.groupClass}}
                             </mat-option>
                         </mat-select>
+                        <mat-error
+                            *ngIf="f['g_ClassId'].hasError('required') || f['g_ClassId'].hasError('touched')">
+                            Group Class is required
+                        </mat-error>
                     </mat-form-field>
                 </div>
 

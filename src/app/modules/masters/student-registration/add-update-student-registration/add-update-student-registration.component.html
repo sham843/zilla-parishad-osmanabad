@@ -65,21 +65,24 @@
                 <div class="col-sm-4">
                     <mat-form-field appearance="outline" class="w-100">
                         <mat-label>Student First Name</mat-label>
-                        <input matInput formControlName="fName"> 
+                        <input matInput formControlName="fName"
+                        (keypress)="validators.onlyAlphabets($event)"> 
                         <mat-error *ngIf="fc['fName'].hasError('required')">Enter First Name</mat-error>
                     </mat-form-field>
                 </div>
                 <div class="col-sm-4">
                     <mat-form-field appearance="outline" class="w-100">
                         <mat-label>Student Middel Name</mat-label>
-                        <input matInput formControlName="mName">
+                        <input matInput formControlName="mName"
+                        (keypress)="validators.onlyAlphabets($event)">
                         <mat-error *ngIf="fc['mName'].hasError('required')">Enter Middel Name</mat-error>
                     </mat-form-field>
                 </div>
                  <div class="col-sm-4">
                     <mat-form-field appearance="outline" class="w-100">
                         <mat-label>Student Last Name</mat-label>
-                        <input matInput formControlName="lName">
+                        <input matInput formControlName="lName"
+                        (keypress)="validators.onlyAlphabets($event)">
                         <mat-error *ngIf="fc['lName'].hasError('required')">Enter Last Name</mat-error>
                     </mat-form-field>
                 </div>
@@ -109,7 +112,7 @@
                         #uploadImage />
                     <mat-form-field appearance="outline" class="w-100 ">
                         <mat-label>Upload Photo</mat-label>
-                        <input matInput>
+                        <input matInput formControlName="photo">
                         <mat-icon matSuffix>
                             <span class="material-symbols-outlined" (click)="uploadImage.click()">
                                 upload
@@ -187,8 +190,9 @@
                 <div class="col-sm-4">
                     <mat-form-field appearance="outline" class="w-100 ">
                         <mat-label>Aadhar No.</mat-label>
-                        <input matInput formControlName="aadharNo">
+                        <input matInput formControlName="aadharNo" maxlength="12" minlength="12">
                         <mat-error *ngIf="fc['aadharNo'].hasError('required')">Enter Aadhar No</mat-error>
+                        <mat-error *ngIf="fc['aadharNo'].hasError('pattern')">Enter Valid Aadhar Number</mat-error>
                     </mat-form-field>
                 </div>
                 <div class="col-sm-4">
@@ -196,7 +200,7 @@
                         #uploadAadhar />
                     <mat-form-field appearance="outline" class="w-100 ">
                         <mat-label>Aadhar Photo</mat-label>
-                        <input matInput>
+                        <input matInput formControlName="aadharPhoto">
                         <mat-icon matSuffix>
                             <span class="material-symbols-outlined" (click)="uploadAadhar.click()">
                                 upload
@@ -210,8 +214,9 @@
                 <div class="col-sm-4">
                     <mat-form-field appearance="outline" class="w-100">
                         <mat-label>Parents Mobile No.</mat-label>
-                        <input matInput formControlName="mobileNo">
+                        <input matInput formControlName="mobileNo" maxlength="10" minlength="10">
                         <mat-error *ngIf="fc['mobileNo'].hasError('required')">Enter Mobile No</mat-error>
+                        <mat-error *ngIf="fc['mobileNo'].hasError('pattern')">Enter Valid Mobile Number</mat-error>
                     </mat-form-field>
                 </div>
             </div>
@@ -219,7 +224,8 @@
                 <div class="col-sm-4">
                     <mat-form-field appearance="outline" class="w-100">
                         <mat-label>Father Name</mat-label>
-                        <input matInput formControlName="fatherFullName">
+                        <input matInput formControlName="fatherFullName"
+                        (keypress)="validators.onlyAlphabets($event)">
                         <mat-error *ngIf="fc['fatherFullName'].hasError('required')">Enter Father Full Name</mat-error>
                     </mat-form-field>
                 </div>
@@ -233,7 +239,8 @@
                 <div class="col-sm-4">
                     <mat-form-field appearance="outline" class="w-100">
                         <mat-label>Mother Name</mat-label>
-                        <input matInput formControlName="motherName">
+                        <input matInput formControlName="motherName"
+                        (keypress)="validators.onlyAlphabets($event)">
                         <mat-error *ngIf="fc['motherName'].hasError('required')">Enter Mother Name </mat-error>
                     </mat-form-field>
                 </div>
