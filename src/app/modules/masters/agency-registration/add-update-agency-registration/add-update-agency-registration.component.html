@@ -14,7 +14,7 @@
     </mat-card-header>
     <form [formGroup]="agencyRegisterForm" (ngSubmit)="onSubmit(clear)" #clear="ngForm">
         <mat-card-content class="card-body">
-            <div class="row">
+            <div class="row mb-2">
                 <div class="col-sm-4">
                     <mat-form-field appearance="outline" class="w-100">
                         <mat-label>{{'Labels.agencyName' | translate}}</mat-label>
@@ -40,6 +40,9 @@
                             Name</mat-error>
                     </mat-form-field>
                 </div>
+                
+            </div>
+            <div class="row mb-2">
                 <div class="col-sm-4">
                     <mat-form-field appearance="outline" class="w-100">
                         <mat-label>{{'Labels.contactNo.' | translate}}</mat-label>
@@ -49,7 +52,7 @@
                     </mat-form-field>
                 </div>
             </div>
-            <div class="row">
+            <div class="row mb-2">
                 <div class="col-sm-4">
                     <mat-form-field appearance="outline" class="w-100">
                         <mat-label>{{'Labels.emailID' | translate}}</mat-label>
