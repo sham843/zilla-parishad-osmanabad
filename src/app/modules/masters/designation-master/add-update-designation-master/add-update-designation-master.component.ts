@@ -7,6 +7,7 @@ import { MasterService } from 'src/app/core/services/master.service';
 import { ErrorsService } from 'src/app/core/services/errors.service';
 import { WebStorageService } from 'src/app/core/services/web-storage.service';
 import { ValidationService } from 'src/app/core/services/validation.service';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-add-update-designation-master',
@@ -23,7 +24,7 @@ export class AddUpdateDesignationMasterComponent {
    
   constructor(private masterService: MasterService, private fb: FormBuilder, private service: ApiService,
     private commonMethod: CommonMethodsService, private errorHandler: ErrorsService,private webStorage : WebStorageService,
-    public validation :ValidationService,
+    public validation :ValidationService, private ngxSpinner : NgxSpinnerService,
     public dialogRef: MatDialogRef<AddUpdateDesignationMasterComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any) { }
 
@@ -39,7 +40,7 @@ export class AddUpdateDesignationMasterComponent {
       "lan": [''],
       "id": [0],
       "designationType": [''],
-      "m_DesignationType": [''],
+      "m_DesignationType": ['',Validators.required],
       "designationLevelId": ['', Validators.required],
       "designationName": ['', Validators.required]
     })
@@ -83,7 +84,7 @@ export class AddUpdateDesignationMasterComponent {
 
   //#region ------------------------------------- Desiganation-Master Submit ---------------------------------// 
   OnSubmit() {
-    if(this.designationForm.valid){
+    // if(this.designationForm.valid){
       let getFormVal = this.designationForm.value;
       let getDesignationLevelId: any = this.commonMethod.getkeyValueByArrayOfObj(this.DesiganationLevelData, 'designationLevel', getFormVal?.designationLevelId);
       this.designationForm.value.designationLevelId = getDesignationLevelId?.id;
@@ -103,12 +104,13 @@ export class AddUpdateDesignationMasterComponent {
         "timestamp": new Date(),
         "localId": 0,
       }
+      this.ngxSpinner.show();
       let url;
       this.editFlag ? url = 'zp_osmanabad/designation-master/UpdateRecord' : url = 'zp_osmanabad/designation-master/AddDesignation'
       this.service.setHttp(this.editFlag ? 'put' : 'post', url, false, postObj, false, 'baseUrl');
       this.service.getHttp().subscribe({
         next: ((res: any) => {
-          // this.ngxspinner.hide();
+          this.ngxSpinner.hide();
           if (res.statusCode == '200') {
             this.dialogRef.close('yes');
           } else {
@@ -116,13 +118,13 @@ export class AddUpdateDesignationMasterComponent {
           }
         }),
         error: (error: any) => {
-          // this.ngxspinner.hide();
+          this.ngxSpinner.hide();
           this.commonMethod.checkEmptyData(error.statusMessage) == false ? this.errorHandler.handelError(error.statusCode) : this.commonMethod.snackBar(error.statusMessage, 1);
         }
       })
-    }else{
-      return;
-    }
+    // }else{
+    //   return;
+    // }
    
   }
   //#endregion -------------------------------------End Desiganation-Master Submit ---------------------------------//

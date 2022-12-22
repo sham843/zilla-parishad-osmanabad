@@ -49,9 +49,9 @@ getDesiganationType() {
 
   //#region ------------------------------------- Designation-Master Table-Data ------------------------------- //
   getTableData(flag?:string) {
-    if(localStorage.getItem('currentPage')){
-      this.pageNumber = JSON.parse(localStorage.getItem('currentPage')||'');
-      localStorage.removeItem('currentPage');
+    if(localStorage.getItem('designation')){
+      this.pageNumber = JSON.parse(localStorage.getItem('designation')||'');
+      localStorage.removeItem('designation');
     }
     this.pageNumber =   flag == 'filter'? 1 :this.pageNumber;
     let tableDataArray = new Array();
@@ -112,15 +112,12 @@ getDesiganationType() {
     })  
      dialogRef.afterClosed().subscribe((result: any) => {
      
-      if(result == 'yes' && obj){   
-        console.log("hiiiiiiiiii",obj);   
-        console.log("this.pageNumber",this.pageNumber);             
+      if(result == 'yes' && obj){     
         this.clearForm();
         this.pageNumber = this.pageNumber;
-        localStorage.setItem('currentPage',JSON.stringify(this.pageNumber));
+        localStorage.setItem('designation',JSON.stringify(this.pageNumber));
       }
       else if(result == 'yes' ){
-        console.log("byeeeeeee",obj);
         this.clearForm();
         this.pageNumber = 1 ;   
       }    
