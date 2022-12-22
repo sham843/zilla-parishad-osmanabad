@@ -2,8 +2,6 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { MatDialogModule } from '@angular/material/dialog';
-import { SharedModule } from 'src/app/shared/shared.module';
-
 import {MatSelectModule} from '@angular/material/select';
 import {MatCardModule} from '@angular/material/card';
 import { MatFormFieldModule} from '@angular/material/form-field';
@@ -15,6 +13,9 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { PageRightAccessRoutingModule } from './page-right-access-routing.module';
 import { PageRightAccessComponent } from './page-right-access.component';
 import { MatInputModule } from '@angular/material/input';
+import { GlobalDialogComponent } from 'src/app/shared/components/global-dialog/global-dialog.component';
+import { TableComponent } from 'src/app/shared/components/table/table.component';
+import { PageStatisticsComponent } from 'src/app/shared/components/page-statistics/page-statistics.component';
 
 
 @NgModule({
@@ -25,7 +26,6 @@ import { MatInputModule } from '@angular/material/input';
     CommonModule,
     PageRightAccessRoutingModule,
     MatDialogModule,
-    SharedModule,
     MatSelectModule,
     MatCardModule,
     MatFormFieldModule,
@@ -33,7 +33,10 @@ import { MatInputModule } from '@angular/material/input';
     MatMenuModule,
     MatButtonModule,
     MatInputModule, 
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    GlobalDialogComponent,
+    TableComponent,
+    PageStatisticsComponent,
   ]
 })
 export class PageRightAccessModule { }

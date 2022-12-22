@@ -13,10 +13,12 @@ import {MatInputModule} from '@angular/material/input';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import {MatMenuModule} from '@angular/material/menu';
-import { SharedModule } from 'src/app/shared/shared.module';
 import { MatIconModule } from '@angular/material/icon';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatPaginatorModule } from '@angular/material/paginator';
+import { GlobalDialogComponent } from 'src/app/shared/components/global-dialog/global-dialog.component';
+import { TableComponent } from 'src/app/shared/components/table/table.component';
+import { PageStatisticsComponent } from 'src/app/shared/components/page-statistics/page-statistics.component';
 
 @NgModule({
   declarations: [
@@ -35,11 +37,13 @@ import { MatPaginatorModule } from '@angular/material/paginator';
     MatDatepickerModule,
     MatNativeDateModule,
     MatMenuModule,
-    SharedModule,
     MatIconModule,
     ReactiveFormsModule,
     FormsModule,
     MatPaginatorModule,
+    GlobalDialogComponent,
+    TableComponent,
+    PageStatisticsComponent,
     
   ]
 })

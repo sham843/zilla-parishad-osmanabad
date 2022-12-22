@@ -10,11 +10,13 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatButtonModule } from '@angular/material/button';
-import { SharedModule } from 'src/app/shared/shared.module';
 import { SchoolRegistrationComponent } from './school-registration.component';
 import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
 import { ReactiveFormsModule } from '@angular/forms';
+import { GlobalDialogComponent } from 'src/app/shared/components/global-dialog/global-dialog.component';
+import { TableComponent } from 'src/app/shared/components/table/table.component';
+import { PageStatisticsComponent } from 'src/app/shared/components/page-statistics/page-statistics.component';
 
 @NgModule({
   declarations: [
@@ -32,9 +34,12 @@ import { ReactiveFormsModule } from '@angular/forms';
     MatMenuModule,
     MatButtonModule,
     MatInputModule,
-    SharedModule,
     MatIconModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    GlobalDialogComponent,
+    TableComponent,
+    PageStatisticsComponent,
+    
   ]
 })
 export class SchoolRegistrationModule { }

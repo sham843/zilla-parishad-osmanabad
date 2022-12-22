@@ -5,8 +5,6 @@ import { DesignationMasterRoutingModule } from './designation-master-routing.mod
 import { DesignationMasterComponent } from './designation-master.component';
 import { AddUpdateDesignationMasterComponent } from './add-update-designation-master/add-update-designation-master.component';
 import { MatDialogModule } from '@angular/material/dialog';
-import { SharedModule } from 'src/app/shared/shared.module';
-
 import {MatSelectModule} from '@angular/material/select';
 import {MatCardModule} from '@angular/material/card';
 import {MatFormFieldModule} from '@angular/material/form-field';
@@ -18,6 +16,9 @@ import {MatDatepickerModule} from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
+import { TableComponent } from 'src/app/shared/components/table/table.component';
+import { PageStatisticsComponent } from 'src/app/shared/components/page-statistics/page-statistics.component';
+import { GlobalDialogComponent } from 'src/app/shared/components/global-dialog/global-dialog.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,6 @@ import { MatIconModule } from '@angular/material/icon';
     CommonModule,
     DesignationMasterRoutingModule,
     MatDialogModule,
-    SharedModule,
     MatSelectModule,
     MatCardModule,
     MatFormFieldModule,
@@ -39,7 +39,10 @@ import { MatIconModule } from '@angular/material/icon';
     MatDatepickerModule,
     MatNativeDateModule,
     MatInputModule,
-    MatIconModule
+    MatIconModule,
+    TableComponent,
+    PageStatisticsComponent,
+    GlobalDialogComponent
   ],
   providers:[]
 })

@@ -11,7 +11,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
   declarations: [
     HeaderComponent,
     FooterComponent,
-    SidebarComponent
+    SidebarComponent,
   ],
   imports: [
     CommonModule,

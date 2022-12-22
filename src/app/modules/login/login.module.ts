@@ -10,6 +10,9 @@ import { MatInputModule } from '@angular/material/input';
 import {MatButtonModule} from '@angular/material/button';
 import {MatIconModule} from '@angular/material/icon';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { TableComponent } from 'src/app/shared/components/table/table.component';
+import { PageStatisticsComponent } from 'src/app/shared/components/page-statistics/page-statistics.component';
+import { GlobalDialogComponent } from 'src/app/shared/components/global-dialog/global-dialog.component';
 
 
 
@@ -27,7 +30,10 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     MatButtonModule,
     MatIconModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    TableComponent,
+    PageStatisticsComponent,
+    GlobalDialogComponent
   ]
 })
 export class LoginModule { }
