@@ -30,13 +30,14 @@ export class AddUpdateAgencyRegistrationComponent {
   }
 
   defaultForm(data?: any) {
-   let obj = this.webStorageService.createdByProps();
+  //  let obj = this.webStorageService.createdByProps();
     this.agencyRegisterForm = this.fb.group({
-      "createdBy": obj.createdBy,
-      "modifiedBy": obj.modifiedBy,
-      "createdDate": obj.createdDate,
-      "modifiedDate": obj.modifiedDate,
-      "isDeleted": obj.isDeleted,
+      // "createdBy": obj.createdBy,
+      // "modifiedBy": obj.modifiedBy,
+      // "createdDate": obj.createdDate,
+      // "modifiedDate": obj.modifiedDate,
+      // "isDeleted": obj.isDeleted,
+      ...this.webStorageService.createdByProps(),
       "id": data ? data.id : 0,
       "agency_Name": [data ? data.agency_Name : "", [Validators.required, Validators.pattern(this.validation.fullName)]],
       "m_Agency_Name": [data ? data.m_Agency_Name : "", Validators.required],
