@@ -18,7 +18,7 @@ export class AddUpdateAgencyRegistrationComponent {
   districtData = new Array();
   talukaData = new Array();
   editData: any;
-  constructor(public dialogRef: MatDialogRef<AddUpdateAgencyRegistrationComponent>, private api: ApiService, public webStorageService : WebStorageService,
+  constructor(public dialogRef: MatDialogRef<AddUpdateAgencyRegistrationComponent>, private api: ApiService, public webStorageService: WebStorageService,
     private fb: FormBuilder, private master: MasterService, public validation: ValidationService,
     private common: CommonMethodsService, @Inject(MAT_DIALOG_DATA) public data: any, private errors: ErrorsService) { }
 
@@ -30,13 +30,8 @@ export class AddUpdateAgencyRegistrationComponent {
   }
 
   defaultForm(data?: any) {
-   let obj = this.webStorageService.createdByProps();
     this.agencyRegisterForm = this.fb.group({
-      "createdBy": obj.createdBy,
-      "modifiedBy": obj.modifiedBy,
-      "createdDate": obj.createdDate,
-      "modifiedDate": obj.modifiedDate,
-      "isDeleted": obj.isDeleted,
+      ...this.webStorageService.createdByProps(),
       "id": data ? data.id : 0,
       "agency_Name": [data ? data.agency_Name : "", [Validators.required, Validators.pattern(this.validation.fullName)]],
       "m_Agency_Name": [data ? data.m_Agency_Name : "", Validators.required],
@@ -80,10 +75,10 @@ export class AddUpdateAgencyRegistrationComponent {
     let obj = this.agencyRegisterForm.value;
     obj.districtId = 1;
     if (this.agencyRegisterForm.valid) {
-      this.api.setHttp(this.data ? 'put' : 'post', this.data ? 'zp-osmanabad/Agency/Update' : 'zp-osmanabad/Agency/Add', false, obj, false, 'baseUrl');
+      this.api.setHttp(this.data ? 'put' : 'post', 'zp-osmanabad/Agency/' + (this.data ? 'Update' : 'Add'), false, obj, false, 'baseUrl');
       this.api.getHttp().subscribe({
         next: (res: any) => {
-          res.statusCode == 200 ? (this.common.snackBar(res.statusMessage, 0), this.dialogRef.close('Yes'), clear.resetForm(), this.defaultForm()) : this.common.snackBar(res.statusMessage, 1);
+          res.statusCode == 200 ? (this.common.snackBar(res.statusMessage, 0), this.dialogRef.close('Yes'), this.onCancel(clear)) : this.common.snackBar(res.statusMessage, 1);
         },
         error: ((err: any) => { this.errors.handelError(err) })
       })

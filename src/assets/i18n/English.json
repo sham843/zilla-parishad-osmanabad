@@ -41,7 +41,8 @@
         "DesignationType":"DesignationType",
         "DesignationTypeReq":"Designation Type is Required",
         "AddDesignation(Marathi)":"Add Designation (Marathi)",
-        "DesignationTypeMarathiReq":"Designation Type Marathi Required"
+        "DesignationTypeMarathiReq":"Designation Type Marathi Required",
+        "searchbyNameContactEmail" :"Search By Name/Contact/Email"
 
     }
 }

@@ -145,8 +145,10 @@ body {
 }
 
 .dashboard-table .table-img {
-  height: 50px;
-  width: 50px;
+  height: 40px;
+    width: 40px;
+    margin-block: 5px;
+    border-radius: 50%;
 }
 
 .plain-card {
@@ -170,4 +172,18 @@ body {
 .plain-card .card-body {
   padding: 10px 15px;
   font-size: 0.85rem;
+}
+.snack-warning { 
+  border-left: 7px solid #ffc107;
+}
+
+.snack-danger {
+    border-left: 7px solid #ff4141;
+}
+.snack-success {
+  border-left: 7px solid #198754;
+}
+
+.mat-mdc-snack-bar-container{
+  background: #333333 !important;
 }
