@@ -23,7 +23,7 @@ export class AddUpdateDesignationMasterComponent {
   obj = { id: 0, designationType: 'Other' };
    
   constructor(private masterService: MasterService, private fb: FormBuilder, private service: ApiService,
-    private commonMethod: CommonMethodsService, private errorHandler: ErrorsService,private webStorage : WebStorageService,
+    private commonMethod: CommonMethodsService, private errorHandler: ErrorsService,public webStorage : WebStorageService,
     public validation :ValidationService, private ngxSpinner : NgxSpinnerService,
     public dialogRef: MatDialogRef<AddUpdateDesignationMasterComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any) { }
@@ -101,13 +101,15 @@ export class AddUpdateDesignationMasterComponent {
       let getDesignationLevelId: any = this.commonMethod.getkeyValueByArrayOfObj(this.DesiganationLevelData, 'designationLevel', getFormVal?.designationLevelId);
       this.designationForm.value.designationLevelId = getDesignationLevelId?.id;
       let formValue = this.designationForm.value;
-  
+      let  data = this.webStorage.createdByProps();
+      console.log("data",data);
+      
       let postObj = {
-        "createdBy": 0,
-        "modifiedBy": 0,
-        "createdDate": new Date(),
-        "modifiedDate": new Date(),
-        "isDeleted": false,
+        "createdBy":  data.createdBy ,
+        "modifiedBy": data.modifiedBy,
+        "createdDate": data.createdDate,
+        "modifiedDate": data.modifiedDate,
+        "isDeleted": data.isDeleted,
         "lan": this.webStorage.languageFlag,
         "id": formValue.id,
         "designationType": formValue.designationName == 'Other' ? formValue.designationType : formValue.designationName,

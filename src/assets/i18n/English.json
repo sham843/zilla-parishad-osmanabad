@@ -6,7 +6,18 @@
         "addAgency" : "Add Agency" ,
         "filter" : "Filter",
         "updateAgency" :"Update Agency",
-        "agencyName" : "Agency Name"
+        "agencyName" : "Agency Name",
+        "agencyName(Marathi)" : "Agency Name(Marathi)",
+        "contactPersonName" : "Contact Person Name",
+        "contactNo." : "Contact No.",
+        "emailID" : "Email ID",
+        "agencyMobileNo." : "Agency Mobile No.",
+        "agencyEmailID" :"Agency Email ID",
+        "district" : "District",
+        "taluka" : "Taluka",
+        "address" : "Address",
+        "submit" : "Submit",
+        "update" : "Update"
 
     }
 }
