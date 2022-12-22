@@ -106,6 +106,7 @@ export class ForgotPasswordComponent {
   pauseTimer() {
     clearInterval(this.interval);
    this.fcMobile['mobileNo'].setValue('');
+   this.otpForm.reset();
   }
 
   setFlag(flag? :any){

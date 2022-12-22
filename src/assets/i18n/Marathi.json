@@ -7,6 +7,18 @@
         "filter" : "",
         "updateAgency" : "अपडेट एजन्सी",
         "agencyName" : "एजन्सीचे नाव",
-        "agencyName(Marathi)" : "एजन्सीचे नाव (मराठी)"
+        "agencyName(Marathi)" : "एजन्सीचे नाव (मराठी)",
+        "contactPersonName" : "संपर्क व्यक्तीचे नाव",
+        "contactNo." : "संपर्क क्र.",
+        "emailID" : "ई - मेल आयडी",
+        "agencyMobileNo." : "एजन्सी मोबाईल क्र.",
+        "agencyEmailID" : "एजन्सीचा ईमेल आयडी",
+        "district" : "जिल्हा",
+        "taluka" : "तालुका",
+        "address" : "पत्ता",
+        "submit" : "प्रस्तुत करणे",
+        "update" : "अपडेट करा"
+       
+
     }
 }
