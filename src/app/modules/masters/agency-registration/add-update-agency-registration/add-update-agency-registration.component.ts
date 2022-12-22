@@ -18,8 +18,8 @@ export class AddUpdateAgencyRegistrationComponent {
   districtData = new Array();
   talukaData = new Array();
   editData: any;
-  constructor(public dialogRef: MatDialogRef<AddUpdateAgencyRegistrationComponent>, private api: ApiService,
-    private fb: FormBuilder, private master: MasterService, public validation: ValidationService, private webStorageService: WebStorageService,
+  constructor(public dialogRef: MatDialogRef<AddUpdateAgencyRegistrationComponent>, private api: ApiService, public webStorageService : WebStorageService,
+    private fb: FormBuilder, private master: MasterService, public validation: ValidationService,
     private common: CommonMethodsService, @Inject(MAT_DIALOG_DATA) public data: any, private errors: ErrorsService) { }
 
   ngOnInit() {
@@ -30,12 +30,13 @@ export class AddUpdateAgencyRegistrationComponent {
   }
 
   defaultForm(data?: any) {
+   let obj = this.webStorageService.createdByProps();
     this.agencyRegisterForm = this.fb.group({
-      "createdBy": 0,
-      "modifiedBy": 0,
-      "createdDate": new Date(),
-      "modifiedDate": new Date(),
-      "isDeleted": true,
+      "createdBy": obj.createdBy,
+      "modifiedBy": obj.modifiedBy,
+      "createdDate": obj.createdDate,
+      "modifiedDate": obj.modifiedDate,
+      "isDeleted": obj.isDeleted,
       "id": data ? data.id : 0,
       "agency_Name": [data ? data.agency_Name : "", [Validators.required, Validators.pattern(this.validation.fullName)]],
       "m_Agency_Name": [data ? data.m_Agency_Name : "", Validators.required],

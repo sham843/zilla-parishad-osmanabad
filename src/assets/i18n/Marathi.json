@@ -2,6 +2,10 @@
     "Labels": {
         "dashboard": "डॅशबोर्ड",
         "agencyRegistration" : "एजन्सी नोंदणी",
-        "DesignationMaster": "पदनाम मास्टर"
+        "DesignationMaster": "पदनाम मास्टर",
+        "addAgency" : "एजन्सी जोडा",
+        "filter" : "",
+        "updateAgency" : "अपडेट एजन्सी",
+        "agencyName" : "एजन्सीचे नाव"
     }
 }

@@ -2,7 +2,11 @@
     "Labels": {
         "dashboard": "Dashboard",
         "agencyRegistration" : "Agency Registration",
-        "DesignationMaster": "Designation Master"
+        "DesignationMaster": "Designation Master",
+        "addAgency" : "Add Agency" ,
+        "filter" : "Filter",
+        "updateAgency" :"Update Agency",
+        "agencyName" : "Agency Name"
 
     }
 }
