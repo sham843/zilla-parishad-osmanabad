@@ -1,5 +1,5 @@
 import { Component, Inject } from '@angular/core';
-import {  FormBuilder, FormGroup } from '@angular/forms';
+import {  FormArray, FormBuilder, FormGroup } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { CommonMethodsService } from 'src/app/core/services/common-methods.service';
 import { ErrorsService } from 'src/app/core/services/errors.service';
@@ -15,6 +15,9 @@ export class AddUpdateTeacherRegistrationComponent {
 
   teacherRegForm!:FormGroup;
   genderArray = new Array();
+  districtArray = new Array();
+  talukaArray = new Array();
+  villageArray =new Array();
 
   constructor(private masterService :MasterService, private commonMethod :CommonMethodsService, private errorHandler :ErrorsService,
    private fb : FormBuilder, public dialogRef: MatDialogRef<AddUpdateTeacherRegistrationComponent>,
@@ -22,7 +25,11 @@ export class AddUpdateTeacherRegistrationComponent {
 
   ngOnInit() {
     this.formData();
-    // this.getGender();
+    //  this.getGender();
+  }
+
+  get itemsForm(): FormArray {
+    return this.teacherRegForm.get('teacherDetails') as FormArray;
   }
 
   formData(){
@@ -54,8 +61,8 @@ export class AddUpdateTeacherRegistrationComponent {
         "lan": "string",
         "localID": 0,
         "timestamp": "2022-12-22T06:44:26.230Z",
-        "teacherDetails": [
-          {
+        teacherDetails: this.fb.array([
+          this.fb.group({
             "createdBy": 0,
             "modifiedBy": 0,
             "createdDate": "2022-12-22T06:44:26.230Z",
@@ -96,8 +103,9 @@ export class AddUpdateTeacherRegistrationComponent {
             "dateOfSeniority": "string",
             "haveYouPassedComputerExam": true,
             "namesAndTalukasAllSchoolsWorkedEarlier": "string"
-          }
-        ],
+          })
+        ]),
+
         "teacherDocument": [
           {
             "createdBy": 0,
@@ -121,7 +129,8 @@ export class AddUpdateTeacherRegistrationComponent {
       next: ((res: any) => {
         if (res.statusCode == '200' && res.responseData.length) {
           this.genderArray = res.responseData;
-          console.log("gender", this.genderArray);         
+          console.log("gender", this.genderArray); 
+          this.getDistrict();        
           
         }
       }), error: (error: any) => {
@@ -130,6 +139,46 @@ export class AddUpdateTeacherRegistrationComponent {
     })
   }
 
+  getDistrict() { 
+    this.masterService.getAllDistrict('EN').subscribe({
+      next: ((res: any) => {
+        if (res.statusCode == '200' && res.responseData.length) {
+          this.districtArray = res.responseData;
+          console.log("districtArray", this.districtArray);         
+          this.getTaluka();
+        }
+      }), error: (error: any) => {
+        this.commonMethod.checkEmptyData(error.statusText) == false ? this.errorHandler.handelError(error.statusCode) : this.commonMethod.snackBar(error.statusText, 1);
+      }
+    })
+  }
+
+  getTaluka() { 
+    this.masterService.getAllTaluka('EN').subscribe({
+      next: ((res: any) => {
+        if (res.statusCode == '200' && res.responseData.length) {
+          this.talukaArray = res.responseData;
+          console.log("talukaArray", this.talukaArray);         
+          this.getVillage();
+        }
+      }), error: (error: any) => {
+        this.commonMethod.checkEmptyData(error.statusText) == false ? this.errorHandler.handelError(error.statusCode) : this.commonMethod.snackBar(error.statusText, 1);
+      }
+    })
+  }
+
+  getVillage() { 
+    this.masterService.getAllTaluka('EN').subscribe({
+      next: ((res: any) => {
+        if (res.statusCode == '200' && res.responseData.length) {
+          this.villageArray = res.responseData;
+          console.log("villageArray", this.villageArray);   
+        }
+      }), error: (error: any) => {
+        this.commonMethod.checkEmptyData(error.statusText) == false ? this.errorHandler.handelError(error.statusCode) : this.commonMethod.snackBar(error.statusText, 1);
+      }
+    })
+  }
 
 
 
