@@ -58,7 +58,7 @@
                         </mat-icon>
                     </mat-form-field>
                 </div>
-                <div class="col-sm">
+                <div class="col-sm-4">
                     <mat-form-field appearance="outline" class="w-100">
                         <mat-label>Birth Date</mat-label>
                         <input matInput [matDatepicker]="picker" formControlName="birthDate">
@@ -67,8 +67,37 @@
                     </mat-form-field>
                 </div>
             </div>
-            <mat-card-subtitle>Address Details</mat-card-subtitle>
-            <div class="row mt-2">
+            <mat-card-subtitle class="mb-2">Address Details</mat-card-subtitle>
+            <div class="row">
+                <div class="col-sm-4">
+                    <mat-form-field appearance="outline" class="w-100 ">
+                        <mat-label>District</mat-label>
+                        <mat-select placeholder="Select">
+                            <mat-option value="one">Bsc Computer</mat-option>
+                            <mat-option value="two"> B.Tech Computer</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+                <div class="col-sm-4">
+                    <mat-form-field appearance="outline" class="w-100 ">
+                        <mat-label>Taluka</mat-label>
+                        <mat-select placeholder="Select">
+                            <mat-option value="one">Bsc Computer</mat-option>
+                            <mat-option value="two"> B.Tech Computer</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+                <div class="col-sm-4">
+                    <mat-form-field appearance="outline" class="w-100 ">
+                        <mat-label>Village</mat-label>
+                        <mat-select placeholder="Select">
+                            <mat-option value="one">Bsc Computer</mat-option>
+                            <mat-option value="two"> B.Tech Computer</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="row">
                 <div class="col-sm-6">
                     <mat-form-field appearance="outline" class="w-100 ">
                         <mat-label>Current Address</mat-label>
