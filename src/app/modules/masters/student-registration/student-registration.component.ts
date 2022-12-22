@@ -89,8 +89,9 @@ export class StudentRegistrationComponent {
       console.log(result);
       if (result == 'yes' && obj) {
         this.pageNumber = obj.pageNumber;        
-      }
-      this.pageNumber = 1
+      }else if (result == 'yes'){
+        this.pageNumber = 1
+      }     
       this.getTableData();
 
     });
@@ -140,6 +141,8 @@ export class StudentRegistrationComponent {
   }
 
   childTableCompInfo(obj: any) {
+    console.log(obj);
+    
     switch (obj.label) {
       case 'Pagination':
         this.pageNumber = obj.pageNumber;

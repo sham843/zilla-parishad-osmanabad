@@ -16,8 +16,11 @@
         "district" : "जिल्हा",
         "taluka" : "तालुका",
         "address" : "पत्ता",
+        "cancel": "रद्द करा",
         "submit" : "प्रस्तुत करणे",
-        "update" : "अपडेट करा"
+        "update" : "अपडेट करा",
+        "agencyNameIsRequired" : "एजन्सीचे नाव आवश्यक आहे",
+        "contactPersonNameIsRequired" : "संपर्क व्यक्तीचे नाव आवश्यक आहे"
        
 
     }

@@ -112,7 +112,7 @@
                         #uploadImage />
                     <mat-form-field appearance="outline" class="w-100 ">
                         <mat-label>Upload Photo</mat-label>
-                        <input matInput>
+                        <input matInput formControlName="photo">
                         <mat-icon matSuffix>
                             <span class="material-symbols-outlined" (click)="uploadImage.click()">
                                 upload
@@ -200,7 +200,7 @@
                         #uploadAadhar />
                     <mat-form-field appearance="outline" class="w-100 ">
                         <mat-label>Aadhar Photo</mat-label>
-                        <input matInput>
+                        <input matInput formControlName="aadharPhoto">
                         <mat-icon matSuffix>
                             <span class="material-symbols-outlined" (click)="uploadAadhar.click()">
                                 upload

@@ -16,6 +16,7 @@ export class AddUpdateOfficeUsersComponent implements OnInit {
   designations = new Array();
   officeForm!: FormGroup;
   districts = new Array();
+  talukas = new Array();
   constructor(private masterService: MasterService,
               private fb: FormBuilder,
               private apiService: ApiService,
@@ -59,12 +60,13 @@ export class AddUpdateOfficeUsersComponent implements OnInit {
     })
     this.getLevelDrop();
     this.getDistrictDrop();
+    this.getTalukaDrop();
   }
 
   getLevelDrop(){
     this.masterService.GetAllDesignationLevel('mr-IN').subscribe({
       next: (resp: any)=>{
-        this.levels = resp.responseData;
+        resp.statusCode == "200" ? this.levels = resp.responseData : this.levels = [];
       },
       error: ( error : any)=>{
         console.log("error is :", error);  
@@ -76,7 +78,7 @@ export class AddUpdateOfficeUsersComponent implements OnInit {
     let levelId = this.officeForm.value.designationLevelId;
     this.masterService.GetDesignationByLevelId('mr-IN', levelId).subscribe({
       next: (resp: any)=>{
-        this.designations = resp.responseData;
+        resp.statusCode == "200" ? this.designations = resp.responseData : this.designations = [];
       },
       error: ( error : any)=>{
         console.log("error is :", error);  
@@ -87,7 +89,18 @@ export class AddUpdateOfficeUsersComponent implements OnInit {
   getDistrictDrop(){
     this.masterService.getAllDistrict('mr-IN').subscribe({
       next: (resp: any)=>{
-        this.districts = resp.responseData;
+        resp.statusCode == "200" ? this.districts = resp.responseData : this.districts = [];
+      },
+      error: ( error : any)=>{
+        console.log("error is :", error);  
+      }
+    });
+  }
+
+  getTalukaDrop(){
+    this.masterService.getAllTaluka('mr-IN').subscribe({
+      next: (resp: any)=>{
+        resp.statusCode == "200" ? this.talukas = resp.responseData : this.talukas = [];
       },
       error: ( error : any)=>{
         console.log("error is :", error);  
