@@ -84,7 +84,7 @@
                         <mat-label>{{'Labels.district' | translate}}</mat-label>
                         <mat-select formControlName="districtId"  placeholder="{{'Labels.district' | translate}}">
                             <mat-option *ngFor="let data of districtData"
-                                [value]="data.id">{{data.district}}</mat-option>
+                                [value]="data.id">{{webStorageService.languageFlag=='mr-IN' ? data.m_District :data.district}}</mat-option>
                         </mat-select>
                     </mat-form-field>
                 </div>
@@ -92,7 +92,7 @@
                     <mat-form-field appearance="outline" class="w-100 ">
                         <mat-label>{{'Labels.taluka' | translate}}</mat-label>
                         <mat-select formControlName="talukaId" placeholder="{{'Labels.taluka' | translate}}">
-                            <mat-option *ngFor="let data of talukaData" [value]="data.id">{{data.taluka}}</mat-option>
+                            <mat-option *ngFor="let data of talukaData" [value]="data.id">{{webStorageService.languageFlag=='mr-IN' ? data.m_Taluka : data.taluka}}</mat-option>
                         </mat-select>
                         <mat-error *ngIf="fc['talukaId'].hasError('required')">{{'Labels.pleaseSelectTaluka' | translate}}</mat-error>
                     </mat-form-field>
