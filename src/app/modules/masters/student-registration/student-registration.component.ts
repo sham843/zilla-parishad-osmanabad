@@ -39,8 +39,8 @@ export class StudentRegistrationComponent {
     this.pageNumber = flag == 'filter' ? 1 : this.pageNumber;
     this.tableDataArray = new Array();
     let tableDatasize!: Number;
-
-    let pageNo = this.cardViewFlag ? (this.cardCurrentPage + 1) : this.pageNumber;
+    let pageNo
+     this.cardViewFlag ? pageNo = (this.cardCurrentPage + 1) : (pageNo = this.pageNumber,this.cardCurrentPage=0);
     let str = `?pageno=${pageNo}&pagesize=10&textSearch=${this.searchContent.value || ''}`;
     this.apiService.setHttp('GET', 'zp-osmanabad/Student/GetAll' + str, false, false, false, 'baseUrl');
     this.apiService.getHttp().subscribe({
@@ -171,7 +171,7 @@ export class StudentRegistrationComponent {
       this.getTableData()
     } else if (label == 'Card')
       this.cardViewFlag = true;
-    this.cardCurrentPage = 0;
+    this.cardCurrentPage = this.cardCurrentPage;
     this.getTableData();
   }
 
