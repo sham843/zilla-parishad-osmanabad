@@ -38,14 +38,9 @@ export class AddUpdateStudentRegistrationComponent {
   languageFlag!: string
 
   constructor(
-    private fb: FormBuilder,
-    private masterService: MasterService,
-    private errors: ErrorsService,
-    private fileUpl: FileUploadService,
-    private apiService: ApiService,
-    private webService: WebStorageService,
-    private commonMethods: CommonMethodsService,
-    public validators: ValidationService,
+    private fb: FormBuilder, private masterService: MasterService, private errors: ErrorsService,
+    private fileUpl: FileUploadService, private apiService: ApiService, private webService: WebStorageService,
+    private commonMethods: CommonMethodsService, public validators: ValidationService,
     public dialogRef: MatDialogRef<AddUpdateStudentRegistrationComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any) { }
 
@@ -83,9 +78,9 @@ export class AddUpdateStudentRegistrationComponent {
       saralId: ['', Validators.required],
       mobileNo: ['', [Validators.required, Validators.pattern(this.validators.mobile_No)]],
       fatherFullName: ['', Validators.required],
-      m_FatherFullName: ['', Validators.required],
+      // m_FatherFullName: ['', Validators.required],
       motherName: ['', Validators.required],
-      m_MotherName: ['', Validators.required],
+      // m_MotherName: ['', Validators.required],
       aadharNo: ['', [Validators.required, Validators.pattern(this.validators.aadhar_card)]],
       // emailID:[''],
       physicallyDisabled: ['', Validators.required],
@@ -230,9 +225,9 @@ export class AddUpdateStudentRegistrationComponent {
       saralId: this.editObj?.saralId,
       mobileNo: this.editObj?.gaurdianResponse[0]?.mobileNo,
       fatherFullName: this.editObj?.gaurdianResponse[0]?.fatherFullName,
-      m_FatherFullName: this.editObj?.gaurdianResponse[0]?.m_FatherFullName,
+      // m_FatherFullName: this.editObj?.gaurdianResponse[0]?.m_FatherFullName,
       motherName: this.editObj?.gaurdianResponse[0]?.motherName,
-      m_MotherName: this.editObj?.gaurdianResponse[0]?.m_MotherName,
+      // m_MotherName: this.editObj?.gaurdianResponse[0]?.m_MotherName,
       aadharNo: this.editObj?.aadharNo,
       dob: new Date(this.editObj?.dob.split(' ')[0]),
       physicallyDisabled: this.editObj?.isHandicaped ? 1 : 2
@@ -293,9 +288,9 @@ export class AddUpdateStudentRegistrationComponent {
         "id": 0,
         "studentId": this.editFlag ? this.editObj.id : 0,
         "fatherFullName": obj.fatherFullName || '',
-        "m_FatherFullName": obj.m_FatherFullName || '',
+         "m_FatherFullName": '',
         "motherName": obj.motherName || '',
-        "m_MotherName": obj.m_MotherName || '',
+         "m_MotherName": '',
         "mobileNo": obj.mobileNo
       },
       "documentModel": [
