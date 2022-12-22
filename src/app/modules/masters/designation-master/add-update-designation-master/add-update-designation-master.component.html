@@ -1,80 +1,83 @@
 <form [formGroup]="designationForm" (ngSubmit)="OnSubmit()">
-<mat-card class="plain-card">
-    <mat-card-header class="card-header">
-        <div class="d-flex align-items-center justify-content-between w-100">
-            <h6 class="mb-0 text-main">{{'Labels.RegisterDesignation' | translate}}</h6>
-            <button mat-icon-button mat-dialog-close class="btn-modal-close">
-                <mat-icon>
-                    close
-                </mat-icon>
-            </button>
-        </div>
-    </mat-card-header>
-    <mat-card-content class="card-body">
-        <div class="row mt-2">
-            <div class="col-sm">
-                <mat-form-field appearance="outline" class="w-100 ">
-                    <mat-label>{{'Labels.DesignationLevel' | translate}}</mat-label>
-                    <mat-select  formControlName="designationLevelId"
-                    (selectionChange)="getDesiganationType();clearForm('designationLevelId')">
-                        <mat-option *ngFor="let designation of DesiganationLevelData" [value]="designation.designationLevel">{{webStorage.getLangauge() == 'EN' ? designation.designationLevel : designation.m_DesignationLevel}}</mat-option>
-                        <!-- <mat-option value="two">option-2</mat-option> -->
-                    </mat-select>
-                    <mat-error *ngIf="f['designationLevelId'].hasError('required') || f['designationLevelId'].hasError('touched')">Company
-                        {{'Labels.DesignationLevelReq' | translate}}</mat-error>
-                </mat-form-field>
+    <mat-card class="plain-card">
+        <mat-card-header class="card-header">
+            <div class="d-flex align-items-center justify-content-between w-100">
+                <h6 class="mb-0 text-main">{{'Labels.RegisterDesignation' | translate}}</h6>
+                <button mat-icon-button mat-dialog-close class="btn-modal-close">
+                    <mat-icon>
+                        close
+                    </mat-icon>
+                </button>
             </div>
-            <div class="col-sm">
-                <mat-form-field appearance="outline" class="w-100 ">
-                    <mat-label> {{'Labels.DesignationType' | translate}}</mat-label>
-                    <mat-select formControlName="designationName" (selectionChange)="changeValidators($event)">
-                        <mat-option *ngFor="let designationType of desiganationTypeData" [value]="designationType.designationType">{{webStorage.getLangauge() == 'EN' ? designationType.designationType : designationType.m_DesignationType}}</mat-option>
-                        <!-- <mat-option value="two">option-2</mat-option> -->
-                    </mat-select>
-                    <mat-error *ngIf="f['designationType'].hasError('required') || f['designationType'].hasError('touched')">Company
-                        {{'Labels.DesignationTypeReq' | translate}}</mat-error>
-                </mat-form-field>
-            </div>
-        </div>
-        <div class="row">
-            <!-- <div class="col-sm">
-                <mat-form-field appearance="outline" class="w-100 ">
-                    <mat-label>Set Designation Level</mat-label>
-                    <mat-select>
-                        <mat-option value="one">option-1</mat-option>
-                        <mat-option value="two">option-2</mat-option>
-                    </mat-select>              
-                </mat-form-field>
-            </div> -->
-            <div class="col-sm">
-                <ng-container *ngIf="designationForm.value.designationName == 'Other' " >
+        </mat-card-header>
+        <mat-card-content class="card-body">
+            <div class="row mt-2 gy-2">
+                <div class="col-sm">
                     <mat-form-field appearance="outline" class="w-100 ">
-                        <mat-label>{{'Labels.AddDesignation' | translate}}</mat-label>
-                        <input matInput placeholder="Enter Desiganation Type" formControlName="designationType" maxlength="30" (keypress)="validation.noFirstSpaceAllow($event);validation.onlyAlphabets($event)">
-                        <mat-error *ngIf="f['designationType'].hasError('required') || f['designationType'].hasError('touched')">
+                        <mat-label>{{'Labels.DesignationLevel' | translate}}</mat-label>
+                        <mat-select formControlName="designationLevelId"
+                            (selectionChange)="getDesiganationType();clearForm('designationLevelId')">
+                            <mat-option *ngFor="let designation of DesiganationLevelData"
+                                [value]="designation.designationLevel">{{webStorage.getLangauge() == 'EN' ?
+                                designation.designationLevel : designation.m_DesignationLevel}}</mat-option>
+                            <!-- <mat-option value="two">option-2</mat-option> -->
+                        </mat-select>
+                        <mat-error
+                            *ngIf="f['designationLevelId'].hasError('required') || f['designationLevelId'].hasError('touched')">Company
+                            {{'Labels.DesignationLevelReq' | translate}}</mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="col-sm">
+                    <mat-form-field appearance="outline" class="w-100 ">
+                        <mat-label> {{'Labels.DesignationType' | translate}}</mat-label>
+                        <mat-select formControlName="designationName" (selectionChange)="changeValidators($event)">
+                            <mat-option *ngFor="let designationType of desiganationTypeData"
+                                [value]="designationType.designationType">{{webStorage.getLangauge() == 'EN' ?
+                                designationType.designationType : designationType.m_DesignationType}}</mat-option>
+                            <!-- <mat-option value="two">option-2</mat-option> -->
+                        </mat-select>
+                        <mat-error
+                            *ngIf="f['designationType'].hasError('required') || f['designationType'].hasError('touched')">Company
                             {{'Labels.DesignationTypeReq' | translate}}</mat-error>
                     </mat-form-field>
-                </ng-container>               
-            </div>          
-        </div>
-        <div class="row">
-            <div class="col-sm">
-                <ng-container *ngIf="designationForm.value.designationName =='Other'">
-                    <mat-form-field appearance="outline" class="w-100 ">
-                        <mat-label>{{'Labels.AddDesignation(Marathi)' | translate}}</mat-label>
-                        <input matInput placeholder="Enter Desiganation Type Marathi" formControlName="m_DesignationType" maxlength="30" (keypress)="validation.noFirstSpaceAllow($event);validation.unicodeMarathiValidation($event)">
-                        <mat-error *ngIf="f['m_DesignationType'].hasError('required') || f['m_DesignationType'].hasError('touched')">
-                            {{'Labels.DesignationTypeMarathiReq' | translate}}</mat-error>
-                    </mat-form-field>
-                </ng-container>               
+                </div>
             </div>
-        </div>
-    </mat-card-content>
-    <mat-card-footer class="card-footer">
-        <mat-card-actions align="end">
-            <button mat-dialog-close mat-flat-button class="btn-second me-2">{{'Labels.cancel' | translate}}</button>
-            <button mat-flat-button class="btn-main"> {{editFlag ?( 'Labels.update' | translate) :('Labels.submit' | translate)}}</button>
-        </mat-card-actions>
-    </mat-card-footer>
-</mat-card>
+            <div class="row gy-2">
+                <div class="col-sm">
+                    <ng-container *ngIf="designationForm.value.designationName == 'Other' ">
+                        <mat-form-field appearance="outline" class="w-100 ">
+                            <mat-label>{{'Labels.AddDesignation' | translate}}</mat-label>
+                            <input matInput placeholder="Enter Desiganation Type" formControlName="designationType"
+                                maxlength="30"
+                                (keypress)="validation.noFirstSpaceAllow($event);validation.onlyAlphabets($event)">
+                            <mat-error
+                                *ngIf="f['designationType'].hasError('required') || f['designationType'].hasError('touched')">
+                                {{'Labels.DesignationTypeReq' | translate}}</mat-error>
+                        </mat-form-field>
+                    </ng-container>
+                </div>
+                <div class="col-sm">
+                    <ng-container *ngIf="designationForm.value.designationName =='Other'">
+                        <mat-form-field appearance="outline" class="w-100 ">
+                            <mat-label>{{'Labels.AddDesignation(Marathi)' | translate}}</mat-label>
+                            <input matInput placeholder="Enter Desiganation Type Marathi"
+                                formControlName="m_DesignationType" maxlength="30"
+                                (keypress)="validation.noFirstSpaceAllow($event);validation.unicodeMarathiValidation($event)">
+                            <mat-error
+                                *ngIf="f['m_DesignationType'].hasError('required') || f['m_DesignationType'].hasError('touched')">
+                                {{'Labels.DesignationTypeMarathiReq' | translate}}</mat-error>
+                        </mat-form-field>
+                    </ng-container>
+                </div>
+            </div>
+        </mat-card-content>
+        <mat-card-footer class="card-footer">
+            <div class="d-flex w-100 justify-content-end align-items-center">
+                <button mat-dialog-close mat-flat-button class="btn-second me-2">{{'Labels.cancel' |
+                    translate}}</button>
+                <button mat-flat-button class="btn-main"> {{editFlag ?( 'Labels.update' | translate) :('Labels.submit' |
+                    translate)}}</button>
+            </div>
+        </mat-card-footer>
+    </mat-card>
 </form>

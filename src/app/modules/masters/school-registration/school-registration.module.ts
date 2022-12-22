@@ -17,6 +17,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { GlobalDialogComponent } from 'src/app/shared/components/global-dialog/global-dialog.component';
 import { TableComponent } from 'src/app/shared/components/table/table.component';
 import { PageStatisticsComponent } from 'src/app/shared/components/page-statistics/page-statistics.component';
+import { GlobalImgComponent } from 'src/app/shared/components/global-img/global-img.component';
 import { TranslateModule } from '@ngx-translate/core';
 @NgModule({
   declarations: [
@@ -39,7 +40,8 @@ import { TranslateModule } from '@ngx-translate/core';
     GlobalDialogComponent,
     TableComponent,
     PageStatisticsComponent,
+    GlobalImgComponent,
     TranslateModule
-  ]
+]
 })
 export class SchoolRegistrationModule { }
