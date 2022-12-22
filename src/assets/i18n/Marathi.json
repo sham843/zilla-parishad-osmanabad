@@ -41,10 +41,28 @@
         "DesignationType":"पदनाम प्रकार",
         "DesignationTypeReq":"पदनाम प्रकार आवश्यक आहे",
         "AddDesignation(Marathi)":"पदनाम जोडा (मराठी)",
-        "DesignationTypeMarathiReq":"पदनाम प्रकार मराठी आवश्यक आहे"
-
-
-       
-
+        "DesignationTypeMarathiReq":"पदनाम प्रकार मराठी आवश्यक आहे",
+        "RegisterSchool" : "शाळेची नोंदणी करा",
+        "AddSchool" : "शाळेची माहिती भरा",
+        "Kendra" : "केंद्र",
+        "Village" : "गाव",
+        "School" : "शाळेचे नाव",
+        "SchoolList" : "शाळेची यादी",
+        "School(Marathi)" : "शाळेचे नाव (मराठी)",
+        "SchoolTypeDescription" : "शाळेचा प्रकार",
+        "SchoolCategoryDescription" : "School Category Description",
+        "SchoolManagementDescription" : "शाळा व्यवस्थापन",
+        "GroupClass" : "गट वर्ग",
+        "UploadPhoto" : "फोटो अपलोड करा",
+        "DistrictIsRequired" : "जिल्हा आवश्यक आहे",
+        "TalukaIsRequired" : "तालुका आवश्यक आहे",
+        "KendraIsRequired" : "केंद्र आवश्यक आहे",
+        "VillageIsRequired" : "गाव आवश्यक आहे",
+        "SchoolIsRequired" : "शाळेचे नाव आवश्यक आहे",
+        "SchoolNameIsRequired" : "शाळेचे नाव आवश्यक आहे",
+        "SchoolTypeDescriptionIsRequired" : "शाळेचा प्रकार आवश्यक आहे",
+        "SchoolCategoryIsRequired" : "School Category is required",
+        "SchoolManagementIsRequired" : "शाळा व्यवस्थापन आवश्यक आहे",
+        "GroupClassIsRequired" : "गट वर्ग आवश्यक आहे"
     }
 }
