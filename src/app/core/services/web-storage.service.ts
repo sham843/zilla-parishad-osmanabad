@@ -20,7 +20,7 @@ export class WebStorageService {
 
   setLanguage(lang:any){
     this.language.next(lang);
-    lang == 'English' ? this.languageFlag = 'EN' : this.languageFlag = 'MR';
+    lang == 'English' ? this.languageFlag = 'EN' : this.languageFlag = 'mr-IN';
   }
 
   getLangauge(){

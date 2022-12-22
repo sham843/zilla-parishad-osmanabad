@@ -19,6 +19,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { TableComponent } from 'src/app/shared/components/table/table.component';
 import { PageStatisticsComponent } from 'src/app/shared/components/page-statistics/page-statistics.component';
 import { GlobalDialogComponent } from 'src/app/shared/components/global-dialog/global-dialog.component';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
   declarations: [
@@ -42,7 +43,8 @@ import { GlobalDialogComponent } from 'src/app/shared/components/global-dialog/g
     MatIconModule,
     TableComponent,
     PageStatisticsComponent,
-    GlobalDialogComponent
+    GlobalDialogComponent,
+    TranslateModule
   ],
   providers:[]
 })
