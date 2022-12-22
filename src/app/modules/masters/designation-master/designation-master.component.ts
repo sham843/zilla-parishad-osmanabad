@@ -137,8 +137,7 @@ getDesiganationType() {
       disableClose: true,
       autoFocus: false
     })
-    deleteDialogRef.afterClosed().subscribe((result: any) => {
-     
+    deleteDialogRef.afterClosed().subscribe((result: any) => {     
       if(result == 'yes'){     
         this.onClickDelete(obj);
       }
