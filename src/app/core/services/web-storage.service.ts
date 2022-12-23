@@ -9,6 +9,7 @@ export class WebStorageService {
   language = new BehaviorSubject('');
   langNameOnChange = this.language.asObservable();
   private theme=new BehaviorSubject('');
+  numFormat: any;
 
   constructor() { }
 
@@ -22,6 +23,7 @@ export class WebStorageService {
   setLanguage(lang:any){
     this.language.next(lang);
     lang == 'English' ? this.languageFlag = 'EN' : this.languageFlag = 'mr-IN';
+    this.numFormat = lang == 'Marathi' ? 'mr-IN' : 'en-IN';
   }
 
   getLangauge(){
@@ -55,5 +57,10 @@ export class WebStorageService {
       "modifiedDate": new Date(),
       "isDeleted": true
     }
+  }
+
+  numberTransformFunction(value: any){
+    let number = new Intl.NumberFormat(this.numFormat).format(value);        
+      return number
   }
 }

@@ -10,6 +10,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { DashPipe } from 'src/app/core/pipes/dash.pipe';
+import { NumberTransformPipe } from 'src/app/core/pipes/number-tranform.pipe';
 @Component({
   selector: 'app-table',
   templateUrl: './table.component.html',
@@ -24,7 +25,8 @@ import { DashPipe } from 'src/app/core/pipes/dash.pipe';
     MatIconModule,
     MatCardModule,
     MatMenuModule,
-    DashPipe
+    DashPipe,
+    NumberTransformPipe
     ],
 
 })
