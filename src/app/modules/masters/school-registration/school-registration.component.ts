@@ -246,7 +246,8 @@ export class SchoolRegistrationComponent {
     this.apiService.setHttp('GET', 'ZP-Osmanabad/School/GetAll' + str, false, false, false, 'baseUrl');
     this.apiService.getHttp().subscribe({
       next: (res: any) => {
-        if (res.statusCode == 200) {
+        if (res.statusCode == "200") {
+          this.resultDownloadArr = [];
           let data:[] = res.responseData.responseData1;
           data.map((ele: any, i: any)=>{
             let obj = {
@@ -277,6 +278,11 @@ export class SchoolRegistrationComponent {
             'createdDate':'Created on:'+new Date()
           }
         this.downloadFileService.downLoadPdf(keyPDFHeader, ValueData, objData);
+  }
+
+  filterData(){
+    this.getTableData();
+    this.getofficeReport();
   }
 
  
