@@ -79,6 +79,7 @@ export class StudentRegistrationComponent {
           this.tableDataArray = res.responseData.responseData1;
           this.totalCount = res.responseData.responseData2.pageCount;
           this.tableDatasize = res.responseData.responseData2.pageCount;
+          this.studentData = []
           let data: [] = res.responseData.responseData1;
           data.find((ele: any, i: any) => {
             let obj = {
