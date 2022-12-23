@@ -80,6 +80,8 @@ export class AddUpdateDesignationMasterComponent {
     let getDesignationLevelId: any = this.commonMethod.getkeyValueByArrayOfObj(this.DesiganationLevelData, 'designationLevel', getFormVal?.designationLevelId);
     let desigLevelId = getDesignationLevelId?.id
    
+    console.log(desigLevelId);
+    
 
     this.masterService.GetDesignationByLevelId(getFormVal.lan, desigLevelId).subscribe({
       next: ((res: any) => {

@@ -8,7 +8,7 @@
 
 <mat-card class="plain-card">
     <mat-card-header class="card-header">
-        <div class="d-flex align-items-center justify-content-between w-100">
+        <div class="d-flex align-items-center flex-wrap justify-content-between w-100">
             <div class="text-main fw-bold">
                 {{'Labels.SchoolList' | translate}}
             </div>
@@ -87,7 +87,7 @@
                 </mat-form-field>
             </div>
             <div class="col-sm-auto">
-                <button mat-flat-button class="btn-main" (click)="getTableData()">{{'Labels.filter' | translate}}</button> 
+                <button mat-flat-button class="btn-main" (click)="filterData()">{{'Labels.filter' | translate}}</button> 
                 <button mat-flat-button class="btn-second ms-2" (click)="onClear()">{{'Labels.clear' | translate}}</button>
             </div>
         </div>

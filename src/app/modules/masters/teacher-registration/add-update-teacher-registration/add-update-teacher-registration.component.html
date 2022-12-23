@@ -228,7 +228,7 @@
                         <mat-label>Caste Verification Done?</mat-label>
                         <mat-select formControlName="isCastVarificationDone">
                             <mat-option *ngFor="let casteVeification of casteVerification"
-                            [value]="casteVeification.isDisabled">{{casteVeification.name}}</mat-option>
+                            [value]="casteVeification.isCastVarificationDone">{{casteVeification.name}}</mat-option>
                             <!-- <mat-option value="two">Bsc</mat-option> -->
                         </mat-select>
                     </mat-form-field>
@@ -321,8 +321,9 @@
                     <mat-form-field appearance="outline" class="w-100 ">
                         <mat-label>Professional Qualification</mat-label>
                         <mat-select formControlName="professionalQualificationId">
-                            <mat-option value="one">MSc</mat-option>
-                            <mat-option value="two">M.tech</mat-option>
+                            <mat-option *ngFor="let proQulification of profesionalQualificationArray"
+                            [value]="proQulification.id">{{proQulification.professinalQualification}}</mat-option>
+                            <!-- <mat-option value="two">M.tech</mat-option> -->
                         </mat-select>
                     </mat-form-field>
                 </div>
@@ -342,8 +343,9 @@
                     <mat-form-field appearance="outline" class="w-100 ">
                         <mat-label>Husband-Wife both are in Service</mat-label>
                         <mat-select formControlName="husbandWife_Both_Service">
-                            <mat-option value="one">MSc</mat-option>
-                            <mat-option value="two">M.tech</mat-option>
+                            <mat-option *ngFor="let husbandWifeService of husbandWifeBothServiceArray"
+                            [value]="husbandWifeService.husbandWife_Both_Service">{{husbandWifeService.name}}</mat-option>
+                            <!-- <mat-option value="two">M.tech</mat-option> -->
                         </mat-select>
                     </mat-form-field>
                 </div>
@@ -357,17 +359,19 @@
                     <mat-form-field appearance="outline" class="w-100 ">
                         <mat-label>Are you Disabled</mat-label>
                         <mat-select formControlName="isDisabled">
-                            <mat-option value="one">Bsc Computer</mat-option>
-                            <mat-option value="two"> B.Tech Computer</mat-option>
+                            <mat-option *ngFor="let disabled of AreyouDisabled"
+                            [value]="disabled.isDisabled">{{disabled.name}}</mat-option>
+                            <!-- <mat-option value="two"> B.Tech Computer</mat-option> -->
                         </mat-select>
                     </mat-form-field>
                 </div>
                 <div class="col-sm-4">
                     <mat-form-field appearance="outline" class="w-100 ">
                         <mat-label>Inter District transferred</mat-label>
-                        <mat-select formControlName="interDistrictTransferred">
-                            <mat-option value="one">MSc</mat-option>
-                            <mat-option value="two">M.tech</mat-option>
+                        <mat-select formControlName="interDistrictTransferred">interDistrictTransferredArray
+                            <mat-option *ngFor="let interDistrict of interDistrictTransferredArray"
+                            [value]="interDistrict.interDistrictTransferred">{{interDistrict.name}}</mat-option>
+                            <!-- <mat-option value="two">M.tech</mat-option> -->
                         </mat-select>
                     </mat-form-field>
                 </div>
@@ -407,8 +411,9 @@
                     <mat-form-field appearance="outline" class="w-100 ">
                         <mat-label>Have you passed Computer exam</mat-label>
                         <mat-select formControlName="haveYouPassedComputerExam">
-                            <mat-option value="one">Bsc Computer</mat-option>
-                            <mat-option value="two"> B.Tech Computer</mat-option>
+                            <mat-option *ngFor="let passComputerExam of haveYouPassedComputerExamArray"
+                            [value]="passComputerExam.haveYouPassedComputerExam">{{passComputerExam.name}}</mat-option>
+                            <!-- <mat-option value="two"> B.Tech Computer</mat-option> -->
                         </mat-select>
                     </mat-form-field>
                 </div>
