@@ -8,6 +8,7 @@ import { ErrorsService } from 'src/app/core/services/errors.service';
 import { WebStorageService } from 'src/app/core/services/web-storage.service';
 import { GlobalDialogComponent } from 'src/app/shared/components/global-dialog/global-dialog.component';
 import { AddUpdateStudentRegistrationComponent } from './add-update-student-registration/add-update-student-registration.component';
+import { StudentDetailsComponent } from './student-details/student-details.component';
 @Component({
   selector: 'app-student-registration',
   templateUrl: './student-registration.component.html',
@@ -27,7 +28,7 @@ export class StudentRegistrationComponent {
 
   displayedColumns = ['docPath', 'srNo', 'fullName', 'standard', 'parentMobileNo', 'gender', 'action'];
   marathiDisplayedColumns = ['docPath', 'srNo', 'm_FullName', 'm_Standard', 'parentMobileNo', 'm_Gender', 'action'];
-  displayedheaders = ['#', 'Sr.No', 'Name', 'Standard', 'Parents Contact No.', 'Gender', 'action'];
+  displayedheaders = ['#', 'Sr.No.', 'Name', 'Standard', 'Parents Contact No.', 'Gender', 'action'];
   marathiDisplayedheaders = ['#', 'अनुक्रमांक', 'नाव', 'वर्ग', 'पालक संपर्क क्र', 'लिंग', 'क्रिया'];
   constructor(
     private dialog: MatDialog,
@@ -70,7 +71,7 @@ export class StudentRegistrationComponent {
     this.tableDataArray = new Array();
     let pageNo
     this.cardViewFlag ? pageNo = (this.cardCurrentPage + 1) : (pageNo = this.pageNumber, this.cardCurrentPage = 0);
-    let str = `?pageno=${pageNo}&pagesize=10&textSearch=${this.searchContent.value || ''}&lan=en`;
+    let str = `?pageno=${pageNo}&pagesize=10&textSearch=${this.searchContent.value || ''}&lan=${this.languageFlag || ''}`;
     let reportStr = `?TextSearch=${this.searchContent.value}`
     this.apiService.setHttp('GET', 'zp-osmanabad/Student/GetAll' + (flag == 'reportFlag' ? reportStr : str), false, false, false, 'baseUrl');
     this.apiService.getHttp().subscribe({
@@ -247,6 +248,23 @@ export class StudentRegistrationComponent {
       'createdDate': 'Created on:' + new Date()
     }
     this.downloadPdfservice.downLoadPdf(keyPDFHeader, ValueData, objData);
-
   }
+
+
+  openViewDilog(obj:any){
+    const viewDialogRef = this.dialog.open(StudentDetailsComponent, {
+      width: '950px',
+      height: '650px',
+      data: obj,
+      disableClose: true,
+      autoFocus: false
+    });
+    viewDialogRef.afterClosed().subscribe((result: any) => {
+      if (result == 'yes') {
+        console.log(result);
+        
+      }
+    })
+  }
+
 }

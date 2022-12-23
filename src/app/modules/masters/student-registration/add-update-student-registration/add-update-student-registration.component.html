@@ -25,7 +25,7 @@
                     <mat-form-field appearance="outline" class="w-100 ">
                         <mat-label>{{'Labels.district'| translate}}</mat-label>
                         <mat-select placeholder="select" formControlName="districtId">
-                            <mat-option *ngFor="let dist of districtArr" [value]="dist.id">{{languageFlag == 'Enlish' ?
+                            <mat-option *ngFor="let dist of districtArr" [value]="dist.id">{{languageFlag == 'EN' ?
                                 dist.district : dist.m_District}}</mat-option>
                         </mat-select>
                         <mat-error *ngIf="fc['districtId'].hasError('required')">User Name Is Required</mat-error>
@@ -35,7 +35,7 @@
                     <mat-form-field appearance="outline" class="w-100 ">
                         <mat-label>{{'Labels.taluka'| translate}}</mat-label>
                         <mat-select placeholder="select" formControlName="talukaId">
-                            <mat-option *ngFor="let tal of talukaArr" [value]="tal.id">{{languageFlag == 'Enlish' ?
+                            <mat-option *ngFor="let tal of talukaArr" [value]="tal.id">{{languageFlag == 'EN' ?
                                 tal.taluka:tal.m_Taluka }}</mat-option>
                         </mat-select>
                         <mat-error *ngIf="fc['talukaId'].hasError('required')">Select Taluka</mat-error>
@@ -45,7 +45,7 @@
                     <mat-form-field appearance="outline" class="w-100 ">
                         <mat-label>{{'Labels.Kendra'| translate}}</mat-label>
                         <mat-select placeholder="select" formControlName="centerId">
-                            <mat-option *ngFor="let cen of centerArr" [value]="cen.id">{{languageFlag == 'Enlish'
+                            <mat-option *ngFor="let cen of centerArr" [value]="cen.id">{{languageFlag == 'EN'
                                 ?cen.center:cen.m_Center}}</mat-option>
                         </mat-select>
                         <mat-error *ngIf="fc['centerId'].hasError('required')">Select Kendra</mat-error>
@@ -57,7 +57,7 @@
                     <mat-form-field appearance="outline" class="w-100 ">
                         <mat-label>{{'Labels.SchoolList'| translate}}</mat-label>
                         <mat-select placeholder="select" formControlName="schoolId">
-                            <mat-option *ngFor="let sch of schoolArr" [value]="sch.id">{{languageFlag == 'Enlish' ?
+                            <mat-option *ngFor="let sch of schoolArr" [value]="sch.id">{{languageFlag == 'EN' ?
                                 sch.schoolType:sch. m_SchoolType}}</mat-option>
                         </mat-select>
                         <mat-error *ngIf="fc['schoolId'].hasError('required')">Select School</mat-error>
@@ -134,7 +134,7 @@
                         <mat-label>{{'Labels.standard'| translate}}</mat-label>
                         <mat-select placeholder="select" formControlName="standard">
                             <mat-option *ngFor="let stan of standardArr"
-                                [value]="stan.id">{{languageFlag == 'Enlish'
+                                [value]="stan.id">{{languageFlag == 'EN'
                                 ?stan.standard:stan.m_Standard}}</mat-option>
                         </mat-select>
                         <mat-error *ngIf="fc['standard'].hasError('required')">Select standard</mat-error>
@@ -153,7 +153,8 @@
                     <mat-form-field appearance="outline" class="w-100 ">
                         <mat-label>{{'Labels.gender'| translate}}</mat-label>
                         <mat-select formControlName="gender">
-                            <mat-option *ngFor="let gen of genderArr" [value]="gen.id">{{gen.gender}}</mat-option>
+                            <mat-option *ngFor="let gen of genderArr" [value]="gen.id">{{languageFlag == 'EN'
+                                ?gen.gender:gen.m_Gender}}</mat-option>
                         </mat-select>
                         <mat-error *ngIf="fc['gender'].hasError('required')">Select Gender</mat-error>
                     </mat-form-field>
@@ -164,7 +165,7 @@
                     <mat-form-field appearance="outline" class="w-100 ">
                         <mat-label>{{'Labels.religion'| translate}}</mat-label>
                         <mat-select placeholder="Select" formControlName="religionId" (selectionChange)="getCaste()">
-                            <mat-option *ngFor="let reli of religionArr" [value]="reli.id">{{languageFlag == 'Enlish' ?
+                            <mat-option *ngFor="let reli of religionArr" [value]="reli.id">{{languageFlag == 'EN' ?
                                 reli.religion:reli.m_Religion}}</mat-option>
                         </mat-select>
                         <mat-error *ngIf="fc['religionId'].hasError('required')">Select Religion</mat-error>
@@ -174,7 +175,7 @@
                     <mat-form-field appearance="outline" class="w-100">
                         <mat-label>{{'Labels.caste'| translate}}</mat-label>
                         <mat-select formControlName="castId">
-                            <mat-option *ngFor="let cast of casteArr" [value]="cast.id">{{languageFlag == 'Enlish'
+                            <mat-option *ngFor="let cast of casteArr" [value]="cast.id">{{languageFlag == 'EN'
                                 ?cast.caste:cast.m_Caste}}</mat-option>
                         </mat-select>
                         <mat-error *ngIf="fc['castId'].hasError('required')">Select Caste</mat-error>
@@ -185,7 +186,7 @@
                         <mat-label>{{'Labels.physicallyDisabled'| translate}}</mat-label>
                         <mat-select formControlName="physicallyDisabled">
                             <mat-option *ngFor="let phy of physicallyDisabled"
-                                [value]="phy.id">{{languageFlag == 'Enlish'
+                                [value]="phy.id">{{languageFlag == 'EN'
                                 ?phy.eName:phy.mName}}</mat-option>
                         </mat-select>
                         <mat-error *ngIf="fc['physicallyDisabled'].hasError('required')">Select Physically

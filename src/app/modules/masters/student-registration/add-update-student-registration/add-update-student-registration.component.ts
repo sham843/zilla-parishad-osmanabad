@@ -46,7 +46,9 @@ export class AddUpdateStudentRegistrationComponent {
 
   ngOnInit() {
     this.languageFlag = this.webService.languageFlag;
-    this.formData(),
+    console.log(this.languageFlag);
+    
+    this.formData();
       this.data ? (this.editObj = this.data, this.patchValue()) : (
         this.getDistrict(),
         this.getTaluka(),
@@ -111,6 +113,7 @@ export class AddUpdateStudentRegistrationComponent {
       next: (res: any) => {
         if (res.statusCode == 200) {
           this.talukaArr = res.responseData;
+          console.log(  this.talukaArr)
           this.editObj ? this.stuRegistrationForm.controls['talukaId'].setValue(this.editObj.talukaId) : '';
         } else {
           this.talukaArr = [];
@@ -232,10 +235,6 @@ export class AddUpdateStudentRegistrationComponent {
       dob: new Date(this.editObj?.dob.split(' ')[0]),
       physicallyDisabled: this.editObj?.isHandicaped ? 1 : 2
     });
-    this.uploadAadhar = this.editObj.documentResponse[1]?.docPath;
-    this.uploadImg = this.editObj.documentResponse[0]?.docPath;
-    this.stuRegistrationForm.controls['photo'].setValue(this.uploadImg.split('/').pop());
-    this.stuRegistrationForm.controls['aadharPhoto'].setValue(this.uploadAadhar.split('/').pop());
     this.getDistrict();
     this.getTaluka();
     this.getCenter();
@@ -243,6 +242,11 @@ export class AddUpdateStudentRegistrationComponent {
     this.getGender();
     this.getReligion();
     this.getStandard();
+    this.uploadAadhar = this.editObj?.documentResponse[1]?.docPath;
+    this.uploadImg = this.editObj?.documentResponse[0]?.docPath;
+    this.stuRegistrationForm.controls['photo'].setValue(this.uploadImg.split('/').pop());
+    this.stuRegistrationForm.controls['aadharPhoto'].setValue(this.uploadAadhar.split('/').pop());
+   
 
   }
 
