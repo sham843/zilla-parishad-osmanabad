@@ -42,6 +42,7 @@
         "DesignationTypeReq":"पदनाम प्रकार आवश्यक आहे",
         "AddDesignation(Marathi)":"पदनाम जोडा (मराठी)",
         "DesignationTypeMarathiReq":"पदनाम प्रकार मराठी आवश्यक आहे",
+        "SchoolRegistration" : "शाळेची नोंदणी",
         "RegisterSchool" : "शाळेची नोंदणी करा",
         "AddSchool" : "शाळेची माहिती भरा",
         "Kendra" : "केंद्र",
@@ -89,9 +90,14 @@
         "studentDetails" :"विद्यार्थीची माहिती",
         "gardiantDetails":"पालकची माहिती",
         "studentList" :"विद्यार्थीची यादी",
-        "master" :"मुख्य"
-
-
-
+        "master" :"मुख्य",
+        "delete" : "हटवा",
+        "doYouWantToDeleteSchoolRecord" : "तुम्हाला शाळेचा रेकॉर्ड हटवायचा आहे का?",
+        "doYouWantToDeleteDesignationRecord" : "तुम्हाला पदनाम रेकॉर्ड हटवायचा आहे का?",
+        "doYouWantToDeleteAgencyRecord" : "तुम्हाला एजन्सी रेकॉर्ड हटवायचा आहे का?",
+        "doYouWantToDeleteTeacherRecord" : "तुम्हाला शिक्षक रेकॉर्ड हटवायचा आहे का?",
+        "doYouWantToDeleteStudentRecord" : "तुम्हाला विद्यार्थी रेकॉर्ड हटवायचा आहे का?",
+        "doYouWantToDeleteOfficeUserRecord" : "तुम्हाला ऑफिस वापरकर्ता रेकॉर्ड हटवायचा आहे का?",
+        "ok" : "ठीक आहे"
     }
 }

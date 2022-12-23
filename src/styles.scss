@@ -134,12 +134,13 @@ body {
   color: var(--main-color) !important;
 }
 
-.dashboard-table .srno {
-  max-width: 80px !important;
-  width: 80px !important;
+.dashboard-table .mat-column-docPath,
+.dashboard-table .mat-column-srNo {
+  min-width: 95px !important;
+  width: 95px !important;
 }
 
-.dashboard-table .action {
+.dashboard-table .mat-column-action {
   max-width: 120px !important;
   width: 120px !important;
 }
