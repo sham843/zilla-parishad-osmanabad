@@ -79,8 +79,6 @@ export class AddUpdateSchoolRegistrationComponent {
   getDistrict() {
     this.masterService.getAllDistrict(this.webStorageS.languageFlag).subscribe({
       next: (res: any) => {
-        console.log("District : ",res);
-        
         res.statusCode == "200" ? this.districtArr = res.responseData : this.districtArr = [];
         this.editFlag ? (this.f['districtId'].setValue(this.data.districtId), this.getTaluka()) : '';
       },
@@ -91,8 +89,6 @@ export class AddUpdateSchoolRegistrationComponent {
   getTaluka() {
     this.masterService.getAllTaluka(this.webStorageS.languageFlag).subscribe({
       next: (res: any) => {
-        console.log("Taluka : ",res);
-
         res.statusCode == "200" ? this.talukaArr = res.responseData : this.talukaArr = [];
         this.editFlag ? (this.f['talukaId'].setValue(this.data.talukaId), this.getCenter()) : '';
       },
@@ -103,8 +99,6 @@ export class AddUpdateSchoolRegistrationComponent {
   getCenter() {
     this.masterService.getAllCenter(this.webStorageS.languageFlag).subscribe({
       next: (res: any) => {
-        console.log("Center : ",res);
-
         res.statusCode == "200" ? this.centerArr = res.responseData : this.centerArr = [];
         this.editFlag ? (this.f['centerId'].setValue(this.data.centerId), this.getVillage()) : '';
       },
@@ -115,8 +109,6 @@ export class AddUpdateSchoolRegistrationComponent {
   getVillage() {
     this.masterService.getAllVillage(this.webStorageS.languageFlag, this.schoolRegForm.value.talukaId).subscribe({
       next: (res: any) => {
-        console.log("Village : ",res);
-
         res.statusCode == "200" ? this.villageArr = res.responseData : this.villageArr = [];
         this.editFlag ? (this.f['villageId'].setValue(this.data.villageId), this.getSchoolType()) : '';
       },
@@ -127,8 +119,6 @@ export class AddUpdateSchoolRegistrationComponent {
   getSchoolType() {
     this.masterService.getAllSchoolType(this.webStorageS.languageFlag).subscribe({
       next: (res: any) => {
-        console.log("SchoolType : ",res);
-        
         res.statusCode == "200" ? this.schoolTypeArr = res.responseData : this.schoolTypeArr = [];
         this.editFlag ? (this.f['s_TypeId'].setValue(this.data.s_TypeId), this.getCategoryDes()) : '';
       },
@@ -139,8 +129,6 @@ export class AddUpdateSchoolRegistrationComponent {
   getCategoryDes() {
     this.masterService.GetSchoolCategoryDescById(this.webStorageS.languageFlag).subscribe({
       next: (res: any) => {
-        console.log("CategoryDes : ",res);
-
         res.statusCode == "200" ? this.categoryArr = res.responseData : this.categoryArr = [];
         this.editFlag ? (this.f['s_CategoryId'].setValue(this.data.s_CategoryId), this.getSchoolMngDesc()) : '';
       },
@@ -151,8 +139,6 @@ export class AddUpdateSchoolRegistrationComponent {
   getSchoolMngDesc() {
     this.masterService.GetSchoolMngDescById(this.webStorageS.languageFlag).subscribe({
       next: (res: any) => {
-        console.log("SchoolMngDesc : ",res);
-
         res.statusCode == "200" ? this.schoolMngArr = res.responseData : this.schoolMngArr = [];
         this.editFlag ? (this.f['s_ManagementId'].setValue(this.data.s_ManagementId), this.getGroupClass()) : '';
       },
@@ -163,8 +149,6 @@ export class AddUpdateSchoolRegistrationComponent {
   getGroupClass() {
     this.masterService.getAllGroupClass(this.webStorageS.languageFlag).subscribe({
       next: (res: any) => {
-        console.log("GroupClass : ",res);
-
         res.statusCode == "200" ? this.groupclassArr = res.responseData : this.groupclassArr = [];
         this.editFlag ? this.f['g_ClassId'].setValue(this.data.g_ClassId) : '';
       },
@@ -190,6 +174,8 @@ export class AddUpdateSchoolRegistrationComponent {
     this.editFlag ? url = 'ZP-Osmanabad/School/Update' : url = 'ZP-Osmanabad/School/Add';
 
     if(!this.schoolRegForm.valid){
+      console.log("Form Invalid");
+      
       return
     }
     else{
