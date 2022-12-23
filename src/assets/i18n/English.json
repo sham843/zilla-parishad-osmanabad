@@ -83,6 +83,12 @@
         "aadhaarPhoto" : "Upload Aadhaar Photo",
         "parentMobileNo" :"Parent Mobile No",
         "fatherName" : "Father Name",
-        "motherName" :"Mother Name"
+        "motherName" :"Mother Name",
+        "studentRegistration":"Student Registration",
+        "addStudent":"Add Student",
+        "studentDetails" :"Student Details",
+        "guardianDetails":"Guardian Details",
+        "studentList" :"Student List",
+        "master" :"Masters"
     }
 }
