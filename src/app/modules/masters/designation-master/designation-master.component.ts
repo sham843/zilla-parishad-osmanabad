@@ -22,7 +22,7 @@ export class DesignationMasterComponent {
   tableDataArray = new Array();
   tableDatasize!: Number;
   displayedColumns = new Array();
-  displayedheaders = ['Sr. No.', 'Name', 'Contact No.', 'Email ID', 'Action'];
+  displayedheaders = ['Sr. No.', 'Name', 'Contact No.', 'Action'];
   displayedheadersMarathi = ['अनुक्रमांक', 'पदनाम', 'पदनाम स्तर','कृती',];
   langTypeName: any
 
@@ -36,18 +36,22 @@ export class DesignationMasterComponent {
     this.getofficeReport()
     this.webStorage.langNameOnChange.subscribe(lang => {
       this.langTypeName = lang;
-      this.displayedColumns = ['srNo', this.langTypeName == 'English' ? 'designationName' : 'm_DesignationType', this.langTypeName == 'English' ?'designationLevel':'m_DesignationLevel', 'action'];
-        this.tableData = {
-          pageNumber: this.pageNumber,
-          img: '', blink: '', badge: '', isBlock: '', pagintion: true,
-          displayedColumns: this.displayedColumns, tableData: this.tableDataArray,
-          tableSize: this.tableDatasize,
-          tableHeaders: this.langTypeName == 'English' ? this.displayedheaders : this.displayedheadersMarathi,
-        };
-      this.apiService.tableData.next(this.tableData);
-     });
+      this.getTableTranslatedData();
+    });
   }
 //#region ------------------------------------- Designation-Master Dropdown ------------------------------- //
+
+getTableTranslatedData(){
+  this.displayedColumns = ['srNo', this.langTypeName == 'English' ? 'designationName' : 'm_DesignationType', this.langTypeName == 'English' ?'designationLevel':'m_DesignationLevel', 'action'];
+    this.tableData = {
+      pageNumber: this.pageNumber,
+      img: '', blink: '', badge: '', isBlock: '', pagintion: true,
+      displayedColumns: this.displayedColumns, tableData: this.tableDataArray,
+      tableSize: this.tableDatasize,
+      tableHeaders: this.langTypeName == 'English' ? this.displayedheaders : this.displayedheadersMarathi,
+    };
+  this.apiService.tableData.next(this.tableData);
+}
 
 getDesiganationType() {  
   this.masterService.GetDesignationByLevelId(this.webStorage.languageFlag,0).subscribe({
@@ -67,6 +71,7 @@ getDesiganationType() {
 
   //#region ------------------------------------- Designation-Master Table-Data ------------------------------- //
   getTableData(flag?:string) {
+    this.tableDataArray = [];
     if(localStorage.getItem('designation')){
       this.pageNumber = JSON.parse(localStorage.getItem('designation')||'');
       localStorage.removeItem('designation');
@@ -86,16 +91,7 @@ getDesiganationType() {
           this.tableDataArray = [];
           this.tableDatasize = 0;
         }
-        // this.displayedColumns = ['srNo', 'designationName', 'designationLevel', 'action'];
-        // let displayedheaders = ['Sr. No', 'Designation Name', 'Designation Level','action'];
-        let tableData = {
-          pageNumber: this.pageNumber,
-          img: '', blink: '', badge: '', isBlock: '', pagintion:true,
-          displayedColumns: this.displayedColumns, tableData: this.tableDataArray,
-          tableSize: this.tableDatasize,
-          tableHeaders: this.langTypeName == 'English' ? this.displayedheaders : this.displayedheadersMarathi
-        };
-        this.apiService.tableData.next(tableData);
+        this.getTableTranslatedData();
       },
       error: ((err: any) => { this.errors.handelError(err) })
     });
