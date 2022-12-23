@@ -18,7 +18,8 @@
                         <mat-label>{{'Labels.district' | translate}}</mat-label>
                         <mat-select formControlName="districtId" (selectionChange)="getTaluka();">
                             <mat-option *ngFor="let district of districtArr" [value]="district.id">
-                                {{district.district}}
+                                {{webStorageS.getLangauge() == 'EN' ?
+                                district.district : district.m_District}}
                             </mat-option>
                         </mat-select>
                         <mat-error *ngIf="f['districtId'].hasError('required') || f['districtId'].hasError('touched')">
@@ -32,7 +33,8 @@
                         <mat-select formControlName="talukaId"
                             (selectionChange)="clearDropdown('Taluka'); getCenter();">
                             <mat-option *ngFor="let taluka of talukaArr" [value]="taluka.id">
-                                {{taluka.taluka}}
+                                {{webStorageS.getLangauge() == 'EN' ?
+                                taluka.taluka : taluka.m_Taluka}}
                             </mat-option>
                         </mat-select>
                         <mat-error *ngIf="f['talukaId'].hasError('required') || f['talukaId'].hasError('touched')">
@@ -46,7 +48,8 @@
                         <mat-select formControlName="centerId"
                             (selectionChange)="clearDropdown('Kendra'); getVillage();">
                             <mat-option *ngFor="let center of centerArr" [value]="center.id">
-                                {{center.center}}
+                                {{webStorageS.getLangauge() == 'EN' ?
+                                center.center : center.m_Center}}
                             </mat-option>
                         </mat-select>
                         <mat-error *ngIf="f['centerId'].hasError('required') || f['centerId'].hasError('touched')">
@@ -60,7 +63,8 @@
                         <mat-select formControlName="villageId"
                             (selectionChange)="clearDropdown('Village'); getSchoolType();">
                             <mat-option *ngFor="let village of villageArr" [value]="village.id">
-                                {{village.village}}
+                                {{webStorageS.getLangauge() == 'EN' ?
+                                village.village : village.m_Village}}
                             </mat-option>
                         </mat-select>
                         <mat-error *ngIf="f['villageId'].hasError('required') || f['villageId'].hasError('touched')">
@@ -92,7 +96,8 @@
                         <mat-select formControlName="s_TypeId"
                             (selectionChange)="clearDropdown('School Type'); getCategoryDes();">
                             <mat-option *ngFor="let schoolType of schoolTypeArr" [value]="schoolType.id">
-                                {{schoolType.schoolType}}
+                                {{webStorageS.getLangauge() == 'EN' ?
+                                schoolType.schoolType : schoolType.m_SchoolType}}
                             </mat-option>
                         </mat-select>
                         <mat-error *ngIf="f['s_TypeId'].hasError('required') || f['s_TypeId'].hasError('touched')">
@@ -106,7 +111,8 @@
                         <mat-select formControlName="s_CategoryId"
                             (selectionChange)="clearDropdown('Category Desc'); getSchoolMngDesc();">
                             <mat-option *ngFor="let category of categoryArr" [value]="category.id">
-                                {{category.category_desc}}
+                                {{webStorageS.getLangauge() == 'EN' ?
+                                category.category_desc : category.m_Category_desc}}
                             </mat-option>
                         </mat-select>
                         <mat-error
@@ -121,7 +127,8 @@
                         <mat-select formControlName="s_ManagementId"
                             (selectionChange)="clearDropdown('Management Desc'); getGroupClass();">
                             <mat-option *ngFor="let schoolMng of schoolMngArr" [value]="schoolMng.id">
-                                {{schoolMng.management_desc}}
+                                {{webStorageS.getLangauge() == 'EN' ?
+                                schoolMng.management_desc : schoolMng.m_Management_desc}}
                             </mat-option>
                         </mat-select>
                         <mat-error
@@ -136,7 +143,8 @@
                         <mat-label>{{'Labels.GroupClass' | translate}}</mat-label>
                         <mat-select formControlName="g_ClassId">
                             <mat-option *ngFor="let groupclass of groupclassArr" [value]="groupclass.id">
-                                {{groupclass.groupClass}}
+                                {{webStorageS.getLangauge() == 'EN' ?
+                                groupclass.groupClass : groupclass.m_GroupClass}}
                             </mat-option>
                         </mat-select>
                         <mat-error
@@ -147,8 +155,6 @@
                 </div>
 
                 <div class="col-sm">
-
-                    <!-- <mat-form-field appearance="outline" class="w-100"> -->
                     <mat-label>{{'Labels.UploadPhoto' | translate}}</mat-label>
                     <input type="file" formControlName="docPath" hidden="hidden" (change)="imgUpload($event)" #img>
                     <mat-icon matSuffix>
@@ -156,7 +162,6 @@
                             upload
                         </span>
                     </mat-icon>
-                    <!-- </mat-form-field> -->
                     <span class="mx-3">
                         <mat-icon class="text-danger" type="button" *ngIf="showAddRemImg"
                             (click)="clearImg()">highlight_off</mat-icon>

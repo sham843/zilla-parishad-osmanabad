@@ -16,7 +16,6 @@ import { WebStorageService } from 'src/app/core/services/web-storage.service';
 })
 export class AddUpdateSchoolRegistrationComponent {
 
-  // @ViewChild('img') img!: ElementRef;
   districtArr = new Array();
   talukaArr = new Array();
   centerArr = new Array();
@@ -30,10 +29,9 @@ export class AddUpdateSchoolRegistrationComponent {
   editFlag: boolean = false;
   showAddRemImg: boolean = false;
 
-
   constructor(private masterService: MasterService, private errors: ErrorsService, private fb: FormBuilder, private fileUpload: FileUploadService,
     private apiService: ApiService, private commonMethod: CommonMethodsService, @Inject(MAT_DIALOG_DATA) public data: any,
-    public dialogRef: MatDialogRef<AddUpdateSchoolRegistrationComponent>, public validationService: ValidationService, private webStorageS: WebStorageService) { }
+    public dialogRef: MatDialogRef<AddUpdateSchoolRegistrationComponent>, public validationService: ValidationService, public webStorageS: WebStorageService) { }
 
   ngOnInit() {
     this.formFeild();
@@ -81,6 +79,8 @@ export class AddUpdateSchoolRegistrationComponent {
   getDistrict() {
     this.masterService.getAllDistrict(this.webStorageS.languageFlag).subscribe({
       next: (res: any) => {
+        console.log("District : ",res);
+        
         res.statusCode == "200" ? this.districtArr = res.responseData : this.districtArr = [];
         this.editFlag ? (this.f['districtId'].setValue(this.data.districtId), this.getTaluka()) : '';
       },
@@ -91,6 +91,8 @@ export class AddUpdateSchoolRegistrationComponent {
   getTaluka() {
     this.masterService.getAllTaluka(this.webStorageS.languageFlag).subscribe({
       next: (res: any) => {
+        console.log("Taluka : ",res);
+
         res.statusCode == "200" ? this.talukaArr = res.responseData : this.talukaArr = [];
         this.editFlag ? (this.f['talukaId'].setValue(this.data.talukaId), this.getCenter()) : '';
       },
@@ -101,6 +103,8 @@ export class AddUpdateSchoolRegistrationComponent {
   getCenter() {
     this.masterService.getAllCenter(this.webStorageS.languageFlag).subscribe({
       next: (res: any) => {
+        console.log("Center : ",res);
+
         res.statusCode == "200" ? this.centerArr = res.responseData : this.centerArr = [];
         this.editFlag ? (this.f['centerId'].setValue(this.data.centerId), this.getVillage()) : '';
       },
@@ -111,6 +115,8 @@ export class AddUpdateSchoolRegistrationComponent {
   getVillage() {
     this.masterService.getAllVillage(this.webStorageS.languageFlag, this.schoolRegForm.value.talukaId).subscribe({
       next: (res: any) => {
+        console.log("Village : ",res);
+
         res.statusCode == "200" ? this.villageArr = res.responseData : this.villageArr = [];
         this.editFlag ? (this.f['villageId'].setValue(this.data.villageId), this.getSchoolType()) : '';
       },
@@ -121,6 +127,8 @@ export class AddUpdateSchoolRegistrationComponent {
   getSchoolType() {
     this.masterService.getAllSchoolType(this.webStorageS.languageFlag).subscribe({
       next: (res: any) => {
+        console.log("SchoolType : ",res);
+        
         res.statusCode == "200" ? this.schoolTypeArr = res.responseData : this.schoolTypeArr = [];
         this.editFlag ? (this.f['s_TypeId'].setValue(this.data.s_TypeId), this.getCategoryDes()) : '';
       },
@@ -131,6 +139,8 @@ export class AddUpdateSchoolRegistrationComponent {
   getCategoryDes() {
     this.masterService.GetSchoolCategoryDescById(this.webStorageS.languageFlag).subscribe({
       next: (res: any) => {
+        console.log("CategoryDes : ",res);
+
         res.statusCode == "200" ? this.categoryArr = res.responseData : this.categoryArr = [];
         this.editFlag ? (this.f['s_CategoryId'].setValue(this.data.s_CategoryId), this.getSchoolMngDesc()) : '';
       },
@@ -141,6 +151,8 @@ export class AddUpdateSchoolRegistrationComponent {
   getSchoolMngDesc() {
     this.masterService.GetSchoolMngDescById(this.webStorageS.languageFlag).subscribe({
       next: (res: any) => {
+        console.log("SchoolMngDesc : ",res);
+
         res.statusCode == "200" ? this.schoolMngArr = res.responseData : this.schoolMngArr = [];
         this.editFlag ? (this.f['s_ManagementId'].setValue(this.data.s_ManagementId), this.getGroupClass()) : '';
       },
@@ -151,6 +163,8 @@ export class AddUpdateSchoolRegistrationComponent {
   getGroupClass() {
     this.masterService.getAllGroupClass(this.webStorageS.languageFlag).subscribe({
       next: (res: any) => {
+        console.log("GroupClass : ",res);
+
         res.statusCode == "200" ? this.groupclassArr = res.responseData : this.groupclassArr = [];
         this.editFlag ? this.f['g_ClassId'].setValue(this.data.g_ClassId) : '';
       },
@@ -169,15 +183,8 @@ export class AddUpdateSchoolRegistrationComponent {
     let formValue = this.schoolRegForm.value;
     console.log("formValue : ", formValue);
 
-    // if (this.editFlag == false) {
       formValue.docPath ? formValue.docPath = this.uploadImg : '';
-    // }
-    // else {
-      // this.data.docPath ? (formValue.docPath =='' ? formValue.docPath = this.data.docPath : formValue.docPath = this.uploadImg) : '';
-      // formValue.docPath = this.data.docPath;
-        // this.data.docPath ? formValue.docPath ?
       !this.showAddRemImg ? formValue.docPath = '' : formValue.docPath = formValue.docPath;
-    // }
     
     let url;
     this.editFlag ? url = 'ZP-Osmanabad/School/Update' : url = 'ZP-Osmanabad/School/Add';
