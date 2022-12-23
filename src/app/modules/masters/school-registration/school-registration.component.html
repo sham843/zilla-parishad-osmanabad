@@ -1,7 +1,7 @@
 <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
         <li class="breadcrumb-item" aria-current="page">{{'Labels.master' | translate}}</li>
-        <li class="breadcrumb-item active" aria-current="page">{{'Labels.RegisterSchool' | translate}}</li>
+        <li class="breadcrumb-item active" aria-current="page">{{'Labels.schoolRegistration' | translate}}</li>
     </ol>
 </nav>
 <app-page-statistics></app-page-statistics>
@@ -10,7 +10,7 @@
     <mat-card-header class="card-header">
         <div class="d-flex align-items-center flex-wrap justify-content-between w-100">
             <div class="text-main fw-bold">
-                {{'Labels.SchoolList' | translate}}
+                {{'Labels.schoolList' | translate}}
             </div>
             <div class="d-flex align-items-center justify-content-end gap-2">
                 <button mat-flat-button class="btn-main btn-icon"
@@ -49,7 +49,7 @@
                     <mat-icon>
                         add
                     </mat-icon>
-                    <span>{{'Labels.AddSchool' | translate}}</span>
+                    <span>{{'Labels.addSchool' | translate}}</span>
                 </button>
             </div>
         </div>
@@ -80,7 +80,7 @@
             </div>
             <div class="col-sm-auto">
                 <mat-form-field appearance="outline" class="w-100">
-                    <mat-label>{{'Labels.Village' | translate}}</mat-label>
+                    <mat-label>{{'Labels.village' | translate}}</mat-label>
                     <mat-select [formControl]="villageId">
                         <mat-option *ngFor="let village of villageArr" [value]="village.id">
                             {{webStorageS.getLangauge() == 'EN' ?
@@ -137,7 +137,7 @@
                             </div>
                             <div class="row">
                                 <div class="col-6 col-sm  form-label">
-                                    Village
+                                    {{'Labels.village' | translate}}
                                 </div>
                                 <div class="col-6 col-sm  form-deta">
                                     {{webStorageS.getLangauge() == 'EN' ?
@@ -146,7 +146,7 @@
                             </div>
                             <div class="row">
                                 <div class="col-6 col-sm form-label">
-                                    Taluka
+                                    {{'Labels.taluka' | translate}}
                                 </div>
                                 <div class="col-6 col-sm form-deta">
                                     {{webStorageS.getLangauge() == 'EN' ?
@@ -155,7 +155,7 @@
                             </div>
                             <div class="row">
                                 <div class="col-6 col-sm form-label">
-                                    District
+                                    {{'Labels.district' | translate}}
                                 </div>
                                 <div class="col-6 col-sm form-deta">
                                     {{webStorageS.getLangauge() == 'EN' ?
@@ -163,7 +163,7 @@
                                 </div>
                             </div>
                             <div class="text-center mb-3">
-                                <button mat-flat-button class="btn-main">Read More</button>
+                                <button mat-flat-button class="btn-main">{{'Labels.readMore' | translate}}</button>
                             </div>
                         </mat-card-content>
                     </mat-card>
