@@ -1,7 +1,7 @@
 <nav aria-label="breadcrumb">
   <ol class="breadcrumb">
-    <li class="breadcrumb-item" aria-current="page">Masters</li>
-    <li class="breadcrumb-item active" aria-current="page">Student Registration</li>
+    <li class="breadcrumb-item" aria-current="page">{{'Labels.master'| translate}}</li>
+    <li class="breadcrumb-item active" aria-current="page">{{'Labels.studentRegistration'| translate}}</li>
   </ol>
 </nav>
 <app-page-statistics></app-page-statistics>
@@ -10,7 +10,7 @@
   <mat-card-header class="card-header">
     <div class="d-flex flex-wrap align-items-center justify-content-between w-100">
       <div class="text-main fw-bold mb-2">
-        Student List
+        {{'Labels.studentList'| translate}}
       </div>
       <div class="d-flex align-items-center justify-content-end gap-2">
         <button mat-flat-button class="btn-icon"
@@ -46,7 +46,7 @@
         </mat-menu>
         <button mat-flat-button class="btn-main" (click)="addUpdateAgency()">
           <mat-icon>add</mat-icon>
-          Add Student
+          {{'Labels.addStudent'| translate}}
         </button>
       </div>
     </div>
@@ -55,7 +55,7 @@
     <div class="row w-100 mt-2">
       <div class="col-sm-auto">
         <mat-form-field appearance="outline" class="w-100">
-          <mat-label>Search by Name/Contact/Email</mat-label>
+          <mat-label>{{'Labels.searchbyNameContactEmail'| translate}}</mat-label>
           <input matInput placeholder="Search by Name/Contact/Email" [formControl]="searchContent">
 
         </mat-form-field>
@@ -74,8 +74,8 @@
         </mat-form-field>
       </div> -->
       <div class="col-sm-auto">
-        <button mat-flat-button class="btn-main" (click)="getTableData('filter')">Filter</button>
-        <button mat-flat-button class="btn-second ms-3" (click)="clearForm()">Clear</button>
+        <button mat-flat-button class="btn-main" (click)="getTableData('filter')">{{'Labels.filter'| translate}}</button>
+        <button mat-flat-button class="btn-second ms-3" (click)="clearForm()">{{'Labels.clear'| translate}}</button>
       </div>
 
     </div>
