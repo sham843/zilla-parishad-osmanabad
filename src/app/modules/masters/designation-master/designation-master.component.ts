@@ -140,10 +140,10 @@ getDesiganationType() {
 
   globalDialogOpen(obj:any) {
     let dialoObj = {
-      header: 'Delete',
-      title: 'Do You Want To Delete The Selected Content ?',
-      cancelButton: 'Cancel',
-      okButton: 'Ok'
+      header: this.webStorage.languageFlag == 'EN' ? 'Delete' : 'हटवा',
+      title: this.webStorage.languageFlag == 'EN' ? 'Do you want to delete Designation record?' : 'तुम्हाला पदनाम रेकॉर्ड हटवायचा आहे का',
+      cancelButton: this.webStorage.languageFlag == 'EN' ? 'Cancel' : 'रद्द करा',
+      okButton: this.webStorage.languageFlag == 'EN' ? 'Ok' : 'ओके'
     }
     const deleteDialogRef = this.dialog.open(GlobalDialogComponent, {
       width: '320px',
