@@ -4,6 +4,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ApiService } from 'src/app/core/services/api.service';
 import { CommonMethodsService } from 'src/app/core/services/common-methods.service';
 import { ErrorsService } from 'src/app/core/services/errors.service';
+import { FileUploadService } from 'src/app/core/services/file-upload.service';
 import { MasterService } from 'src/app/core/services/master.service';
 
 
@@ -17,6 +18,8 @@ export class AddUpdateTeacherRegistrationComponent {
   teacherRegForm!:FormGroup;
   editFlag:boolean=false;
   editObj:any;
+  uploadImg:any;
+  showAddRemImg:boolean=false;
   genderArray = new Array();
   districtArray = new Array();
   talukaArray = new Array();
@@ -42,6 +45,7 @@ export class AddUpdateTeacherRegistrationComponent {
  
 
   constructor(private masterService :MasterService, private commonMethod :CommonMethodsService, private errorHandler :ErrorsService,
+    private fileUpload: FileUploadService,
    private fb : FormBuilder,private service: ApiService, public dialogRef: MatDialogRef<AddUpdateTeacherRegistrationComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any) { }
 
@@ -50,7 +54,9 @@ export class AddUpdateTeacherRegistrationComponent {
      !this.data ? this.getGender():this.onEdit(this.data);
   }
 
- 
+  get f() {
+    return this.teacherRegForm.controls;
+  }
 
   get itemsForm(): FormArray {
     return this.teacherRegForm.get('teacherDetails') as FormArray;
@@ -397,12 +403,21 @@ getHaveYouPassedComputerExam(){
 }
 
 
+imgUpload(event: any) {
+  this.fileUpload.uploadDocuments(event, 'Upload', 'jpg, jpeg, png').subscribe((res: any) => {
+    this.uploadImg = res.responseData;
+    this.showAddRemImg = true;
+  });
+}
 
 
 
   OnSubmit(){
     console.log(this.teacherRegForm.value);
+    let formValue = this.teacherRegForm.value
     return;
+    formValue.docPath ? formValue.docPath = this.uploadImg : '';
+      !this.showAddRemImg ? formValue.docPath = '' : formValue.docPath = formValue.docPath;
     let postObj = this.teacherRegForm.value;
     let url;
       this.editFlag ? url = 'zp_osmanabad/Teacher/Update' : url = 'zp_osmanabad/Teacher/Add'
@@ -424,8 +439,21 @@ getHaveYouPassedComputerExam(){
   }
 
   onEdit(obj:any){
+    this.editFlag =true;
     this.editObj = obj;
     console.log("editObj",this.editObj);
+    return
+    this.data.docPath ? this.teacherRegForm.value.docPath = this.data.docPath : '';
     
+    this.data.docPath ? this.showAddRemImg = true :  this.showAddRemImg = false;
+   this.formData();
+    
+  }
+
+  clearImg(){
+    return
+    this.teacherRegForm.value.docPath = '';
+    this.f['docPath'].setValue('');
+    this.showAddRemImg = false;
   }
 }
