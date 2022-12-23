@@ -22,13 +22,13 @@
                     <div class="col-sm-3">
                         <mat-form-field appearance="outline" class="w-100">
                           <mat-label>{{'Labels.searchPage' | translate}}</mat-label>
-                          <input matInput placeholder="{{'Labels.search' | translate}}" formControlName="Textsearch"
+                          <input matInput placeholder="{{'Labels.searchPage' | translate}}" formControlName="Textsearch"
                             (keypress)="validation.noSpacesAtStart($event)" maxlength="100">
                         </mat-form-field>
                     </div>
                 </div>
-                <button mat-stroked-button (click)="getUserRightPageList()" class="btn-main">Filter</button>
-                <button type="button" mat-flat-button class="btn-second ms-2" (click)="resetFilter()">Clear</button>
+                <button mat-stroked-button (click)="getUserRightPageList()" class="btn-main">{{'Labels.filter' | translate}}</button>
+                <button type="button" mat-flat-button class="btn-second ms-2" (click)="resetFilter()">{{'Labels.clear' | translate}}</button>
             </form>
         </div>
     </mat-card-header>

@@ -24,7 +24,7 @@ export class PageRightAccessComponent {
   tableDatasize!: Number;
   displayedColumns = new Array();
   displayedheaders = ['Sr. No.', 'Page Name', 'Page URL', 'Select'];
-  displayedheadersMarathi = ['अनुक्रमांक', 'पृष्ठाचे नाव', 'पृष्ठ url','निवडा',];
+  displayedheadersMarathi = ['अनुक्रमांक', 'पृष्ठाचे नाव', 'पृष्ठ युआरएल','निवडा',];
   
   langTypeName:any;
   constructor(
