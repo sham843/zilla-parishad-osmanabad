@@ -75,17 +75,17 @@ childCompInfo(_obj: any) {
       this.pageNumber = _obj.pageNumber;
       this.getTableData();
       break;
-    // case 'Edit' || 'Delete':
-    //   this.addUpdateAgency(_obj);
-    //   break;
+    case 'Edit' || 'Delete':
+      this.addUpdateTeacher(_obj);
+      break;
     // case 'Block':
     //   this.globalDialogOpen();
     //   break;
   }
 }
   
-  addUpdateAgency() {
-    let obj: any;
+  addUpdateTeacher(obj?:any) {
+    // let obj: any;
     this.dialog.open(AddUpdateTeacherRegistrationComponent, {
       width: '900px',
       height:'700px',
