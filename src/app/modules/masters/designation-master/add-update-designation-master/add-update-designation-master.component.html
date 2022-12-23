@@ -16,35 +16,37 @@
                     <mat-form-field appearance="outline" class="w-100 ">
                         <mat-label>{{'Labels.DesignationLevel' | translate}}</mat-label>
                         <mat-select formControlName="designationLevelId"
-                            (selectionChange)="getDesiganationType();clearForm('designationLevelId')">
+                            (selectionChange)="clearForm('designationLevelId')">
                             <mat-option *ngFor="let designation of DesiganationLevelData"
                                 [value]="designation.designationLevel">{{webStorage.getLangauge() == 'EN' ?
-                                designation.designationLevel : designation.m_DesignationLevel}}</mat-option>
-                            <!-- <mat-option value="two">option-2</mat-option> -->
+                                designation.designationLevel : designation.m_DesignationLevel}}</mat-option>                           
                         </mat-select>
                         <mat-error
                             *ngIf="f['designationLevelId'].hasError('required') || f['designationLevelId'].hasError('touched')">Company
                             {{'Labels.DesignationLevelReq' | translate}}</mat-error>
                     </mat-form-field>
                 </div>
-                <div class="col-sm">
+                <!-- <div class="col-sm">
                     <mat-form-field appearance="outline" class="w-100 ">
                         <mat-label> {{'Labels.DesignationType' | translate}}</mat-label>
                         <mat-select formControlName="designationName" (selectionChange)="changeValidators($event)">
                             <mat-option *ngFor="let designationType of desiganationTypeData"
                                 [value]="designationType.designationType">{{webStorage.getLangauge() == 'EN' ?
                                 designationType.designationType : designationType.m_DesignationType}}</mat-option>
-                            <!-- <mat-option value="two">option-2</mat-option> -->
+                            <mat-option value="two">option-2</mat-option>
                         </mat-select>
                         <mat-error
                             *ngIf="f['designationType'].hasError('required') || f['designationType'].hasError('touched')">Company
                             {{'Labels.DesignationTypeReq' | translate}}</mat-error>
                     </mat-form-field>
-                </div>
+                    ..
+                    *ngIf="designationForm.value.designationName == 'Other' "
+                    *ngIf="designationForm.value.designationName =='Other'"
+                </div> -->
             </div>
             <div class="row gy-2">
                 <div class="col-sm">
-                    <ng-container *ngIf="designationForm.value.designationName == 'Other' ">
+                    <ng-container >
                         <mat-form-field appearance="outline" class="w-100 ">
                             <mat-label>{{'Labels.AddDesignation' | translate}}</mat-label>
                             <input matInput placeholder="Enter Desiganation Type" formControlName="designationType"
@@ -57,7 +59,7 @@
                     </ng-container>
                 </div>
                 <div class="col-sm">
-                    <ng-container *ngIf="designationForm.value.designationName =='Other'">
+                    <ng-container >
                         <mat-form-field appearance="outline" class="w-100 ">
                             <mat-label>{{'Labels.AddDesignation(Marathi)' | translate}}</mat-label>
                             <input matInput placeholder="Enter Desiganation Type Marathi"
