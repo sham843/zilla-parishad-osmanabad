@@ -83,7 +83,15 @@
         "aadhaarPhoto" : "आधार फोटो अपलोड करा",
         "parentMobileNo" :"पालक मोबाईल क्र",
         "fatherName" : "वडीलचे नाव",
-        "motherName" :"आईचे नाव"
+        "motherName" :"आईचे नाव",
+        "studentRegistration":"विद्यार्थीची नोंदणी",
+        "addStudent":" विद्यार्थीची नोंदणी करा",
+        "studentDetails" :"विद्यार्थीची माहिती",
+        "gardiantDetails":"पालकची माहिती",
+        "studentList" :"विद्यार्थीची यादी",
+        "master" :"मुख्य"
+
+
 
     }
 }
