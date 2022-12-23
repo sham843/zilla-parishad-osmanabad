@@ -32,13 +32,14 @@ export class AddUpdateTeacherRegistrationComponent {
   degreeUniversityArray = new Array();
   educationQualificationArray = new Array();
   profesionalQualificationArray = new Array();
-  castCategoryArray = new Array()
-  casteVerification:any=[{id : 1 ,name :'yes' , isCastVarificationDone :true},{id : 2 ,name :'no' , isCastVarificationDone :false}] ;
-  husbandWifeBothServiceArray:any=[{id : 1 ,name :'yes' , husbandWife_Both_Service :true},{id : 2 ,name :'no' , husbandWife_Both_Service :false}];
-  AreyouDisabled:any=[{id : 1 ,name :'yes' , isDisabled :true},{id : 2 ,name :'no' , isDisabled :false}];
-  interDistrictTransferredArray:any=[{id : 1 ,name :'yes' , interDistrictTransferred :true},{id : 2 ,name :'no' , interDistrictTransferred :false}];
-  haveYouPassedComputerExamArray:any=[{id : 1 ,name :'yes' , haveYouPassedComputerExam :true},{id : 2 ,name :'no' , haveYouPassedComputerExam :false}];
-  // "isGraduate_PayScale": any=[{}]
+  castCategoryArray = new Array();
+  casteVerification =new Array();
+  husbandWifeBothServiceArray = new Array();
+  AreyouDisabled =new Array();
+  interDistrictTransferredArray = new Array();
+  haveYouPassedComputerExamArray = new Array();
+  isGraduatePayScaleArray = new Array();  
+ 
 
   constructor(private masterService :MasterService, private commonMethod :CommonMethodsService, private errorHandler :ErrorsService,
    private fb : FormBuilder,private service: ApiService, public dialogRef: MatDialogRef<AddUpdateTeacherRegistrationComponent>,
@@ -139,10 +140,8 @@ export class AddUpdateTeacherRegistrationComponent {
             "documentId": 0,
             "docPath": ['']
           }
-        ]
-      
-
-    })
+        ]      
+      })
   }
 
   getGender() { 
@@ -249,8 +248,8 @@ export class AddUpdateTeacherRegistrationComponent {
         if (res.statusCode == '200' && res.responseData.length) {
           this.GradateTeacherSubjectArray = res.responseData;
           console.log("GradateTeacherSubjectArray", this.GradateTeacherSubjectArray);  
-          // this.getGraduatepayScale();
-          this.getCaste();
+          this.getGraduatePayScale();
+          
         }
       }), error: (error: any) => {
         this.commonMethod.checkEmptyData(error.statusText) == false ? this.errorHandler.handelError(error.statusCode) : this.commonMethod.snackBar(error.statusText, 1);
@@ -258,19 +257,13 @@ export class AddUpdateTeacherRegistrationComponent {
     })
   }
 
-  // getGraduatepayScale() { 
-  //   this.masterService.getPayscaleCategoryDescById('EN').subscribe({
-  //     next: ((res: any) => {
-  //       if (res.statusCode == '200' && res.responseData.length) {
-  //         this.payScaleArray = res.responseData;
-  //         console.log("GradateTeacherSubjectArray", this.GradateTeacherSubjectArray);   
-  //         this.getCaste();
-  //       }
-  //     }), error: (error: any) => {
-  //       this.commonMethod.checkEmptyData(error.statusText) == false ? this.errorHandler.handelError(error.statusCode) : this.commonMethod.snackBar(error.statusText, 1);
-  //     }
-  //   })
-  // }
+  getGraduatePayScale() {
+     this.isGraduatePayScaleArray = [
+      { id: 1, name: 'yes', isGraduate_PayScale: true }, 
+      { id: 2, name: 'no', isGraduate_PayScale: false }
+    ];
+    this.getCaste();
+  }
 
   getCaste() { 
     this.masterService.getAllCaste('EN',1).subscribe({
@@ -293,11 +286,15 @@ export class AddUpdateTeacherRegistrationComponent {
           this.castCategoryArray = res.responseData;
           console.log("castCategoryArray", this.castCategoryArray);   
           this.getEducationQualification(); 
+          this.getCasteVerification();
         }
       }), error: (error: any) => {
         this.commonMethod.checkEmptyData(error.statusText) == false ? this.errorHandler.handelError(error.statusCode) : this.commonMethod.snackBar(error.statusText, 1);
       }
     })
+  }
+  getCasteVerification(){
+    return  this.casteVerification=[{id : 1 ,name :'yes' , isCastVarificationDone :true},{id : 2 ,name :'no' , isCastVarificationDone :false}] ;
   }
 
   getEducationQualification() { 
@@ -361,13 +358,46 @@ export class AddUpdateTeacherRegistrationComponent {
       next: ((res: any) => {
         if (res.statusCode == '200' && res.responseData.length) {
           this.profesionalQualificationArray = res.responseData;
-          console.log("profesionalQualificationArray", this.profesionalQualificationArray);   
+          console.log("profesionalQualificationArray", this.profesionalQualificationArray);
+          this.gethusbandWifeBothService();   
         }
       }), error: (error: any) => {
         this.commonMethod.checkEmptyData(error.statusText) == false ? this.errorHandler.handelError(error.statusCode) : this.commonMethod.snackBar(error.statusText, 1);
       }
     })
   }
+  gethusbandWifeBothService(){
+      this.husbandWifeBothServiceArray=[
+        {id : 1 ,name :'yes' , husbandWife_Both_Service :true},
+        {id : 2 ,name :'no' , husbandWife_Both_Service :false}
+      ];
+      this.getAreyouDisabled();
+  }
+  getAreyouDisabled(){
+    this.AreyouDisabled=[
+      {id : 1 ,name :'yes' , isDisabled :true},
+      {id : 2 ,name :'no' , isDisabled :false}
+    ];
+    this.getInterDistrictTransferred();
+  }
+
+  getInterDistrictTransferred(){
+  this.interDistrictTransferredArray=[
+    {id : 1 ,name :'yes' , interDistrictTransferred :true},
+    {id : 2 ,name :'no' , interDistrictTransferred :false}
+  ];
+  this.getHaveYouPassedComputerExam();
+  }
+
+getHaveYouPassedComputerExam(){
+   this. haveYouPassedComputerExamArray=[
+    {id : 1 ,name :'yes' , haveYouPassedComputerExam :true},
+    {id : 2 ,name :'no' , haveYouPassedComputerExam :false}
+  ];
+}
+
+
+
 
 
   OnSubmit(){

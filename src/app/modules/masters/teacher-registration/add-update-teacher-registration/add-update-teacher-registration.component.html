@@ -185,9 +185,9 @@
                     <mat-form-field appearance="outline" class="w-100 ">
                         <mat-label>Taking Graduate Pay Scale</mat-label>
                         <mat-select formControlName="isGraduate_PayScale">
-                            <!-- <mat-option *ngFor="let payScale of payScaleArray"
-                            [value]="payScale.id">{{payScale.}}</mat-option> -->
-                            <mat-option value="two"> B.Tech Computer</mat-option>
+                            <mat-option *ngFor="let payScale of isGraduatePayScaleArray"
+                            [value]="payScale.isGraduate_PayScale">{{payScale.name}}</mat-option>
+                            <!-- <mat-option value="two"> B.Tech Computer</mat-option> -->
                         </mat-select>
                     </mat-form-field>
                 </div>
@@ -368,7 +368,7 @@
                 <div class="col-sm-4">
                     <mat-form-field appearance="outline" class="w-100 ">
                         <mat-label>Inter District transferred</mat-label>
-                        <mat-select formControlName="interDistrictTransferred">interDistrictTransferredArray
+                        <mat-select formControlName="interDistrictTransferred">
                             <mat-option *ngFor="let interDistrict of interDistrictTransferredArray"
                             [value]="interDistrict.interDistrictTransferred">{{interDistrict.name}}</mat-option>
                             <!-- <mat-option value="two">M.tech</mat-option> -->

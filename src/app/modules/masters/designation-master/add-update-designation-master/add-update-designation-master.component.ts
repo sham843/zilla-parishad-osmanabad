@@ -40,10 +40,9 @@ export class AddUpdateDesignationMasterComponent {
     this.designationForm = this.fb.group({
       "lan": [''],
       "id": [0],
-      "designationType": [''],
-      "m_DesignationType": [''],
-      "designationLevelId": ['', Validators.required],
-      "designationName": ['', Validators.required]
+      "designationType": ['',Validators.required],
+      "m_DesignationType": ['',Validators.required],
+      "designationLevelId": ['', Validators.required]
     }) 
   }
   //#endregion  ---------------------------- End Desiganation-Master Formdata ------------------------------- //
@@ -66,7 +65,7 @@ export class AddUpdateDesignationMasterComponent {
       next: ((res: any) => {
         if (res.statusCode == '200' && res.responseData.length) {
           this.DesiganationLevelData = res.responseData;
-          this.editFlag ? (this.designationForm.controls['designationLevelId'].setValue(this.editData.designationLevel), this.getDesiganationType()) : '';
+          this.editFlag ? (this.designationForm.controls['designationLevelId'].setValue(this.editData.designationLevel)) : '';
         }
       }), error: (error: any) => {
         this.commonMethod.checkEmptyData(error.statusText) == false ? this.errorHandler.handelError(error.statusCode) : this.commonMethod.snackBar(error.statusText, 1);
@@ -74,28 +73,28 @@ export class AddUpdateDesignationMasterComponent {
     })
   }
 
-  getDesiganationType() {
-    this.desiganationTypeData=[];
-    let getFormVal = this.designationForm.value;
-    let getDesignationLevelId: any = this.commonMethod.getkeyValueByArrayOfObj(this.DesiganationLevelData, 'designationLevel', getFormVal?.designationLevelId);
-    let desigLevelId = getDesignationLevelId?.id
+  // getDesiganationType() {
+  //   this.desiganationTypeData=[];
+  //   let getFormVal = this.designationForm.value;
+  //   let getDesignationLevelId: any = this.commonMethod.getkeyValueByArrayOfObj(this.DesiganationLevelData, 'designationLevel', getFormVal?.designationLevelId);
+  //   let desigLevelId = getDesignationLevelId?.id
    
-    console.log(desigLevelId);
+  //   console.log(desigLevelId);
     
 
-    this.masterService.GetDesignationByLevelId(getFormVal.lan, desigLevelId).subscribe({
-      next: ((res: any) => {
-        if (res.statusCode == '200' && res.responseData.length) {
-          this.desiganationTypeData = res.responseData;
-          this.desiganationTypeData.push(this.obj);      
-          this.editFlag ? (this.designationForm.controls['designationName'].setValue(this.editData.designationName)) : '';
-        }
-      }), error: (error: any) => {
-        this.commonMethod.checkEmptyData(error.statusText) == false ? this.errorHandler.handelError(error.statusCode) : this.commonMethod.snackBar(error.statusText, 1);
-      }
-    })
+  //   this.masterService.GetDesignationByLevelId(getFormVal.lan, desigLevelId).subscribe({
+  //     next: ((res: any) => {
+  //       if (res.statusCode == '200' && res.responseData.length) {
+  //         this.desiganationTypeData = res.responseData;
+  //         this.desiganationTypeData.push(this.obj);      
+  //         this.editFlag ? (this.designationForm.controls['designationName'].setValue(this.editData.designationName)) : '';
+  //       }
+  //     }), error: (error: any) => {
+  //       this.commonMethod.checkEmptyData(error.statusText) == false ? this.errorHandler.handelError(error.statusCode) : this.commonMethod.snackBar(error.statusText, 1);
+  //     }
+  //   })
 
-  }
+  // }
   //#endregion  -------------------------------- End Desiganation-Master Dropdown ------------------------------- //
 
   //#region ------------------------------------- Desiganation-Master Submit ---------------------------------// 
@@ -116,7 +115,7 @@ export class AddUpdateDesignationMasterComponent {
         "isDeleted": data.isDeleted,
         "lan": this.webStorage.languageFlag,
         "id": formValue.id,
-        "designationType": formValue.designationName == 'Other' ? formValue.designationType : formValue.designationName,
+        "designationType":  formValue.designationType ,
         "m_DesignationType": formValue.m_DesignationType,
         "designationLevelId": formValue.designationLevelId,
         "timestamp": new Date(),
