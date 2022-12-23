@@ -64,6 +64,26 @@
         "SchoolCategoryIsRequired" : "School Category is required",
         "SchoolManagementIsRequired" : "शाळा व्यवस्थापन आवश्यक आहे",
         "GroupClassIsRequired" : "गट वर्ग आवश्यक आहे",
-        "searchbyNameContactEmail" : "नाव/संपर्क/ईमेल द्वारे शोधा"
+        "searchbyNameContactEmail" : "नाव/संपर्क/ईमेल द्वारे शोधा",
+
+        "studentFirstName" : "विद्यार्थीचे प्रथम नाव",
+        "studentMiddelName" : "विद्यार्थीचे मधला नाव",
+        "studentLastName" : "विद्यार्थीचे अडनाव",
+        "studentFirstNameMarathi" : "विद्यार्थीचे प्रथम नाव (मराठी)",
+        "studentMiddelNameMarathi" : "विद्यार्थीचे मधला नाव (मराठी)",
+        "studentLastNameMarathi" : "विद्यार्थीचे अडनाव (मराठी)",
+        "standard" :"इयत्ता",
+        "birthDate": "जन्मदिनांक",
+        "gender": "लिंग",
+        "religion" : "धर्म",
+        "caste" : "जाति",
+        "physicallyDisabled" :"दिव्यांग/अपंग",
+        "saralId" : "सरल आयडी",
+        "aadhaarNo" :"आधार क्र.",
+        "aadhaarPhoto" : "आधार फोटो अपलोड करा",
+        "parentMobileNo" :"पालक मोबाईल क्र",
+        "fatherName" : "वडीलचे नाव",
+        "motherName" :"आईचे नाव"
+
     }
 }
