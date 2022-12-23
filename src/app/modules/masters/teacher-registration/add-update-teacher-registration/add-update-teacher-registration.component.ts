@@ -29,8 +29,12 @@ export class AddUpdateTeacherRegistrationComponent {
   degreeUniversityArray = new Array();
   educationQualificationArray = new Array();
   profesionalQualificationArray = new Array();
-  castCategoryArray = new Array();
-  casteVerification:any=[{id : 1 ,name :'yes' , isDisabled :'true'},{id : 2 ,name :'no' , isDisabled :'false'}] ;
+  castCategoryArray = new Array()
+  casteVerification:any=[{id : 1 ,name :'yes' , isCastVarificationDone :true},{id : 2 ,name :'no' , isCastVarificationDone :false}] ;
+  husbandWifeBothServiceArray:any=[{id : 1 ,name :'yes' , husbandWife_Both_Service :true},{id : 2 ,name :'no' , husbandWife_Both_Service :false}];
+  AreyouDisabled:any=[{id : 1 ,name :'yes' , isDisabled :true},{id : 2 ,name :'no' , isDisabled :false}];
+  interDistrictTransferredArray:any=[{id : 1 ,name :'yes' , interDistrictTransferred :true},{id : 2 ,name :'no' , interDistrictTransferred :false}]
+  haveYouPassedComputerExamArray:any=[{id : 1 ,name :'yes' , haveYouPassedComputerExam :true},{id : 2 ,name :'no' , haveYouPassedComputerExam :false}]
 
   constructor(private masterService :MasterService, private commonMethod :CommonMethodsService, private errorHandler :ErrorsService,
    private fb : FormBuilder, public dialogRef: MatDialogRef<AddUpdateTeacherRegistrationComponent>,
@@ -363,6 +367,6 @@ export class AddUpdateTeacherRegistrationComponent {
 
 
   OnSubmit(){
-
+    console.log(this.teacherRegForm.value);
   }
 }
