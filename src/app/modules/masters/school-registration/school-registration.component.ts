@@ -55,6 +55,7 @@ export class SchoolRegistrationComponent {
     this.getTableData();
   }
 
+  //#region ------------------------------------------- School Registration Table Data start here ----------------------------------------// 
   getTableData(flag?: string) {
     this.pageNumber = flag == 'filter' ? 1 : this.pageNumber;
     let tableDatasize!: Number;
@@ -74,8 +75,6 @@ export class SchoolRegistrationComponent {
           this.tableDataArray = [];
           tableDatasize = 0;
         }
-        // let displayedColumns = ['docPath','srNo', 'schoolName', 'village', 'taluka', 'district', 'action'];
-        // let displayedheaders = ['#','Sr. No', 'Name', 'Village', 'Taluka', 'District', 'action'];
         let tableData = {
           pageNumber: this.pageNumber,
           img: 'docPath', blink: '', badge: '', isBlock: '', pagintion: true,
@@ -88,6 +87,43 @@ export class SchoolRegistrationComponent {
       error: ((err: any) => { this.errors.handelError(err) })
     });
   }
+  //#endregion ------------------------------------------- School Registration Table Data end here ----------------------------------------// 
+
+  //#region ---------------------------------------------- School Registration Dropdown start here ----------------------------------------// 
+  getDistrict() {
+    this.masterService.getAllDistrict(this.webStorageS.languageFlag).subscribe({
+      next: (res: any) => {
+        if (res.statusCode == 200) {
+          this.districtArr = res.responseData;
+        }
+      },
+      error: ((err: any) => { this.errors.handelError(err) })
+    });
+  }
+
+  getTaluka() {
+    this.masterService.getAllTaluka(this.webStorageS.languageFlag).subscribe({
+      next: (res: any) => {
+        if (res.statusCode == 200) {
+          this.talukaArr = res.responseData;
+        }
+      },
+      error: ((err: any) => { this.errors.handelError(err) })
+    });
+  }
+
+  getVillage() {
+    let talukaId = this.talukaId.value;
+    this.masterService.getAllVillage(this.webStorageS.languageFlag, talukaId).subscribe({
+      next: (res: any) => {
+        if (res.statusCode == 200) {
+          this.villageArr = res.responseData;
+        }
+      },
+      error: ((err: any) => { this.errors.handelError(err) })
+    });
+  }
+//#endregion ------------------------------------------- School Registration Dropdown start here ----------------------------------------// 
 
   languageChange(){
     this.webStorageS.langNameOnChange.subscribe(lang =>{
@@ -101,10 +137,8 @@ export class SchoolRegistrationComponent {
         tableHeaders: this.langTypeName == 'English' ? this.displayedheadersEnglish : this.displayedheadersMarathi
       };
       this.apiService.tableData.next(this.tableData);
-
     })
   }
-
 
   childCompInfo(obj: any) {
     switch (obj.label) {
@@ -115,15 +149,13 @@ export class SchoolRegistrationComponent {
       case 'Edit' || 'Delete':
         this.addUpdateAgency(obj);
         break;
-      // case 'Block':
-      //   this.globalDialogOpen();
-      //   break;
       case 'Delete':
         this.globalDialogOpen(obj);
         break;
     }
   }
 
+   //#region ------------------------------------------- Open Dialog Box Function start here ----------------------------------------// 
   addUpdateAgency(obj?: any) {
     const dialogRef = this.dialog.open(AddUpdateSchoolRegistrationComponent, {
       width: '820px',
@@ -160,6 +192,7 @@ export class SchoolRegistrationComponent {
       }
     })
   }
+  //#endregion ------------------------------------------- Open Dialog Box Function end here ----------------------------------------// 
 
   onClear(){
     this.districtId.reset();
@@ -168,40 +201,7 @@ export class SchoolRegistrationComponent {
     this.getTableData();
   }
 
-  getDistrict() {
-    this.masterService.getAllDistrict(this.webStorageS.languageFlag).subscribe({
-      next: (res: any) => {
-        if (res.statusCode == 200) {
-          this.districtArr = res.responseData;
-        }
-      },
-      error: ((err: any) => { this.errors.handelError(err) })
-    });
-  }
-
-  getTaluka() {
-    this.masterService.getAllTaluka(this.webStorageS.languageFlag).subscribe({
-      next: (res: any) => {
-        if (res.statusCode == 200) {
-          this.talukaArr = res.responseData;
-        }
-      },
-      error: ((err: any) => { this.errors.handelError(err) })
-    });
-  }
-
-  getVillage() {
-    let talukaId = this.talukaId.value;
-    this.masterService.getAllVillage(this.webStorageS.languageFlag, talukaId).subscribe({
-      next: (res: any) => {
-        if (res.statusCode == 200) {
-          this.villageArr = res.responseData;
-        }
-      },
-      error: ((err: any) => { this.errors.handelError(err) })
-    });
-  }
-
+  //#region ---------------------------------------------- Delete Record Logic start here ----------------------------------------//  
   onClickDelete() {
     let deleteObj = {
       "id": this.deleteObj.id,
@@ -222,6 +222,7 @@ export class SchoolRegistrationComponent {
       this.commonMethodS.checkEmptyData(error.statusText) == false ? this.errors.handelError(error.statusCode) : this.commonMethodS.snackBar(error.statusText, 1);
     }
   }
+  //#endregion ---------------------------------------------- Delete Record Logic end here ----------------------------------------//  
   
   onPageChanged(event: any) {
     this.cardCurrentPage = event.pageIndex;
@@ -240,6 +241,7 @@ export class SchoolRegistrationComponent {
       this.getTableData();
   }
 
+  //#region ---------------------------------------------- PDF Download start here ----------------------------------------// 
   getofficeReport(){
     let str = `?&DistrictId=${this.districtId.value ? this.districtId.value : 0}
      &TalukaId=${this.talukaId.value ? this.talukaId.value : 0}&VillageId=${this.villageId.value ? this.villageId.value : 0}&lan=${this.webStorageS.languageFlag}`;
@@ -279,12 +281,14 @@ export class SchoolRegistrationComponent {
           }
         this.downloadFileService.downLoadPdf(keyPDFHeader, ValueData, objData);
   }
+  //#endregion ---------------------------------------------- PDF Download end here ----------------------------------------// 
 
+  //#region ------------------------------------------------- Filter Form start here ------------------------------------------// 
   filterData(){
     this.getTableData();
     this.getofficeReport();
   }
-
+//#endregion ---------------------------------------------- Filter Form end here ----------------------------------------// 
  
 
 }
