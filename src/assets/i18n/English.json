@@ -42,11 +42,7 @@
         "DesignationTypeReq":"Designation Type is Required",
         "AddDesignation(Marathi)":"Add Designation (Marathi)",
         "DesignationTypeMarathiReq":"Designation Type Marathi Required",
-<<<<<<< HEAD
-=======
-        "searchbyNameContactEmail" :"Search By Name/Contact/Email"
->>>>>>> 3fe591c7a00ce1a1d4f6ff1d78d176ce86bfa91c
-
+        "searchbyNameContactEmail" :"Search By Name/Contact/Email",
         "RegisterSchool" : "Register School",
         "SchoolList" : "School List",
         "AddSchool" : "Add School",
