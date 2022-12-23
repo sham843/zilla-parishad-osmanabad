@@ -64,6 +64,25 @@
         "SchoolTypeDescriptionIsRequired" : " School Type Description is required",
         "SchoolCategoryIsRequired" : "School Category is required",
         "SchoolManagementIsRequired" : "School Management is required",
-        "GroupClassIsRequired" : "Group Class is required"
+        "GroupClassIsRequired" : "Group Class is required",
+
+        "studentFirstName" : "Student First Name",
+        "studentMiddelName" : "Student Middel Name",
+        "studentLastName" : "Student Last Name",
+        "studentFirstNameMarathi" : "Student First Name (Marathi)",
+        "studentMiddelNameMarathi" : "Student Middel Name (Marathi)",
+        "studentLastNameMarathi" : "Student Last Name (Marathi)",
+        "standard" :"Standard",
+        "birthDate": "Birth Date",
+        "gender": "Gender",
+        "religion" : "Religion",
+        "caste" : "Caste",
+        "physicallyDisabled" :"Physically Disabled",
+        "saralId" : "Saral Id",
+        "aadhaarNo" :"Aadhaar No",
+        "aadhaarPhoto" : "Upload Aadhaar Photo",
+        "parentMobileNo" :"Parent Mobile No",
+        "fatherName" : "Father Name",
+        "motherName" :"Mother Name"
     }
 }
