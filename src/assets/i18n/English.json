@@ -107,8 +107,10 @@
         "level" : "Level",
         "designation" : "Designation (Officer)",
         "name" : "Name",
-        "mobileNo" : "Mobile No"
-
+        "mobileNo" : "Mobile No",
+        "searchPage":"Page Name/Page URL",
+        "userType":"User Type",
+        "subUserType":"Sub User Type"
 
 
         

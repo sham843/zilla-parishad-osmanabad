@@ -1,12 +1,35 @@
 <mat-card>
     <mat-card-header class="mb-0 pb-0">
         <div class="d-flex flex-wrap flex-sm-nowrap">
-            <mat-form-field appearance="outline" class="w-100 me-2 mb-0">
-                <mat-label>Search</mat-label>
-                <input matInput [formControl]="searchContent" placeholder="Search">
-            </mat-form-field>
-            <button mat-stroked-button (click)="getTableData('filter')" class="btn-main">Filter</button>
-            <button  mat-flat-button class="btn-second ms-2">Clear</button>
+            <form [formGroup]="userRightFrm" (ngSubmit)="onSubmit()">
+                <div class="row">
+                    <div class="col-sm-3">
+                        <mat-form-field appearance="outline" class="w-100 me-2 mb-0">
+                            <mat-label>{{'Labels.userType' | translate}}</mat-label>
+                            <mat-select formControlName="userType" (selectionChange)="getSubUserType(userRightFrm.value.userType); this.initialLoadFlag = false;">
+                                <mat-option *ngFor="let u of UserTypeArr" [value]="u.userTypeId">{{ langTypeName=='English' ? u.userType : u.m_UserType}}</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-sm-3">
+                        <mat-form-field appearance="outline" class="w-100">
+                            <mat-label>{{'Labels.subUserType' | translate}}</mat-label>
+                            <mat-select formControlName="subUserType">
+                            <mat-option *ngFor="let u of SubUserTypeArr" [value]="u.subUserTypeId">{{langTypeName=='English' ? u.subUserType : u.m_SubUserType}}</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-sm-3">
+                        <mat-form-field appearance="outline" class="w-100">
+                          <mat-label>{{'Labels.searchPage' | translate}}</mat-label>
+                          <input matInput placeholder="{{'Labels.searchPage' | translate}}" formControlName="Textsearch"
+                            (keypress)="validation.noSpacesAtStart($event)" maxlength="100">
+                        </mat-form-field>
+                    </div>
+                </div>
+                <button mat-stroked-button (click)="getUserRightPageList()" class="btn-main">{{'Labels.filter' | translate}}</button>
+                <button type="button" mat-flat-button class="btn-second ms-2" (click)="resetFilter()">{{'Labels.clear' | translate}}</button>
+            </form>
         </div>
     </mat-card-header>
     <mat-card-content>
