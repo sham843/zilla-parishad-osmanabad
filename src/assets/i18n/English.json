@@ -42,7 +42,28 @@
         "DesignationTypeReq":"Designation Type is Required",
         "AddDesignation(Marathi)":"Add Designation (Marathi)",
         "DesignationTypeMarathiReq":"Designation Type Marathi Required",
-        "searchbyNameContactEmail" :"Search By Name/Contact/Email"
-
+        "searchbyNameContactEmail" :"Search By Name/Contact/Email",
+        "RegisterSchool" : "Register School",
+        "SchoolList" : "School List",
+        "AddSchool" : "Add School",
+        "Kendra" : "Kendra",
+        "Village" : "Village",
+        "School" : "School",
+        "School(Marathi)" : "School(Marathi)",
+        "SchoolTypeDescription" : "School Type Description",
+        "SchoolCategoryDescription" : "School Category Description",
+        "SchoolManagementDescription" : "School Management Description",
+        "GroupClass" : "Group Class",
+        "UploadPhoto" : "Upload Photo",
+        "DistrictIsRequired" : "District is required",
+        "TalukaIsRequired" : "Taluka is required",
+        "KendraIsRequired" : "Kendra is required",
+        "VillageIsRequired" : "Village is required",
+        "SchoolIsRequired" : "School is required",
+        "SchoolNameIsRequired" : "School name is required",
+        "SchoolTypeDescriptionIsRequired" : " School Type Description is required",
+        "SchoolCategoryIsRequired" : "School Category is required",
+        "SchoolManagementIsRequired" : "School Management is required",
+        "GroupClassIsRequired" : "Group Class is required"
     }
 }
