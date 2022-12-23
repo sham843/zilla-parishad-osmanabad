@@ -66,7 +66,6 @@
         "SchoolCategoryIsRequired" : "School Category Is Required",
         "SchoolManagementIsRequired" : "School Management Is Required",
         "GroupClassIsRequired" : "Group Class Is Required",
-
         "studentFirstName" : "Student First Name",
         "studentMiddelName" : "Student Middel Name",
         "studentLastName" : "Student Last Name",
@@ -90,6 +89,14 @@
         "studentDetails" :"Student Details",
         "guardianDetails":"Guardian Details",
         "studentList" :"Student List",
-        "master" :"Masters"
+        "master" :"Masters",
+        "delete" : "Delete",
+        "doYouWantToDeleteSchoolRecord" : "Do you want to delete School record?",
+        "doYouWantToDeleteDesignationRecord" : "Do you want to delete Designation record?",
+        "doYouWantToDeleteAgencyRecord" : "Do you want to delete Agency record?",
+        "doYouWantToDeleteTeacherRecord" : "Do you want to delete Teacher record?",
+        "doYouWantToDeleteStudentRecord" : "Do you want to delete Student record?",
+        "doYouWantToDeleteOfficeUserRecord" : "Do you want to delete Office User record?",
+        "ok" : "Ok"
     }
 }
