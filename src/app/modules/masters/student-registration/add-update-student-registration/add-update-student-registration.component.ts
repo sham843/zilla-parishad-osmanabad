@@ -26,8 +26,8 @@ export class AddUpdateStudentRegistrationComponent {
   casteArr = new Array();
   editFlag: boolean = false
   physicallyDisabled = [
-    { id: 1, name: 'Yes' },
-    { id: 2, name: 'No' }
+    { id: 1, eName: 'Yes',mName: 'होय'},
+    { id: 2, eName: 'No' ,mName: 'नाही'}
   ]
 
   @ViewChild('uploadImage') imageFile!: ElementRef;

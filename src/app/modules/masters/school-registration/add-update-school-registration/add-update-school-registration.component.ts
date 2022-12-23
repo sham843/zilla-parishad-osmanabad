@@ -16,7 +16,6 @@ import { WebStorageService } from 'src/app/core/services/web-storage.service';
 })
 export class AddUpdateSchoolRegistrationComponent {
 
-  // @ViewChild('img') img!: ElementRef;
   districtArr = new Array();
   talukaArr = new Array();
   centerArr = new Array();
@@ -30,10 +29,9 @@ export class AddUpdateSchoolRegistrationComponent {
   editFlag: boolean = false;
   showAddRemImg: boolean = false;
 
-
   constructor(private masterService: MasterService, private errors: ErrorsService, private fb: FormBuilder, private fileUpload: FileUploadService,
     private apiService: ApiService, private commonMethod: CommonMethodsService, @Inject(MAT_DIALOG_DATA) public data: any,
-    public dialogRef: MatDialogRef<AddUpdateSchoolRegistrationComponent>, public validationService: ValidationService, private webStorageS: WebStorageService) { }
+    public dialogRef: MatDialogRef<AddUpdateSchoolRegistrationComponent>, public validationService: ValidationService, public webStorageS: WebStorageService) { }
 
   ngOnInit() {
     this.formFeild();
@@ -169,20 +167,15 @@ export class AddUpdateSchoolRegistrationComponent {
     let formValue = this.schoolRegForm.value;
     console.log("formValue : ", formValue);
 
-    // if (this.editFlag == false) {
       formValue.docPath ? formValue.docPath = this.uploadImg : '';
-    // }
-    // else {
-      // this.data.docPath ? (formValue.docPath =='' ? formValue.docPath = this.data.docPath : formValue.docPath = this.uploadImg) : '';
-      // formValue.docPath = this.data.docPath;
-        // this.data.docPath ? formValue.docPath ?
       !this.showAddRemImg ? formValue.docPath = '' : formValue.docPath = formValue.docPath;
-    // }
     
     let url;
     this.editFlag ? url = 'ZP-Osmanabad/School/Update' : url = 'ZP-Osmanabad/School/Add';
 
     if(!this.schoolRegForm.valid){
+      console.log("Form Invalid");
+      
       return
     }
     else{

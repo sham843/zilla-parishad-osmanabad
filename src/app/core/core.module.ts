@@ -8,6 +8,8 @@ import { RouterModule } from '@angular/router';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import {MatIconModule} from '@angular/material/icon';
 import { MatDialogModule } from '@angular/material/dialog';
+import { MatPaginatorIntl } from '@angular/material/paginator';
+import { CustomMatPaginatorIntl } from './pipes/custom-pagination';
 
 
 @NgModule({
@@ -25,6 +27,10 @@ import { MatDialogModule } from '@angular/material/dialog';
   ],
   providers: [
     AuthGuard,
+    {
+      provide: MatPaginatorIntl,
+      useClass: CustomMatPaginatorIntl,
+    },
   ],
   exports: [HeaderComponent, FooterComponent, SidebarComponent]
 })

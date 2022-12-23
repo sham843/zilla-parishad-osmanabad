@@ -22,7 +22,7 @@ export class DesignationMasterComponent {
   tableDataArray = new Array();
   tableDatasize!: Number;
   displayedColumns = new Array();
-  displayedheaders = ['Sr. No.', 'Name', 'Contact No.', 'Action'];
+  displayedheaders = ['Sr. No.', 'Name', 'Designation Level', 'Action'];
   displayedheadersMarathi = ['अनुक्रमांक', 'पदनाम', 'पदनाम स्तर','कृती',];
   langTypeName: any
 

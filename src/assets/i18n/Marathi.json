@@ -42,6 +42,7 @@
         "DesignationTypeReq":"पदनाम प्रकार आवश्यक आहे",
         "AddDesignation(Marathi)":"पदनाम जोडा (मराठी)",
         "DesignationTypeMarathiReq":"पदनाम प्रकार मराठी आवश्यक आहे",
+        "SchoolRegistration" : "शाळेची नोंदणी",
         "RegisterSchool" : "शाळेची नोंदणी करा",
         "AddSchool" : "शाळेची माहिती भरा",
         "Kendra" : "केंद्र",
@@ -64,6 +65,34 @@
         "SchoolCategoryIsRequired" : "School Category is required",
         "SchoolManagementIsRequired" : "शाळा व्यवस्थापन आवश्यक आहे",
         "GroupClassIsRequired" : "गट वर्ग आवश्यक आहे",
-        "searchbyNameContactEmail" : "नाव/संपर्क/ईमेल द्वारे शोधा"
+        "searchbyNameContactEmail" : "नाव/संपर्क/ईमेल द्वारे शोधा",
+
+        "studentFirstName" : "विद्यार्थीचे प्रथम नाव",
+        "studentMiddelName" : "विद्यार्थीचे मधला नाव",
+        "studentLastName" : "विद्यार्थीचे अडनाव",
+        "studentFirstNameMarathi" : "विद्यार्थीचे प्रथम नाव (मराठी)",
+        "studentMiddelNameMarathi" : "विद्यार्थीचे मधला नाव (मराठी)",
+        "studentLastNameMarathi" : "विद्यार्थीचे अडनाव (मराठी)",
+        "standard" :"इयत्ता",
+        "birthDate": "जन्मदिनांक",
+        "gender": "लिंग",
+        "religion" : "धर्म",
+        "caste" : "जाति",
+        "physicallyDisabled" :"दिव्यांग/अपंग",
+        "saralId" : "सरल आयडी",
+        "aadhaarNo" :"आधार क्र.",
+        "aadhaarPhoto" : "आधार फोटो अपलोड करा",
+        "parentMobileNo" :"पालक मोबाईल क्र",
+        "fatherName" : "वडीलचे नाव",
+        "motherName" :"आईचे नाव",
+        "studentRegistration":"विद्यार्थीची नोंदणी",
+        "addStudent":" विद्यार्थीची नोंदणी करा",
+        "studentDetails" :"विद्यार्थीची माहिती",
+        "gardiantDetails":"पालकची माहिती",
+        "studentList" :"विद्यार्थीची यादी",
+        "master" :"मुख्य"
+
+
+
     }
 }

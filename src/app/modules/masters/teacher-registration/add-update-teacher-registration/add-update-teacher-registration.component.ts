@@ -1,6 +1,7 @@
 import { Component, Inject } from '@angular/core';
 import {  FormArray, FormBuilder, FormGroup } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { ApiService } from 'src/app/core/services/api.service';
 import { CommonMethodsService } from 'src/app/core/services/common-methods.service';
 import { ErrorsService } from 'src/app/core/services/errors.service';
 import { MasterService } from 'src/app/core/services/master.service';
@@ -14,6 +15,8 @@ import { MasterService } from 'src/app/core/services/master.service';
 export class AddUpdateTeacherRegistrationComponent {
 
   teacherRegForm!:FormGroup;
+  editFlag:boolean=false;
+  editObj:any;
   genderArray = new Array();
   districtArray = new Array();
   talukaArray = new Array();
@@ -29,16 +32,20 @@ export class AddUpdateTeacherRegistrationComponent {
   degreeUniversityArray = new Array();
   educationQualificationArray = new Array();
   profesionalQualificationArray = new Array();
-  castCategoryArray = new Array();
-  casteVerification:any=[{id : 1 ,name :'yes' , isDisabled :'true'},{id : 2 ,name :'no' , isDisabled :'false'}] ;
+  castCategoryArray = new Array()
+  casteVerification:any=[{id : 1 ,name :'yes' , isCastVarificationDone :true},{id : 2 ,name :'no' , isCastVarificationDone :false}] ;
+  husbandWifeBothServiceArray:any=[{id : 1 ,name :'yes' , husbandWife_Both_Service :true},{id : 2 ,name :'no' , husbandWife_Both_Service :false}];
+  AreyouDisabled:any=[{id : 1 ,name :'yes' , isDisabled :true},{id : 2 ,name :'no' , isDisabled :false}];
+  interDistrictTransferredArray:any=[{id : 1 ,name :'yes' , interDistrictTransferred :true},{id : 2 ,name :'no' , interDistrictTransferred :false}]
+  haveYouPassedComputerExamArray:any=[{id : 1 ,name :'yes' , haveYouPassedComputerExam :true},{id : 2 ,name :'no' , haveYouPassedComputerExam :false}]
 
   constructor(private masterService :MasterService, private commonMethod :CommonMethodsService, private errorHandler :ErrorsService,
-   private fb : FormBuilder, public dialogRef: MatDialogRef<AddUpdateTeacherRegistrationComponent>,
+   private fb : FormBuilder,private service: ApiService, public dialogRef: MatDialogRef<AddUpdateTeacherRegistrationComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any) { }
 
   ngOnInit() {
     this.formData();
-     this.getGender();
+     this.editFlag ? this.getGender():this.onEdit(this.data);
   }
 
  
@@ -51,13 +58,13 @@ export class AddUpdateTeacherRegistrationComponent {
     this.teacherRegForm =this.fb.group({            
         "createdBy": 0,
         "modifiedBy": 0,
-        "createdDate": "2022-12-22T06:44:26.229Z",
-        "modifiedDate": "2022-12-22T06:44:26.229Z",
+        "createdDate": new Date(),
+        "modifiedDate": new Date(),
         "isDeleted": true,
         "id": 0,
-        "name": "string",
-        "m_Name": "string",
-        "address": "string",
+        "name": [''],
+        "m_Name": [''],
+        "address": [''],
         "stateId": 0,
         "districtId": 0,
         "talukaId": 0,
@@ -66,21 +73,21 @@ export class AddUpdateTeacherRegistrationComponent {
         "userTypeId": 0,
         "subUserTypeId": 0,
         "genderId": 0,
-        "mobileNo": "string",
-        "emailId": "string",
-        "birthDate": "2022-12-22T06:44:26.229Z",
+        "mobileNo": [''],
+        "emailId": [''],
+        "birthDate": new Date(),
         "age": 0,
-        "currentAddress": "string",
-        "permentAddress": "string",
-        "lan": "string",
+        "currentAddress": [''],
+        "permentAddress": [''],
+        "lan": [''],
         "localID": 0,
-        "timestamp": "2022-12-22T06:44:26.230Z",
+        "timestamp": new Date(),
         teacherDetails: this.fb.array([
           this.fb.group({
             "createdBy": 0,
             "modifiedBy": 0,
-            "createdDate": "2022-12-22T06:44:26.230Z",
-            "modifiedDate": "2022-12-22T06:44:26.230Z",
+            "createdDate": new Date(),
+            "modifiedDate": new Date(),
             "isDeleted": true,
             "id": 0,
             "teacherId": 0,
@@ -91,15 +98,15 @@ export class AddUpdateTeacherRegistrationComponent {
             "isGraduate_PayScale": true,
             "castId": 0,
             "castCategoryId": 0,
-            "castCertificateNo": "string",
-            "castCertificateOffice": "string",
+            "castCertificateNo": [''],
+            "castCertificateOffice": [''],
             "isCastVarificationDone": true,
-            "castValidityNoDate": "string",
-            "castverificationCommitteeName": "string",
-            "dateOfFirstAppoinmentService": "2022-12-22T06:44:26.230Z",
-            "currentSchoolJoiningDate": "2022-12-22T06:44:26.230Z",
-            "currentTalukaPresentDate": "2022-12-22T06:44:26.230Z",
-            "retirementDate": "2022-12-22T06:44:26.230Z",
+            "castValidityNoDate": [''],
+            "castverificationCommitteeName": [''],
+            "dateOfFirstAppoinmentService": new Date(),
+            "currentSchoolJoiningDate": new Date(),
+            "currentTalukaPresentDate": new Date(),
+            "retirementDate": new Date(),
             "educationalQualificationId": 0,
             "branchId12th": 0,
             "degreeOptionalSubjectsId": 0,
@@ -108,28 +115,28 @@ export class AddUpdateTeacherRegistrationComponent {
             "bEdPercentages": 0,
             "bEdUniversityId": 0,
             "husbandWife_Both_Service": true,
-            "husbandWife_OfficeName": "string",
+            "husbandWife_OfficeName": [''],
             "isDisabled": true,
             "interDistrictTransferred": true,
-            "dateOFPresenceInterDistrictTransfer": "string",
+            "dateOFPresenceInterDistrictTransfer": [''],
             "interDistrictTransferType": 0,
             "theOriginalDistrictInterDistrictTransfer": 0,
-            "dateOfSeniority": "string",
+            "dateOfSeniority": [''],
             "haveYouPassedComputerExam": true,
-            "namesAndTalukasAllSchoolsWorkedEarlier": "string"
+            "namesAndTalukasAllSchoolsWorkedEarlier": ['']
           })
         ]),
         "teacherDocument": [
           {
             "createdBy": 0,
             "modifiedBy": 0,
-            "createdDate": "2022-12-22T06:44:26.230Z",
-            "modifiedDate": "2022-12-22T06:44:26.230Z",
+            "createdDate": new Date(),
+            "modifiedDate": new Date(),
             "isDeleted": true,
             "id": 0,
             "teacherId": 0,
             "documentId": 0,
-            "docPath": "string"
+            "docPath": ['']
           }
         ]
       
@@ -363,6 +370,30 @@ export class AddUpdateTeacherRegistrationComponent {
 
 
   OnSubmit(){
-
+    console.log(this.teacherRegForm.value);
+    return;
+    let postObj = this.teacherRegForm.value;
+    let url;
+      this.editFlag ? url = 'zp_osmanabad/Teacher/Update' : url = 'zp_osmanabad/Teacher/Add'
+      this.service.setHttp(this.editFlag ? 'put' : 'post', url, false, postObj, false, 'baseUrl');
+      this.service.getHttp().subscribe({
+        next: ((res: any) => {
+          // this.ngxSpinner.hide();
+          if (res.statusCode == '200') {
+            this.dialogRef.close('yes');
+          } else {
+            this.commonMethod.checkEmptyData(res.statusMessage) == false ? this.errorHandler.handelError(res.statusCode) : this.commonMethod.snackBar(res.statusMessage, 1);
+          }
+        }),
+        error: (error: any) => {
+          // this.ngxSpinner.hide();
+          this.commonMethod.checkEmptyData(error.statusMessage) == false ? this.errorHandler.handelError(error.statusCode) : this.commonMethod.snackBar(error.statusMessage, 1);
+        }
+      })
+  }
+  onEdit(obj:any){
+    this.editObj = obj;
+    console.log("editObj",this.editObj);
+    
   }
 }
