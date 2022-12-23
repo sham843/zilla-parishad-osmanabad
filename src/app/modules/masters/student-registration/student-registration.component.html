@@ -98,12 +98,12 @@
                 </span>
               </button>
               <mat-menu #menu="matMenu">
-                <button mat-menu-item>Edit
+                <button mat-menu-item (click)="addUpdateAgency(data)">Edit
                   <span class="material-symbols-outlined">
                     create
                   </span>
                 </button>
-                <button mat-menu-item>Delete
+                <button mat-menu-item (click)="deteleDialogOpen(data)">Delete
                   <span class="material-symbols-outlined">
                     delete
                   </span>
@@ -113,19 +113,19 @@
             <mat-card-content>
               <div class="text-center mb-3">
                 <img [src]="data.documentResponse[0]?.docPath" alt="" height="60px">
-                <p>{{ languageFlag == 'English' ? data.fullName : data.m_FullName}}</p>
+                <p>{{ languageFlag == 'EN' ? data.fullName : data.m_FullName}}</p>
               </div>
               <div class="row">
                 <div class="col-sm  form-label">
-                  School Name
+                  {{'Labels.School'| translate}}
                 </div>
                 <div class=" col-sm  form-deta">
-                  {{languageFlag == 'English' ? data.schoolName: data.m_SchoolName}}
+                  {{languageFlag == 'EN' ? data.schoolName: data.m_SchoolName}}
                 </div>
               </div>
               <div class="row">
                 <div class="col-sm form-label">
-                  Mobile No.
+                 {{'Labels.contactNo.'| translate}}
                 </div>
                 <div class="col-sm form-deta">
                   {{data.parentMobileNo}}
@@ -133,14 +133,14 @@
               </div>
               <div class="row">
                 <div class=" col-sm form-label">
-                  Gender
+                  {{'Labels.gender'| translate}} 
                 </div>
                 <div class="col-sm form-deta">
-                  {{ languageFlag == 'English' ? data.gender:data.m_Gender}}
+                  {{ languageFlag == 'EN' ? data.gender:data.m_Gender}}
                 </div>
               </div>
               <div class="text-center mb-3">
-                <button mat-flat-button class="btn-main">Read More</button>
+                <button mat-flat-button class="btn-main" (click)="openViewDilog(data)">Read More</button>
               </div>
 
             </mat-card-content>
