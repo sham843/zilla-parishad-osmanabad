@@ -176,10 +176,10 @@ export class AgencyRegistrationComponent {
 
   deleteAgency(_obj: any) {
     let dialoObj = {
-      header: 'Delete',
-      title: 'Do You Want To Delete The Selected Agency ?',
-      cancelButton: 'Cancel',
-      okButton: 'Ok'
+      header: this.langTypeName == 'English' ? 'Delete' :'हटवा',
+      title: this.langTypeName == 'English' ?  'Do You Want To Delete The Selected Agency ?': 'तुम्हाला एजन्सी रेकॉर्ड हटवायचा आहे का?',
+      cancelButton: this.langTypeName == 'English' ?  'Cancel' : 'रद्द करा',
+      okButton: this.langTypeName == 'English' ? 'Ok' :'ओके '
     }
     const dialogRef = this.dialog.open(GlobalDialogComponent, {
       width: '320px',
