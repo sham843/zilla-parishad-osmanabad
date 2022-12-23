@@ -84,13 +84,22 @@ input:-webkit-autofill:active {
     .mat-mdc-unelevated-button .mdc-button__label {
         font-size: 12px !important;
     }
+    .mat-mdc-dialog-container {
+        outline: 0;
+        height: 495px !important;
+    }
 }
-.mat-mdc-form-field-hint-wrapper, .mat-mdc-form-field-error-wrapper{
+
+.mat-mdc-form-field-hint-wrapper,
+.mat-mdc-form-field-error-wrapper {
     padding: 0 !important;
-  }
-  .mat-mdc-form-field-error{
+}
+
+.mat-mdc-form-field-error {
     margin: 0 !important;
     font-family: 'Poppins', sans-serif !important;
     font-size: 0.7rem;
     letter-spacing: normal;
-  }
+}
+
+
