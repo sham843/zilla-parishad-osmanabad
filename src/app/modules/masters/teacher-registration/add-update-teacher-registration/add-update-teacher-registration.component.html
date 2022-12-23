@@ -146,7 +146,7 @@
                         <mat-label>Working School Name</mat-label>
                         <mat-select formControlName="schoolId">
                             <mat-option  *ngFor="let school of schoolArray"
-                            [value]="school.id">{{school.schoolType}}</mat-option>
+                            [value]="school.id">{{school.schoolName}}</mat-option>
                             <!-- <mat-option value="two">Bsc</mat-option> -->
                         </mat-select>
                     </mat-form-field>

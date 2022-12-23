@@ -56,7 +56,7 @@ getTableData(flag?: string) {
         tableDatasize = 0;
       }
       let displayedColumns = ['srNo', 'name', 'mobileNo', 'emailId',' ', 'taluka', 'action'];
-      let displayedheaders = ['Sr.No', 'Name', 'Contact No.', 'Email ID', 'Village', 'Taluka', 'action'];
+      let displayedheaders = ['Sr. No', 'Name', 'Contact No.', 'Email ID', 'Village', 'Taluka', 'action'];
       let tableData = {
         pageNumber: this.pageNumber,
         img: '', blink: '', badge: '', isBlock: '', pagintion: true,

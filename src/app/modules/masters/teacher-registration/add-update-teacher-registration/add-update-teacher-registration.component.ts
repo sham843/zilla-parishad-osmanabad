@@ -36,8 +36,9 @@ export class AddUpdateTeacherRegistrationComponent {
   casteVerification:any=[{id : 1 ,name :'yes' , isCastVarificationDone :true},{id : 2 ,name :'no' , isCastVarificationDone :false}] ;
   husbandWifeBothServiceArray:any=[{id : 1 ,name :'yes' , husbandWife_Both_Service :true},{id : 2 ,name :'no' , husbandWife_Both_Service :false}];
   AreyouDisabled:any=[{id : 1 ,name :'yes' , isDisabled :true},{id : 2 ,name :'no' , isDisabled :false}];
-  interDistrictTransferredArray:any=[{id : 1 ,name :'yes' , interDistrictTransferred :true},{id : 2 ,name :'no' , interDistrictTransferred :false}]
-  haveYouPassedComputerExamArray:any=[{id : 1 ,name :'yes' , haveYouPassedComputerExam :true},{id : 2 ,name :'no' , haveYouPassedComputerExam :false}]
+  interDistrictTransferredArray:any=[{id : 1 ,name :'yes' , interDistrictTransferred :true},{id : 2 ,name :'no' , interDistrictTransferred :false}];
+  haveYouPassedComputerExamArray:any=[{id : 1 ,name :'yes' , haveYouPassedComputerExam :true},{id : 2 ,name :'no' , haveYouPassedComputerExam :false}];
+  // "isGraduate_PayScale": any=[{}]
 
   constructor(private masterService :MasterService, private commonMethod :CommonMethodsService, private errorHandler :ErrorsService,
    private fb : FormBuilder,private service: ApiService, public dialogRef: MatDialogRef<AddUpdateTeacherRegistrationComponent>,
@@ -45,7 +46,7 @@ export class AddUpdateTeacherRegistrationComponent {
 
   ngOnInit() {
     this.formData();
-     this.editFlag ? this.getGender():this.onEdit(this.data);
+     !this.data ? this.getGender():this.onEdit(this.data);
   }
 
  
@@ -201,7 +202,7 @@ export class AddUpdateTeacherRegistrationComponent {
     })
   }
   getAllSchool() { 
-    this.masterService.getAllSchoolType('EN').subscribe({
+    this.masterService.getAllSchoolByCriteria('EN',0,0,0).subscribe({
       next: ((res: any) => {
         if (res.statusCode == '200' && res.responseData.length) {
           this.schoolArray = res.responseData;
@@ -391,6 +392,7 @@ export class AddUpdateTeacherRegistrationComponent {
         }
       })
   }
+
   onEdit(obj:any){
     this.editObj = obj;
     console.log("editObj",this.editObj);
