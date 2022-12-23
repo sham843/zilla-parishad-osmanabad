@@ -18,7 +18,7 @@
                 <mat-form-field appearance="outline" class="w-100 ">
                     <mat-label>Level</mat-label>
                     <mat-select placeholder="select" formControlName="designationLevelId" (selectionChange)="getDesignationByLevelId()">
-                        <mat-option [value]="level.id"   *ngFor="let level of levels">{{level.designationLevel}}</mat-option>
+                        <mat-option [value]="level.id"   *ngFor="let level of levels">{{level.m_DesignationLevel}} {{webStorageService.languageFlag=='mr-IN' ? data.m_DesignationLevel : data.designationLevel}}</mat-option>
                     </mat-select>
                 </mat-form-field>
             </div>

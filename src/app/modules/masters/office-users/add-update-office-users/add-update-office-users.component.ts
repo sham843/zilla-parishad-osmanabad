@@ -27,12 +27,12 @@ export class AddUpdateOfficeUsersComponent implements OnInit {
               private error: ErrorsService,
               private dialogRef: MatDialogRef<AddUpdateOfficeUsersComponent>,
               @Inject(MAT_DIALOG_DATA) public data: any, 
-              private webStorageService : WebStorageService){}
+              public webStorageService : WebStorageService){}
               
   ngOnInit(){
     this.defaultForm();
-    !this.data ? this.getLevelDrop(): '';
-    !this.data ? this.getDistrictDrop(): '';
+    (!this.data) ? this.getLevelDrop(): '';
+    (!this.data) ? this.getDistrictDrop(): '';
     this.getCenterDrop();
   }
 
@@ -71,7 +71,6 @@ export class AddUpdateOfficeUsersComponent implements OnInit {
     this.masterService.GetAllDesignationLevel(this.webStorageService.languageFlag).subscribe({
       next: (resp: any)=>{
         console.log("level",resp);
-        
         resp.statusCode == "200" ? this.levels = resp.responseData : this.levels = [];
       },
       error: ( error : any)=>{
