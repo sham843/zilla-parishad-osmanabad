@@ -18,6 +18,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { TableComponent } from 'src/app/shared/components/table/table.component';
 import { PageStatisticsComponent } from 'src/app/shared/components/page-statistics/page-statistics.component';
 import { GlobalDialogComponent } from 'src/app/shared/components/global-dialog/global-dialog.component';
+import { TranslateModule } from '@ngx-translate/core';
 
 
 @NgModule({
@@ -42,6 +43,7 @@ import { GlobalDialogComponent } from 'src/app/shared/components/global-dialog/g
     GlobalDialogComponent,
     TableComponent,
     PageStatisticsComponent,
+    TranslateModule
   ]
 })
 export class OfficeUsersModule { }

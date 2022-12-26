@@ -19,7 +19,8 @@ export class SchoolRegistrationComponent {
   pageNumber: number = 1;
   tableDataArray = new Array();
   searchContent = new FormControl('');
-  districtId = new FormControl('0');
+  // districtId = new FormControl('0');
+  districtId = new FormControl('');
   talukaId = new FormControl('');
   villageId = new FormControl();
   resultDownloadArr = new Array();
@@ -58,7 +59,6 @@ export class SchoolRegistrationComponent {
   //#region ------------------------------------------- School Registration Table Data start here ----------------------------------------// 
   getTableData(flag?: string) {
     this.pageNumber = flag == 'filter' ? 1 : this.pageNumber;
-    console.log(this.pageNumber, " pagenum");
     
     let tableDatasize!: Number;
     let pageNo = this.cardViewFlag ? (this.cardCurrentPage + 1) : this.pageNumber;
@@ -69,14 +69,10 @@ export class SchoolRegistrationComponent {
     this.apiService.getHttp().subscribe({
 
       next: (res: any) => {
-        console.log("res",res);
-        
         if (res.statusCode == "200") {
           this.tableDataArray = res.responseData.responseData1;
-          this.totalCount = res.responseData.responseData2.totalPages;
+          this.totalCount = res.responseData.responseData2.pageCount;
           tableDatasize = res.responseData.responseData2.pageCount;
-          console.log("tableDatasize resppp", tableDatasize);
-          
         } 
         else {
           this.tableDataArray = [];
@@ -91,7 +87,7 @@ export class SchoolRegistrationComponent {
         };
         this.apiService.tableData.next(tableData);
       },
-      error: ((err: any) => { this.errors.handelError(err) })
+      error: ((err: any) => { this.commonMethodS.checkEmptyData(err.statusText) == false ? this.errors.handelError(err.statusCode) : this.commonMethodS.snackBar(err.statusText, 1); })
     });
   }
   //#endregion ------------------------------------------- School Registration Table Data end here ----------------------------------------// 
@@ -104,7 +100,7 @@ export class SchoolRegistrationComponent {
           this.districtArr = res.responseData;
         }
       },
-      error: ((err: any) => { this.errors.handelError(err) })
+      error: ((err: any) => { this.commonMethodS.checkEmptyData(err.statusText) == false ? this.errors.handelError(err.statusCode) : this.commonMethodS.snackBar(err.statusText, 1); })
     });
   }
 
@@ -115,7 +111,7 @@ export class SchoolRegistrationComponent {
           this.talukaArr = res.responseData;
         }
       },
-      error: ((err: any) => { this.errors.handelError(err) })
+      error: ((err: any) => { this.commonMethodS.checkEmptyData(err.statusText) == false ? this.errors.handelError(err.statusCode) : this.commonMethodS.snackBar(err.statusText, 1); })
     });
   }
 
@@ -127,7 +123,7 @@ export class SchoolRegistrationComponent {
           this.villageArr = res.responseData;
         }
       },
-      error: ((err: any) => { this.errors.handelError(err) })
+      error: ((err: any) => { this.commonMethodS.checkEmptyData(err.statusText) == false ? this.errors.handelError(err.statusCode) : this.commonMethodS.snackBar(err.statusText, 1); })
     });
   }
   //#endregion ------------------------------------------- School Registration Dropdown start here ----------------------------------------// 
@@ -202,18 +198,22 @@ export class SchoolRegistrationComponent {
   //#endregion ------------------------------------------- Open Dialog Box Function end here ----------------------------------------// 
 
   onClear() {
-    this.districtId.reset();
-    this.talukaId.reset();
-    this.villageId.reset();
-    this.getTableData();
-    this.pageNumber = 1;
+    if(this.districtId.value || this.talukaId.value || this.villageId.value){
+      this.districtId.reset();
+      this.talukaId.reset();
+      this.villageId.reset();
+      this.getTableData();
+      this.pageNumber = 1;
+    }
   }
 
   //#region ------------------------------------------------- Filter Form start here ------------------------------------------// 
   filterData() {
+    if(this.districtId.value || this.talukaId.value || this.villageId.value){
     this.getTableData();
     this.getofficeReport();
     this.pageNumber = 1;
+  }
   }
   //#endregion ---------------------------------------------- Filter Form end here ----------------------------------------// 
 
@@ -279,7 +279,9 @@ export class SchoolRegistrationComponent {
           });
         }
       },
-      error: ((err: any) => { this.errors.handelError(err.message) })
+      error: ((err: any) => { 
+      this.commonMethodS.checkEmptyData(err.statusText) == false ? this.errors.handelError(err.statusCode) : this.commonMethodS.snackBar(err.statusText, 1);
+       })
     });
   }
 
@@ -288,9 +290,7 @@ export class SchoolRegistrationComponent {
     let ValueData =
       this.resultDownloadArr.reduce(
         (acc: any, obj: any) => [...acc, Object.values(obj).map((value) => value)], []
-      );// Value Name
-    console.log("ValueData", ValueData);
-
+      );
     let objData: any = {
       'topHedingName': 'School Registration Data',
       'createdDate': 'Created on:' + new Date()

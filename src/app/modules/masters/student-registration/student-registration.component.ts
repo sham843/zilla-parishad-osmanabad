@@ -39,25 +39,21 @@ export class StudentRegistrationComponent {
     private commonMethods: CommonMethodsService,
     private webService: WebStorageService,
     private downloadPdfservice: DownloadPdfExcelService,
-    private ngxSpinner : NgxSpinnerService,
+    private ngxSpinner: NgxSpinnerService,
     public validators: ValidationService
   ) { }
 
   ngOnInit() {
     this.languageFlag = this.webService.languageFlag;
-    this.getTableData();
     this.languageChange();
-  }
-
-  onPagintion(pageNo: number) {
-    this.pageNumber = pageNo;
     this.getTableData();
+   
   }
 
   //#region ----------------------------------------------------- Language Change Logic Start here -----------------------------------------------
 
   languageChange() {
-    this.webService.langNameOnChange.subscribe(lang => {
+    this.webService.langNameOnChange.subscribe(lang => {      
       this.languageFlag = lang;
       let tableData = {
         pageNumber: this.pageNumber,
@@ -78,7 +74,7 @@ export class StudentRegistrationComponent {
   getTableData(flag?: string) {
     this.ngxSpinner.show();
     this.pageNumber = flag == 'filter' ? 1 : this.pageNumber;
-    if(flag == 'filter' && !this.searchContent.value){
+    if (flag == 'filter' && !this.searchContent.value) {
       this.ngxSpinner.hide();
       return
     }
@@ -86,7 +82,7 @@ export class StudentRegistrationComponent {
     let pageNo
     this.cardViewFlag ? pageNo = (this.cardCurrentPage + 1) : (pageNo = this.pageNumber, this.cardCurrentPage = 0);
     let str = `?pageno=${pageNo}&pagesize=10&textSearch=${this.searchContent.value || ''}&lan=${this.languageFlag || ''}`;
-    let reportStr = `?TextSearch=${this.searchContent.value}`
+    let reportStr = '?TextSearch='+this.searchContent.value;
     this.apiService.setHttp('GET', 'zp-osmanabad/Student/GetAll' + (flag == 'reportFlag' ? reportStr : str), false, false, false, 'baseUrl');
     this.apiService.getHttp().subscribe({
       next: (res: any) => {
@@ -101,14 +97,14 @@ export class StudentRegistrationComponent {
             let obj = {
               srNo: i + 1,
               id: ele.id,
-              fullName: this.languageFlag == 'English' ? ele.fullName : ele.m_FullName,
-              gender: this.languageFlag == 'English' ? ele.gender : ele.m_Gender,
+              fullName: ele.fullName,
+              gender: ele.gender,
               mobileNo: ele.parentMobileNo,
-              standard: this.languageFlag == 'English' ? ele.standard : ele.m_Standard,
-              schoolName: this.languageFlag == 'English' ? ele.schoolName : ele.m_SchoolName,
-              caste: this.languageFlag == 'English' ? ele.caste : ele.m_Caste,
-              taluka: this.languageFlag == 'English' ? ele.taluka : ele.m_Taluka,
-              center: this.languageFlag == 'English' ? ele.center : ele.m_Center,
+              standard: ele.standard,
+              schoolName: ele.schoolName,
+              caste: ele.caste,
+              taluka: ele.taluka,
+              center: ele.center,
             }
             this.studentData.push(obj);
           });
@@ -118,8 +114,7 @@ export class StudentRegistrationComponent {
           this.tableDataArray = [];
           this.tableDatasize = 0;
         }
-
-        let tableData = {
+        let tableData = {  
           pageNumber: this.pageNumber,
           img: 'docPath', blink: '', badge: '', isBlock: '', pagintion: this.tableDatasize > 10 ? true : false,
           displayedColumns: this.languageFlag == 'English' ? this.displayedColumns : this.marathiDisplayedColumns,
@@ -136,7 +131,7 @@ export class StudentRegistrationComponent {
         this.apiService.tableData.next(tableData);
 
       },
-      error: ((err: any) => {this.ngxSpinner.hide(); this.errors.handelError(err) })
+      error: ((err: any) => { this.ngxSpinner.hide(); this.errors.handelError(err) })
     });
   }
 
@@ -196,11 +191,11 @@ export class StudentRegistrationComponent {
     if (label == 'Table') {
       this.cardViewFlag = false;
       this.pageNumber = 1;
-      this.getTableData()
-    } else if (label == 'Card')
+    } else if (label == 'Card') {
       this.cardCurrentPage = 0;
-    this.cardViewFlag = true;
-    this.cardCurrentPage = this.cardCurrentPage;
+      this.cardViewFlag = true;
+      this.cardCurrentPage = this.cardCurrentPage;
+    }
     this.getTableData();
   }
 
@@ -267,7 +262,7 @@ export class StudentRegistrationComponent {
     let deleteObj = {
       "id": id,
       "modifiedBy": 0,
-      "modifiedDate": "2022-12-21T12:30:51.962Z",
+      "modifiedDate": new Date(),
       "lan": "string"
     }
     this.apiService.setHttp('delete', 'zp-osmanabad/Student/DeleteStudent', false, deleteObj, false, 'baseUrl');

@@ -427,25 +427,32 @@
                     </mat-form-field>
                 </div>
                 <div class="col-sm-6">
+                    <div>
+                    <div>
+                        <!-- <div formArrayName="assignTeacher"
+                    *ngFor="let item of teacherForm.controls;let i = index;">
+                    <div [formGroupName]="i"> -->
                     <mat-card-subtitle>Assigned Class</mat-card-subtitle>
-                    <form class="teacherForm">
-                        <input type="checkbox" name="check" id="check1" value="1" />
+                    <div class="teacherForm">
+                        <input type="checkbox" name="check" id="check1"  (change)="addStand($event, 1)"/>
                         <label for="check1">1</label>
-                        <input type="checkbox" name="check" id="check2" value="2" />
+                        <input type="checkbox" name="check" id="check2" (change)="addStand($event, 2)" />
                         <label for="check2">2</label>
-                        <input type="checkbox" name="check" id="check3" value="3" />
+                        <input type="checkbox" name="check" id="check3" (change)="addStand($event, 3)"/>
                         <label for="check3">3</label>
-                        <input type="checkbox" name="check" id="check4" value="4" />
+                        <input type="checkbox" name="check" id="check4"(change)="addStand($event, 4)" />
                         <label for="check4">4</label>
-                        <input type="checkbox" name="check" id="check5" value="5" />
+                        <input type="checkbox" name="check" id="check5" (change)="addStand($event, 5)" />
                         <label for="check5">5</label>
-                        <input type="checkbox" name="check" id="check6" value="6" />
+                        <input type="checkbox" name="check" id="check6" (change)="addStand($event, 6)" />
                         <label for="check6">6</label>
-                        <input type="checkbox" name="check" id="check7" value="7" />
+                        <input type="checkbox" name="check" id="check7" (change)="addStand($event, 7)" />
                         <label for="check7">7</label>
-                        <input type="checkbox" name="check" id="check8" value="8" />
+                        <input type="checkbox" name="check" id="check8" (change)="addStand($event, 8)" />
                         <label for="check8">8</label>
-                    </form>
+                        </div>
+                </div>
+                </div>
                 </div>
             </div>
         </div>

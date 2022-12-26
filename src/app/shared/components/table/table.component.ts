@@ -62,9 +62,6 @@ export class TableComponent implements OnInit {
 
         this.paginator?._pageIndex != 0 && this.pageIndex != this.pageNumber ? this.paginator?.firstPage() : '';
         this.tableRecords.sort = this.sort;
-
-        console.log("tableData",this.tableInfo.tableData);
-        console.log("table size : ", this.tableInfo.tableSize);
       }
     })
   }

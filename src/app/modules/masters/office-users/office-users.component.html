@@ -1,7 +1,7 @@
 <nav aria-label="breadcrumb">
   <ol class="breadcrumb">
-    <li class="breadcrumb-item" aria-current="page">Masters</li>
-    <li class="breadcrumb-item active" aria-current="page">Office Users</li>
+    <li class="breadcrumb-item" aria-current="page">{{'Labels.master' | translate}}</li>
+    <li class="breadcrumb-item active" aria-current="page">{{'Labels.officeUser' | translate}}</li>
   </ol>
 </nav>
 <app-page-statistics></app-page-statistics>
@@ -11,7 +11,7 @@
     <div class="row w-100 align-items-center">
       <div class="col-sm-8">
        <div class="text-main fw-bold mb-2">
-         Office Users
+        {{'Labels.officeUser' | translate}}
        </div>
       </div>
        <div class="col-sm-4 text-lg-end">
@@ -38,7 +38,7 @@
            <mat-icon>
              add
            </mat-icon>
-           Add User
+           {{'Labels.addUser' | translate}}
          </button>
        </div>
      </div>
@@ -47,7 +47,7 @@
     <div class="row w-100 gx-2">
       <div class="col-sm-auto">
         <mat-form-field appearance="outline" class="w-100">
-          <mat-label>Search by Name</mat-label>
+          <mat-label>{{'Labels.searchByName' | translate}}</mat-label>
           <input matInput placeholder="Search by Name" [formControl]="searchContent">
 
         </mat-form-field>
@@ -66,9 +66,9 @@
         </mat-form-field>
       </div> -->
 
-    <div class="col-sm-4 mb-1">
-        <button mat-flat-button class="btn-main" (click)="filterData()">Filter</button>
-        <button  mat-flat-button class="btn-second ms-2" (click)="clearFilterData()">Clear</button>
+      <div class="col-sm-4 mb-1">
+        <button mat-flat-button class="btn-main" (click)="filterData()">{{'Labels.filter' | translate}}</button>
+        <button  mat-flat-button class="btn-second ms-2" (click)="clearFilterData()">{{'Labels.clear' | translate}}</button>
     </div>
 
     </div>
