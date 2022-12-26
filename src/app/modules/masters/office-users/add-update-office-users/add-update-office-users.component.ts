@@ -31,9 +31,7 @@ export class AddUpdateOfficeUsersComponent implements OnInit {
               
   ngOnInit(){
     this.defaultForm();
-    (!this.data) ? this.getLevelDrop(): '';
-    (!this.data) ? this.getDistrictDrop(): '';
-    this.getCenterDrop();
+    (!this.data) ? (this.getLevelDrop(), this.getTalukaDrop(), this.getDistrictDrop()): '';
   }
 
   defaultForm(){
@@ -60,6 +58,7 @@ export class AddUpdateOfficeUsersComponent implements OnInit {
         "kendraMobileNo": [""],
         "kendraEmailId": [""],
         "centerId": [0],
+        "bitName": [],
         "lan": [this.webStorageService.languageFlag]
     })
     // this.getLevelDrop();
@@ -81,14 +80,14 @@ export class AddUpdateOfficeUsersComponent implements OnInit {
 
   getDesignationByLevelId(){
     let levelId = this.officeForm.value.designationLevelId;
+    console.log(levelId);
     this.masterService.GetDesignationByLevelId(this.webStorageService.languageFlag, levelId).subscribe({
       next: (resp: any)=>{
         console.log("designation : ",resp);
-
         resp.statusCode == "200" ? this.designations = resp.responseData : this.designations = [];
       },
       error: ( error : any)=>{
-        console.log("error is :", error);  
+        console.log("error is getDesignationByLevelId:", error);  
       }
     }) 
   }
@@ -107,7 +106,7 @@ export class AddUpdateOfficeUsersComponent implements OnInit {
   getTalukaDrop(){
     this.masterService.getAllTaluka(this.webStorageService.languageFlag).subscribe({
       next: (resp: any)=>{
-        resp.statusCode == "200" ? this.talukas = resp.responseData : this.talukas = [];
+        resp.statusCode == "200" ? (console.log(resp), this.talukas = resp.responseData) : this.talukas = [];
       },
       error: ( error : any)=>{
         console.log("error is :", error);  
@@ -118,12 +117,13 @@ export class AddUpdateOfficeUsersComponent implements OnInit {
   getCenterDrop(){
     this.masterService.getAllCenter(this.webStorageService.languageFlag).subscribe({
       next: (resp: any)=>{
-        resp.statusCode == "200" ? this.centers = resp.responseData : this.centers = [];
+        resp.statusCode == "200" ? (console.log("resp cluster", resp),
+        this.centers = resp.responseData) : this.centers = [];
       },
       error: ( error : any)=>{
         console.log("error is :", error);  
       }
-    });
+    })
   }
 
   submitOfficeData(){
