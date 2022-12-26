@@ -48,7 +48,7 @@ export class OfficeUsersComponent {
           tableDatasize = 0;
         }
         let displayedColumns = ['srNo', 'name', 'designation', 'mobileNo', 'emailId', 'm_Name', 'action'];
-        let displayedheaders = ['Sr. No', 'Name', 'Designation', 'Contact No', 'Email ID', 'Office Name', 'action'];
+        let displayedheaders = ['Sr. No.', 'Name', 'Designation', 'Contact No.', 'Email ID', 'Office Name', 'action'];
         let tableData = {
           pageNumber: this.pageNumber,
           img: '', blink: '', badge: '', isBlock: '', pagintion: true,
