@@ -21,6 +21,10 @@
                                 {{webStorageS.getLangauge() == 'EN' ?
                                 district.district : district.m_District}}
                             </mat-option>
+                            <!-- <mat-option [value]="1" *ngFor="let district of districtArr">
+                                {{webStorageS.getLangauge() == 'EN' ? -->
+                                <!-- district.district : district.m_District}} -->
+                            <!-- </mat-option> -->
                         </mat-select>
                         <mat-error *ngIf="f['districtId'].hasError('required') || f['districtId'].hasError('touched')">
                             {{'Labels.districtIsRequired' | translate}}
@@ -61,7 +65,7 @@
                     <mat-form-field appearance="outline" class="w-100 ">
                         <mat-label>{{'Labels.village' | translate}}</mat-label>
                         <mat-select formControlName="villageId"
-                            (selectionChange)="clearDropdown('Village'); getSchoolType();">
+                            (selectionChange)="clearDropdown('Village');">
                             <mat-option *ngFor="let village of villageArr" [value]="village.id">
                                 {{webStorageS.getLangauge() == 'EN' ?
                                 village.village : village.m_Village}}
@@ -84,7 +88,7 @@
                 <div class="col-sm">
                     <mat-form-field appearance="outline" class="w-100">
                         <mat-label>{{'Labels.school(Marathi)' | translate}}</mat-label>
-                        <input matInput placeholder="School (Marathi)" formControlName="m_SchoolName" maxlength="50" (keypress)="validationService.unicodeMarathiValidation($event);">
+                        <input matInput placeholder="School (Marathi)" formControlName="m_SchoolName" maxlength="50" (keypress)="validationService.noFirstSpaceAllow($event); validationService.unicodeMarathiValidation($event);">
                         <mat-error *ngIf="f['m_SchoolName'].hasError('required') || f['m_SchoolName'].hasError('touched')">
                             {{'Labels.schoolNameIsRequired' | translate}}
                         </mat-error>
@@ -94,7 +98,7 @@
                     <mat-form-field appearance="outline" class="w-100">
                         <mat-label>{{'Labels.schoolTypeDescription' | translate}}</mat-label>
                         <mat-select formControlName="s_TypeId"
-                            (selectionChange)="clearDropdown('School Type'); getCategoryDes();">
+                            (selectionChange)="clearDropdown('School Type');">
                             <mat-option *ngFor="let schoolType of schoolTypeArr" [value]="schoolType.id">
                                 {{webStorageS.getLangauge() == 'EN' ?
                                 schoolType.schoolType : schoolType.m_SchoolType}}
@@ -109,7 +113,7 @@
                     <mat-form-field appearance="outline" class="w-100">
                         <mat-label>{{'Labels.schoolCategoryDescription' | translate}}</mat-label>
                         <mat-select formControlName="s_CategoryId"
-                            (selectionChange)="clearDropdown('Category Desc'); getSchoolMngDesc();">
+                            (selectionChange)="clearDropdown('Category Desc');">
                             <mat-option *ngFor="let category of categoryArr" [value]="category.id">
                                 {{webStorageS.getLangauge() == 'EN' ?
                                 category.category_desc : category.m_Category_desc}}
@@ -125,7 +129,7 @@
                     <mat-form-field appearance="outline" class="w-100">
                         <mat-label>{{'Labels.schoolManagementDescription' | translate}}</mat-label>
                         <mat-select formControlName="s_ManagementId"
-                            (selectionChange)="clearDropdown('Management Desc'); getGroupClass();">
+                            (selectionChange)="clearDropdown('Management Desc');">
                             <mat-option *ngFor="let schoolMng of schoolMngArr" [value]="schoolMng.id">
                                 {{webStorageS.getLangauge() == 'EN' ?
                                 schoolMng.management_desc : schoolMng.m_Management_desc}}
@@ -156,8 +160,8 @@
 
                 <div class="col-sm">
                     <mat-label>{{'Labels.uploadPhoto' | translate}}</mat-label>
-                    <input type="file" formControlName="docPath" hidden="hidden" (change)="imgUpload($event)" #img>
-                    <mat-icon matSuffix>
+                    <input type="file" formControlName="uploadImage" hidden="hidden" (change)="imgUpload($event)" #img>
+                    <mat-icon matSuffix *ngIf="!showAddRemImg">
                         <span class="material-symbols-outlined" (click)="img.click()">
                             upload
                         </span>

@@ -71,7 +71,7 @@ export class SchoolRegistrationComponent {
       next: (res: any) => {
         if (res.statusCode == "200") {
           this.tableDataArray = res.responseData.responseData1;
-          this.totalCount = res.responseData.responseData2.totalPages;
+          this.totalCount = res.responseData.responseData2.pageCount;
           tableDatasize = res.responseData.responseData2.pageCount;
         } 
         else {

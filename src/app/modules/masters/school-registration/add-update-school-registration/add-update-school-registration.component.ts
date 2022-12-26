@@ -38,6 +38,11 @@ export class AddUpdateSchoolRegistrationComponent {
   ngOnInit() {
     this.formFeild();
     this.getDistrict();
+    this.getSchoolType();
+    this.getCategoryDes();
+    this.getSchoolMngDesc();
+    this. getGroupClass();
+    
 
     if (this.data) {
       this.onEdit();
@@ -69,7 +74,7 @@ export class AddUpdateSchoolRegistrationComponent {
       "lowestClass": 0,
       "highestClass": 0,
       "timesStamp": new Date(),
-      "docPath": [''],
+      "uploadImage": [''],
       "createdBy": data.createdBy,
       "createdDate": data.createdDate,
       "modifiedBy": data.modifiedBy,
@@ -163,8 +168,14 @@ export class AddUpdateSchoolRegistrationComponent {
   //#region ------------------------------------------------- Upload Image start here --------------------------------------------// 
   imgUpload(event: any) {
     this.fileUpload.uploadDocuments(event, 'Upload', 'jpg, jpeg, png').subscribe((res: any) => {
-      this.uploadImg = res.responseData;
-      this.showAddRemImg = true;
+      if(res.statusCode == "200"){
+        this.uploadImg = res.responseData;
+        this.showAddRemImg = true;
+      }
+      else{
+        return
+      }
+      
     });
   }
   //#endregionegion ------------------------------------------------- Upload Image end here --------------------------------------------// 
@@ -172,8 +183,8 @@ export class AddUpdateSchoolRegistrationComponent {
   //#region ------------------------------------------------- Add/Update Record start here --------------------------------------------//
   onSubmit() {
     let formValue = this.schoolRegForm.value;
-    formValue.docPath ? formValue.docPath = this.uploadImg : '';
-    !this.showAddRemImg ? formValue.docPath = '' : formValue.docPath = formValue.docPath;
+    formValue.uploadImage ? formValue.uploadImage = this.uploadImg : '';
+    !this.showAddRemImg ? formValue.uploadImage = '' : formValue.uploadImage = formValue.uploadImage;
 
     let url;
     this.editFlag ? url = 'ZP-Osmanabad/School/Update' : url = 'ZP-Osmanabad/School/Add';
@@ -207,16 +218,16 @@ export class AddUpdateSchoolRegistrationComponent {
   //#region ------------------------------------------------- Edit Record start here --------------------------------------------//
   onEdit() {
     this.editFlag = true;
-    this.data.docPath ? this.schoolRegForm.value.docPath = this.data.docPath : '';
-    this.data.docPath ? this.showAddRemImg = true : this.showAddRemImg = false;
+    this.data.uploadImage ? this.schoolRegForm.value.uploadImage = this.data.uploadImage : '';
+    this.data.uploadImage ? this.showAddRemImg = true : this.showAddRemImg = false;
     this.formFeild();
   }
   //#endregiongion ---------------------------------------------- Edit Record end here --------------------------------------------//
 
   //#region ------------------------------------------------- Clear Img field start here --------------------------------------------//
   clearImg() {
-    this.schoolRegForm.value.docPath = '';
-    this.f['docPath'].setValue('');
+    this.schoolRegForm.value.uploadImage = '';
+    this.f['uploadImage'].setValue('');
     this.showAddRemImg = false;
   }
   //#endregionegion --------------------------------------------- Clear Img field end here --------------------------------------------//
