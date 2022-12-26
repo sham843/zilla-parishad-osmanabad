@@ -78,6 +78,12 @@ export class AddUpdateOfficeUsersComponent implements OnInit {
     }) 
   }
 
+  onchangeLevel(event: any){
+    console.log(event.target.value);
+    
+    this.getDesignationByLevelId();
+  }
+
   getDesignationByLevelId(){
     let levelId = this.officeForm.value.designationLevelId;
     console.log(levelId);
