@@ -29,7 +29,7 @@
                 <div class="col-sm">
                     <mat-form-field appearance="outline" class="w-100 ">
                         <mat-label>Gender</mat-label>
-                        <mat-select formControlName="genderId">
+                        <mat-select formControlName="genderId" (selectionChange)="getDistrict();">
                             <mat-option *ngFor="let gender of genderArray"
                             [value]="gender.id">{{gender.gender}}</mat-option>
                             <!-- <mat-option value="two">Female</mat-option> -->
@@ -73,7 +73,7 @@
                 <div class="col-sm-4">
                     <mat-form-field appearance="outline" class="w-100 ">
                         <mat-label>District</mat-label>
-                        <mat-select placeholder="Select" formControlName="districtId">
+                        <mat-select placeholder="Select" formControlName="districtId" (selectionChange)="getTaluka();">
                             <mat-option *ngFor="let distric of districtArray"
                             [value]="distric.id">{{distric.district}}</mat-option>
                             <!-- <mat-option value="two"> B.Tech Computer</mat-option> -->
@@ -83,7 +83,7 @@
                 <div class="col-sm-4">
                     <mat-form-field appearance="outline" class="w-100 ">
                         <mat-label>Taluka</mat-label>
-                        <mat-select placeholder="Select" formControlName="talukaId">
+                        <mat-select placeholder="Select" formControlName="talukaId" (selectionChange)="getVillage();">
                             <mat-option *ngFor="let taluka of talukaArray"
                             [value]="taluka.id">{{taluka.taluka}}</mat-option>
                             <!-- <mat-option value="two"> B.Tech Computer</mat-option> -->
@@ -93,7 +93,7 @@
                 <div class="col-sm-4">
                     <mat-form-field appearance="outline" class="w-100 ">
                         <mat-label>Village</mat-label>
-                        <mat-select placeholder="Select" formControlName="villageId">
+                        <mat-select placeholder="Select" formControlName="villageId" (selectionChange)="getAllSchool();">
                             <mat-option *ngFor="let village of villageArray"
                             [value]="village.id">{{village.village}}</mat-option>
                             <!-- <mat-option value="two"> B.Tech Computer</mat-option> -->
@@ -146,7 +146,7 @@
                 <div class="col-sm-4">
                     <mat-form-field appearance="outline" class="w-100 ">
                         <mat-label>Working School Name</mat-label>
-                        <mat-select formControlName="schoolId">
+                        <mat-select formControlName="schoolId" (selectionChange)="getCluster();">
                             <mat-option  *ngFor="let school of schoolArray"
                             [value]="school.id">{{school.schoolName}}</mat-option>
                             <!-- <mat-option value="two">Bsc</mat-option> -->
@@ -156,7 +156,7 @@
                 <div class="col-sm-4">
                     <mat-form-field appearance="outline" class="w-100 ">
                         <mat-label>Cluster Name</mat-label>
-                        <mat-select formControlName="clusterId">
+                        <mat-select formControlName="clusterId" (selectionChange)="getDesignation();">
                             <mat-option *ngFor="let cluster of clusterArray"
                             [value]="cluster.id">{{cluster.clusterName}}</mat-option>
                             <!-- <mat-option value="two"> B.Tech Computer</mat-option> -->
@@ -166,7 +166,7 @@
                 <div class="col-sm-4">
                     <mat-form-field appearance="outline" class="w-100 ">
                         <mat-label>Designation</mat-label>
-                        <mat-select formControlName="designationId">
+                        <mat-select formControlName="designationId" (selectionChange)="getGraduateTeacherSubject();">
                             <mat-option *ngFor="let designation of designationArray"
                             [value]="designation.id">{{designation.designationType}}</mat-option>
                             <!-- <mat-option value="two">M.tech</mat-option> -->
@@ -176,7 +176,7 @@
                 <div class="col-sm-4">
                     <mat-form-field appearance="outline" class="w-100 ">
                         <mat-label>Graduate Teacher Subject</mat-label>
-                        <mat-select formControlName="graduate_SubjectId">
+                        <mat-select formControlName="graduate_SubjectId" (selectionChange)="getGraduatePayScale();">
                             <mat-option *ngFor="let GradateTeacherSubject of GradateTeacherSubjectArray"
                             [value]="GradateTeacherSubject.id">{{GradateTeacherSubject.subject}}</mat-option>
                             <!-- <mat-option value="two">Bsc</mat-option> -->
@@ -186,7 +186,7 @@
                 <div class="col-sm-4">
                     <mat-form-field appearance="outline" class="w-100 ">
                         <mat-label>Taking Graduate Pay Scale</mat-label>
-                        <mat-select formControlName="isGraduate_PayScale">
+                        <mat-select formControlName="isGraduate_PayScale" (selectionChange)="getCaste();">
                             <mat-option *ngFor="let payScale of isGraduatePayScaleArray"
                             [value]="payScale.isGraduate_PayScale">{{payScale.name}}</mat-option>
                             <!-- <mat-option value="two"> B.Tech Computer</mat-option> -->
@@ -196,7 +196,7 @@
                 <div class="col-sm-4">
                     <mat-form-field appearance="outline" class="w-100 ">
                         <mat-label>Caste</mat-label>
-                        <mat-select formControlName="castId">
+                        <mat-select formControlName="castId" (selectionChange)="getCasteCategory();">
                             <mat-option *ngFor="let caste of casteArray"
                             [value]="caste.id">{{caste.caste}}</mat-option>
                             <!-- <mat-option value="two">M.tech</mat-option> -->
@@ -206,7 +206,7 @@
                 <div class="col-sm-4">
                     <mat-form-field appearance="outline" class="w-100 ">
                         <mat-label>Caste Category</mat-label>
-                        <mat-select formControlName="castCategoryId">
+                        <mat-select formControlName="castCategoryId" (selectionChange)="getCasteVerification();">
                             <mat-option *ngFor="let casteCategory of castCategoryArray"
                             [value]="casteCategory.id">{{casteCategory.categoryName}}</mat-option>
                             <!-- <mat-option value="two">Bsc</mat-option> -->
@@ -228,7 +228,7 @@
                 <div class="col-sm-4">
                     <mat-form-field appearance="outline" class="w-100 ">
                         <mat-label>Caste Verification Done?</mat-label>
-                        <mat-select formControlName="isCastVarificationDone">
+                        <mat-select formControlName="isCastVarificationDone" (selectionChange)="getEducationQualification();">
                             <mat-option *ngFor="let casteVeification of casteVerification"
                             [value]="casteVeification.isCastVarificationDone">{{casteVeification.name}}</mat-option>
                             <!-- <mat-option value="two">Bsc</mat-option> -->
@@ -282,7 +282,7 @@
                 <div class="col-sm-4">
                     <mat-form-field appearance="outline" class="w-100 ">
                         <mat-label>Educational Qualification</mat-label>
-                        <mat-select formControlName="educationalQualificationId">
+                        <mat-select formControlName="educationalQualificationId" (selectionChange)="getTwelveBranch();">
                             <mat-option *ngFor="let educationQuali of educationQualificationArray"
                             [value]="educationQuali.id">{{educationQuali.educationalQualification}}</mat-option>
                             <!-- <mat-option value="two"> B.Tech Computer</mat-option> -->
@@ -292,7 +292,7 @@
                 <div class="col-sm-4">
                     <mat-form-field appearance="outline" class="w-100 ">
                         <mat-label>12th Branch</mat-label>
-                        <mat-select formControlName="branchId12th">
+                        <mat-select formControlName="branchId12th" (selectionChange)="getOptionalSubject();">
                             <mat-option *ngFor="let twelve of twelveBranchArray"
                             [value]="twelve.id">{{twelve.branchName}}</mat-option>
                             <!-- <mat-option value="two">M.tech</mat-option> -->
@@ -302,7 +302,7 @@
                 <div class="col-sm-4">
                     <mat-form-field appearance="outline" class="w-100 ">
                         <mat-label>Degree Optional Subjects</mat-label>
-                        <mat-select formControlName="degreeOptionalSubjectsId">
+                        <mat-select formControlName="degreeOptionalSubjectsId" (selectionChange)="getDegreeUniversity();">
                             <mat-option *ngFor="let optionalSubject of optionalSubjectArray"
                             [value]="optionalSubject.id">{{optionalSubject.subjectName}}</mat-option>
                             <!-- <mat-option value="two">Bsc</mat-option> -->
@@ -312,7 +312,7 @@
                 <div class="col-sm-4">
                     <mat-form-field appearance="outline" class="w-100 ">
                         <mat-label>Degree University</mat-label>
-                        <mat-select formControlName="degreeUniversityId">
+                        <mat-select formControlName="degreeUniversityId"  (selectionChange)="getProfesionalQualification();">
                             <mat-option *ngFor="let university of degreeUniversityArray"
                             [value]="university.id">{{university.univesityName}}</mat-option>
                             <!-- <mat-option value="two"> B.Tech Computer</mat-option> -->
@@ -322,7 +322,7 @@
                 <div class="col-sm-4">
                     <mat-form-field appearance="outline" class="w-100 ">
                         <mat-label>Professional Qualification</mat-label>
-                        <mat-select formControlName="professionalQualificationId">
+                        <mat-select formControlName="professionalQualificationId" (selectionChange)="gethusbandWifeBothService();">
                             <mat-option *ngFor="let proQulification of profesionalQualificationArray"
                             [value]="proQulification.id">{{proQulification.professinalQualification}}</mat-option>
                             <!-- <mat-option value="two">M.tech</mat-option> -->
@@ -344,7 +344,7 @@
                 <div class="col-sm-4">
                     <mat-form-field appearance="outline" class="w-100 ">
                         <mat-label>Husband-Wife both are in Service</mat-label>
-                        <mat-select formControlName="husbandWife_Both_Service">
+                        <mat-select formControlName="husbandWife_Both_Service" (selectionChange)="getAreyouDisabled();">
                             <mat-option *ngFor="let husbandWifeService of husbandWifeBothServiceArray"
                             [value]="husbandWifeService.husbandWife_Both_Service">{{husbandWifeService.name}}</mat-option>
                             <!-- <mat-option value="two">M.tech</mat-option> -->
@@ -360,7 +360,7 @@
                 <div class="col-sm-4">
                     <mat-form-field appearance="outline" class="w-100 ">
                         <mat-label>Are you Disabled</mat-label>
-                        <mat-select formControlName="isDisabled">
+                        <mat-select formControlName="isDisabled" (selectionChange)="getInterDistrictTransferred();">
                             <mat-option *ngFor="let disabled of AreyouDisabled"
                             [value]="disabled.isDisabled">{{disabled.name}}</mat-option>
                             <!-- <mat-option value="two"> B.Tech Computer</mat-option> -->
@@ -370,7 +370,7 @@
                 <div class="col-sm-4">
                     <mat-form-field appearance="outline" class="w-100 ">
                         <mat-label>Inter District transferred</mat-label>
-                        <mat-select formControlName="interDistrictTransferred">
+                        <mat-select formControlName="interDistrictTransferred" (selectionChange)="GetInterDistrictTransferType();">
                             <mat-option *ngFor="let interDistrict of interDistrictTransferredArray"
                             [value]="interDistrict.interDistrictTransferred">{{interDistrict.name}}</mat-option>
                             <!-- <mat-option value="two">M.tech</mat-option> -->
@@ -389,9 +389,10 @@
                 <div class="col-sm-4">
                     <mat-form-field appearance="outline" class="w-100 ">
                         <mat-label>Inter district transfer type*</mat-label>
-                        <mat-select formControlName="interDistrictTransferType">
-                            <mat-option value="one">Bsc Computer</mat-option>
-                            <mat-option value="two"> B.Tech Computer</mat-option>
+                        <mat-select formControlName="interDistrictTransferType" (selectionChange)="getHaveYouPassedComputerExam();">
+                            <mat-option *ngFor="let interDistricttrasferType of interDistrictTransferTypeArray"
+                            [value]="interDistricttrasferType.id">{{interDistricttrasferType.interDistrictTransferType}}</mat-option>
+                            <!-- <mat-option value="two"> B.Tech Computer</mat-option> -->
                         </mat-select>
                     </mat-form-field>
                 </div>

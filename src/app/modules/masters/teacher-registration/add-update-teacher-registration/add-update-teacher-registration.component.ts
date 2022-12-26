@@ -92,7 +92,7 @@ export class AddUpdateTeacherRegistrationComponent {
         "lan": [this.data ? this.data.lan :''],
         "localID": 0,
         "timestamp": new Date(),   
-         teacherDetails:this.fb.group( {
+         teacherDetails:this.fb.group({
           "createdBy": 0,
           "modifiedBy": 0,
           "createdDate": new Date(),
@@ -137,7 +137,7 @@ export class AddUpdateTeacherRegistrationComponent {
           "haveYouPassedComputerExam": true,
           "namesAndTalukasAllSchoolsWorkedEarlier": [this.data ? this.data.namesAndTalukasAllSchoolsWorkedEarlier :'']
         })
-      // ]),
+    
     })
   }
 
@@ -146,9 +146,8 @@ export class AddUpdateTeacherRegistrationComponent {
       next: ((res: any) => {
         if (res.statusCode == '200' && res.responseData.length) {
           this.genderArray = res.responseData;
-          console.log("gender", this.genderArray); 
-          this.getDistrict();        
-          
+          console.log("gender", this.genderArray);                 
+          this.editFlag ? (this.teacherRegForm.controls['genderId'].setValue(this.data.gender),this.getDistrict()) : '';
         }
       }), error: (error: any) => {
         this.commonMethod.checkEmptyData(error.statusText) == false ? this.errorHandler.handelError(error.statusCode) : this.commonMethod.snackBar(error.statusText, 1);
@@ -161,8 +160,8 @@ export class AddUpdateTeacherRegistrationComponent {
       next: ((res: any) => {
         if (res.statusCode == '200' && res.responseData.length) {
           this.districtArray = res.responseData;
-          console.log("districtArray", this.districtArray);         
-          this.getTaluka();
+          // console.log("districtArray", this.districtArray);    
+          this.editFlag ? (this.teacherRegForm.controls['districtId'].setValue(this.data.district),this.getTaluka()) : '';
         }
       }), error: (error: any) => {
         this.commonMethod.checkEmptyData(error.statusText) == false ? this.errorHandler.handelError(error.statusCode) : this.commonMethod.snackBar(error.statusText, 1);
@@ -175,8 +174,8 @@ export class AddUpdateTeacherRegistrationComponent {
       next: ((res: any) => {
         if (res.statusCode == '200' && res.responseData.length) {
           this.talukaArray = res.responseData;
-          console.log("talukaArray", this.talukaArray);         
-          this.getVillage();
+          // console.log("talukaArray", this.talukaArray);  
+          // this.editFlag ? (this.teacherRegForm.controls['districtId'].setValue(this.data.district),this.getTaluka()) : '';
         }
       }), error: (error: any) => {
         this.commonMethod.checkEmptyData(error.statusText) == false ? this.errorHandler.handelError(error.statusCode) : this.commonMethod.snackBar(error.statusText, 1);
@@ -189,8 +188,8 @@ export class AddUpdateTeacherRegistrationComponent {
       next: ((res: any) => {
         if (res.statusCode == '200' && res.responseData.length) {
           this.villageArray = res.responseData;
-          console.log("villageArray", this.villageArray);  
-          this.getAllSchool(); 
+          // console.log("villageArray", this.villageArray);            
+          // this.editFlag ? (this.teacherRegForm.controls['districtId'].setValue(this.data.district),this.getTaluka()) : '';
         }
       }), error: (error: any) => {
         this.commonMethod.checkEmptyData(error.statusText) == false ? this.errorHandler.handelError(error.statusCode) : this.commonMethod.snackBar(error.statusText, 1);
@@ -202,8 +201,8 @@ export class AddUpdateTeacherRegistrationComponent {
       next: ((res: any) => {
         if (res.statusCode == '200' && res.responseData.length) {
           this.schoolArray = res.responseData;
-          console.log("schoolArray", this.schoolArray);
-          this.getCluster();
+          // console.log("schoolArray", this.schoolArray);         
+          // this.editFlag ? (this.teacherRegForm.controls['districtId'].setValue(this.data.district),this.getTaluka()) : '';
         }
       }), error: (error: any) => {
         this.commonMethod.checkEmptyData(error.statusText) == false ? this.errorHandler.handelError(error.statusCode) : this.commonMethod.snackBar(error.statusText, 1);
@@ -216,8 +215,8 @@ export class AddUpdateTeacherRegistrationComponent {
       next: ((res: any) => {
         if (res.statusCode == '200' && res.responseData.length) {
           this.clusterArray = res.responseData;
-          console.log("clusterArray", this.clusterArray);
-          this.getDesignation();
+          // console.log("clusterArray", this.clusterArray);        
+          // this.editFlag ? (this.teacherRegForm.controls['districtId'].setValue(this.data.district),this.getTaluka()) : '';
         }
       }), error: (error: any) => {
         this.commonMethod.checkEmptyData(error.statusText) == false ? this.errorHandler.handelError(error.statusCode) : this.commonMethod.snackBar(error.statusText, 1);
@@ -230,8 +229,8 @@ export class AddUpdateTeacherRegistrationComponent {
       next: ((res: any) => {
         if (res.statusCode == '200' && res.responseData.length) {
           this.designationArray = res.responseData;
-          console.log("designationArray", this.designationArray);   
-          this.getGraduateTeacherSubject();
+          // console.log("designationArray", this.designationArray);            
+          // this.editFlag ? (this.teacherRegForm.controls['districtId'].setValue(this.data.district),this.getTaluka()) : '';
         }
       }), error: (error: any) => {
         this.commonMethod.checkEmptyData(error.statusText) == false ? this.errorHandler.handelError(error.statusCode) : this.commonMethod.snackBar(error.statusText, 1);
@@ -244,8 +243,8 @@ export class AddUpdateTeacherRegistrationComponent {
       next: ((res: any) => {
         if (res.statusCode == '200' && res.responseData.length) {
           this.GradateTeacherSubjectArray = res.responseData;
-          console.log("GradateTeacherSubjectArray", this.GradateTeacherSubjectArray);  
-          this.getGraduatePayScale();
+          // console.log("GradateTeacherSubjectArray", this.GradateTeacherSubjectArray); 
+          // this.editFlag ? (this.teacherRegForm.controls['districtId'].setValue(this.data.district),this.getTaluka()) : '';
           
         }
       }), error: (error: any) => {
@@ -259,7 +258,8 @@ export class AddUpdateTeacherRegistrationComponent {
       { id: 1, name: 'yes', isGraduate_PayScale: true }, 
       { id: 2, name: 'no', isGraduate_PayScale: false }
     ];
-    this.getCaste();
+    // this.editFlag ? (this.teacherRegForm.controls['districtId'].setValue(this.data.district),this.getTaluka()) : '';
+
   }
 
   getCaste() { 
@@ -267,8 +267,8 @@ export class AddUpdateTeacherRegistrationComponent {
       next: ((res: any) => {
         if (res.statusCode == '200' && res.responseData.length) {
           this.casteArray = res.responseData;
-          console.log("casteArray", this.casteArray);  
-          this.getCasteCategory(); 
+          // console.log("casteArray", this.casteArray);  
+          // this.editFlag ? (this.teacherRegForm.controls['districtId'].setValue(this.data.district),this.getTaluka()) : '';
         }
       }), error: (error: any) => {
         this.commonMethod.checkEmptyData(error.statusText) == false ? this.errorHandler.handelError(error.statusCode) : this.commonMethod.snackBar(error.statusText, 1);
@@ -281,9 +281,8 @@ export class AddUpdateTeacherRegistrationComponent {
       next: ((res: any) => {
         if (res.statusCode == '200' && res.responseData.length) {
           this.castCategoryArray = res.responseData;
-          console.log("castCategoryArray", this.castCategoryArray);   
-          this.getEducationQualification(); 
-          this.getCasteVerification();
+          // console.log("castCategoryArray", this.castCategoryArray);   
+          // this.editFlag ? (this.teacherRegForm.controls['districtId'].setValue(this.data.district),this.getTaluka()) : '';
         }
       }), error: (error: any) => {
         this.commonMethod.checkEmptyData(error.statusText) == false ? this.errorHandler.handelError(error.statusCode) : this.commonMethod.snackBar(error.statusText, 1);
@@ -299,8 +298,8 @@ export class AddUpdateTeacherRegistrationComponent {
       next: ((res: any) => {
         if (res.statusCode == '200' && res.responseData.length) {
           this.educationQualificationArray = res.responseData;
-          console.log("educationQualificationArray", this.educationQualificationArray); 
-          this.getTwelveBranch();   
+          // console.log("educationQualificationArray", this.educationQualificationArray); 
+          // this.editFlag ? (this.teacherRegForm.controls['districtId'].setValue(this.data.district),this.getTaluka()) : '';
         }
       }), error: (error: any) => {
         this.commonMethod.checkEmptyData(error.statusText) == false ? this.errorHandler.handelError(error.statusCode) : this.commonMethod.snackBar(error.statusText, 1);
@@ -313,8 +312,8 @@ export class AddUpdateTeacherRegistrationComponent {
       next: ((res: any) => {
         if (res.statusCode == '200' && res.responseData.length) {
           this.twelveBranchArray = res.responseData;
-          console.log("twelveBranchArray", this.twelveBranchArray); 
-          this.getOptionalSubject();
+          // console.log("twelveBranchArray", this.twelveBranchArray); 
+          // this.editFlag ? (this.teacherRegForm.controls['districtId'].setValue(this.data.district),this.getTaluka()) : '';
         }
       }), error: (error: any) => {
         this.commonMethod.checkEmptyData(error.statusText) == false ? this.errorHandler.handelError(error.statusCode) : this.commonMethod.snackBar(error.statusText, 1);
@@ -327,8 +326,8 @@ export class AddUpdateTeacherRegistrationComponent {
       next: ((res: any) => {
         if (res.statusCode == '200' && res.responseData.length) {
           this.optionalSubjectArray = res.responseData;
-          console.log("optionalSubjectArray", this.optionalSubjectArray); 
-          this.getDegreeUniversity();  
+          // console.log("optionalSubjectArray", this.optionalSubjectArray); 
+          // this.editFlag ? (this.teacherRegForm.controls['districtId'].setValue(this.data.district),this.getTaluka()) : '';
         }
       }), error: (error: any) => {
         this.commonMethod.checkEmptyData(error.statusText) == false ? this.errorHandler.handelError(error.statusCode) : this.commonMethod.snackBar(error.statusText, 1);
@@ -341,8 +340,8 @@ export class AddUpdateTeacherRegistrationComponent {
       next: ((res: any) => {
         if (res.statusCode == '200' && res.responseData.length) {
           this.degreeUniversityArray = res.responseData;
-          console.log("degreeUniversityArray", this.degreeUniversityArray); 
-          this.getProfesionalQualification();   
+          // console.log("degreeUniversityArray", this.degreeUniversityArray); 
+          // this.editFlag ? (this.teacherRegForm.controls['districtId'].setValue(this.data.district),this.getTaluka()) : '';
         }
       }), error: (error: any) => {
         this.commonMethod.checkEmptyData(error.statusText) == false ? this.errorHandler.handelError(error.statusCode) : this.commonMethod.snackBar(error.statusText, 1);
@@ -355,8 +354,8 @@ export class AddUpdateTeacherRegistrationComponent {
       next: ((res: any) => {
         if (res.statusCode == '200' && res.responseData.length) {
           this.profesionalQualificationArray = res.responseData;
-          console.log("profesionalQualificationArray", this.profesionalQualificationArray);
-          this.gethusbandWifeBothService();   
+          // console.log("profesionalQualificationArray", this.profesionalQualificationArray);
+          // this.editFlag ? (this.teacherRegForm.controls['districtId'].setValue(this.data.district),this.getTaluka()) : '';
         }
       }), error: (error: any) => {
         this.commonMethod.checkEmptyData(error.statusText) == false ? this.errorHandler.handelError(error.statusCode) : this.commonMethod.snackBar(error.statusText, 1);
@@ -365,12 +364,12 @@ export class AddUpdateTeacherRegistrationComponent {
   }
 
   GetInterDistrictTransferType() { 
-    this.masterService.getProfessinalQualificationById('EN',).subscribe({
+    this.masterService.getAllInterDistrictTransferType('EN',).subscribe({
       next: ((res: any) => {
         if (res.statusCode == '200' && res.responseData.length) {
           this.interDistrictTransferTypeArray = res.responseData;
-          console.log("interDistrictTransferTypeArray", this.interDistrictTransferTypeArray);
-          this.gethusbandWifeBothService();   
+          // console.log("interDistrictTransferTypeArray", this.interDistrictTransferTypeArray);     
+          // this.editFlag ? (this.teacherRegForm.controls['districtId'].setValue(this.data.district),this.getTaluka()) : '';
         }
       }), error: (error: any) => {
         this.commonMethod.checkEmptyData(error.statusText) == false ? this.errorHandler.handelError(error.statusCode) : this.commonMethod.snackBar(error.statusText, 1);
@@ -382,14 +381,16 @@ export class AddUpdateTeacherRegistrationComponent {
         {id : 1 ,name :'yes' , husbandWife_Both_Service :true},
         {id : 2 ,name :'no' , husbandWife_Both_Service :false}
       ];
-      this.getAreyouDisabled();
+     
+      // this.editFlag ? (this.teacherRegForm.controls['districtId'].setValue(this.data.district),this.getTaluka()) : '';
   }
   getAreyouDisabled(){
     this.AreyouDisabled=[
       {id : 1 ,name :'yes' , isDisabled :true},
       {id : 2 ,name :'no' , isDisabled :false}
     ];
-    this.getInterDistrictTransferred();
+  
+    // this.editFlag ? (this.teacherRegForm.controls['districtId'].setValue(this.data.district),this.getTaluka()) : '';
   }
 
   getInterDistrictTransferred(){
@@ -397,7 +398,8 @@ export class AddUpdateTeacherRegistrationComponent {
     {id : 1 ,name :'yes' , interDistrictTransferred :true},
     {id : 2 ,name :'no' , interDistrictTransferred :false}
   ];
-  this.getHaveYouPassedComputerExam();
+
+  // this.editFlag ? (this.teacherRegForm.controls['districtId'].setValue(this.data.district),this.getTaluka()) : '';
   }
 
 getHaveYouPassedComputerExam(){
@@ -405,6 +407,7 @@ getHaveYouPassedComputerExam(){
     {id : 1 ,name :'yes' , haveYouPassedComputerExam :true},
     {id : 2 ,name :'no' , haveYouPassedComputerExam :false}
   ];
+  // this.editFlag ? (this.teacherRegForm.controls['districtId'].setValue(this.data.district),this.getTaluka()) : '';
 }
 
 
@@ -412,7 +415,7 @@ imgUpload(event: any) {
   this.fileUpload.uploadDocuments(event, 'Upload', 'jpg, jpeg, png').subscribe((res: any) => {
     this.uploadImg = res.responseData;
     this.showAddRemImg = true;
-    console.log("uploadImg",this.uploadImg);
+    // console.log("uploadImg",this.uploadImg);
     
   });
 }
@@ -422,9 +425,11 @@ imgUpload(event: any) {
   OnSubmit(){
     console.log(this.teacherRegForm.value);
     let formValue = this.teacherRegForm.value;
-    formValue.docPath ? formValue.docPath = this.uploadImg : '';
-      !this.showAddRemImg ? formValue.docPath = '' : formValue.docPath = formValue.docPath;
+    formValue.uploadImage ? formValue.uploadImage = this.uploadImg : '';
+      !this.showAddRemImg ? formValue.uploadImage = '' : formValue.uploadImage = formValue.uploadImage;       
     let postObj = this.teacherRegForm.value;
+    console.log(postObj);
+    
     let url;
       this.editFlag ? url = 'zp_osmanabad/Teacher/Update' : url = 'zp_osmanabad/Teacher/Add'
       this.service.setHttp(this.editFlag ? 'put' : 'post', url, false, postObj, false, 'baseUrl');
@@ -449,10 +454,10 @@ imgUpload(event: any) {
     this.editObj = obj;
     console.log("editObj",this.editObj);
     // return
-    this.data.docPath ? this.teacherRegForm.value.docPath = this.data.docPath : '';
+    this.data.uploadImage ? this.teacherRegForm.value.uploadImage = this.data.uploadImage : '';
     
-    this.data.docPath ? this.showAddRemImg = true :  this.showAddRemImg = false;
-   this.formData();
+    this.data.uploadImage ? this.showAddRemImg = true :  this.showAddRemImg = false;
+   this.formData();this.getGender();
     
   }
 
