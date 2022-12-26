@@ -78,6 +78,7 @@ export class AddUpdateSchoolRegistrationComponent {
     })
   }
 
+  //#region ---------------------------------------------- School Registration Dropdown start here ----------------------------------------// 
   getDistrict() {
     this.masterService.getAllDistrict(this.webStorageS.languageFlag).subscribe({
       next: (res: any) => {
@@ -157,18 +158,20 @@ export class AddUpdateSchoolRegistrationComponent {
       error: ((err: any) => { this.errors.handelError(err) })
     });
   }
+  //#endregion ------------------------------------------- School Registration Dropdown end here ----------------------------------------// 
 
+  //#region ------------------------------------------------- Upload Image start here --------------------------------------------// 
   imgUpload(event: any) {
     this.fileUpload.uploadDocuments(event, 'Upload', 'jpg, jpeg, png').subscribe((res: any) => {
       this.uploadImg = res.responseData;
       this.showAddRemImg = true;
     });
   }
+  //#endregionegion ------------------------------------------------- Upload Image end here --------------------------------------------// 
 
+  //#region ------------------------------------------------- Add/Update Record start here --------------------------------------------//
   onSubmit() {
     let formValue = this.schoolRegForm.value;
-    console.log("formValue : ", formValue);
-
     formValue.docPath ? formValue.docPath = this.uploadImg : '';
     !this.showAddRemImg ? formValue.docPath = '' : formValue.docPath = formValue.docPath;
 
@@ -199,23 +202,26 @@ export class AddUpdateSchoolRegistrationComponent {
       });
     }
   }
+  //#endregiongion ------------------------------------------ Add/Update Record end here --------------------------------------------//
 
+  //#region ------------------------------------------------- Edit Record start here --------------------------------------------//
   onEdit() {
     this.editFlag = true;
-    console.log("editObj : ", this.data);
-
     this.data.docPath ? this.schoolRegForm.value.docPath = this.data.docPath : '';
-
     this.data.docPath ? this.showAddRemImg = true : this.showAddRemImg = false;
     this.formFeild();
   }
+  //#endregiongion ---------------------------------------------- Edit Record end here --------------------------------------------//
 
+  //#region ------------------------------------------------- Clear Img field start here --------------------------------------------//
   clearImg() {
     this.schoolRegForm.value.docPath = '';
     this.f['docPath'].setValue('');
     this.showAddRemImg = false;
   }
+  //#endregionegion --------------------------------------------- Clear Img field end here --------------------------------------------//
 
+  //#region ----------------------------------------------- Clear dropdown on change start here --------------------------------------------//
   clearDropdown(dropdown: string) {
     this.editFlag = false;
     if (dropdown == 'Taluka') {
@@ -259,6 +265,6 @@ export class AddUpdateSchoolRegistrationComponent {
       this.groupclassArr = [];
     }
   }
-
+  //#endregiongion ----------------------------------------------- Clear dropdown on change end here --------------------------------------------//
 
 }
