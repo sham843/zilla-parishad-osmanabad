@@ -85,7 +85,7 @@ export class AddUpdateAgencyRegistrationComponent {
     }
     else {
       obj.emailId == obj.agency_EmailId  ? this.common.snackBar('Email Id & Agency Email Id Can Not Be Same',1) : '';
-      obj.contact_No == obj.agency_MobileNo ? this.common.snackBar('Contact Number & Agency Contact Number Can not Be Same',1) :'';
+      obj.contact_No == obj.agency_MobileNo ? this.common.snackBar('Contact Number & Agency Contact Number Can Not Be Same',1) :'';
       return;
     }
   }
