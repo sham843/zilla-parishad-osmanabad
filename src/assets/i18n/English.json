@@ -129,8 +129,11 @@
         "enterFatherName" :"Enter Father Name",
         "enterParentMobileNo":"Enter Parent Mobile No",
         "enterValidParentMobileNo":"Enter Valid Parent Mobile No",
-        "enterValidAadharNo":"Enter Valid Parent Aadhar No"
+        "enterValidAadharNo":"Enter Valid Parent Aadhar No",
 
+        "profile": "Profile",
+        "changePwd": "Change Password",
+        "logout": "Logout"
 
         
     }

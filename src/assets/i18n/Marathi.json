@@ -127,7 +127,10 @@
         "enterFatherName" :"वडीलचे नाव आवश्यक आहे",
         "enterParentMobileNo":"पालकचे मोबाईल क्र. आवश्यक आहे",
         "enterValidParentMobileNo":"वैध पालकचे मोबाईल क्र. आवश्यक आहे",
-        "enterValidAadharNo":"वैध आधार क्र. आवश्यक आहे"
+        "enterValidAadharNo":"वैध आधार क्र. आवश्यक आहे",
         
+        "profile": "प्रोफाइल",
+        "changePwd": "पासवर्ड बदला",
+        "logout": "बाहेर पडणे"
     }
 }
