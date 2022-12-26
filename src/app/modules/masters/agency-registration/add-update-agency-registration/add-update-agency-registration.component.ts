@@ -83,7 +83,11 @@ export class AddUpdateAgencyRegistrationComponent {
         error: ((err: any) => { this.errors.handelError(err) })
       })
     }
-    else {
+    else if(this.agencyRegisterForm.invalid ) {
+      this.common.snackBar('Please Enter Mandatory Fields',1) 
+      return;
+    }
+    else{
       obj.emailId == obj.agency_EmailId  ? this.common.snackBar('Email Id & Agency Email Id Can Not Be Same',1) : '';
       obj.contact_No == obj.agency_MobileNo ? this.common.snackBar('Contact Number & Agency Contact Number Can Not Be Same',1) :'';
       return;
