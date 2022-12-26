@@ -74,7 +74,7 @@ export class AddUpdateAgencyRegistrationComponent {
   onSubmit(clear: any) {
     let obj = this.agencyRegisterForm.value;
     obj.districtId = 1;
-    if (this.agencyRegisterForm.valid) {
+    if (this.agencyRegisterForm.valid && obj.emailId != obj.agency_EmailId && obj.contact_No != obj.agency_MobileNo) {
       this.api.setHttp(this.data ? 'put' : 'post', 'zp-osmanabad/Agency/' + (this.data ? 'Update' : 'Add'), false, obj, false, 'baseUrl');
       this.api.getHttp().subscribe({
         next: (res: any) => {
@@ -84,6 +84,8 @@ export class AddUpdateAgencyRegistrationComponent {
       })
     }
     else {
+      obj.emailId == obj.agency_EmailId  ? this.common.snackBar('Email Id & Agency Email Id Can Not Be Same',1) : '';
+      obj.contact_No == obj.agency_MobileNo ? this.common.snackBar('Contact Number & Agency Contact Number Can Not Be Same',1) :'';
       return;
     }
   }

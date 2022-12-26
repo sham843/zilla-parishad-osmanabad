@@ -63,4 +63,11 @@ export class WebStorageService {
     let number = new Intl.NumberFormat(this.numFormat).format(value);        
       return number
   }
+
+  getAllPageName(){
+    if (this.checkUserIsLoggedIn() == true) {      
+      let getAllPageName = this.getLoggedInLocalstorageData();
+      return getAllPageName.pageLstModels;
+    }
+  }
 }

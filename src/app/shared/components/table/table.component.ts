@@ -59,6 +59,7 @@ export class TableComponent implements OnInit {
         this.tableHeaders = this.tableInfo.tableHeaders
         this.pageNumber = this.tableInfo.pageNumber;
         this.tableInfo.tableData ? this.tableRecords = new MatTableDataSource(this.tableInfo.tableData) : this.tableRecords = [];
+        
         this.paginator?._pageIndex != 0 && this.pageIndex != this.pageNumber ? this.paginator?.firstPage() : '';
         this.tableRecords.sort = this.sort;
       }
@@ -69,8 +70,8 @@ export class TableComponent implements OnInit {
   //   this.tableInfo.sort = this.sort;
   // }
 
-  action(obj: any, label: string, i?: any) {
-    this.highlightedRow = i;
+  action(obj: any, label: string, i?: any) {        
+    label == 'checkBox' ? obj.checkBoxValue = i.checked : this.highlightedRow = i;
     obj.label = label;
     obj.pageNumber = obj.pageIndex + 1;
     this.pageIndex = obj.pageNumber;
