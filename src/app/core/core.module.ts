@@ -10,6 +10,7 @@ import {MatIconModule} from '@angular/material/icon';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatPaginatorIntl } from '@angular/material/paginator';
 import { CustomMatPaginatorIntl } from './pipes/custom-pagination';
+import { TranslateModule } from '@ngx-translate/core';
 
 
 @NgModule({
@@ -23,7 +24,8 @@ import { CustomMatPaginatorIntl } from './pipes/custom-pagination';
     MatSnackBarModule,
     RouterModule,
     MatIconModule,
-    MatDialogModule
+    MatDialogModule,
+    TranslateModule
   ],
   providers: [
     AuthGuard,

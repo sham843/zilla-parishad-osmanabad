@@ -30,8 +30,6 @@
         "contactNumberIsRequired" : "Contact Number Is Required",
         "emailIdIsRequired" : "Email Id Is Required",
         "pleaseSelectTaluka" : "Please Select Taluka",
-        "pleaseSelectCenter" : "Please Select Center",
-        "pleaseSelectSchool" : "Please Select School",
         "addressIsRequired" :"Address Is Required",
         "maximummLength500Characters" : "Maximumm Length Should Be Less Than 500 Characters",
         "clear":"Clear",
@@ -112,8 +110,10 @@
         "mobileNo" : "Mobile No",
         "searchPage":"Page Name/Page URL",
         "userType":"User Type",
-        "subUserType":"Sub User Type"
-
+        "subUserType":"Sub User Type",
+        "profile": "Profile",
+        "changePwd": "Change Password",
+        "logout": "Logout"
 
         
     }

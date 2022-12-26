@@ -30,8 +30,6 @@
         "contactNumberIsRequired" : "संपर्क क्रमांक आवश्यक आहे",
         "emailIdIsRequired" :"ईमेल आयडी आवश्यक आहे",
         "pleaseSelectTaluka" : "कृपया तालुका निवडा",
-        "pleaseSelectCenter" : "कृपया केंद्र निवडा",
-        "pleaseSelectSchool" : "कृपया शाळा निवडा",
         "addressIsRequired" : "पत्ता आवश्यक आहे",
         "maximummLength500Characters": "कमाल लांबी 500 वर्णांपेक्षा कमी असावी",
         "clear":"रद्द करा",
@@ -111,6 +109,9 @@
         "mobileNo" : "मोबाईल नंबर",
         "searchPage":"पृष्ठाचे नाव/पृष्ठ युआरएल",
         "userType":"वापरकर्ता प्रकार",
-        "subUserType":"उप-वापरकर्ता प्रकार"
+        "subUserType":"उप-वापरकर्ता प्रकार",
+        "profile": "प्रोफाइल",
+        "changePwd": "पासवर्ड बदला",
+        "logout": "बाहेर पडणे"
     }
 }
