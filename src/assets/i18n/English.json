@@ -30,6 +30,15 @@
         "contactNumberIsRequired" : "Contact Number Is Required",
         "emailIdIsRequired" : "Email Id Is Required",
         "pleaseSelectTaluka" : "Please Select Taluka",
+        "pleaseSelectCenter" : "Please Select Center",
+        "pleaseSelectSchool" : "Please Select School",
+        "pleaseSelectStandard" : "Please Select Standard",
+        "pleaseSelectBirthDate" : "Please Select BirthDate",
+        "pleaseSelectGender" : "Please Select Gender",
+        "pleaseSelectReligion" : "Please Select Religion",
+        "pleaseSelectCaste" : "Please Select Caste",
+        "pleaseSelectPhysicallyDisabled" : "Please Select PhysicallyDisabled",
+
         "addressIsRequired" :"Address Is Required",
         "maximummLength500Characters" : "Maximumm Length Should Be Less Than 500 Characters",
         "clear":"Clear",
@@ -110,8 +119,21 @@
         "mobileNo" : "Mobile No",
         "searchPage":"Page Name/Page URL",
         "userType":"User Type",
-        "subUserType":"Sub User Type"
+        "subUserType":"Sub User Type",
+        "enterStudentFirstName" :"Enter Student First Name",
+        "enterStudentMiddelName" :"Enter Student Middel Name",
+        "enterStudentLastName" :"Enter Student Last Name",
+        "enterSaralId":"Enter Saral Id",
+        "enterAadharNo" :"Enter Aadhar No",
+        "enterMotherName" :"Enter Mother Name",
+        "enterFatherName" :"Enter Father Name",
+        "enterParentMobileNo":"Enter Parent Mobile No",
+        "enterValidParentMobileNo":"Enter Valid Parent Mobile No",
+        "enterValidAadharNo":"Enter Valid Parent Aadhar No",
 
+        "profile": "Profile",
+        "changePwd": "Change Password",
+        "logout": "Logout"
 
         
     }

@@ -139,6 +139,8 @@ export class PageRightAccessComponent {
   }
 
   childCompInfo(obj: any) {
+    console.log(obj);
+    
     switch (obj.label) {
       case 'Pagination':
         this.pageNumber = obj.pageNumber;
@@ -148,12 +150,13 @@ export class PageRightAccessComponent {
         let req = {
           ...this.webStorage.createdByProps(),
           "id": obj.id,
-          "designationtypeId": obj.designationtypeId,
+          "userTypeId": obj.userTypeId,
+          "subUserTypeId": obj. subUserTypeId,
           "readRight": obj?.checkBoxValue,
           "writeRight": false,
           "pageId": obj.pageId
         }
-        this.apiService.setHttp('post', '', false, req, false, 'baseUrl');
+        this.apiService.setHttp('post', 'api/UserPages/AddRecord', false, req, false, 'baseUrl');
         this.apiService.getHttp().subscribe({
           next: ((res: any) => {
             if (res.statusCode == 200) {

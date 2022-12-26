@@ -101,6 +101,7 @@ export class AddUpdateStudentRegistrationComponent {
           this.districtArr = res.responseData;
           this.stuRegistrationForm.controls['districtId'].setValue(1);
         } else {
+          this.commonMethods.checkEmptyData(res.statusMessage) == false ? this.errors.handelError(res.statusCode) : this.commonMethods.snackBar(res.statusMessage, 1);
           this.districtArr = [];
         }
       },
@@ -116,6 +117,7 @@ export class AddUpdateStudentRegistrationComponent {
           console.log(  this.talukaArr)
           this.editObj ? this.stuRegistrationForm.controls['talukaId'].setValue(this.editObj.talukaId) : '';
         } else {
+          this.commonMethods.checkEmptyData(res.statusMessage) == false ? this.errors.handelError(res.statusCode) : this.commonMethods.snackBar(res.statusMessage, 1);
           this.talukaArr = [];
         }
       },
@@ -130,6 +132,7 @@ export class AddUpdateStudentRegistrationComponent {
           this.centerArr = res.responseData;
           this.editObj ? this.stuRegistrationForm.controls['centerId'].setValue(this.editObj.centerId) : ''
         } else {
+          this.commonMethods.checkEmptyData(res.statusMessage) == false ? this.errors.handelError(res.statusCode) : this.commonMethods.snackBar(res.statusMessage, 1);
           this.centerArr = [];
         }
       },
@@ -144,6 +147,7 @@ export class AddUpdateStudentRegistrationComponent {
           this.schoolArr = res.responseData;
           this.editObj ? this.stuRegistrationForm.controls['schoolId'].setValue(this.editObj.schoolId) : '';
         } else {
+          this.commonMethods.checkEmptyData(res.statusMessage) == false ? this.errors.handelError(res.statusCode) : this.commonMethods.snackBar(res.statusMessage, 1);
           this.schoolArr = [];
         }
       },
@@ -158,6 +162,7 @@ export class AddUpdateStudentRegistrationComponent {
           this.standardArr = res.responseData;
           this.editObj ? this.stuRegistrationForm.controls['standard'].setValue(this.editObj.standardId) : '';
         } else {
+          this.commonMethods.checkEmptyData(res.statusMessage) == false ? this.errors.handelError(res.statusCode) : this.commonMethods.snackBar(res.statusMessage, 1);
           this.standardArr = [];
         }
       },
@@ -172,6 +177,7 @@ export class AddUpdateStudentRegistrationComponent {
           this.genderArr = res.responseData;
           this.editObj ? this.stuRegistrationForm.controls['gender'].setValue(this.editObj.genderId) : '';
         } else {
+          this.commonMethods.checkEmptyData(res.statusMessage) == false ? this.errors.handelError(res.statusCode) : this.commonMethods.snackBar(res.statusMessage, 1);
           this.genderArr = [];
         }
       },
@@ -186,6 +192,7 @@ export class AddUpdateStudentRegistrationComponent {
           this.religionArr = res.responseData;
           this.editObj ? (this.stuRegistrationForm.controls['religionId'].setValue(this.editObj.religionId), this.getCaste()) : '';
         } else {
+          this.commonMethods.checkEmptyData(res.statusMessage) == false ? this.errors.handelError(res.statusCode) : this.commonMethods.snackBar(res.statusMessage, 1);
           this.religionArr = [];
         }
       },
@@ -201,6 +208,7 @@ export class AddUpdateStudentRegistrationComponent {
           this.casteArr = res.responseData;
           this.editObj ? this.stuRegistrationForm.controls['castId'].setValue(this.editObj.castId) : '';
         } else {
+          this.commonMethods.checkEmptyData(res.statusMessage) == false ? this.errors.handelError(res.statusCode) : this.commonMethods.snackBar(res.statusMessage, 1);
           this.casteArr = [];
         }
       },
@@ -210,8 +218,10 @@ export class AddUpdateStudentRegistrationComponent {
 
   fileUpload(event: any, name: string) {
     this.fileUpl.uploadDocuments(event, 'Upload', 'jpg, jpeg, png').subscribe((res: any) => {
-      name == 'img' ? (this.uploadImg = res.responseData, this.stuRegistrationForm.controls['photo'].setValue(this.uploadImg.split('/').pop())) : (
-        this.uploadAadhar = res.responseData, this.stuRegistrationForm.controls['aadharPhoto'].setValue(this.uploadAadhar.split('/').pop()));
+      if(res.statusCode == 200){
+        name == 'img' ? (this.uploadImg = res.responseData, this.stuRegistrationForm.controls['photo'].setValue(this.uploadImg.split('/').pop())) : (
+          this.uploadAadhar = res.responseData, this.stuRegistrationForm.controls['aadharPhoto'].setValue(this.uploadAadhar.split('/').pop()));
+      }
     });
   }
 
@@ -244,8 +254,8 @@ export class AddUpdateStudentRegistrationComponent {
     this.getStandard();
     this.uploadAadhar = this.editObj?.documentResponse[1]?.docPath;
     this.uploadImg = this.editObj?.documentResponse[0]?.docPath;
-    this.stuRegistrationForm.controls['photo'].setValue(this.uploadImg.split('/').pop());
-    this.stuRegistrationForm.controls['aadharPhoto'].setValue(this.uploadAadhar.split('/').pop());
+    this.stuRegistrationForm.controls['photo'].setValue(this.uploadImg?.split('/').pop());
+    this.stuRegistrationForm.controls['aadharPhoto'].setValue(this.uploadAadhar?.split('/').pop());
    
 
   }
@@ -323,11 +333,11 @@ export class AddUpdateStudentRegistrationComponent {
       this.apiService.setHttp(this.editFlag ? 'put' : 'post', 'zp-osmanabad/Student/' + url, false, postObj, false, 'baseUrl');
       this.apiService.getHttp().subscribe({
         next: (res: any) => {
-          if (res.statusCode == "200") {
+          if (res.statusCode == 200) {
             this.commonMethods.snackBar(res.statusMessage, 0);
             this.dialogRef.close('yes')
           } else {
-            this.commonMethods.snackBar(res.statusMessage, 1);
+            this.commonMethods.checkEmptyData(res.statusMessage) == false ? this.errors.handelError(res.statusCode) : this.commonMethods.snackBar(res.statusMessage, 1);
           }
         },
         error: ((err: any) => { this.errors.handelError(err) })
