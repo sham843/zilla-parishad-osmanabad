@@ -27,16 +27,22 @@ export class AddUpdateStudentRegistrationComponent {
   casteArr = new Array();
   editFlag: boolean = false
   physicallyDisabled = [
-    { id: 1, eName: 'Yes',mName: 'होय'},
-    { id: 2, eName: 'No' ,mName: 'नाही'}
-  ]
+    { id: 1, eName: 'Yes', mName: 'होय' },
+    { id: 2, eName: 'No', mName: 'नाही' }
+  ];
 
-  @ViewChild('uploadImage') imageFile!: ElementRef;
-  @ViewChild('uploadAadhar') aadharFile!: ElementRef;  
   uploadImg: any;
   uploadAadhar: any;
   editObj: any;
   languageFlag!: string
+  imageArray = new Array();
+
+  imageFlag: boolean = false;
+  aadhaarFlag : boolean = false;
+
+  @ViewChild('uploadImage') imageFile!: ElementRef;
+  @ViewChild('uploadAadhar') aadharFile!: ElementRef;
+
 
   constructor(
     private fb: FormBuilder, private masterService: MasterService, private errors: ErrorsService,
@@ -46,22 +52,26 @@ export class AddUpdateStudentRegistrationComponent {
     @Inject(MAT_DIALOG_DATA) public data: any) { }
 
   ngOnInit() {
-    this.languageFlag = this.webService.languageFlag;    
+    this.languageFlag = this.webService.languageFlag;
     this.formData();
-      this.data ? (this.editObj = this.data, this.patchValue()) : (
-        this.getDistrict(),
-        this.getTaluka(),
-        this.getCenter(),
-        this.getSchool(),
-        this.getGender(),
-        this.getReligion(),
-        this.getStandard()
-      )
+    this.data ? (this.editObj = this.data, this.patchValue()) : (
+      this.allDropdownMethods()
+    )
+  }
+
+  allDropdownMethods() {
+    this.getDistrict(),
+      this.getTaluka(),
+      this.getCenter(),
+      this.getSchool(),
+      this.getGender(),
+      this.getReligion(),
+      this.getStandard()
   }
 
   formData() {
     this.stuRegistrationForm = this.fb.group({
-      districtId: [{ value: 1, disabled: true }],
+      districtId: [''],
       talukaId: ['', Validators.required],
       centerId: ['', Validators.required],
       schoolId: ['', Validators.required],
@@ -76,7 +86,7 @@ export class AddUpdateStudentRegistrationComponent {
       gender: ['', Validators.required],
       religionId: ['', Validators.required],
       castId: ['', Validators.required],
-      saralId: ['', Validators.required],
+      saralId: [''],
       mobileNo: ['', [Validators.required, Validators.pattern(this.validators.mobile_No)]],
       fatherFullName: ['', Validators.required],
       // m_FatherFullName: ['', Validators.required],
@@ -238,17 +248,14 @@ export class AddUpdateStudentRegistrationComponent {
       dob: new Date(this.editObj?.dob.split(' ')[0]),
       physicallyDisabled: this.editObj?.isHandicaped ? 1 : 2
     });
-    this.getDistrict();
-    this.getTaluka();
-    this.getCenter();
-    this.getSchool();
-    this.getGender();
-    this.getReligion();
-    this.getStandard();
-    this.uploadAadhar = this.editObj?.documentResponse[1]?.docPath;
-    this.uploadImg = this.editObj?.documentResponse[0]?.docPath;
+    this.allDropdownMethods();
+    this.imageArray = this.editObj?.documentResponse;
+    let aadharObj = this.editObj?.documentResponse?.find((res: any) => res.documentId == 1);
+    let imageObj = this.editObj?.documentResponse?.find((res: any) => res.documentId == 2);
+    this.uploadAadhar = aadharObj?.docPath;
+    this.uploadImg = imageObj?.docPath;
     this.stuRegistrationForm.controls['photo'].setValue(this.uploadImg?.split('/').pop());
-    this.stuRegistrationForm.controls['aadharPhoto'].setValue(this.uploadAadhar?.split('/').pop());  
+    this.stuRegistrationForm.controls['aadharPhoto'].setValue(this.uploadAadhar?.split('/').pop());
   }
 
   //#region  ----------------------------------------------- Submit logic Start here ------------------------------------------------
@@ -256,11 +263,7 @@ export class AddUpdateStudentRegistrationComponent {
     this.ngxSpinner.show();
     let obj = this.stuRegistrationForm.value;
     let postObj = {
-      "createdBy": 0,
-      "modifiedBy": 0,
-      "createdDate": "2022-12-21T07:11:24.503Z",
-      "modifiedDate": "2022-12-21T07:11:24.503Z",
-      "isDeleted": true,
+      ... this.webService.createdByProps(),
       "id": this.editFlag ? this.editObj.id : 0,
       "fName": obj.fName || '',
       "f_MName": obj.f_MName || '',
@@ -286,7 +289,7 @@ export class AddUpdateStudentRegistrationComponent {
       "isOnlyMotherAlive": true,
       "isHandicaped": obj.physicallyDisabled == 1 ? true : false,
       "isHandicapedCertificate": true,
-      "timestamp": "2022-12-21T07:11:24.503Z",
+      "timestamp": new Date(),
       "localId": 0,
       "fatherFullName": obj.fatherFullName,
       "motherName": obj.motherName,
@@ -295,29 +298,19 @@ export class AddUpdateStudentRegistrationComponent {
         "id": 0,
         "studentId": this.editFlag ? this.editObj.id : 0,
         "fatherFullName": obj.fatherFullName || '',
-         "m_FatherFullName": '',
+        "m_FatherFullName": '',
         "motherName": obj.motherName || '',
-         "m_MotherName": '',
+        "m_MotherName": '',
         "mobileNo": obj.mobileNo
       },
-      "documentModel": [
-        {
-          "id": 0,
-          "studentId": this.editFlag ? this.editObj.id : 0,
-          "documentId": 1,
-          "docPath": this.uploadImg || ''
-        },
-        {
-          "id": 0,
-          "studentId": this.editFlag ? this.editObj.id : 0,
-          "documentId": 2,
-          "docPath": this.uploadAadhar || ''
-        }
-      ],
-      "lan": "string"
+      "documentModel": this.imageArray,
+      "lan": this.languageFlag
     }
 
     if (this.stuRegistrationForm.invalid) {
+      this.ngxSpinner.hide();
+      this.uploadImg ? this.imageFlag = false : this.imageFlag = true;
+      this.uploadAadhar ? this.aadhaarFlag = false : this.aadhaarFlag = true;
       return
     } else {
       let url = this.editFlag ? 'UpdateStudent' : 'AddStudent'
@@ -333,7 +326,7 @@ export class AddUpdateStudentRegistrationComponent {
             this.commonMethods.checkEmptyData(res.statusMessage) == false ? this.errors.handelError(res.statusCode) : this.commonMethods.snackBar(res.statusMessage, 1);
           }
         },
-        error: ((err: any) => {this.ngxSpinner.hide(); this.errors.handelError(err) })
+        error: ((err: any) => { this.ngxSpinner.hide(); this.errors.handelError(err) })
       });
     }
   }
@@ -342,17 +335,36 @@ export class AddUpdateStudentRegistrationComponent {
 
 
 
- 
 
-//#region ------------------------------------------- Image Logic Start Here -----------------------------------------------------------------
+
+  //#region ------------------------------------------- Image Logic Start Here -----------------------------------------------------------------
   fileUpload(event: any, name: string) {
     this.fileUpl.uploadDocuments(event, 'Upload', 'jpg, jpeg, png').subscribe((res: any) => {
-      if(res.statusCode == 200){
-        name == 'img' ? (this.uploadImg = res.responseData, this.stuRegistrationForm.controls['photo'].setValue(this.uploadImg.split('/').pop())) : (
-          this.uploadAadhar = res.responseData, this.stuRegistrationForm.controls['aadharPhoto'].setValue(this.uploadAadhar.split('/').pop()));
-      }else{
-        name == 'img' ? (this.uploadImg = '', this.imageFile.nativeElement.value='', this.stuRegistrationForm.controls['photo'].setValue('')) : (
-          this.uploadAadhar = '', this.aadharFile.nativeElement.value='', this.stuRegistrationForm.controls['aadharPhoto'].setValue(''));
+      if (res.statusCode == 200) {
+        if (name == 'img') {
+          this.uploadImg = res.responseData;
+          this.stuRegistrationForm.controls['photo'].setValue(this.uploadImg.split('/').pop());
+          let obj = {
+            "id": 0,
+            "studentId": this.editFlag ? this.editObj.id : 0,
+            "documentId": 1,
+            "docPath": this.uploadImg
+          }
+          this.imageArray.push(obj);
+        } else {
+          this.uploadAadhar = res.responseData;
+          this.stuRegistrationForm.controls['aadharPhoto'].setValue(this.uploadAadhar.split('/').pop());
+          let obj = {
+            "id": 0,
+            "studentId": this.editFlag ? this.editObj.id : 0,
+            "documentId": 2,
+            "docPath": this.uploadAadhar
+          }
+          this.imageArray.push(obj);
+        }
+      } else {
+        name == 'img' ? (this.uploadImg = '', this.imageFile.nativeElement.value = '', this.stuRegistrationForm.controls['photo'].setValue('')) : (
+          this.uploadAadhar = '', this.aadharFile.nativeElement.value = '', this.stuRegistrationForm.controls['aadharPhoto'].setValue(''));
       }
     });
   }
