@@ -116,7 +116,7 @@
                     <input type="file" id="real-file" (change)="fileUpload($event,'img')" hidden="hidden"
                         #uploadImage />
                     <mat-form-field appearance="outline" class="w-100 ">
-                        <mat-label>{{'Labels.UploadPhoto'| translate}}</mat-label>
+                        <mat-label>{{'Labels.uploadPhoto'| translate}}</mat-label>
                         <input matInput formControlName="photo">
                         <mat-icon matSuffix *ngIf="!stuRegistrationForm.value.photo">
                             <span class="material-symbols-outlined" (click)="uploadImage.click()">
