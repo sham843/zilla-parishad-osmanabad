@@ -78,7 +78,7 @@ export class LoginComponent {
             localStorage.setItem('loggedInData', JSON.stringify(logObj));
             sessionStorage.setItem('loggedIn', 'true');
             this.commonMethods.snackBar(res.statusMessage, 0)
-            this.router.navigateByUrl('/dashboard');
+            res.responseData?.pageLstModels.length > 0 ? this.router.navigateByUrl(res.responseData?.pageLstModels[0].pageURL) : this.router.navigateByUrl('/dashboard');
           } else {
             this.commonMethods.snackBar(res.statusMessage, 1)
           }
