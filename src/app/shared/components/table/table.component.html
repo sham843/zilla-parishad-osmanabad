@@ -44,7 +44,8 @@
         <tr mat-row *matRowDef="let row; columns: displayedColumns; let i=index" [ngClass]="{'highlightedRow ':highlightedRow == i}"></tr>
     </table>
 </div>
-<mat-paginator *ngIf="tableInfo?.tableData?.length!=0 && tableInfo?.pagintion" showFirstLastButtons [length]="tableSize"
+<!-- <mat-paginator *ngIf="tableInfo?.tableData?.length!=0 && tableInfo?.pagintion" showFirstLastButtons [length]="tableSize" -->
+    <mat-paginator *ngIf="tableInfo?.tableSize > 10 && tableInfo?.pagintion" showFirstLastButtons [length]="tableSize"
     (page)="action($event, 'Pagination')" [pageSizeOptions]="[10]" aria-label="Select page" class="m-0">
 </mat-paginator>
 
