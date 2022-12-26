@@ -42,6 +42,7 @@ export class AddUpdateTeacherRegistrationComponent {
   interDistrictTransferredArray = new Array();
   haveYouPassedComputerExamArray = new Array();
   isGraduatePayScaleArray = new Array();  
+  interDistrictTransferTypeArray = new Array();
  
 
   constructor(private masterService :MasterService, private commonMethod :CommonMethodsService, private errorHandler :ErrorsService,
@@ -63,16 +64,16 @@ export class AddUpdateTeacherRegistrationComponent {
   }
 
   formData(){
-    this.teacherRegForm =this.fb.group({            
+    this.teacherRegForm =this.fb.group({              
         "createdBy": 0,
         "modifiedBy": 0,
         "createdDate": new Date(),
         "modifiedDate": new Date(),
         "isDeleted": true,
-        "id": 0,
-        "name": [''],
-        "m_Name": [''],
-        "address": [''],
+        "id": [this.data ? this.data.id : 0],
+        "name": [this.data ? this.data.name :''],
+        "m_Name": [this.data ? this.data.m_Name :''],
+        "address": [this.data ? this.data.address :''],
         "stateId": 0,
         "districtId": 0,
         "talukaId": 0,
@@ -81,73 +82,63 @@ export class AddUpdateTeacherRegistrationComponent {
         "userTypeId": 0,
         "subUserTypeId": 0,
         "genderId": 0,
-        "mobileNo": [''],
-        "emailId": [''],
+        "mobileNo": [this.data ? this.data.mobileNo :''],
+        "emailId": [this.data ? this.data.emailId :''],
         "birthDate": new Date(),
-        "age": 0,
-        "currentAddress": [''],
-        "permentAddress": [''],
-        "lan": [''],
+        "age": [this.data ? this.data.age : 0],
+        "uploadImage": [''],
+        "currentAddress": [this.data ? this.data.currentAddress :''],
+        "permentAddress": [this.data ? this.data.permentAddress :''],
+        "lan": [this.data ? this.data.lan :''],
         "localID": 0,
-        "timestamp": new Date(),
-        teacherDetails: this.fb.array([
-          this.fb.group({
-            "createdBy": 0,
-            "modifiedBy": 0,
-            "createdDate": new Date(),
-            "modifiedDate": new Date(),
-            "isDeleted": true,
-            "id": 0,
-            "teacherId": 0,
-            "schoolId": 0,
-            "clusterId": 0,
-            "designationId": 0,
-            "graduate_SubjectId": 0,
-            "isGraduate_PayScale": true,
-            "castId": 0,
-            "castCategoryId": 0,
-            "castCertificateNo": [''],
-            "castCertificateOffice": [''],
-            "isCastVarificationDone": true,
-            "castValidityNoDate": [''],
-            "castverificationCommitteeName": [''],
-            "dateOfFirstAppoinmentService": new Date(),
-            "currentSchoolJoiningDate": new Date(),
-            "currentTalukaPresentDate": new Date(),
-            "retirementDate": new Date(),
-            "educationalQualificationId": 0,
-            "branchId12th": 0,
-            "degreeOptionalSubjectsId": 0,
-            "degreeUniversityId": 0,
-            "professionalQualificationId": 0,
-            "bEdPercentages": 0,
-            "bEdUniversityId": 0,
-            "husbandWife_Both_Service": true,
-            "husbandWife_OfficeName": [''],
-            "isDisabled": true,
-            "interDistrictTransferred": true,
-            "dateOFPresenceInterDistrictTransfer": [''],
-            "interDistrictTransferType": 0,
-            "theOriginalDistrictInterDistrictTransfer": 0,
-            "dateOfSeniority": [''],
-            "haveYouPassedComputerExam": true,
-            "namesAndTalukasAllSchoolsWorkedEarlier": ['']
-          })
-        ]),
-        "teacherDocument": [
-          {
-            "createdBy": 0,
-            "modifiedBy": 0,
-            "createdDate": new Date(),
-            "modifiedDate": new Date(),
-            "isDeleted": true,
-            "id": 0,
-            "teacherId": 0,
-            "documentId": 0,
-            "docPath": ['']
-          }
-        ]      
-      })
+        "timestamp": new Date(),   
+         teacherDetails:this.fb.group( {
+          "createdBy": 0,
+          "modifiedBy": 0,
+          "createdDate": new Date(),
+          "modifiedDate": new Date(),
+          "isDeleted": false,
+          "id": 0,
+          "teacherId": 0,
+          "districtId": 0,
+          "talukaId": 0,
+          "villageId": 0,
+          "schoolId": 0,
+          "clusterId": 0,
+          "designationId": 0,
+          "graduate_SubjectId": 0,
+          "isGraduate_PayScale": true,
+          "castId": 0,
+          "castCategoryId": 0,
+          "castCertificateNo": [this.data ? this.data.castCertificateNo :''],
+          "castCertificateOffice": [this.data ? this.data.castCertificateOffice :''],
+          "isCastVarificationDone": true,
+          "castValidityNoDate": [this.data ? this.data.castValidityNoDate :''],
+          "castverificationCommitteeName": [this.data ? this.data.castverificationCommitteeName :''],
+          "dateOfFirstAppoinmentService": new Date(),
+          "currentSchoolJoiningDate": new Date(),
+          "currentTalukaPresentDate": new Date(),
+          "retirementDate": new Date(),
+          "educationalQualificationId": 0,
+          "branchId12th": 0,
+          "degreeOptionalSubjectsId": 0,
+          "degreeUniversityId": 0,
+          "professionalQualificationId": 0,
+          "bEdPercentages": 0,
+          "bEdUniversityId": 0,
+          "husbandWife_Both_Service": true,
+          "husbandWife_OfficeName": [this.data ? this.data.husbandWife_OfficeName :''],
+          "isDisabled": true,
+          "interDistrictTransferred": true,
+          "dateOFPresenceInterDistrictTransfer": [this.data ? this.data.dateOFPresenceInterDistrictTransfer :''],
+          "interDistrictTransferType": 0,
+          "theOriginalDistrictInterDistrictTransfer": 0,
+          "dateOfSeniority": [this.data ? this.data.dateOfSeniority :''],
+          "haveYouPassedComputerExam": true,
+          "namesAndTalukasAllSchoolsWorkedEarlier": [this.data ? this.data.namesAndTalukasAllSchoolsWorkedEarlier :'']
+        })
+      // ]),
+    })
   }
 
   getGender() { 
@@ -372,6 +363,20 @@ export class AddUpdateTeacherRegistrationComponent {
       }
     })
   }
+
+  GetInterDistrictTransferType() { 
+    this.masterService.getProfessinalQualificationById('EN',).subscribe({
+      next: ((res: any) => {
+        if (res.statusCode == '200' && res.responseData.length) {
+          this.interDistrictTransferTypeArray = res.responseData;
+          console.log("interDistrictTransferTypeArray", this.interDistrictTransferTypeArray);
+          this.gethusbandWifeBothService();   
+        }
+      }), error: (error: any) => {
+        this.commonMethod.checkEmptyData(error.statusText) == false ? this.errorHandler.handelError(error.statusCode) : this.commonMethod.snackBar(error.statusText, 1);
+      }
+    })
+  }
   gethusbandWifeBothService(){
       this.husbandWifeBothServiceArray=[
         {id : 1 ,name :'yes' , husbandWife_Both_Service :true},
@@ -407,6 +412,8 @@ imgUpload(event: any) {
   this.fileUpload.uploadDocuments(event, 'Upload', 'jpg, jpeg, png').subscribe((res: any) => {
     this.uploadImg = res.responseData;
     this.showAddRemImg = true;
+    console.log("uploadImg",this.uploadImg);
+    
   });
 }
 
@@ -414,8 +421,7 @@ imgUpload(event: any) {
 
   OnSubmit(){
     console.log(this.teacherRegForm.value);
-    let formValue = this.teacherRegForm.value
-    return;
+    let formValue = this.teacherRegForm.value;
     formValue.docPath ? formValue.docPath = this.uploadImg : '';
       !this.showAddRemImg ? formValue.docPath = '' : formValue.docPath = formValue.docPath;
     let postObj = this.teacherRegForm.value;
@@ -442,7 +448,7 @@ imgUpload(event: any) {
     this.editFlag =true;
     this.editObj = obj;
     console.log("editObj",this.editObj);
-    return
+    // return
     this.data.docPath ? this.teacherRegForm.value.docPath = this.data.docPath : '';
     
     this.data.docPath ? this.showAddRemImg = true :  this.showAddRemImg = false;

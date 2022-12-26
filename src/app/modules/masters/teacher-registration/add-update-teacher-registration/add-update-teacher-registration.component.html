@@ -49,15 +49,15 @@
                     </mat-form-field>
                 </div>
                 <div class="col-sm">
-                    <mat-form-field appearance="outline" class="w-100 ">
+                    <!-- <mat-form-field appearance="outline" class="w-100 "> -->
                         <mat-label>Upload Photo</mat-label>
-                        <input matInput>
-                        <mat-icon matSuffix>
-                            <span class="material-symbols-outlined">
+                        <input type="file" formControlName="uploadImage" hidden="hidden" (change)="imgUpload($event)" #img>
+                        <mat-icon matSuffix >
+                            <span class="material-symbols-outlined" (click)="img.click()">
                                 upload
                             </span>
                         </mat-icon>
-                    </mat-form-field>
+                    <!-- </mat-form-field> -->
                 </div>
                 <div class="col-sm-4">
                     <mat-form-field appearance="outline" class="w-100">
@@ -73,7 +73,7 @@
                 <div class="col-sm-4">
                     <mat-form-field appearance="outline" class="w-100 ">
                         <mat-label>District</mat-label>
-                        <mat-select placeholder="Select">
+                        <mat-select placeholder="Select" formControlName="districtId">
                             <mat-option *ngFor="let distric of districtArray"
                             [value]="distric.id">{{distric.district}}</mat-option>
                             <!-- <mat-option value="two"> B.Tech Computer</mat-option> -->
@@ -83,7 +83,7 @@
                 <div class="col-sm-4">
                     <mat-form-field appearance="outline" class="w-100 ">
                         <mat-label>Taluka</mat-label>
-                        <mat-select placeholder="Select">
+                        <mat-select placeholder="Select" formControlName="talukaId">
                             <mat-option *ngFor="let taluka of talukaArray"
                             [value]="taluka.id">{{taluka.taluka}}</mat-option>
                             <!-- <mat-option value="two"> B.Tech Computer</mat-option> -->
@@ -93,7 +93,7 @@
                 <div class="col-sm-4">
                     <mat-form-field appearance="outline" class="w-100 ">
                         <mat-label>Village</mat-label>
-                        <mat-select placeholder="Select">
+                        <mat-select placeholder="Select" formControlName="villageId">
                             <mat-option *ngFor="let village of villageArray"
                             [value]="village.id">{{village.village}}</mat-option>
                             <!-- <mat-option value="two"> B.Tech Computer</mat-option> -->
@@ -118,24 +118,26 @@
 
             <mat-card-subtitle class="mb-2">Educational and Professional Details</mat-card-subtitle>
 
-            <div formArrayName="teacherDetails" *ngFor="let item of itemsForm.controls;let i = index;">
-            <div [formGroupName]="i">
+            <!-- <div formArrayName="teacherDetails" *ngFor="let item of itemsForm.controls;let i = index;"> -->
+            <div formGroupName="teacherDetails">
                 <div class="row">
                     <div class="col-sm-4">
                         <mat-form-field appearance="outline" class="w-100 ">
                             <mat-label>District</mat-label>
-                            <mat-select placeholder="Select">
-                                <mat-option value="one">Bsc Computer</mat-option>
-                                <mat-option value="two"> B.Tech Computer</mat-option>
+                            <mat-select placeholder="Select" formControlName="districtId">
+                                <mat-option *ngFor="let district of districtArray"
+                                [value]="district.id">{{district.district}}</mat-option>
+                                <!-- <mat-option value="two"> B.Tech Computer</mat-option> -->
                             </mat-select>
                         </mat-form-field>
                     </div>
                     <div class="col-sm-4">
                         <mat-form-field appearance="outline" class="w-100 ">
                             <mat-label>Taluka</mat-label>
-                            <mat-select placeholder="Select">
-                                <mat-option value="one">Bsc Computer</mat-option>
-                                <mat-option value="two"> B.Tech Computer</mat-option>
+                            <mat-select placeholder="Select" formControlName="talukaId">
+                                <mat-option *ngFor="let taluka of talukaArray"
+                                [value]="taluka.id">{{taluka.taluka}}</mat-option>
+                                <!-- <mat-option value="two"> B.Tech Computer</mat-option> -->
                             </mat-select>
                         </mat-form-field>
                     </div>
@@ -446,7 +448,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    <!-- </div> -->
         </mat-card-content>
         <mat-card-footer class="card-footer">
             <mat-card-actions align="end">
