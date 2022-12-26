@@ -121,10 +121,12 @@ export class AgencyRegistrationComponent {
   }
 
   onClear() {
+    if(this.filterForm.value.searchText !=null && this.filterForm.value.searchText != '' ){
     this.filterForm.reset();
     this.filterData();
     this.pageNumber = 1;
     this.getTableData();
+  }
   }
 
   childCompInfo(_obj: any) {
