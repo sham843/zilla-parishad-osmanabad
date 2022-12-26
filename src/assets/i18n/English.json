@@ -54,6 +54,7 @@
         "searchbyNameContactEmail" :"Search By Name/Contact/Email",
         "schoolRegistration" : "School Registration",
         "registerSchool" : "Register School",
+        "updateSchool" : "Update School",
         "schoolList" : "School List",
         "addSchool" : "Add School",
         "kendra" : "Kendra",
@@ -133,7 +134,9 @@
 
         "profile": "Profile",
         "changePwd": "Change Password",
-        "logout": "Logout"
+        "logout": "Logout",
+
+        "searchByNameContactNo" : "Search By Name/ContactNo"
 
         
     }
