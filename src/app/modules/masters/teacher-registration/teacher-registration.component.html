@@ -55,8 +55,8 @@
         </div>
     </mat-card-header>
     <mat-card-header class="card-header">
-        <div class="row gx-2">
-            <div class="col-sm-4">
+        <div class="row gx-2 w-100">
+            <div class="col-sm-auto">
                 <mat-form-field appearance="outline" class="w-100">
                     <mat-label>Search by Name/Contact/Email</mat-label>
                     <input matInput [formControl]="searchContent">
@@ -74,7 +74,7 @@
                     <input matInput>
                 </mat-form-field>
             </div> -->
-            <div class="col-sm-4">
+            <div class="col-sm-auto">
                 <button mat-flat-button class="btn-main" (click)="onFilterClick()">Filter</button>
                 <button mat-flat-button class="btn-second ms-2" (click)="clearFilterData()">Clear</button>
             </div>
