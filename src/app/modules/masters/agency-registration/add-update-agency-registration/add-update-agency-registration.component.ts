@@ -83,9 +83,13 @@ export class AddUpdateAgencyRegistrationComponent {
         error: ((err: any) => { this.errors.handelError(err) })
       })
     }
+    else if (this.agencyRegisterForm.invalid) {
+      this.common.snackBar(this.webStorageService.languageFlag == 'EN' ? 'Please Enter Mandatory Fields' : 'कृपया अनिवार्य फील्ड प्रविष्ट करा', 1)
+      return;
+    }
     else {
-      obj.emailId == obj.agency_EmailId  ? this.common.snackBar('Email Id & Agency Email Id Can Not Be Same',1) : '';
-      obj.contact_No == obj.agency_MobileNo ? this.common.snackBar('Contact Number & Agency Contact Number Can Not Be Same',1) :'';
+      obj.emailId == obj.agency_EmailId ? this.common.snackBar(this.webStorageService.languageFlag == 'EN' ? 'Email Id & Agency Email Id Can Not Be Same' : 'ईमेल आयडी आणि एजन्सीचा ईमेल आयडी एकच असू शकत नाही', 1) : '';
+      obj.contact_No == obj.agency_MobileNo ? this.common.snackBar(this.webStorageService.languageFlag == 'EN' ? 'Contact Number & Agency Contact Number Can Not Be Same' : 'संपर्क क्रमांक आणि एजन्सीचा संपर्क क्रमांक एकच असू शकत नाही', 1) : '';
       return;
     }
   }

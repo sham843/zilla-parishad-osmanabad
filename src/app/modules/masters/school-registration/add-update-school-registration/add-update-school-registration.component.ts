@@ -1,6 +1,7 @@
 import { Component, Inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { NgxSpinnerService } from 'ngx-spinner';
 import { ApiService } from 'src/app/core/services/api.service';
 import { CommonMethodsService } from 'src/app/core/services/common-methods.service';
 import { ErrorsService } from 'src/app/core/services/errors.service';
@@ -31,11 +32,17 @@ export class AddUpdateSchoolRegistrationComponent {
 
   constructor(private masterService: MasterService, private errors: ErrorsService, private fb: FormBuilder, private fileUpload: FileUploadService,
     private apiService: ApiService, private commonMethod: CommonMethodsService, @Inject(MAT_DIALOG_DATA) public data: any,
-    public dialogRef: MatDialogRef<AddUpdateSchoolRegistrationComponent>, public validationService: ValidationService, public webStorageS: WebStorageService) { }
+    public dialogRef: MatDialogRef<AddUpdateSchoolRegistrationComponent>, public validationService: ValidationService, public webStorageS: WebStorageService,
+    private ngxSpinner: NgxSpinnerService) { }
 
   ngOnInit() {
     this.formFeild();
     this.getDistrict();
+    this.getSchoolType();
+    this.getCategoryDes();
+    this.getSchoolMngDesc();
+    this. getGroupClass();
+    
 
     if (this.data) {
       this.onEdit();
@@ -67,7 +74,7 @@ export class AddUpdateSchoolRegistrationComponent {
       "lowestClass": 0,
       "highestClass": 0,
       "timesStamp": new Date(),
-      "docPath": [''],
+      "uploadImage": [''],
       "createdBy": data.createdBy,
       "createdDate": data.createdDate,
       "modifiedBy": data.modifiedBy,
@@ -76,6 +83,7 @@ export class AddUpdateSchoolRegistrationComponent {
     })
   }
 
+  //#region ---------------------------------------------- School Registration Dropdown start here ----------------------------------------// 
   getDistrict() {
     this.masterService.getAllDistrict(this.webStorageS.languageFlag).subscribe({
       next: (res: any) => {
@@ -155,59 +163,76 @@ export class AddUpdateSchoolRegistrationComponent {
       error: ((err: any) => { this.errors.handelError(err) })
     });
   }
+  //#endregion ------------------------------------------- School Registration Dropdown end here ----------------------------------------// 
 
+  //#region ------------------------------------------------- Upload Image start here --------------------------------------------// 
   imgUpload(event: any) {
     this.fileUpload.uploadDocuments(event, 'Upload', 'jpg, jpeg, png').subscribe((res: any) => {
-      this.uploadImg = res.responseData;
-      this.showAddRemImg = true;
+      if(res.statusCode == "200"){
+        this.uploadImg = res.responseData;
+        this.showAddRemImg = true;
+      }
+      else{
+        return
+      }
+      
     });
   }
+  //#endregionegion ------------------------------------------------- Upload Image end here --------------------------------------------// 
 
+  //#region ------------------------------------------------- Add/Update Record start here --------------------------------------------//
   onSubmit() {
     let formValue = this.schoolRegForm.value;
-    console.log("formValue : ", formValue);
+    formValue.uploadImage ? formValue.uploadImage = this.uploadImg : '';
+    !this.showAddRemImg ? formValue.uploadImage = '' : formValue.uploadImage = formValue.uploadImage;
 
-      formValue.docPath ? formValue.docPath = this.uploadImg : '';
-      !this.showAddRemImg ? formValue.docPath = '' : formValue.docPath = formValue.docPath;
-    
     let url;
     this.editFlag ? url = 'ZP-Osmanabad/School/Update' : url = 'ZP-Osmanabad/School/Add';
 
-    if(!this.schoolRegForm.valid){
-      console.log("Form Invalid");
-      
+    if (!this.schoolRegForm.valid) {
       return
     }
-    else{
+    else {
+      this.ngxSpinner.show();
       this.apiService.setHttp(this.editFlag ? 'put' : 'post', url, false, formValue, false, 'baseUrl');
-    this.apiService.getHttp().subscribe({
-      next: (res: any) => {
-        if (res.statusCode == "200") {
-          this.editFlag ? this.commonMethod.snackBar("Record Update Successfully", 0) : this.commonMethod.snackBar("Record Added Successfully", 0);
-          this.dialogRef.close('yes');
-        }
-      },
-      error: ((err: any) => { this.errors.handelError(err) })
-    });
+      this.apiService.getHttp().subscribe({
+        next: (res: any) => {
+          this.ngxSpinner.hide();
+          if (res.statusCode == "200") {
+            this.editFlag ? this.commonMethod.snackBar("Record Update Successfully", 0) : this.commonMethod.snackBar("Record Added Successfully", 0);
+            this.dialogRef.close('yes');
+          }
+          else{
+            this.commonMethod.checkEmptyData(res.statusMessage) == false ? this.errors.handelError(res.statusCode) : this.commonMethod.snackBar(res.statusMessage, 1);
+          }
+        },
+        error: ((err: any) => { 
+          this.ngxSpinner.hide();
+          this.commonMethod.checkEmptyData(err.statusMessage) == false ? this.errors.handelError(err.statusCode) : this.commonMethod.snackBar(err.statusMessage, 1);
+        })
+      });
     }
   }
+  //#endregiongion ------------------------------------------ Add/Update Record end here --------------------------------------------//
 
+  //#region ------------------------------------------------- Edit Record start here --------------------------------------------//
   onEdit() {
     this.editFlag = true;
-    console.log("editObj : ", this.data);
-
-    this.data.docPath ? this.schoolRegForm.value.docPath = this.data.docPath : '';
-    
-    this.data.docPath ? this.showAddRemImg = true :  this.showAddRemImg = false; 
+    this.data.uploadImage ? this.schoolRegForm.value.uploadImage = this.data.uploadImage : '';
+    this.data.uploadImage ? this.showAddRemImg = true : this.showAddRemImg = false;
     this.formFeild();
   }
+  //#endregiongion ---------------------------------------------- Edit Record end here --------------------------------------------//
 
-  clearImg(){
-    this.schoolRegForm.value.docPath = '';
-    this.f['docPath'].setValue('');
+  //#region ------------------------------------------------- Clear Img field start here --------------------------------------------//
+  clearImg() {
+    this.schoolRegForm.value.uploadImage = '';
+    this.f['uploadImage'].setValue('');
     this.showAddRemImg = false;
   }
+  //#endregionegion --------------------------------------------- Clear Img field end here --------------------------------------------//
 
+  //#region ----------------------------------------------- Clear dropdown on change start here --------------------------------------------//
   clearDropdown(dropdown: string) {
     this.editFlag = false;
     if (dropdown == 'Taluka') {
@@ -251,6 +276,6 @@ export class AddUpdateSchoolRegistrationComponent {
       this.groupclassArr = [];
     }
   }
-
+  //#endregiongion ----------------------------------------------- Clear dropdown on change end here --------------------------------------------//
 
 }

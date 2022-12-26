@@ -37,12 +37,12 @@
               <i class='bx bxs-file-pdf text-danger'></i>
             </div>
           </button>
-          <button mat-menu-item>
+          <!-- <button mat-menu-item>
             <div class="d-flex align-items-center justify-content-between w-100">
               <span>Excel</span>
               <i class='bx bxs-file text-primary'></i>
             </div>
-          </button>
+          </button> -->
         </mat-menu>
         <button mat-flat-button class="btn-main" (click)="addUpdateAgency()">
           <mat-icon>add</mat-icon>
@@ -55,8 +55,9 @@
     <div class="row w-100 gx-2">
       <div class="col-sm-auto">
         <mat-form-field appearance="outline" class="w-100">
-          <mat-label>{{'Labels.searchbyNameContactEmail'| translate}}</mat-label>
-          <input matInput placeholder="Search by Name/Contact/Email" [formControl]="searchContent">
+          <mat-label>{{'Labels.searchByNameContactNo'| translate}}</mat-label>
+          <input matInput placeholder="Search by Name/Contact" [formControl]="searchContent"
+          (keypress)="validators.noFirstSpaceAllow($event)">
 
         </mat-form-field>
       </div>

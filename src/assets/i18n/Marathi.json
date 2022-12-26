@@ -50,8 +50,9 @@
         "DesignationTypeReq":"पदनाम प्रकार आवश्यक आहे",
         "AddDesignation(Marathi)":"पदनाम जोडा (मराठी)",
         "DesignationTypeMarathiReq":"पदनाम प्रकार मराठी आवश्यक आहे",
-        "schoolRegistration" : "शाळेची नोंदणी",
-        "registerSchool" : "शाळेची नोंदणी करा",
+        "schoolRegistration" : "शाळेची नोंद",
+        "registerSchool" : "शाळेची नोंद करा",
+        "updateSchool" : "शाळेची नोंद अपडेट करा",
         "addSchool" : "शाळेची माहिती भरा",
         "kendra" : "केंद्र",
         "village" : "गाव",
@@ -109,7 +110,7 @@
         "readMore" : "पुढे वाचा",
         "officeUser" : "ऑफिस युजर",
         "addUser" : "युजरची माहिती भरा",
-        "searchByName" : "नावाने शोधा",
+        "searchByName" : "नावा द्वारे शोधा",
         "registerOfficeUsers" : "ऑफिस युजरची नोंदणी",
         "level" : "पातळी",
         "designation" : "पद (अधिकारी)",
@@ -131,6 +132,8 @@
         
         "profile": "प्रोफाइल",
         "changePwd": "पासवर्ड बदला",
-        "logout": "बाहेर पडणे"
+        "logout": "बाहेर पडणे",
+
+        "searchByNameContactNo" : "नाव/संपर्क क्र.द्वारे शोधा"
     }
 }

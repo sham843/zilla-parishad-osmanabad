@@ -105,6 +105,7 @@ export class AgencyRegistrationComponent {
   }
 
   downloadPdf() {
+    if(this.agencyReport.length){
     this.getTableData('reportFlag')
     let keyPDFHeader = ['SrNo', "Name", "Contact No.", "Email Id"];
     let ValueData =
@@ -117,6 +118,10 @@ export class AgencyRegistrationComponent {
       'createdDate': 'Created on:' + new Date()
     }
     this.downloadPdfservice.downLoadPdf(keyPDFHeader, ValueData, objData);
+  }
+  else{
+    this.common.snackBar('No Record Found',1)
+  }
 
   }
 

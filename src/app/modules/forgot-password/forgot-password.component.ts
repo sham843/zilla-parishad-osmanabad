@@ -15,8 +15,8 @@ import { ValidationService } from 'src/app/core/services/validation.service';
 export class ForgotPasswordComponent {
   hide = true;
   hide1 = true;
-  sendOtpFlag : boolean = false;
-  verifyOtpflag : boolean = false;
+  sendOtpFlag: boolean = false;
+  verifyOtpflag: boolean = false;
   mobileField: boolean = true;
   otpField: boolean = false;
   passwordField: boolean = false;
@@ -95,7 +95,7 @@ export class ForgotPasswordComponent {
       this.apiService.setHttp('post', 'api/OtpTran', false, this.obj, false, 'baseUrl');
       this.apiService.getHttp().subscribe({
         next: (res: any) => {
-          res.statusCode == 200 ? (this.common.snackBar(res.statusMessage, 0),this.setFlag(flag), this.startTimer()) : this.common.snackBar(res.statusMessage, 1);
+          res.statusCode == 200 ? (this.common.snackBar(res.statusMessage, 0), this.setFlag(flag), this.startTimer()) : this.common.snackBar(res.statusMessage, 1);
         },
         error: ((err: any) => { this.errors.handelError(err) })
       })
@@ -104,13 +104,13 @@ export class ForgotPasswordComponent {
 
   pauseTimer() {
     clearInterval(this.interval);
-   this.fcMobile['mobileNo'].setValue('');
-   this.otpForm.reset();
+    this.fcMobile['mobileNo'].setValue('');
+    this.otpForm.reset();
   }
 
-  setFlag(flag? :any){
-   this.sendOtpFlag || flag == 'resend' ?(this.mobileField = false, this.otpField = true, this.otpStatus = true) :'';
-   this.verifyOtpflag ? (this.mobileField = false, this.otpField = false, this.passwordField = true):'';
+  setFlag(flag?: any) {
+    this.sendOtpFlag || flag == 'resend' ? (this.mobileField = false, this.otpField = true, this.otpStatus = true) : '';
+    this.verifyOtpflag ? (this.mobileField = false, this.otpField = false, this.passwordField = true) : '';
   }
 
   verifyOtp() {
@@ -123,7 +123,7 @@ export class ForgotPasswordComponent {
       this.apiService.setHttp('post', 'api/OtpTran/VerifyOTP', false, this.obj, false, 'baseUrl');
       this.apiService.getHttp().subscribe({
         next: (res: any) => {
-          res.statusCode == 200 ? (this.common.snackBar(res.statusMessage, 0), this.setFlag(), clearInterval(this.interval), this.pauseTimer()) : (this.common.snackBar(res.statusMessage, 1), this.timeLeft = 0);
+          res.statusCode == 200 ? (this.common.snackBar(res.statusMessage, 0), this.setFlag(), clearInterval(this.interval), this.pauseTimer()) : (this.common.snackBar(res.statusMessage, 1), this.otpForm.reset());
         },
         error: ((err: any) => { this.errors.handelError(err) })
       })
@@ -146,7 +146,7 @@ export class ForgotPasswordComponent {
       })
     }
     else {
-      this.passwordForm.invalid? this.common.snackBar('Please Enter New Password & Confirm Password', 1): this.common.snackBar('New Password & Confirm Password Did Not Match', 1)
+      this.passwordForm.invalid ? this.common.snackBar('Please Enter New Password & Confirm Password', 1) : this.common.snackBar('New Password & Confirm Password Did Not Match', 1)
     }
   }
 }
