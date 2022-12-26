@@ -67,6 +67,8 @@ export class TeacherRegistrationComponent {
           this.tableDataArray = res.responseData.responseData1;
           this.totalCount = res.responseData.responseData2.pageCount;
           tableDatasize = res.responseData.responseData2.pageCount;
+          console.log("tableDatasize teavche resppp", tableDatasize);
+
         } else {
           this.tableDataArray = [];
           tableDatasize = 0;

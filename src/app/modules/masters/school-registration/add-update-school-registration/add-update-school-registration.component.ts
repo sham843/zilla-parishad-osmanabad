@@ -1,6 +1,7 @@
 import { Component, Inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { NgxSpinnerService } from 'ngx-spinner';
 import { ApiService } from 'src/app/core/services/api.service';
 import { CommonMethodsService } from 'src/app/core/services/common-methods.service';
 import { ErrorsService } from 'src/app/core/services/errors.service';
@@ -31,7 +32,8 @@ export class AddUpdateSchoolRegistrationComponent {
 
   constructor(private masterService: MasterService, private errors: ErrorsService, private fb: FormBuilder, private fileUpload: FileUploadService,
     private apiService: ApiService, private commonMethod: CommonMethodsService, @Inject(MAT_DIALOG_DATA) public data: any,
-    public dialogRef: MatDialogRef<AddUpdateSchoolRegistrationComponent>, public validationService: ValidationService, public webStorageS: WebStorageService) { }
+    public dialogRef: MatDialogRef<AddUpdateSchoolRegistrationComponent>, public validationService: ValidationService, public webStorageS: WebStorageService,
+    private ngxSpinner: NgxSpinnerService) { }
 
   ngOnInit() {
     this.formFeild();
@@ -167,28 +169,34 @@ export class AddUpdateSchoolRegistrationComponent {
     let formValue = this.schoolRegForm.value;
     console.log("formValue : ", formValue);
 
-      formValue.docPath ? formValue.docPath = this.uploadImg : '';
-      !this.showAddRemImg ? formValue.docPath = '' : formValue.docPath = formValue.docPath;
-    
+    formValue.docPath ? formValue.docPath = this.uploadImg : '';
+    !this.showAddRemImg ? formValue.docPath = '' : formValue.docPath = formValue.docPath;
+
     let url;
     this.editFlag ? url = 'ZP-Osmanabad/School/Update' : url = 'ZP-Osmanabad/School/Add';
 
-    if(!this.schoolRegForm.valid){
-      console.log("Form Invalid");
-      
+    if (!this.schoolRegForm.valid) {
       return
     }
-    else{
+    else {
+      this.ngxSpinner.show();
       this.apiService.setHttp(this.editFlag ? 'put' : 'post', url, false, formValue, false, 'baseUrl');
-    this.apiService.getHttp().subscribe({
-      next: (res: any) => {
-        if (res.statusCode == "200") {
-          this.editFlag ? this.commonMethod.snackBar("Record Update Successfully", 0) : this.commonMethod.snackBar("Record Added Successfully", 0);
-          this.dialogRef.close('yes');
-        }
-      },
-      error: ((err: any) => { this.errors.handelError(err) })
-    });
+      this.apiService.getHttp().subscribe({
+        next: (res: any) => {
+          this.ngxSpinner.hide();
+          if (res.statusCode == "200") {
+            this.editFlag ? this.commonMethod.snackBar("Record Update Successfully", 0) : this.commonMethod.snackBar("Record Added Successfully", 0);
+            this.dialogRef.close('yes');
+          }
+          else{
+            this.commonMethod.checkEmptyData(res.statusMessage) == false ? this.errors.handelError(res.statusCode) : this.commonMethod.snackBar(res.statusMessage, 1);
+          }
+        },
+        error: ((err: any) => { 
+          this.ngxSpinner.hide();
+          this.commonMethod.checkEmptyData(err.statusMessage) == false ? this.errors.handelError(err.statusCode) : this.commonMethod.snackBar(err.statusMessage, 1);
+        })
+      });
     }
   }
 
@@ -197,12 +205,12 @@ export class AddUpdateSchoolRegistrationComponent {
     console.log("editObj : ", this.data);
 
     this.data.docPath ? this.schoolRegForm.value.docPath = this.data.docPath : '';
-    
-    this.data.docPath ? this.showAddRemImg = true :  this.showAddRemImg = false; 
+
+    this.data.docPath ? this.showAddRemImg = true : this.showAddRemImg = false;
     this.formFeild();
   }
 
-  clearImg(){
+  clearImg() {
     this.schoolRegForm.value.docPath = '';
     this.f['docPath'].setValue('');
     this.showAddRemImg = false;
