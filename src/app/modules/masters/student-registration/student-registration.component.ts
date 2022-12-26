@@ -1,10 +1,12 @@
 import { Component } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
+import { NgxSpinnerService } from 'ngx-spinner';
 import { ApiService } from 'src/app/core/services/api.service';
 import { CommonMethodsService } from 'src/app/core/services/common-methods.service';
 import { DownloadPdfExcelService } from 'src/app/core/services/download-pdf-excel.service';
 import { ErrorsService } from 'src/app/core/services/errors.service';
+import { ValidationService } from 'src/app/core/services/validation.service';
 import { WebStorageService } from 'src/app/core/services/web-storage.service';
 import { GlobalDialogComponent } from 'src/app/shared/components/global-dialog/global-dialog.component';
 import { AddUpdateStudentRegistrationComponent } from './add-update-student-registration/add-update-student-registration.component';
@@ -28,8 +30,8 @@ export class StudentRegistrationComponent {
 
   displayedColumns = ['docPath', 'srNo', 'fullName', 'standard', 'parentMobileNo', 'gender', 'action'];
   marathiDisplayedColumns = ['docPath', 'srNo', 'm_FullName', 'm_Standard', 'parentMobileNo', 'm_Gender', 'action'];
-  displayedheaders = ['#', 'Sr.No.', 'Name', 'Standard', 'Parents Contact No.', 'Gender', 'action'];
-  marathiDisplayedheaders = ['#', 'अनुक्रमांक', 'नाव', 'वर्ग', 'पालक संपर्क क्र', 'लिंग', 'क्रिया'];
+  displayedheaders = ['#', 'Sr No.', 'Name', 'Standard', 'Parents Contact No.', 'Gender', 'action'];
+  marathiDisplayedheaders = ['#', 'अनुक्रमांक', 'नाव', 'वर्ग', 'पालक संपर्क क्र', 'लिंग', 'कृती'];
   constructor(
     private dialog: MatDialog,
     private apiService: ApiService,
@@ -37,12 +39,12 @@ export class StudentRegistrationComponent {
     private commonMethods: CommonMethodsService,
     private webService: WebStorageService,
     private downloadPdfservice: DownloadPdfExcelService,
+    private ngxSpinner : NgxSpinnerService,
+    public validators: ValidationService
   ) { }
 
   ngOnInit() {
     this.languageFlag = this.webService.languageFlag;
-    console.log(this.languageFlag);
-
     this.getTableData();
     this.languageChange();
   }
@@ -50,14 +52,13 @@ export class StudentRegistrationComponent {
   onPagintion(pageNo: number) {
     this.pageNumber = pageNo;
     this.getTableData();
-
   }
+
+  //#region ----------------------------------------------------- Language Change Logic Start here -----------------------------------------------
 
   languageChange() {
     this.webService.langNameOnChange.subscribe(lang => {
       this.languageFlag = lang;
-      console.log(this.languageFlag);
-
       let tableData = {
         pageNumber: this.pageNumber,
         img: '', blink: '', badge: '', isBlock: '', pagintion: true,
@@ -70,8 +71,17 @@ export class StudentRegistrationComponent {
     });
   }
 
+  //#endregion ----------------------------------------------------- Language Change Logic End here -----------------------------------------------
+
+  //#region ----------------------------------------------------- Get Table Data Logic Start here -----------------------------------------------
+
   getTableData(flag?: string) {
+    this.ngxSpinner.show();
     this.pageNumber = flag == 'filter' ? 1 : this.pageNumber;
+    if(flag == 'filter' && !this.searchContent.value){
+      this.ngxSpinner.hide();
+      return
+    }
     this.tableDataArray = new Array();
     let pageNo
     this.cardViewFlag ? pageNo = (this.cardCurrentPage + 1) : (pageNo = this.pageNumber, this.cardCurrentPage = 0);
@@ -81,6 +91,7 @@ export class StudentRegistrationComponent {
     this.apiService.getHttp().subscribe({
       next: (res: any) => {
         if (res.statusCode == 200) {
+          this.ngxSpinner.hide();
           this.tableDataArray = res.responseData.responseData1;
           this.totalCount = res.responseData.responseData2.pageCount;
           this.tableDatasize = res.responseData.responseData2.pageCount;
@@ -103,6 +114,7 @@ export class StudentRegistrationComponent {
           });
 
         } else {
+          this.ngxSpinner.hide();
           this.tableDataArray = [];
           this.tableDatasize = 0;
         }
@@ -124,8 +136,27 @@ export class StudentRegistrationComponent {
         this.apiService.tableData.next(tableData);
 
       },
-      error: ((err: any) => { this.errors.handelError(err) })
+      error: ((err: any) => {this.ngxSpinner.hide(); this.errors.handelError(err) })
     });
+  }
+
+  //#endregion ----------------------------------------------------- Get Table Data Logic End here -----------------------------------------------
+
+
+
+  childTableCompInfo(obj: any) {
+    switch (obj.label) {
+      case 'Pagination':
+        this.pageNumber = obj.pageNumber;
+        this.getTableData();
+        break;
+      case 'Edit':
+        this.addUpdateAgency(obj);
+        break;
+      case 'Delete':
+        this.deteleDialogOpen(obj);
+        break;
+    }
   }
 
   addUpdateAgency(obj?: any) {
@@ -138,17 +169,78 @@ export class StudentRegistrationComponent {
       autoFocus: false
     });
     dialogRef.afterClosed().subscribe((result: any) => {
-      console.log(this.pageNumber);
-      console.log(result);
       if (result == 'yes' && obj) {
         this.pageNumber = obj.pageNumber || 1;
       } else if (result == 'yes') {
         this.pageNumber = 1;
       }
       this.getTableData();
-
     });
   }
+
+
+  childGridCompInfo(obj: any) {
+    if (obj.label = 'Pagination') {
+      this.pageNumber = obj.pageNumber;
+      this.getTableData();
+    }
+
+  }
+
+  onPageChanged(event: any) {
+    this.cardCurrentPage = event.pageIndex;
+    this.selectGrid('Card');
+  }
+
+  selectGrid(label: string) {
+    if (label == 'Table') {
+      this.cardViewFlag = false;
+      this.pageNumber = 1;
+      this.getTableData()
+    } else if (label == 'Card')
+      this.cardCurrentPage = 0;
+    this.cardViewFlag = true;
+    this.cardCurrentPage = this.cardCurrentPage;
+    this.getTableData();
+  }
+
+  clearForm() {
+    this.searchContent.setValue('');
+    this.getTableData();
+  }
+
+  downloadPdf() {
+    this.getTableData('reportFlag')
+    let keyPDFHeader = ['SrNo', "ID", "Full Name", "Gender", "Contact No.", "Standard", "School Name", "Caste", "Taluka", "Center"];
+    let ValueData =
+      this.studentData.reduce(
+        (acc: any, obj: any) => [...acc, Object.values(obj).map((value) => value)], []
+      );// Value Name
+    console.log("ValueData", ValueData);
+    let objData: any = {
+      'topHedingName': 'Student Report',
+      'createdDate': 'Created on:' + new Date()
+    }
+    this.downloadPdfservice.downLoadPdf(keyPDFHeader, ValueData, objData);
+  }
+
+
+  openViewDilog(obj: any) {
+    const viewDialogRef = this.dialog.open(StudentDetailsComponent, {
+      width: '950px',
+      height: '650px',
+      data: obj,
+      disableClose: true,
+      autoFocus: false
+    });
+    viewDialogRef.afterClosed().subscribe((result: any) => {
+      if (result == 'yes') {
+        console.log(result);
+      }
+    })
+  }
+
+  //#region -------------------------------------------------- Delete Logic Start Here ------------------------------------------------------
 
   deteleDialogOpen(obj: any) {
     let dialoObj = {
@@ -193,81 +285,6 @@ export class StudentRegistrationComponent {
 
   }
 
-  childTableCompInfo(obj: any) {
-    switch (obj.label) {
-      case 'Pagination':
-        this.pageNumber = obj.pageNumber;
-        this.getTableData();
-        break;
-      case 'Edit':
-        this.addUpdateAgency(obj);
-        break;
-      case 'Delete':
-        this.deteleDialogOpen(obj);
-        break;
-    }
-  }
-
-  childGridCompInfo(obj: any) {
-    if (obj.label = 'Pagination') {
-      this.pageNumber = obj.pageNumber;
-      this.getTableData();
-    }
-
-  }
-
-  onPageChanged(event: any) {
-    this.cardCurrentPage = event.pageIndex;
-    this.selectGrid('Card');
-  }
-
-  selectGrid(label: string) {
-    if (label == 'Table') {
-      this.cardViewFlag = false;
-      this.pageNumber = 1;
-      this.getTableData()
-    } else if (label == 'Card')
-      this.cardCurrentPage = 0;
-    this.cardViewFlag = true;
-    this.cardCurrentPage = this.cardCurrentPage;
-    this.getTableData();
-  }
-
-  clearForm() {
-    this.searchContent.setValue('');
-    this.getTableData();
-  }
-
-  downloadPdf() {
-    this.getTableData('reportFlag')
-    let keyPDFHeader = ['SrNo', "ID", "Full Name", "Gender", "Contact No.", "Standard", "School Name", "Caste", "Taluka", "Center"];
-    let ValueData =
-      this.studentData.reduce(
-        (acc: any, obj: any) => [...acc, Object.values(obj).map((value) => value)], []
-      );// Value Name
-    console.log("ValueData", ValueData);
-
-    let objData: any = {
-      'topHedingName': 'Student Report',
-      'createdDate': 'Created on:' + new Date()
-    }
-    this.downloadPdfservice.downLoadPdf(keyPDFHeader, ValueData, objData);
-  }
-
-
-  openViewDilog(obj: any) {
-    const viewDialogRef = this.dialog.open(StudentDetailsComponent, {
-      width: '950px',
-      height: '650px',
-      data: obj,
-      disableClose: true,
-      autoFocus: false
-    });
-    viewDialogRef.afterClosed().subscribe((result: any) => {
-      if (result == 'yes') {
-        console.log(result);
-      }
-    })
-  }
+  //#endregion -------------------------------------------------- Delete Logic End Here ------------------------------------------------------
 
 }

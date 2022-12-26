@@ -123,7 +123,7 @@ export class ForgotPasswordComponent {
       this.apiService.setHttp('post', 'api/OtpTran/VerifyOTP', false, this.obj, false, 'baseUrl');
       this.apiService.getHttp().subscribe({
         next: (res: any) => {
-          res.statusCode == 200 ? (this.common.snackBar(res.statusMessage, 0), this.setFlag(), clearInterval(this.interval), this.pauseTimer()) : (this.common.snackBar(res.statusMessage, 1), this.timeLeft = 0);
+          res.statusCode == 200 ? (this.common.snackBar(res.statusMessage, 0), this.setFlag(), clearInterval(this.interval), this.pauseTimer()) : (this.common.snackBar(res.statusMessage, 1),this.otpForm.reset());
         },
         error: ((err: any) => { this.errors.handelError(err) })
       })
