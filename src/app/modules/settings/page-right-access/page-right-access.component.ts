@@ -133,21 +133,20 @@ export class PageRightAccessComponent {
 
   resetFilter(){
     this.assignUserRightsForm();
-    this.getUserType();
     this.pageNumber == 1;
     this.initialLoadFlag = true;
+    this.UserTypeArr = [];
+    this.SubUserTypeArr = [];
   }
 
   childCompInfo(obj: any) {
-    console.log(obj);
-    
     switch (obj.label) {
       case 'Pagination':
         this.pageNumber = obj.pageNumber;
         this.getUserRightPageList();
         break;
       case 'checkBox':
-        let req = {
+        let req = [{
           ...this.webStorage.createdByProps(),
           "id": obj.id,
           "userTypeId": obj.userTypeId,
@@ -155,7 +154,7 @@ export class PageRightAccessComponent {
           "readRight": obj?.checkBoxValue,
           "writeRight": false,
           "pageId": obj.pageId
-        }
+        }]
         this.apiService.setHttp('post', 'api/UserPages/AddRecord', false, req, false, 'baseUrl');
         this.apiService.getHttp().subscribe({
           next: ((res: any) => {

@@ -73,7 +73,7 @@ export class TeacherRegistrationComponent {
           this.tableDataArray = [];
           tableDatasize = 0;
         }
-        let displayedColumns = ['srNo', 'name', 'mobileNo', 'emailId', ' ', 'taluka', 'action'];
+        let displayedColumns = ['srNo', 'name', 'mobileNo', 'emailId', 'village', 'taluka', 'action'];
         let displayedheaders = ['Sr. No.', 'Name', 'Contact No.', 'Email ID', 'Village', 'Taluka', 'action'];
         let tableData = {
           pageNumber: this.pageNumber,
