@@ -38,29 +38,35 @@
                             <mat-option *ngFor="let tal of talukaArr" [value]="tal.id">{{languageFlag == 'EN' ?
                                 tal.taluka:tal.m_Taluka }}</mat-option>
                         </mat-select>
-                        <mat-error *ngIf="fc['talukaId'].hasError('required')">Select Taluka</mat-error>
+                        <mat-error *ngIf="fc['talukaId'].hasError('required')">
+                           {{'Labels.pleaseSelectTaluka'| translate  }}
+                        </mat-error>
                     </mat-form-field>
                 </div>
                 <div class="col-sm-4">
                     <mat-form-field appearance="outline" class="w-100 ">
-                        <mat-label>{{'Labels.Kendra'| translate}}</mat-label>
+                        <mat-label>{{'Labels.kendra'| translate}}</mat-label>
                         <mat-select placeholder="select" formControlName="centerId">
                             <mat-option *ngFor="let cen of centerArr" [value]="cen.id">{{languageFlag == 'EN'
                                 ?cen.center:cen.m_Center}}</mat-option>
                         </mat-select>
-                        <mat-error *ngIf="fc['centerId'].hasError('required')">Select Kendra</mat-error>
+                        <mat-error *ngIf="fc['centerId'].hasError('required')">
+                            {{'Labels.pleaseSelectCenter'| translate  }}
+                        </mat-error>
                     </mat-form-field>
                 </div>
             </div>
             <div class="row">
                 <div class="col-sm-4">
                     <mat-form-field appearance="outline" class="w-100 ">
-                        <mat-label>{{'Labels.SchoolList'| translate}}</mat-label>
+                        <mat-label>{{'Labels.schoolList'| translate}}</mat-label>
                         <mat-select placeholder="select" formControlName="schoolId">
                             <mat-option *ngFor="let sch of schoolArr" [value]="sch.id">{{languageFlag == 'EN' ?
                                 sch.schoolType:sch. m_SchoolType}}</mat-option>
                         </mat-select>
-                        <mat-error *ngIf="fc['schoolId'].hasError('required')">Select School</mat-error>
+                        <mat-error *ngIf="fc['schoolId'].hasError('required')">
+                            {{'Labels.pleaseSelectSchool'| translate  }}
+                        </mat-error>
                     </mat-form-field>
                 </div>
                 <div class="col-sm-4">

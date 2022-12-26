@@ -210,8 +210,10 @@ export class AddUpdateStudentRegistrationComponent {
 
   fileUpload(event: any, name: string) {
     this.fileUpl.uploadDocuments(event, 'Upload', 'jpg, jpeg, png').subscribe((res: any) => {
-      name == 'img' ? (this.uploadImg = res.responseData, this.stuRegistrationForm.controls['photo'].setValue(this.uploadImg.split('/').pop())) : (
-        this.uploadAadhar = res.responseData, this.stuRegistrationForm.controls['aadharPhoto'].setValue(this.uploadAadhar.split('/').pop()));
+      if(res.statusCode == 200){
+        name == 'img' ? (this.uploadImg = res.responseData, this.stuRegistrationForm.controls['photo'].setValue(this.uploadImg.split('/').pop())) : (
+          this.uploadAadhar = res.responseData, this.stuRegistrationForm.controls['aadharPhoto'].setValue(this.uploadAadhar.split('/').pop()));
+      }
     });
   }
 
@@ -244,8 +246,8 @@ export class AddUpdateStudentRegistrationComponent {
     this.getStandard();
     this.uploadAadhar = this.editObj?.documentResponse[1]?.docPath;
     this.uploadImg = this.editObj?.documentResponse[0]?.docPath;
-    this.stuRegistrationForm.controls['photo'].setValue(this.uploadImg.split('/').pop());
-    this.stuRegistrationForm.controls['aadharPhoto'].setValue(this.uploadAadhar.split('/').pop());
+    this.stuRegistrationForm.controls['photo'].setValue(this.uploadImg?.split('/').pop());
+    this.stuRegistrationForm.controls['aadharPhoto'].setValue(this.uploadAadhar?.split('/').pop());
    
 
   }

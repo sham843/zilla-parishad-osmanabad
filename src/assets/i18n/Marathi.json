@@ -30,6 +30,8 @@
         "contactNumberIsRequired" : "संपर्क क्रमांक आवश्यक आहे",
         "emailIdIsRequired" :"ईमेल आयडी आवश्यक आहे",
         "pleaseSelectTaluka" : "कृपया तालुका निवडा",
+        "pleaseSelectCenter" : "कृपया केंद्र निवडा",
+        "pleaseSelectSchool" : "कृपया शाळा निवडा",
         "addressIsRequired" : "पत्ता आवश्यक आहे",
         "maximummLength500Characters": "कमाल लांबी 500 वर्णांपेक्षा कमी असावी",
         "clear":"रद्द करा",
