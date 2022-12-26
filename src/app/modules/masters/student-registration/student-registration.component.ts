@@ -36,7 +36,8 @@ export class StudentRegistrationComponent {
     private errors: ErrorsService,
     private commonMethods: CommonMethodsService,
     private webService: WebStorageService,
-    private downloadPdfservice: DownloadPdfExcelService) { }
+    private downloadPdfservice: DownloadPdfExcelService,
+    ) { }
 
   ngOnInit() {
     this.languageFlag = this.webService.languageFlag;
@@ -55,20 +56,22 @@ export class StudentRegistrationComponent {
   languageChange() {
     this.webService.langNameOnChange.subscribe(lang => {
       this.languageFlag = lang;  
+      console.log(this.languageFlag);
+      
       let tableData = {
         pageNumber: this.pageNumber,
         img: '', blink: '', badge: '', isBlock: '', pagintion: true,
-        displayedColumns: this.languageFlag == 'EN' ? this.displayedColumns : this.marathiDisplayedColumns,
+        displayedColumns: this.languageFlag == 'English' ? this.displayedColumns : this.marathiDisplayedColumns,
         tableData: this.tableDataArray,
         tableSize: this.tableDatasize,
-        tableHeaders: this.languageFlag == 'EN' ? this.displayedheaders : this.marathiDisplayedheaders
+        tableHeaders: this.languageFlag == 'English' ? this.displayedheaders : this.marathiDisplayedheaders
       };
       this.apiService.tableData.next(tableData);
     });
   }
 
   getTableData(flag?: string) {
-
+    
     this.pageNumber = flag == 'filter' ? 1 : this.pageNumber;
     this.tableDataArray = new Array();
     let pageNo
@@ -88,14 +91,14 @@ export class StudentRegistrationComponent {
             let obj = {
               srNo: i + 1,
               id: ele.id,
-              fullName: this.languageFlag == 'EN' ? ele.fullName : ele.m_FullName,
-              gender: this.languageFlag == 'EN' ? ele.gender : ele.m_Gender,
+              fullName: this.languageFlag == 'English' ? ele.fullName : ele.m_FullName,
+              gender: this.languageFlag == 'English' ? ele.gender : ele.m_Gender,
               mobileNo: ele.parentMobileNo,
-              standard: this.languageFlag == 'EN' ? ele.standard : ele.m_Standard,
-              schoolName: this.languageFlag == 'EN' ? ele.schoolName : ele.m_SchoolName,
-              caste: this.languageFlag == 'EN' ? ele.caste : ele.m_Caste,
-              taluka: this.languageFlag == 'EN' ? ele.taluka : ele.m_Taluka,
-              center: this.languageFlag == 'EN' ? ele.center : ele.m_Center,
+              standard: this.languageFlag == 'English' ? ele.standard : ele.m_Standard,
+              schoolName: this.languageFlag == 'English' ? ele.schoolName : ele.m_SchoolName,
+              caste: this.languageFlag == 'English' ? ele.caste : ele.m_Caste,
+              taluka: this.languageFlag == 'English' ? ele.taluka : ele.m_Taluka,
+              center: this.languageFlag == 'English' ? ele.center : ele.m_Center,
             }            
             this.studentData.push(obj);
           });
@@ -108,10 +111,10 @@ export class StudentRegistrationComponent {
           let tableData = {
             pageNumber: this.pageNumber,
             img: 'docPath', blink: '', badge: '', isBlock: '', pagintion: this.tableDatasize > 10 ? true : false,
-            displayedColumns: this.languageFlag == 'EN' ? this.displayedColumns : this.marathiDisplayedColumns,
+            displayedColumns: this.languageFlag == 'English' ? this.displayedColumns : this.marathiDisplayedColumns,
             tableData: this.tableDataArray,
             tableSize: this.tableDatasize,
-            tableHeaders: this.languageFlag == 'EN' ? this.displayedheaders : this.marathiDisplayedheaders
+            tableHeaders: this.languageFlag == 'English' ? this.displayedheaders : this.marathiDisplayedheaders
           };
   
           this.tableDataForcard = {
@@ -137,7 +140,6 @@ export class StudentRegistrationComponent {
     });
     dialogRef.afterClosed().subscribe((result: any) => {
       console.log(this.pageNumber);
-
       console.log(result);
       if (result == 'yes' && obj) {
         this.pageNumber = obj.pageNumber || 1;
@@ -151,10 +153,10 @@ export class StudentRegistrationComponent {
 
   deteleDialogOpen(obj: any) {
     let dialoObj = {
-      header: this.languageFlag == 'EN' ? 'Delete' : 'हटवा',
-      title: this.languageFlag == 'EN' ? 'Do you want to delete Student record?' :'तुम्हाला विद्यार्थी रेकॉर्ड हटवायचा आहे का?',
-      cancelButton: this.languageFlag == 'EN' ? 'Cancel':'रद्द करा',
-      okButton: this.languageFlag == 'EN' ? 'Ok':'ओके'
+      header: this.languageFlag == 'English' ? 'Delete' : 'हटवा',
+      title: this.languageFlag == 'English' ? 'Do you want to delete Student record?' :'तुम्हाला विद्यार्थी रेकॉर्ड हटवायचा आहे का?',
+      cancelButton: this.languageFlag == 'English' ? 'Cancel':'रद्द करा',
+      okButton: this.languageFlag == 'English' ? 'Ok':'ओके'
     }
 
     const deleteDialogRef = this.dialog.open(GlobalDialogComponent, {
@@ -263,8 +265,7 @@ export class StudentRegistrationComponent {
     });
     viewDialogRef.afterClosed().subscribe((result: any) => {
       if (result == 'yes') {
-        console.log(result);
-        
+        console.log(result);        
       }
     })
   }
