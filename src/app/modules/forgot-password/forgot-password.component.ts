@@ -5,7 +5,7 @@ import { ApiService } from 'src/app/core/services/api.service';
 import { CommonMethodsService } from 'src/app/core/services/common-methods.service';
 import { ErrorsService } from 'src/app/core/services/errors.service';
 import { ValidationService } from 'src/app/core/services/validation.service';
-import { WebStorageService } from 'src/app/core/services/web-storage.service';
+
 
 @Component({
   selector: 'app-forgot-password',
@@ -26,13 +26,12 @@ export class ForgotPasswordComponent {
   timeLeft: number = 60;
   interval: any;
   otpStatus: boolean = false;
-  webData = this.webStorage.createdByProps();
   obj = {
-    "createdBy": this.webData.createdBy,
-    "modifiedBy": this.webData.modifiedBy,
-    "createdDate": this.webData.createdDate,
-    "modifiedDate": this.webData.modifiedDate,
-    "isDeleted": this.webData.isDeleted,
+    "createdBy": 0,
+    "modifiedBy": 0,
+    "createdDate": new Date(),
+    "modifiedDate": new Date(),
+    "isDeleted": true,
     "id": 0,
     "mobileNo": "",
     "otp": "",
@@ -43,7 +42,7 @@ export class ForgotPasswordComponent {
   }
 
   constructor(private apiService: ApiService, private common: CommonMethodsService, private router: Router,
-    private errors: ErrorsService, public validation: ValidationService, private fb: FormBuilder, public webStorage : WebStorageService) { }
+    private errors: ErrorsService, public validation: ValidationService, private fb: FormBuilder) { }
 
 
   ngOnInit() {
