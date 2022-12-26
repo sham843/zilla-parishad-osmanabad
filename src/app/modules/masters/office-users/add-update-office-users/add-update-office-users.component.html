@@ -17,7 +17,7 @@
             <div class="col-sm-4">
                 <mat-form-field appearance="outline" class="w-100 ">
                     <mat-label>Level</mat-label>
-                    <mat-select placeholder="select" formControlName="designationLevelId"  (selectionChange)="getDesignationByLevelId()">
+                    <mat-select placeholder="select" formControlName="designationLevelId"  (selectionChange)="onchangeLevel($event)">
                         <mat-option [value]="level.id" *ngFor="let level of levels">{{webStorageService.languageFlag =='mr-IN' ? level.m_DesignationLevel : level.designationLevel}}</mat-option>
                     </mat-select>
                 </mat-form-field>
@@ -37,10 +37,10 @@
                 </mat-form-field>
             </div>
 
-            <div class="col-sm-4" *ngIf="officeForm.value.designationId == 110">
+            <div class="col-sm-4" *ngIf="officeForm.value.designationId == 110 &&  officeForm.value.designationLevelId == 2">
                 <mat-form-field appearance="outline" class="w-100">
                     <mat-label>Kendra</mat-label>
-                    <mat-select placeholder="select" formControlName="centerId">
+                    <mat-select placeholder="select" formControlName="centerId"  (selectionChange)="getAllSchoolsByCenterId()">
                         <mat-option [value]="centr.id" *ngFor="let centr of centers">{{webStorageService.languageFlag =='mr-IN' ? centr.m_Center : centr.center}}</mat-option>
                     </mat-select>
                 </mat-form-field>
@@ -49,12 +49,13 @@
         </div>
 
         <div class="row">
-            <ng-container *ngIf="officeForm.value.designationLevelId == 2">
+            <!-- designationLevelId taluka  -->
+            <ng-container *ngIf="officeForm.value.designationLevelId == 2 && officeForm.value.designationId == 110" > 
                 <div class="col-sm-4">
                     <mat-form-field appearance="outline" class="w-100">
                         <mat-label>School</mat-label>
-                        <mat-select placeholder="select" formControlName=""> 
-                            <mat-option>School</mat-option>
+                        <mat-select placeholder="select" formControlName="schoolId"> 
+                            <mat-option [value]="sch.id" *ngFor="let sch of schools">{{webStorageService.languageFlag =='mr-IN' ? sch.m_SchoolName : sch.schoolName}}</mat-option>
                         </mat-select>
                     </mat-form-field>
                 </div>
@@ -65,7 +66,7 @@
                     <mat-form-field appearance="outline" class="w-100 ">
                         <mat-label>District</mat-label>
                         <mat-select placeholder="select" formControlName="districtId">
-                            <mat-option [value]="dist.id" *ngFor="let dist of districts">{{ webStorageService.languageFlag =='mr-IN' ? dist.m_District:  dist.district}}</mat-option>
+                            <mat-option [value]="dist.id" *ngFor="let dist of districts">{{webStorageService.languageFlag =='mr-IN' ? dist.m_District:  dist.district}}</mat-option>
                         </mat-select>
                     </mat-form-field>
                 </div>
@@ -81,25 +82,39 @@
                     </mat-form-field>
                 </div>
             </ng-container>
-
-           
-
-            
-
-            <!-- <div class="col-sm-4">
-                <mat-form-field appearance="outline" class="w-100">
-                    <mat-label>Contact No.(BEO Office)</mat-label>
-                    <input matInput placeholder="Contact No.(BEO Office)" formControlName="kendraMobileNo">
-                </mat-form-field>
-            </div>
-            <div class="col-sm-4">
-                <mat-form-field appearance="outline" class="w-100">
-                    <mat-label>Email ID(BEO Office)</mat-label>
-                    <input matInput placeholder="Email ID(BEO Office)" formControlName="kendraEmailId">
-                </mat-form-field>
-            </div> -->
         </div>
 
+        <div class="row">
+            <ng-container *ngIf="officeForm.value.designationLevelId == 2 && officeForm.value.designationId == 115" >
+                <div class="col-sm-4">
+                    <mat-form-field appearance="outline" class="w-100">
+                        <mat-label>Contact No.(BEO Office)</mat-label>
+                        <input matInput placeholder="Contact No.(BEO Office)" formControlName="beoMobileNo">
+                    </mat-form-field>
+                </div>
+                <div class="col-sm-4">
+                    <mat-form-field appearance="outline" class="w-100">
+                        <mat-label>Email ID(BEO Office)</mat-label>
+                        <input matInput placeholder="Email ID(BEO Office)" formControlName="beoEmailId">
+                    </mat-form-field>
+                </div>
+            </ng-container>
+
+            <ng-container *ngIf="officeForm.value.designationLevelId == 2 && officeForm.value.designationId == 110" >
+                <div class="col-sm-4">
+                    <mat-form-field appearance="outline" class="w-100">
+                        <mat-label>Contact No.(Kendra)</mat-label>
+                        <input matInput placeholder="Contact No.(Kendra)" formControlName="kendraMobileNo">
+                    </mat-form-field>
+                </div>
+                <div class="col-sm-4">
+                    <mat-form-field appearance="outline" class="w-100">
+                        <mat-label>Email ID(kendra)</mat-label>
+                        <input matInput placeholder="Email ID(Kendra)" formControlName="kendraEmailId">
+                    </mat-form-field>
+                </div>
+            </ng-container>
+        </div>
 
 
 

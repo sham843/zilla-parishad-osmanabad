@@ -19,6 +19,7 @@ export class AddUpdateOfficeUsersComponent implements OnInit {
   districts = new Array();
   talukas = new Array();
   centers = new Array();
+  schools = new Array();
 
   constructor(private masterService: MasterService,
               private fb: FormBuilder,
@@ -48,6 +49,7 @@ export class AddUpdateOfficeUsersComponent implements OnInit {
         "mobileNo": [this.data ? this.data.mobileNo : ""],
         "emailId": [this.data ? this.data.emailId :""],
         "address": [""],
+        "schoolId": [0],
         "designationId": [this.data ? this.data.designationId : 0],
         "designationLevelId": [this.data ? this.data.designationLevelId : ""],
         "stateId": [0],
@@ -57,8 +59,10 @@ export class AddUpdateOfficeUsersComponent implements OnInit {
         "subUserTypeId": [0],
         "kendraMobileNo": [""],
         "kendraEmailId": [""],
+        "beoEmailId": [""],
+        "beoMobileNo": [""],  
         "centerId": [0],
-        "bitName": [],
+        "bitName": [""],
         "lan": [this.webStorageService.languageFlag]
     })
     // this.getLevelDrop();
@@ -79,8 +83,8 @@ export class AddUpdateOfficeUsersComponent implements OnInit {
   }
 
   onchangeLevel(event: any){
-    console.log(event.target.value);
-    
+    console.log(event.value);
+    this.designations = [];
     this.getDesignationByLevelId();
   }
 
@@ -96,6 +100,18 @@ export class AddUpdateOfficeUsersComponent implements OnInit {
         console.log("error is getDesignationByLevelId:", error);  
       }
     }) 
+  }
+
+  getAllSchoolsByCenterId(){
+    let centerId = this.officeForm.value.designationLevelId;
+    this.masterService.getAllSchoolsByCenterId(this.webStorageService.languageFlag, centerId).subscribe({
+      next: (resp: any)=>{
+        resp.statusCode == "200" ?(console.log(resp), this.schools = resp.responseData ): this.schools = [];
+      },
+      error: ( error : any)=>{
+        console.log("error is :", error);  
+      }
+    });
   }
 
   getDistrictDrop(){
@@ -121,6 +137,7 @@ export class AddUpdateOfficeUsersComponent implements OnInit {
   }
 
   getCenterDrop(){
+    console.log(this.officeForm.value.designationId);
     this.masterService.getAllCenter(this.webStorageService.languageFlag).subscribe({
       next: (resp: any)=>{
         resp.statusCode == "200" ? (console.log("resp cluster", resp),

@@ -318,6 +318,20 @@ export class MasterService {
     });
   }
 
+  getAllSchoolsByCenterId(langFlag: string, CenterId: number){
+    return new Observable((obj) => {
+      this.apiService.setHttp('GET', 'zp-osmanabad/master/GetAllSchoolsByCenterId?flag_lang='+langFlag+'&CenterId='+CenterId, false, false, false, 'baseUrl');
+      this.apiService.getHttp().subscribe({
+        next: (res: any) => { if (res.statusCode == "200") {obj.next(res) } else { obj.error(res); } },
+        error: (e: any) => { obj.error(e) }
+      });
+    });
+  }
+
+
+
+
+
 
   
 
