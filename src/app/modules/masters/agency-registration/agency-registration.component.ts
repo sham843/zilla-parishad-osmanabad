@@ -46,7 +46,7 @@ export class AgencyRegistrationComponent {
   getTableDataMarathi() {
     this.webStroageService.langNameOnChange.subscribe(lang => {
       this.langTypeName = lang;
-      this.displayedColumns = ['srNo', this.langTypeName == 'English' ? 'agency_Name' : 'm_Agency_Name', 'contact_No', 'agency_EmailId', 'action'];
+      this.displayedColumns = ['srNo', this.langTypeName == 'English' ? 'agency_Name' : 'm_Agency_Name', 'agency_MobileNo', 'agency_EmailId', 'action'];
       this.tableData = {
         pageNumber: this.pageNumber,
         img: '', blink: '', badge: '', isBlock: '', pagintion: true,
