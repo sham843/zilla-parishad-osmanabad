@@ -28,20 +28,20 @@ export class SchoolRegistrationComponent {
   talukaArr = new Array();
   villageArr = new Array();
   deleteObj: any;
-  cardViewFlag : boolean = false;
-  imgPath : any;
+  cardViewFlag: boolean = false;
+  imgPath: any;
   totalCount: number = 0;
   cardCurrentPage: number = 0;
-  langTypeName : any;
+  langTypeName: any;
   displayedColumns = new Array();
   tableDatasize!: Number;
   tableData: any;
-  displayedheadersEnglish = ['#','Sr. No.', 'Name', 'Village', 'Taluka', 'District', 'Action'];
-  displayedheadersMarathi = ['#','अनुक्रमांक', 'शाळेचे नाव', 'गाव', 'तालुका', 'जिल्हा', 'कृती'];
+  displayedheadersEnglish = ['#', 'Sr. No.', 'Name', 'Village', 'Taluka', 'District', 'Action'];
+  displayedheadersMarathi = ['#', 'अनुक्रमांक', 'शाळेचे नाव', 'गाव', 'तालुका', 'जिल्हा', 'कृती'];
 
   constructor(private dialog: MatDialog, private apiService: ApiService, private errors: ErrorsService,
-    private masterService: MasterService,private commonMethodS: CommonMethodsService, public webStorageS : WebStorageService, 
-    private downloadFileService : DownloadPdfExcelService) { }
+    private masterService: MasterService, private commonMethodS: CommonMethodsService, public webStorageS: WebStorageService,
+    private downloadFileService: DownloadPdfExcelService) { }
 
   ngOnInit() {
     this.getTableData();
@@ -58,20 +58,27 @@ export class SchoolRegistrationComponent {
   //#region ------------------------------------------- School Registration Table Data start here ----------------------------------------// 
   getTableData(flag?: string) {
     this.pageNumber = flag == 'filter' ? 1 : this.pageNumber;
-    let tableDatasize!: Number;
-    let pageNo = this.cardViewFlag ? (this.cardCurrentPage + 1)  : this.pageNumber; 
+    console.log(this.pageNumber, " pagenum");
     
+    let tableDatasize!: Number;
+    let pageNo = this.cardViewFlag ? (this.cardCurrentPage + 1) : this.pageNumber;
+
     let str = `?pageno=${pageNo}&pagesize=10&DistrictId=${this.districtId.value ? this.districtId.value : 0}
     &TalukaId=${this.talukaId.value ? this.talukaId.value : 0}&VillageId=${this.villageId.value ? this.villageId.value : 0}&lan=${this.webStorageS.languageFlag}`;
     this.apiService.setHttp('GET', 'ZP-Osmanabad/School/GetAll' + str, false, false, false, 'baseUrl');
     this.apiService.getHttp().subscribe({
 
       next: (res: any) => {
+        console.log("res",res);
+        
         if (res.statusCode == "200") {
           this.tableDataArray = res.responseData.responseData1;
           this.totalCount = res.responseData.responseData2.totalPages;
           tableDatasize = res.responseData.responseData2.pageCount;
-        } else {
+          console.log("tableDatasize resppp", tableDatasize);
+          
+        } 
+        else {
           this.tableDataArray = [];
           tableDatasize = 0;
         }
@@ -123,12 +130,12 @@ export class SchoolRegistrationComponent {
       error: ((err: any) => { this.errors.handelError(err) })
     });
   }
-//#endregion ------------------------------------------- School Registration Dropdown start here ----------------------------------------// 
+  //#endregion ------------------------------------------- School Registration Dropdown start here ----------------------------------------// 
 
-  languageChange(){
-    this.webStorageS.langNameOnChange.subscribe(lang =>{
+  languageChange() {
+    this.webStorageS.langNameOnChange.subscribe(lang => {
       this.langTypeName = lang;
-      this.displayedColumns = ['docPath','srNo', this.langTypeName == 'English' ? 'schoolName' : 'm_SchoolName', 'village', 'taluka', 'district', 'action'];
+      this.displayedColumns = ['docPath', 'srNo', this.langTypeName == 'English' ? 'schoolName' : 'm_SchoolName', 'village', 'taluka', 'district', 'action'];
       this.tableData = {
         pageNumber: this.pageNumber,
         img: 'docPath', blink: '', badge: '', isBlock: '', pagintion: true,
@@ -155,7 +162,7 @@ export class SchoolRegistrationComponent {
     }
   }
 
-   //#region ------------------------------------------- Open Dialog Box Function start here ----------------------------------------// 
+  //#region ------------------------------------------- Open Dialog Box Function start here ----------------------------------------// 
   addUpdateAgency(obj?: any) {
     const dialogRef = this.dialog.open(AddUpdateSchoolRegistrationComponent, {
       width: '820px',
@@ -164,7 +171,7 @@ export class SchoolRegistrationComponent {
       autoFocus: false
     });
     dialogRef.afterClosed().subscribe((result: any) => {
-      if(result == 'yes'){
+      if (result == 'yes') {
         this.getTableData();
       }
     });
@@ -194,12 +201,21 @@ export class SchoolRegistrationComponent {
   }
   //#endregion ------------------------------------------- Open Dialog Box Function end here ----------------------------------------// 
 
-  onClear(){
+  onClear() {
     this.districtId.reset();
     this.talukaId.reset();
     this.villageId.reset();
     this.getTableData();
+    this.pageNumber = 1;
   }
+
+  //#region ------------------------------------------------- Filter Form start here ------------------------------------------// 
+  filterData() {
+    this.getTableData();
+    this.getofficeReport();
+    this.pageNumber = 1;
+  }
+  //#endregion ---------------------------------------------- Filter Form end here ----------------------------------------// 
 
   //#region ---------------------------------------------- Delete Record Logic start here ----------------------------------------//  
   onClickDelete() {
@@ -207,12 +223,12 @@ export class SchoolRegistrationComponent {
       "id": this.deleteObj.id,
       "modifiedBy": 0,
       "modifiedDate": new Date(),
-      "lan": "EN"
+      "lan": this.webStorageS.languageFlag
     }
-    this.apiService.setHttp('delete','ZP-Osmanabad/School/Delete', false, deleteObj, false, 'baseUrl');
+    this.apiService.setHttp('delete', 'ZP-Osmanabad/School/Delete', false, deleteObj, false, 'baseUrl');
     this.apiService.getHttp().subscribe({
-      next : ( res : any )=>{
-        if(res.statusCode == "200"){
+      next: (res: any) => {
+        if (res.statusCode == "200") {
           this.commonMethodS.snackBar(res.statusMessage, 0);
           this.getTableData();
         }
@@ -223,7 +239,7 @@ export class SchoolRegistrationComponent {
     }
   }
   //#endregion ---------------------------------------------- Delete Record Logic end here ----------------------------------------//  
-  
+
   onPageChanged(event: any) {
     this.cardCurrentPage = event.pageIndex;
     this.selectGrid('Card');
@@ -238,11 +254,11 @@ export class SchoolRegistrationComponent {
       this.getTableData();
     } else if (label == 'Card')
       this.cardViewFlag = true;
-      this.getTableData();
+    this.getTableData();
   }
 
   //#region ---------------------------------------------- PDF Download start here ----------------------------------------// 
-  getofficeReport(){
+  getofficeReport() {
     let str = `?&DistrictId=${this.districtId.value ? this.districtId.value : 0}
      &TalukaId=${this.talukaId.value ? this.talukaId.value : 0}&VillageId=${this.villageId.value ? this.villageId.value : 0}&lan=${this.webStorageS.languageFlag}`;
     this.apiService.setHttp('GET', 'ZP-Osmanabad/School/GetAll' + str, false, false, false, 'baseUrl');
@@ -250,10 +266,10 @@ export class SchoolRegistrationComponent {
       next: (res: any) => {
         if (res.statusCode == "200") {
           this.resultDownloadArr = [];
-          let data:[] = res.responseData.responseData1;
-          data.map((ele: any, i: any)=>{
+          let data: [] = res.responseData.responseData1;
+          data.map((ele: any, i: any) => {
             let obj = {
-              "Sr.No": i+1,
+              "Sr.No": i + 1,
               "Name": ele.schoolName,
               "District": ele.district,
               "Taluka": ele.taluka,
@@ -268,27 +284,18 @@ export class SchoolRegistrationComponent {
   }
 
   downloadPdf() {
-    let keyPDFHeader = ['SrNo', "Name", "District", "Taluka","Village"];
-        let ValueData =
-          this.resultDownloadArr.reduce(
-            (acc: any, obj: any) => [...acc, Object.values(obj).map((value) => value)], []
-          );// Value Name
-          console.log("ValueData", ValueData);
-          
-          let objData:any = {
-            'topHedingName': 'School Registration Data',
-            'createdDate':'Created on:'+new Date()
-          }
-        this.downloadFileService.downLoadPdf(keyPDFHeader, ValueData, objData);
+    let keyPDFHeader = ['SrNo', "Name", "District", "Taluka", "Village"];
+    let ValueData =
+      this.resultDownloadArr.reduce(
+        (acc: any, obj: any) => [...acc, Object.values(obj).map((value) => value)], []
+      );// Value Name
+    console.log("ValueData", ValueData);
+
+    let objData: any = {
+      'topHedingName': 'School Registration Data',
+      'createdDate': 'Created on:' + new Date()
+    }
+    this.downloadFileService.downLoadPdf(keyPDFHeader, ValueData, objData);
   }
   //#endregion ---------------------------------------------- PDF Download end here ----------------------------------------// 
-
-  //#region ------------------------------------------------- Filter Form start here ------------------------------------------// 
-  filterData(){
-    this.getTableData();
-    this.getofficeReport();
-  }
-//#endregion ---------------------------------------------- Filter Form end here ----------------------------------------// 
- 
-
 }
