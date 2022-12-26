@@ -17,53 +17,38 @@
             <div class="col-sm-4">
                 <mat-form-field appearance="outline" class="w-100 ">
                     <mat-label>Level</mat-label>
-                    <mat-select placeholder="select" formControlName="designationLevelId" (selectionChange)="getDesignationByLevelId()">
-                        <mat-option [value]="level.id"   *ngFor="let level of levels">{{level.m_DesignationLevel}} {{webStorageService.languageFlag=='mr-IN' ? data.m_DesignationLevel : data.designationLevel}}</mat-option>
+                    <mat-select placeholder="select" formControlName="designationLevelId"  (selectionChange)="getDesignationByLevelId()">
+                        <mat-option [value]="level.id" *ngFor="let level of levels">{{webStorageService.languageFlag =='mr-IN' ? level.m_DesignationLevel : level.designationLevel}}</mat-option>
                     </mat-select>
                 </mat-form-field>
             </div>
 
             <div class="col-sm-4">
-                <mat-form-field appearance="outline" class="w-100 ">
+                <mat-form-field appearance="outline" class="w-100 " *ngIf="officeForm.value.designationLevelId != 5">
                     <mat-label>Designation (Officer)</mat-label>
-                    <mat-select placeholder="select" formControlName="designationId">
-                        <mat-option  [value]="desig.id" *ngFor="let desig of designations">{{desig.designationType}}</mat-option>
+                    <mat-select placeholder="select" formControlName="designationId" (selectionChange)="getCenterDrop()">
+                        <mat-option  [value]="desig.id" *ngFor="let desig of designations">{{webStorageService.languageFlag =='mr-IN' ? desig.m_DesignationType: desig.designationType}}</mat-option>
+                    </mat-select>
+                </mat-form-field>
+
+                <mat-form-field appearance="outline" class="w-100 " *ngIf="officeForm.value.designationLevelId == 5">
+                    <mat-label>Name of Bit</mat-label>
+                        <input matInput placeholder="bitName" formControlName="bitName">
+                </mat-form-field>
+            </div>
+
+            <div class="col-sm-4" *ngIf="officeForm.value.designationId == 110">
+                <mat-form-field appearance="outline" class="w-100">
+                    <mat-label>Kendra</mat-label>
+                    <mat-select placeholder="select" formControlName="centerId">
+                        <mat-option [value]="centr.id" *ngFor="let centr of centers">{{webStorageService.languageFlag =='mr-IN' ? centr.m_Center : centr.center}}</mat-option>
                     </mat-select>
                 </mat-form-field>
             </div>
-            <div class="col-sm-4">
-                <mat-form-field appearance="outline" class="w-100 ">
-                    <mat-label>District</mat-label>
-                    <mat-select placeholder="select" formControlName="districtId">
-                        <mat-option [value]="dist.id" *ngFor="let dist of districts">{{dist.district}}</mat-option>
-                    </mat-select>
-                </mat-form-field>
-            </div>
+           
         </div>
 
         <div class="row">
-            <ng-container *ngIf="officeForm.value.designationLevelId == 1 || officeForm.value.designationLevelId == 2">
-                <div class="col-sm-4">
-                    <mat-form-field appearance="outline" class="w-100">
-                        <mat-label>Taluka</mat-label>
-                        <mat-select placeholder="select" formControlName="talukaId">
-                            <mat-option [value]="taluka.id" *ngFor="let taluka of talukas">{{taluka.taluka}}</mat-option>
-                        </mat-select>
-                    </mat-form-field>
-                </div>
-            </ng-container>
-
-            <ng-container *ngIf="officeForm.value.designationId == 110">
-                <div class="col-sm-4">
-                    <mat-form-field appearance="outline" class="w-100">
-                        <mat-label>Kendra</mat-label>
-                        <mat-select placeholder="select" formControlName="centerId">
-                            <mat-option [value]="center.id" *ngFor="let center of centers">{{center.center}}</mat-option>
-                        </mat-select>
-                    </mat-form-field>
-                </div>
-            </ng-container>
-
             <ng-container *ngIf="officeForm.value.designationLevelId == 2">
                 <div class="col-sm-4">
                     <mat-form-field appearance="outline" class="w-100">
@@ -74,6 +59,32 @@
                     </mat-form-field>
                 </div>
             </ng-container>
+
+            <ng-container>
+                <div class="col-sm-4">
+                    <mat-form-field appearance="outline" class="w-100 ">
+                        <mat-label>District</mat-label>
+                        <mat-select placeholder="select" formControlName="districtId">
+                            <mat-option [value]="dist.id" *ngFor="let dist of districts">{{ webStorageService.languageFlag =='mr-IN' ? dist.m_District:  dist.district}}</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+            </ng-container>
+            
+            <ng-container>
+                <div class="col-sm-4">
+                    <mat-form-field appearance="outline" class="w-100">
+                        <mat-label>Taluka</mat-label>
+                        <mat-select placeholder="select" formControlName="talukaId">
+                            <mat-option [value]="taluka.id" *ngFor="let taluka of talukas">{{webStorageService.languageFlag =='mr-IN' ? taluka.m_Taluka : taluka.taluka}}</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+            </ng-container>
+
+           
+
+            
 
             <!-- <div class="col-sm-4">
                 <mat-form-field appearance="outline" class="w-100">
@@ -103,10 +114,19 @@
             </div>
             <div class="col-sm-4">
                 <mat-form-field appearance="outline" class="w-100">
+                    <mat-label>Name(in marathi)</mat-label>
+                    <input matInput placeholder="Name(in marathi)" formControlName="name">
+                </mat-form-field>
+            </div>
+            <div class="col-sm-4">
+                <mat-form-field appearance="outline" class="w-100">
                     <mat-label>Mobile No.</mat-label>
                     <input matInput placeholder="Mobile No." formControlName="mobileNo">
                 </mat-form-field>
             </div>
+        </div>
+
+        <div class="row">
             <div class="col-sm-4">
                 <mat-form-field appearance="outline" class="w-100">
                     <mat-label>Email ID</mat-label>

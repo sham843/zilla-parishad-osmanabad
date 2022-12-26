@@ -13,15 +13,17 @@ import { WebStorageService } from '../services/web-storage.service';
 })
 export class HeaderComponent {
   @HostBinding('class') className = '';
+  UserData: any;
 
   constructor(
     private overlay: OverlayContainer, 
     private dialog: MatDialog, 
-    private webStorage: WebStorageService,
+    public webStorage: WebStorageService,
     private router: Router, 
     public translate: TranslateService) { }
   ngOnInit(): void {
     this.translateLanguage(sessionStorage.getItem('language') ? sessionStorage.getItem('language') : 'English');
+    this.UserData = this.webStorage.getLoggedInLocalstorageData();    
   }
   
   changeTheme(darkMode: any) {
@@ -45,10 +47,10 @@ export class HeaderComponent {
 
   logOut() {
     let dialoObj = {
-      header: 'Confirmation',
-      title: 'Do You Want To Logout ?',
-      cancelButton: 'Cancel',
-      okButton: 'Ok'
+      header: this.webStorage.languageFlag == 'EN' ? 'Confirmation' : 'पुष्टीकरण',
+      title: this.webStorage.languageFlag == 'EN' ? 'Do You Want To Logout ?' : 'तुम्हाला लॉगआउट करायचे आहे का ?',
+      cancelButton: this.webStorage.languageFlag == 'EN' ? 'Cancel' : 'रद्द करा',
+      okButton: this.webStorage.languageFlag == 'EN' ? 'Ok' : 'ठीक आहे'
     }
     const dialogRef = this.dialog.open(GlobalDialogComponent, {
       width: '320px',
