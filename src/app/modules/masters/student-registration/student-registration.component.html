@@ -56,7 +56,8 @@
       <div class="col-sm-auto">
         <mat-form-field appearance="outline" class="w-100">
           <mat-label>{{'Labels.searchbyNameContactEmail'| translate}}</mat-label>
-          <input matInput placeholder="Search by Name/Contact/Email" [formControl]="searchContent">
+          <input matInput placeholder="Search by Name/Contact" [formControl]="searchContent"
+          (keypress)="validators.noFirstSpaceAllow($event)">
 
         </mat-form-field>
       </div>

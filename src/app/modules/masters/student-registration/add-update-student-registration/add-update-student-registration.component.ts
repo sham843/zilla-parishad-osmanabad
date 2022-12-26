@@ -1,6 +1,7 @@
 import { Component, ElementRef, Inject, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { NgxSpinnerService } from 'ngx-spinner';
 import { ApiService } from 'src/app/core/services/api.service';
 import { CommonMethodsService } from 'src/app/core/services/common-methods.service';
 import { ErrorsService } from 'src/app/core/services/errors.service';
@@ -31,7 +32,7 @@ export class AddUpdateStudentRegistrationComponent {
   ]
 
   @ViewChild('uploadImage') imageFile!: ElementRef;
-  @ViewChild('uploadAadhar') aadharFile!: ElementRef;
+  @ViewChild('uploadAadhar') aadharFile!: ElementRef;  
   uploadImg: any;
   uploadAadhar: any;
   editObj: any;
@@ -40,14 +41,12 @@ export class AddUpdateStudentRegistrationComponent {
   constructor(
     private fb: FormBuilder, private masterService: MasterService, private errors: ErrorsService,
     private fileUpl: FileUploadService, private apiService: ApiService, private webService: WebStorageService,
-    private commonMethods: CommonMethodsService, public validators: ValidationService,
+    private commonMethods: CommonMethodsService, public validators: ValidationService, private ngxSpinner: NgxSpinnerService,
     public dialogRef: MatDialogRef<AddUpdateStudentRegistrationComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any) { }
 
   ngOnInit() {
-    this.languageFlag = this.webService.languageFlag;
-    console.log(this.languageFlag);
-    
+    this.languageFlag = this.webService.languageFlag;    
     this.formData();
       this.data ? (this.editObj = this.data, this.patchValue()) : (
         this.getDistrict(),
@@ -94,6 +93,8 @@ export class AddUpdateStudentRegistrationComponent {
 
   get fc() { return this.stuRegistrationForm.controls }
 
+  //#region ---------------------------- Dropdown start here -----------------------------------------------
+
   getDistrict() {
     this.masterService.getAllDistrict(this.languageFlag).subscribe({
       next: (res: any) => {
@@ -114,7 +115,6 @@ export class AddUpdateStudentRegistrationComponent {
       next: (res: any) => {
         if (res.statusCode == 200) {
           this.talukaArr = res.responseData;
-          console.log(  this.talukaArr)
           this.editObj ? this.stuRegistrationForm.controls['talukaId'].setValue(this.editObj.talukaId) : '';
         } else {
           this.commonMethods.checkEmptyData(res.statusMessage) == false ? this.errors.handelError(res.statusCode) : this.commonMethods.snackBar(res.statusMessage, 1);
@@ -216,18 +216,11 @@ export class AddUpdateStudentRegistrationComponent {
     });
   }
 
-  fileUpload(event: any, name: string) {
-    this.fileUpl.uploadDocuments(event, 'Upload', 'jpg, jpeg, png').subscribe((res: any) => {
-      if(res.statusCode == 200){
-        name == 'img' ? (this.uploadImg = res.responseData, this.stuRegistrationForm.controls['photo'].setValue(this.uploadImg.split('/').pop())) : (
-          this.uploadAadhar = res.responseData, this.stuRegistrationForm.controls['aadharPhoto'].setValue(this.uploadAadhar.split('/').pop()));
-      }
-    });
-  }
+  //#endregion  ---------------------------------- Dropdown End here -----------------------------------------------
+
 
   patchValue() {
     this.editFlag = true;
-    console.log(this.editObj);
     this.stuRegistrationForm.patchValue({
       fName: this.editObj?.fName,
       mName: this.editObj?.mName,
@@ -255,12 +248,12 @@ export class AddUpdateStudentRegistrationComponent {
     this.uploadAadhar = this.editObj?.documentResponse[1]?.docPath;
     this.uploadImg = this.editObj?.documentResponse[0]?.docPath;
     this.stuRegistrationForm.controls['photo'].setValue(this.uploadImg?.split('/').pop());
-    this.stuRegistrationForm.controls['aadharPhoto'].setValue(this.uploadAadhar?.split('/').pop());
-   
-
+    this.stuRegistrationForm.controls['aadharPhoto'].setValue(this.uploadAadhar?.split('/').pop());  
   }
 
+  //#region  ----------------------------------------------- Submit logic Start here ------------------------------------------------
   onSubmit() {
+    this.ngxSpinner.show();
     let obj = this.stuRegistrationForm.value;
     let postObj = {
       "createdBy": 0,
@@ -283,7 +276,7 @@ export class AddUpdateStudentRegistrationComponent {
       "standard": obj.standard,
       "saralId": obj.saralId,
       "gender": obj.gender,
-      "dob": "2022-12-21T07:11:24.503Z",
+      "dob": obj.dob,
       "religionId": obj.religionId,
       "castId": obj.castId,
       "aadharNo": obj.aadharNo,
@@ -327,25 +320,41 @@ export class AddUpdateStudentRegistrationComponent {
     if (this.stuRegistrationForm.invalid) {
       return
     } else {
-      console.log(postObj);
-
       let url = this.editFlag ? 'UpdateStudent' : 'AddStudent'
       this.apiService.setHttp(this.editFlag ? 'put' : 'post', 'zp-osmanabad/Student/' + url, false, postObj, false, 'baseUrl');
       this.apiService.getHttp().subscribe({
         next: (res: any) => {
           if (res.statusCode == 200) {
+            this.ngxSpinner.hide();
             this.commonMethods.snackBar(res.statusMessage, 0);
             this.dialogRef.close('yes')
           } else {
+            this.ngxSpinner.hide();
             this.commonMethods.checkEmptyData(res.statusMessage) == false ? this.errors.handelError(res.statusCode) : this.commonMethods.snackBar(res.statusMessage, 1);
           }
         },
-        error: ((err: any) => { this.errors.handelError(err) })
+        error: ((err: any) => {this.ngxSpinner.hide(); this.errors.handelError(err) })
       });
     }
   }
-  clearForm(clear: any) {
-    clear.resetForm();
+
+  //#endregion   ----------------------------------------------- Submit logic End here ------------------------------------------------
+
+
+
+ 
+
+//#region ------------------------------------------- Image Logic Start Here -----------------------------------------------------------------
+  fileUpload(event: any, name: string) {
+    this.fileUpl.uploadDocuments(event, 'Upload', 'jpg, jpeg, png').subscribe((res: any) => {
+      if(res.statusCode == 200){
+        name == 'img' ? (this.uploadImg = res.responseData, this.stuRegistrationForm.controls['photo'].setValue(this.uploadImg.split('/').pop())) : (
+          this.uploadAadhar = res.responseData, this.stuRegistrationForm.controls['aadharPhoto'].setValue(this.uploadAadhar.split('/').pop()));
+      }else{
+        name == 'img' ? (this.uploadImg = '', this.imageFile.nativeElement.value='', this.stuRegistrationForm.controls['photo'].setValue('')) : (
+          this.uploadAadhar = '', this.aadharFile.nativeElement.value='', this.stuRegistrationForm.controls['aadharPhoto'].setValue(''));
+      }
+    });
   }
 
   viewImages(name: string) {
@@ -367,5 +376,7 @@ export class AddUpdateStudentRegistrationComponent {
       this.stuRegistrationForm.controls['photo'].setValue('');
     }
   }
+
+  //#region ------------------------------------------- Image Logic Start Here -----------------------------------------------------------------
 
 }
