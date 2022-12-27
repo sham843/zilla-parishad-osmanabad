@@ -105,6 +105,7 @@ export class AddUpdateStudentRegistrationComponent {
   //#region ---------------------------- Dropdown start here -----------------------------------------------
 
   getDistrict() {
+    this.districtArr = [];
     this.masterService.getAllDistrict(this.languageFlag).subscribe({
       next: (res: any) => {
         if (res.statusCode == 200) {
@@ -120,6 +121,7 @@ export class AddUpdateStudentRegistrationComponent {
   }
 
   getTaluka() {
+    this.talukaArr = [];
     this.masterService.getAllTaluka(this.languageFlag).subscribe({
       next: (res: any) => {
         if (res.statusCode == 200) {
@@ -135,6 +137,7 @@ export class AddUpdateStudentRegistrationComponent {
   }
 
   getCenter() {
+    this.centerArr = [];
     this.masterService.getAllCenter(this.languageFlag).subscribe({
       next: (res: any) => {
         if (res.statusCode == 200) {
@@ -150,6 +153,7 @@ export class AddUpdateStudentRegistrationComponent {
   }
 
   getSchool() {
+    this.schoolArr = [];
     this.masterService.getAllSchoolType(this.languageFlag).subscribe({
       next: (res: any) => {
         if (res.statusCode == 200) {
@@ -165,6 +169,7 @@ export class AddUpdateStudentRegistrationComponent {
   }
 
   getStandard() {
+    this.standardArr = [];
     this.masterService.getAllStandard(this.languageFlag).subscribe({
       next: (res: any) => {
         if (res.statusCode == 200) {
@@ -180,6 +185,7 @@ export class AddUpdateStudentRegistrationComponent {
   }
 
   getGender() {
+    this.genderArr = [];
     this.masterService.getAllGender(this.languageFlag).subscribe({
       next: (res: any) => {
         if (res.statusCode == 200) {
@@ -195,6 +201,7 @@ export class AddUpdateStudentRegistrationComponent {
   }
 
   getReligion() {
+    this.religionArr = [];
     this.masterService.getAllReligion(this.languageFlag).subscribe({
       next: (res: any) => {
         if (res.statusCode == 200) {
@@ -210,6 +217,7 @@ export class AddUpdateStudentRegistrationComponent {
   }
 
   getCaste() {
+    this.casteArr = [];
     let id = this.stuRegistrationForm.value.religionId;
     this.masterService.getAllCaste(this.languageFlag, id).subscribe({
       next: (res: any) => {
@@ -247,7 +255,6 @@ export class AddUpdateStudentRegistrationComponent {
       dob: new Date(this.editObj?.dob.split(' ')[0]),
       physicallyDisabled: this.editObj?.isHandicaped ? 1 : 2
     });
-    this.allDropdownMethods();
     this.imageArray = this.editObj?.documentResponse;
     let aadharObj = this.editObj?.documentResponse?.find((res: any) => res.documentId == 1);
     let imageObj = this.editObj?.documentResponse?.find((res: any) => res.documentId == 2);
@@ -255,6 +262,8 @@ export class AddUpdateStudentRegistrationComponent {
     this.uploadImg = imageObj?.docPath;
     this.stuRegistrationForm.controls['photo'].setValue(this.uploadImg?.split('/').pop());
     this.stuRegistrationForm.controls['aadharPhoto'].setValue(this.uploadAadhar?.split('/').pop());
+    this.allDropdownMethods();
+
   }
 
   //#region  ----------------------------------------------- Submit logic Start here ------------------------------------------------
