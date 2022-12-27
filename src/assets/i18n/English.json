@@ -189,6 +189,25 @@
         "dateOfSeniority" : "Date of Seniority",
         "haveYouPassedComputerExam" : "Have you passed Computer exam",
         "schoolNames&TalukaWorkEarlier" : "School names & Taluka work earlier",
-        "assignedClass" : "Assigned Class"
+        "assignedClass" : "Assigned Class",
+        "changePassword": "Change Password",
+        "enterCurrentPassword" :"Enter Current Password",
+        "enterNewPassword" : "Enter New Password",
+        "confirmPassword" : "Confirm Password",
+        "currentPassIsRequired" :"Current Password Is Required",
+        "pleaseEnterValidCurrentPassword" : "Please Enter Valid Current Password",
+        "newPasswordIsRequired":  "New Password Is Required",
+        "PleaseEnterValidNewPassword" :"Please Enter Valid New Password",
+        "ConfirmPasswordIsRequired" :"Confirm Password Is Required",
+        "PleaseEnterValidConfirmPassword" : "Please Enter Valid Confirm Password",
+        "Passwordsmustcontains" : "Passwords Must Contains",
+        "Atleast8Characterslong" :"At least 8 Characters long",
+        "Atleast1LowercaseCharacters(a-z)" : "At least 1 Lowercase Characters (a-z)",
+        "Atleast1UpercaseCharacters(A-Z)" : "At least 1 Uppercase Characters (a-z)",
+        "Atleast1Digits(0-9)" :"At least 1 Digits(0-9)",
+        "(*$@#)Atleast1SpecialCharacters(*$@#)" :"(*$@#)At least 1 Special Characters (*$@#)",
+        "show" : "Show",
+        "hide" : "Hide"
+
     }
 }
