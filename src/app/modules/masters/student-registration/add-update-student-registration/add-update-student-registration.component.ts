@@ -53,9 +53,7 @@ export class AddUpdateStudentRegistrationComponent {
   ngOnInit() {
     this.languageFlag = this.webService.languageFlag;
     this.formData();
-    this.data ? (this.editObj = this.data, this.patchValue()) : (
-      this.allDropdownMethods()
-    )
+    this.data ? (this.editObj = this.data, this.patchValue()) : this.allDropdownMethods();    
   }
 
   allDropdownMethods() {
@@ -256,16 +254,16 @@ export class AddUpdateStudentRegistrationComponent {
       physicallyDisabled: this.editObj?.isHandicaped ? 1 : 2
     });
     this.imageArray = this.editObj?.documentResponse;
-    let aadharObj = this.editObj?.documentResponse?.find((res: any) => res.documentId == 1);
-    let imageObj = this.editObj?.documentResponse?.find((res: any) => res.documentId == 2);
+    let aadharObj = this.editObj?.documentResponse?.find((res: any) => res.documentId == 2);
+    let imageObj = this.editObj?.documentResponse?.find((res: any) => res.documentId == 1);
     this.uploadAadhar = aadharObj?.docPath;
     this.uploadImg = imageObj?.docPath;
     this.stuRegistrationForm.controls['photo'].setValue(this.uploadImg?.split('/').pop());
     this.stuRegistrationForm.controls['aadharPhoto'].setValue(this.uploadAadhar?.split('/').pop());
     this.allDropdownMethods();
   }
-
   //#region  ----------------------------------------------- Submit logic Start here ------------------------------------------------
+ 
   onSubmit() {
     this.ngxSpinner.show();
     let obj = this.stuRegistrationForm.value;
@@ -313,7 +311,8 @@ export class AddUpdateStudentRegistrationComponent {
       "documentModel": this.imageArray,
       "lan": this.languageFlag
     }
-
+    console.log(postObj.documentModel);
+    
     if (this.stuRegistrationForm.invalid) {
       this.ngxSpinner.hide();
       return
@@ -347,26 +346,22 @@ export class AddUpdateStudentRegistrationComponent {
     this.fileUpl.uploadDocuments(event, 'Upload', 'jpg, jpeg, png').subscribe((res: any) => {
       if (res.statusCode == 200) {
         if (name == 'img') {
-          this.uploadImg = res.responseData;
+          this.uploadImg = res.responseData;          
           this.stuRegistrationForm.controls['photo'].setValue(this.uploadImg.split('/').pop());
-          let obj = {
-            "id": 0,
-            "studentId": this.editFlag ? this.editObj.id : 0,
-            "documentId": 1,
-            "docPath": this.uploadImg
-          }
-          this.imageArray.push(obj);
         } else {
           this.uploadAadhar = res.responseData;
-          this.stuRegistrationForm.controls['aadharPhoto'].setValue(this.uploadAadhar.split('/').pop());
-          let obj = {
-            "id": 0,
-            "studentId": this.editFlag ? this.editObj.id : 0,
-            "documentId": 2,
-            "docPath": this.uploadAadhar
-          }
-          this.imageArray.push(obj);
+          this.stuRegistrationForm.controls['aadharPhoto'].setValue(this.uploadAadhar.split('/').pop());         
         }
+        this.commonMethods.snackBar(res.statusMessage, 0);
+        let obj = {
+          "id": 0,
+          "studentId": this.editFlag ? this.editObj.id : 0,
+          "documentId": name == 'img' ? 1 :2,
+          "docPath": name == 'img' ? this.uploadImg :this.uploadAadhar
+        }        
+        this.imageArray.push(obj);
+        console.log(this.imageArray);
+        
       } else {
         name == 'img' ? (this.uploadImg = '', this.imageFile.nativeElement.value = '', this.stuRegistrationForm.controls['photo'].setValue('')) : (
           this.uploadAadhar = '', this.aadharFile.nativeElement.value = '', this.stuRegistrationForm.controls['aadharPhoto'].setValue(''));
@@ -387,10 +382,16 @@ export class AddUpdateStudentRegistrationComponent {
       this.uploadAadhar = '';
       this.aadharFile.nativeElement.value = '';
       this.stuRegistrationForm.controls['aadharPhoto'].setValue('');
+     let index = this.imageArray.findIndex((res:any) => {res.documentId == 2 })
+     console.log(index);
+     
+     this.imageArray.splice(index,1);
     } else if (name == 'photo') {
       this.uploadImg = '';
       this.imageFile.nativeElement.value = '';
       this.stuRegistrationForm.controls['photo'].setValue('');
+      let index = this.imageArray.findIndex((res:any) => {res.documentId == 1 })
+     this.imageArray.splice(index,1);
     }
   }
 

@@ -30,8 +30,8 @@ export class StudentRegistrationComponent {
 
   displayedColumns = ['docPath', 'srNo', 'fullName', 'standard', 'parentMobileNo', 'gender', 'action'];
   marathiDisplayedColumns = ['docPath', 'srNo', 'm_FullName', 'm_Standard', 'parentMobileNo', 'm_Gender', 'action'];
-  displayedheaders = ['#', 'Sr No.', 'Name', 'Standard', 'Parents Contact No.', 'Gender', 'action'];
-  marathiDisplayedheaders = ['#', 'अनुक्रमांक', 'नाव', 'वर्ग', 'पालक संपर्क क्र', 'लिंग', 'कृती'];
+  displayedheaders = ['#', 'Sr. No.', 'Name', 'Standard', 'Parents Contact No.', 'Gender', 'action'];
+  marathiDisplayedheaders = ['#', 'अनुक्रमांक', 'नाव', 'वर्ग', 'पालक संपर्क क्र.', 'लिंग', 'कृती'];
   constructor(
     private dialog: MatDialog,
     private apiService: ApiService,
@@ -82,13 +82,16 @@ export class StudentRegistrationComponent {
     let pageNo
     this.cardViewFlag ? pageNo = (this.cardCurrentPage + 1) : (pageNo = this.pageNumber, this.cardCurrentPage = 0);
     let str = `?pageno=${pageNo}&pagesize=10&textSearch=${this.searchContent.value || ''}&lan=${this.languageFlag || ''}`;
-    let reportStr = '?TextSearch=' + this.searchContent.value;
+    let reportStr = '?pageno=1&pagesize='+(this.totalCount *10) +'&textSearch=' + this.searchContent.value +'&lan='+this.languageFlag;
     this.apiService.setHttp('GET', 'zp-osmanabad/Student/GetAll' + (flag == 'reportFlag' ? reportStr : str), false, false, false, 'baseUrl');
     this.apiService.getHttp().subscribe({
       next: (res: any) => {
         if (res.statusCode == 200) {
           this.ngxSpinner.hide();
           this.tableDataArray = res.responseData.responseData1;
+          this.tableDataArray.map((res:any)=>{
+            res.docPath = res.documentResponse[0]?.docPath                      
+          })
           this.totalCount = res.responseData.responseData2.pageCount;
           this.tableDatasize = res.responseData.responseData2.pageCount;
           this.studentData = []

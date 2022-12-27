@@ -43,6 +43,16 @@ export class AddUpdateTeacherRegistrationComponent {
   isGraduatePayScaleArray = new Array();
   interDistrictTransferTypeArray = new Array();
   assignClassArray = new Array();
+  newAsssignClassArray=[
+    {standardId :1 , checked:false},
+    {standardId :2 , checked:false},
+    {standardId :3 , checked:false},
+    {standardId :4 , checked:false},
+    {standardId :5 , checked:false},
+    {standardId :6 , checked:false},
+    {standardId :7 , checked:false},
+    {standardId :8 , checked:false}
+  ];
 
 
   constructor(private masterService: MasterService, private commonMethod: CommonMethodsService, private errorHandler: ErrorsService,
@@ -89,7 +99,7 @@ export class AddUpdateTeacherRegistrationComponent {
       "uploadImage": [''],
       "currentAddress": [this.data ? this.data.currentAddress : ''],
       "permentAddress": [this.data ? this.data.permentAddress : ''],
-      "lan": [this.data ? this.data.lan : 'EN'],
+      "lan": ['EN'],
       "localID": 0,
       "timestamp": new Date(),
       teacherDetails: this.fb.group({
@@ -169,6 +179,7 @@ export class AddUpdateTeacherRegistrationComponent {
     }
     console.log("assignClassArray",this.assignClassArray);
   }
+
 
   getGender() {
     this.masterService.getAllGender('EN').subscribe({
