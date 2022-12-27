@@ -151,7 +151,6 @@ export class SchoolRegistrationComponent {
   childCompInfo(obj: any) {
     switch (obj.label) {
       case 'Pagination':
-        console.log(obj.pageNumber);
         this.pageNumber = obj.pageNumber;
         this.getTableData();
         break;
@@ -277,12 +276,10 @@ export class SchoolRegistrationComponent {
     this.apiService.setHttp('GET', 'ZP-Osmanabad/School/GetAll' + str, false, false, false, 'baseUrl');
     this.apiService.getHttp().subscribe({
       next: (res: any) => {
-        console.log("PDF : ",res);
         
         if (res.statusCode == 200) {
           this.resultDownloadArr = [];
           let data: [] = res.responseData.responseData1;
-          console.log("data", data);
           
           if(data.length < 0){
             data.map((ele: any, i: any) => {
@@ -314,7 +311,6 @@ export class SchoolRegistrationComponent {
       'topHedingName': 'School Registration Data',
       'createdDate': 'Created on:' + new Date()
     }
-    console.log("ValueData : ",ValueData);
     if(ValueData.length > 0){
       this.downloadFileService.downLoadPdf(keyPDFHeader, ValueData, objData);
     }
