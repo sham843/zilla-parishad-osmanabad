@@ -20,7 +20,7 @@ export class StudentRegistrationComponent {
   pageNumber: number = 1;
   searchContent = new FormControl('');
   tableDataArray = new Array();
-  tableDataForcard: any;
+  // tableDataForcard: any;
   cardViewFlag: boolean = false;
   totalCount: number = 0;
   cardCurrentPage: number = 0;
@@ -47,13 +47,13 @@ export class StudentRegistrationComponent {
     this.languageFlag = this.webService.languageFlag;
     this.languageChange();
     this.getTableData();
-   
+
   }
 
   //#region ----------------------------------------------------- Language Change Logic Start here -----------------------------------------------
 
   languageChange() {
-    this.webService.langNameOnChange.subscribe(lang => {      
+    this.webService.langNameOnChange.subscribe(lang => {
       this.languageFlag = lang;
       let tableData = {
         pageNumber: this.pageNumber,
@@ -82,7 +82,7 @@ export class StudentRegistrationComponent {
     let pageNo
     this.cardViewFlag ? pageNo = (this.cardCurrentPage + 1) : (pageNo = this.pageNumber, this.cardCurrentPage = 0);
     let str = `?pageno=${pageNo}&pagesize=10&textSearch=${this.searchContent.value || ''}&lan=${this.languageFlag || ''}`;
-    let reportStr = '?TextSearch='+this.searchContent.value;
+    let reportStr = '?TextSearch=' + this.searchContent.value;
     this.apiService.setHttp('GET', 'zp-osmanabad/Student/GetAll' + (flag == 'reportFlag' ? reportStr : str), false, false, false, 'baseUrl');
     this.apiService.getHttp().subscribe({
       next: (res: any) => {
@@ -114,7 +114,7 @@ export class StudentRegistrationComponent {
           this.tableDataArray = [];
           this.tableDatasize = 0;
         }
-        let tableData = {  
+        let tableData = {
           pageNumber: this.pageNumber,
           img: 'docPath', blink: '', badge: '', isBlock: '', pagintion: this.tableDatasize > 10 ? true : false,
           displayedColumns: this.languageFlag == 'English' ? this.displayedColumns : this.marathiDisplayedColumns,
@@ -123,21 +123,18 @@ export class StudentRegistrationComponent {
           tableHeaders: this.languageFlag == 'English' ? this.displayedheaders : this.marathiDisplayedheaders
         };
 
-        this.tableDataForcard = {
-          pageNumber: this.pageNumber,
-          tableData: this.tableDataArray,
-          tableSize: this.tableDatasize,
-        };
+        // this.tableDataForcard = {
+        //   pageNumber: this.pageNumber,
+        //   tableData: this.tableDataArray,
+        //   tableSize: this.tableDatasize,
+        // };
         this.apiService.tableData.next(tableData);
 
       },
       error: ((err: any) => { this.ngxSpinner.hide(); this.errors.handelError(err) })
     });
   }
-
   //#endregion ----------------------------------------------------- Get Table Data Logic End here -----------------------------------------------
-
-
 
   childTableCompInfo(obj: any) {
     switch (obj.label) {
@@ -192,7 +189,6 @@ export class StudentRegistrationComponent {
       this.cardViewFlag = false;
       this.pageNumber = 1;
     } else if (label == 'Card') {
-      this.cardCurrentPage = 0;
       this.cardViewFlag = true;
       this.cardCurrentPage = this.cardCurrentPage;
     }
@@ -203,22 +199,6 @@ export class StudentRegistrationComponent {
     this.searchContent.setValue('');
     this.getTableData();
   }
-
-  downloadPdf() {
-    this.getTableData('reportFlag')
-    let keyPDFHeader = ['SrNo', "ID", "Full Name", "Gender", "Contact No.", "Standard", "School Name", "Caste", "Taluka", "Center"];
-    let ValueData =
-      this.studentData.reduce(
-        (acc: any, obj: any) => [...acc, Object.values(obj).map((value) => value)], []
-      );// Value Name
-    console.log("ValueData", ValueData);
-    let objData: any = {
-      'topHedingName': 'Student Report',
-      'createdDate': 'Created on:' + new Date()
-    }
-    this.downloadPdfservice.downLoadPdf(keyPDFHeader, ValueData, objData);
-  }
-
 
   openViewDilog(obj: any) {
     const viewDialogRef = this.dialog.open(StudentDetailsComponent, {
@@ -234,7 +214,6 @@ export class StudentRegistrationComponent {
       }
     })
   }
-
   //#region -------------------------------------------------- Delete Logic Start Here ------------------------------------------------------
 
   deteleDialogOpen(obj: any) {
@@ -243,27 +222,26 @@ export class StudentRegistrationComponent {
       title: this.languageFlag == 'English' ? 'Do you want to delete Student record?' : 'तुम्हाला विद्यार्थी रेकॉर्ड हटवायचा आहे का?',
       cancelButton: this.languageFlag == 'English' ? 'Cancel' : 'रद्द करा',
       okButton: this.languageFlag == 'English' ? 'Ok' : 'ओके'
-    }
-
+    };
     const deleteDialogRef = this.dialog.open(GlobalDialogComponent, {
       width: '320px',
       data: dialoObj,
       disableClose: true,
       autoFocus: false
-    })
+    });
     deleteDialogRef.afterClosed().subscribe((result: any) => {
       if (result == 'yes') {
         this.deleteRecord(obj.id)
       }
-    })
+    });
   }
 
   deleteRecord(id: any) {
     let deleteObj = {
       "id": id,
-      "modifiedBy": 0,
+      "modifiedBy": this.webService.getUserId(),
       "modifiedDate": new Date(),
-      "lan": "string"
+      "lan": this.languageFlag == 'English' ? 'EN' : 'mr-IN'
     }
     this.apiService.setHttp('delete', 'zp-osmanabad/Student/DeleteStudent', false, deleteObj, false, 'baseUrl');
     this.apiService.getHttp().subscribe({
@@ -277,9 +255,22 @@ export class StudentRegistrationComponent {
       },
       error: ((err: any) => { this.errors.handelError(err) })
     });
-
   }
-
   //#endregion -------------------------------------------------- Delete Logic End Here ------------------------------------------------------
+
+  downloadPdf() {
+    this.getTableData('reportFlag')
+    let keyPDFHeader = ['SrNo', "ID", "Full Name", "Gender", "Contact No.", "Standard", "School Name", "Caste", "Taluka", "Center"];
+    let ValueData =
+      this.studentData.reduce(
+        (acc: any, obj: any) => [...acc, Object.values(obj).map((value) => value)], []
+      );// Value Name
+    console.log("ValueData", ValueData);
+    let objData: any = {
+      'topHedingName': 'Student Report',
+      'createdDate': 'Created on:' + new Date()
+    }
+    this.downloadPdfservice.downLoadPdf(keyPDFHeader, ValueData, objData);
+  }
 
 }

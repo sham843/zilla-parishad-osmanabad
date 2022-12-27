@@ -144,8 +144,10 @@ export class SchoolRegistrationComponent {
   }
 
   childCompInfo(obj: any) {
+    console.log("oooooooooo",obj);    
     switch (obj.label) {
       case 'Pagination':
+        console.log(obj.pageNumber);        
         this.pageNumber = obj.pageNumber;
         this.getTableData();
         break;
