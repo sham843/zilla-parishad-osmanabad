@@ -20,6 +20,7 @@ import { GlobalDialogComponent } from 'src/app/shared/components/global-dialog/g
 import { TableComponent } from 'src/app/shared/components/table/table.component';
 import { PageStatisticsComponent } from 'src/app/shared/components/page-statistics/page-statistics.component';
 import { TranslateModule } from '@ngx-translate/core';
+import { GlobalDetailsComponent } from 'src/app/shared/components/global-details/global-details.component';
 
 @NgModule({
   declarations: [
@@ -45,8 +46,8 @@ import { TranslateModule } from '@ngx-translate/core';
     GlobalDialogComponent,
     TableComponent,
     PageStatisticsComponent,
-    TranslateModule
-    
+    TranslateModule,
+    GlobalDetailsComponent
   ]
 })
 export class StudentRegistrationModule {
