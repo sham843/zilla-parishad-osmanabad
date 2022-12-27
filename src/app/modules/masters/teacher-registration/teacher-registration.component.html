@@ -10,14 +10,14 @@
     <mat-card-header class="card-header">
         <div class="d-flex align-items-center justify-content-between flex-wrap w-100">
             <div class="text-main fw-bold mb-sm-0 mb-2">
-                Teacher List
+                Teacher's List
             </div>
             <div class="d-flex align-items-center justify-content-end gap-2">
                 <button mat-flat-button class="btn-main btn-icon"
                     [ngClass]="{'btn-main':!this.cardViewFlag, 'btn-second':this.cardViewFlag}"
                     (click)="selectGrid('Table')">
                     <mat-icon>
-                        format_list_bulleted
+                        table_view
                     </mat-icon>
                 </button>
                 <button mat-flat-button class="btn-second btn-icon"
@@ -27,7 +27,12 @@
                         grid_view
                     </mat-icon>
                 </button>
-                <button mat-flat-button class="btn-main btn-icon" [matMenuTriggerFor]="menu">
+                <button mat-flat-button class="bg-danger btn-icon text-white" title="Download as PDF" (click)="downloadPdf()">
+                    <mat-icon>
+                        description
+                    </mat-icon>
+                  </button>
+                <!-- <button mat-flat-button class="btn-main btn-icon" [matMenuTriggerFor]="menu">
                     <mat-icon>
                         download
                     </mat-icon>
@@ -39,13 +44,7 @@
                             <i class='bx bxs-file-pdf text-danger'></i>
                         </div>
                     </button>
-                    <!-- <button mat-menu-item>
-                        <div class="d-flex align-items-center justify-content-between w-100">
-                            <span>Excel</span>
-                            <i class='bx bxs-file text-primary'></i>
-                        </div>
-                    </button> -->
-                </mat-menu>
+                </mat-menu> -->
                 <button mat-flat-button class="btn-main" (click)="addUpdateTeacher()">
                     <mat-icon>
                         add
@@ -54,22 +53,22 @@
             </div>
         </div>
     </mat-card-header>
-    <mat-card-header class="card-header">
+    <mat-card-header class="card-header pb-0 border-bottom-0">
         <div class="row gx-2 w-100">
-            <div class="col-sm-auto">
+            <div class="col-sm-3">
                 <mat-form-field appearance="outline" class="w-100">
                     <mat-label>Search by Name/Contact/Email</mat-label>
                     <input matInput [formControl]="searchContent">
                 </mat-form-field>
             </div>
             <div class="col-sm-auto">
-                <button mat-flat-button class="btn-main" (click)="onFilterClick()">Filter</button>
+                <button mat-flat-button class="btn-main" (click)="onFilterClick()">Search</button>
                 <button mat-flat-button class="btn-second ms-2" (click)="clearFilterData()">Clear</button>
             </div>
         </div>
     </mat-card-header>
 
-    <mat-card-content class="card-body">
+    <mat-card-content class="card-body pt-0">
         <ng-container *ngIf="!cardViewFlag">
             <app-table (recObjToChild)="childCompInfo($event)"></app-table>
         </ng-container>

@@ -29,7 +29,7 @@ export class MasterService {
     });
   }
 
-  getAllTaluka(langFlag: string) {
+  getAllTaluka(langFlag?: string) {
     return new Observable((obj) => {
       this.apiService.setHttp('GET', 'zp-osmanabad/master/GetAllTaluka?flag_lang=' + langFlag, false, false, false, 'baseUrl');
       this.apiService.getHttp().subscribe({
@@ -49,7 +49,7 @@ export class MasterService {
     });
   }
 
-  getAllCenter(langFlag: string) {
+  getAllCenter(langFlag?: string) {
     return new Observable((obj) => {
       this.apiService.setHttp('GET', 'zp-osmanabad/master/GetAllCenterByTalukaId?flag_lang=' + langFlag, false, false, false, 'baseUrl');
       this.apiService.getHttp().subscribe({
@@ -59,7 +59,7 @@ export class MasterService {
     });
   }
 
-  getAllSchoolType(langFlag: string) {
+  getAllSchoolType(langFlag?: string) {
     return new Observable((obj) => {
       this.apiService.setHttp('GET', 'zp-osmanabad/master/GetAllSchoolType?flag_lang=' + langFlag, false, false, false, 'baseUrl');
       this.apiService.getHttp().subscribe({
