@@ -1,4 +1,4 @@
-import { Component} from '@angular/core';
+import { Component } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
 import { MasterService } from 'src/app/core/services/master.service';
@@ -9,46 +9,46 @@ import { WebStorageService } from 'src/app/core/services/web-storage.service';
   styleUrls: ['./dashboard.component.scss']
 })
 export class DashboardComponent {
-  talukaData=new Array();
-  lang !:string;
-  schoolData=new Array();
-  centerData=new Array();
-  filterForm!:FormGroup;
-  piechartOptions:any;
-  barchartOptions:any;
-  get f(){ return this.filterForm.controls; }
-  constructor(public translate: TranslateService, private masterService:MasterService,
-     public webStorage:WebStorageService, private fb:FormBuilder){
-      this.getChart();
-     }
-  ngOnInit(){
-    this.filterForm=this.fb.group({
-      talukaId:[],
-      centerId:[],
-      schoolId:[]
+  talukaData = new Array();
+  lang !: string;
+  schoolData = new Array();
+  centerData = new Array();
+  filterForm!: FormGroup;
+  piechartOptions: any;
+  barchartOptions: any;
+  get f() { return this.filterForm.controls; }
+  constructor(public translate: TranslateService, private masterService: MasterService,
+    public webStorage: WebStorageService, private fb: FormBuilder) {
+    this.getChart();
+  }
+  ngOnInit() {
+    this.filterForm = this.fb.group({
+      talukaId: [],
+      centerId: [],
+      schoolId: []
     })
     this.getTalukas();
     this.getCenters();
     this.getschools();
     this.getBarChart();
-    
+
   }
-  getTalukas(){
-    this.masterService.getAllTaluka().subscribe((res:any)=>{
-      this.talukaData=res.responseData;
+  getTalukas() {
+    this.masterService.getAllTaluka().subscribe((res: any) => {
+      this.talukaData = res.responseData;
     })
   }
-  getCenters(){
-    this.masterService.getAllCenter().subscribe((res:any)=>{
-      this.centerData=res.responseData;
+  getCenters() {
+    this.masterService.getAllCenter().subscribe((res: any) => {
+      this.centerData = res.responseData;
     })
   }
-  getschools(){
-    this.masterService.getAllSchoolType().subscribe((res:any)=>{
-      this.schoolData=res.responseData;
+  getschools() {
+    this.masterService.getAllSchoolType().subscribe((res: any) => {
+      this.schoolData = res.responseData;
     })
   }
-  getChart(){
+  getChart() {
     this.piechartOptions = {
       series: [44, 55, 13, 43, 22],
       chart: {
@@ -70,7 +70,7 @@ export class DashboardComponent {
       ]
     };
   }
-  getBarChart(){
+  getBarChart() {
     this.barchartOptions = {
       series: [
         [{
@@ -111,15 +111,15 @@ export class DashboardComponent {
         }],
         [{
           name: "PRODUCT A",
-          data: [65,36,25,15]
+          data: [65, 36, 25, 15]
         },
         {
           name: "PRODUCT B",
-          data: [10,70,25,42]
+          data: [10, 70, 25, 42]
         },
         {
           name: "PRODUCT C",
-          data: [37,65,74,20]
+          data: [37, 65, 74, 20]
         }],
       ],
       chart: {
@@ -151,11 +151,21 @@ export class DashboardComponent {
           "2011 Q1",
         ]
       },
+
       yaxis: {
-        labels:{
         show: false,
-        }
-       
+        showAlways: false,
+        floating: false,
+        axisTicks: {
+          show: false
+        },
+        axisBorder: {
+          show: false
+        },
+        labels: {
+          show: false
+        },
+
       },
       fill: {
         opacity: 1
