@@ -24,7 +24,7 @@
             </div>
 
             <div class="col-sm-4">
-                <mat-form-field appearance="outline" class="w-100 " *ngIf="officeForm.value.designationLevelId != 5">
+                <mat-form-field appearance="outline" class="w-100 " *ngIf="officeForm.value.designationLevelId != 5 && officeForm.value.designationLevelId != 6 && officeForm.value.designationLevelId != 7">
                     <mat-label>Designation (Officer)</mat-label>
                     <mat-select placeholder="select" formControlName="designationId" (selectionChange)="getCenterDrop()">
                         <mat-option  [value]="desig.id" *ngFor="let desig of designations">{{webStorageService.languageFlag =='mr-IN' ? desig.m_DesignationType: desig.designationType}}</mat-option>
@@ -61,7 +61,7 @@
                 </div>
             </ng-container>
 
-            <ng-container>
+            <ng-container *ngIf=" officeForm.value.designationLevelId != 6 && officeForm.value.designationLevelId != 7">
                 <div class="col-sm-4">
                     <mat-form-field appearance="outline" class="w-100 ">
                         <mat-label>District</mat-label>
@@ -72,7 +72,7 @@
                 </div>
             </ng-container>
             
-            <ng-container>
+            <ng-container *ngIf=" officeForm.value.designationLevelId != 6 && officeForm.value.designationLevelId != 7">
                 <div class="col-sm-4">
                     <mat-form-field appearance="outline" class="w-100">
                         <mat-label>Taluka</mat-label>
