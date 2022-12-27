@@ -156,7 +156,8 @@
                 <div class="col-sm-4">
                     <mat-form-field appearance="outline" class="w-100">
                         <mat-label>{{'Labels.birthDate'| translate}}</mat-label>
-                        <input matInput [matDatepicker]="picker" formControlName="dob" readonly>
+                        <input matInput [matDatepicker]="picker" formControlName="dob" readonly
+                        [max]="maxDate">
                         <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
                         <mat-datepicker #picker></mat-datepicker>
                         <mat-error *ngIf="fc['dob'].hasError('required')">
