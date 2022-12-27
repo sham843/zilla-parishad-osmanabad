@@ -19,7 +19,6 @@ export class SchoolRegistrationComponent {
   pageNumber: number = 1;
   tableDataArray = new Array();
   searchContent = new FormControl('');
-  // districtId = new FormControl('0');
   districtId = new FormControl('');
   talukaId = new FormControl('');
   villageId = new FormControl();
@@ -59,10 +58,10 @@ export class SchoolRegistrationComponent {
   //#region ------------------------------------------- School Registration Table Data start here ----------------------------------------// 
   getTableData(flag?: string) {
     this.tableDataArray = [];
-    if(localStorage.getItem('schoolRegistration')){
-      this.pageNumber = JSON.parse(localStorage.getItem('schoolRegistration')||'');
-      localStorage.removeItem('schoolRegistration');
-    }
+    // if(localStorage.getItem('schoolRegistration')){
+    //   this.pageNumber = JSON.parse(localStorage.getItem('schoolRegistration')||'');
+    //   localStorage.removeItem('schoolRegistration');
+    // }
 
     this.pageNumber = flag == 'filter' ? 1 : this.pageNumber;
 
@@ -75,7 +74,7 @@ export class SchoolRegistrationComponent {
     this.apiService.getHttp().subscribe({
 
       next: (res: any) => {
-        if (res.statusCode == "200") {
+        if (res.statusCode == 200) {
           this.tableDataArray = res.responseData.responseData1;
           this.totalCount = res.responseData.responseData2.pageCount;
           tableDatasize = res.responseData.responseData2.pageCount;
@@ -178,7 +177,7 @@ export class SchoolRegistrationComponent {
         this.onClear();
         this.getTableData();
         this.pageNumber = this.pageNumber;
-        localStorage.setItem('schoolRegistration',JSON.stringify(this.pageNumber));
+        // localStorage.setItem('schoolRegistration',JSON.stringify(this.pageNumber));
       }
       else if(result == 'yes'){
         this.getTableData();
@@ -280,7 +279,7 @@ export class SchoolRegistrationComponent {
       next: (res: any) => {
         console.log("PDF : ",res);
         
-        if (res.statusCode == "200") {
+        if (res.statusCode == 200) {
           this.resultDownloadArr = [];
           let data: [] = res.responseData.responseData1;
           console.log("data", data);
