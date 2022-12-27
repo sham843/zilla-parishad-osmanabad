@@ -170,7 +170,7 @@
                 <div class="col-sm-4">
                     <mat-form-field appearance="outline" class="w-100">
                         <mat-label>{{'Labels.emailID' | translate}}</mat-label>
-                        <input matInput formControlName="emailId" (keypress)="validation.noFirstSpaceAllow($event)">
+                        <input matInput formControlName="emailId" (keypress)="validation.noFirstSpaceAllow($event)">    
                         <mat-error *ngIf="fc['emailId'].hasError('required')">{{'Labels.emailIdIsRequired' | translate}}</mat-error>
                         <mat-error *ngIf="fc['emailId'].hasError('pattern')">{{'Labels.pleaseEnterValidEmailId' | translate}}</mat-error>
                     </mat-form-field>
@@ -182,7 +182,8 @@
     </mat-card-content>
     <mat-card-footer class="d-flex justify-content-end card-footer mb-0">
         <button mat-flat-button type="button" mat-dialog-close class="btn-second me-2">{{'Labels.cancel' | translate}}</button>
-        <button mat-flat-button type="submit" class="btn-main">{{data ? 'Update' :'Submit'}}</button>
+        <!-- <button mat-flat-button type="submit" class="btn-main">{{data ? 'Update' :'Submit'}}</button> -->
+        <button mat-flat-button type="submit" class="btn-main">{{data ? 'Update' : ('Labels.submit' | translate)}}</button>
     </mat-card-footer>
 </form>
 </mat-card>
