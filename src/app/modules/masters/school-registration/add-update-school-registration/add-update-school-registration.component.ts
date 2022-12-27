@@ -87,7 +87,9 @@ export class AddUpdateSchoolRegistrationComponent {
   getDistrict() {
     this.masterService.getAllDistrict(this.webStorageS.languageFlag).subscribe({
       next: (res: any) => {
-        res.statusCode == "200" ? this.districtArr = res.responseData : this.districtArr = [];
+        res.statusCode == "200" ?( this.districtArr = res.responseData, this.schoolRegForm.value.districtId= this.districtArr[0].id ): this.districtArr = [];
+        this.schoolRegForm.controls['districtId'].setValue(1); 
+
         this.editFlag ? (this.f['districtId'].setValue(this.data.districtId), this.getTaluka()) : '';
       },
       error: ((err: any) => { this.errors.handelError(err) })
@@ -175,8 +177,11 @@ export class AddUpdateSchoolRegistrationComponent {
       else{
         return
       }
-      
     });
+  }
+
+  viewImg(){
+    window.open(this.uploadImg, 'blank');
   }
   //#endregionegion ------------------------------------------------- Upload Image end here --------------------------------------------// 
 
