@@ -83,10 +83,10 @@
                 </div>
                 <div class="col-sm-4">
                     <mat-form-field appearance="outline" class="w-100">
-                        <mat-label>{{'Labels.address' | translate}}</mat-label>
-                        <input matInput formControlName="address"  (keypress)="validation.noFirstSpaceAllow($event)">
-                        <mat-error *ngIf="fc['address'].hasError('required')">{{'Labels.addressIsRequired' | translate}}</mat-error>
-                        <mat-error *ngIf="fc['address'].hasError('maxlength')">{{'Labels.maximummLength500Characters' | translate}}</mat-error>                   
+                        <mat-label>{{'Labels.agencyAdd' | translate}}</mat-label>
+                        <input matInput formControlName="agencyAddress"  (keypress)="validation.noFirstSpaceAllow($event)">
+                        <mat-error *ngIf="fc['agencyAddress'].hasError('required')">{{'Labels.addressIsRequired' | translate}}</mat-error>
+                        <mat-error *ngIf="fc['agencyAddress'].hasError('maxlength')">{{'Labels.maximummLength500Characters' | translate}}</mat-error>                   
                     </mat-form-field>
                 </div>
             </div>

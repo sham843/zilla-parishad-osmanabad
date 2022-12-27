@@ -8,6 +8,8 @@ import {MatCardModule} from '@angular/material/card';
 import { TranslateModule } from '@ngx-translate/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgApexchartsModule } from 'ng-apexcharts';
+import {MatCheckboxModule} from '@angular/material/checkbox';
+
 
 @NgModule({
   declarations: [
@@ -22,6 +24,7 @@ import { NgApexchartsModule } from 'ng-apexcharts';
     MatCardModule,
     NgApexchartsModule,
     TranslateModule,
+    MatCheckboxModule,
     AgmCoreModule.forRoot({
       apiKey: 'AIzaSyBhkYI4LMEqVhB6ejq12wpIA6CW5theKJw',
       language: 'en',
