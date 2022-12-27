@@ -7,6 +7,7 @@ import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
+import { MatTooltipModule } from '@angular/material/tooltip';
 import { Router } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
 import { ApiService } from 'src/app/core/services/api.service';
@@ -16,7 +17,7 @@ import { ValidationService } from 'src/app/core/services/validation.service';
 import { WebStorageService } from 'src/app/core/services/web-storage.service';
 
 @Component({standalone:true,
-  imports: [MatButtonModule,CommonModule, MatIconModule, MatFormFieldModule,ReactiveFormsModule,MatInputModule,TranslateModule,FormsModule,MatCardModule,MatDialogModule],
+  imports: [MatButtonModule,CommonModule,MatTooltipModule, MatIconModule, MatFormFieldModule,ReactiveFormsModule,MatInputModule,TranslateModule,FormsModule,MatCardModule,MatDialogModule],
   selector: 'app-change-password',
   templateUrl: './change-password.component.html',
   styleUrls: ['./change-password.component.scss']
