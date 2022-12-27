@@ -370,7 +370,7 @@
                 </div>
                 <div class="col-sm-4">
                     <mat-form-field appearance="outline" class="w-100 ">
-                        <mat-label>Husband-Wife both are in Service</mat-label>
+                        <mat-label>Husband-Wife both Are In Service</mat-label>
                         <mat-select formControlName="husbandWife_Both_Service" >
                             <mat-option *ngFor="let husbandWifeService of husbandWifeBothServiceArray"
                             [value]="husbandWifeService.husbandWife_Both_Service">{{husbandWifeService.name}}</mat-option>
@@ -382,14 +382,14 @@
                 <ng-container *ngIf="teacherRegForm.value.teacherDetails.husbandWife_Both_Service == 1 ">
                     <div class="col-sm-4">
                         <mat-form-field appearance="outline" class="w-100 ">
-                            <mat-label>If Yes then name and office name</mat-label>
+                            <mat-label>If Yes Then Name And Office Name</mat-label>
                             <input matInput formControlName="husbandWife_OfficeName">
                         </mat-form-field>
                     </div>
                 </ng-container>             
                 <div class="col-sm-4">
                     <mat-form-field appearance="outline" class="w-100 ">
-                        <mat-label>Are you Disabled</mat-label>
+                        <mat-label>Are You Disabled</mat-label>
                         <mat-select formControlName="isDisabled" >
                             <mat-option *ngFor="let disabled of AreyouDisabled"
                             [value]="disabled.isDisabled">{{disabled.name}}</mat-option>
@@ -400,7 +400,7 @@
                 </div>
                 <div class="col-sm-4">
                     <mat-form-field appearance="outline" class="w-100 ">
-                        <mat-label>Inter District transferred</mat-label>
+                        <mat-label>Inter District Transferred</mat-label>
                         <mat-select formControlName="interDistrictTransferred" >
                             <mat-option *ngFor="let interDistrict of interDistrictTransferredArray"
                             [value]="interDistrict.interDistrictTransferred">{{interDistrict.name}}</mat-option>
@@ -413,7 +413,7 @@
                 <ng-container *ngIf="teacherRegForm.value.teacherDetails.interDistrictTransferred == 1 ">
                     <div class="col-sm-4">
                         <mat-form-field appearance="outline" class="w-100">
-                            <mat-label>Date of presence by inter district transfer</mat-label>
+                            <mat-label>Date Of Presence By Inter District Transfer</mat-label>
                             <input matInput [matDatepicker]=" DistrictTransfer"
                                 formControlName="dateOFPresenceInterDistrictTransfer">
                             <mat-datepicker-toggle matIconSuffix [for]="DistrictTransfer"></mat-datepicker-toggle>
@@ -422,7 +422,7 @@
                     </div>
                     <div class="col-sm-4">
                         <mat-form-field appearance="outline" class="w-100 ">
-                            <mat-label>Inter district transfer type*</mat-label>
+                            <mat-label>Inter District Transfer Type*</mat-label>
                             <mat-select formControlName="interDistrictTransferType" >
                                 <mat-option *ngFor="let interDistricttrasferType of interDistrictTransferTypeArray"
                                 [value]="interDistricttrasferType.id">{{interDistricttrasferType.interDistrictTransferType}}</mat-option>
@@ -433,14 +433,14 @@
                     </div>
                     <div class="col-sm-4">
                         <mat-form-field appearance="outline" class="w-100 ">
-                            <mat-label>The original district of inter-district transfer</mat-label>
+                            <mat-label>The Original District Of Inter-district Transfer</mat-label>
                             <input matInput formControlName="theOriginalDistrictInterDistrictTransfer" >
                         </mat-form-field>
                     </div>
                 </ng-container>             
                 <div class="col-sm-4">
                     <mat-form-field appearance="outline" class="w-100">
-                        <mat-label>Date of Seniority</mat-label>
+                        <mat-label>Date Of Seniority</mat-label>
                         <input matInput [matDatepicker]=" DateSeniority" formControlName="dateOfSeniority">
                         <mat-datepicker-toggle matIconSuffix [for]="DateSeniority"></mat-datepicker-toggle>
                         <mat-datepicker #DateSeniority></mat-datepicker>
@@ -448,7 +448,7 @@
                 </div>
                 <div class="col-sm-4">
                     <mat-form-field appearance="outline" class="w-100 ">
-                        <mat-label>Have you passed Computer exam</mat-label>
+                        <mat-label>Have You Passed Computer Exam</mat-label>
                         <mat-select formControlName="haveYouPassedComputerExam">
                             <mat-option *ngFor="let passComputerExam of haveYouPassedComputerExamArray"
                             [value]="passComputerExam.haveYouPassedComputerExam">{{passComputerExam.name}}</mat-option>
@@ -459,7 +459,7 @@
                 </div>
                 <div class="col-sm-4">
                     <mat-form-field appearance="outline" class="w-100 ">
-                        <mat-label>School names & Taluka work earlier</mat-label>
+                        <mat-label>School Names & Taluka Work Earlier</mat-label>
                           <input matInput formControlName="namesAndTalukasAllSchoolsWorkedEarlier">
                     </mat-form-field>
                 </div>
