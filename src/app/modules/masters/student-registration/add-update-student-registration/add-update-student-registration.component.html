@@ -135,7 +135,7 @@
                                 </span>
                             </mat-icon>
                         </span>
-                        <mat-error *ngIf="fc['photo'].hasError('required')">Please Upload Image</mat-error>
+                        <mat-error *ngIf="fc['photo'].hasError('required')">{{'Labels.uploadImg'| translate}}</mat-error>
                     </mat-form-field>
                     
                 </div>
@@ -156,7 +156,7 @@
                 <div class="col-sm-4">
                     <mat-form-field appearance="outline" class="w-100">
                         <mat-label>{{'Labels.birthDate'| translate}}</mat-label>
-                        <input matInput [matDatepicker]="picker" formControlName="dob">
+                        <input matInput [matDatepicker]="picker" formControlName="dob" readonly>
                         <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
                         <mat-datepicker #picker></mat-datepicker>
                         <mat-error *ngIf="fc['dob'].hasError('required')">
@@ -251,7 +251,7 @@
                                 </span>
                             </mat-icon>
                         </span>
-                        <mat-error *ngIf="fc['aadharPhoto'].hasError('required')">Please Upload Aadhar Image</mat-error>
+                        <mat-error *ngIf="fc['aadharPhoto'].hasError('required')">{{'Labels.uploadImg'| translate}}</mat-error>
                     </mat-form-field>      
                    
                            
