@@ -16,15 +16,16 @@
                 <div class="col-sm">
                     <mat-form-field appearance="outline" class="w-100">
                         <mat-label>{{'Labels.district' | translate}}</mat-label>
-                        <mat-select formControlName="districtId" (selectionChange)="getTaluka();">
-                            <mat-option *ngFor="let district of districtArr" [value]="district.id">
+                        <mat-select formControlName="districtId" [disabled]="schoolRegForm.value.districtId == 1">
+                            <mat-option *ngFor="let district of districtArr" value="{{district.id}}">
                                 {{webStorageS.getLangauge() == 'EN' ?
                                 district.district : district.m_District}}
                             </mat-option>
-                            <!-- <mat-option [value]="1" *ngFor="let district of districtArr">
-                                {{webStorageS.getLangauge() == 'EN' ? -->
-                                <!-- district.district : district.m_District}} -->
-                            <!-- </mat-option> -->
+
+                            <!-- <mat-option *ngFor="let district of districtArr" [value]="district.id">
+                                {{webStorageS.getLangauge() == 'EN' ?
+                                district.district : district.m_District}}
+                            </mat-option> -->
                         </mat-select>
                         <mat-error *ngIf="f['districtId'].hasError('required') || f['districtId'].hasError('touched')">
                             {{'Labels.districtIsRequired' | translate}}
@@ -170,7 +171,7 @@
                         <mat-icon class="text-danger" type="button" *ngIf="showAddRemImg"
                             (click)="clearImg()">highlight_off</mat-icon>
                         <mat-icon class="text-success"
-                            *ngIf="showAddRemImg">check_circle_outline</mat-icon>
+                            *ngIf="showAddRemImg" (click)="viewImg()">check_circle_outline</mat-icon>
                     </span>
                 </div>
             </div>
