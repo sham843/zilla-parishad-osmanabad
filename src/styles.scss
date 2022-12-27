@@ -118,10 +118,13 @@ body {
   font-family: 'Poppins', sans-serif !important;
 }
 
-.dashboard-table button {
-  height: 40px !important;
-  width: 40px !important;
-  padding: 10px !important;
+.dashboard-table .mat-mdc-icon-button.mat-mdc-button-base {
+  height: 34px !important;
+  width: 34px !important;
+  padding: 8px 5px !important;
+  background-color: #EEEEEE !important;
+  border-radius: 5px !important;
+  margin: 2px;
 }
 
 .dashboard-table button mat-icon {
