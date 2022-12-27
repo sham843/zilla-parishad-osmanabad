@@ -205,6 +205,20 @@
         "Atleast1LowercaseCharacters(a-z)" :"किमान एक लोअरकेस वर्ण (a-z)",
         "Atleast1UpercaseCharacters(A-Z)" : "किमान एक अपरकेस कॅरेक्टर (A-Z)",
         "Atleast1Digits(0-9)" :"किमान एक अंक (0-9)",
-        "(*$@#)Atleast1SpecialCharacters(*$@#)" : "(*$@#)किमान 1 विशेष वर्ण (*$@#)"
+        "(*$@#)Atleast1SpecialCharacters(*$@#)" : "(*$@#)किमान 1 विशेष वर्ण (*$@#)",
+        "show" :"पहा",
+        "hide" : "लपवा",
+        "Urban" : "शहरी",
+        "Rural" :"ग्रामीण",
+        "Teacher" : "शिक्षक",
+        "Female": "महिला",
+        "Male" : "पुरुष",
+        "Girls" : "मुली",
+        "Boys" : "मुले",
+        "OfficeUsers" : "ऑफिस वापरकर्ते",
+        "Student" : "विद्यार्थी",
+        "Designation" : "पदनाम",
+        "agencyReg" : "एजन्सी रजिस्टर"
+       
     }
 }

@@ -206,7 +206,21 @@
         "Atleast1LowercaseCharacters(a-z)" : "At least 1 Lowercase Characters (a-z)",
         "Atleast1UpercaseCharacters(A-Z)" : "At least 1 Uppercase Characters (a-z)",
         "Atleast1Digits(0-9)" :"At least 1 Digits(0-9)",
-        "(*$@#)Atleast1SpecialCharacters(*$@#)" :"(*$@#)At least 1 Special Characters (*$@#)"
+        "(*$@#)Atleast1SpecialCharacters(*$@#)" :"(*$@#)At least 1 Special Characters (*$@#)",
+        "show" : "Show",
+        "hide" : "Hide",
+        "Urban" : "Urban",
+        "Rural" : "Rural",
+        "Teacher" :"Teacher",
+        "Female" : "Female",
+        "Male" : "Male",
+        "Girls" : "Girls",
+        "Boys" : "Boys",
+        "OfficeUsers" : "Office Users",
+        "Student" : "Student",
+        "Designation" : "Designation",
+        "agencyReg" : "Agency Register"
+        
 
     }
 }
