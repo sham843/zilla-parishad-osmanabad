@@ -176,6 +176,18 @@
         "Atleast1Digits(0-9)" :"किमान एक अंक (0-9)",
         "(*$@#)Atleast1SpecialCharacters(*$@#)" : "(*$@#)किमान 1 विशेष वर्ण (*$@#)",
         "show" :"पहा",
-        "hide" : "लपवा"
+        "hide" : "लपवा",
+        "Urban" : "शहरी",
+        "Rural" :"ग्रामीण",
+        "Teacher" : "शिक्षक",
+        "Female": "महिला",
+        "Male" : "पुरुष",
+        "Girls" : "मुली",
+        "Boys" : "मुले",
+        "OfficeUsers" : "ऑफिस वापरकर्ते",
+        "Student" : "विद्यार्थी",
+        "Designation" : "पदनाम",
+        "agencyReg" : "एजन्सी रजिस्टर"
+       
     }
 }
