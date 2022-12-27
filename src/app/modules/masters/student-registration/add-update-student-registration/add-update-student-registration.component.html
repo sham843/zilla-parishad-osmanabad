@@ -142,10 +142,8 @@
                                 </span>
                             </mat-icon>
                         </span>
+                        <mat-error *ngIf="fc['photo'].hasError('required')">Please Upload Image</mat-error>
                     </mat-form-field>
-                    <ng-container *ngIf="imageFlag">
-                        <small class="text-danger" style="font-size: 12px;" >Please Upload Image</small>
-                    </ng-container>
                     
                 </div>
             </div>
@@ -260,10 +258,9 @@
                                 </span>
                             </mat-icon>
                         </span>
+                        <mat-error *ngIf="fc['aadharPhoto'].hasError('required')">Please Upload Aadhar Image</mat-error>
                     </mat-form-field>      
-                    <ng-container *ngIf="aadhaarFlag">
-                        <small class="text-danger" style="font-size: 12px;" >Please Upload Aadhar Image</small>       
-                    </ng-container>
+                   
                            
                 </div>
                 

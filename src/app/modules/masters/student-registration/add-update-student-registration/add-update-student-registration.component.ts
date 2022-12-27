@@ -36,9 +36,7 @@ export class AddUpdateStudentRegistrationComponent {
   editObj: any;
   languageFlag!: string
   imageArray = new Array();
-
-  imageFlag: boolean = false;
-  aadhaarFlag : boolean = false;
+ 
 
   @ViewChild('uploadImage') imageFile!: ElementRef;
   @ViewChild('uploadAadhar') aadharFile!: ElementRef;
@@ -95,8 +93,8 @@ export class AddUpdateStudentRegistrationComponent {
       aadharNo: ['', [Validators.required, Validators.pattern(this.validators.aadhar_card)]],
       // emailID:[''],
       physicallyDisabled: ['', Validators.required],
-      photo: [''],
-      aadharPhoto: ['']
+      photo: ['', Validators.required],
+      aadharPhoto: ['', Validators.required]
 
     })
   }
@@ -309,8 +307,6 @@ export class AddUpdateStudentRegistrationComponent {
 
     if (this.stuRegistrationForm.invalid) {
       this.ngxSpinner.hide();
-      this.uploadImg ? this.imageFlag = false : this.imageFlag = true;
-      this.uploadAadhar ? this.aadhaarFlag = false : this.aadhaarFlag = true;
       return
     } else {
       let url = this.editFlag ? 'UpdateStudent' : 'AddStudent'
