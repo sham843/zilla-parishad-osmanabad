@@ -262,8 +262,8 @@ export class AddUpdateStudentRegistrationComponent {
     this.stuRegistrationForm.controls['aadharPhoto'].setValue(this.uploadAadhar?.split('/').pop());
     this.allDropdownMethods();
   }
-
   //#region  ----------------------------------------------- Submit logic Start here ------------------------------------------------
+ 
   onSubmit() {
     this.ngxSpinner.show();
     let obj = this.stuRegistrationForm.value;
