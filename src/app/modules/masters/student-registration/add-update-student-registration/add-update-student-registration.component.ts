@@ -263,7 +263,6 @@ export class AddUpdateStudentRegistrationComponent {
     this.stuRegistrationForm.controls['photo'].setValue(this.uploadImg?.split('/').pop());
     this.stuRegistrationForm.controls['aadharPhoto'].setValue(this.uploadAadhar?.split('/').pop());
     this.allDropdownMethods();
-
   }
 
   //#region  ----------------------------------------------- Submit logic Start here ------------------------------------------------
