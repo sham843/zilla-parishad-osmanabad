@@ -19,7 +19,7 @@
                 <div class="col-sm-4">
                     <mat-form-field appearance="outline" class="w-100">
                         <mat-label>{{'Labels.agencyName' | translate}}</mat-label>
-                        <input matInput formControlName="agency_Name"  maxlength="50" (keypress)="validation.noFirstSpaceAllow($event)">
+                        <input appAutofocus  matInput formControlName="agency_Name"  maxlength="50" (keypress)="validation.noFirstSpaceAllow($event)">
                         <mat-error *ngIf="fc['agency_Name'].hasError('required')">{{'Labels.agencyNameIsRequired' | translate}}</mat-error>
                         <mat-error *ngIf="fc['agency_Name'].hasError('pattern')">{{'Labels.pleaseEnterValidAgencyName' | translate}}</mat-error>
                     </mat-form-field>

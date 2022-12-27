@@ -18,6 +18,7 @@ import { TableComponent } from 'src/app/shared/components/table/table.component'
 import { PageStatisticsComponent } from 'src/app/shared/components/page-statistics/page-statistics.component';
 import { GlobalDialogComponent } from 'src/app/shared/components/global-dialog/global-dialog.component';
 import { TranslateModule } from '@ngx-translate/core';
+import { AutofocusDirective } from 'src/app/core/directives/autofocus.directive';
 
 
 @NgModule({
@@ -43,7 +44,7 @@ import { TranslateModule } from '@ngx-translate/core';
     PageStatisticsComponent,
     GlobalDialogComponent,
     TranslateModule,
-
+    AutofocusDirective
   ]
 })
 export class AgencyRegistrationModule { }
