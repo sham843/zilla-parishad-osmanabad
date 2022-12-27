@@ -36,6 +36,7 @@ export class AddUpdateStudentRegistrationComponent {
   editObj: any;
   languageFlag!: string
   imageArray = new Array();
+  maxDate = new Date();
  
 
   @ViewChild('uploadImage') imageFile!: ElementRef;
