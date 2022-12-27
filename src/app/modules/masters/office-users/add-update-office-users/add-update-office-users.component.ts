@@ -32,42 +32,46 @@ export class AddUpdateOfficeUsersComponent implements OnInit {
               
   ngOnInit(){
     this.defaultForm();
+    console.log("dataaa",this.data);
+    
     (!this.data) ? (this.getLevelDrop(), this.getTalukaDrop(), this.getDistrictDrop()): '';
   }
 
   defaultForm(){
     this.officeForm = this.fb.group(
       {
-        "createdBy": [0],
-        "modifiedBy": [0],
-        "createdDate": [new Date()],
-        "modifiedDate": [new Date()],
-        "isDeleted": [true],
+        // "createdBy": [0],
+        // "modifiedBy": [0],
+        // "createdDate": [new Date()],
+        // "modifiedDate": [new Date()],
+        // "isDeleted": [true],
+        ...this.webStorageService.createdByProps(),
         "id": [this.data ? this.data.id : 0],
         "name": [this.data ? this.data.name :""],
-        "m_Name": [""],
+        "m_Name": [this.data ? this.data.m_Name:""],
         "mobileNo": [this.data ? this.data.mobileNo : ""],
         "emailId": [this.data ? this.data.emailId :""],
-        "address": [""],
-        "schoolId": [0],
+        "address": [this.data ? this.data.address:""],
+        "schoolId": [this.data ? this.data.schoolId:0],
         "designationId": [this.data ? this.data.designationId : 0],
         "designationLevelId": [this.data ? this.data.designationLevelId : ""],
-        "stateId": [0],
+        "stateId": [this.data ? this.data.stateId: 0],
         "districtId": [this.data ? this.data.districtId: 0],
-        "talukaId": [0],
-        "userTypeId": [0],
-        "subUserTypeId": [0],
-        "kendraMobileNo": [""],
-        "kendraEmailId": [""],
-        "beoEmailId": [""],
-        "beoMobileNo": [""],  
-        "centerId": [0],
-        "bitName": [""],
+        "talukaId": [this.data ? this.data.talukaId:0],
+        "userTypeId": [this.data ? this.data.userTypeId:0],
+        "subUserTypeId": [this.data ? this.data.subUserTypeId:0],
+        "kendraMobileNo": [this.data ? this.data.kendraMobileNo:""],
+        "kendraEmailId": [this.data ? this.data.kendraEmailId:""],
+        "beoEmailId": [this.data ? this.data.beoEmailId:""],
+        "beoMobileNo": [this.data ? this.data.beoMobileNo:""],  
+        "centerId": [this.data ? this.data.centerId:0],
+        "bitName": [this.data ? this.data.bitName:""],
         "lan": [this.webStorageService.languageFlag]
     })
-    // this.getLevelDrop();
+    this.data? (this.getLevelDrop(), this.getDistrictDrop(), this.getTalukaDrop(), this.getDesignationByLevelId()): ''
     // this.getDistrictDrop();
     // this.getTalukaDrop();
+    // this.getDesignationByLevelId();
   }
 
   getLevelDrop(){

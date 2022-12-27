@@ -49,7 +49,7 @@
                     <ng-container >
                         <mat-form-field appearance="outline" class="w-100 ">
                             <mat-label>{{'Labels.AddDesignation' | translate}}</mat-label>
-                            <input matInput placeholder="Enter Desiganation Type" formControlName="designationType"
+                            <input matInput formControlName="designationType"
                                 maxlength="30"
                                 (keypress)="validation.noFirstSpaceAllow($event);validation.onlyAlphabets($event)">
                             <mat-error
@@ -62,8 +62,7 @@
                     <ng-container >
                         <mat-form-field appearance="outline" class="w-100 ">
                             <mat-label>{{'Labels.AddDesignation(Marathi)' | translate}}</mat-label>
-                            <input matInput placeholder="Enter Desiganation Type Marathi"
-                                formControlName="m_DesignationType" maxlength="30"
+                            <input matInput formControlName="m_DesignationType" maxlength="30"
                                 (keypress)="validation.noFirstSpaceAllow($event);validation.unicodeMarathiValidation($event)">
                             <mat-error
                                 *ngIf="f['m_DesignationType'].hasError('required') || f['m_DesignationType'].hasError('touched')">

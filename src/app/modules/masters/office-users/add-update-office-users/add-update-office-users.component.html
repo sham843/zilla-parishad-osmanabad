@@ -17,30 +17,30 @@
             <div class="col-sm-4">
                 <mat-form-field appearance="outline" class="w-100 ">
                     <mat-label>Level</mat-label>
-                    <mat-select placeholder="select" formControlName="designationLevelId"  (selectionChange)="onchangeLevel($event)">
+                    <mat-select  formControlName="designationLevelId"  (selectionChange)="onchangeLevel($event)">
                         <mat-option [value]="level.id" *ngFor="let level of levels">{{webStorageService.languageFlag =='mr-IN' ? level.m_DesignationLevel : level.designationLevel}}</mat-option>
                     </mat-select>
                 </mat-form-field>
             </div>
 
             <div class="col-sm-4">
-                <mat-form-field appearance="outline" class="w-100 " *ngIf="officeForm.value.designationLevelId != 5">
+                <mat-form-field appearance="outline" class="w-100 " *ngIf="officeForm.value.designationLevelId != 5 && officeForm.value.designationLevelId != 6 && officeForm.value.designationLevelId != 7">
                     <mat-label>Designation (Officer)</mat-label>
-                    <mat-select placeholder="select" formControlName="designationId" (selectionChange)="getCenterDrop()">
+                    <mat-select  formControlName="designationId" (selectionChange)="getCenterDrop()">
                         <mat-option  [value]="desig.id" *ngFor="let desig of designations">{{webStorageService.languageFlag =='mr-IN' ? desig.m_DesignationType: desig.designationType}}</mat-option>
                     </mat-select>
                 </mat-form-field>
 
                 <mat-form-field appearance="outline" class="w-100 " *ngIf="officeForm.value.designationLevelId == 5">
                     <mat-label>Name of Bit</mat-label>
-                        <input matInput placeholder="bitName" formControlName="bitName">
+                        <input matInput formControlName="bitName">
                 </mat-form-field>
             </div>
 
             <div class="col-sm-4" *ngIf="officeForm.value.designationId == 110 &&  officeForm.value.designationLevelId == 2">
                 <mat-form-field appearance="outline" class="w-100">
                     <mat-label>Kendra</mat-label>
-                    <mat-select placeholder="select" formControlName="centerId"  (selectionChange)="getAllSchoolsByCenterId()">
+                    <mat-select  formControlName="centerId"  (selectionChange)="getAllSchoolsByCenterId()">
                         <mat-option [value]="centr.id" *ngFor="let centr of centers">{{webStorageService.languageFlag =='mr-IN' ? centr.m_Center : centr.center}}</mat-option>
                     </mat-select>
                 </mat-form-field>
@@ -54,29 +54,29 @@
                 <div class="col-sm-4">
                     <mat-form-field appearance="outline" class="w-100">
                         <mat-label>School</mat-label>
-                        <mat-select placeholder="select" formControlName="schoolId"> 
+                        <mat-select formControlName="schoolId"> 
                             <mat-option [value]="sch.id" *ngFor="let sch of schools">{{webStorageService.languageFlag =='mr-IN' ? sch.m_SchoolName : sch.schoolName}}</mat-option>
                         </mat-select>
                     </mat-form-field>
                 </div>
             </ng-container>
 
-            <ng-container>
+            <ng-container *ngIf=" officeForm.value.designationLevelId != 6 && officeForm.value.designationLevelId != 7">
                 <div class="col-sm-4">
                     <mat-form-field appearance="outline" class="w-100 ">
                         <mat-label>District</mat-label>
-                        <mat-select placeholder="select" formControlName="districtId">
+                        <mat-select  formControlName="districtId">
                             <mat-option [value]="dist.id" *ngFor="let dist of districts">{{webStorageService.languageFlag =='mr-IN' ? dist.m_District:  dist.district}}</mat-option>
                         </mat-select>
                     </mat-form-field>
                 </div>
             </ng-container>
             
-            <ng-container>
+            <ng-container *ngIf=" officeForm.value.designationLevelId != 6 && officeForm.value.designationLevelId != 7">
                 <div class="col-sm-4">
                     <mat-form-field appearance="outline" class="w-100">
                         <mat-label>Taluka</mat-label>
-                        <mat-select placeholder="select" formControlName="talukaId">
+                        <mat-select  formControlName="talukaId">
                             <mat-option [value]="taluka.id" *ngFor="let taluka of talukas">{{webStorageService.languageFlag =='mr-IN' ? taluka.m_Taluka : taluka.taluka}}</mat-option>
                         </mat-select>
                     </mat-form-field>
@@ -89,13 +89,13 @@
                 <div class="col-sm-4">
                     <mat-form-field appearance="outline" class="w-100">
                         <mat-label>Contact No.(BEO Office)</mat-label>
-                        <input matInput placeholder="Contact No.(BEO Office)" formControlName="beoMobileNo">
+                        <input matInput formControlName="beoMobileNo">
                     </mat-form-field>
                 </div>
                 <div class="col-sm-4">
                     <mat-form-field appearance="outline" class="w-100">
                         <mat-label>Email ID(BEO Office)</mat-label>
-                        <input matInput placeholder="Email ID(BEO Office)" formControlName="beoEmailId">
+                        <input matInput formControlName="beoEmailId">
                     </mat-form-field>
                 </div>
             </ng-container>
@@ -104,13 +104,13 @@
                 <div class="col-sm-4">
                     <mat-form-field appearance="outline" class="w-100">
                         <mat-label>Contact No.(Kendra)</mat-label>
-                        <input matInput placeholder="Contact No.(Kendra)" formControlName="kendraMobileNo">
+                        <input matInput  formControlName="kendraMobileNo">
                     </mat-form-field>
                 </div>
                 <div class="col-sm-4">
                     <mat-form-field appearance="outline" class="w-100">
                         <mat-label>Email ID(kendra)</mat-label>
-                        <input matInput placeholder="Email ID(Kendra)" formControlName="kendraEmailId">
+                        <input matInput  formControlName="kendraEmailId">
                     </mat-form-field>
                 </div>
             </ng-container>
@@ -123,20 +123,20 @@
             <div class="col-sm-4">
                 <mat-form-field appearance="outline" class="w-100">
                     <mat-label>Name</mat-label>
-                    <input matInput placeholder="Name" formControlName="name">
+                    <input matInput formControlName="name">
 
                 </mat-form-field>
             </div>
             <div class="col-sm-4">
                 <mat-form-field appearance="outline" class="w-100">
                     <mat-label>Name(in marathi)</mat-label>
-                    <input matInput placeholder="Name(in marathi)" formControlName="name">
+                    <input matInput  formControlName="name">
                 </mat-form-field>
             </div>
             <div class="col-sm-4">
                 <mat-form-field appearance="outline" class="w-100">
                     <mat-label>Mobile No.</mat-label>
-                    <input matInput placeholder="Mobile No." formControlName="mobileNo">
+                    <input matInput  formControlName="mobileNo">
                 </mat-form-field>
             </div>
         </div>
@@ -145,7 +145,7 @@
             <div class="col-sm-4">
                 <mat-form-field appearance="outline" class="w-100">
                     <mat-label>Email ID</mat-label>
-                    <input matInput placeholder="Email ID" formControlName="emailId">
+                    <input matInput formControlName="emailId">
                 </mat-form-field>
             </div>
         </div>

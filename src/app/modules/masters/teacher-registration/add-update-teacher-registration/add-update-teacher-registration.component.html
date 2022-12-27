@@ -73,7 +73,7 @@
                 <div class="col-sm-4">
                     <mat-form-field appearance="outline" class="w-100 ">
                         <mat-label>District</mat-label>
-                        <mat-select placeholder="Select" formControlName="districtId" (selectionChange)="getTaluka();">
+                        <mat-select  formControlName="districtId" (selectionChange)="getTaluka();">
                             <mat-option *ngFor="let distric of districtArray"
                             [value]="distric.id">{{distric.district}}</mat-option>
                             <!-- <mat-option value="two"> B.Tech Computer</mat-option> -->
@@ -83,7 +83,7 @@
                 <div class="col-sm-4">
                     <mat-form-field appearance="outline" class="w-100 ">
                         <mat-label>Taluka</mat-label>
-                        <mat-select placeholder="Select" formControlName="talukaId" (selectionChange)="getVillage();">
+                        <mat-select  formControlName="talukaId" (selectionChange)="getVillage();">
                             <mat-option *ngFor="let taluka of talukaArray"
                             [value]="taluka.id">{{taluka.taluka}}</mat-option>
                             <!-- <mat-option value="two"> B.Tech Computer</mat-option> -->
@@ -93,7 +93,7 @@
                 <div class="col-sm-4">
                     <mat-form-field appearance="outline" class="w-100 ">
                         <mat-label>Village</mat-label>
-                        <mat-select placeholder="Select" formControlName="villageId" (selectionChange)="getAllSchool();">
+                        <mat-select formControlName="villageId" (selectionChange)="getAllSchool();">
                             <mat-option *ngFor="let village of villageArray"
                             [value]="village.id">{{village.village}}</mat-option>
                             <!-- <mat-option value="two"> B.Tech Computer</mat-option> -->
@@ -124,7 +124,7 @@
                     <div class="col-sm-4">
                         <mat-form-field appearance="outline" class="w-100 ">
                             <mat-label>District</mat-label>
-                            <mat-select placeholder="Select" formControlName="districtId">
+                            <mat-select formControlName="districtId">
                                 <mat-option *ngFor="let district of districtArray"
                                 [value]="district.id">{{district.district}}</mat-option>
                                 <!-- <mat-option value="two"> B.Tech Computer</mat-option> -->
@@ -134,7 +134,7 @@
                     <div class="col-sm-4">
                         <mat-form-field appearance="outline" class="w-100 ">
                             <mat-label>Taluka</mat-label>
-                            <mat-select placeholder="Select" formControlName="talukaId">
+                            <mat-select formControlName="talukaId">
                                 <mat-option *ngFor="let taluka of talukaArray"
                                 [value]="taluka.id">{{taluka.taluka}}</mat-option>
                                 <!-- <mat-option value="two"> B.Tech Computer</mat-option> -->

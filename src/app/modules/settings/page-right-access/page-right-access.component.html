@@ -22,7 +22,7 @@
                     <div class="col-sm">
                         <mat-form-field appearance="outline" class="w-100">
                           <mat-label>{{'Labels.searchPage' | translate}}</mat-label>
-                          <input matInput placeholder="{{'Labels.searchPage' | translate}}" formControlName="Textsearch"
+                          <input matInput  formControlName="Textsearch"
                             (keypress)="validation.noSpacesAtStart($event)" maxlength="100">
                         </mat-form-field>
                     </div>
