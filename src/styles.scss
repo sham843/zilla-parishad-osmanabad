@@ -247,3 +247,11 @@ body {
   padding: 7px 20px;
   cursor: pointer;
 }
+.apexcharts-yaxis-texts-g,
+.apexcharts-grid-borders,
+.apexcharts-grid{
+  display: none !important;
+}
+.apexcharts-legend-text{
+  font-family: "Poppins", sans-serif !important;
+}
