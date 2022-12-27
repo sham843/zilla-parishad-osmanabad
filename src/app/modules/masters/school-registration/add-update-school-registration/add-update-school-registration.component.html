@@ -2,7 +2,8 @@
     <mat-card class="plain-card">
         <mat-card-header class="card-header">
             <div class="d-flex align-items-center justify-content-between w-100">
-                <h6 class="text-main mb-0">{{editFlag ?( 'Labels.updateSchool' | translate) :('Labels.registerSchool' | translate)}}</h6>
+                <h6 class="text-main mb-0 fw-bold">{{editFlag ?( 'Labels.updateSchool' | translate)
+                    :('Labels.registerSchool' | translate)}}</h6>
                 <button mat-icon-button mat-dialog-close class="btn-modal-close">
                     <mat-icon>
                         close
@@ -12,13 +13,12 @@
         </mat-card-header>
 
         <mat-card-content class="card-body">
-            <div class="row my-3 gy-2">
-                <div class="col-sm">
+            <div class="row gy-2">
+                <div class="col-sm-4">
                     <mat-form-field appearance="outline" class="w-100">
                         <mat-label>{{'Labels.district' | translate}}</mat-label>
-                        <mat-select formControlName="districtId" 
-                        [disabled]="schoolRegForm.value.districtId == 1">
-                           
+                        <mat-select formControlName="districtId" [disabled]="schoolRegForm.value.districtId == 1">
+
                             <mat-option *ngFor="let district of districtArr" [value]="district.id">
                                 {{webStorageS.getLangauge() == 'EN' ?
                                 district.district : district.m_District}}
@@ -34,7 +34,7 @@
                         </mat-error>
                     </mat-form-field>
                 </div>
-                <div class="col-sm">
+                <div class="col-sm-4">
                     <mat-form-field appearance="outline" class="w-100 ">
                         <mat-label>{{'Labels.taluka' | translate}}</mat-label>
                         <mat-select formControlName="talukaId"
@@ -49,7 +49,7 @@
                         </mat-error>
                     </mat-form-field>
                 </div>
-                <div class="col-sm">
+                <div class="col-sm-4">
                     <mat-form-field appearance="outline" class="w-100 ">
                         <mat-label>{{'Labels.kendra' | translate}}</mat-label>
                         <mat-select formControlName="centerId"
@@ -64,7 +64,7 @@
                         </mat-error>
                     </mat-form-field>
                 </div>
-                <div class="col-sm">
+                <div class="col-sm-4">
                     <mat-form-field appearance="outline" class="w-100 ">
                         <mat-label>{{'Labels.village' | translate}}</mat-label>
                         <mat-select formControlName="villageId">
@@ -78,25 +78,28 @@
                         </mat-error>
                     </mat-form-field>
                 </div>
-                <div class="col-sm">
+                <div class="col-sm-8">
                     <mat-form-field appearance="outline" class="w-100">
                         <mat-label>{{'Labels.school' | translate}}</mat-label>
-                        <input matInput formControlName="schoolName" maxlength="50" (keypress)="validationService.noFirstSpaceAllow($event);">
+                        <input matInput formControlName="schoolName" maxlength="50"
+                            (keypress)="validationService.noFirstSpaceAllow($event);">
                         <mat-error *ngIf="f['schoolName'].hasError('required') || f['schoolName'].hasError('touched')">
                             {{'Labels.schoolNameIsRequired' | translate}}
                         </mat-error>
                     </mat-form-field>
                 </div>
-                <div class="col-sm">
+                <div class="col-sm-6">
                     <mat-form-field appearance="outline" class="w-100">
                         <mat-label>{{'Labels.school(Marathi)' | translate}}</mat-label>
-                        <input matInput  formControlName="m_SchoolName" maxlength="50" (keypress)="validationService.noFirstSpaceAllow($event); validationService.unicodeMarathiValidation($event);">
-                        <mat-error *ngIf="f['m_SchoolName'].hasError('required') || f['m_SchoolName'].hasError('touched')">
+                        <input matInput formControlName="m_SchoolName" maxlength="50"
+                            (keypress)="validationService.noFirstSpaceAllow($event); validationService.unicodeMarathiValidation($event);">
+                        <mat-error
+                            *ngIf="f['m_SchoolName'].hasError('required') || f['m_SchoolName'].hasError('touched')">
                             {{'Labels.schoolNameIsRequired' | translate}}
                         </mat-error>
                     </mat-form-field>
                 </div>
-                <div class="col-sm">
+                <div class="col-sm-6">
                     <mat-form-field appearance="outline" class="w-100">
                         <mat-label>{{'Labels.schoolTypeDescription' | translate}}</mat-label>
                         <mat-select formControlName="s_TypeId">
@@ -110,7 +113,7 @@
                         </mat-error>
                     </mat-form-field>
                 </div>
-                <div class="col-sm">
+                <div class="col-sm-6">
                     <mat-form-field appearance="outline" class="w-100">
                         <mat-label>{{'Labels.schoolCategoryDescription' | translate}}</mat-label>
                         <mat-select formControlName="s_CategoryId">
@@ -125,7 +128,7 @@
                         </mat-error>
                     </mat-form-field>
                 </div>
-                <div class="col-sm">
+                <div class="col-sm-6">
                     <mat-form-field appearance="outline" class="w-100">
                         <mat-label>{{'Labels.schoolManagementDescription' | translate}}</mat-label>
                         <mat-select formControlName="s_ManagementId">
@@ -141,7 +144,7 @@
                     </mat-form-field>
                 </div>
 
-                <div class="col-sm">
+                <div class="col-sm-6">
                     <mat-form-field appearance="outline" class="w-100">
                         <mat-label>{{'Labels.groupClass' | translate}}</mat-label>
                         <mat-select formControlName="g_ClassId">
@@ -150,15 +153,28 @@
                                 groupclass.groupClass : groupclass.m_GroupClass}}
                             </mat-option>
                         </mat-select>
-                        <mat-error
-                            *ngIf="f['g_ClassId'].hasError('required') || f['g_ClassId'].hasError('touched')">
+                        <mat-error *ngIf="f['g_ClassId'].hasError('required') || f['g_ClassId'].hasError('touched')">
                             {{'Labels.groupClassIsRequired' | translate}}
                         </mat-error>
                     </mat-form-field>
                 </div>
 
-                <div class="col-sm">
-                    <mat-label>{{'Labels.uploadPhoto' | translate}}</mat-label>
+                <div class="col-sm-6">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div class="upload-btn-wrapper">
+                            <button class="upload-btn">Upload a file</button>
+                            <input type="file" name="myfile" />
+                        </div>
+                        <div class="action-btn">
+                            <button mat-icon-button class="btn-icon text-primary">
+                                <mat-icon>content_copy</mat-icon>
+                            </button>
+                            <button mat-icon-button class="btn-icon text-danger">
+                                <mat-icon>delete</mat-icon>
+                            </button>
+                        </div>
+                    </div>
+                    <!-- <mat-label>{{'Labels.uploadPhoto' | translate}}</mat-label>
                     <input type="file" formControlName="uploadImage" hidden="hidden" (change)="imgUpload($event)" #img>
                     <mat-icon matSuffix *ngIf="!showAddRemImg">
                         <span class="material-symbols-outlined" (click)="img.click()">
@@ -170,7 +186,7 @@
                             (click)="clearImg()">highlight_off</mat-icon>
                         <mat-icon class="text-success"
                             *ngIf="showAddRemImg" (click)="viewImg()">check_circle_outline</mat-icon>
-                    </span>
+                    </span> -->
                 </div>
             </div>
         </mat-card-content>

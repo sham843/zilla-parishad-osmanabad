@@ -199,7 +199,7 @@ body {
 .mat-mdc-snack-bar-container {
  background: #fff !important;
 }
-
+// profile pic upload CSS
 .upload-btn-wrapper {
   position: relative;
   overflow: hidden;
@@ -234,4 +234,16 @@ body {
   text-align: center;
   padding: 0;
   border-color: var(--main-color);
+}
+
+// upload button CSS
+.upload-btn {
+  border: 1px solid var(--main-color);
+  color: #fff;
+  background-color: var(--main-color);
+  font-size: 0.85rem;
+  font-weight: 500;
+  border-radius: 0.375rem;
+  padding: 7px 20px;
+  cursor: pointer;
 }

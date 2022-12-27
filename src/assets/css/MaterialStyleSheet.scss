@@ -66,7 +66,11 @@ input:-webkit-autofill:active {
     height: 36px !important;
     padding: 6px !important;
 }
-
+.action-btn .mat-mdc-icon-button.mat-mdc-button-base {
+    width: 36px !important;
+    height: 36px !important;
+    padding: 8px 6px!important;
+  }
 .mat-mdc-paginator-range-label {
     margin: 0px !important;
 }
