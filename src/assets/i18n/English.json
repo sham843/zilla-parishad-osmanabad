@@ -46,7 +46,7 @@
         "SelectDesignation": "Select Designation",
         "RegisterDesignation":"Register Designation",
         "DesignationLevel":"Designation Level",
-        "DesignationLevelReq":"Designation Level Required",
+        "DesignationLevelReq":"Designation Level Is Required",
         "DesignationType":"DesignationType",
         "DesignationTypeReq":"Designation Type Is Required",
         "AddDesignation(Marathi)":"Add Designation (Marathi)",
@@ -131,12 +131,23 @@
         "enterParentMobileNo":"Enter Parent Mobile No",
         "enterValidParentMobileNo":"Enter Valid Parent Mobile No",
         "enterValidAadharNo":"Enter Valid Parent Aadhar No",
-
+        "bit":"Name Of Bit",
+        "bitRequired" : "Bit Name Is Required",
         "profile": "Profile",
         "changePwd": "Change Password",
         "logout": "Logout",
+        "kendraRequired" : "Kendra Is Required",
+        "contactBeo" : "Contact No.(BEO Office)",
+        "searchByNameContactNo" : "Search By Name/ContactNo",
+        "nameIsRequired" : "Name Is Required",
+        "mobileIsRequired" : "Mobile Number Is Required",
+        "nameMarathi" : "Name In (Marathi)",
+        "studentReg" : "Student Registraion",
+        "studentUpdate": "Update Student",
+        "levelRequired" : "Level Is Required",
+        "uploadImg" : "Please Upload Image"
 
-        "searchByNameContactNo" : "Search By Name/ContactNo"
+        
 
         
     }

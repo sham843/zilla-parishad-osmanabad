@@ -6,11 +6,11 @@
                     {{tableHeaders[j] | titlecase}}
                 </th>
                 <td mat-cell *matCellDef="let element let i=index">
-                    <ng-container *ngIf="'srNo' ==columns">{{((pageNumber + 1) * 10 + i + 1)-20 | numberTranformPipe}}</ng-container>
+                    <ng-container  *ngIf="'srNo' ==columns">{{((pageNumber + 1) * 10 + i + 1)-20 | numberTranformPipe}}</ng-container>
                     <ng-container
                         *ngIf="'srNo' !=columns && tableInfo?.img != columns && tableInfo?.blink != columns && tableInfo?.badge !=  columns && tableInfo?.checkBox != columns">{{element[columns] | dash}}
                     </ng-container>
-                    <ng-container *ngIf="tableInfo?.img == columns"><img class="table-img" src="{{element[columns] ? element[columns] : 'assets/images/user.jpg'}}"></ng-container>
+                    <ng-container  *ngIf="tableInfo?.img == columns"><img class="table-img" routerLink="[../details]" src="{{element[columns] ? element[columns] : 'assets/images/user.jpg'}}"></ng-container>
                     <ng-container *ngIf="tableInfo?.blink == columns">{{element[columns] }}</ng-container>
                     <ng-container *ngIf="tableInfo?.badge == columns">{{element[columns] }}</ng-container>
                     <ng-container *ngIf="tableInfo?.checkBox == columns" >
@@ -32,11 +32,11 @@
                             edit
                         </mat-icon>
                     </button>
-                    <button mat-icon-button (click)="action(element, 'Delete')">
+                    <!-- <button mat-icon-button (click)="action(element, 'Delete')">
                         <mat-icon class="text-danger">
                             delete
                         </mat-icon>
-                    </button>
+                    </button> -->
                 </td>
             </ng-container>
         </ng-container>

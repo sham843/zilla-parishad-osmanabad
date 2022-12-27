@@ -162,7 +162,7 @@ export class StudentRegistrationComponent {
     });
     dialogRef.afterClosed().subscribe((result: any) => {
       if (result == 'yes' && obj) {
-        this.pageNumber = obj.pageNumber || 1;
+        this.pageNumber = obj.pageNumber;
       } else if (result == 'yes') {
         this.pageNumber = 1;
       }

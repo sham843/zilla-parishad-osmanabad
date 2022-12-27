@@ -1,10 +1,11 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ApiService } from 'src/app/core/services/api.service';
 import { CommonMethodsService } from 'src/app/core/services/common-methods.service';
 import { ErrorsService } from 'src/app/core/services/errors.service';
 import { MasterService } from 'src/app/core/services/master.service';
+import { ValidationService } from 'src/app/core/services/validation.service';
 import { WebStorageService } from 'src/app/core/services/web-storage.service';
 
 @Component({
@@ -28,6 +29,7 @@ export class AddUpdateOfficeUsersComponent implements OnInit {
               private error: ErrorsService,
               private dialogRef: MatDialogRef<AddUpdateOfficeUsersComponent>,
               @Inject(MAT_DIALOG_DATA) public data: any, 
+              public validation : ValidationService,
               public webStorageService : WebStorageService){}
               
   ngOnInit(){
@@ -47,25 +49,25 @@ export class AddUpdateOfficeUsersComponent implements OnInit {
         // "isDeleted": [true],
         ...this.webStorageService.createdByProps(),
         "id": [this.data ? this.data.id : 0],
-        "name": [this.data ? this.data.name :""],
+        "name": [this.data ? this.data.name :"",[Validators.required, Validators.pattern(this.validation.fullName)]],
         "m_Name": [this.data ? this.data.m_Name:""],
-        "mobileNo": [this.data ? this.data.mobileNo : ""],
-        "emailId": [this.data ? this.data.emailId :""],
-        "address": [this.data ? this.data.address:""],
-        "schoolId": [this.data ? this.data.schoolId:0],
-        "designationId": [this.data ? this.data.designationId : 0],
-        "designationLevelId": [this.data ? this.data.designationLevelId : ""],
+        "mobileNo": [this.data ? this.data.mobileNo : "",[Validators.required, Validators.pattern(this.validation.mobile_No)]],
+        "emailId": [this.data ? this.data.emailId :"", [Validators.required, Validators.pattern(this.validation.email)]],
+        "address": [this.data ? this.data.address:"",[Validators.required,Validators.maxLength(500)]],
+        "schoolId": [this.data ? this.data.schoolId:0, Validators.required],
+        "designationId": [this.data ? this.data.designationId : '',  Validators.required],
+        "designationLevelId": [this.data ? this.data.designationLevelId : "",  Validators.required],
         "stateId": [this.data ? this.data.stateId: 0],
-        "districtId": [this.data ? this.data.districtId: 0],
-        "talukaId": [this.data ? this.data.talukaId:0],
+        "districtId": [this.data ? this.data.districtId: '',  Validators.required],
+        "talukaId": [this.data ? this.data.talukaId:'' ,  Validators.required],
         "userTypeId": [this.data ? this.data.userTypeId:0],
         "subUserTypeId": [this.data ? this.data.subUserTypeId:0],
-        "kendraMobileNo": [this.data ? this.data.kendraMobileNo:""],
-        "kendraEmailId": [this.data ? this.data.kendraEmailId:""],
-        "beoEmailId": [this.data ? this.data.beoEmailId:""],
-        "beoMobileNo": [this.data ? this.data.beoMobileNo:""],  
-        "centerId": [this.data ? this.data.centerId:0],
-        "bitName": [this.data ? this.data.bitName:""],
+        "kendraMobileNo": [this.data ? this.data.kendraMobileNo:"", [Validators.required, Validators.pattern(this.validation.mobile_No)]],
+        "kendraEmailId": [this.data ? this.data.kendraEmailId:"", [Validators.required, Validators.pattern(this.validation.email)]],
+        "beoEmailId": [this.data ? this.data.beoEmailId:"" , [Validators.required, Validators.pattern(this.validation.email)]],
+        "beoMobileNo": [this.data ? this.data.beoMobileNo:"",[Validators.required, Validators.pattern(this.validation.mobile_No)]],  
+        "centerId": [this.data ? this.data.centerId:'', Validators.required],
+        "bitName": [this.data ? this.data.bitName:"",[Validators.required, Validators.pattern(this.validation.fullName)]],
         "lan": [this.webStorageService.languageFlag]
     })
     this.data? (this.getLevelDrop(), this.getDistrictDrop(), this.getTalukaDrop(), this.getDesignationByLevelId()): ''
@@ -73,6 +75,8 @@ export class AddUpdateOfficeUsersComponent implements OnInit {
     // this.getTalukaDrop();
     // this.getDesignationByLevelId();
   }
+
+  get fc() { return this.officeForm.controls}
 
   getLevelDrop(){
     this.masterService.GetAllDesignationLevel(this.webStorageService.languageFlag).subscribe({
