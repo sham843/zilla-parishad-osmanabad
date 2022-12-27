@@ -41,8 +41,8 @@ export class AddUpdateSchoolRegistrationComponent {
     this.getSchoolType();
     this.getCategoryDes();
     this.getSchoolMngDesc();
-    this. getGroupClass();
-    
+    this.getGroupClass();
+
 
     if (this.data) {
       this.onEdit();
@@ -58,7 +58,7 @@ export class AddUpdateSchoolRegistrationComponent {
 
     this.schoolRegForm = this.fb.group({
       "id": this.data ? this.data.id : 0,
-      "schoolName": [this.data ? this.data.schoolName : '', [Validators.required, Validators.pattern('^[a-zA-Z][a-zA-Z ]*$')]],
+      "schoolName": [this.data ? this.data.schoolName : '', [Validators.required, Validators.pattern('^[-_., a-zA-Z0-9]+$')]],
       "m_SchoolName": [this.data ? this.data.m_SchoolName : '', Validators.required],
       "stateId": 0,
       "districtId": ['', Validators.required],
@@ -87,8 +87,9 @@ export class AddUpdateSchoolRegistrationComponent {
   getDistrict() {
     this.masterService.getAllDistrict(this.webStorageS.languageFlag).subscribe({
       next: (res: any) => {
-        res.statusCode == "200" ?( this.districtArr = res.responseData, this.schoolRegForm.value.districtId= this.districtArr[0].id ): this.districtArr = [];
-        this.schoolRegForm.controls['districtId'].setValue(1); 
+        res.statusCode == "200" ? this.districtArr = res.responseData : this.districtArr = [];
+        this.getTaluka();
+        // this.schoolRegForm.controls['districtId'].setValue(this.districtArr[0].id); 
 
         this.editFlag ? (this.f['districtId'].setValue(this.data.districtId), this.getTaluka()) : '';
       },
@@ -170,18 +171,24 @@ export class AddUpdateSchoolRegistrationComponent {
   //#region ------------------------------------------------- Upload Image start here --------------------------------------------// 
   imgUpload(event: any) {
     this.fileUpload.uploadDocuments(event, 'Upload', 'jpg, jpeg, png').subscribe((res: any) => {
-      if(res.statusCode == "200"){
+      if (res.statusCode == "200") {
         this.uploadImg = res.responseData;
         this.showAddRemImg = true;
       }
-      else{
+      else {
         return
       }
     });
   }
 
-  viewImg(){
-    window.open(this.uploadImg, 'blank');
+  viewImg() {
+    if (this.editFlag == true) {
+      let viewImg = this.data.uploadImage;
+      window.open(viewImg, 'blank');
+    }
+    else {
+      window.open(this.uploadImg, 'blank');
+    }
   }
   //#endregionegion ------------------------------------------------- Upload Image end here --------------------------------------------// 
 
@@ -207,11 +214,11 @@ export class AddUpdateSchoolRegistrationComponent {
             this.editFlag ? this.commonMethod.snackBar("Record Update Successfully", 0) : this.commonMethod.snackBar("Record Added Successfully", 0);
             this.dialogRef.close('yes');
           }
-          else{
+          else {
             this.commonMethod.checkEmptyData(res.statusMessage) == false ? this.errors.handelError(res.statusCode) : this.commonMethod.snackBar(res.statusMessage, 1);
           }
         },
-        error: ((err: any) => { 
+        error: ((err: any) => {
           this.ngxSpinner.hide();
           this.commonMethod.checkEmptyData(err.statusMessage) == false ? this.errors.handelError(err.statusCode) : this.commonMethod.snackBar(err.statusMessage, 1);
         })
@@ -241,44 +248,11 @@ export class AddUpdateSchoolRegistrationComponent {
   clearDropdown(dropdown: string) {
     this.editFlag = false;
     if (dropdown == 'Taluka') {
-      this.villageArr = [];
-      this.schoolTypeArr = [];
-      this.categoryArr = [];
-      this.schoolMngArr = [];
-      this.groupclassArr = [];
       this.f['centerId'].setValue('');
-      this.f['schoolName'].setValue('');
+      this.villageArr = [];
     }
     else if (dropdown == 'Kendra') {
       this.f['villageId'].setValue('');
-      this.f['schoolName'].setValue('');
-      this.schoolTypeArr = [];
-      this.categoryArr = [];
-      this.schoolMngArr = [];
-      this.groupclassArr = [];
-    }
-    else if (dropdown == 'Village') {
-      this.f['schoolName'].setValue('');
-      this.f['s_TypeId'].setValue('');
-      this.schoolTypeArr = [];
-      this.categoryArr = [];
-      this.schoolMngArr = [];
-      this.groupclassArr = [];
-    }
-    else if (dropdown == 'School Type') {
-      this.f['s_CategoryId'].setValue('');
-      this.categoryArr = [];
-      this.schoolMngArr = [];
-      this.groupclassArr = [];
-    }
-    else if (dropdown == 'Category Desc') {
-      this.f['s_ManagementId'].setValue('');
-      this.schoolMngArr = [];
-      this.groupclassArr = [];
-    }
-    else if (dropdown == 'Management Desc') {
-      this.f['g_ClassId'].setValue('');
-      this.groupclassArr = [];
     }
   }
   //#endregiongion ----------------------------------------------- Clear dropdown on change end here --------------------------------------------//
