@@ -14,7 +14,8 @@
     </mat-card-header>
     <form [formGroup]="agencyRegisterForm" (ngSubmit)="onSubmit(clear)" #clear="ngForm">
         <mat-card-content class="card-body">
-            <div class="row mb-2">
+            <h6 class="mb-3">Agency Details</h6>
+            <div class="row mb-1">
                 <div class="col-sm-4">
                     <mat-form-field appearance="outline" class="w-100">
                         <mat-label>{{'Labels.agencyName' | translate}}</mat-label>
@@ -25,10 +26,11 @@
                 </div>
                 <div class="col-sm-4">
                     <mat-form-field appearance="outline" class="w-100">
-                        <mat-label>{{'Labels.contactPersonName' | translate}}</mat-label>
-                        <input matInput formControlName="contactPerson_Name" maxlength="50" (keypress)="validation.noFirstSpaceAllow($event)">
-                        <mat-error *ngIf="fc['contactPerson_Name'].hasError('required')">{{'Labels.contactPersonNameIsRequired' | translate}}</mat-error>
-                        <mat-error *ngIf="fc['contactPerson_Name'].hasError('pattern')">{{'Labels.pleaseEnterValidPersonName' | translate}}</mat-error>
+                        <mat-label>{{'Labels.agencyMobileNo.' | translate}}</mat-label>
+                        <input matInput formControlName="agency_MobileNo" maxlength="10"
+                             (keypress)="validation.onlyDigits($event)">
+                        <mat-error *ngIf="fc['agency_MobileNo'].hasError('required')">{{'Labels.agencyMobileNumberIsRequired' | translate}}</mat-error>
+                        <mat-error *ngIf="fc['agency_MobileNo'].hasError('pattern')">{{'Labels.pleaseEnterValidMobileNumber' | translate}}</mat-error>
                     </mat-form-field>
                 </div>
                 <div class="col-sm-4">
@@ -39,10 +41,10 @@
                         <mat-error *ngIf="fc['m_Agency_Name'].hasError('pattern')"> Please Enter Valid Agency Name</mat-error>
                     </mat-form-field> -->
                     <mat-form-field appearance="outline" class="w-100">
-                        <mat-label>{{'Labels.contactNo.' | translate}}</mat-label>
-                        <input matInput formControlName="contact_No" maxlength="10"  (keypress)="validation.onlyDigits($event)">
-                        <mat-error *ngIf="fc['contact_No'].hasError('required')">{{'Labels.contactNumberIsRequired' | translate}}</mat-error>
-                        <mat-error *ngIf="fc['contact_No'].hasError('pattern')">{{'Labels.pleaseEnterValidMobileNumber' | translate}}</mat-error>
+                        <mat-label>{{'Labels.agencyEmailID' | translate}}</mat-label>
+                        <input matInput formControlName="agency_EmailId"  maxlength="50" (keypress)="validation.noFirstSpaceAllow($event)">
+                        <mat-error *ngIf="fc['agency_EmailId'].hasError('required')">{{'Labels.agencyEmailIdIsRequired' | translate}}</mat-error>
+                        <mat-error *ngIf="fc['agency_EmailId'].hasError('pattern')">{{'Labels.pleaseEnterValidEmailId' | translate}}</mat-error>
                     </mat-form-field>
                 </div>
                 
@@ -57,33 +59,6 @@
                     </mat-form-field>
                 </div>
             </div> -->
-            <div class="row mb-2">
-                <div class="col-sm-4">
-                    <mat-form-field appearance="outline" class="w-100">
-                        <mat-label>{{'Labels.emailID' | translate}}</mat-label>
-                        <input matInput formControlName="emailId"  maxlength="50" (keypress)="validation.noFirstSpaceAllow($event)">
-                        <mat-error *ngIf="fc['emailId'].hasError('required')">{{'Labels.emailIdIsRequired' | translate}}</mat-error>
-                        <mat-error *ngIf="fc['emailId'].hasError('pattern')">{{'Labels.pleaseEnterValidEmailId' | translate}}</mat-error>
-                    </mat-form-field>
-                </div>
-                <div class="col-sm-4">
-                    <mat-form-field appearance="outline" class="w-100">
-                        <mat-label>{{'Labels.agencyMobileNo.' | translate}}</mat-label>
-                        <input matInput formControlName="agency_MobileNo" maxlength="10"
-                             (keypress)="validation.onlyDigits($event)">
-                        <mat-error *ngIf="fc['agency_MobileNo'].hasError('required')">{{'Labels.agencyMobileNumberIsRequired' | translate}}</mat-error>
-                        <mat-error *ngIf="fc['agency_MobileNo'].hasError('pattern')">{{'Labels.pleaseEnterValidMobileNumber' | translate}}</mat-error>
-                    </mat-form-field>
-                </div>
-                <div class="col-sm-4">
-                    <mat-form-field appearance="outline" class="w-100">
-                        <mat-label>{{'Labels.agencyEmailID' | translate}}</mat-label>
-                        <input matInput formControlName="agency_EmailId"  maxlength="50" (keypress)="validation.noFirstSpaceAllow($event)">
-                        <mat-error *ngIf="fc['agency_EmailId'].hasError('required')">{{'Labels.agencyEmailIdIsRequired' | translate}}</mat-error>
-                        <mat-error *ngIf="fc['agency_EmailId'].hasError('pattern')">{{'Labels.pleaseEnterValidEmailId' | translate}}</mat-error>
-                    </mat-form-field>
-                </div>
-            </div>
             <div class="row">
                 <div class="col-sm-4">
                     <mat-form-field appearance="outline" class="w-100">
@@ -101,6 +76,41 @@
                             <mat-option *ngFor="let data of talukaData" [value]="data.id">{{webStorageService.languageFlag=='mr-IN' ? data.m_Taluka : data.taluka}}</mat-option>
                         </mat-select>
                         <mat-error *ngIf="fc['talukaId'].hasError('required')">{{'Labels.pleaseSelectTaluka' | translate}}</mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="col-sm-4">
+                    <mat-form-field appearance="outline" class="w-100">
+                        <mat-label>{{'Labels.address' | translate}}</mat-label>
+                        <input matInput formControlName="address"  (keypress)="validation.noFirstSpaceAllow($event)">
+                        <mat-error *ngIf="fc['address'].hasError('required')">{{'Labels.addressIsRequired' | translate}}</mat-error>
+                        <mat-error *ngIf="fc['address'].hasError('maxlength')">{{'Labels.maximummLength500Characters' | translate}}</mat-error>                   
+                    </mat-form-field>
+                </div>
+            </div>
+            <h6 class="mb-3">Person Details</h6>
+            <div class="row mb-1">
+                <div class="col-sm-4">
+                    <mat-form-field appearance="outline" class="w-100">
+                        <mat-label>{{'Labels.contactPersonName' | translate}}</mat-label>
+                        <input matInput formControlName="contactPerson_Name" maxlength="50" (keypress)="validation.noFirstSpaceAllow($event)">
+                        <mat-error *ngIf="fc['contactPerson_Name'].hasError('required')">{{'Labels.contactPersonNameIsRequired' | translate}}</mat-error>
+                        <mat-error *ngIf="fc['contactPerson_Name'].hasError('pattern')">{{'Labels.pleaseEnterValidPersonName' | translate}}</mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="col-sm-4">
+                    <mat-form-field appearance="outline" class="w-100">
+                        <mat-label>{{'Labels.contactNo.' | translate}}</mat-label>
+                        <input matInput formControlName="contact_No" maxlength="10"  (keypress)="validation.onlyDigits($event)">
+                        <mat-error *ngIf="fc['contact_No'].hasError('required')">{{'Labels.contactNumberIsRequired' | translate}}</mat-error>
+                        <mat-error *ngIf="fc['contact_No'].hasError('pattern')">{{'Labels.pleaseEnterValidMobileNumber' | translate}}</mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="col-sm-4">
+                    <mat-form-field appearance="outline" class="w-100">
+                        <mat-label>{{'Labels.emailID' | translate}}</mat-label>
+                        <input matInput formControlName="emailId"  maxlength="50" (keypress)="validation.noFirstSpaceAllow($event)">
+                        <mat-error *ngIf="fc['emailId'].hasError('required')">{{'Labels.emailIdIsRequired' | translate}}</mat-error>
+                        <mat-error *ngIf="fc['emailId'].hasError('pattern')">{{'Labels.pleaseEnterValidEmailId' | translate}}</mat-error>
                     </mat-form-field>
                 </div>
                 <div class="col-sm-4">
