@@ -16,6 +16,7 @@
         "district" : "जिल्हा",
         "taluka" : "तालुका",
         "address" : "पत्ता",
+        "agencyAdd" :"एजन्सीचा पत्ता",
         "cancel": "रद्द करा",
         "submit" : "प्रस्तुत करणे",
         "update" : "अपडेट करा",
@@ -50,8 +51,8 @@
         "DesignationTypeReq":"पदनाम प्रकार आवश्यक आहे",
         "AddDesignation(Marathi)":"पदनाम जोडा (मराठी)",
         "DesignationTypeMarathiReq":"पदनाम प्रकार मराठी आवश्यक आहे",
-        "schoolRegistration" : "शाळेची नोंद",
-        "registerSchool" : "शाळेची नोंद करा",
+        "schoolRegistration" : "शाळेची नोंदणी",
+        "registerSchool" : "शाळेची नोंदणी करा",
         "updateSchool" : "शाळेची नोंद अपडेट करा",
         "addSchool" : "शाळेची माहिती भरा",
         "kendra" : "केंद्र",
@@ -143,6 +144,22 @@
         "studentReg" : "विद्यार्थी नोंदणी",
         "studentUpdate" : "विद्यार्थी अद्यतनित करा",
         "levelRequired" : "स्तर आवश्यक आहे",
-        "uploadImg" :"कृपया प्रतिमा अपलोड करा"
+        "uploadImg" :"कृपया प्रतिमा अपलोड करा",
+
+        "dataNotAvailable" : "डेटा उपलब्ध नाही",
+        "teacherRegistration" : "शिक्षकांची नोंदणी",
+        "teacherList" : "शिक्षकांची यादी",
+        "addTeacher" : "शिक्षकांची माहिती भरा",
+        "registerTeacher" : "शिक्षकांची नोंदणी",
+        "personalDetails" : "वैयक्तिक माहिती",
+        "teacherName" : "शिक्षकाचे नाव",
+        "currentAddress" : "सध्याचा पत्ता",
+        "permanentAddress" : "कायमचा पत्ता",
+        "educationalAndProfessionalDetails" : "शैक्षणिक आणि व्यावसायिक माहिती",
+        "workingSchoolName" : "कार्यरत शाळेचे नाव",
+        "clusterName" : "क्लस्टरचे नाव",
+        "graduateTeacherSubject" : "पदवीधर शिक्षकाचा विषय"
+        
+
     }
 }
