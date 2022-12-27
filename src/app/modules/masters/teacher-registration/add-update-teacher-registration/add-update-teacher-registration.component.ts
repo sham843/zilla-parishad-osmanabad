@@ -14,7 +14,6 @@ import { MasterService } from 'src/app/core/services/master.service';
   styleUrls: ['./add-update-teacher-registration.component.scss']
 })
 export class AddUpdateTeacherRegistrationComponent {
-
   teacherRegForm!: FormGroup;
   editFlag: boolean = false;
   editObj: any;
@@ -60,7 +59,6 @@ export class AddUpdateTeacherRegistrationComponent {
     return this.teacherRegForm.controls;
   }
 
-
   get teacherForm(): FormArray {
     return this.teacherRegForm.get('assignTeacher') as FormArray;
   }
@@ -69,9 +67,9 @@ export class AddUpdateTeacherRegistrationComponent {
     this.teacherRegForm = this.fb.group({
       "createdBy": 0,
       "modifiedBy": 0,
-      "createdDate": new Date(),
+      "createdDate":  new Date(),
       "modifiedDate": new Date(),
-      "isDeleted": true,
+      "isDeleted": false,
       "id": [this.data ? this.data.id : 0],
       "name": [this.data ? this.data.name : ''],
       "m_Name": [this.data ? this.data.m_Name : ''],
@@ -86,7 +84,7 @@ export class AddUpdateTeacherRegistrationComponent {
       "genderId": 0,
       "mobileNo": [this.data ? this.data.mobileNo : ''],
       "emailId": [this.data ? this.data.emailId : ''],
-      "birthDate": new Date(),
+      "birthDate": [this.data ? this.data.birthDate : ''],
       "age": [this.data ? this.data.age : 0],
       "uploadImage": [''],
       "currentAddress": [this.data ? this.data.currentAddress : ''],
@@ -117,17 +115,17 @@ export class AddUpdateTeacherRegistrationComponent {
         "isCastVarificationDone": true,
         "castValidityNoDate": [this.data ? this.data.teacherDetails.castValidityNoDate : ''],
         "castverificationCommitteeName": [this.data ? this.data.teacherDetails.castverificationCommitteeName : ''],
-        "dateOfFirstAppoinmentService": new Date(),
-        "currentSchoolJoiningDate": new Date(),
-        "currentTalukaPresentDate": new Date(),
-        "retirementDate": new Date(),
+        "dateOfFirstAppoinmentService":[this.data ? this.data.teacherDetails.dateOfFirstAppoinmentService : new Date()],
+        "currentSchoolJoiningDate": [this.data ? this.data.teacherDetails.currentSchoolJoiningDate : new Date()],
+        "currentTalukaPresentDate": [this.data ? this.data.teacherDetails.currentTalukaPresentDate : new Date()],
+        "retirementDate":  [this.data ? this.data.teacherDetails.retirementDate : new Date()],
         "educationalQualificationId": 0,
         "branchId12th": 0,
         "degreeOptionalSubjectsId": 0,
         "degreeUniversityId": 0,
         "professionalQualificationId": 0,
-        "bEdPercentages": 0,
-        "bEdUniversityId": 0,
+        "bEdPercentages":[this.data ? this.data.teacherDetails.bEdPercentages : ''],
+        "bEdUniversityId":[this.data ? this.data.teacherDetails.bEdUniversityId : ''],
         "husbandWife_Both_Service": true,
         "husbandWife_OfficeName": [this.data ? this.data.teacherDetails.husbandWife_OfficeName : ''],
         "isDisabled": true,
@@ -178,7 +176,7 @@ export class AddUpdateTeacherRegistrationComponent {
         if (res.statusCode == '200' && res.responseData.length) {
           this.genderArray = res.responseData;
           console.log("gender", this.genderArray);
-          this.editFlag ? (this.teacherRegForm.controls['genderId'].setValue(this.editObj.genderID), this.getDistrict()) : '';
+          this.editFlag ? (this.teacherRegForm.controls['genderId'].setValue(this.editObj.genderID), this.getDistrict()) : this.getDistrict();
         }
       }), error: (error: any) => {
         this.commonMethod.checkEmptyData(error.statusText) == false ? this.errorHandler.handelError(error.statusCode) : this.commonMethod.snackBar(error.statusText, 1);
@@ -192,7 +190,7 @@ export class AddUpdateTeacherRegistrationComponent {
         if (res.statusCode == '200' && res.responseData.length) {
           this.districtArray = res.responseData;
           // console.log("districtArray", this.districtArray);    
-          this.editFlag ? (this.teacherRegForm.controls['districtId'].setValue(this.editObj.districtId), this.getTaluka()) : '';
+          this.editFlag ? (this.teacherRegForm.controls['districtId'].setValue(this.editObj.districtId), this.getTaluka()) : this.getTaluka();
         }
       }), error: (error: any) => {
         this.commonMethod.checkEmptyData(error.statusText) == false ? this.errorHandler.handelError(error.statusCode) : this.commonMethod.snackBar(error.statusText, 1);
@@ -206,7 +204,7 @@ export class AddUpdateTeacherRegistrationComponent {
         if (res.statusCode == '200' && res.responseData.length) {
           this.talukaArray = res.responseData;
           // console.log("talukaArray", this.talukaArray);  
-          this.editFlag ? (this.teacherRegForm.controls['talukaId'].setValue(this.editObj.talukaId), this.getVillage()) : '';
+          this.editFlag ? (this.teacherRegForm.controls['talukaId'].setValue(this.editObj.talukaId), this.getVillage()) : this.getVillage();
         }
       }), error: (error: any) => {
         this.commonMethod.checkEmptyData(error.statusText) == false ? this.errorHandler.handelError(error.statusCode) : this.commonMethod.snackBar(error.statusText, 1);
@@ -215,12 +213,15 @@ export class AddUpdateTeacherRegistrationComponent {
   }
 
   getVillage() {
-    this.masterService.getAllVillage('EN', 0).subscribe({
+    let talukaId = this.teacherRegForm.value.talukaId
+    // console.log("fgdfg",talukaId);
+    
+    this.masterService.getAllVillage('EN', talukaId).subscribe({
       next: ((res: any) => {
         if (res.statusCode == '200' && res.responseData.length) {
           this.villageArray = res.responseData;
           // console.log("villageArray", this.villageArray);            
-          this.editFlag ? (this.teacherRegForm.controls['villageId'].setValue(this.editObj.villageId), this.getAllSchool()) : '';
+          this.editFlag ? (this.teacherRegForm.controls['villageId'].setValue(this.editObj.villageId), this.getAllSchool()) :this.getAllSchool();
         }
       }), error: (error: any) => {
         this.commonMethod.checkEmptyData(error.statusText) == false ? this.errorHandler.handelError(error.statusCode) : this.commonMethod.snackBar(error.statusText, 1);
@@ -228,7 +229,9 @@ export class AddUpdateTeacherRegistrationComponent {
     })
   }
   getAllSchool() {
-    this.masterService.getAllSchoolByCriteria('EN', 0, 0, 0).subscribe({
+    let talukaId = this.teacherRegForm.value.talukaId;
+    let villageId =this.teacherRegForm.value.villageId;
+    this.masterService.getAllSchoolByCriteria('EN', talukaId, villageId, 0).subscribe({
       next: ((res: any) => {
         if (res.statusCode == '200' && res.responseData.length) {
           this.schoolArray = res.responseData;
@@ -239,9 +242,12 @@ export class AddUpdateTeacherRegistrationComponent {
                 schoolId: this.editObj.teacherDetails?.schoolId
               }
             }),this.getCluster();
+
+          }else{
+            this.getCluster();
           }
 
-          //  this.editFlag ? (this.teacherRegForm.controls['schoolId'].setValue(this.editObj.teacherDetails[0].schoolId),this.getCluster()) : '';
+          //  this.editFlag ? (this.teacherRegForm.controls['schoolId'].setValue(this.editObj.teacherDetails.schoolId),this.getCluster()) : '';
         }
       }), error: (error: any) => {
         this.commonMethod.checkEmptyData(error.statusText) == false ? this.errorHandler.handelError(error.statusCode) : this.commonMethod.snackBar(error.statusText, 1);
@@ -261,8 +267,10 @@ export class AddUpdateTeacherRegistrationComponent {
                 clusterId: this.editObj.teacherDetails?.clusterId
               }
             }),this.getDesignation();
-          }      
-          // this.editFlag ? (this.teacherRegForm.controls['clusterId']?.setValue(this.editObj.teacherDetails.clusterId), this.getDesignation()) : '';
+          } else{
+            this.getDesignation();
+          }     
+           this.editFlag ? (this.teacherRegForm.controls['clusterId']?.setValue(this.editObj.teacherDetails.clusterId), this.getDesignation()) : '';
         }
       }), error: (error: any) => {
         this.commonMethod.checkEmptyData(error.statusText) == false ? this.errorHandler.handelError(error.statusCode) : this.commonMethod.snackBar(error.statusText, 1);
@@ -283,7 +291,9 @@ export class AddUpdateTeacherRegistrationComponent {
 
               }
             }),this.getGraduateTeacherSubject();
-          }          
+          } else{
+            this.getGraduateTeacherSubject();
+          }         
           // this.editFlag ? (this.teacherRegForm.controls['districtId'].setValue(this.editObj.districtId), this.getGraduateTeacherSubject()) : '';
         }
       }), error: (error: any) => {
@@ -304,7 +314,9 @@ export class AddUpdateTeacherRegistrationComponent {
                 graduate_SubjectId: this.editObj.teacherDetails?.graduate_SubjectId
               }
             }),this.getGraduatePayScale();
-          }    
+          }  else{
+            this.getGraduatePayScale();
+          }  
           // this.editFlag ? (this.teacherRegForm.controls['graduate_SubjectId'].setValue(this.editObj.graduate_SubjectId), this.getGraduatePayScale()) : '';
 
         }
@@ -326,7 +338,9 @@ export class AddUpdateTeacherRegistrationComponent {
           isGraduate_PayScale: this.editObj.teacherDetails?.isGraduate_PayScale
         }
       }),this.getCaste();
-    } 
+    } else{
+      this.getCaste();
+    }
     // this.editFlag ? (this.teacherRegForm.controls['isGraduate_PayScale'].setValue(this.editObj.isGraduate_PayScale), this.getCaste()) : '';
 
   }
@@ -343,6 +357,8 @@ export class AddUpdateTeacherRegistrationComponent {
                 castId: this.editObj.teacherDetails?.castId
               }
             }),this.getCasteCategory();
+          }else{
+            this.getCasteCategory();
           }  
           // this.editFlag ? (this.teacherRegForm.controls['castId'].setValue(this.editObj.castId), this.getCasteCategory()) : '';
         }
@@ -364,7 +380,9 @@ export class AddUpdateTeacherRegistrationComponent {
                 castCategoryId: this.editObj.teacherDetails?.castCategoryId
               }
             }),this.getCasteVerification();
-          }    
+          }  else{
+            this.getCasteVerification();
+          }  
           // this.editFlag ? (this.teacherRegForm.controls['castCategoryId'].setValue(this.editObj.castCategoryId), this.getCasteVerification()) : '';
         }
       }), error: (error: any) => {
@@ -383,7 +401,9 @@ export class AddUpdateTeacherRegistrationComponent {
           isCastVarificationDone: this.editObj.teacherDetails?.isCastVarificationDone
         }
       }),this.getEducationQualification();
-    } 
+    } else{
+      this.getEducationQualification();
+    }
     // this.editFlag ? (this.teacherRegForm.controls['isCastVarificationDone'].setValue(this.editObj.isCastVarificationDone), this.getEducationQualification()) : '';
   }
 
@@ -399,6 +419,8 @@ export class AddUpdateTeacherRegistrationComponent {
                 educationalQualificationId: this.editObj.teacherDetails?.educationalQualificationId
               }
             }),this.getTwelveBranch();
+          }else{
+            this.getTwelveBranch();
           }  
           // this.editFlag ? (this.teacherRegForm.controls['educationalQualificationId'].setValue(this.editObj.educationalQualificationId), this.getTwelveBranch()) : '';
         }
@@ -420,6 +442,8 @@ export class AddUpdateTeacherRegistrationComponent {
                 branchId12th: this.editObj.teacherDetails?.branchId12th
               }
             }),this.getOptionalSubject();
+          }else{
+            this.getOptionalSubject();
           }  
           // this.editFlag ? (this.teacherRegForm.controls['branchId12th'].setValue(this.editObj.branchId12th), this.getOptionalSubject()) : '';
         }
@@ -441,7 +465,9 @@ export class AddUpdateTeacherRegistrationComponent {
                 degreeOptionalSubjectsId: this.editObj.teacherDetails?.degreeOptionalSubjectsId
               }
             }),this.getDegreeUniversity();
-          }  
+          }  else{
+            this.getDegreeUniversity();
+          }
           // this.editFlag ? (this.teacherRegForm.controls['degreeOptionalSubjectsId'].setValue(this.editObj.degreeOptionalSubjectsId), this.getDegreeUniversity()) : '';
         }
       }), error: (error: any) => {
@@ -462,7 +488,9 @@ export class AddUpdateTeacherRegistrationComponent {
                 degreeUniversityId: this.editObj.teacherDetails?.degreeUniversityId
               }
             }),this.getProfesionalQualification();
-          }  
+          }  else{
+            this.getProfesionalQualification();
+          }
           // this.editFlag ? (this.teacherRegForm.controls['degreeUniversityId'].setValue(this.editObj.degreeUniversityId), this.getProfesionalQualification()) : '';
         }
       }), error: (error: any) => {
@@ -483,7 +511,9 @@ export class AddUpdateTeacherRegistrationComponent {
                 professionalQualificationId: this.editObj.teacherDetails?.professionalQualificationId
               }
             }),this.gethusbandWifeBothService();
-          }  
+          } else{
+            this.gethusbandWifeBothService();
+          } 
           // this.editFlag ? (this.teacherRegForm.controls['professionalQualificationId'].setValue(this.editObj.professionalQualificationId), this.gethusbandWifeBothService()) : '';
         }
       }), error: (error: any) => {
@@ -505,7 +535,9 @@ export class AddUpdateTeacherRegistrationComponent {
           husbandWife_Both_Service: this.editObj.teacherDetails?.husbandWife_Both_Service
         }
       }),this.getAreyouDisabled();
-    }  
+    }  else{
+      this.getAreyouDisabled();
+    }
 
     // this.editFlag ? (this.teacherRegForm.controls['husbandWife_Both_Service'].setValue(this.editObj.husbandWife_Both_Service), this.getAreyouDisabled()) : '';
   }
@@ -521,7 +553,9 @@ export class AddUpdateTeacherRegistrationComponent {
           isDisabled: this.editObj.teacherDetails?.isDisabled
         }
       }),this.getInterDistrictTransferred();
-    }  
+    }  else{
+      this.getInterDistrictTransferred();
+    }
 
     // this.editFlag ? (this.teacherRegForm.controls['isDisabled'].setValue(this.editObj.isDisabled), this.getInterDistrictTransferred()) : '';
   }
@@ -538,7 +572,9 @@ export class AddUpdateTeacherRegistrationComponent {
           interDistrictTransferred: this.editObj.teacherDetails?.interDistrictTransferred
         }
       }),this.GetInterDistrictTransferType();
-    }  
+    } else{
+      this.GetInterDistrictTransferType();
+    } 
     // this.editFlag ? (this.teacherRegForm.controls['interDistrictTransferred'].setValue(this.editObj.interDistrictTransferred), this.GetInterDistrictTransferType()) : '';
   }
 
@@ -547,14 +583,16 @@ export class AddUpdateTeacherRegistrationComponent {
       next: ((res: any) => {
         if (res.statusCode == '200' && res.responseData.length) {
           this.interDistrictTransferTypeArray = res.responseData;
-          // console.log("interDistrictTransferTypeArray", this.interDistrictTransferTypeArray); 
+          console.log("interDistrictTransferTypeArray", this.interDistrictTransferTypeArray); 
           if (this.editFlag) {
             this.teacherRegForm.patchValue({
               teacherDetails: {
                 interDistrictTransferType: this.editObj.teacherDetails?.interDistrictTransferType
               }
             }),this.getHaveYouPassedComputerExam();
-          }     
+          }  else{
+            this.getHaveYouPassedComputerExam();
+          }   
           // this.editFlag ? (this.teacherRegForm.controls['interDistrictTransferType'].setValue(this.editObj.interDistrictTransferType), this.getHaveYouPassedComputerExam()) : '';
         }
       }), error: (error: any) => {
@@ -568,30 +606,21 @@ export class AddUpdateTeacherRegistrationComponent {
       { id: 1, name: 'yes', haveYouPassedComputerExam: true },
       { id: 2, name: 'no', haveYouPassedComputerExam: false }
     ];
-
     if (this.editFlag) {
       this.teacherRegForm.patchValue({
         teacherDetails: {
           haveYouPassedComputerExam: this.editObj.teacherDetails?.haveYouPassedComputerExam
         }
       })
-    }  
-    // this.editFlag ? (this.teacherRegForm.controls['haveYouPassedComputerExam'].setValue(this.editObj.haveYouPassedComputerExam), this.getTaluka()) : '';
+    }     
   }
-
-
-
 
   imgUpload(event: any) {
     this.fileUpload.uploadDocuments(event, 'Upload', 'jpg, jpeg, png').subscribe((res: any) => {
       this.uploadImg = res.responseData;
       this.showAddRemImg = true;
-      // console.log("uploadImg",this.uploadImg);
-
     });
   }
-
-
 
   OnSubmit() {
     console.log(this.teacherRegForm.value);
@@ -626,16 +655,18 @@ export class AddUpdateTeacherRegistrationComponent {
     console.log("editObj", this.editObj);
     // return
     this.data.uploadImage ? this.teacherRegForm.value.uploadImage = this.data.uploadImage : '';
-
     this.data.uploadImage ? this.showAddRemImg = true : this.showAddRemImg = false;
     this.formData(); this.getGender();
-
   }
 
   clearImg() {
-    return
-    this.teacherRegForm.value.docPath = '';
-    this.f['docPath'].setValue('');
+  
+    this.teacherRegForm.value.uploadImage = '';
+    this.f['uploadImage'].setValue('');
     this.showAddRemImg = false;
   }
+  viewImg(){
+    window.open(this.uploadImg, 'blank');
+  }
+
 }

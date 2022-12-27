@@ -19,6 +19,7 @@ import { GlobalDialogComponent } from 'src/app/shared/components/global-dialog/g
 import { TableComponent } from 'src/app/shared/components/table/table.component';
 import { PageStatisticsComponent } from 'src/app/shared/components/page-statistics/page-statistics.component';
 import { AutofocusDirective } from 'src/app/core/directives/autofocus.directive';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
   declarations: [
@@ -44,7 +45,8 @@ import { AutofocusDirective } from 'src/app/core/directives/autofocus.directive'
     GlobalDialogComponent,
     TableComponent,
     PageStatisticsComponent,
-    AutofocusDirective
+    AutofocusDirective,
+    TranslateModule
   ]
 })
 export class TeacherRegistrationModule { }
