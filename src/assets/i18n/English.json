@@ -131,12 +131,20 @@
         "enterParentMobileNo":"Enter Parent Mobile No",
         "enterValidParentMobileNo":"Enter Valid Parent Mobile No",
         "enterValidAadharNo":"Enter Valid Parent Aadhar No",
-
+        "bit":"Name Of Bit",
+        "bitRequired" : "Bit Name Is Required",
         "profile": "Profile",
         "changePwd": "Change Password",
         "logout": "Logout",
-
-        "searchByNameContactNo" : "Search By Name/ContactNo"
+        "kendraRequired" : "Kendra Is Required",
+        "contactBeo" : "Contact No.(BEO Office)",
+        "searchByNameContactNo" : "Search By Name/ContactNo",
+        "nameIsRequired" : "Name Is Required",
+        "mobileIsRequired" : "Mobile Number Is Required",
+        "nameMarathi" : "Name In (Marathi)",
+        "studentReg" : "Student Registraion",
+        "studentUpdate": "Update Student"
+        
 
         
     }

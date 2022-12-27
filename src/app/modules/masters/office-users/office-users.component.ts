@@ -75,7 +75,7 @@ export class OfficeUsersComponent {
   languageChange() {
     this.webStorageService.langNameOnChange.subscribe(lang => {
       this.langTypeName = lang;
-      this.displayedColumns = ['srNo', this.langTypeName == 'English' ? 'name' : 'm_Name', 'designation', 'mobileNo', 'emailId', 'm_Name', 'action'];
+      this.displayedColumns = ['srNo', this.langTypeName == 'English' ? 'name' : 'm_Name', 'designation', 'mobileNo', 'emailId', 'taluka', 'action'];
       this.tableData = {
         pageNumber: this.pageNumber,
         img: '', blink: '', badge: '', isBlock: '', pagintion: true,

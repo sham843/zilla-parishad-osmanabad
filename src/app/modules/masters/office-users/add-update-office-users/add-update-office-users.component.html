@@ -16,7 +16,7 @@
         <div class="row">
             <div class="col-sm-4">
                 <mat-form-field appearance="outline" class="w-100 ">
-                    <mat-label>Level</mat-label>
+                    <mat-label>{{'Labels.level' | translate}}</mat-label>
                     <mat-select  formControlName="designationLevelId"  (selectionChange)="onchangeLevel($event)">
                         <mat-option [value]="level.id" *ngFor="let level of levels">{{webStorageService.languageFlag =='mr-IN' ? level.m_DesignationLevel : level.designationLevel}}</mat-option>
                     </mat-select>
@@ -25,24 +25,27 @@
 
             <div class="col-sm-4">
                 <mat-form-field appearance="outline" class="w-100 " *ngIf="officeForm.value.designationLevelId != 5 && officeForm.value.designationLevelId != 6 && officeForm.value.designationLevelId != 7">
-                    <mat-label>Designation (Officer)</mat-label>
+                    <mat-label>{{'Labels.designation' | translate}}</mat-label>
                     <mat-select  formControlName="designationId" (selectionChange)="getCenterDrop()">
                         <mat-option  [value]="desig.id" *ngFor="let desig of designations">{{webStorageService.languageFlag =='mr-IN' ? desig.m_DesignationType: desig.designationType}}</mat-option>
                     </mat-select>
                 </mat-form-field>
 
                 <mat-form-field appearance="outline" class="w-100 " *ngIf="officeForm.value.designationLevelId == 5">
-                    <mat-label>Name of Bit</mat-label>
-                        <input matInput formControlName="bitName">
+                    <mat-label>{{'Labels.bit' | translate}}</mat-label>
+                        <input matInput formControlName="bitName"> bitRequired
+                    <mat-error *ngIf="fc['bitName'].hasError('required')">{{'Labels.bitRequired' | translate}}</mat-error>
                 </mat-form-field>
             </div>
 
             <div class="col-sm-4" *ngIf="officeForm.value.designationId == 110 &&  officeForm.value.designationLevelId == 2">
                 <mat-form-field appearance="outline" class="w-100">
-                    <mat-label>Kendra</mat-label>
+                    <mat-label>{{'Labels.kendra' | translate}}</mat-label>
                     <mat-select  formControlName="centerId"  (selectionChange)="getAllSchoolsByCenterId()">
                         <mat-option [value]="centr.id" *ngFor="let centr of centers">{{webStorageService.languageFlag =='mr-IN' ? centr.m_Center : centr.center}}</mat-option>
                     </mat-select>
+                    <mat-error *ngIf="fc['centerId'].hasError('required')">{{'Labels.kendraRequired' | translate}}</mat-error>
+
                 </mat-form-field>
             </div>
            
@@ -53,10 +56,11 @@
             <ng-container *ngIf="officeForm.value.designationLevelId == 2 && officeForm.value.designationId == 110" > 
                 <div class="col-sm-4">
                     <mat-form-field appearance="outline" class="w-100">
-                        <mat-label>School</mat-label>
+                        <mat-label>{{'Labels.school' | translate}}</mat-label>
                         <mat-select formControlName="schoolId"> 
                             <mat-option [value]="sch.id" *ngFor="let sch of schools">{{webStorageService.languageFlag =='mr-IN' ? sch.m_SchoolName : sch.schoolName}}</mat-option>
                         </mat-select>
+                    <mat-error *ngIf="fc['schoolId'].hasError('required')">{{'Labels.schoolIsRequired' | translate}}</mat-error>
                     </mat-form-field>
                 </div>
             </ng-container>
@@ -64,10 +68,11 @@
             <ng-container *ngIf=" officeForm.value.designationLevelId != 6 && officeForm.value.designationLevelId != 7">
                 <div class="col-sm-4">
                     <mat-form-field appearance="outline" class="w-100 ">
-                        <mat-label>District</mat-label>
+                        <mat-label>{{'Labels.district' | translate}}</mat-label>
                         <mat-select  formControlName="districtId">
                             <mat-option [value]="dist.id" *ngFor="let dist of districts">{{webStorageService.languageFlag =='mr-IN' ? dist.m_District:  dist.district}}</mat-option>
                         </mat-select>
+                    <mat-error *ngIf="fc['districtId'].hasError('required')">{{'Labels.districtIsRequired' | translate}}</mat-error>
                     </mat-form-field>
                 </div>
             </ng-container>
@@ -75,10 +80,11 @@
             <ng-container *ngIf=" officeForm.value.designationLevelId != 6 && officeForm.value.designationLevelId != 7">
                 <div class="col-sm-4">
                     <mat-form-field appearance="outline" class="w-100">
-                        <mat-label>Taluka</mat-label>
+                        <mat-label>{{'Labels.taluka' | translate}}</mat-label>
                         <mat-select  formControlName="talukaId">
                             <mat-option [value]="taluka.id" *ngFor="let taluka of talukas">{{webStorageService.languageFlag =='mr-IN' ? taluka.m_Taluka : taluka.taluka}}</mat-option>
                         </mat-select>
+                    <mat-error *ngIf="fc['talukaId'].hasError('required')">{{'Labels.talukaIsRequired' | translate}}</mat-error>
                     </mat-form-field>
                 </div>
             </ng-container>
@@ -88,7 +94,7 @@
             <ng-container *ngIf="officeForm.value.designationLevelId == 2 && officeForm.value.designationId == 115" >
                 <div class="col-sm-4">
                     <mat-form-field appearance="outline" class="w-100">
-                        <mat-label>Contact No.(BEO Office)</mat-label>
+                        <mat-label>{{'Labels.contactBeo' | translate}}</mat-label>
                         <input matInput formControlName="beoMobileNo">
                     </mat-form-field>
                 </div>
@@ -122,36 +128,50 @@
         <div class="row">
             <div class="col-sm-4">
                 <mat-form-field appearance="outline" class="w-100">
-                    <mat-label>Name</mat-label>
+                    <mat-label>{{'Labels.name' | translate}}</mat-label>
                     <input matInput formControlName="name">
-
+                    <mat-error *ngIf="fc['name'].hasError('required')">{{'Labels.nameIsRequired' | translate}}</mat-error>
                 </mat-form-field>
             </div>
             <div class="col-sm-4">
                 <mat-form-field appearance="outline" class="w-100">
-                    <mat-label>Name(in marathi)</mat-label>
-                    <input matInput  formControlName="name">
+                    <mat-label>{{'Labels.nameMarathi' | translate}}</mat-label>
+                    <input matInput  formControlName="m_Name">
                 </mat-form-field>
             </div>
             <div class="col-sm-4">
                 <mat-form-field appearance="outline" class="w-100">
-                    <mat-label>Mobile No.</mat-label>
+                    <mat-label>{{'Labels.mobileNo' | translate}}</mat-label>
                     <input matInput  formControlName="mobileNo">
+                    <mat-error *ngIf="fc['mobileNo'].hasError('required')">{{'Labels.mobileIsRequired' | translate}}</mat-error>
+                    <mat-error *ngIf="fc['mobileNo'].hasError('pattern')">{{'Labels.pleaseEnterValidMobileNumber' | translate}}</mat-error>
                 </mat-form-field>
             </div>
+            <ng-container *ngIf="officeForm.value.designationLevelId == 6 ||  officeForm.value.designationLevelId == 7">
+                    <div class="col-sm-4">
+                        <mat-form-field appearance="outline" class="w-100">
+                            <mat-label>{{'Labels.address' | translate}}</mat-label>
+                            <input matInput formControlName="address">
+                          <mat-error *ngIf="fc['address'].hasError('required')">{{'Labels.addressIsRequired' | translate}}</mat-error>
+
+                        </mat-form-field>
+                    </div>
+            </ng-container>
+              
+                <div class="col-sm-4">
+                    <mat-form-field appearance="outline" class="w-100">
+                        <mat-label>{{'Labels.emailID' | translate}}</mat-label>
+                        <input matInput formControlName="emailId">
+                        <mat-error *ngIf="fc['emailId'].hasError('required')">{{'Labels.emailIdIsRequired' | translate}}</mat-error>
+                    </mat-form-field>
+                </div>
         </div>
 
-        <div class="row">
-            <div class="col-sm-4">
-                <mat-form-field appearance="outline" class="w-100">
-                    <mat-label>Email ID</mat-label>
-                    <input matInput formControlName="emailId">
-                </mat-form-field>
-            </div>
-        </div>
+        
+        
     </mat-card-content>
     <mat-card-footer class="d-flex justify-content-end card-footer mb-0">
-        <button mat-flat-button type="button" mat-dialog-close class="btn-second me-2">Cancel</button>
+        <button mat-flat-button type="button" mat-dialog-close class="btn-second me-2">{{'Labels.cancel' | translate}}</button>
         <button mat-flat-button type="submit" class="btn-main">{{data ? 'Update' :'Submit'}}</button>
     </mat-card-footer>
 </form>

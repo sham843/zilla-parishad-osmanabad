@@ -129,11 +129,18 @@
         "enterParentMobileNo":"पालकचे मोबाईल क्र. आवश्यक आहे",
         "enterValidParentMobileNo":"वैध पालकचे मोबाईल क्र. आवश्यक आहे",
         "enterValidAadharNo":"वैध आधार क्र. आवश्यक आहे",
-        
+        "bit":"बिटचे नाव",
+        "bitRequired" : "बिट नाव आवश्यक आहे",
         "profile": "प्रोफाइल",
         "changePwd": "पासवर्ड बदला",
         "logout": "बाहेर पडणे",
-
-        "searchByNameContactNo" : "नाव/संपर्क क्र.द्वारे शोधा"
+        "kendraRequired" : "केंद्र आवश्यक आहे",
+        "searchByNameContactNo" : "नाव/संपर्क क्र.द्वारे शोधा",
+        "nameIsRequired" : "नाव आवश्यक आहे",
+        "mobileIsRequired" :"मोबाईल क्रमांक आवश्यक आहे",
+        "nameMarathi" :"नाव (मराठी)",
+        "contactBeo" : "संपर्क क्रमांक (BEO कार्यालय)",
+        "studentReg" : "विद्यार्थी नोंदणी",
+        "studentUpdate" : "विद्यार्थी अद्यतनित करा"
     }
 }
