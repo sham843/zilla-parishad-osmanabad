@@ -65,6 +65,7 @@ export class TeacherRegistrationComponent {
       next: (res: any) => {
         if (res.statusCode == "200") {
           this.tableDataArray = res.responseData.responseData1;
+          
           this.totalCount = res.responseData.responseData2.pageCount;
           tableDatasize = res.responseData.responseData2.pageCount;
           console.log("tableDatasize teavche resppp", tableDatasize);
@@ -83,6 +84,7 @@ export class TeacherRegistrationComponent {
           tableHeaders: displayedheaders
         };
         this.apiService.tableData.next(tableData);
+        
       },
       error: ((err: any) => { this.errors.handelError(err) })
     });
