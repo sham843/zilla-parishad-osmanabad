@@ -126,11 +126,11 @@
                         </mat-card-header>
                         <mat-card-content>
                             <div class="text-center">
-                                <ng-container *ngIf="data.docPath">
-                                    <img src="{{data.docPath}}" height="60px">
+                                <ng-container *ngIf="data.uploadImage">
+                                    <img src="{{data.uploadImage}}" height="60px">
                                 </ng-container>
 
-                                <ng-container *ngIf="!data.docPath">
+                                <ng-container *ngIf="!data.uploadImage">
                                     <img src="assets/images/user.jpg" height="60px">
                                 </ng-container>
                                 <p>{{data.schoolName}}</p>

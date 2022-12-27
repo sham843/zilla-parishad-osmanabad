@@ -17,7 +17,7 @@
                 <div class="col-sm">
                     <mat-form-field appearance="outline" class="w-100">
                         <mat-label>Teacher Name</mat-label>
-                        <input matInput formControlName="name">
+                        <input appAutofocus matInput formControlName="name">
                     </mat-form-field>
                 </div>
                 <div class="col-sm">
@@ -29,7 +29,7 @@
                 <div class="col-sm">
                     <mat-form-field appearance="outline" class="w-100 ">
                         <mat-label>Gender</mat-label>
-                        <mat-select formControlName="genderId" (selectionChange)="getDistrict();">
+                        <mat-select formControlName="genderId" >
                             <mat-option *ngFor="let gender of genderArray"
                             [value]="gender.id">{{gender.gender}}</mat-option>
                             <!-- <mat-option value="two">Female</mat-option> -->
@@ -52,11 +52,17 @@
                     <!-- <mat-form-field appearance="outline" class="w-100 "> -->
                         <mat-label>Upload Photo</mat-label>
                         <input type="file" formControlName="uploadImage" hidden="hidden" (change)="imgUpload($event)" #img>
-                        <mat-icon matSuffix >
+                        <mat-icon matSuffix *ngIf="!showAddRemImg">
                             <span class="material-symbols-outlined" (click)="img.click()">
                                 upload
                             </span>
                         </mat-icon>
+                        <span class="mx-3">
+                            <mat-icon class="text-danger" type="button" *ngIf="showAddRemImg"
+                                (click)="clearImg()">highlight_off</mat-icon>
+                            <mat-icon class="text-success"
+                                *ngIf="showAddRemImg" (click)="viewImg()">check_circle_outline</mat-icon>
+                        </span>
                     <!-- </mat-form-field> -->
                 </div>
                 <div class="col-sm-4">
@@ -73,7 +79,7 @@
                 <div class="col-sm-4">
                     <mat-form-field appearance="outline" class="w-100 ">
                         <mat-label>District</mat-label>
-                        <mat-select  formControlName="districtId" (selectionChange)="getTaluka();">
+                        <mat-select  formControlName="districtId" >
                             <mat-option *ngFor="let distric of districtArray"
                             [value]="distric.id">{{distric.district}}</mat-option>
                             <!-- <mat-option value="two"> B.Tech Computer</mat-option> -->
@@ -83,7 +89,7 @@
                 <div class="col-sm-4">
                     <mat-form-field appearance="outline" class="w-100 ">
                         <mat-label>Taluka</mat-label>
-                        <mat-select  formControlName="talukaId" (selectionChange)="getVillage();">
+                        <mat-select  formControlName="talukaId" >
                             <mat-option *ngFor="let taluka of talukaArray"
                             [value]="taluka.id">{{taluka.taluka}}</mat-option>
                             <!-- <mat-option value="two"> B.Tech Computer</mat-option> -->
@@ -93,7 +99,7 @@
                 <div class="col-sm-4">
                     <mat-form-field appearance="outline" class="w-100 ">
                         <mat-label>Village</mat-label>
-                        <mat-select formControlName="villageId" (selectionChange)="getAllSchool();">
+                        <mat-select formControlName="villageId" >
                             <mat-option *ngFor="let village of villageArray"
                             [value]="village.id">{{village.village}}</mat-option>
                             <!-- <mat-option value="two"> B.Tech Computer</mat-option> -->
@@ -146,7 +152,7 @@
                 <div class="col-sm-4">
                     <mat-form-field appearance="outline" class="w-100 ">
                         <mat-label>Working School Name</mat-label>
-                        <mat-select formControlName="schoolId" (selectionChange)="getCluster();">
+                        <mat-select formControlName="schoolId" >
                             <mat-option  *ngFor="let school of schoolArray"
                             [value]="school.id">{{school.schoolName}}</mat-option>
                             <!-- <mat-option value="two">Bsc</mat-option> -->
@@ -156,7 +162,7 @@
                 <div class="col-sm-4">
                     <mat-form-field appearance="outline" class="w-100 ">
                         <mat-label>Cluster Name</mat-label>
-                        <mat-select formControlName="clusterId" (selectionChange)="getDesignation();">
+                        <mat-select formControlName="clusterId" >
                             <mat-option *ngFor="let cluster of clusterArray"
                             [value]="cluster.id">{{cluster.clusterName}}</mat-option>
                             <!-- <mat-option value="two"> B.Tech Computer</mat-option> -->
@@ -166,7 +172,7 @@
                 <div class="col-sm-4">
                     <mat-form-field appearance="outline" class="w-100 ">
                         <mat-label>Designation</mat-label>
-                        <mat-select formControlName="designationId" (selectionChange)="getGraduateTeacherSubject();">
+                        <mat-select formControlName="designationId" >
                             <mat-option *ngFor="let designation of designationArray"
                             [value]="designation.id">{{designation.designationType}}</mat-option>
                             <!-- <mat-option value="two">M.tech</mat-option> -->
@@ -176,7 +182,7 @@
                 <div class="col-sm-4">
                     <mat-form-field appearance="outline" class="w-100 ">
                         <mat-label>Graduate Teacher Subject</mat-label>
-                        <mat-select formControlName="graduate_SubjectId" (selectionChange)="getGraduatePayScale();">
+                        <mat-select formControlName="graduate_SubjectId" >
                             <mat-option *ngFor="let GradateTeacherSubject of GradateTeacherSubjectArray"
                             [value]="GradateTeacherSubject.id">{{GradateTeacherSubject.subject}}</mat-option>
                             <!-- <mat-option value="two">Bsc</mat-option> -->
@@ -186,7 +192,7 @@
                 <div class="col-sm-4">
                     <mat-form-field appearance="outline" class="w-100 ">
                         <mat-label>Taking Graduate Pay Scale</mat-label>
-                        <mat-select formControlName="isGraduate_PayScale" (selectionChange)="getCaste();">
+                        <mat-select formControlName="isGraduate_PayScale" >
                             <mat-option *ngFor="let payScale of isGraduatePayScaleArray"
                             [value]="payScale.isGraduate_PayScale">{{payScale.name}}</mat-option>
                             <!-- <mat-option value="two"> B.Tech Computer</mat-option> -->
@@ -196,57 +202,66 @@
                 <div class="col-sm-4">
                     <mat-form-field appearance="outline" class="w-100 ">
                         <mat-label>Caste</mat-label>
-                        <mat-select formControlName="castId" (selectionChange)="getCasteCategory();">
+                        <mat-select formControlName="castId" >
                             <mat-option *ngFor="let caste of casteArray"
                             [value]="caste.id">{{caste.caste}}</mat-option>
                             <!-- <mat-option value="two">M.tech</mat-option> -->
                         </mat-select>
                     </mat-form-field>
                 </div>
-                <div class="col-sm-4">
-                    <mat-form-field appearance="outline" class="w-100 ">
-                        <mat-label>Caste Category</mat-label>
-                        <mat-select formControlName="castCategoryId" (selectionChange)="getCasteVerification();">
-                            <mat-option *ngFor="let casteCategory of castCategoryArray"
-                            [value]="casteCategory.id">{{casteCategory.categoryName}}</mat-option>
-                            <!-- <mat-option value="two">Bsc</mat-option> -->
-                        </mat-select>
-                    </mat-form-field>
-                </div>
-                <div class="col-sm-4">
-                    <mat-form-field appearance="outline" class="w-100">
-                        <mat-label>Caste Certificate Date & Number</mat-label>
-                        <input matInput formControlName="castCertificateNo">
-                    </mat-form-field>
-                </div>
-                <div class="col-sm-4">
-                    <mat-form-field appearance="outline" class="w-100">
-                        <mat-label>Caste Certificate Office</mat-label>
-                        <input matInput formControlName="castCertificateOffice">
-                    </mat-form-field>
-                </div>
-                <div class="col-sm-4">
-                    <mat-form-field appearance="outline" class="w-100 ">
-                        <mat-label>Caste Verification Done?</mat-label>
-                        <mat-select formControlName="isCastVarificationDone" (selectionChange)="getEducationQualification();">
-                            <mat-option *ngFor="let casteVeification of casteVerification"
-                            [value]="casteVeification.isCastVarificationDone">{{casteVeification.name}}</mat-option>
-                            <!-- <mat-option value="two">Bsc</mat-option> -->
-                        </mat-select>
-                    </mat-form-field>
-                </div>
-                <div class="col-sm-4">
-                    <mat-form-field appearance="outline" class="w-100">
-                        <mat-label>Caste vailidity Date & Number</mat-label>
-                        <input matInput formControlName="castValidityNoDate">
-                    </mat-form-field>
-                </div>
-                <div class="col-sm-4">
-                    <mat-form-field appearance="outline" class="w-100 ">
-                        <mat-label>Caste Verification Committee Name</mat-label>
-                        <input matInput formControlName="castverificationCommitteeName">
-                    </mat-form-field>
-                </div>
+
+                <ng-container *ngIf="teacherRegForm.value.teacherDetails.castId != 7 ">
+                    <div class="col-sm-4">
+                        <mat-form-field appearance="outline" class="w-100 ">
+                            <mat-label>Caste Category</mat-label>
+                            <mat-select formControlName="castCategoryId">
+                                <mat-option *ngFor="let casteCategory of castCategoryArray"
+                                [value]="casteCategory.id">{{casteCategory.categoryName}}</mat-option>
+                                <!-- <mat-option value="two">Bsc</mat-option> -->
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-sm-4">
+                        <mat-form-field appearance="outline" class="w-100">
+                            <mat-label>Caste Certificate Date & Number</mat-label>
+                            <input matInput formControlName="castCertificateNo">
+                        </mat-form-field>
+                    </div>
+                    <div class="col-sm-4">
+                        <mat-form-field appearance="outline" class="w-100">
+                            <mat-label>Caste Certificate Office</mat-label>
+                            <input matInput formControlName="castCertificateOffice">
+                        </mat-form-field>
+                    </div>
+                    <div class="col-sm-4">
+                        <mat-form-field appearance="outline" class="w-100 ">
+                            <mat-label>Caste Verification Done?</mat-label>
+                            <mat-select formControlName="isCastVarificationDone" >
+                                <mat-option *ngFor="let casteVeification of casteVerification"
+                                [value]="casteVeification.isCastVarificationDone">{{casteVeification.name}}</mat-option>
+                                <!-- <mat-option value="two">Bsc</mat-option> -->
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-sm-4">
+                        <mat-form-field appearance="outline" class="w-100">
+                            <mat-label>Caste vailidity Date & Number</mat-label>
+                            <input matInput formControlName="castValidityNoDate">
+                        </mat-form-field>
+                    </div>
+                    <div class="col-sm-4">
+                        <mat-form-field appearance="outline" class="w-100 ">
+                            <mat-label>Caste Verification Committee Name</mat-label>
+                            <input matInput formControlName="castverificationCommitteeName">
+                        </mat-form-field>
+                    </div>
+                </ng-container>
+              
+                
+               
+                
+                
+              
                 <div class="col-sm-4">
                     <mat-form-field appearance="outline" class="w-100">
                         <mat-label>1st appointment Date in Service</mat-label>
@@ -282,7 +297,7 @@
                 <div class="col-sm-4">
                     <mat-form-field appearance="outline" class="w-100 ">
                         <mat-label>Educational Qualification</mat-label>
-                        <mat-select formControlName="educationalQualificationId" (selectionChange)="getTwelveBranch();">
+                        <mat-select formControlName="educationalQualificationId" >
                             <mat-option *ngFor="let educationQuali of educationQualificationArray"
                             [value]="educationQuali.id">{{educationQuali.educationalQualification}}</mat-option>
                             <!-- <mat-option value="two"> B.Tech Computer</mat-option> -->
@@ -292,7 +307,7 @@
                 <div class="col-sm-4">
                     <mat-form-field appearance="outline" class="w-100 ">
                         <mat-label>12th Branch</mat-label>
-                        <mat-select formControlName="branchId12th" (selectionChange)="getOptionalSubject();">
+                        <mat-select formControlName="branchId12th" >
                             <mat-option *ngFor="let twelve of twelveBranchArray"
                             [value]="twelve.id">{{twelve.branchName}}</mat-option>
                             <!-- <mat-option value="two">M.tech</mat-option> -->
@@ -302,7 +317,7 @@
                 <div class="col-sm-4">
                     <mat-form-field appearance="outline" class="w-100 ">
                         <mat-label>Degree Optional Subjects</mat-label>
-                        <mat-select formControlName="degreeOptionalSubjectsId" (selectionChange)="getDegreeUniversity();">
+                        <mat-select formControlName="degreeOptionalSubjectsId" >
                             <mat-option *ngFor="let optionalSubject of optionalSubjectArray"
                             [value]="optionalSubject.id">{{optionalSubject.subjectName}}</mat-option>
                             <!-- <mat-option value="two">Bsc</mat-option> -->
@@ -312,7 +327,7 @@
                 <div class="col-sm-4">
                     <mat-form-field appearance="outline" class="w-100 ">
                         <mat-label>Degree University</mat-label>
-                        <mat-select formControlName="degreeUniversityId"  (selectionChange)="getProfesionalQualification();">
+                        <mat-select formControlName="degreeUniversityId"  >
                             <mat-option *ngFor="let university of degreeUniversityArray"
                             [value]="university.id">{{university.univesityName}}</mat-option>
                             <!-- <mat-option value="two"> B.Tech Computer</mat-option> -->
@@ -322,7 +337,7 @@
                 <div class="col-sm-4">
                     <mat-form-field appearance="outline" class="w-100 ">
                         <mat-label>Professional Qualification</mat-label>
-                        <mat-select formControlName="professionalQualificationId" (selectionChange)="gethusbandWifeBothService();">
+                        <mat-select formControlName="professionalQualificationId" >
                             <mat-option *ngFor="let proQulification of profesionalQualificationArray"
                             [value]="proQulification.id">{{proQulification.professinalQualification}}</mat-option>
                             <!-- <mat-option value="two">M.tech</mat-option> -->
@@ -344,23 +359,25 @@
                 <div class="col-sm-4">
                     <mat-form-field appearance="outline" class="w-100 ">
                         <mat-label>Husband-Wife both are in Service</mat-label>
-                        <mat-select formControlName="husbandWife_Both_Service" (selectionChange)="getAreyouDisabled();">
+                        <mat-select formControlName="husbandWife_Both_Service" >
                             <mat-option *ngFor="let husbandWifeService of husbandWifeBothServiceArray"
                             [value]="husbandWifeService.husbandWife_Both_Service">{{husbandWifeService.name}}</mat-option>
                             <!-- <mat-option value="two">M.tech</mat-option> -->
                         </mat-select>
                     </mat-form-field>
                 </div>
-                <div class="col-sm-4">
-                    <mat-form-field appearance="outline" class="w-100 ">
-                        <mat-label>If Yes then name and office name</mat-label>
-                        <input matInput formControlName="husbandWife_OfficeName">
-                    </mat-form-field>
-                </div>
+                <ng-container *ngIf="teacherRegForm.value.teacherDetails.husbandWife_Both_Service == 1 ">
+                    <div class="col-sm-4">
+                        <mat-form-field appearance="outline" class="w-100 ">
+                            <mat-label>If Yes then name and office name</mat-label>
+                            <input matInput formControlName="husbandWife_OfficeName">
+                        </mat-form-field>
+                    </div>
+                </ng-container>             
                 <div class="col-sm-4">
                     <mat-form-field appearance="outline" class="w-100 ">
                         <mat-label>Are you Disabled</mat-label>
-                        <mat-select formControlName="isDisabled" (selectionChange)="getInterDistrictTransferred();">
+                        <mat-select formControlName="isDisabled" >
                             <mat-option *ngFor="let disabled of AreyouDisabled"
                             [value]="disabled.isDisabled">{{disabled.name}}</mat-option>
                             <!-- <mat-option value="two"> B.Tech Computer</mat-option> -->
@@ -370,38 +387,44 @@
                 <div class="col-sm-4">
                     <mat-form-field appearance="outline" class="w-100 ">
                         <mat-label>Inter District transferred</mat-label>
-                        <mat-select formControlName="interDistrictTransferred" (selectionChange)="GetInterDistrictTransferType();">
+                        <mat-select formControlName="interDistrictTransferred" >
                             <mat-option *ngFor="let interDistrict of interDistrictTransferredArray"
                             [value]="interDistrict.interDistrictTransferred">{{interDistrict.name}}</mat-option>
                             <!-- <mat-option value="two">M.tech</mat-option> -->
                         </mat-select>
                     </mat-form-field>
                 </div>
-                <div class="col-sm-4">
-                    <mat-form-field appearance="outline" class="w-100">
-                        <mat-label>Date of presence by inter district transfer</mat-label>
-                        <input matInput [matDatepicker]=" DistrictTransfer"
-                            formControlName="dateOFPresenceInterDistrictTransfer">
-                        <mat-datepicker-toggle matIconSuffix [for]="DistrictTransfer"></mat-datepicker-toggle>
-                        <mat-datepicker #DistrictTransfer></mat-datepicker>
-                    </mat-form-field>
-                </div>
-                <div class="col-sm-4">
-                    <mat-form-field appearance="outline" class="w-100 ">
-                        <mat-label>Inter district transfer type*</mat-label>
-                        <mat-select formControlName="interDistrictTransferType" (selectionChange)="getHaveYouPassedComputerExam();">
-                            <mat-option *ngFor="let interDistricttrasferType of interDistrictTransferTypeArray"
-                            [value]="interDistricttrasferType.id">{{interDistricttrasferType.interDistrictTransferType}}</mat-option>
-                            <!-- <mat-option value="two"> B.Tech Computer</mat-option> -->
-                        </mat-select>
-                    </mat-form-field>
-                </div>
-                <div class="col-sm-4">
-                    <mat-form-field appearance="outline" class="w-100 ">
-                        <mat-label>The original district of inter-district transfer</mat-label>
-                        <input matInput >
-                    </mat-form-field>
-                </div>
+
+                <ng-container *ngIf="teacherRegForm.value.teacherDetails.interDistrictTransferred == 1 ">
+                    <div class="col-sm-4">
+                        <mat-form-field appearance="outline" class="w-100">
+                            <mat-label>Date of presence by inter district transfer</mat-label>
+                            <input matInput [matDatepicker]=" DistrictTransfer"
+                                formControlName="dateOFPresenceInterDistrictTransfer">
+                            <mat-datepicker-toggle matIconSuffix [for]="DistrictTransfer"></mat-datepicker-toggle>
+                            <mat-datepicker #DistrictTransfer></mat-datepicker>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-sm-4">
+                        <mat-form-field appearance="outline" class="w-100 ">
+                            <mat-label>Inter district transfer type*</mat-label>
+                            <mat-select formControlName="interDistrictTransferType" >
+                                <mat-option *ngFor="let interDistricttrasferType of interDistrictTransferTypeArray"
+                                [value]="interDistricttrasferType.id">{{interDistricttrasferType.interDistrictTransferType}}</mat-option>
+                                <!-- <mat-option value="two"> B.Tech Computer</mat-option> -->
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-sm-4">
+                        <mat-form-field appearance="outline" class="w-100 ">
+                            <mat-label>The original district of inter-district transfer</mat-label>
+                            <input matInput >
+                        </mat-form-field>
+                    </div>
+                </ng-container>
+             
+               
+               
                 <div class="col-sm-4">
                     <mat-form-field appearance="outline" class="w-100">
                         <mat-label>Date of Seniority</mat-label>
@@ -460,8 +483,10 @@
         </mat-card-content>
         <mat-card-footer class="card-footer">
             <mat-card-actions align="end">
-                <button mat-flat-button class="btn-second me-2">Cancel</button>
-                <button mat-flat-button class="btn-main">Submit</button>
+                <button mat-flat-button mat-dialog-close class="btn-second me-2">{{'Labels.cancel' |
+                    translate}}</button>
+                <button mat-flat-button class="btn-main">{{editFlag ?( 'Labels.update' | translate) :('Labels.submit' |
+                    translate)}}</button>
             </mat-card-actions>
         </mat-card-footer>
     </mat-card>

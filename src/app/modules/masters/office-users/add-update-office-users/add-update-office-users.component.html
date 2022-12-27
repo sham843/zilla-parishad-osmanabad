@@ -35,7 +35,7 @@
 
                 <mat-form-field appearance="outline" class="w-100 " *ngIf="officeForm.value.designationLevelId == 5">
                     <mat-label>{{'Labels.bit' | translate}}</mat-label>
-                        <input matInput formControlName="bitName">
+                        <input matInput formControlName="bitName" (keypress)="validation.noFirstSpaceAllow($event)">
                     <mat-error *ngIf="fc['bitName'].hasError('required')">{{'Labels.bitRequired' | translate}}</mat-error>
                 </mat-form-field>
             </div>
@@ -96,7 +96,7 @@
                 <div class="col-sm-4">
                     <mat-form-field appearance="outline" class="w-100">
                         <mat-label>{{'Labels.contactBeo' | translate}}</mat-label>
-                        <input matInput formControlName="beoMobileNo">
+                        <input matInput formControlName="beoMobileNo" (keypress)="validation.onlyDigits($event)">
                     <mat-error *ngIf="fc['beoMobileNo'].hasError('required')">{{'Labels.mobileIsRequired' | translate}}</mat-error>
                     <mat-error *ngIf="fc['beoMobileNo'].hasError('pattern')">{{'Labels.pleaseEnterValidMobileNumber' | translate}}</mat-error>
                     </mat-form-field>
@@ -115,7 +115,7 @@
                 <div class="col-sm-4">
                     <mat-form-field appearance="outline" class="w-100">
                         <mat-label>Contact No.(Kendra)</mat-label>
-                        <input matInput  formControlName="kendraMobileNo">
+                        <input matInput  formControlName="kendraMobileNo" (keypress)="validation.onlyDigits($event)">
                     <mat-error *ngIf="fc['kendraMobileNo'].hasError('required')">{{'Labels.mobileIsRequired' | translate}}</mat-error>
                     <mat-error *ngIf="fc['kendraMobileNo'].hasError('pattern')">{{'Labels.pleaseEnterValidMobileNumber' | translate}}</mat-error>
                     </mat-form-field>
@@ -138,7 +138,7 @@
             <div class="col-sm-4">
                 <mat-form-field appearance="outline" class="w-100">
                     <mat-label>{{'Labels.name' | translate}}</mat-label>
-                    <input matInput formControlName="name">
+                    <input matInput formControlName="name" (keypress)="validation.noFirstSpaceAllow($event)">
                     <mat-error *ngIf="fc['name'].hasError('required')">{{'Labels.nameIsRequired' | translate}}</mat-error>
                 </mat-form-field>
             </div>
@@ -151,7 +151,7 @@
             <div class="col-sm-4">
                 <mat-form-field appearance="outline" class="w-100">
                     <mat-label>{{'Labels.mobileNo' | translate}}</mat-label>
-                    <input matInput  formControlName="mobileNo">
+                    <input matInput  formControlName="mobileNo" (keypress)="validation.onlyDigits($event)">
                     <mat-error *ngIf="fc['mobileNo'].hasError('required')">{{'Labels.mobileIsRequired' | translate}}</mat-error>
                     <mat-error *ngIf="fc['mobileNo'].hasError('pattern')">{{'Labels.pleaseEnterValidMobileNumber' | translate}}</mat-error>
                 </mat-form-field>
@@ -160,7 +160,7 @@
                     <div class="col-sm-4">
                         <mat-form-field appearance="outline" class="w-100">
                             <mat-label>{{'Labels.address' | translate}}</mat-label>
-                            <input matInput formControlName="address">
+                            <input matInput formControlName="address" (keypress)="validation.noFirstSpaceAllow($event)">
                           <mat-error *ngIf="fc['address'].hasError('required')">{{'Labels.addressIsRequired' | translate}}</mat-error>
 
                         </mat-form-field>
@@ -170,7 +170,7 @@
                 <div class="col-sm-4">
                     <mat-form-field appearance="outline" class="w-100">
                         <mat-label>{{'Labels.emailID' | translate}}</mat-label>
-                        <input matInput formControlName="emailId">
+                        <input matInput formControlName="emailId" (keypress)="validation.noFirstSpaceAllow($event)">    
                         <mat-error *ngIf="fc['emailId'].hasError('required')">{{'Labels.emailIdIsRequired' | translate}}</mat-error>
                         <mat-error *ngIf="fc['emailId'].hasError('pattern')">{{'Labels.pleaseEnterValidEmailId' | translate}}</mat-error>
                     </mat-form-field>
@@ -182,7 +182,8 @@
     </mat-card-content>
     <mat-card-footer class="d-flex justify-content-end card-footer mb-0">
         <button mat-flat-button type="button" mat-dialog-close class="btn-second me-2">{{'Labels.cancel' | translate}}</button>
-        <button mat-flat-button type="submit" class="btn-main">{{data ? 'Update' :'Submit'}}</button>
+        <!-- <button mat-flat-button type="submit" class="btn-main">{{data ? 'Update' :'Submit'}}</button> -->
+        <button mat-flat-button type="submit" class="btn-main">{{data ? 'Update' : ('Labels.submit' | translate)}}</button>
     </mat-card-footer>
 </form>
 </mat-card>
