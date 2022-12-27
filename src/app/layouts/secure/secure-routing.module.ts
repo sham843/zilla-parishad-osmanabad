@@ -13,6 +13,11 @@ const routes: Routes = [
   { path: 'teacher-registration', loadChildren: () => import('../../modules/masters/teacher-registration/teacher-registration.module').then(m => m.TeacherRegistrationModule), data: { breadcrumb: [{ title: 'Teacher Registration', active: true }] } },
   { path: 'office-users', loadChildren: () => import('../../modules/masters/office-users/office-users.module').then(m => m.OfficeUsersModule), data: { breadcrumb: [{ title: 'Office Users', active: true }] } },
   { path: 'page-right-access', loadChildren: () => import('../../modules/settings/page-right-access/page-right-access.module').then(m => m.PageRightAccessModule), data: { breadcrumb: [{ title: 'Page Right Access', active: true }] } },
+  {
+    path: 'details',
+    loadComponent: () =>
+      import('../../shared/components/global-details/global-details.component').then((x) => x.GlobalDetailsComponent),
+  }
 ]
   
 
