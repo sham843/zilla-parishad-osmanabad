@@ -20,7 +20,6 @@ export class StudentRegistrationComponent {
   pageNumber: number = 1;
   searchContent = new FormControl('');
   tableDataArray = new Array();
-  // tableDataForcard: any;
   cardViewFlag: boolean = false;
   totalCount: number = 0;
   cardCurrentPage: number = 0;
@@ -78,21 +77,23 @@ export class StudentRegistrationComponent {
       this.ngxSpinner.hide();
       return
     }
-    this.tableDataArray = new Array();
     let pageNo
     this.cardViewFlag ? pageNo = (this.cardCurrentPage + 1) : (pageNo = this.pageNumber, this.cardCurrentPage = 0);
     let str = `?pageno=${pageNo}&pagesize=10&textSearch=${this.searchContent.value || ''}&lan=${this.languageFlag || ''}`;
-    let reportStr = '?TextSearch=' + this.searchContent.value;
+    let reportStr = '?pageno=1&pagesize='+(this.totalCount *10) +'&textSearch=' + this.searchContent.value +'&lan='+this.languageFlag;
     this.apiService.setHttp('GET', 'zp-osmanabad/Student/GetAll' + (flag == 'reportFlag' ? reportStr : str), false, false, false, 'baseUrl');
     this.apiService.getHttp().subscribe({
       next: (res: any) => {
         if (res.statusCode == 200) {
           this.ngxSpinner.hide();
-          this.tableDataArray = res.responseData.responseData1;
+          flag != 'reportFlag' ? this.tableDataArray = res.responseData.responseData1 : this.tableDataArray = this.tableDataArray;
+          this.tableDataArray.map((res:any)=>{
+            res.docPath = res.documentResponse[0]?.docPath                      
+          })
           this.totalCount = res.responseData.responseData2.pageCount;
           this.tableDatasize = res.responseData.responseData2.pageCount;
           this.studentData = []
-          let data: [] = res.responseData.responseData1;
+          let data: [] = flag == 'reportFlag' ? res.responseData.responseData1 : [];
           data.find((ele: any, i: any) => {
             let obj = {
               srNo: i + 1,
@@ -260,6 +261,7 @@ export class StudentRegistrationComponent {
 
   downloadPdf() {
     this.getTableData('reportFlag')
+    if(this.studentData.length > 0){
     let keyPDFHeader = ['SrNo', "ID", "Full Name", "Gender", "Contact No.", "Standard", "School Name", "Caste", "Taluka", "Center"];
     let ValueData =
       this.studentData.reduce(
@@ -270,7 +272,7 @@ export class StudentRegistrationComponent {
       'topHedingName': 'Student Report',
       'createdDate': 'Created on:' + new Date()
     }
-    this.downloadPdfservice.downLoadPdf(keyPDFHeader, ValueData, objData);
+    this.downloadPdfservice.downLoadPdf(keyPDFHeader, ValueData, objData);}
   }
 
 }

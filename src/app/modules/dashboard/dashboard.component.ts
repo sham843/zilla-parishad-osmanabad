@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
+import { ApiService } from 'src/app/core/services/api.service';
+import { ErrorsService } from 'src/app/core/services/errors.service';
 import { MasterService } from 'src/app/core/services/master.service';
 import { WebStorageService } from 'src/app/core/services/web-storage.service';
 @Component({
@@ -16,9 +18,11 @@ export class DashboardComponent {
   filterForm!: FormGroup;
   piechartOptions: any;
   barchartOptions: any;
+  dashboardCountData:object|any;
   get f() { return this.filterForm.controls; }
   constructor(public translate: TranslateService, private masterService: MasterService,
-    public webStorage: WebStorageService, private fb: FormBuilder) {
+    public webStorage: WebStorageService, private fb: FormBuilder, private apiService:ApiService,
+    private error:ErrorsService) {
     this.getChart();
   }
   ngOnInit() {
@@ -31,6 +35,7 @@ export class DashboardComponent {
     this.getCenters();
     this.getschools();
     this.getBarChart();
+    this.getdashboardCount();
 
   }
   getTalukas() {
@@ -176,5 +181,26 @@ export class DashboardComponent {
         offsetY: 50
       }
     };
+  }
+
+  getdashboardCount(){
+    const formData= this.filterForm.value;
+    this.apiService.setHttp('GET', 'zp-osmanabad/Dashboard/GetDashboardCount?TalukaId='+(formData?.talukaId ||0)+'&CenterId='+(formData?.centerId ||0)+'&SchoolId='+(formData?.schoolId ||0), false, false, false, 'baseUrl');
+    this.apiService.getHttp().subscribe({
+      next: (res: any) => { 
+        if (res.statusCode == "200") {
+          this.dashboardCountData= res.responseData;
+          const serriesArray= [0,0,0];
+          serriesArray[0]= this.dashboardCountData.govtSchool|0;
+          serriesArray[1]= this.dashboardCountData.privateSchool|0;
+          serriesArray[2]= this.dashboardCountData.otherSchool|0;
+          this.piechartOptions.series = serriesArray;
+          this.piechartOptions.labels=['Goverment','Private','Other'];
+           } else { 
+            this.dashboardCountData=[];
+          }
+       },
+      error: (error:any) => { this.error.handelError(error.message) }
+    });
   }
 }

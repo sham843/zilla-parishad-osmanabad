@@ -28,7 +28,6 @@ export class AddUpdateSchoolRegistrationComponent {
   schoolRegForm !: FormGroup;
   uploadImg: any;
   editFlag: boolean = false;
-  showAddRemImg: boolean = false;
 
   constructor(private masterService: MasterService, private errors: ErrorsService, private fb: FormBuilder, private fileUpload: FileUploadService,
     private apiService: ApiService, private commonMethod: CommonMethodsService, @Inject(MAT_DIALOG_DATA) public data: any,
@@ -80,18 +79,18 @@ export class AddUpdateSchoolRegistrationComponent {
       "modifiedBy": data.modifiedBy,
       "modifiedDate": data.modifiedDate,
       "isDeleted": data.isDeleted
-    })  
-    this.data ? this.onEdit():''  
-   
+    })
+    this.data ? this.onEdit() : ''
+
   }
 
   //#region ---------------------------------------------- School Registration Dropdown start here ----------------------------------------// 
   getDistrict() {
     this.masterService.getAllDistrict(this.webStorageS.languageFlag).subscribe({
       next: (res: any) => {
-        res.statusCode == "200" ? (this.districtArr = res.responseData,  this.schoolRegForm.controls['districtId'].setValue(1)) : this.districtArr = [];
+        res.statusCode == 200 ? (this.districtArr = res.responseData, this.schoolRegForm.controls['districtId'].setValue(1)) : this.districtArr = [];
         this.getTaluka();
-       
+
 
         this.editFlag ? (this.f['districtId'].setValue(this.data.districtId), this.getTaluka()) : '';
       },
@@ -102,7 +101,7 @@ export class AddUpdateSchoolRegistrationComponent {
   getTaluka() {
     this.masterService.getAllTaluka(this.webStorageS.languageFlag).subscribe({
       next: (res: any) => {
-        res.statusCode == "200" ? this.talukaArr = res.responseData : this.talukaArr = [];
+        res.statusCode == 200 ? this.talukaArr = res.responseData : this.talukaArr = [];
         this.editFlag ? (this.f['talukaId'].setValue(this.data.talukaId), this.getCenter()) : '';
       },
       error: ((err: any) => { this.errors.handelError(err) })
@@ -112,7 +111,7 @@ export class AddUpdateSchoolRegistrationComponent {
   getCenter() {
     this.masterService.getAllCenter(this.webStorageS.languageFlag).subscribe({
       next: (res: any) => {
-        res.statusCode == "200" ? this.centerArr = res.responseData : this.centerArr = [];
+        res.statusCode == 200 ? this.centerArr = res.responseData : this.centerArr = [];
         this.editFlag ? (this.f['centerId'].setValue(this.data.centerId), this.getVillage()) : '';
       },
       error: ((err: any) => { this.errors.handelError(err) })
@@ -122,7 +121,7 @@ export class AddUpdateSchoolRegistrationComponent {
   getVillage() {
     this.masterService.getAllVillage(this.webStorageS.languageFlag, this.schoolRegForm.value.talukaId).subscribe({
       next: (res: any) => {
-        res.statusCode == "200" ? this.villageArr = res.responseData : this.villageArr = [];
+        res.statusCode == 200 ? this.villageArr = res.responseData : this.villageArr = [];
         this.editFlag ? (this.f['villageId'].setValue(this.data.villageId), this.getSchoolType()) : '';
       },
       error: ((err: any) => { this.errors.handelError(err) })
@@ -132,7 +131,7 @@ export class AddUpdateSchoolRegistrationComponent {
   getSchoolType() {
     this.masterService.getAllSchoolType(this.webStorageS.languageFlag).subscribe({
       next: (res: any) => {
-        res.statusCode == "200" ? this.schoolTypeArr = res.responseData : this.schoolTypeArr = [];
+        res.statusCode == 200 ? this.schoolTypeArr = res.responseData : this.schoolTypeArr = [];
         this.editFlag ? (this.f['s_TypeId'].setValue(this.data.s_TypeId), this.getCategoryDes()) : '';
       },
       error: ((err: any) => { this.errors.handelError(err) })
@@ -142,7 +141,7 @@ export class AddUpdateSchoolRegistrationComponent {
   getCategoryDes() {
     this.masterService.GetSchoolCategoryDescById(this.webStorageS.languageFlag).subscribe({
       next: (res: any) => {
-        res.statusCode == "200" ? this.categoryArr = res.responseData : this.categoryArr = [];
+        res.statusCode == 200 ? this.categoryArr = res.responseData : this.categoryArr = [];
         this.editFlag ? (this.f['s_CategoryId'].setValue(this.data.s_CategoryId), this.getSchoolMngDesc()) : '';
       },
       error: ((err: any) => { this.errors.handelError(err) })
@@ -152,7 +151,7 @@ export class AddUpdateSchoolRegistrationComponent {
   getSchoolMngDesc() {
     this.masterService.GetSchoolMngDescById(this.webStorageS.languageFlag).subscribe({
       next: (res: any) => {
-        res.statusCode == "200" ? this.schoolMngArr = res.responseData : this.schoolMngArr = [];
+        res.statusCode == 200 ? this.schoolMngArr = res.responseData : this.schoolMngArr = [];
         this.editFlag ? (this.f['s_ManagementId'].setValue(this.data.s_ManagementId), this.getGroupClass()) : '';
       },
       error: ((err: any) => { this.errors.handelError(err) })
@@ -162,7 +161,7 @@ export class AddUpdateSchoolRegistrationComponent {
   getGroupClass() {
     this.masterService.getAllGroupClass(this.webStorageS.languageFlag).subscribe({
       next: (res: any) => {
-        res.statusCode == "200" ? this.groupclassArr = res.responseData : this.groupclassArr = [];
+        res.statusCode == 200 ? this.groupclassArr = res.responseData : this.groupclassArr = [];
         this.editFlag ? this.f['g_ClassId'].setValue(this.data.g_ClassId) : '';
       },
       error: ((err: any) => { this.errors.handelError(err) })
@@ -172,10 +171,10 @@ export class AddUpdateSchoolRegistrationComponent {
 
   //#region ------------------------------------------------- Upload Image start here --------------------------------------------// 
   imgUpload(event: any) {
+
     this.fileUpload.uploadDocuments(event, 'Upload', 'jpg, jpeg, png').subscribe((res: any) => {
-      if (res.statusCode == "200") {
+      if (res.statusCode == 200) {
         this.uploadImg = res.responseData;
-        this.showAddRemImg = true;
       }
       else {
         return
@@ -186,7 +185,7 @@ export class AddUpdateSchoolRegistrationComponent {
   viewImg() {
     if (this.editFlag == true) {
       let viewImg = this.data.uploadImage;
-      window.open(viewImg, 'blank');
+      this.uploadImg ? window.open(this.uploadImg, 'blank') : window.open(viewImg, 'blank')
     }
     else {
       window.open(this.uploadImg, 'blank');
@@ -198,7 +197,7 @@ export class AddUpdateSchoolRegistrationComponent {
   onSubmit() {
     let formValue = this.schoolRegForm.value;
     formValue.uploadImage ? formValue.uploadImage = this.uploadImg : '';
-    !this.showAddRemImg ? formValue.uploadImage = '' : formValue.uploadImage = formValue.uploadImage;
+    !this.uploadImg ? formValue.uploadImage = '' : formValue.uploadImage = formValue.uploadImage;
 
     let url;
     this.editFlag ? url = 'ZP-Osmanabad/School/Update' : url = 'ZP-Osmanabad/School/Add';
@@ -212,7 +211,7 @@ export class AddUpdateSchoolRegistrationComponent {
       this.apiService.getHttp().subscribe({
         next: (res: any) => {
           this.ngxSpinner.hide();
-          if (res.statusCode == "200") {
+          if (res.statusCode == 200) {
             this.editFlag ? this.commonMethod.snackBar("Record Update Successfully", 0) : this.commonMethod.snackBar("Record Added Successfully", 0);
             this.dialogRef.close('yes');
           }
@@ -231,20 +230,17 @@ export class AddUpdateSchoolRegistrationComponent {
 
   //#region ------------------------------------------------- Edit Record start here --------------------------------------------//
   onEdit() {
-    debugger
     this.editFlag = true;
     this.data.uploadImage ? this.schoolRegForm.value.uploadImage = this.data.uploadImage : '';
-    this.data.uploadImage ? this.showAddRemImg = true : this.showAddRemImg = false;
     this.uploadImg = this.data?.uploadImage
-    // this.formFeild();
   }
   //#endregiongion ---------------------------------------------- Edit Record end here --------------------------------------------//
 
   //#region ------------------------------------------------- Clear Img field start here --------------------------------------------//
   clearImg() {
+    this.uploadImg = '';
     this.schoolRegForm.value.uploadImage = '';
     this.f['uploadImage'].setValue('');
-    this.showAddRemImg = false;
   }
   //#endregionegion --------------------------------------------- Clear Img field end here --------------------------------------------//
 

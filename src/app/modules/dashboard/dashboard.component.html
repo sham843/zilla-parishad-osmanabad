@@ -46,7 +46,7 @@
                 <div class="position-relative">
                     <img src="assets/images/statistical-icons/School-white.svg" class="bg-image">
                     <p>School</p>
-                    <h3>7,500</h3>
+                    <h3>{{this.dashboardCountData?.schoolCount}}</h3>
                 </div>
                 <div class="right-img">
                     <img src="assets/images/statistical-icons/School.svg">
@@ -60,7 +60,7 @@
                 <div class="position-relative">
                     <img src="assets/images/statistical-icons/Teacher-white.svg" class="bg-image">
                     <p>Teachers</p>
-                    <h3>4,500</h3>
+                    <h3>{{this.dashboardCountData?.teacherCount}}</h3>
                 </div>
                 <div class="right-img">
                     <img src="assets/images/statistical-icons/Teacher.svg">
@@ -74,7 +74,7 @@
                 <div class="position-relative">
                     <img src="assets/images/statistical-icons/Student-white.svg" class="bg-image">
                     <p>Students</p>
-                    <h3>7,500</h3>
+                    <h3>{{this.dashboardCountData?.studentCount}}</h3>
                 </div>
                 <div class="right-img">
                     <img src="assets/images/statistical-icons/Student.svg">
@@ -88,7 +88,7 @@
                 <div class="position-relative">
                     <img src="assets/images/statistical-icons/ZP-Officer-white.svg" class="bg-image">
                     <p>ZP Officers</p>
-                    <h3>7,500</h3>
+                    <h3>{{this.dashboardCountData?.zpOfficerCount}}</h3>
                 </div>
                 <div class="right-img">
                     <img src="assets/images/statistical-icons/ZP-Officer.svg">
@@ -129,44 +129,79 @@
                     <div>निवडलेली संख्या : <span class="fw-bold">15,533</span></div>
                 </div>
             </mat-card-header>
-            
+
             <mat-card-content class="card-body">
                 <div class="row">
-                    <div class="col-sm-4">
-                        <apx-chart
-                        [series]="barchartOptions.series[0]"
-                        [chart]="barchartOptions.chart"
-                        [dataLabels]="barchartOptions.dataLabels"
-                        [plotOptions]="barchartOptions.plotOptions"
-                        [responsive]="barchartOptions.responsive"
-                        [xaxis]="barchartOptions.xaxis"
-                        [legend]="barchartOptions.legend"
-                        [fill]="barchartOptions.fill"
-                      ></apx-chart>
+                    <div class="col-sm-12">
+                        <table class="table inner-table mb-3">
+                            <thead>
+                                <tr>
+                                    <th>एकूण संख्या</th>
+                                    <th>
+                                        <div class="d-flex align-items-center justify-content-start">
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" value=""
+                                                    id="flexCheckDefault">
+                                                <label class="form-check-label" for="flexCheckDefault">
+                                                    १ली ते 2री
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </th>
+                                    <th>
+                                        <div class="d-flex align-items-center justify-content-start">
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" value=""
+                                                    id="flexCheckDefault">
+                                                <label class="form-check-label" for="flexCheckDefault">
+                                                    3री ते ५वी
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </th>
+                                    <th>
+                                        <div class="d-flex align-items-center justify-content-start">
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" value=""
+                                                    id="flexCheckDefault">
+                                                <label class="form-check-label" for="flexCheckDefault">
+                                                    ६वी ते ८वी
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>1</td>
+                                    <td>Mark</td>
+                                    <td>Otto</td>
+                                    <td>@mdo</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="col-sm-4 border-end">
+                        <h6 class="small fw-bold text-center mb-0">मराठी भाषा स्तर</h6>
+                        <apx-chart [series]="barchartOptions.series[0]" [chart]="barchartOptions.chart"
+                            [dataLabels]="barchartOptions.dataLabels" [plotOptions]="barchartOptions.plotOptions"
+                            [responsive]="barchartOptions.responsive" [xaxis]="barchartOptions.xaxis"
+                            [legend]="barchartOptions.legend" [fill]="barchartOptions.fill"></apx-chart>
+                    </div>
+                    <div class="col-sm-4 border-end">
+                        <h6 class="small fw-bold text-center mb-0">गणित स्तर निवडा</h6>
+                        <apx-chart [series]="barchartOptions.series[1]" [chart]="barchartOptions.chart"
+                            [dataLabels]="barchartOptions.dataLabels" [plotOptions]="barchartOptions.plotOptions"
+                            [responsive]="barchartOptions.responsive" [xaxis]="barchartOptions.xaxis"
+                            [legend]="barchartOptions.legend" [fill]="barchartOptions.fill"></apx-chart>
                     </div>
                     <div class="col-sm-4">
-                        <apx-chart
-                        [series]="barchartOptions.series[1]"
-                        [chart]="barchartOptions.chart"
-                        [dataLabels]="barchartOptions.dataLabels"
-                        [plotOptions]="barchartOptions.plotOptions"
-                        [responsive]="barchartOptions.responsive"
-                        [xaxis]="barchartOptions.xaxis"
-                        [legend]="barchartOptions.legend"
-                        [fill]="barchartOptions.fill"
-                      ></apx-chart>
-                    </div>
-                    <div class="col-sm-4">
-                        <apx-chart
-                        [series]="barchartOptions.series[2]"
-                        [chart]="barchartOptions.chart"
-                        [dataLabels]="barchartOptions.dataLabels"
-                        [plotOptions]="barchartOptions.plotOptions"
-                        [responsive]="barchartOptions.responsive"
-                        [xaxis]="barchartOptions.xaxis"
-                        [legend]="barchartOptions.legend"
-                        [fill]="barchartOptions.fill"
-                      ></apx-chart>
+                        <h6 class="small fw-bold text-center mb-0">इंग्रजी स्तर निवडा</h6>
+                        <apx-chart [series]="barchartOptions.series[2]" [chart]="barchartOptions.chart"
+                            [dataLabels]="barchartOptions.dataLabels" [plotOptions]="barchartOptions.plotOptions"
+                            [responsive]="barchartOptions.responsive" [xaxis]="barchartOptions.xaxis"
+                            [legend]="barchartOptions.legend" [fill]="barchartOptions.fill"></apx-chart>
                     </div>
                 </div>
             </mat-card-content>
@@ -206,14 +241,14 @@
                             </mat-select>
                         </mat-form-field> -->
                     </div>
-                        
+
                 </div>
             </mat-card-header>
             <mat-card-content class="card-body">
                 <apx-chart [series]="barchartOptions.series[3]" [chart]="barchartOptions.chart"
                     [dataLabels]="barchartOptions.dataLabels" [plotOptions]="barchartOptions.plotOptions"
-                    [responsive]="barchartOptions.responsive" [xaxis]="barchartOptions.xaxis" [legend]="barchartOptions.legend"
-                    [fill]="barchartOptions.fill"></apx-chart>
+                    [responsive]="barchartOptions.responsive" [xaxis]="barchartOptions.xaxis"
+                    [legend]="barchartOptions.legend" [fill]="barchartOptions.fill"></apx-chart>
             </mat-card-content>
         </mat-card>]
     </div>
