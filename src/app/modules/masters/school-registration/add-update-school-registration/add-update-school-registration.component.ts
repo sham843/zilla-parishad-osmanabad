@@ -80,16 +80,18 @@ export class AddUpdateSchoolRegistrationComponent {
       "modifiedBy": data.modifiedBy,
       "modifiedDate": data.modifiedDate,
       "isDeleted": data.isDeleted
-    })
+    })  
+    this.data ? this.onEdit():''  
+   
   }
 
   //#region ---------------------------------------------- School Registration Dropdown start here ----------------------------------------// 
   getDistrict() {
     this.masterService.getAllDistrict(this.webStorageS.languageFlag).subscribe({
       next: (res: any) => {
-        res.statusCode == "200" ? this.districtArr = res.responseData : this.districtArr = [];
+        res.statusCode == "200" ? (this.districtArr = res.responseData,  this.schoolRegForm.controls['districtId'].setValue(1)) : this.districtArr = [];
         this.getTaluka();
-        // this.schoolRegForm.controls['districtId'].setValue(this.districtArr[0].id); 
+       
 
         this.editFlag ? (this.f['districtId'].setValue(this.data.districtId), this.getTaluka()) : '';
       },
@@ -229,10 +231,12 @@ export class AddUpdateSchoolRegistrationComponent {
 
   //#region ------------------------------------------------- Edit Record start here --------------------------------------------//
   onEdit() {
+    debugger
     this.editFlag = true;
     this.data.uploadImage ? this.schoolRegForm.value.uploadImage = this.data.uploadImage : '';
     this.data.uploadImage ? this.showAddRemImg = true : this.showAddRemImg = false;
-    this.formFeild();
+    this.uploadImg = this.data?.uploadImage
+    // this.formFeild();
   }
   //#endregiongion ---------------------------------------------- Edit Record end here --------------------------------------------//
 

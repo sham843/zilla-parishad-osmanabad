@@ -132,7 +132,7 @@ export class AddUpdateTeacherRegistrationComponent {
         "interDistrictTransferred": true,
         "dateOFPresenceInterDistrictTransfer": [this.data ? this.data.teacherDetails.dateOFPresenceInterDistrictTransfer : ''],
         "interDistrictTransferType": 0,
-        "theOriginalDistrictInterDistrictTransfer":0,
+        "theOriginalDistrictInterDistrictTransfer":[this.data ? this.data.teacherDetails.theOriginalDistrictInterDistrictTransfer : ''],
         "dateOfSeniority": [this.data ? this.data.teacherDetails.dateOfSeniority : ''],
         "haveYouPassedComputerExam": true,
         "namesAndTalukasAllSchoolsWorkedEarlier": [this.data ? this.data.teacherDetails.namesAndTalukasAllSchoolsWorkedEarlier : '']
@@ -213,10 +213,10 @@ export class AddUpdateTeacherRegistrationComponent {
   }
 
   getVillage() {
-    let talukaId = this.teacherRegForm.value.talukaId
+    // let talukaId = this.teacherRegForm.value.talukaId
     // console.log("fgdfg",talukaId);
     
-    this.masterService.getAllVillage('EN', talukaId).subscribe({
+    this.masterService.getAllVillage('EN', 1).subscribe({
       next: ((res: any) => {
         if (res.statusCode == '200' && res.responseData.length) {
           this.villageArray = res.responseData;
@@ -229,9 +229,9 @@ export class AddUpdateTeacherRegistrationComponent {
     })
   }
   getAllSchool() {
-    let talukaId = this.teacherRegForm.value.talukaId;
-    let villageId =this.teacherRegForm.value.villageId;
-    this.masterService.getAllSchoolByCriteria('EN', talukaId, villageId, 0).subscribe({
+    // let talukaId = this.teacherRegForm.value.talukaId;
+    // let villageId =this.teacherRegForm.value.villageId;
+    this.masterService.getAllSchoolByCriteria('EN', 1, 1, 0).subscribe({
       next: ((res: any) => {
         if (res.statusCode == '200' && res.responseData.length) {
           this.schoolArray = res.responseData;
