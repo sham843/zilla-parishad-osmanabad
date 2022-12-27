@@ -3,7 +3,7 @@
     <mat-card-header class="card-header">
         <div class="d-flex align-items-center justify-content-between w-100">
             <h6 class="text-main mb-0">
-                Register Office Users</h6>
+                {{'Labels.registerOfficeUsers' | translate}}</h6>
             <button mat-icon-button mat-dialog-close class="btn-modal-close">
                 <mat-icon>
                     close
@@ -47,7 +47,6 @@
                         <mat-option [value]="centr.id" *ngFor="let centr of centers">{{webStorageService.languageFlag =='mr-IN' ? centr.m_Center : centr.center}}</mat-option>
                     </mat-select>
                     <mat-error *ngIf="fc['centerId'].hasError('required')">{{'Labels.kendraRequired' | translate}}</mat-error>
-
                 </mat-form-field>
             </div>
            
@@ -98,12 +97,16 @@
                     <mat-form-field appearance="outline" class="w-100">
                         <mat-label>{{'Labels.contactBeo' | translate}}</mat-label>
                         <input matInput formControlName="beoMobileNo">
+                    <mat-error *ngIf="fc['beoMobileNo'].hasError('required')">{{'Labels.mobileIsRequired' | translate}}</mat-error>
+                    <mat-error *ngIf="fc['beoMobileNo'].hasError('pattern')">{{'Labels.pleaseEnterValidMobileNumber' | translate}}</mat-error>
                     </mat-form-field>
                 </div>
                 <div class="col-sm-4">
                     <mat-form-field appearance="outline" class="w-100">
                         <mat-label>Email ID(BEO Office)</mat-label>
                         <input matInput formControlName="beoEmailId">
+                    <mat-error *ngIf="fc['beoEmailId'].hasError('required')">{{'Labels.emailIdIsRequired' | translate}}</mat-error>
+                    <mat-error *ngIf="fc['beoEmailId'].hasError('pattern')">{{'Labels.pleaseEnterValidEmailId' | translate}}</mat-error>
                     </mat-form-field>
                 </div>
             </ng-container>
@@ -113,12 +116,16 @@
                     <mat-form-field appearance="outline" class="w-100">
                         <mat-label>Contact No.(Kendra)</mat-label>
                         <input matInput  formControlName="kendraMobileNo">
+                    <mat-error *ngIf="fc['kendraMobileNo'].hasError('required')">{{'Labels.mobileIsRequired' | translate}}</mat-error>
+                    <mat-error *ngIf="fc['kendraMobileNo'].hasError('pattern')">{{'Labels.pleaseEnterValidMobileNumber' | translate}}</mat-error>
                     </mat-form-field>
                 </div>
                 <div class="col-sm-4">
                     <mat-form-field appearance="outline" class="w-100">
                         <mat-label>Email ID(kendra)</mat-label>
                         <input matInput  formControlName="kendraEmailId">
+                        <mat-error *ngIf="fc['kendraEmailId'].hasError('required')">{{'Labels.emailIdIsRequired' | translate}}</mat-error>
+                        <mat-error *ngIf="fc['kendraEmailId'].hasError('pattern')">{{'Labels.pleaseEnterValidEmailId' | translate}}</mat-error>
                     </mat-form-field>
                 </div>
             </ng-container>
@@ -165,6 +172,7 @@
                         <mat-label>{{'Labels.emailID' | translate}}</mat-label>
                         <input matInput formControlName="emailId">
                         <mat-error *ngIf="fc['emailId'].hasError('required')">{{'Labels.emailIdIsRequired' | translate}}</mat-error>
+                        <mat-error *ngIf="fc['emailId'].hasError('pattern')">{{'Labels.pleaseEnterValidEmailId' | translate}}</mat-error>
                     </mat-form-field>
                 </div>
         </div>
