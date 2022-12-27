@@ -46,7 +46,7 @@
         "SelectDesignation": "Select Designation",
         "RegisterDesignation":"Register Designation",
         "DesignationLevel":"Designation Level",
-        "DesignationLevelReq":"Designation Level Required",
+        "DesignationLevelReq":"Designation Level Is Required",
         "DesignationType":"DesignationType",
         "DesignationTypeReq":"Designation Type Is Required",
         "AddDesignation(Marathi)":"Add Designation (Marathi)",
@@ -143,7 +143,10 @@
         "mobileIsRequired" : "Mobile Number Is Required",
         "nameMarathi" : "Name In (Marathi)",
         "studentReg" : "Student Registraion",
-        "studentUpdate": "Update Student"
+        "studentUpdate": "Update Student",
+        "levelRequired" : "Level Is Required",
+        "uploadImg" : "Please Upload Image"
+
         
 
         

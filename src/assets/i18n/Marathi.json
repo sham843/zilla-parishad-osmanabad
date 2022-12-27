@@ -112,7 +112,7 @@
         "addUser" : "युजरची माहिती भरा",
         "searchByName" : "नावा द्वारे शोधा",
         "registerOfficeUsers" : "ऑफिस युजरची नोंदणी",
-        "level" : "पातळी",
+        "level" : "स्तर",
         "designation" : "पद (अधिकारी)",
         "name" : "ऑफिस युजरचे नाव",
         "mobileNo" : "मोबाईल नंबर",
@@ -141,6 +141,8 @@
         "nameMarathi" :"नाव (मराठी)",
         "contactBeo" : "संपर्क क्रमांक (BEO कार्यालय)",
         "studentReg" : "विद्यार्थी नोंदणी",
-        "studentUpdate" : "विद्यार्थी अद्यतनित करा"
+        "studentUpdate" : "विद्यार्थी अद्यतनित करा",
+        "levelRequired" : "स्तर आवश्यक आहे",
+        "uploadImg" :"कृपया प्रतिमा अपलोड करा"
     }
 }

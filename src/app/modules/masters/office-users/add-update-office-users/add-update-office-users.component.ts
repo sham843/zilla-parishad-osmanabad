@@ -55,7 +55,7 @@ export class AddUpdateOfficeUsersComponent implements OnInit {
         "emailId": [this.data ? this.data.emailId :"", [Validators.required, Validators.pattern(this.validation.email)]],
         "address": [this.data ? this.data.address:"",[Validators.required,Validators.maxLength(500)]],
         "schoolId": [this.data ? this.data.schoolId:0, Validators.required],
-        "designationId": [this.data ? this.data.designationId : 0,  Validators.required],
+        "designationId": [this.data ? this.data.designationId : '',  Validators.required],
         "designationLevelId": [this.data ? this.data.designationLevelId : "",  Validators.required],
         "stateId": [this.data ? this.data.stateId: 0],
         "districtId": [this.data ? this.data.districtId: 0,  Validators.required],
@@ -66,7 +66,7 @@ export class AddUpdateOfficeUsersComponent implements OnInit {
         "kendraEmailId": [this.data ? this.data.kendraEmailId:"", [Validators.required, Validators.pattern(this.validation.email)]],
         "beoEmailId": [this.data ? this.data.beoEmailId:"" , [Validators.required, Validators.pattern(this.validation.email)]],
         "beoMobileNo": [this.data ? this.data.beoMobileNo:"",[Validators.required, Validators.pattern(this.validation.mobile_No)]],  
-        "centerId": [this.data ? this.data.centerId:0, Validators.required],
+        "centerId": [this.data ? this.data.centerId:'', Validators.required],
         "bitName": [this.data ? this.data.bitName:"",[Validators.required, Validators.pattern(this.validation.fullName)]],
         "lan": [this.webStorageService.languageFlag]
     })
