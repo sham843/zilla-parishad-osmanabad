@@ -53,9 +53,7 @@ export class AddUpdateStudentRegistrationComponent {
   ngOnInit() {
     this.languageFlag = this.webService.languageFlag;
     this.formData();
-    this.data ? (this.editObj = this.data, this.patchValue()) : (
-      this.allDropdownMethods()
-    )
+    this.data ? (this.editObj = this.data, this.patchValue()) : this.allDropdownMethods();    
   }
 
   allDropdownMethods() {
