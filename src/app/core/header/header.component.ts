@@ -3,6 +3,7 @@ import { Component, HostBinding } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
+import { ChangePasswordComponent } from 'src/app/shared/components/change-password/change-password.component';
 import { GlobalDialogComponent } from 'src/app/shared/components/global-dialog/global-dialog.component';
 import { MyProfileComponent } from 'src/app/shared/components/my-profile/my-profile.component';
 import { WebStorageService } from '../services/web-storage.service';
@@ -74,5 +75,9 @@ export class HeaderComponent {
     this.dialog.open(MyProfileComponent,{
       width: '500px',
     });
+  }
+
+  openChangePasswordDialog() {
+    this.dialog.open(ChangePasswordComponent);
   }
 }
