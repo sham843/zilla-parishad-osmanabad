@@ -16,7 +16,8 @@
                 <div class="col-sm">
                     <mat-form-field appearance="outline" class="w-100">
                         <mat-label>{{'Labels.district' | translate}}</mat-label>
-                        <mat-select formControlName="districtId" [disabled]="schoolRegForm.value.districtId == 1">
+                        <mat-select formControlName="districtId" >
+                            <!-- [disabled]="schoolRegForm.value.districtId" -->
                             <mat-option *ngFor="let district of districtArr" value="{{district.id}}">
                                 {{webStorageS.getLangauge() == 'EN' ?
                                 district.district : district.m_District}}
@@ -65,8 +66,7 @@
                 <div class="col-sm">
                     <mat-form-field appearance="outline" class="w-100 ">
                         <mat-label>{{'Labels.village' | translate}}</mat-label>
-                        <mat-select formControlName="villageId"
-                            (selectionChange)="clearDropdown('Village');">
+                        <mat-select formControlName="villageId">
                             <mat-option *ngFor="let village of villageArr" [value]="village.id">
                                 {{webStorageS.getLangauge() == 'EN' ?
                                 village.village : village.m_Village}}
@@ -98,8 +98,7 @@
                 <div class="col-sm">
                     <mat-form-field appearance="outline" class="w-100">
                         <mat-label>{{'Labels.schoolTypeDescription' | translate}}</mat-label>
-                        <mat-select formControlName="s_TypeId"
-                            (selectionChange)="clearDropdown('School Type');">
+                        <mat-select formControlName="s_TypeId">
                             <mat-option *ngFor="let schoolType of schoolTypeArr" [value]="schoolType.id">
                                 {{webStorageS.getLangauge() == 'EN' ?
                                 schoolType.schoolType : schoolType.m_SchoolType}}
@@ -113,8 +112,7 @@
                 <div class="col-sm">
                     <mat-form-field appearance="outline" class="w-100">
                         <mat-label>{{'Labels.schoolCategoryDescription' | translate}}</mat-label>
-                        <mat-select formControlName="s_CategoryId"
-                            (selectionChange)="clearDropdown('Category Desc');">
+                        <mat-select formControlName="s_CategoryId">
                             <mat-option *ngFor="let category of categoryArr" [value]="category.id">
                                 {{webStorageS.getLangauge() == 'EN' ?
                                 category.category_desc : category.m_Category_desc}}
@@ -129,8 +127,7 @@
                 <div class="col-sm">
                     <mat-form-field appearance="outline" class="w-100">
                         <mat-label>{{'Labels.schoolManagementDescription' | translate}}</mat-label>
-                        <mat-select formControlName="s_ManagementId"
-                            (selectionChange)="clearDropdown('Management Desc');">
+                        <mat-select formControlName="s_ManagementId">
                             <mat-option *ngFor="let schoolMng of schoolMngArr" [value]="schoolMng.id">
                                 {{webStorageS.getLangauge() == 'EN' ?
                                 schoolMng.management_desc : schoolMng.m_Management_desc}}
