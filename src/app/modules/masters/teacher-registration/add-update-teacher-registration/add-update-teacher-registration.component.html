@@ -452,11 +452,19 @@
                 <div class="col-sm-6">
                     <div>
                     <div>
+                       
+                        
                         <!-- <div formArrayName="assignTeacher"
                     *ngFor="let item of teacherForm.controls;let i = index;">
                     <div [formGroupName]="i"> -->
                     <mat-card-subtitle>Assigned Class</mat-card-subtitle>
-                    <div class="teacherForm">
+                    <div class="teacherForm" *ngFor="let assign of newAsssignClassArray">
+                        <!-- <div > -->
+                            <input type="checkbox" name="check" id="{{assign.standardId}}" [checked]="assign.checked" (change)="addStand($event,assign.standardId)"/>
+                            <label for="{{assign.standardId}}">{{assign.standardId}}</label>
+                        <!-- </div> -->
+                    </div>
+                    <!-- <div class="teacherForm">
                         <input type="checkbox" name="check" id="check1"  (change)="addStand($event, 1)"/>
                         <label for="check1">1</label>
                         <input type="checkbox" name="check" id="check2" (change)="addStand($event, 2)" />
@@ -473,7 +481,7 @@
                         <label for="check7">7</label>
                         <input type="checkbox" name="check" id="check8" (change)="addStand($event, 8)" />
                         <label for="check8">8</label>
-                        </div>
+                        </div> -->
                 </div>
                 </div>
                 </div>

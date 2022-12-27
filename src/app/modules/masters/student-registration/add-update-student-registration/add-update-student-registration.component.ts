@@ -53,9 +53,7 @@ export class AddUpdateStudentRegistrationComponent {
   ngOnInit() {
     this.languageFlag = this.webService.languageFlag;
     this.formData();
-    this.data ? (this.editObj = this.data, this.patchValue()) : (
-      this.allDropdownMethods()
-    )
+    this.data ? (this.editObj = this.data, this.patchValue()) : this.allDropdownMethods();    
   }
 
   allDropdownMethods() {
@@ -264,8 +262,8 @@ export class AddUpdateStudentRegistrationComponent {
     this.stuRegistrationForm.controls['aadharPhoto'].setValue(this.uploadAadhar?.split('/').pop());
     this.allDropdownMethods();
   }
-
   //#region  ----------------------------------------------- Submit logic Start here ------------------------------------------------
+ 
   onSubmit() {
     this.ngxSpinner.show();
     let obj = this.stuRegistrationForm.value;

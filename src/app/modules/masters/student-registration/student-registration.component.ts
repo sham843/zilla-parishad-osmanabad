@@ -30,8 +30,8 @@ export class StudentRegistrationComponent {
 
   displayedColumns = ['docPath', 'srNo', 'fullName', 'standard', 'parentMobileNo', 'gender', 'action'];
   marathiDisplayedColumns = ['docPath', 'srNo', 'm_FullName', 'm_Standard', 'parentMobileNo', 'm_Gender', 'action'];
-  displayedheaders = ['#', 'Sr No.', 'Name', 'Standard', 'Parents Contact No.', 'Gender', 'action'];
-  marathiDisplayedheaders = ['#', 'अनुक्रमांक', 'नाव', 'वर्ग', 'पालक संपर्क क्र', 'लिंग', 'कृती'];
+  displayedheaders = ['#', 'Sr. No.', 'Name', 'Standard', 'Parents Contact No.', 'Gender', 'action'];
+  marathiDisplayedheaders = ['#', 'अनुक्रमांक', 'नाव', 'वर्ग', 'पालक संपर्क क्र.', 'लिंग', 'कृती'];
   constructor(
     private dialog: MatDialog,
     private apiService: ApiService,
