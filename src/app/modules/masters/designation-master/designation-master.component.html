@@ -8,7 +8,7 @@
 <mat-card class="plain-card">
     <mat-card-header class="card-header">
         <div class="d-flex fw-bold justify-content-between align-items-center w-100 flex-wrap">
-            <span class="text-main mb-2">{{'Labels.DesignationMaster' | translate}}</span>
+            <span class="text-main mb-0">{{'Labels.DesignationMaster' | translate}}</span>
             <div class="d-flex gap-2">
                 <button mat-flat-button class="btn-main btn-icon" [matMenuTriggerFor]="menu">
                     <mat-icon>
@@ -37,9 +37,9 @@
             </div>
         </div>
     </mat-card-header>
-    <mat-card-header class="card-header mb-0 pb-0">
-       <div class="row gx-2 mt-2">
-        <div class="col-sm-auto">
+    <mat-card-header class="card-header mb-0 pb-0 border-bottom-0">
+       <div class="row gx-2 w-100">
+        <div class="col-sm-3">
             <!-- <mat-form-field appearance="outline" class="w-100">
                 <mat-label>{{'Labels.SelectDesignation'| translate}}</mat-label>
                 <mat-select [formControl]="searchContent">
@@ -59,7 +59,7 @@
         </div>
        </div>
     </mat-card-header>
-    <mat-card-content class="card-body">
+    <mat-card-content class="card-body pt-0">
         <app-table (recObjToChild)="childCompInfo($event)"></app-table>
     </mat-card-content>
 </mat-card>
