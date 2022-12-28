@@ -35,7 +35,6 @@ export class AddUpdateOfficeUsersComponent implements OnInit {
   ngOnInit(){
     this.defaultForm();
     console.log("dataaa",this.data);
-    
     (!this.data) ? (this.getLevelDrop(), this.getTalukaDrop(), this.getDistrictDrop()): '';
   }
 
@@ -87,7 +86,7 @@ export class AddUpdateOfficeUsersComponent implements OnInit {
       error: ( error : any)=>{
         console.log("error is :", error);  
       }
-    }) 
+    });
   }
 
   onchangeLevel(event: any){
@@ -170,6 +169,12 @@ export class AddUpdateOfficeUsersComponent implements OnInit {
         this.commonService.checkEmptyData(error.status) == false ? this.error.handelError(error.status) : this.commonService.snackBar(error.status, 1);
       })
     });
+  }
+
+  onchangeValidation(event: any){
+    if(event == 1){
+
+    }
   }
 
 
