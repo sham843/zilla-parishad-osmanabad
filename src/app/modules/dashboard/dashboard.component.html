@@ -126,7 +126,7 @@
             <mat-card-header class="card-header">
                 <div class="d-flex align-items-center justify-content-between w-100">
                     <div>सर्वेक्षण केलेल्या विद्यार्थ्यांची एकूण संख्या</div>
-                    <div>निवडलेली संख्या : <span class="fw-bold">15,533</span></div>
+                    <div>निवडलेली संख्या : <span class="fw-bold">{{selectedObj?.GroupId==1? dashboardCountData[0]?.totalStudent_1_2: selectedObj?.GroupId==2? dashboardCountData[0]?.totalStudent_3_5 :dashboardCountData[0]?.totalStudent_6_8}}</span></div>
                 </div>
             </mat-card-header>
 
@@ -151,40 +151,6 @@
                                             </div>
                                         </div>
                                     </th>
-                                    <!-- <th>एकूण संख्या</th>
-                                    <th>
-                                        <div class="d-flex align-items-center justify-content-start">
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="checkbox" value=""
-                                                    id="flexCheckDefault">
-                                                <label class="form-check-label" for="flexCheckDefault">
-                                                    १ली ते 2री
-                                                </label>
-                                            </div>
-                                        </div>
-                                    </th>
-                                    <th>
-                                        <div class="d-flex align-items-center justify-content-start">
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="checkbox" value=""
-                                                    id="flexCheckDefault">
-                                                <label class="form-check-label" for="flexCheckDefault">
-                                                    3री ते ५वी
-                                                </label>
-                                            </div>
-                                        </div>
-                                    </th>
-                                    <th>
-                                        <div class="d-flex align-items-center justify-content-start">
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="checkbox" value=""
-                                                    id="flexCheckDefault">
-                                                <label class="form-check-label" for="flexCheckDefault">
-                                                    ६वी ते ८वी
-                                                </label>
-                                            </div>
-                                        </div>
-                                    </th> -->
                                 </tr>
                             </thead>
                             <tbody>
@@ -198,8 +164,8 @@
                         </table>
                     </div>
                     <div class="row" *ngIf="showBarChartF">
-                        <div class="col-sm-4 border-end" *ngFor="let bar of barchartOptions.series[0]">
-                            <h6 class="small fw-bold text-center mb-0">मराठी भाषा स्तर</h6>
+                        <div class="col-sm border-end" *ngFor="let bar of barchartOptions.series[0]; let i=index">
+                            <h6 class="small fw-bold text-center mb-0">{{this.barchartOptions.xaxis.categories[i]}} स्तर</h6>
                             <apx-chart [series]="bar" [chart]="barchartOptions.chart"
                                 [dataLabels]="barchartOptions.dataLabels" [plotOptions]="barchartOptions.plotOptions"
                                 [responsive]="barchartOptions.responsive" [xaxis]="barchartOptions.xaxis"
@@ -232,31 +198,43 @@
             <mat-card-header class="card-header">
                 <div class="d-flex align-items-center flex-wrap justify-content-between w-100">
                     <div class="mb-3">तालुका निहाय मूल्यांकन</div>
+                    <form [formGroup]="filterFormForBarGraph">
+                        <div class="row">
+                            <div class="col-sm-4" *ngIf="!f['talukaId'].value">
+                                <mat-form-field appearance="outline" class="w-100">
+                                    <mat-label>तालुका निवडा</mat-label>
+                                    <mat-select formControlName="filtertalukaId">
+                                        <mat-option *ngFor="let taluka of talukaData" [value]="taluka.id">
+                                            {{webStorage.languageFlag == 'EN'?taluka.taluka:taluka.m_Taluka}}
+                                        </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+                            <div class="col-sm-4" *ngIf="f['talukaId'].value || fBgraph['filtertalukaId'].value">
+                                <mat-form-field appearance="outline" class="w-100">
+                                    <mat-label>केंद्र निवडा</mat-label>
+                                    <mat-select formControlName="filtercenterId">
+                                        <mat-option *ngFor="let center of centerData" [value]="center.id">
+                                            {{webStorage.languageFlag == 'EN'?center.center:center.m_Center}}
+                                        </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+                            <div class="col-sm-4">
+                                <mat-form-field appearance="outline" class="w-100">
+                                    <mat-label>Subject</mat-label>
+                                    <mat-select formControlName="filtersubjectId">
+                                        <mat-option *ngFor="let subject of subjectData" [value]="subject.id ">
+                                            {{webStorage.languageFlag == 'EN'?subject.subject :subject.m_Subject }}
+                                        </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                    </form>
                     <div class="d-flex align-items-center justify-content-between flex-wrap flex-sm-nowrap gap-2">
-                        <mat-form-field appearance="outline" class="w-100">
-                            <mat-label>केंद्र निवडा</mat-label>
-                            <mat-select>
-                                <mat-option *ngFor="let center of centerData" [value]="center.id">
-                                    {{this.webStorage.languageFlag == 'EN'?center.center:center.m_Center}}
-                                </mat-option>
-                            </mat-select>
-                        </mat-form-field>
-                        <!-- <mat-form-field appearance="outline" class="w-100">
-                            <mat-label>कामगिरी</mat-label>
-                            <mat-select>
-                                <mat-option *ngFor="let food of foods" [value]="food.value">
-                                    {{food.viewValue}}
-                                </mat-option>
-                            </mat-select>
-                        </mat-form-field>
-                        <mat-form-field appearance="outline" class="w-100">
-                            <mat-label>भाषा निवडा</mat-label>
-                            <mat-select>
-                                <mat-option *ngFor="let food of foods" [value]="food.value">
-                                    {{food.viewValue}}
-                                </mat-option>
-                            </mat-select>
-                        </mat-form-field> -->
+                        
+                 
                     </div>
 
                 </div>
@@ -267,6 +245,6 @@
                     [responsive]="barchartOptions.responsive" [xaxis]="barchartOptions.xaxis"
                     [legend]="barchartOptions.legend" [fill]="barchartOptions.fill"></apx-chart> -->
             </mat-card-content>
-        </mat-card>]
+        </mat-card>
     </div>
 </div>
