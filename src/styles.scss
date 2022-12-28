@@ -256,11 +256,11 @@ body {
   font-family: "Poppins", sans-serif !important;
 }
 .card-height-full{
-  height:81vh;
+  max-height:81vh;
   overflow-y: auto;
 }
 .card-height-mid {
-  height: 74vh;
+  max-height: 74vh;
   overflow-y: auto;
 }
 .scrollbar {
