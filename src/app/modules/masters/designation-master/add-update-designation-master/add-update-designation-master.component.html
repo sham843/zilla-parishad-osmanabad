@@ -32,7 +32,7 @@
                             <mat-label>{{'Labels.AddDesignation' | translate}}</mat-label>
                             <input matInput formControlName="designationType"
                                 maxlength="30"
-                                (keypress)="validation.noFirstSpaceAllow($event);validation.onlyAlphabets($event)">
+                                (keypress)="validation.noFirstSpaceAllow($event)">
                             <mat-error
                                 *ngIf="f['designationType'].hasError('required') || f['designationType'].hasError('touched')">
                                 {{'Labels.DesignationTypeReq' | translate}}</mat-error>
