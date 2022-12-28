@@ -8,72 +8,53 @@
 
 <mat-card class="plain-card">
   <mat-card-header class="card-header">
-    <div class="row w-100 align-items-center">
-      <div class="col-sm-8">
-       <div class="text-main fw-bold mb-2">
+    <div class="d-flex w-100 align-items-center justify-content-between">
+      <div class="text-main fw-bold mb-2 mb-lg-0">
         {{'Labels.officeUser' | translate}}
-       </div>
       </div>
-       <div class="col-sm-4 text-lg-end">
-         <button mat-flat-button class="btn-main btn-icon" [matMenuTriggerFor]="menu">
-           <mat-icon>
-             download
-           </mat-icon>
-         </button>
-         <mat-menu #menu="matMenu" xPosition="before">
-           <button mat-menu-item (click)="downloadPdf()">
-             <div class="d-flex align-items-center justify-content-between w-100">
-               <span>PDF</span>
-               <i class='bx bxs-file-pdf text-danger'></i>
-             </div>
-           </button>
-           <!-- <button mat-menu-item>
-             <div class="d-flex align-items-center justify-content-between w-100">
-               <span>Excel</span>
-               <i class='bx bxs-file text-primary'></i>
-             </div>
-           </button> -->
-         </mat-menu>
-         <button mat-flat-button class="btn-main ms-2" (click)="addUpdateOffice()">
-           <mat-icon>
-             add
-           </mat-icon>
-           {{'Labels.addUser' | translate}}
-         </button>
-       </div>
-     </div>
+      <div class="d-flex gap-2">
+        <button mat-flat-button class="btn-main btn-icon" title="Table View">
+          <mat-icon>
+            table_view
+          </mat-icon>
+        </button>
+
+        <button mat-flat-button class="btn-second btn-icon" title="Card View">
+          <mat-icon>
+            grid_view
+          </mat-icon>
+        </button>
+
+        <button mat-flat-button class="bg-danger btn-icon text-white" title="Download as PDF" (click)="downloadPdf()">
+          <mat-icon>
+            description
+          </mat-icon>
+        </button>
+        <button mat-flat-button class="btn-main" (click)="addUpdateOffice()">
+          <mat-icon>
+            add
+          </mat-icon>
+          {{'Labels.addUser' | translate}}
+        </button>
+      </div>
+    </div>
   </mat-card-header>
-  <mat-card-header class="card-header mb-0 pb-0">
+  <mat-card-header class="card-header mb-0 pb-0 border-bottom-0">
     <div class="row w-100 gx-2">
-      <div class="col-sm-auto">
+      <div class="col-sm-3">
         <mat-form-field appearance="outline" class="w-100">
           <mat-label>{{'Labels.searchByName' | translate}}</mat-label>
           <input matInput [formControl]="searchContent">
-
         </mat-form-field>
       </div>
-      <!-- <div class="col-sm-3">
-        <mat-form-field appearance="outline" class="w-100">
-          <mat-label>Search by Contact</mat-label>
-          <input matInput placeholder="Search by Contact">
-
-        </mat-form-field>
-      </div> -->
-      <!-- <div class="col-sm-3">
-        <mat-form-field appearance="outline" class="w-100">
-          <mat-label>Search by Email</mat-label>
-          <input matInput placeholder="Search by Email">
-        </mat-form-field>
-      </div> -->
-
-      <div class="col-sm-4 mb-1">
+       <div class="col-sm-auto">
         <button mat-flat-button class="btn-main" (click)="filterData()">{{'Labels.filter' | translate}}</button>
-        <button  mat-flat-button class="btn-second ms-2" (click)="clearFilterData()">{{'Labels.clear' | translate}}</button>
-    </div>
-
+        <button mat-flat-button class="btn-second ms-2" (click)="clearFilterData()">{{'Labels.clear' |
+          translate}}</button>
+      </div>
     </div>
   </mat-card-header>
-  <mat-card-content class="card-body">
+  <mat-card-content class="card-body pt-0">
     <app-table (recObjToChild)="childCompInfo($event)"></app-table>
   </mat-card-content>
 </mat-card>

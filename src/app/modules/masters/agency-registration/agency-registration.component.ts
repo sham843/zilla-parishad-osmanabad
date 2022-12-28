@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
+import { NgxSpinnerService } from 'ngx-spinner';
 import { ApiService } from 'src/app/core/services/api.service';
 import { CommonMethodsService } from 'src/app/core/services/common-methods.service';
 import { DownloadPdfExcelService } from 'src/app/core/services/download-pdf-excel.service';
@@ -27,7 +28,8 @@ export class AgencyRegistrationComponent {
   displayedheadersMarathi = ['अनुक्रमांक', 'नाव', 'संपर्क क्र.', 'ई - मेल आयडी', 'कृती'];
   langTypeName: any;
 
-  constructor(private dialog: MatDialog, private apiService: ApiService, private webStroageService: WebStorageService, private downloadPdfservice: DownloadPdfExcelService,
+  constructor(private dialog: MatDialog, private apiService: ApiService,  private ngxSpinner: NgxSpinnerService,
+     private webStroageService: WebStorageService, private downloadPdfservice: DownloadPdfExcelService,
     private errors: ErrorsService, private fb: FormBuilder, private common: CommonMethodsService, public validation: ValidationService,
   ) { }
 
@@ -59,15 +61,17 @@ export class AgencyRegistrationComponent {
   }
 
   getTableData(flag?: string) {
+    this.ngxSpinner.show();
     this.pageNumber = flag == 'filter' ? 1 : this.pageNumber;
-    flag == 'filter' ? this.agencyReport = [] : ''
+    flag == 'filter' ? this.agencyReport = [] : '';
     let obj = this.filterForm.value;
     let str = `pageno=${this.pageNumber}&pagesize=10&&TextSearch=${obj.searchText}&lan=${this.webStroageService.languageFlag}`;
     let reportStr = `TextSearch=${obj.searchText}`
-    this.apiService.setHttp('GET', 'zp-osmanabad/Agency/GetAll?' + (flag == 'reportFlag' ? reportStr : str), false, false, false, 'baseUrl');
+    this.apiService.setHttp('GET', 'zp-osmanabad/Agency/GetAll?' + ( flag =='pdfDownload' ? reportStr : str ), false, false, false, 'baseUrl');
     this.apiService.getHttp().subscribe({
       next: (res: any) => {
         if (res.statusCode == "200") {
+          this.ngxSpinner.hide();
           this.agencyReport = [];
           this.tableDataArray = res.responseData.responseData1;
           this.tableDatasize = res.responseData.responseData2.pageCount;
@@ -82,6 +86,7 @@ export class AgencyRegistrationComponent {
             this.agencyReport.push(obj);
           });
         } else {
+          this.ngxSpinner.hide();
           this.tableDataArray = [];
           this.tableDatasize = 0;
         }
@@ -106,7 +111,7 @@ export class AgencyRegistrationComponent {
 
   downloadPdf() {
     if(this.agencyReport.length){
-    this.getTableData('reportFlag')
+    this.getTableData('pdfDownload')
     let keyPDFHeader = ['SrNo', "Name", "Contact No.", "Email Id"];
     let ValueData =
       this.agencyReport.reduce(

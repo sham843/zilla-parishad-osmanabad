@@ -162,7 +162,7 @@ export class AddUpdateTeacherRegistrationComponent {
   }
 
   addStand(stand: any, value: number) {
-    console.log("value",value);
+    console.log("value",value, stand);
     
     this.assignclass=true;
     console.log(stand.currentTarget.checked);
@@ -178,14 +178,35 @@ export class AddUpdateTeacherRegistrationComponent {
       this.assignClassArray.push(data);
     }
     else {
-      let index = this.assignClassArray.indexOf(value);
-      if (index > -1) {
-        this.assignClassArray.splice(index, 1);
-      }
+      //  this.assignClassArray = this.editObj.assignTeacher
+      
+      console.log("array",this.editObj.assignTeacher);
+      // console.log("index",index);
+     let findObj= this.assignClassArray.find((ele: any)=>{
+       return ele.standardId === value
+      })
+       console.log("delete this",findObj);
+    
+       this.assignClassArray.splice(findObj)
+       console.log(this.assignClassArray);
+       
+      // let index = this.editObj.assignTeacher.indexOf(findIndex);
+
+    //  let  index = this.assignClassArray.findIndex((x: any) => x.standardId === value);
+    //   console.log("delete this",index);
+
+      
+
+     
+      
+      
+      // if (index > -1) {
+      //   this.editObj.assignTeacher.splice(index, 1);
+      // }
       // return this.assignClassArray;
     }
       
-    console.log("assignClassArray",this.assignClassArray);
+    // console.log("assignClassArray",this.editObj.assignTeacher);
   }
 
 
@@ -641,16 +662,11 @@ export class AddUpdateTeacherRegistrationComponent {
   }
 
   OnSubmit() {
-    console.log(this.teacherRegForm.value);
+    // console.log(this.teacherRegForm.value);
     let formValue = this.teacherRegForm.value;
-
     formValue.uploadImage ? formValue.uploadImage = this.uploadImg : '';
     !this.showAddRemImg ? formValue.uploadImage = '' : formValue.uploadImage = formValue.uploadImage;
-
-  formValue.assignTeacher = this.assignClassArray ;
-    
-    
-    
+    formValue.assignTeacher = this.assignClassArray;
     let postObj = this.teacherRegForm.value;
     console.log(postObj);
     let url;
@@ -678,7 +694,6 @@ export class AddUpdateTeacherRegistrationComponent {
     console.log("editObj", this.editObj);
     this.data.uploadImage ? this.teacherRegForm.value.uploadImage = obj.uploadImage : '';
     this.data.uploadImage ? this.showAddRemImg = true : this.showAddRemImg = false;
-
     this.assignClassArray = obj.assignTeacher;
 
      for(let i=0; i<this.newAsssignClassArray.length;i++){
