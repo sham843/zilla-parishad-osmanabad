@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
+import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -7,6 +8,7 @@ import { ActivatedRoute } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ApiService } from 'src/app/core/services/api.service';
 import { ErrorsService } from 'src/app/core/services/errors.service';
+import { ValidationService } from 'src/app/core/services/validation.service';
 import { WebStorageService } from 'src/app/core/services/web-storage.service';
 import { StudentDetailsComponent } from 'src/app/modules/masters/student-registration/student-details/student-details.component';
 import { TableComponent } from '../table/table.component';
@@ -22,7 +24,9 @@ import { TableComponent } from '../table/table.component';
     MatCardModule,
     MatInputModule,
     TableComponent,
-    StudentDetailsComponent
+    StudentDetailsComponent,
+    FormsModule,
+    ReactiveFormsModule
   ]
 })
 export class GlobalDetailsComponent {
@@ -32,7 +36,8 @@ export class GlobalDetailsComponent {
   tableDatasize!: Number;
   languageFlag!: string;
   editStudentId:any;
-  currentItem:any
+  currentItem:any;
+  searchContent = new FormControl('');
 
   displayedColumns = ['docPath', 'srNo', 'fullName', 'Status'];
   marathiDisplayedColumns = ['docPath', 'srNo', 'm_FullName', 'Status' ];
@@ -47,6 +52,7 @@ export class GlobalDetailsComponent {
     private webService: WebStorageService,
     private errors: ErrorsService,
     private route: ActivatedRoute,
+    public validators: ValidationService
 
   ){}
   ngOnInit(){
@@ -78,9 +84,10 @@ export class GlobalDetailsComponent {
   }
 
 
-  getTableData() {
-    this.ngxSpinner.show();   
-    let str = `?pageno=${this.pageNumber}&pagesize=10&textSearch=${''}&lan=${this.languageFlag || ''}`;
+  getTableData(flag?:any) {
+    this.ngxSpinner.show(); 
+   this.pageNumber =  flag == 'filter' ? 1 : this.pageNumber 
+    let str = `?pageno=${this.pageNumber}&pagesize=10&textSearch=${this.searchContent.value || ''}&lan=${this.languageFlag || ''}`;
     
     this.apiService.setHttp('GET', 'zp-osmanabad/Student/GetAll' +  str, false, false, false, 'baseUrl');
     this.apiService.getHttp().subscribe({
@@ -92,13 +99,7 @@ export class GlobalDetailsComponent {
           this.tableDataArray.map((res: any) => {
             res.docPath = res.documentResponse[0]?.docPath
           }) 
-          let obj =  this.tableDataArray.find((res:any) => res.id == this.editStudentId)
-          if(obj){
-            this.currentItem = obj;
-          }else{
-            this.pageNumber = this.pageNumber+1;
-            this. getTableData();
-          }
+          this.currentItem =  this.tableDataArray[0]
           
         } else {
           this.ngxSpinner.hide();
@@ -134,22 +135,8 @@ export class GlobalDetailsComponent {
     }
   }
 
-  // addUpdateAgency(obj?: any) {
-  //   console.log(obj);
-  //   const dialogRef = this.dialog.open(AddUpdateStudentRegistrationComponent, {
-  //     width: '900px',
-  //     height: '650px',
-  //     data: obj,
-  //     disableClose: true,
-  //     autoFocus: false
-  //   });
-  //   dialogRef.afterClosed().subscribe((result: any) => {
-  //     if (result == 'yes' && obj) {
-  //       this.pageNumber = obj.pageNumber;
-  //     } else if (result == 'yes') {
-  //       this.pageNumber = 1;
-  //     }
-  //     this.getTableData();
-  //   });
-  // }
+  clearForm() {
+    this.searchContent.setValue('');
+    this.getTableData();
+  } 
 }

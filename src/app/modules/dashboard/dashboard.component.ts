@@ -61,12 +61,12 @@ export class DashboardComponent implements OnInit,AfterViewInit {
     })
   }
   getCenters() {
-    this.masterService.getAllCenter().subscribe((res: any) => {
+    this.masterService.getAllCenter('', (this.f['talukaId'].value|0)).subscribe((res: any) => {
       this.centerData = res.responseData;
     })
   }
   getschools() {
-    this.masterService.getAllSchoolType().subscribe((res: any) => {
+    this.masterService.getAllSchoolsByCenterId('', (this.f['centerId'].value|0)).subscribe((res: any) => {
       this.schoolData = res.responseData;
     })
   }
@@ -267,23 +267,27 @@ export class DashboardComponent implements OnInit,AfterViewInit {
            })
            this.barchartOptions.series.push(dataArray);
            this.barchartOptions.xaxis.categories=subjectSet;
-           console.log(this.barchartOptions)
             this.showBarChartF=true;
           } 
        
        },
       error: (error:any) => { this.error.handelError(error.message) }
     });
+    this.getbarChartByTaluka();
   }
 
   getbarChartByTaluka(){
-    const formData= this.filterForm.value;
+    const filterformData= this.filterForm.value;
+    const formDatafilterbyTaluka= this.filterFormForBarGraph.value;
     this.barChartData=[];
-    this.apiService.setHttp('GET', 'zp-osmanabad/Dashboard/'+(this.selectedObj.GroupId==1?'GetDataFor1st2ndStd':'GetDataFor3rdAboveStdByTaluka')+'?TalukaId='+(formData?.talukaId ||0)+'&CenterId='+(formData?.centerId ||0)+'&SchoolId='+(formData?.schoolId ||0)+'&GroupId='+this.selectedObj?.GroupId, false, false, false, 'baseUrl');
+    const TalukaId= filterformData?.talukaId? filterformData?.talukaId :formDatafilterbyTaluka?.filtertalukaId;
+    const str= TalukaId?(this.selectedObj.GroupId==1?'GetDataFor1st2ndStdByTaluka':'GetDataFor3rdAboveStdByTaluka'):(this.selectedObj.GroupId==1?'GetDataFor1st2ndStdByCenter':'GetDataFor3rdAboveStdByCenter')
+    this.apiService.setHttp('GET', 'zp-osmanabad/Dashboard/'+str+'?TalukaId='+(TalukaId||0)+(!TalukaId?'&CenterId='+(filterformData?.centerId ||0):'')+'&GroupId='+this.selectedObj?.GroupId+ '&', false, false, false, 'baseUrl');
     this.apiService.getHttp().subscribe({
       next: (res: any) => { 
         if (res.statusCode == "200") {
           this.barChartByTalukaData=res.responseData.responseData1;
+          console.log(this.barChartByTalukaData)
             this.showBarChartF=true;
           } 
        },

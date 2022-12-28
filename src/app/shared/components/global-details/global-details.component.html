@@ -4,7 +4,7 @@
       <!-- <li class="breadcrumb-item active" aria-current="page">Agency Registration</li> -->
     </ol>
   </nav>
-<div class="row w-100">
+<!-- <div class="row w-100">
     <div class="col-sm-3">
         <mat-form-field appearance="outline" class="w-100">
             <mat-label>विद्यार्थी नाव</mat-label>
@@ -23,7 +23,20 @@
             <input matInput formControlName="">
         </mat-form-field>
     </div>
-</div>
+</div> -->
+<div class="row w-100 ">
+    <div class="col-sm-3">
+      <mat-form-field appearance="outline" class="w-100">
+        <mat-label>Search By Name Contact No</mat-label>
+        <input matInput [formControl]="searchContent" (keypress)="validators.noFirstSpaceAllow($event)">
+      </mat-form-field>
+    </div>
+    <div class="col-sm-auto">
+      <button mat-flat-button class="btn-main" (click)="getTableData('filter')">filter</button>
+      <button mat-flat-button class="btn-second ms-2" (click)="clearForm()" >clear</button>
+    </div>
+
+  </div>
 <mat-card class="plain-card h-100">
     <mat-card-content>
         <div class="row">
