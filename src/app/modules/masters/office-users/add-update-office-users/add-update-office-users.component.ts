@@ -186,7 +186,68 @@ export class AddUpdateOfficeUsersComponent implements OnInit {
 
       this.fc['kendraEmailId'].clearValidators();
       this.fc['kendraEmailId'].updateValueAndValidity();
+
+      this.fc['beoMobileNo'].clearValidators();
+      this.fc['beoMobileNo'].updateValueAndValidity();
+
+      this.fc['beoEmailId'].clearValidators();
+      this.fc['beoEmailId'].updateValueAndValidity();
+
+      this.fc['bitName'].clearValidators();
+      this.fc['bitName'].updateValueAndValidity();
     }
+    else if(event == 5  && label == 'Level'){
+      this.fc['designationId'].clearValidators();
+      this.fc['designationId'].updateValueAndValidity();
+
+      this.fc['centerId'].clearValidators();
+      this.fc['centerId'].updateValueAndValidity();
+
+      this.fc['schoolId'].clearValidators();
+      this.fc['schoolId'].updateValueAndValidity();
+
+      this.fc['kendraMobileNo'].clearValidators();
+      this.fc['kendraMobileNo'].updateValueAndValidity();
+
+      this.fc['kendraEmailId'].clearValidators();
+      this.fc['kendraEmailId'].updateValueAndValidity();
+
+      this.fc['beoMobileNo'].clearValidators();
+      this.fc['beoMobileNo'].updateValueAndValidity();
+
+      this.fc['beoEmailId'].clearValidators();
+      this.fc['beoEmailId'].updateValueAndValidity();
+    }
+
+    else if(event == 6 || event == 7  && label == 'Level'){
+      this.fc['designationId'].clearValidators();
+      this.fc['designationId'].updateValueAndValidity();
+
+      this.fc['districtId'].clearValidators();
+      this.fc['districtId'].updateValueAndValidity();
+
+      this.fc['talukaId'].clearValidators();
+      this.fc['talukaId'].updateValueAndValidity();
+
+      this.fc['centerId'].clearValidators();
+      this.fc['centerId'].updateValueAndValidity();
+
+      this.fc['schoolId'].clearValidators();
+      this.fc['schoolId'].updateValueAndValidity();
+
+      this.fc['kendraMobileNo'].clearValidators();
+      this.fc['kendraMobileNo'].updateValueAndValidity();
+
+      this.fc['kendraEmailId'].clearValidators();
+      this.fc['kendraEmailId'].updateValueAndValidity();
+
+      this.fc['beoMobileNo'].clearValidators();
+      this.fc['beoMobileNo'].updateValueAndValidity();
+
+      this.fc['beoEmailId'].clearValidators();
+      this.fc['beoEmailId'].updateValueAndValidity();
+    }
+
     else if(event == 17 && label == 'Designation'){
       this.fc['centerId'].clearValidators();
       this.fc['centerId'].updateValueAndValidity();
@@ -199,6 +260,47 @@ export class AddUpdateOfficeUsersComponent implements OnInit {
 
       this.fc['kendraEmailId'].clearValidators();
       this.fc['kendraEmailId'].updateValueAndValidity();
+
+      this.fc['bitName'].clearValidators();
+      this.fc['bitName'].updateValueAndValidity();
+    }
+    else if(event == 20 && label == 'Designation'){
+      this.fc['centerId'].clearValidators();
+      this.fc['centerId'].updateValueAndValidity();
+
+      this.fc['schoolId'].clearValidators();
+      this.fc['schoolId'].updateValueAndValidity();
+
+      this.fc['beoMobileNo'].clearValidators();
+      this.fc['beoMobileNo'].updateValueAndValidity();
+
+      this.fc['beoEmailId'].clearValidators();
+      this.fc['beoEmailId'].updateValueAndValidity();
+
+      this.fc['bitName'].clearValidators();
+      this.fc['bitName'].updateValueAndValidity();
+    }
+    else if(event == 18 || event == 19 || event == 21 && label == 'Designation'){
+      this.fc['centerId'].clearValidators();
+      this.fc['centerId'].updateValueAndValidity();
+
+      this.fc['schoolId'].clearValidators();
+      this.fc['schoolId'].updateValueAndValidity();
+
+      this.fc['beoMobileNo'].clearValidators();
+      this.fc['beoMobileNo'].updateValueAndValidity();
+
+      this.fc['beoEmailId'].clearValidators();
+      this.fc['beoEmailId'].updateValueAndValidity();
+
+      this.fc['kendraMobileNo'].clearValidators();
+      this.fc['kendraMobileNo'].updateValueAndValidity();
+
+      this.fc['kendraEmailId'].clearValidators();
+      this.fc['kendraEmailId'].updateValueAndValidity();
+
+      this.fc['bitName'].clearValidators();
+      this.fc['bitName'].updateValueAndValidity();
     }
     
   }
