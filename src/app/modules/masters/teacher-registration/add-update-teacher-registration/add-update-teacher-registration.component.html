@@ -161,7 +161,7 @@
                             [value]="school.id">{{school.schoolName}}</mat-option>
                             <!-- <mat-option value="two">Bsc</mat-option> -->
                         </mat-select>
-                        <!-- <mat-error *ngIf="f['schoolId'].hasError('required')">School Is Required</mat-error> -->
+                        <mat-error *ngIf="td['schoolId'].hasError('required')">School Is Required</mat-error>
                     </mat-form-field>
                 </div>
                 <div class="col-sm-4">

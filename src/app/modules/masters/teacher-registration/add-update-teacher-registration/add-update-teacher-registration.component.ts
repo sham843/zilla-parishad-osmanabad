@@ -72,6 +72,12 @@ export class AddUpdateTeacherRegistrationComponent {
     return this.teacherRegForm.controls;
   }
 
+  get td(){
+    // return this.teacherRegForm.get('teacherDetails') as FormGroup .controls;
+    return ((this.teacherRegForm.get('teacherDetails') as FormGroup).controls)
+
+  }
+
   // get teacherForm() {
   //   return this.teacherRegForm.get('teacherDetails') as object;
   // }
