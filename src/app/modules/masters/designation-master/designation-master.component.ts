@@ -88,8 +88,10 @@ getDesiganationType() {
     this.pageNumber =   flag == 'filter'? 1 :this.pageNumber;
     // let tableDataArray = new Array();
     // let tableDatasize!: Number; 
-    let str = `Id=${this.searchContent.value?this.searchContent.value:0}&pageno=${this.pageNumber}&pagesize=10&lan=${this.webStorage.languageFlag}`;
-    this.apiService.setHttp('GET', 'zp_osmanabad/designation-master/GetAll?' + str, false, false, false, 'baseUrl');
+   
+    let str = `pageno=${this.pageNumber}&pagesize=10&textSearch=${this.searchContent.value ? this.searchContent.value:''}&lan=${this.webStorage.languageFlag}`;
+    // let str = `Id=${this.searchContent.value?this.searchContent.value:0}&pageno=${this.pageNumber}&pagesize=10&lan=${this.webStorage.languageFlag}`;
+    this.apiService.setHttp('GET', 'zp_osmanabad/designation-master/GetAllByCriteria?' + str, false, false, false, 'baseUrl');
     this.apiService.getHttp().subscribe({
 
       next: (res: any) => {
@@ -191,8 +193,10 @@ getDesiganationType() {
   }
 
   getofficeReport(){
-    let str = `Id=${this.searchContent.value?this.searchContent.value:0}&lan=${this.webStorage.languageFlag}`;
-    this.apiService.setHttp('GET', 'zp_osmanabad/designation-master/GetAll?' + str, false, false, false, 'baseUrl');
+    let str = `pageno=${this.pageNumber}&pagesize=10&textSearch=${this.searchContent.value ? this.searchContent.value:''}&lan=${this.webStorage.languageFlag}`;
+    this.apiService.setHttp('GET', 'zp_osmanabad/designation-master/GetAllByCriteria?' + str, false, false, false, 'baseUrl');
+    // let str = `Id=${this.searchContent.value?this.searchContent.value:0}&lan=${this.webStorage.languageFlag}`;
+    // this.apiService.setHttp('GET', 'zp_osmanabad/designation-master/GetAll?' + str, false, false, false, 'baseUrl');
     this.apiService.getHttp().subscribe({
       next: (res: any) => {
         if (res.statusCode == "200") {          

@@ -26,7 +26,7 @@
                 <div class="col-sm-4">
                     <mat-form-field appearance="outline" class="w-100 ">
                         <mat-label>{{'Labels.taluka'| translate}}</mat-label>
-                        <mat-select  formControlName="talukaId" (selectionChange)="getAllCenter()">
+                        <mat-select  formControlName="talukaId" (selectionChange)="clearDropdown('talukaId');getAllCenter()">
                             <mat-option *ngFor="let tal of talukaArr" [value]="tal.id">{{languageFlag == 'EN' ?
                                 tal.taluka:tal.m_Taluka }}</mat-option>
                         </mat-select>
@@ -36,7 +36,7 @@
                 <div class="col-sm-4">
                     <mat-form-field appearance="outline" class="w-100 ">
                         <mat-label>{{'Labels.kendra'| translate}}</mat-label>
-                        <mat-select  formControlName="centerId" (selectionChange)="getAllSchoolsByCenterId()">
+                        <mat-select  formControlName="centerId" (selectionChange)="clearDropdown('centerId');getAllSchoolsByCenterId()">
                             <mat-option *ngFor="let cen of centerArr" [value]="cen.id">{{languageFlag == 'EN'
                                 ?cen.center:cen.m_Center}}</mat-option>
                         </mat-select>
@@ -265,7 +265,7 @@
             <mat-card-actions align="end">
                 <button mat-stroked-button class="btn-second me-2" type="button" mat-dialog-close>{{'Labels.cancel'|
                     translate}}</button>
-                <button mat-stroked-button class="btn-main" (click)="onSubmit()">{{editFlag ? ('Labels.update'|
+                <button mat-stroked-button class="btn-main" (click)="onSubmit()">{{editObj ? ('Labels.update'|
                     translate):('Labels.submit'| translate)}}</button>
             </mat-card-actions>
         </mat-card-footer>
