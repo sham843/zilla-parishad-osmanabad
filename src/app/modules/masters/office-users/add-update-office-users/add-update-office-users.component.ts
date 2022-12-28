@@ -171,8 +171,10 @@ export class AddUpdateOfficeUsersComponent implements OnInit {
     });
   }
 
-  onchangeValidation(event: any){
-    if(event == 1){
+  onchangeValidation(event : any,label: string){
+    console.log("validation label, event : ", event, label);
+    
+    if(event == 1 || event == 2 && label == 'Level'){
       this.fc['centerId'].clearValidators();
       this.fc['centerId'].updateValueAndValidity();
 
@@ -185,22 +187,20 @@ export class AddUpdateOfficeUsersComponent implements OnInit {
       this.fc['kendraEmailId'].clearValidators();
       this.fc['kendraEmailId'].updateValueAndValidity();
     }
-    if(event == 2){
-      this.fc['centerId'].clearValidators();
-      this.fc['centerId'].updateValueAndValidity();
+    // else if(event == 17 && label == 'Designation'){
+    //   this.fc['centerId'].clearValidators();
+    //   this.fc['centerId'].updateValueAndValidity();
 
-      this.fc['schoolId'].clearValidators();
-      this.fc['schoolId'].updateValueAndValidity();
+    //   this.fc['schoolId'].clearValidators();
+    //   this.fc['schoolId'].updateValueAndValidity();
 
-      this.fc['kendraMobileNo'].clearValidators();
-      this.fc['kendraMobileNo'].updateValueAndValidity();
+    //   this.fc['kendraMobileNo'].clearValidators();
+    //   this.fc['kendraMobileNo'].updateValueAndValidity();
 
-      this.fc['kendraEmailId'].clearValidators();
-      this.fc['kendraEmailId'].updateValueAndValidity();
-    }
+    //   this.fc['kendraEmailId'].clearValidators();
+    //   this.fc['kendraEmailId'].updateValueAndValidity();
+    // }
+    
   }
-
-
-
 
 }
