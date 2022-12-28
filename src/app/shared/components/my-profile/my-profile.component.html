@@ -2,23 +2,24 @@
     <mat-card-header class="card-header">
         <div class="d-flex align-items-center justify-content-between w-100">
             <h6 class="mb-0 text-main">My Profile</h6>
-            <button mat-icon-button mat-dialog-close class="btn-modal-close">
+            <button type="button" mat-icon-button mat-dialog-close class="btn-modal-close">
                 <mat-icon>
                     close
                 </mat-icon>
             </button>
         </div>
     </mat-card-header>
+    <form [formGroup]="userProfile" (ngSubmit)="onSubmit()">
     <mat-card-content class="card-body">
         <div class="text-center mb-3">
             <div class="upload-btn-wrapper">
-                <img src="assets/images/user.jpg" alt="profile-img" width="100" class="profile-image">
-                <input type="file" id="img-upload" />
+                <img src="{{uploadImg}}" alt="profile-img" width="100" class="profile-image">
+                <input type="file" id="img-upload" #uploadImage (change)="fileUpload($event)"/>
                 <div class="profile-buttons d-flex flex-column">
-                    <button type="button" class="btn bg-light text-primary">
+                    <button type="button" class="btn bg-light text-primary" (click)="uploadImage.click()">
                         <i class='bx bx-plus'></i>
                     </button>
-                    <button type="button" class="border border-0 btn bg-light text-danger">
+                    <button type="button" class="border border-0 btn bg-light text-danger" (click)="removeImg()">
                         <i class='bx bx-trash'></i>
                     </button>
                 </div>
@@ -27,40 +28,41 @@
         <div class="row">
             <div class="col-sm-6">
                 <mat-form-field appearance="outline" class="w-100">
-                    <mat-label>First Name</mat-label>
-                    <input matInput>
+                    <mat-label>Teacher Name</mat-label>
+                    <input matInput formControlName="name" readonly>
                 </mat-form-field>
             </div>
-            <div class="col-sm-6">
+            <!-- <div class="col-sm-6">
                 <mat-form-field appearance="outline" class="w-100">
                     <mat-label>Middle Name</mat-label>
-                    <input matInput>
+                    <input matInput formControlName="middleName">
                 </mat-form-field>
-            </div>
-            <div class="col-sm-6">
+            </div> -->
+            <!-- <div class="col-sm-6">
                 <mat-form-field appearance="outline" class="w-100">
                     <mat-label>Last Name</mat-label>
-                    <input matInput >
+                    <input matInput formControlName="lastName">
                 </mat-form-field>
-            </div>
+            </div> -->
             <div class="col-sm-6">
                 <mat-form-field appearance="outline" class="w-100">
                     <mat-label>Contact No.</mat-label>
-                    <input matInput>
+                    <input matInput formControlName="mobileNo">
                 </mat-form-field>
             </div>
             <div class="col-sm-6">
                 <mat-form-field appearance="outline" class="w-100">
                     <mat-label>Email ID</mat-label>
-                    <input matInput>
+                    <input matInput formControlName="emailId">
                 </mat-form-field>
             </div>
         </div>
     </mat-card-content>
     <mat-card-footer class="card-footer">
         <div class="d-flex w-100 justify-content-end align-items-center">
-            <button mat-dialog-close mat-flat-button class="btn-second me-2">Cancel</button>
-            <button mat-flat-button class="btn-main">Submit</button>
+            <button type="button" mat-dialog-close mat-flat-button class="btn-second me-2">Cancel</button>
+            <button type="submit" mat-flat-button class="btn-main">Update</button>
         </div>
     </mat-card-footer>
+   </form>
 </mat-card>
