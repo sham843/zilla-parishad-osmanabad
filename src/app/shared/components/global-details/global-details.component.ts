@@ -53,19 +53,33 @@ export class GlobalDetailsComponent {
     this.route.paramMap.subscribe((params) => {
       this.editStudentId = params.get('id');
     })
-    console.log();
-    
-    this.languageFlag = this.webService.languageFlag;
+    this.languageChange();
     this.getTableData();
   }
 
-
-  getTableData(flag?: string) {
-    this.ngxSpinner.show();
-    console.log(flag);
+  languageChange() {
+    this.webService.langNameOnChange.subscribe(lang => {
+      this.languageFlag = lang;  
+      this.setTableData();  
+    });
     
-    // this.pageNumber = flag == 'filter' ? 1 : this.pageNumber;
-   
+  }
+
+  setTableData(){
+    let tableData = {
+      pageNumber: this.pageNumber,
+      img: 'docPath', blink: '', badge: '', isBlock: '', pagintion: true,
+      displayedColumns: this.languageFlag == 'English' ? this.displayedColumns : this.marathiDisplayedColumns,
+      tableData: this.tableDataArray,
+      tableSize: this.tableDatasize,
+      tableHeaders: this.languageFlag == 'English' ? this.displayedheaders : this.marathiDisplayedheaders
+    };
+    this.apiService.tableData.next(tableData);
+  }
+
+
+  getTableData() {
+    this.ngxSpinner.show();   
     let str = `?pageno=${this.pageNumber}&pagesize=10&textSearch=${''}&lan=${this.languageFlag || ''}`;
     
     this.apiService.setHttp('GET', 'zp-osmanabad/Student/GetAll' +  str, false, false, false, 'baseUrl');
@@ -84,27 +98,22 @@ export class GlobalDetailsComponent {
           }else{
             this.pageNumber = this.pageNumber+1;
             this. getTableData();
-            
           }
+          
         } else {
           this.ngxSpinner.hide();
           this.tableDataArray = [];
           this.totalCount = 0;
         }
-
-        let tableData = {
-          pageNumber: this.pageNumber,
-          img: 'docPath', blink: true, badge: '', isBlock: '', pagintion: false,
-          displayedColumns: this.languageFlag == 'EN' ? this.displayedColumns : this.marathiDisplayedColumns,
-          tableData: this.tableDataArray,
-          tableSize: this.totalCount,
-          tableHeaders: this.languageFlag == 'EN' ? this.displayedheaders : this.marathiDisplayedheaders
-        };
-        this.apiService.tableData.next(tableData);
+        this.setTableData();
 
       },
       error: ((err: any) => { this.ngxSpinner.hide(); this.errors.handelError(err) })
     });
+  }
+
+  viewDetails(obj:any){
+    this.currentItem = obj
   }
    
   childTableCompInfo(obj: any) {
@@ -118,6 +127,9 @@ export class GlobalDetailsComponent {
         break;
       case 'Delete':
         // this.deteleDialogOpen(obj);
+        break;
+        case 'View':
+        this.viewDetails(obj);
         break;
     }
   }
