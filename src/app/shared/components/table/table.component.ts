@@ -12,6 +12,7 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { DashPipe } from 'src/app/core/pipes/dash.pipe';
 import { NumberTransformPipe } from 'src/app/core/pipes/number-tranform.pipe';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import {MatTooltipModule} from '@angular/material/tooltip';
 @Component({
   selector: 'app-table',
   templateUrl: './table.component.html',
@@ -28,7 +29,8 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
     MatMenuModule,
     DashPipe,
     NumberTransformPipe,
-    MatCheckboxModule
+    MatCheckboxModule,
+    MatTooltipModule
     ],
 
 })
