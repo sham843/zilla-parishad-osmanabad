@@ -62,9 +62,6 @@ export class AddUpdateStudentRegistrationComponent {
 
   allDropdownMethods() {
     this.getDistrict(),
-      this.getTaluka(),
-      this.getCenter(),
-      this.getSchool(),
       this.getGender(),
       this.getReligion(),
       this.getStandard()
@@ -110,6 +107,7 @@ export class AddUpdateStudentRegistrationComponent {
         if (res.statusCode == 200) {
           this.districtArr = res.responseData;
           this.stuRegistrationForm.controls['districtId'].setValue(1);
+          this.getTaluka();
         } else {
           this.commonMethods.checkEmptyData(res.statusMessage) == false ? this.errors.handelError(res.statusCode) : this.commonMethods.snackBar(res.statusMessage, 1);
           this.districtArr = [];
@@ -125,7 +123,7 @@ export class AddUpdateStudentRegistrationComponent {
       next: (res: any) => {
         if (res.statusCode == 200) {
           this.talukaArr = res.responseData;
-          this.editObj ? this.stuRegistrationForm.controls['talukaId'].setValue(this.editObj.talukaId) : '';
+          this.editObj ? (this.stuRegistrationForm.controls['talukaId'].setValue(this.editObj.talukaId), this.getAllCenter()) : '';
         } else {
           this.commonMethods.checkEmptyData(res.statusMessage) == false ? this.errors.handelError(res.statusCode) : this.commonMethods.snackBar(res.statusMessage, 1);
           this.talukaArr = [];
@@ -135,13 +133,14 @@ export class AddUpdateStudentRegistrationComponent {
     });
   }
 
-  getCenter() {
+  getAllCenter() {
     this.centerArr = [];
-    this.masterService.getAllCenter(this.languageFlag).subscribe({
+    let id = this.stuRegistrationForm.value.talukaId;
+    this.masterService.getAllCenter(this.languageFlag, id).subscribe({
       next: (res: any) => {
         if (res.statusCode == 200) {
           this.centerArr = res.responseData;
-          this.editObj ? this.stuRegistrationForm.controls['centerId'].setValue(this.editObj.centerId) : ''
+          this.editObj ? (this.stuRegistrationForm.controls['centerId'].setValue(this.editObj.centerId), this.getAllSchoolsByCenterId()) : ''
         } else {
           this.commonMethods.checkEmptyData(res.statusMessage) == false ? this.errors.handelError(res.statusCode) : this.commonMethods.snackBar(res.statusMessage, 1);
           this.centerArr = [];
@@ -151,9 +150,10 @@ export class AddUpdateStudentRegistrationComponent {
     });
   }
 
-  getSchool() {
+  getAllSchoolsByCenterId() {
     this.schoolArr = [];
-    this.masterService.getAllSchoolType(this.languageFlag).subscribe({
+    let id = this.stuRegistrationForm.value.centerId;
+    this.masterService.getAllSchoolsByCenterId(this.languageFlag, id).subscribe({
       next: (res: any) => {
         if (res.statusCode == 200) {
           this.schoolArr = res.responseData;
@@ -310,13 +310,13 @@ export class AddUpdateStudentRegistrationComponent {
       "documentModel": this.imageArray,
       "lan": this.languageFlag
     }
-    
+
     if (this.stuRegistrationForm.invalid) {
       this.ngxSpinner.hide();
-      if (!this.uploadImg) { this.imgFlag = true  } ;
+      if (!this.uploadImg) { this.imgFlag = true };
       if (!this.uploadAadhaar) { this.aadhaarFlag = true };
       return
-     } else {
+    } else {
       if (!this.uploadImg || !this.uploadAadhaar) {
         this.ngxSpinner.hide();
         if (!this.uploadImg) { this.imgFlag = true };

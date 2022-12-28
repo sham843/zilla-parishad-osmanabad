@@ -24,7 +24,7 @@ export class AgencyRegistrationComponent {
   tableData: any;
   tableDataArray = new Array();
   tableDatasize!: Number;
-  displayedheadersEnglish = ['Sr. No.', 'Name', 'Contact No.', 'Email ID', 'Action'];
+  displayedheadersEnglish = ['Sr.No.', 'Agency Name', 'Contact No.', 'Email ID', 'Action'];
   displayedheadersMarathi = ['अनुक्रमांक', 'नाव', 'संपर्क क्र.', 'ई - मेल आयडी', 'कृती'];
   langTypeName: any;
 

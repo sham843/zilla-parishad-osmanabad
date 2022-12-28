@@ -20,31 +20,27 @@
                             <mat-option *ngFor="let dist of districtArr" [value]="dist.id">{{languageFlag == 'EN' ?
                                 dist.district : dist.m_District}}</mat-option>
                         </mat-select>
-                        <mat-error *ngIf="fc['districtId'].hasError('required')">User Name Is Required</mat-error>
+                        <!-- <mat-error *ngIf="fc['districtId'].hasError('required')">User Name Is Required</mat-error> -->
                     </mat-form-field>
                 </div>
                 <div class="col-sm-4">
                     <mat-form-field appearance="outline" class="w-100 ">
                         <mat-label>{{'Labels.taluka'| translate}}</mat-label>
-                        <mat-select  formControlName="talukaId">
+                        <mat-select  formControlName="talukaId" (selectionChange)="getAllCenter()">
                             <mat-option *ngFor="let tal of talukaArr" [value]="tal.id">{{languageFlag == 'EN' ?
                                 tal.taluka:tal.m_Taluka }}</mat-option>
                         </mat-select>
-                        <mat-error *ngIf="fc['talukaId'].hasError('required')">
-                            {{'Labels.pleaseSelectTaluka'| translate }}
-                        </mat-error>
+                        <!-- <mat-error *ngIf="fc['talukaId'].hasError('required')"> {{'Labels.pleaseSelectTaluka'| translate }} </mat-error> -->
                     </mat-form-field>
                 </div>
                 <div class="col-sm-4">
                     <mat-form-field appearance="outline" class="w-100 ">
                         <mat-label>{{'Labels.kendra'| translate}}</mat-label>
-                        <mat-select  formControlName="centerId">
+                        <mat-select  formControlName="centerId" (selectionChange)="getAllSchoolsByCenterId()">
                             <mat-option *ngFor="let cen of centerArr" [value]="cen.id">{{languageFlag == 'EN'
                                 ?cen.center:cen.m_Center}}</mat-option>
                         </mat-select>
-                        <mat-error *ngIf="fc['centerId'].hasError('required')">
-                            {{'Labels.pleaseSelectCenter'| translate }}
-                        </mat-error>
+                        <!-- <mat-error *ngIf="fc['centerId'].hasError('required')">{{'Labels.pleaseSelectCenter'| translate }} </mat-error> -->
                     </mat-form-field>
                 </div>
                 <div class="col-sm-4">
@@ -52,35 +48,30 @@
                         <mat-label>{{'Labels.schoolList'| translate}}</mat-label>
                         <mat-select  formControlName="schoolId">
                             <mat-option *ngFor="let sch of schoolArr" [value]="sch.id">{{languageFlag == 'EN' ?
-                                sch.schoolType:sch. m_SchoolType}}</mat-option>
+                                sch.schoolName:sch. m_SchoolName}}</mat-option>
                         </mat-select>
-                        <mat-error *ngIf="fc['schoolId'].hasError('required')">
-                            {{'Labels.pleaseSelectSchool'| translate }}
-                        </mat-error>
+                        <!-- <mat-error *ngIf="fc['schoolId'].hasError('required')">  {{'Labels.pleaseSelectSchool'| translate }} </mat-error> -->
                     </mat-form-field>
                 </div>
                 <div class="col-sm-4">
                     <mat-form-field appearance="outline" class="w-100">
                         <mat-label>{{'Labels.studentFirstName'| translate}}</mat-label>
                         <input matInput formControlName="fName" (keypress)="validators.onlyAlphabets($event)">
-                        <mat-error *ngIf="fc['fName'].hasError('required')">{{'Labels.enterStudentFirstName'|
-                            translate}}</mat-error>
+                        <!-- <mat-error *ngIf="fc['fName'].hasError('required')">{{'Labels.enterStudentFirstName'| translate}}</mat-error> -->
                     </mat-form-field>
                 </div>
                 <div class="col-sm-4">
                     <mat-form-field appearance="outline" class="w-100">
                         <mat-label>{{'Labels.studentMiddelName'| translate}}</mat-label>
                         <input matInput formControlName="mName" (keypress)="validators.onlyAlphabets($event)">
-                        <mat-error *ngIf="fc['mName'].hasError('required')">{{'Labels.enterStudentMiddelName'|
-                            translate}}</mat-error>
+                        <!-- <mat-error *ngIf="fc['mName'].hasError('required')">{{'Labels.enterStudentMiddelName'|  translate}}</mat-error> -->
                     </mat-form-field>
                 </div>
                 <div class="col-sm-4">
                     <mat-form-field appearance="outline" class="w-100">
                         <mat-label>{{'Labels.studentLastName'| translate}}</mat-label>
                         <input matInput formControlName="lName" (keypress)="validators.onlyAlphabets($event)">
-                        <mat-error *ngIf="fc['lName'].hasError('required')">{{'Labels.enterStudentLastName'|
-                            translate}}</mat-error>
+                        <!-- <mat-error *ngIf="fc['lName'].hasError('required')">{{'Labels.enterStudentLastName'| translate}}</mat-error> -->
                     </mat-form-field>
                 </div>
                 <div class="col-sm-4">
@@ -89,8 +80,8 @@
                         <input matInput formControlName="f_MName"
                             (keypress)="validators.unicodeMarathiValidation($event)"
                             (keypress)="validators.noSpaceAllow($event)">
-                        <mat-error *ngIf="fc['f_MName'].hasError('required')">{{'Labels.enterStudentFirstName'|
-                            translate}}</mat-error>
+                        <!-- <mat-error *ngIf="fc['f_MName'].hasError('required')">{{'Labels.enterStudentFirstName'|
+                            translate}}</mat-error> -->
                     </mat-form-field>
                 </div>
                 <div class="col-sm-4">
@@ -98,8 +89,8 @@
                         <mat-label>{{'Labels.studentMiddelNameMarathi'| translate}}</mat-label>
                         <input matInput formControlName="m_MName" (keypress)="validators.unicodeMarathiValidation($event)"
                         (keypress)="validators.noSpaceAllow($event)">
-                        <mat-error *ngIf="fc['m_MName'].hasError('required')">{{'Labels.enterStudentMiddelName'|
-                            translate}}</mat-error>
+                        <!-- <mat-error *ngIf="fc['m_MName'].hasError('required')">{{'Labels.enterStudentMiddelName'|
+                            translate}}</mat-error> -->
                     </mat-form-field>
                 </div>
                 <div class="col-sm-4">
@@ -107,8 +98,7 @@
                         <mat-label>{{'Labels.studentLastNameMarathi'| translate}}</mat-label>
                         <input matInput formControlName="l_MName" (keypress)="validators.unicodeMarathiValidation($event)"
                         (keypress)="validators.noSpaceAllow($event)">
-                        <mat-error *ngIf="fc['l_MName'].hasError('required')">{{'Labels.enterStudentLastName'|
-                            translate}}</mat-error>
+                        <!-- <mat-error *ngIf="fc['l_MName'].hasError('required')">{{'Labels.enterStudentLastName'| translate}}</mat-error> -->
                     </mat-form-field>
                 </div>
                 <div class="col-sm-4">
@@ -137,9 +127,7 @@
                             <mat-option *ngFor="let stan of standardArr" [value]="stan.id">{{languageFlag == 'EN'
                                 ?stan.standard:stan.m_Standard}}</mat-option>
                         </mat-select>
-                        <mat-error *ngIf="fc['standard'].hasError('required')">
-                            {{'Labels.pleaseSelectStandard'| translate}}
-                        </mat-error>
+                        <!-- <mat-error *ngIf="fc['standard'].hasError('required')"> {{'Labels.pleaseSelectStandard'| translate}} </mat-error> -->
                     </mat-form-field>
                 </div>
                 <div class="col-sm-4">
@@ -149,9 +137,9 @@
                         [max]="maxDate">
                         <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
                         <mat-datepicker #picker></mat-datepicker>
-                        <mat-error *ngIf="fc['dob'].hasError('required')">
+                        <!-- <mat-error *ngIf="fc['dob'].hasError('required')">
                             {{'Labels.pleaseSelectBirthDate'| translate}}
-                        </mat-error>
+                        </mat-error> -->
                     </mat-form-field>
                 </div>
                 <div class="col-sm-4">
@@ -161,8 +149,8 @@
                             <mat-option *ngFor="let gen of genderArr" [value]="gen.id">{{languageFlag == 'EN'
                                 ?gen.gender:gen.m_Gender}}</mat-option>
                         </mat-select>
-                        <mat-error *ngIf="fc['gender'].hasError('required')"> {{'Labels.pleaseSelectGender'|
-                            translate}}</mat-error>
+                        <!-- <mat-error *ngIf="fc['gender'].hasError('required')"> {{'Labels.pleaseSelectGender'|
+                            translate}}</mat-error> -->
                     </mat-form-field>
                 </div>
                 <div class="col-sm-4">
@@ -172,8 +160,8 @@
                             <mat-option *ngFor="let reli of religionArr" [value]="reli.id">{{languageFlag == 'EN' ?
                                 reli.religion:reli.m_Religion}}</mat-option>
                         </mat-select>
-                        <mat-error *ngIf="fc['religionId'].hasError('required')"> {{'Labels.pleaseSelectReligion'|
-                            translate}}</mat-error>
+                        <!-- <mat-error *ngIf="fc['religionId'].hasError('required')"> {{'Labels.pleaseSelectReligion'|
+                            translate}}</mat-error> -->
                     </mat-form-field>
                 </div>
                 <div class="col-sm-4">
@@ -183,8 +171,8 @@
                             <mat-option *ngFor="let cast of casteArr" [value]="cast.id">{{languageFlag == 'EN'
                                 ?cast.caste:cast.m_Caste}}</mat-option>
                         </mat-select>
-                        <mat-error *ngIf="fc['castId'].hasError('required')"> {{'Labels.pleaseSelectCaste'|
-                            translate}}</mat-error>
+                        <!-- <mat-error *ngIf="fc['castId'].hasError('required')"> {{'Labels.pleaseSelectCaste'|
+                            translate}}</mat-error> -->
                     </mat-form-field>
                 </div>
                 <div class="col-sm-4">
@@ -194,9 +182,9 @@
                             <mat-option *ngFor="let phy of physicallyDisabled" [value]="phy.id">{{languageFlag == 'EN'
                                 ?phy.eName:phy.mName}}</mat-option>
                         </mat-select>
-                        <mat-error
+                        <!-- <mat-error
                             *ngIf="fc['physicallyDisabled'].hasError('required')">{{'Labels.pleaseSelectPhysicallyDisabled'|
-                            translate}}</mat-error>
+                            translate}}</mat-error> -->
                     </mat-form-field>
                 </div>
                 <div class="col-sm-4">
@@ -212,8 +200,8 @@
                         <mat-label>{{'Labels.aadhaarNo'| translate}}</mat-label>
                         <input matInput formControlName="aadharNo" maxlength="12" minlength="12"
                             (keypress)="validators.onlyDigits($event)">
-                        <mat-error *ngIf="fc['aadharNo'].hasError('required')">{{'Labels.enterAadharNo'|
-                            translate}}</mat-error>
+                            <!-- <mat-error *ngIf="fc['aadharNo'].hasError('required')">{{'Labels.enterAadharNo'|
+                                translate}}</mat-error> -->
                         <mat-error *ngIf="fc['aadharNo'].hasError('pattern')">{{'Labels.enterValidAadharNo'|
                             translate}}</mat-error>
                     </mat-form-field>
@@ -249,8 +237,8 @@
                         <mat-label>{{'Labels.parentMobileNo'| translate}}</mat-label>
                         <input matInput formControlName="mobileNo" maxlength="10" minlength="10"
                             (keypress)="validators.onlyDigits($event)">
-                        <mat-error *ngIf="fc['mobileNo'].hasError('required')">{{'Labels.enterParentMobileNo'|
-                            translate}}</mat-error>
+                        <!-- <mat-error *ngIf="fc['mobileNo'].hasError('required')">{{'Labels.enterParentMobileNo'|
+                            translate}}</mat-error> -->
                         <mat-error *ngIf="fc['mobileNo'].hasError('pattern')">{{'Labels.enterValidParentMobileNo'|
                             translate}}</mat-error>
                     </mat-form-field>
@@ -259,16 +247,16 @@
                     <mat-form-field appearance="outline" class="w-100">
                         <mat-label>{{'Labels.fatherName'| translate}}</mat-label>
                         <input matInput formControlName="fatherFullName" (keypress)="validators.noFirstSpaceAllow($event);validators.alphabetsWithSpaces($event)" maxlength="50">
-                        <mat-error *ngIf="fc['fatherFullName'].hasError('required')">{{'Labels.enterFatherName'|
-                            translate}}</mat-error>
+                        <!-- <mat-error *ngIf="fc['fatherFullName'].hasError('required')">{{'Labels.enterFatherName'|
+                            translate}}</mat-error> -->
                     </mat-form-field>
                 </div>
                 <div class="col-sm-4">
                     <mat-form-field appearance="outline" class="w-100">
                         <mat-label>{{'Labels.motherName'| translate}}</mat-label>
                         <input matInput formControlName="motherName" maxlength="50" (keypress)="validators.noFirstSpaceAllow($event);validators.alphabetsWithSpaces($event)">
-                        <mat-error *ngIf="fc['motherName'].hasError('required')">{{'Labels.enterMotherName'| translate}}
-                        </mat-error>
+                        <!-- <mat-error *ngIf="fc['motherName'].hasError('required')">{{'Labels.enterMotherName'| translate}}
+                        </mat-error> -->
                     </mat-form-field>
                 </div>
             </div>
