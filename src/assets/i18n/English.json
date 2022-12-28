@@ -218,8 +218,9 @@
         "OfficeUsers" : "Office Users",
         "Student" : "Student",
         "Designation" : "Designation",
-        "agencyReg" : "Agency Register"
-        
+        "agencyReg" : "Agency Register",
+        "GenderRequired" : "Gender is required",
+        "AddressDetails" : "Address Details"
 
     }
 }
