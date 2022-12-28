@@ -12,7 +12,7 @@
                 <mat-label>तालुका निवडा</mat-label>
                 <mat-select formControlName="talukaId">
                     <mat-option *ngFor="let taluka of talukaData" [value]="taluka.id">
-                        {{this.webStorage.languageFlag == 'EN'?taluka.taluka:taluka.m_Taluka}}
+                        {{webStorage.languageFlag == 'EN'?taluka.taluka:taluka.m_Taluka}}
                     </mat-option>
                 </mat-select>
             </mat-form-field>
@@ -22,7 +22,7 @@
                 <mat-label>केंद्र निवडा</mat-label>
                 <mat-select formControlName="centerId">
                     <mat-option *ngFor="let center of centerData" [value]="center.id">
-                        {{this.webStorage.languageFlag == 'EN'?center.center:center.m_Center}}
+                        {{webStorage.languageFlag == 'EN'?center.center:center.m_Center}}
                     </mat-option>
                 </mat-select>
             </mat-form-field>
@@ -32,7 +32,7 @@
                 <mat-label>शाळा निवडा</mat-label>
                 <mat-select formControlName="schoolId">
                     <mat-option *ngFor="let school of schoolData" [value]="school.value">
-                        {{this.webStorage.languageFlag == 'EN'?school.schoolType :school.m_SchoolType }}
+                        {{webStorage.languageFlag == 'EN'?school.schoolType :school.m_SchoolType }}
                     </mat-option>
                 </mat-select>
             </mat-form-field>
@@ -46,7 +46,7 @@
                 <div class="position-relative">
                     <img src="assets/images/statistical-icons/School-white.svg" class="bg-image">
                     <p>School</p>
-                    <h3>{{this.dashboardCountData?.schoolCount}}</h3>
+                    <h3>{{dashboardCountData[0]?.schoolCount}}</h3>
                 </div>
                 <div class="right-img">
                     <img src="assets/images/statistical-icons/School.svg">
@@ -60,7 +60,7 @@
                 <div class="position-relative">
                     <img src="assets/images/statistical-icons/Teacher-white.svg" class="bg-image">
                     <p>Teachers</p>
-                    <h3>{{this.dashboardCountData?.teacherCount}}</h3>
+                    <h3>{{dashboardCountData[0]?.teacherCount}}</h3>
                 </div>
                 <div class="right-img">
                     <img src="assets/images/statistical-icons/Teacher.svg">
@@ -74,7 +74,7 @@
                 <div class="position-relative">
                     <img src="assets/images/statistical-icons/Student-white.svg" class="bg-image">
                     <p>Students</p>
-                    <h3>{{this.dashboardCountData?.studentCount}}</h3>
+                    <h3>{{dashboardCountData[0]?.studentCount}}</h3>
                 </div>
                 <div class="right-img">
                     <img src="assets/images/statistical-icons/Student.svg">
@@ -88,7 +88,7 @@
                 <div class="position-relative">
                     <img src="assets/images/statistical-icons/ZP-Officer-white.svg" class="bg-image">
                     <p>ZP Officers</p>
-                    <h3>{{this.dashboardCountData?.zpOfficerCount}}</h3>
+                    <h3>{{dashboardCountData[0]?.zpOfficerCount}}</h3>
                 </div>
                 <div class="right-img">
                     <img src="assets/images/statistical-icons/ZP-Officer.svg">
@@ -136,7 +136,22 @@
                         <table class="table inner-table mb-3">
                             <thead>
                                 <tr>
-                                    <th>एकूण संख्या</th>
+                                    <th *ngFor="let header of tableColumn">
+                                        <div *ngIf="header.ischeckboxShow==false">
+                                            {{header.label}}
+                                        </div>
+                                        <div *ngIf="header.ischeckboxShow==true">
+                                            <div class="d-flex align-items-center justify-content-start">
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="checkbox" [disabled]="header.status==true" [(ngModel)]="header.status" (click)="checkData(header)">
+                                                    <label class="form-check-label" for="flexCheckDefault">
+                                                        {{header.label}}
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </th>
+                                    <!-- <th>एकूण संख्या</th>
                                     <th>
                                         <div class="d-flex align-items-center justify-content-start">
                                             <div class="form-check">
@@ -169,27 +184,29 @@
                                                 </label>
                                             </div>
                                         </div>
-                                    </th>
+                                    </th> -->
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td>1</td>
-                                    <td>Mark</td>
-                                    <td>Otto</td>
-                                    <td>@mdo</td>
+                                <tr *ngFor="let item of dashboardCountData">
+                                    <td>{{item?.totalStudent}}</td>
+                                    <td>{{item?.totalStudent_1_2}}</td>
+                                    <td>{{item?.totalStudent_3_5}}</td>
+                                    <td>{{item?.totalStudent_6_8}}</td>
                                 </tr>
                             </tbody>
                         </table>
                     </div>
-                    <div class="col-sm-4 border-end">
-                        <h6 class="small fw-bold text-center mb-0">मराठी भाषा स्तर</h6>
-                        <apx-chart [series]="barchartOptions.series[0]" [chart]="barchartOptions.chart"
-                            [dataLabels]="barchartOptions.dataLabels" [plotOptions]="barchartOptions.plotOptions"
-                            [responsive]="barchartOptions.responsive" [xaxis]="barchartOptions.xaxis"
-                            [legend]="barchartOptions.legend" [fill]="barchartOptions.fill"></apx-chart>
+                    <div class="row" *ngIf="showBarChartF">
+                        <div class="col-sm-4 border-end" *ngFor="let bar of barchartOptions.series[0]">
+                            <h6 class="small fw-bold text-center mb-0">मराठी भाषा स्तर</h6>
+                            <apx-chart [series]="bar" [chart]="barchartOptions.chart"
+                                [dataLabels]="barchartOptions.dataLabels" [plotOptions]="barchartOptions.plotOptions"
+                                [responsive]="barchartOptions.responsive" [xaxis]="barchartOptions.xaxis"
+                                [legend]="barchartOptions.legend" [fill]="barchartOptions.fill"></apx-chart>
+                        </div>
                     </div>
-                    <div class="col-sm-4 border-end">
+                    <!-- <div class="col-sm-4 border-end">
                         <h6 class="small fw-bold text-center mb-0">गणित स्तर निवडा</h6>
                         <apx-chart [series]="barchartOptions.series[1]" [chart]="barchartOptions.chart"
                             [dataLabels]="barchartOptions.dataLabels" [plotOptions]="barchartOptions.plotOptions"
@@ -202,7 +219,7 @@
                             [dataLabels]="barchartOptions.dataLabels" [plotOptions]="barchartOptions.plotOptions"
                             [responsive]="barchartOptions.responsive" [xaxis]="barchartOptions.xaxis"
                             [legend]="barchartOptions.legend" [fill]="barchartOptions.fill"></apx-chart>
-                    </div>
+                    </div> -->
                 </div>
             </mat-card-content>
         </mat-card>
@@ -245,10 +262,10 @@
                 </div>
             </mat-card-header>
             <mat-card-content class="card-body">
-                <apx-chart [series]="barchartOptions.series[3]" [chart]="barchartOptions.chart"
+                <!-- <apx-chart [series]="barchartOptions.series[1][0]" [chart]="barchartOptions.chart"
                     [dataLabels]="barchartOptions.dataLabels" [plotOptions]="barchartOptions.plotOptions"
                     [responsive]="barchartOptions.responsive" [xaxis]="barchartOptions.xaxis"
-                    [legend]="barchartOptions.legend" [fill]="barchartOptions.fill"></apx-chart>
+                    [legend]="barchartOptions.legend" [fill]="barchartOptions.fill"></apx-chart> -->
             </mat-card-content>
         </mat-card>]
     </div>

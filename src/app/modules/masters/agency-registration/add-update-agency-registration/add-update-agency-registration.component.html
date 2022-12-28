@@ -1,8 +1,7 @@
 <mat-card class="plain-card">
-
     <mat-card-header class="card-header">
         <div class="d-flex align-items-center justify-content-between w-100">
-            <h6 class="text-main mb-0">
+            <h6 class="text-main mb-0 fw-bold">
                 {{editData ? ('Labels.updateAgency' | translate): 'Labels.agencyRegistration' | translate}}
             </h6>
             <button mat-icon-button mat-dialog-close class="btn-modal-close">
@@ -13,9 +12,9 @@
         </div>
     </mat-card-header>
     <form [formGroup]="agencyRegisterForm" (ngSubmit)="onSubmit(clear)" #clear="ngForm">
-        <mat-card-content class="card-body">
-            <h6 class="mb-3">Agency Details</h6>
-            <div class="row mb-1">
+        <mat-card-content class="card-body card-height-mid scrollbar">
+            <mat-card-subtitle class="mb-2 fw-bold">Agency Details</mat-card-subtitle>
+            <div class="row gx-3">
                 <div class="col-sm-4">
                     <mat-form-field appearance="outline" class="w-100">
                         <mat-label>{{'Labels.agencyName' | translate}}</mat-label>
@@ -41,8 +40,6 @@
                         <mat-error *ngIf="fc['agency_MobileNo'].hasError('pattern')">{{'Labels.pleaseEnterValidMobileNumber' | translate}}</mat-error>
                     </mat-form-field>
                 </div>
-            </div>
-            <div class="row">
                 <div class="col-sm-4">
                     <mat-form-field appearance="outline" class="w-100">
                         <mat-label>{{'Labels.agencyEmailID' | translate}}</mat-label>
@@ -51,18 +48,6 @@
                         <mat-error *ngIf="fc['agency_EmailId'].hasError('pattern')">{{'Labels.pleaseEnterValidEmailId' | translate}}</mat-error>
                     </mat-form-field>
                 </div>
-            </div>
-            <!-- <div class="row mb-2">
-                <div class="col-sm-4">
-                    <mat-form-field appearance="outline" class="w-100">
-                        <mat-label>{{'Labels.contactNo.' | translate}}</mat-label>
-                        <input matInput formControlName="contact_No" maxlength="10"  (keypress)="validation.onlyDigits($event)">
-                        <mat-error *ngIf="fc['contact_No'].hasError('required')">{{'Labels.contactNumberIsRequired' | translate}}</mat-error>
-                        <mat-error *ngIf="fc['contact_No'].hasError('pattern')">{{'Labels.pleaseEnterValidMobileNumber' | translate}}</mat-error>
-                    </mat-form-field>
-                </div>
-            </div> -->
-            <div class="row">
                 <div class="col-sm-4">
                     <mat-form-field appearance="outline" class="w-100">
                         <mat-label>{{'Labels.district' | translate}}</mat-label>
@@ -84,14 +69,15 @@
                 <div class="col-sm-4">
                     <mat-form-field appearance="outline" class="w-100">
                         <mat-label>{{'Labels.agencyAdd' | translate}}</mat-label>
-                        <input matInput formControlName="agencyAddress"  (keypress)="validation.noFirstSpaceAllow($event)">
-                        <mat-error *ngIf="fc['agencyAddress'].hasError('required')">{{'Labels.addressIsRequired' | translate}}</mat-error>
-                        <mat-error *ngIf="fc['agencyAddress'].hasError('maxlength')">{{'Labels.maximummLength500Characters' | translate}}</mat-error>                   
+                        <input matInput formControlName="agency_Address"  (keypress)="validation.noFirstSpaceAllow($event)">
+                        <mat-error *ngIf="fc['agency_Address'].hasError('required')">{{'Labels.addressIsRequired' | translate}}</mat-error>
+                        <mat-error *ngIf="fc['agency_Address'].hasError('maxlength')">{{'Labels.maximummLength500Characters' | translate}}</mat-error>                   
                     </mat-form-field>
                 </div>
             </div>
-            <h6 class="mb-3">Person Details</h6>
-            <div class="row mb-1">
+            
+            <mat-card-subtitle class="mb-2 fw-bold">Person Details</mat-card-subtitle>
+            <div class="row gx-4">
                 <div class="col-sm-4">
                     <mat-form-field appearance="outline" class="w-100">
                         <mat-label>{{'Labels.contactPersonName' | translate}}</mat-label>

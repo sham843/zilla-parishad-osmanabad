@@ -32,17 +32,18 @@
                 </div>
                 <div class="dropdown">
                     <button class="btn" data-bs-toggle="dropdown" aria-expanded="false">
-                        <mat-icon>translate</mat-icon>
+                        <!-- <mat-icon>translate</mat-icon> -->
+                        <img [src]="webStorage.languageFlag == 'EN' ? 'assets/images/english.svg' : 'assets/images/marathi.svg'">
                     </button>
                     <div class="dropdown-menu dropdown-menu-end">
                         <button class="dropdown-item" (click)="translateLanguage('English')">
-                            <div class="d-flex align-items-center">
+                            <div class="d-flex align-items-start">
                                 <img src="assets/images/english.svg">
                                 <span>English</span>
                             </div>
                         </button>
                         <button class="dropdown-item" (click)="translateLanguage('Marathi')">
-                            <div class="d-flex align-items-center">
+                            <div class="d-flex align-items-start">
                                 <img src="assets/images/marathi.svg">
                                 <span>Marathi</span>
                             </div>

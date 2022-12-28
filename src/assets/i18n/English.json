@@ -55,7 +55,7 @@
         "searchbyNameContactEmail" :"Search By Name/Contact/Email",
         "schoolRegistration" : "School Registration",
         "registerSchool" : "Register School",
-        "updateSchool" : "Update School",
+        "updateSchool" : "Update School Details",
         "schoolList" : "School List",
         "addSchool" : "Add School",
         "kendra" : "Kendra",
@@ -218,8 +218,9 @@
         "OfficeUsers" : "Office Users",
         "Student" : "Student",
         "Designation" : "Designation",
-        "agencyReg" : "Agency Register"
-        
+        "agencyReg" : "Agency Register",
+        "GenderRequired" : "Gender is required",
+        "AddressDetails" : "Address Details"
 
     }
 }

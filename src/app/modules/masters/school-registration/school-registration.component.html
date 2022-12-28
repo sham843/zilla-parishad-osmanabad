@@ -112,15 +112,22 @@
                                 </span>
                             </button>
                             <mat-menu #menu="matMenu">
-                                <button mat-menu-item (click)="addUpdateAgency(data)">Edit
-                                    <span class="material-symbols-outlined">
-                                        create
-                                    </span>
+                                <button mat-menu-item (click)="addUpdateAgency(data)">
+                                    <div class="d-flex justify-content-between">
+                                        Edit
+                                        <span class="material-symbols-outlined ">
+                                            create
+                                        </span>
+                                    </div>
+                                   
                                 </button>
-                                <button mat-menu-item (click)="globalDialogOpen(data)">Delete
+                                <button mat-menu-item (click)="globalDialogOpen(data)">
+                                    <div class="d-flex justify-content-between">
+                                    Delete
                                     <span class="material-symbols-outlined">
                                         delete
                                     </span>
+                                </div>
                                 </button>
                             </mat-menu>
                         </mat-card-header>
@@ -133,7 +140,9 @@
                                 <ng-container *ngIf="!data.uploadImage">
                                     <img src="assets/images/user.jpg" height="60px">
                                 </ng-container>
-                                <p>{{data.schoolName}}</p>
+                                <p>{{webStorageS.getLangauge() == 'EN' ?
+                                    data.schoolName : data.m_SchoolName}}
+                                </p>
                             </div>
                             <div class="row">
                                 <div class="col-6 col-sm  form-label">
@@ -169,18 +178,16 @@
                     </mat-card>
                 </div>
             </div>
-            <ng-container *ngIf="tableDataArray.length > 9">
+            <ng-container *ngIf="tableDataArray.length >= 10">
                 <mat-paginator [length]="totalCount" [pageIndex]="cardCurrentPage" [pageSize]="10"
                     [pageSizeOptions]="[10]" [showFirstLastButtons]="true" (page)="onPageChanged($event)">
                 </mat-paginator>
             </ng-container>
-                <div *ngIf="tableDataArray.length < 1">
+                <div *ngIf="tableDataArray.length == 0">
                     <div class="alert alert-danger text-center py-2 ">
                         Data not available
                     </div>
                 </div>
-
-            
         </ng-container>
     </mat-card-content>
 </mat-card>

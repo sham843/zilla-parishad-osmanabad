@@ -218,7 +218,8 @@
         "OfficeUsers" : "ऑफिस वापरकर्ते",
         "Student" : "विद्यार्थी",
         "Designation" : "पदनाम",
-        "agencyReg" : "एजन्सी रजिस्टर"
-       
+        "agencyReg" : "एजन्सी रजिस्टर",
+        "GenderRequired" : "लिंग आवश्यक आहे",
+        "AddressDetails" : "पत्ता तपशील"
     }
 }

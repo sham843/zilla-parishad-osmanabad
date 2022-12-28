@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
 import { ApiService } from 'src/app/core/services/api.service';
@@ -10,7 +10,7 @@ import { WebStorageService } from 'src/app/core/services/web-storage.service';
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.scss']
 })
-export class DashboardComponent {
+export class DashboardComponent implements OnInit,AfterViewInit {
   talukaData = new Array();
   lang !: string;
   schoolData = new Array();
@@ -18,7 +18,10 @@ export class DashboardComponent {
   filterForm!: FormGroup;
   piechartOptions: any;
   barchartOptions: any;
-  dashboardCountData:object|any;
+  dashboardCountData=new Array();
+  tableColumn=new Array();
+  barChartData=new Array();
+  showBarChartF:boolean=false;
   get f() { return this.filterForm.controls; }
   constructor(public translate: TranslateService, private masterService: MasterService,
     public webStorage: WebStorageService, private fb: FormBuilder, private apiService:ApiService,
@@ -34,8 +37,11 @@ export class DashboardComponent {
     this.getTalukas();
     this.getCenters();
     this.getschools();
-    this.getBarChart();
+    this.getBarChartOption();
     this.getdashboardCount();
+  }
+  ngAfterViewInit(){
+   // this.getdashboardCount();
 
   }
   getTalukas() {
@@ -75,58 +81,61 @@ export class DashboardComponent {
       ]
     };
   }
-  getBarChart() {
+  getBarChartOption() {
     this.barchartOptions = {
-      series: [
-        [{
-          name: "PRODUCT A",
-          data: [44]
-        },
-        {
-          name: "PRODUCT B",
-          data: [13]
-        },
-        {
-          name: "PRODUCT C",
-          data: [11]
-        }],
-        [{
-          name: "PRODUCT A",
-          data: [24]
-        },
-        {
-          name: "PRODUCT B",
-          data: [10]
-        },
-        {
-          name: "PRODUCT C",
-          data: [48]
-        }],
-        [{
-          name: "PRODUCT A",
-          data: [65]
-        },
-        {
-          name: "PRODUCT B",
-          data: [10]
-        },
-        {
-          name: "PRODUCT C",
-          data: [37]
-        }],
-        [{
-          name: "PRODUCT A",
-          data: [65, 36, 25, 15]
-        },
-        {
-          name: "PRODUCT B",
-          data: [10, 70, 25, 42]
-        },
-        {
-          name: "PRODUCT C",
-          data: [37, 65, 74, 20]
-        }],
-      ],
+      series:[],
+      // series: [
+      //   [
+      //     [{
+      //     name: "PRODUCT A",
+      //     data: [44]
+      //   },
+      //   {
+      //     name: "PRODUCT B",
+      //     data: [13]
+      //   },
+      //   {
+      //     name: "PRODUCT C",
+      //     data: [11]
+      //   }],
+      //   [{
+      //     name: "PRODUCT A",
+      //     data: [24]
+      //   },
+      //   {
+      //     name: "PRODUCT B",
+      //     data: [10]
+      //   },
+      //   {
+      //     name: "PRODUCT C",
+      //     data: [48]
+      //   }],
+      //   [{
+      //     name: "PRODUCT A",
+      //     data: [65]
+      //   },
+      //   {
+      //     name: "PRODUCT B",
+      //     data: [10]
+      //   },
+      //   {
+      //     name: "PRODUCT C",
+      //     data: [37]
+      //   }]
+      // ],
+      //   [[{
+      //     name: "PRODUCT A",
+      //     data: [65, 36, 25, 15]
+      //   },
+      //   {
+      //     name: "PRODUCT B",
+      //     data: [10, 70, 25, 42]
+      //   },
+      //   {
+      //     name: "PRODUCT C",
+      //     data: [37, 65, 74, 20]
+      //   }]],
+      // ],
       chart: {
         type: "bar",
         height: 350,
@@ -189,13 +198,10 @@ export class DashboardComponent {
     this.apiService.getHttp().subscribe({
       next: (res: any) => { 
         if (res.statusCode == "200") {
-          this.dashboardCountData= res.responseData;
-          const serriesArray= [0,0,0];
-          serriesArray[0]= this.dashboardCountData.govtSchool|0;
-          serriesArray[1]= this.dashboardCountData.privateSchool|0;
-          serriesArray[2]= this.dashboardCountData.otherSchool|0;
-          this.piechartOptions.series = serriesArray;
-          this.piechartOptions.labels=['Goverment','Private','Other'];
+          this.dashboardCountData.push(res.responseData);
+          this.tableColumn=[{label:'एकूण संख्या', GroupId:0,  ischeckboxShow:false, status:false},{label:'१ली ते 2री',GroupId:1,  ischeckboxShow:true, status:true},{label:'3री ते ५वी',GroupId:2, ischeckboxShow:true, status:false},{label:'६वी ते ८वी',GroupId:3, ischeckboxShow:true, status:false},];
+          this.checkData(this.tableColumn[1]);
+          this.getPieChartData();
            } else { 
             this.dashboardCountData=[];
           }
@@ -203,4 +209,54 @@ export class DashboardComponent {
       error: (error:any) => { this.error.handelError(error.message) }
     });
   }
+  checkData(obj:any){
+    this.tableColumn.map((x:any)=>{
+      if(x.status==true){
+        x.status= obj.GroupId != x.GroupId? false: obj.status;
+      }
+    })
+    this.getBarChart(obj);
+  }
+  getPieChartData(){
+    const serriesArray= [0,0,0];
+    serriesArray[0]= this.dashboardCountData[0].govtSchool|0;
+    serriesArray[1]= this.dashboardCountData[0].privateSchool|0;
+    serriesArray[2]= this.dashboardCountData[0].otherSchool|0;
+    this.piechartOptions.series = serriesArray;
+    this.piechartOptions.labels=['Goverment','Private','Other'];
+  }
+
+  getBarChart(obj:any){
+    const formData= this.filterForm.value;
+    this.barChartData=[];
+    this.apiService.setHttp('GET', 'zp-osmanabad/Dashboard/'+(obj.GroupId==1?'GetDataFor1st2ndStd':'GetDataFor3rdAboveStd')+'?TalukaId='+(formData?.talukaId ||0)+'&CenterId='+(formData?.centerId ||0)+'&SchoolId='+(formData?.schoolId ||0)+'&GroupId='+obj?.GroupId, false, false, false, 'baseUrl');
+    this.apiService.getHttp().subscribe({
+      next: (res: any) => { 
+        if (res.statusCode == "200") {
+          this.barChartData=res.responseData.responseData1;
+         const subjectSet = [...new Set(this.barChartData.map(sub => sub.subjectName))];
+          this.barchartOptions.series=[];
+          let dataArray:any[]=[];
+          subjectSet.map((x:any)=>{
+            const  filterSubject=this.barChartData.filter((y:any)=> y.subjectName==x);
+            let dataObjArray:any[]=[];
+            filterSubject.map((z:any)=>{
+              const subData = {
+                name: obj.GroupId==1 ? z.optionName : z.question,
+                data: [z.totalStudent]
+              }
+              dataObjArray.push(subData);
+            })
+             dataArray.push(dataObjArray);
+           })
+           this.barchartOptions.series.push(dataArray);
+            this.showBarChartF=true;
+        console.log(this.barchartOptions.series)
+          } 
+       
+       },
+      error: (error:any) => { this.error.handelError(error.message) }
+    });
+  }
+
 }

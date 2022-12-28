@@ -41,7 +41,7 @@ export class AddUpdateAgencyRegistrationComponent {
       "emailId": [data ? data.emailId : "", [Validators.required, Validators.pattern(this.validation.email)]],
       "agency_EmailId": [data ? data.agency_EmailId : "", [Validators.required, Validators.pattern(this.validation.email)]],
       "address": [data ? data.address : "", [Validators.required, Validators.maxLength(500)]],
-      "agencyAddress": [ "", [Validators.required, Validators.maxLength(500)]],
+      "agency_Address": [data ? data.agency_Address : "", [Validators.required, Validators.maxLength(500)]],
       "districtId": [{ value: 1, disabled: true }],
       "talukaId": ["", Validators.required],
       "lan": "",

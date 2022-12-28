@@ -29,7 +29,7 @@ export class TeacherRegistrationComponent {
 
   @HostBinding('class') className = '';
   constructor(private dialog: MatDialog, private overlay: OverlayContainer, private apiService: ApiService, private errors: ErrorsService,
-    private webStorageS: WebStorageService, private downloadFileService: DownloadPdfExcelService, private commonMethodS : CommonMethodsService) {
+    public webStorageS: WebStorageService, private downloadFileService: DownloadPdfExcelService, private commonMethodS : CommonMethodsService) {
   }
 
   ngOnInit(): void {
@@ -63,22 +63,23 @@ export class TeacherRegistrationComponent {
     this.apiService.getHttp().subscribe({
 
       next: (res: any) => {
+        console.log("table res : ",res);
+        
         if (res.statusCode == "200") {
           this.tableDataArray = res.responseData.responseData1;
           
           this.totalCount = res.responseData.responseData2.pageCount;
           tableDatasize = res.responseData.responseData2.pageCount;
-          console.log("tableDatasize teavche resppp", tableDatasize);
 
         } else {
           this.tableDataArray = [];
           tableDatasize = 0;
         }
-        let displayedColumns = ['srNo', 'name', 'mobileNo', 'emailId', 'village', 'taluka', 'action'];
-        let displayedheaders = ['Sr. No.', 'Name', 'Contact No.', 'Email ID', 'Village', 'Taluka', 'action'];
+        let displayedColumns = ['uploadImage','srNo', 'name', 'mobileNo', 'emailId', 'village', 'taluka', 'action'];
+        let displayedheaders = ['#','Sr. No.', 'Name', 'Contact No.', 'Email ID', 'Village', 'Taluka', 'action'];
         let tableData = {
           pageNumber: this.pageNumber,
-          img: '', blink: '', badge: '', isBlock: '', pagintion: true,
+          img: 'uploadImage', blink: '', badge: '', isBlock: '', pagintion: true,
           displayedColumns: displayedColumns, tableData: this.tableDataArray,
           tableSize: tableDatasize,
           tableHeaders: displayedheaders
@@ -95,7 +96,7 @@ export class TeacherRegistrationComponent {
         this.pageNumber = _obj.pageNumber;
         this.getTableData();
         break;
-      case 'Edit' || 'Delete':
+      case 'Edit':
         this.addUpdateTeacher(_obj);
         break;
       case 'Delete':
@@ -106,13 +107,25 @@ export class TeacherRegistrationComponent {
 
   addUpdateTeacher(obj?: any) {
     // let obj: any;
-    this.dialog.open(AddUpdateTeacherRegistrationComponent, {
+    const dialogRef = this.dialog.open(AddUpdateTeacherRegistrationComponent, {
       width: '900px',
       height: '700px',
       data: obj,
       disableClose: true,
       autoFocus: false
-    })
+    });
+    dialogRef.afterClosed().subscribe((result: any) => {
+      if (result == 'yes' && obj) {
+        this.clearFilterData();
+        this.getTableData();
+        this.pageNumber = this.pageNumber;
+      }
+      else if(result == 'yes'){
+        this.getTableData();
+        this.clearFilterData();
+        this.pageNumber = 1;
+      }
+    });
   }
 
   globalDialogOpen(obj: any) {
