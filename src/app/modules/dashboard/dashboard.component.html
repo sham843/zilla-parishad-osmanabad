@@ -10,7 +10,7 @@
         <div class="col-sm-4">
             <mat-form-field appearance="outline" class="w-100">
                 <mat-label>तालुका निवडा</mat-label>
-                <mat-select formControlName="talukaId">
+                <mat-select formControlName="talukaId" (selectionChange)="this.getCenters();this.getbarChartByTaluka()">
                     <mat-option *ngFor="let taluka of talukaData" [value]="taluka.id">
                         {{webStorage.languageFlag == 'EN'?taluka.taluka:taluka.m_Taluka}}
                     </mat-option>
@@ -20,7 +20,7 @@
         <div class="col-sm-4">
             <mat-form-field appearance="outline" class="w-100">
                 <mat-label>केंद्र निवडा</mat-label>
-                <mat-select formControlName="centerId">
+                <mat-select formControlName="centerId" (selectionChange)="this.getschools()">
                     <mat-option *ngFor="let center of centerData" [value]="center.id">
                         {{webStorage.languageFlag == 'EN'?center.center:center.m_Center}}
                     </mat-option>
@@ -203,7 +203,7 @@
                             <div class="col-sm-4" *ngIf="!f['talukaId'].value">
                                 <mat-form-field appearance="outline" class="w-100">
                                     <mat-label>तालुका निवडा</mat-label>
-                                    <mat-select formControlName="filtertalukaId">
+                                    <mat-select formControlName="filtertalukaId" (selectionChange)="this.getbarChartByTaluka()">
                                         <mat-option *ngFor="let taluka of talukaData" [value]="taluka.id">
                                             {{webStorage.languageFlag == 'EN'?taluka.taluka:taluka.m_Taluka}}
                                         </mat-option>
@@ -213,7 +213,7 @@
                             <div class="col-sm-4" *ngIf="f['talukaId'].value || fBgraph['filtertalukaId'].value">
                                 <mat-form-field appearance="outline" class="w-100">
                                     <mat-label>केंद्र निवडा</mat-label>
-                                    <mat-select formControlName="filtercenterId">
+                                    <mat-select formControlName="filtercenterId" (selectionChange)="this.getbarChartByTaluka()">
                                         <mat-option *ngFor="let center of centerData" [value]="center.id">
                                             {{webStorage.languageFlag == 'EN'?center.center:center.m_Center}}
                                         </mat-option>
@@ -223,7 +223,7 @@
                             <div class="col-sm-4">
                                 <mat-form-field appearance="outline" class="w-100">
                                     <mat-label>Subject</mat-label>
-                                    <mat-select formControlName="filtersubjectId">
+                                    <mat-select formControlName="filtersubjectId" (selectionChange)="this.getbarChartByTaluka()">
                                         <mat-option *ngFor="let subject of subjectData" [value]="subject.id ">
                                             {{webStorage.languageFlag == 'EN'?subject.subject :subject.m_Subject }}
                                         </mat-option>
