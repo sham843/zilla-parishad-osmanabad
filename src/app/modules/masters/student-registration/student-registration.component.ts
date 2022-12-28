@@ -10,6 +10,7 @@ import { ValidationService } from 'src/app/core/services/validation.service';
 import { WebStorageService } from 'src/app/core/services/web-storage.service';
 import { GlobalDialogComponent } from 'src/app/shared/components/global-dialog/global-dialog.component';
 import { AddUpdateStudentRegistrationComponent } from './add-update-student-registration/add-update-student-registration.component';
+import { StudentDetailsComponent } from './student-details/student-details.component';
 @Component({
   selector: 'app-student-registration',
   templateUrl: './student-registration.component.html',
@@ -143,6 +144,9 @@ export class StudentRegistrationComponent {
       case 'Delete':
         this.deteleDialogOpen(obj);
         break;
+        case 'View':
+        this.openDetailsDialog(obj);
+        break;
     }
   }
 
@@ -193,6 +197,24 @@ export class StudentRegistrationComponent {
   clearForm() {
     this.searchContent.setValue('');
     this.getTableData();
+  }
+
+  openDetailsDialog(obj:any){
+      console.log(obj);
+      const viewDialogRef = this.dialog.open(StudentDetailsComponent, {
+        width: '900px',
+        height: '650px',
+        data: obj,
+        disableClose: true,
+        autoFocus: false
+      });
+      viewDialogRef.afterClosed().subscribe((result: any) => {
+       if (result == 'yes') {
+        this.getTableData();
+        }
+        
+      });
+      
   }
 
  
