@@ -35,7 +35,6 @@ export class AddUpdateOfficeUsersComponent implements OnInit {
   ngOnInit(){
     this.defaultForm();
     console.log("dataaa",this.data);
-    
     (!this.data) ? (this.getLevelDrop(), this.getTalukaDrop(), this.getDistrictDrop()): '';
   }
 
@@ -87,7 +86,7 @@ export class AddUpdateOfficeUsersComponent implements OnInit {
       error: ( error : any)=>{
         console.log("error is :", error);  
       }
-    }) 
+    });
   }
 
   onchangeLevel(event: any){
@@ -111,7 +110,7 @@ export class AddUpdateOfficeUsersComponent implements OnInit {
   }
 
   getAllSchoolsByCenterId(){
-    let centerId = this.officeForm.value.designationLevelId;
+    let centerId = this.officeForm.value.centerId;
     this.masterService.getAllSchoolsByCenterId(this.webStorageService.languageFlag, centerId).subscribe({
       next: (resp: any)=>{
         resp.statusCode == "200" ?(console.log(resp), this.schools = resp.responseData ): this.schools = [];
@@ -170,6 +169,35 @@ export class AddUpdateOfficeUsersComponent implements OnInit {
         this.commonService.checkEmptyData(error.status) == false ? this.error.handelError(error.status) : this.commonService.snackBar(error.status, 1);
       })
     });
+  }
+
+  onchangeValidation(event: any){
+    if(event == 1){
+      this.fc['centerId'].clearValidators();
+      this.fc['centerId'].updateValueAndValidity();
+
+      this.fc['schoolId'].clearValidators();
+      this.fc['schoolId'].updateValueAndValidity();
+
+      this.fc['kendraMobileNo'].clearValidators();
+      this.fc['kendraMobileNo'].updateValueAndValidity();
+
+      this.fc['kendraEmailId'].clearValidators();
+      this.fc['kendraEmailId'].updateValueAndValidity();
+    }
+    if(event == 2){
+      this.fc['centerId'].clearValidators();
+      this.fc['centerId'].updateValueAndValidity();
+
+      this.fc['schoolId'].clearValidators();
+      this.fc['schoolId'].updateValueAndValidity();
+
+      this.fc['kendraMobileNo'].clearValidators();
+      this.fc['kendraMobileNo'].updateValueAndValidity();
+
+      this.fc['kendraEmailId'].clearValidators();
+      this.fc['kendraEmailId'].updateValueAndValidity();
+    }
   }
 
 
