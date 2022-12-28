@@ -127,7 +127,7 @@
                 </div>
               </div>
               <div class="text-center mb-3">
-                <button mat-flat-button class="btn-main" routerLink="/global-details">Read More</button>
+                <button mat-flat-button class="btn-main" [routerLink]="['../global-details/',data.id]">Read More</button>
               </div>
 
             </mat-card-content>
