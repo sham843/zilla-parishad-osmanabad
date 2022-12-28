@@ -27,7 +27,8 @@ export class AgencyRegistrationComponent {
   displayedheadersMarathi = ['अनुक्रमांक', 'नाव', 'संपर्क क्र.', 'ई - मेल आयडी', 'कृती'];
   langTypeName: any;
 
-  constructor(private dialog: MatDialog, private apiService: ApiService, private webStroageService: WebStorageService, private downloadPdfservice: DownloadPdfExcelService,
+  constructor(private dialog: MatDialog, private apiService: ApiService, 
+     private webStroageService: WebStorageService, private downloadPdfservice: DownloadPdfExcelService,
     private errors: ErrorsService, private fb: FormBuilder, private common: CommonMethodsService, public validation: ValidationService,
   ) { }
 
@@ -60,11 +61,11 @@ export class AgencyRegistrationComponent {
 
   getTableData(flag?: string) {
     this.pageNumber = flag == 'filter' ? 1 : this.pageNumber;
-    flag == 'filter' ? this.agencyReport = [] : ''
+    flag == 'filter' ? this.agencyReport = [] : '';
     let obj = this.filterForm.value;
     let str = `pageno=${this.pageNumber}&pagesize=10&&TextSearch=${obj.searchText}&lan=${this.webStroageService.languageFlag}`;
     let reportStr = `TextSearch=${obj.searchText}`
-    this.apiService.setHttp('GET', 'zp-osmanabad/Agency/GetAll?' + (flag == 'reportFlag' ? reportStr : str), false, false, false, 'baseUrl');
+    this.apiService.setHttp('GET', 'zp-osmanabad/Agency/GetAll?' + ( flag =='pdfDownload' ? reportStr : str ), false, false, false, 'baseUrl');
     this.apiService.getHttp().subscribe({
       next: (res: any) => {
         if (res.statusCode == "200") {
@@ -106,7 +107,7 @@ export class AgencyRegistrationComponent {
 
   downloadPdf() {
     if(this.agencyReport.length){
-    this.getTableData('reportFlag')
+    this.getTableData('pdfDownload')
     let keyPDFHeader = ['SrNo', "Name", "Contact No.", "Email Id"];
     let ValueData =
       this.agencyReport.reduce(
