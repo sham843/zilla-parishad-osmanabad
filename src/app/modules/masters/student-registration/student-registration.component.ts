@@ -10,7 +10,6 @@ import { ValidationService } from 'src/app/core/services/validation.service';
 import { WebStorageService } from 'src/app/core/services/web-storage.service';
 import { GlobalDialogComponent } from 'src/app/shared/components/global-dialog/global-dialog.component';
 import { AddUpdateStudentRegistrationComponent } from './add-update-student-registration/add-update-student-registration.component';
-import { StudentDetailsComponent } from './student-details/student-details.component';
 @Component({
   selector: 'app-student-registration',
   templateUrl: './student-registration.component.html',
@@ -115,7 +114,7 @@ export class StudentRegistrationComponent {
           this.tableDataArray = [];
           this.tableDatasize = 0;
         }
-        
+
         let tableData = {
           pageNumber: this.pageNumber,
           img: 'docPath', blink: '', badge: '', isBlock: '', pagintion: this.tableDatasize > 10 ? true : false,
@@ -196,20 +195,7 @@ export class StudentRegistrationComponent {
     this.getTableData();
   }
 
-  openViewDilog(obj: any) {
-    const viewDialogRef = this.dialog.open(StudentDetailsComponent, {
-      width: '950px',
-      height: '650px',
-      data: obj,
-      disableClose: true,
-      autoFocus: false
-    });
-    viewDialogRef.afterClosed().subscribe((result: any) => {
-      if (result == 'yes') {
-        console.log(result);
-      }
-    })
-  }
+ 
   //#region -------------------------------------------------- Delete Logic Start Here ------------------------------------------------------
 
   deteleDialogOpen(obj: any) {
