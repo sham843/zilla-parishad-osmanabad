@@ -23,9 +23,9 @@
                                 district.district : district.m_District}}
                             </mat-option>
                         </mat-select>
-                        <mat-error *ngIf="f['districtId'].hasError('required') || f['districtId'].hasError('touched')">
+                        <!-- <mat-error *ngIf="f['districtId'].hasError('required') || f['districtId'].hasError('touched')">
                             {{'Labels.districtIsRequired' | translate}}
-                        </mat-error>
+                        </mat-error> -->
                     </mat-form-field>
                 </div>
                 <div class="col-sm-4">
@@ -38,9 +38,9 @@
                                 taluka.taluka : taluka.m_Taluka}}
                             </mat-option>
                         </mat-select>
-                        <mat-error *ngIf="f['talukaId'].hasError('required') || f['talukaId'].hasError('touched')">
+                        <!-- <mat-error *ngIf="f['talukaId'].hasError('required') || f['talukaId'].hasError('touched')">
                             {{'Labels.talukaIsRequired' | translate}}
-                        </mat-error>
+                        </mat-error> -->
                     </mat-form-field>
                 </div>
                 <div class="col-sm-4">
@@ -53,9 +53,9 @@
                                 center.center : center.m_Center}}
                             </mat-option>
                         </mat-select>
-                        <mat-error *ngIf="f['centerId'].hasError('required') || f['centerId'].hasError('touched')">
+                        <!-- <mat-error *ngIf="f['centerId'].hasError('required') || f['centerId'].hasError('touched')">
                             {{'Labels.kendraIsRequired' | translate}}
-                        </mat-error>
+                        </mat-error> -->
                     </mat-form-field>
                 </div>
                 <div class="col-sm-4">
@@ -67,9 +67,9 @@
                                 village.village : village.m_Village}}
                             </mat-option>
                         </mat-select>
-                        <mat-error *ngIf="f['villageId'].hasError('required') || f['villageId'].hasError('touched')">
+                        <!-- <mat-error *ngIf="f['villageId'].hasError('required') || f['villageId'].hasError('touched')">
                             {{'Labels.villageIsRequired' | translate}}
-                        </mat-error>
+                        </mat-error> -->
                     </mat-form-field>
                 </div>
                 <div class="col-sm-8">
@@ -77,9 +77,9 @@
                         <mat-label>{{'Labels.school' | translate}}</mat-label>
                         <input matInput formControlName="schoolName" maxlength="50"
                             (keypress)="validationService.noFirstSpaceAllow($event);">
-                        <mat-error *ngIf="f['schoolName'].hasError('required') || f['schoolName'].hasError('touched')">
+                        <!-- <mat-error *ngIf="f['schoolName'].hasError('required') || f['schoolName'].hasError('touched')">
                             {{'Labels.schoolNameIsRequired' | translate}}
-                        </mat-error>
+                        </mat-error> -->
                     </mat-form-field>
                 </div>
                 <div class="col-sm-6">
@@ -87,10 +87,10 @@
                         <mat-label>{{'Labels.school(Marathi)' | translate}}</mat-label>
                         <input matInput formControlName="m_SchoolName" maxlength="50"
                             (keypress)="validationService.noFirstSpaceAllow($event); validationService.unicodeMarathiValidation($event);">
-                        <mat-error
+                        <!-- <mat-error
                             *ngIf="f['m_SchoolName'].hasError('required') || f['m_SchoolName'].hasError('touched')">
                             {{'Labels.schoolNameIsRequired' | translate}}
-                        </mat-error>
+                        </mat-error> -->
                     </mat-form-field>
                 </div>
                 <div class="col-sm-6">
@@ -102,9 +102,9 @@
                                 schoolType.schoolType : schoolType.m_SchoolType}}
                             </mat-option>
                         </mat-select>
-                        <mat-error *ngIf="f['s_TypeId'].hasError('required') || f['s_TypeId'].hasError('touched')">
+                        <!-- <mat-error *ngIf="f['s_TypeId'].hasError('required') || f['s_TypeId'].hasError('touched')">
                             {{'Labels.schoolTypeDescriptionIsRequired' | translate}}
-                        </mat-error>
+                        </mat-error> -->
                     </mat-form-field>
                 </div>
                 <div class="col-sm-6">
@@ -116,10 +116,10 @@
                                 category.category_desc : category.m_Category_desc}}
                             </mat-option>
                         </mat-select>
-                        <mat-error
+                        <!-- <mat-error
                             *ngIf="f['s_CategoryId'].hasError('required') || f['s_CategoryId'].hasError('touched')">
                             {{'Labels.schoolCategoryIsRequired' | translate}}
-                        </mat-error>
+                        </mat-error> -->
                     </mat-form-field>
                 </div>
                 <div class="col-sm-6">
@@ -131,22 +131,21 @@
                                 schoolMng.management_desc : schoolMng.m_Management_desc}}
                             </mat-option>
                         </mat-select>
-                        <mat-error
+                        <!-- <mat-error
                             *ngIf="f['s_ManagementId'].hasError('required') || f['s_ManagementId'].hasError('touched')">
                             {{'Labels.schoolManagementIsRequired' | translate}}
-                        </mat-error>
+                        </mat-error> -->
                     </mat-form-field>
                 </div>
 
                 <!-- <div class="col-sm-6">
                     <mat-form-field appearance="outline" class="w-100">
                         <mat-label>{{'Labels.groupClass' | translate}}</mat-label>
-                        <mat-select formControlName="g_ClassId">
-                            <mat-option *ngFor="let groupclass of groupclassArr" [value]="groupclass.id">
-                                {{webStorageS.getLangauge() == 'EN' ?
-                                groupclass.groupClass : groupclass.m_GroupClass}}
-                            </mat-option>
-                        </mat-select>
+                        <mat-select multiple [(ngModel)]="selectedObjects" formControlName="g_ClassId">
+                        <mat-option *ngFor="let groupclass of groupclassArr" [value]="groupclass">
+                            {{groupclass.groupclass}}
+                        </mat-option>
+                    </mat-select>
                         <mat-error *ngIf="f['g_ClassId'].hasError('required') || f['g_ClassId'].hasError('touched')">
                             {{'Labels.groupClassIsRequired' | translate}}
                         </mat-error>
@@ -154,35 +153,19 @@
                 </div> -->
 
                 <div class="col-sm-6">
-                    <mat-form-field appearance="outline" class="w-100">
-                        <mat-label>{{'Labels.groupClass' | translate}}</mat-label>
-                        <mat-select formControlName="g_ClassId" multiple>
-                            <mat-select-trigger>
-                                {{schoolRegForm.value.g_ClassId?.[0] || ''}}
-                                <span *ngIf="(schoolRegForm.value.g_ClassId || 0) > 1" class="example-additional-selection">
-                                  (+{{(schoolRegForm.value.g_ClassId || 0) - 1}} {{schoolRegForm.value.g_ClassId === 2 ? 'other' : 'others'}})
-                                </span>
-                              </mat-select-trigger>
-                              <mat-option *ngFor="let groupclass of groupclassArr" [value]="groupclass">{{webStorageS.getLangauge() == 'EN' ?
-                                groupclass.groupClass : groupclass.m_GroupClass}}</mat-option>
-                        </mat-select>
-                        <mat-error *ngIf="f['g_ClassId'].hasError('required') || f['g_ClassId'].hasError('touched')">
-                            {{'Labels.groupClassIsRequired' | translate}}
-                        </mat-error>
-                    </mat-form-field>
-                </div>
-
-                <div class="col-sm-6">
                     <div class="d-flex justify-content-between align-items-center">
                         <div class="upload-btn-wrapper">
                             <button class="upload-btn">{{'Labels.uploadPhoto' | translate}}</button>
-                            <input type="file" name="myfile" formControlName="uploadImage" (change)="imgUpload($event)" />
+                            <input type="file" name="myfile" formControlName="uploadImage"
+                                (change)="imgUpload($event)" />
                         </div>
                         <div class="action-btn">
-                            <button type="button" mat-icon-button class="btn-icon text-primary" *ngIf="uploadImg" (click)="viewImg()">
+                            <button type="button" mat-icon-button class="btn-icon text-primary" *ngIf="uploadImg"
+                                (click)="viewImg()">
                                 <mat-icon>content_copy</mat-icon>
                             </button>
-                            <button type="button" mat-icon-button class="btn-icon text-danger" *ngIf="uploadImg" (click)="clearImg()">
+                            <button type="button" mat-icon-button class="btn-icon text-danger" *ngIf="uploadImg"
+                                (click)="clearImg()">
                                 <mat-icon>delete</mat-icon>
                             </button>
                         </div>
