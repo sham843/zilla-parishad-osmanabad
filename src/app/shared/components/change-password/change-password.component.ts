@@ -49,16 +49,16 @@ export class ChangePasswordComponent {
   onSubmit(clear : any){
     let obj = this.passwordForm.value;
     if(this.passwordForm.invalid){
-      this.common.snackBar('Please Enter Mandatory Fields',1);
+      this.common.snackBar(this.webStorage.languageFlag == 'EN' ?'Please Enter Mandatory Fields' : 'कृपया अनिवार्य फील्ड प्रविष्ट करा',1);
       return;
     }
     else{
       if(obj.currentPassword == obj.newPassword){
-        this.common.snackBar("New Password Must Be Different From Current Password", 1);
+        this.common.snackBar( this.webStorage.languageFlag == 'EN' ?'New Password Must Be Different From Current Password' :'नवीन पासवर्ड आणि सध्याच्या पासवर्ड वेगळा असणे आवश्यक आहे', 1);
         return
       }
       else if(obj.newPassword != obj.confirmPassword){
-        this.common.snackBar('New Password and Confirm Password Does Not Match', 1);
+        this.common.snackBar(this.webStorage.languageFlag == 'EN' ?'New Password and Confirm Password Does Not Match' :'नवीन पासवर्ड आणि कन्फर्म पासवर्ड जुळत नाही', 1);
         return
       }
       else{
