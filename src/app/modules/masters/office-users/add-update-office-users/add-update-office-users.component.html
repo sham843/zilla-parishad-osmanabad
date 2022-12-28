@@ -17,7 +17,7 @@
             <div class="col-sm-4">
                 <mat-form-field appearance="outline" class="w-100 ">
                     <mat-label>{{'Labels.level' | translate}}</mat-label>
-                    <mat-select  formControlName="designationLevelId"  (selectionChange)="onchangeLevel($event)">
+                    <mat-select  formControlName="designationLevelId"  (selectionChange)="onchangeLevel($event); onchangeValidation($event, 'Level')">
                         <mat-option [value]="level.id" *ngFor="let level of levels">{{webStorageService.languageFlag =='mr-IN' ? level.m_DesignationLevel : level.designationLevel}}</mat-option>
                     </mat-select>
                     <mat-error *ngIf="fc['designationLevelId'].hasError('required')">{{'Labels.levelRequired' | translate}}</mat-error>
@@ -27,7 +27,7 @@
             <div class="col-sm-4">
                 <mat-form-field appearance="outline" class="w-100 " *ngIf="officeForm.value.designationLevelId != 5 && officeForm.value.designationLevelId != 6 && officeForm.value.designationLevelId != 7">
                     <mat-label>{{'Labels.designation' | translate}}</mat-label>
-                    <mat-select  formControlName="designationId" (selectionChange)="getCenterDrop()">
+                    <mat-select  formControlName="designationId" (selectionChange)="getCenterDrop(); onchangeValidation($event, 'Designation')">
                         <mat-option  [value]="desig.id" *ngFor="let desig of designations">{{webStorageService.languageFlag =='mr-IN' ? desig.m_DesignationType: desig.designationType}}</mat-option>
                     </mat-select>
                     <mat-error *ngIf="fc['designationId'].hasError('required')">{{'Labels.DesignationTypeReq' | translate}}</mat-error>
@@ -40,7 +40,7 @@
                 </mat-form-field>
             </div>
 
-            <div class="col-sm-4" *ngIf="officeForm.value.designationId == 110 &&  officeForm.value.designationLevelId == 2">
+            <div class="col-sm-4" *ngIf="officeForm.value.designationId == 20 &&  officeForm.value.designationLevelId == 2">
                 <mat-form-field appearance="outline" class="w-100">
                     <mat-label>{{'Labels.kendra' | translate}}</mat-label>
                     <mat-select  formControlName="centerId"  (selectionChange)="getAllSchoolsByCenterId()">
@@ -54,7 +54,7 @@
 
         <div class="row">
             <!-- designationLevelId taluka  -->
-            <ng-container *ngIf="officeForm.value.designationLevelId == 2 && officeForm.value.designationId == 110" > 
+            <ng-container *ngIf="officeForm.value.designationLevelId == 2 && officeForm.value.designationId == 20" > 
                 <div class="col-sm-4">
                     <mat-form-field appearance="outline" class="w-100">
                         <mat-label>{{'Labels.school' | translate}}</mat-label>
@@ -92,7 +92,7 @@
         </div>
 
         <div class="row">
-            <ng-container *ngIf="officeForm.value.designationLevelId == 2 && officeForm.value.designationId == 115" >
+            <ng-container *ngIf="officeForm.value.designationLevelId == 2 && officeForm.value.designationId == 17" >
                 <div class="col-sm-4">
                     <mat-form-field appearance="outline" class="w-100">
                         <mat-label>{{'Labels.contactBeo' | translate}}</mat-label>
@@ -111,7 +111,7 @@
                 </div>
             </ng-container>
 
-            <ng-container *ngIf="officeForm.value.designationLevelId == 2 && officeForm.value.designationId == 110" >
+            <ng-container *ngIf="officeForm.value.designationLevelId == 2 && officeForm.value.designationId == 20" >
                 <div class="col-sm-4">
                     <mat-form-field appearance="outline" class="w-100">
                         <mat-label>Contact No.(Kendra)</mat-label>

@@ -1,8 +1,7 @@
 <mat-card class="plain-card">
     <mat-card-header class="card-header">
         <div class="d-flex align-items-center justify-content-between w-100">
-            <h6 class="text-main mb-0">{{editFlag ? ('Labels.studentUpdate'| translate):('Labels.studentRegistration'| translate)}}
-            </h6>
+            <h6 class="text-main mb-0">{{editFlag ? ('Labels.studentUpdate'| translate):('Labels.studentRegistration'| translate)}}</h6>
             <button mat-icon-button mat-dialog-close class="btn-modal-close">
                 <mat-icon>
                     close
@@ -11,8 +10,8 @@
         </div>
     </mat-card-header>
     <form [formGroup]="stuRegistrationForm">
-        <mat-card-content>
-            <h6 class="mb-3">{{'Labels.studentDetails'| translate}}</h6>
+        <mat-card-content class="card-body card-height-mid scrollbar">
+            <mat-card-subtitle class="mb-2 fw-bold">{{'Labels.studentDetails'| translate}}</mat-card-subtitle>
             <div class="row">
                 <div class="col-sm-4"> 
                     <mat-form-field appearance="outline" class="w-100 ">
@@ -48,8 +47,6 @@
                         </mat-error>
                     </mat-form-field>
                 </div>
-            </div>
-            <div class="row">
                 <div class="col-sm-4">
                     <mat-form-field appearance="outline" class="w-100 ">
                         <mat-label>{{'Labels.schoolList'| translate}}</mat-label>
@@ -115,32 +112,24 @@
                     </mat-form-field>
                 </div>
                 <div class="col-sm-4">
-                    <input type="file" id="real-file" (change)="fileUpload($event,'img')" hidden="hidden"
-                        #uploadImage />
-                    <mat-form-field appearance="outline" class="w-100 ">
-                        <mat-label>{{'Labels.uploadPhoto'| translate}}</mat-label>
-                        <input matInput formControlName="photo" readonly >
-                        <span class="uploadView">
-                            <mat-icon matSuffix *ngIf="!stuRegistrationForm.value.photo">
-                                <span class="material-symbols-outlined" (click)="uploadImage.click()">
-                                    upload
-                                </span>
-                            </mat-icon>
-                            <mat-icon matSuffix *ngIf="stuRegistrationForm.value.photo" class="w-auto">
-                                <span class="material-symbols-outlined text-primary" (click)="viewImages('photo')">
-                                    visibility
-                                </span>
-                                <span class="material-symbols-outlined text-danger"  (click)="deleteImage('photo')">
-                                    clear
-                                </span>
-                            </mat-icon>
-                        </span>
-                        <mat-error *ngIf="fc['photo'].hasError('required')">{{'Labels.uploadImg'| translate}}</mat-error>
-                    </mat-form-field>
-                    
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div class="upload-btn-wrapper">
+                            <button class="upload-btn" type="button" (click)="uploadImage.click()">Upload a file</button>
+                            <input type="file" name="myfile" (change)="fileUpload($event,'img')" #uploadImage/>
+                        </div>
+                        <div class="action-btn" *ngIf="uploadImg">
+                            <button mat-icon-button class="btn-icon text-primary" type="button" (click)="viewImages('photo')">
+                                <mat-icon>content_copy</mat-icon>
+                            </button>
+                            <button mat-icon-button class="btn-icon text-danger" type="button" (click)="deleteImage('photo')">
+                                <mat-icon>delete</mat-icon>
+                            </button>
+                        </div>
+                    </div>  
+                    <ng-container *ngIf="imgFlag">
+                        <span style="font-size: 11px;" class="text-danger">please Upload Image</span>
+                    </ng-container>                  
                 </div>
-            </div>
-            <div class="row">
                 <div class="col-sm-4">
                     <mat-form-field appearance="outline" class="w-100 ">
                         <mat-label>{{'Labels.standard'| translate}}</mat-label>
@@ -176,8 +165,6 @@
                             translate}}</mat-error>
                     </mat-form-field>
                 </div>
-            </div>
-            <div class="row">
                 <div class="col-sm-4">
                     <mat-form-field appearance="outline" class="w-100 ">
                         <mat-label>{{'Labels.religion'| translate}}</mat-label>
@@ -232,34 +219,30 @@
                     </mat-form-field>
                 </div>
                 <div class="col-sm-4">
-                    <input type="file" id="real-file" (change)="fileUpload($event,'aadhar')" hidden="hidden"
-                        #uploadAadhar />
-                    <mat-form-field appearance="outline" class="w-100 ">
-                        <mat-label>{{'Labels.aadhaarPhoto'| translate}}</mat-label>
-                        <input matInput formControlName="aadharPhoto" readonly> 
-                        <span class="aadhar-uploadView">
-                            <mat-icon matSuffix *ngIf="!stuRegistrationForm.value.aadharPhoto">
-                                <span class="material-symbols-outlined" (click)="uploadAadhar.click()">
-                                    upload
-                                </span>
-                            </mat-icon>
-                            <mat-icon matSuffix *ngIf="stuRegistrationForm.value.aadharPhoto" class="w-auto">
-                                <span class="material-symbols-outlined text-primary" (click)="viewImages('aadharPhoto')">
-                                    visibility
-                                </span>
-                                <span class="material-symbols-outlined text-danger" (click)="deleteImage('aadharPhoto')">
-                                    clear
-                                </span>
-                            </mat-icon>
-                        </span>
-                        <mat-error *ngIf="fc['aadharPhoto'].hasError('required')">{{'Labels.uploadImg'| translate}}</mat-error>
-                    </mat-form-field>      
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div class="upload-btn-wrapper">
+                            <button class="upload-btn" type="button" (click)="uploadAadhar.click()">Upload a file</button>
+                            <input type="file" name="myfile" (change)="fileUpload($event,'aadhar')" #uploadAadhar/>
+                        </div>
+                        <div class="action-btn" *ngIf="uploadAadhaar">
+                            <button mat-icon-button class="btn-icon text-primary" type="button" (click)="viewImages('aadharPhoto')">
+                                <mat-icon>content_copy</mat-icon>
+                            </button>
+                            <button mat-icon-button class="btn-icon text-danger" type="button" (click)="deleteImage('aadharPhoto')">
+                                <mat-icon>delete</mat-icon>
+                            </button>
+                        </div>
+                    </div>
+                    <ng-container *ngIf="aadhaarFlag">
+                        <span style="font-size: 11px;" class="text-danger">please Upload Aadhaar Image</span>
+                    </ng-container>
                    
-                           
+                   
                 </div>
-                
             </div>
-            <h6 class="mb-3">{{'Labels.gardiantDetails'| translate}}</h6>
+            
+            
+            <mat-card-subtitle class="mb-2 fw-bold">{{'Labels.gardiantDetails'| translate}}</mat-card-subtitle>
             <div class="row">
                 <div class="col-sm-4">
                     <mat-form-field appearance="outline" class="w-100">
@@ -272,8 +255,6 @@
                             translate}}</mat-error>
                     </mat-form-field>
                 </div>
-            </div>
-            <div class="row">
                 <div class="col-sm-4">
                     <mat-form-field appearance="outline" class="w-100">
                         <mat-label>{{'Labels.fatherName'| translate}}</mat-label>
@@ -282,14 +263,6 @@
                             translate}}</mat-error>
                     </mat-form-field>
                 </div>
-                <!-- <div class="col-sm-4">
-                    <mat-form-field appearance="outline" class="w-100">
-                        <mat-label>Father Marathi Name</mat-label>
-                        <input matInput formControlName="m_FatherFullName">
-                        <mat-error *ngIf="fc['m_FatherFullName'].hasError('required')">Enter Father Full Name
-                        </mat-error>
-                    </mat-form-field>
-                </div> -->
                 <div class="col-sm-4">
                     <mat-form-field appearance="outline" class="w-100">
                         <mat-label>{{'Labels.motherName'| translate}}</mat-label>
@@ -298,26 +271,13 @@
                         </mat-error>
                     </mat-form-field>
                 </div>
-                <!-- <div class="col-sm-4">
-                    <mat-form-field appearance="outline" class="w-100">
-                        <mat-label>Mother Marathi Name</mat-label>
-                        <input matInput formControlName="m_MotherName">
-                        <mat-error *ngIf="fc['m_MotherName'].hasError('required')">Enter Mother Name </mat-error>
-                    </mat-form-field>
-                </div> -->
-                <!-- <div class="col-sm-4">
-                    <mat-form-field appearance="outline" class="w-100">
-                        <mat-label>Email ID</mat-label>
-                        <input matInput formControlName="emailID">
-                    </mat-form-field>
-                </div> -->
             </div>
         </mat-card-content>
-        <mat-card-footer class="card-footer">
+        <mat-card-footer>
             <mat-card-actions align="end">
-                <button class="btn btn-outline-secondary me-2" type="button" mat-dialog-close>{{'Labels.cancel'|
+                <button mat-stroked-button class="btn-second me-2" type="button" mat-dialog-close>{{'Labels.cancel'|
                     translate}}</button>
-                <button class="btn btn-main " (click)="onSubmit()">{{editFlag ? ('Labels.update'|
+                <button mat-stroked-button class="btn-main" (click)="onSubmit()">{{editFlag ? ('Labels.update'|
                     translate):('Labels.submit'| translate)}}</button>
             </mat-card-actions>
         </mat-card-footer>

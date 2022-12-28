@@ -1,11 +1,12 @@
 import { Component, Inject } from '@angular/core';
-import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ApiService } from 'src/app/core/services/api.service';
 import { CommonMethodsService } from 'src/app/core/services/common-methods.service';
 import { ErrorsService } from 'src/app/core/services/errors.service';
 import { FileUploadService } from 'src/app/core/services/file-upload.service';
 import { MasterService } from 'src/app/core/services/master.service';
+import { ValidationService } from 'src/app/core/services/validation.service';
 
 
 @Component({
@@ -16,6 +17,7 @@ import { MasterService } from 'src/app/core/services/master.service';
 export class AddUpdateTeacherRegistrationComponent {
   teacherRegForm!: FormGroup;
   editFlag: boolean = false;
+  assignclass:boolean =false;
   editObj: any;
   uploadImg: any;
   showAddRemImg: boolean = false;
@@ -43,6 +45,7 @@ export class AddUpdateTeacherRegistrationComponent {
   isGraduatePayScaleArray = new Array();
   interDistrictTransferTypeArray = new Array();
   assignClassArray = new Array();
+
   newAsssignClassArray=[
     {standardId :1 , checked:false},
     {standardId :2 , checked:false},
@@ -56,7 +59,7 @@ export class AddUpdateTeacherRegistrationComponent {
 
 
   constructor(private masterService: MasterService, private commonMethod: CommonMethodsService, private errorHandler: ErrorsService,
-    private fileUpload: FileUploadService,
+    private fileUpload: FileUploadService,public validation: ValidationService,
     private fb: FormBuilder, private service: ApiService, public dialogRef: MatDialogRef<AddUpdateTeacherRegistrationComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any) { }
 
@@ -69,9 +72,15 @@ export class AddUpdateTeacherRegistrationComponent {
     return this.teacherRegForm.controls;
   }
 
-  get teacherForm(): FormArray {
-    return this.teacherRegForm.get('assignTeacher') as FormArray;
+  get td(){
+    // return this.teacherRegForm.get('teacherDetails') as FormGroup .controls;
+    return ((this.teacherRegForm.get('teacherDetails') as FormGroup).controls)
+
   }
+
+  // get teacherForm() {
+  //   return this.teacherRegForm.get('teacherDetails') as object;
+  // }
 
   formData() {
     this.teacherRegForm = this.fb.group({
@@ -81,24 +90,24 @@ export class AddUpdateTeacherRegistrationComponent {
       "modifiedDate": new Date(),
       "isDeleted": false,
       "id": [this.data ? this.data.id : 0],
-      "name": [this.data ? this.data.name : ''],
-      "m_Name": [this.data ? this.data.m_Name : ''],
-      "address": [this.data ? this.data.address : ''],
+      "name": [this.data ? this.data.name : '',[Validators.required, Validators.pattern(this.validation.fullName)]],
+      "m_Name": [this.data ? this.data.m_Name : '',Validators.required],
+      "address": [''],
       "stateId": 0,
-      "districtId": 0,
-      "talukaId": 0,
-      "villageId": 0,
+      "districtId": ['', Validators.required],
+      "talukaId": ['', Validators.required],
+      "villageId":['', Validators.required],
       "centerId": 0,
       "userTypeId": 0,
       "subUserTypeId": 0,
-      "genderId": 0,
-      "mobileNo": [this.data ? this.data.mobileNo : ''],
+      "genderId": ['', Validators.required],
+      "mobileNo": [this.data ? this.data.mobileNo : '',[Validators.required, Validators.pattern(this.validation.mobile_No)]],
       "emailId": [this.data ? this.data.emailId : ''],
-      "birthDate": [this.data ? this.data.birthDate : ''],
+      "birthDate": [this.data ? this.data.birthDate : '',Validators.required],
       "age": [this.data ? this.data.age : 0],
       "uploadImage": [''],
-      "currentAddress": [this.data ? this.data.currentAddress : ''],
-      "permentAddress": [this.data ? this.data.permentAddress : ''],
+      "currentAddress": [this.data ? this.data.currentAddress : '',[Validators.required, Validators.pattern(this.validation.fullName)]],
+      "permentAddress": [this.data ? this.data.permentAddress : '',[Validators.required, Validators.pattern(this.validation.fullName)]],
       "lan": ['EN'],
       "localID": 0,
       "timestamp": new Date(),
@@ -113,55 +122,49 @@ export class AddUpdateTeacherRegistrationComponent {
         "districtId": 0,
         "talukaId": 0,
         "villageId": 0,
-        "schoolId": 0,
-        "clusterId": 0,
-        "designationId": 0,
-        "graduate_SubjectId": 0,
-        "isGraduate_PayScale": true,
-        "castId": 0,
-        "castCategoryId": 0,
-        "castCertificateNo": [this.data ? this.data.teacherDetails.castCertificateNo : ''],
-        "castCertificateOffice": [this.data ? this.data.teacherDetails.castCertificateOffice : ''],
-        "isCastVarificationDone": true,
-        "castValidityNoDate": [this.data ? this.data.teacherDetails.castValidityNoDate : ''],
-        "castverificationCommitteeName": [this.data ? this.data.teacherDetails.castverificationCommitteeName : ''],
-        "dateOfFirstAppoinmentService":[this.data ? this.data.teacherDetails.dateOfFirstAppoinmentService : new Date()],
-        "currentSchoolJoiningDate": [this.data ? this.data.teacherDetails.currentSchoolJoiningDate : new Date()],
-        "currentTalukaPresentDate": [this.data ? this.data.teacherDetails.currentTalukaPresentDate : new Date()],
-        "retirementDate":  [this.data ? this.data.teacherDetails.retirementDate : new Date()],
-        "educationalQualificationId": 0,
-        "branchId12th": 0,
-        "degreeOptionalSubjectsId": 0,
-        "degreeUniversityId": 0,
-        "professionalQualificationId": 0,
+        "schoolId": ['',Validators.required],
+        "clusterId": ['',Validators.required],
+        "designationId":['',Validators.required],
+        "graduate_SubjectId": ['',Validators.required],
+        "isGraduate_PayScale": ['',Validators.required],
+        "castId":['',Validators.required],
+        "castCategoryId": ['',Validators.required],
+        "castCertificateNo": [this.data ? this.data.teacherDetails.castCertificateNo : '',Validators.required],
+        "castCertificateOffice": [this.data ? this.data.teacherDetails.castCertificateOffice : '',Validators.required],
+        "isCastVarificationDone": ['',Validators.required],
+        "castValidityNoDate": [this.data ? this.data.teacherDetails.castValidityNoDate : '',Validators.required],
+        "castverificationCommitteeName": [this.data ? this.data.teacherDetails.castverificationCommitteeName : '',Validators.required],
+        "dateOfFirstAppoinmentService":[this.data ? this.data.teacherDetails.dateOfFirstAppoinmentService : '',Validators.required],
+        "currentSchoolJoiningDate": [this.data ? this.data.teacherDetails.currentSchoolJoiningDate : '',Validators.required],
+        "currentTalukaPresentDate": [this.data ? this.data.teacherDetails.currentTalukaPresentDate : '',Validators.required],
+        "retirementDate":  [this.data ? this.data.teacherDetails.retirementDate : '',Validators.required],
+        "educationalQualificationId": ['',Validators.required],
+        "branchId12th": ['',Validators.required],
+        "degreeOptionalSubjectsId": ['',Validators.required],
+        "degreeUniversityId": ['',Validators.required],
+        "professionalQualificationId": ['',Validators.required],
         "bEdPercentages":[this.data ? this.data.teacherDetails.bEdPercentages : ''],
         "bEdUniversityId":[this.data ? this.data.teacherDetails.bEdUniversityId : ''],
-        "husbandWife_Both_Service": true,
-        "husbandWife_OfficeName": [this.data ? this.data.teacherDetails.husbandWife_OfficeName : ''],
-        "isDisabled": true,
-        "interDistrictTransferred": true,
-        "dateOFPresenceInterDistrictTransfer": [this.data ? this.data.teacherDetails.dateOFPresenceInterDistrictTransfer : ''],
-        "interDistrictTransferType": 0,
-        "theOriginalDistrictInterDistrictTransfer":[this.data ? this.data.teacherDetails.theOriginalDistrictInterDistrictTransfer : ''],
-        "dateOfSeniority": [this.data ? this.data.teacherDetails.dateOfSeniority : ''],
-        "haveYouPassedComputerExam": true,
-        "namesAndTalukasAllSchoolsWorkedEarlier": [this.data ? this.data.teacherDetails.namesAndTalukasAllSchoolsWorkedEarlier : '']
+        "husbandWife_Both_Service":['',Validators.required],
+        "husbandWife_OfficeName": [this.data ? this.data.teacherDetails.husbandWife_OfficeName : '',Validators.required],
+        "isDisabled":['',Validators.required],
+        "interDistrictTransferred": ['',Validators.required],
+        "dateOFPresenceInterDistrictTransfer": [this.data ? this.data.teacherDetails.dateOFPresenceInterDistrictTransfer : '',Validators.required],
+        "interDistrictTransferType": ['',Validators.required],
+        "theOriginalDistrictInterDistrictTransfer":[this.data ? this.data.teacherDetails.theOriginalDistrictInterDistrictTransfer : '',Validators.required],
+        "dateOfSeniority": [this.data ? this.data.teacherDetails.dateOfSeniority : '',Validators.required],
+        "haveYouPassedComputerExam": ['',Validators.required],
+        "namesAndTalukasAllSchoolsWorkedEarlier": [this.data ? this.data.teacherDetails.namesAndTalukasAllSchoolsWorkedEarlier : '',Validators.required]
       }),
       "assignTeacher": []
     })
 
   }
 
-  getClass(): FormGroup {
-    return this.fb.group({
-      "id": 0,
-      "teacherId": 0,
-      "standardId": 0,
-      "isDeleted": true
-    });
-  }
-
   addStand(stand: any, value: number) {
+    console.log("value",value);
+    
+    this.assignclass=true;
     console.log(stand.currentTarget.checked);
     let data =
     {
@@ -175,8 +178,13 @@ export class AddUpdateTeacherRegistrationComponent {
       this.assignClassArray.push(data);
     }
     else {
-      this.assignClassArray.pop();
+      let index = this.assignClassArray.indexOf(value);
+      if (index > -1) {
+        this.assignClassArray.splice(index, 1);
+      }
+      // return this.assignClassArray;
     }
+      
     console.log("assignClassArray",this.assignClassArray);
   }
 
@@ -533,7 +541,6 @@ export class AddUpdateTeacherRegistrationComponent {
     })
   }
 
-
   gethusbandWifeBothService() {
     this.husbandWifeBothServiceArray = [
       { id: 1, name: 'yes', husbandWife_Both_Service: true },
@@ -636,9 +643,14 @@ export class AddUpdateTeacherRegistrationComponent {
   OnSubmit() {
     console.log(this.teacherRegForm.value);
     let formValue = this.teacherRegForm.value;
+
     formValue.uploadImage ? formValue.uploadImage = this.uploadImg : '';
     !this.showAddRemImg ? formValue.uploadImage = '' : formValue.uploadImage = formValue.uploadImage;
-    this.teacherRegForm.value.assignTeacher = this.assignClassArray;
+
+  formValue.assignTeacher = this.assignClassArray ;
+    
+    
+    
     let postObj = this.teacherRegForm.value;
     console.log(postObj);
     let url;
@@ -664,14 +676,22 @@ export class AddUpdateTeacherRegistrationComponent {
     this.editFlag = true;
     this.editObj = obj;
     console.log("editObj", this.editObj);
-    // return
-    this.data.uploadImage ? this.teacherRegForm.value.uploadImage = this.data.uploadImage : '';
+    this.data.uploadImage ? this.teacherRegForm.value.uploadImage = obj.uploadImage : '';
     this.data.uploadImage ? this.showAddRemImg = true : this.showAddRemImg = false;
+
+    this.assignClassArray = obj.assignTeacher;
+
+     for(let i=0; i<this.newAsssignClassArray.length;i++){
+      for(let j=0 ;j<obj.assignTeacher.length;j++){  
+         if(this.newAsssignClassArray[i].standardId == obj.assignTeacher[j].standardId){
+          this.newAsssignClassArray[i].checked = true;
+         }
+      }
+   }
     this.formData(); this.getGender();
   }
 
-  clearImg() {
-  
+  clearImg() {  
     this.teacherRegForm.value.uploadImage = '';
     this.f['uploadImage'].setValue('');
     this.showAddRemImg = false;

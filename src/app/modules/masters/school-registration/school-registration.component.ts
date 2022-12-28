@@ -19,7 +19,6 @@ export class SchoolRegistrationComponent {
   pageNumber: number = 1;
   tableDataArray = new Array();
   searchContent = new FormControl('');
-  // districtId = new FormControl('0');
   districtId = new FormControl('');
   talukaId = new FormControl('');
   villageId = new FormControl();
@@ -48,7 +47,10 @@ export class SchoolRegistrationComponent {
     this.getTableData();
     this.getDistrict();
     this.getofficeReport();
-    this.languageChange();
+    this.webStorageS.langNameOnChange.subscribe(lang => {
+      this.langTypeName = lang;
+      this.languageChange();
+    });
   }
 
   onPagintion(pageNo: number) {
@@ -57,16 +59,26 @@ export class SchoolRegistrationComponent {
   }
 
   //#region ------------------------------------------- School Registration Table Data start here ----------------------------------------// 
+  
+  languageChange() {
+    this.webStorageS.langNameOnChange.subscribe(lang => {
+      this.langTypeName = lang;
+      this.displayedColumns = ['uploadImage', 'srNo', this.langTypeName == 'English' ? 'schoolName' : 'm_SchoolName', 'village', 'taluka', 'district', 'action'];
+      this.tableData = {
+        pageNumber: this.pageNumber,
+        img: 'uploadImage', blink: '', badge: '', isBlock: '', pagintion: true,
+        displayedColumns: this.displayedColumns, tableData: this.tableDataArray,
+        tableSize: this.tableDatasize,
+        tableHeaders: this.langTypeName == 'English' ? this.displayedheadersEnglish : this.displayedheadersMarathi
+      };
+      this.apiService.tableData.next(this.tableData);
+    })
+  }
+  
   getTableData(flag?: string) {
     this.tableDataArray = [];
-    if(localStorage.getItem('schoolRegistration')){
-      this.pageNumber = JSON.parse(localStorage.getItem('schoolRegistration')||'');
-      localStorage.removeItem('schoolRegistration');
-    }
 
     this.pageNumber = flag == 'filter' ? 1 : this.pageNumber;
-
-    let tableDatasize!: Number;
     let pageNo = this.cardViewFlag ? (this.cardCurrentPage + 1) : this.pageNumber;
 
     let str = `?pageno=${pageNo}&pagesize=10&DistrictId=${this.districtId.value ? this.districtId.value : 0}
@@ -75,23 +87,16 @@ export class SchoolRegistrationComponent {
     this.apiService.getHttp().subscribe({
 
       next: (res: any) => {
-        if (res.statusCode == "200") {
+        if (res.statusCode == 200) {
           this.tableDataArray = res.responseData.responseData1;
           this.totalCount = res.responseData.responseData2.pageCount;
-          tableDatasize = res.responseData.responseData2.pageCount;
+          this.tableDatasize = res.responseData.responseData2.pageCount;
         }
         else {
           this.tableDataArray = [];
-          tableDatasize = 0;
+          this.tableDatasize = 0;
         }
-        let tableData = {
-          pageNumber: this.pageNumber,
-          img: 'uploadImage', blink: '', badge: '', isBlock: '', pagintion: true,
-          displayedColumns: this.displayedColumns, tableData: this.tableDataArray,
-          tableSize: tableDatasize,
-          tableHeaders: this.langTypeName == 'English' ? this.displayedheadersEnglish : this.displayedheadersMarathi
-        };
-        this.apiService.tableData.next(tableData);
+        this.languageChange();
       },
       error: ((err: any) => { this.commonMethodS.checkEmptyData(err.statusText) == false ? this.errors.handelError(err.statusCode) : this.commonMethodS.snackBar(err.statusText, 1); })
     });
@@ -134,25 +139,9 @@ export class SchoolRegistrationComponent {
   }
   //#endregion ------------------------------------------- School Registration Dropdown start here ----------------------------------------// 
 
-  languageChange() {
-    this.webStorageS.langNameOnChange.subscribe(lang => {
-      this.langTypeName = lang;
-      this.displayedColumns = ['uploadImage', 'srNo', this.langTypeName == 'English' ? 'schoolName' : 'm_SchoolName', 'village', 'taluka', 'district', 'action'];
-      this.tableData = {
-        pageNumber: this.pageNumber,
-        img: 'uploadImage', blink: '', badge: '', isBlock: '', pagintion: true,
-        displayedColumns: this.displayedColumns, tableData: this.tableDataArray,
-        tableSize: this.tableDatasize,
-        tableHeaders: this.langTypeName == 'English' ? this.displayedheadersEnglish : this.displayedheadersMarathi
-      };
-      this.apiService.tableData.next(this.tableData);
-    })
-  }
-
   childCompInfo(obj: any) {
     switch (obj.label) {
       case 'Pagination':
-        console.log(obj.pageNumber);
         this.pageNumber = obj.pageNumber;
         this.getTableData();
         break;
@@ -178,7 +167,6 @@ export class SchoolRegistrationComponent {
         this.onClear();
         this.getTableData();
         this.pageNumber = this.pageNumber;
-        localStorage.setItem('schoolRegistration',JSON.stringify(this.pageNumber));
       }
       else if(result == 'yes'){
         this.getTableData();
@@ -225,7 +213,6 @@ export class SchoolRegistrationComponent {
   filterData() {
     if (this.districtId.value || this.talukaId.value || this.villageId.value) {
       this.getTableData();
-      this.pageNumber = 1;
         this.getofficeReport();
     }
   }
@@ -278,14 +265,12 @@ export class SchoolRegistrationComponent {
     this.apiService.setHttp('GET', 'ZP-Osmanabad/School/GetAll' + str, false, false, false, 'baseUrl');
     this.apiService.getHttp().subscribe({
       next: (res: any) => {
-        console.log("PDF : ",res);
         
-        if (res.statusCode == "200") {
+        if (res.statusCode == 200) {
           this.resultDownloadArr = [];
           let data: [] = res.responseData.responseData1;
-          console.log("data", data);
           
-          if(data.length < 0){
+          // if(data.length < 0){
             data.map((ele: any, i: any) => {
               let obj = {
                 "Sr.No": i + 1,
@@ -296,7 +281,7 @@ export class SchoolRegistrationComponent {
               }
               this.resultDownloadArr.push(obj);
             });
-          }
+          // }
         }
       },
       error: ((err: any) => {
@@ -315,7 +300,6 @@ export class SchoolRegistrationComponent {
       'topHedingName': 'School Registration Data',
       'createdDate': 'Created on:' + new Date()
     }
-    console.log("ValueData : ",ValueData);
     if(ValueData.length > 0){
       this.downloadFileService.downLoadPdf(keyPDFHeader, ValueData, objData);
     }
