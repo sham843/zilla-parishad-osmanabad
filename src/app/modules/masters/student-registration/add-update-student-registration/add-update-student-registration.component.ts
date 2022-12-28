@@ -123,7 +123,7 @@ export class AddUpdateStudentRegistrationComponent {
       next: (res: any) => {
         if (res.statusCode == 200) {
           this.talukaArr = res.responseData;
-          this.editObj ? (this.stuRegistrationForm.controls['talukaId'].setValue(this.editObj.talukaId), this.getAllCenter()) : '';
+          this.editFlag ? (this.stuRegistrationForm.controls['talukaId'].setValue(this.editObj.talukaId), this.getAllCenter()) : '';
         } else {
           this.commonMethods.checkEmptyData(res.statusMessage) == false ? this.errors.handelError(res.statusCode) : this.commonMethods.snackBar(res.statusMessage, 1);
           this.talukaArr = [];
@@ -140,7 +140,7 @@ export class AddUpdateStudentRegistrationComponent {
       next: (res: any) => {
         if (res.statusCode == 200) {
           this.centerArr = res.responseData;
-          this.editObj ? (this.stuRegistrationForm.controls['centerId'].setValue(this.editObj.centerId), this.getAllSchoolsByCenterId()) : ''
+          this.editFlag ? (this.stuRegistrationForm.controls['centerId'].setValue(this.editObj.centerId), this.getAllSchoolsByCenterId()) : ''
         } else {
           this.commonMethods.checkEmptyData(res.statusMessage) == false ? this.errors.handelError(res.statusCode) : this.commonMethods.snackBar(res.statusMessage, 1);
           this.centerArr = [];
@@ -157,7 +157,7 @@ export class AddUpdateStudentRegistrationComponent {
       next: (res: any) => {
         if (res.statusCode == 200) {
           this.schoolArr = res.responseData;
-          this.editObj ? this.stuRegistrationForm.controls['schoolId'].setValue(this.editObj.schoolId) : '';
+          this.editFlag ? this.stuRegistrationForm.controls['schoolId'].setValue(this.editObj.schoolId) : '';
         } else {
           this.commonMethods.checkEmptyData(res.statusMessage) == false ? this.errors.handelError(res.statusCode) : this.commonMethods.snackBar(res.statusMessage, 1);
           this.schoolArr = [];
@@ -173,7 +173,7 @@ export class AddUpdateStudentRegistrationComponent {
       next: (res: any) => {
         if (res.statusCode == 200) {
           this.standardArr = res.responseData;
-          this.editObj ? this.stuRegistrationForm.controls['standard'].setValue(this.editObj.standardId) : '';
+          this.editFlag ? this.stuRegistrationForm.controls['standard'].setValue(this.editObj.standardId) : '';
         } else {
           this.commonMethods.checkEmptyData(res.statusMessage) == false ? this.errors.handelError(res.statusCode) : this.commonMethods.snackBar(res.statusMessage, 1);
           this.standardArr = [];
@@ -189,7 +189,7 @@ export class AddUpdateStudentRegistrationComponent {
       next: (res: any) => {
         if (res.statusCode == 200) {
           this.genderArr = res.responseData;
-          this.editObj ? this.stuRegistrationForm.controls['gender'].setValue(this.editObj.genderId) : '';
+          this.editFlag ? this.stuRegistrationForm.controls['gender'].setValue(this.editObj.genderId) : '';
         } else {
           this.commonMethods.checkEmptyData(res.statusMessage) == false ? this.errors.handelError(res.statusCode) : this.commonMethods.snackBar(res.statusMessage, 1);
           this.genderArr = [];
@@ -205,7 +205,7 @@ export class AddUpdateStudentRegistrationComponent {
       next: (res: any) => {
         if (res.statusCode == 200) {
           this.religionArr = res.responseData;
-          this.editObj ? (this.stuRegistrationForm.controls['religionId'].setValue(this.editObj.religionId), this.getCaste()) : '';
+          this.editFlag ? (this.stuRegistrationForm.controls['religionId'].setValue(this.editObj.religionId), this.getCaste()) : '';
         } else {
           this.commonMethods.checkEmptyData(res.statusMessage) == false ? this.errors.handelError(res.statusCode) : this.commonMethods.snackBar(res.statusMessage, 1);
           this.religionArr = [];
@@ -222,7 +222,7 @@ export class AddUpdateStudentRegistrationComponent {
       next: (res: any) => {
         if (res.statusCode == 200) {
           this.casteArr = res.responseData;
-          this.editObj ? this.stuRegistrationForm.controls['castId'].setValue(this.editObj.castId) : '';
+          this.editFlag ? this.stuRegistrationForm.controls['castId'].setValue(this.editObj.castId) : '';
         } else {
           this.commonMethods.checkEmptyData(res.statusMessage) == false ? this.errors.handelError(res.statusCode) : this.commonMethods.snackBar(res.statusMessage, 1);
           this.casteArr = [];
@@ -323,8 +323,8 @@ export class AddUpdateStudentRegistrationComponent {
         if (!this.uploadAadhaar) { this.aadhaarFlag = true };
         return
       }
-      let url = this.editFlag ? 'UpdateStudent' : 'AddStudent'
-      this.apiService.setHttp(this.editFlag ? 'put' : 'post', 'zp-osmanabad/Student/' + url, false, postObj, false, 'baseUrl');
+      let url = this.editObj ? 'UpdateStudent' : 'AddStudent'
+      this.apiService.setHttp(this.editObj ? 'put' : 'post', 'zp-osmanabad/Student/' + url, false, postObj, false, 'baseUrl');
       this.apiService.getHttp().subscribe({
         next: (res: any) => {
           if (res.statusCode == 200) {
@@ -395,5 +395,16 @@ export class AddUpdateStudentRegistrationComponent {
   }
 
   //#region ------------------------------------------- Image Logic Start Here -----------------------------------------------------------------
+
+  clearDropdown(name:any){
+    this.editFlag = false
+    if(name == 'talukaId'){
+      this.stuRegistrationForm.controls['centerId'].setValue('');
+      this.stuRegistrationForm.controls['schoolId'].setValue('');
+    }else if(name == 'centerId'){
+      this.stuRegistrationForm.controls['schoolId'].setValue('');
+    }
+  }
+
 
 }

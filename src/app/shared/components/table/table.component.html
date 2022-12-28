@@ -27,7 +27,7 @@
                     {{tableHeaders[j] | titlecase}}
                 </th>
                 <td mat-cell *matCellDef="let element let i=index">
-                    <button mat-icon-button (click)="action(element, 'Edit', i)" matTooltip="Edit" matTooltipPosition="left">
+                    <button mat-icon-button id="tooltip" data-tooltip="Edit" (click)="action(element, 'Edit', i)">
                         <mat-icon class="text-main">edit</mat-icon>
                     </button>
                     <!-- <button mat-icon-button (click)="action(element, 'Delete')">

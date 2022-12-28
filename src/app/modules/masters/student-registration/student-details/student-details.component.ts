@@ -1,7 +1,8 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input } from '@angular/core';
+import { Component, Inject, Input } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 // import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -23,11 +24,12 @@ import { MatSelectModule } from '@angular/material/select';
 })
 export class StudentDetailsComponent {
   @Input() data : any; // decorate the property with @Input()
-  constructor() {      
-    }
+  constructor(   
+    public dialogRef: MatDialogRef<StudentDetailsComponent>,
+    @Inject(MAT_DIALOG_DATA) public dialogdata: any) { }
 
     ngOnInit(){
-      console.log(this.data);   
+      this.dialogdata ? this.data = this.dialogdata : this.data = this.data  
     }
 
 }

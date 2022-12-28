@@ -138,19 +138,19 @@
                     </mat-form-field>
                 </div>
 
-                <!-- <div class="col-sm-6">
+                <div class="col-sm-6">
                     <mat-form-field appearance="outline" class="w-100">
                         <mat-label>{{'Labels.groupClass' | translate}}</mat-label>
-                        <mat-select multiple [(ngModel)]="selectedObjects" formControlName="g_ClassId">
-                        <mat-option *ngFor="let groupclass of groupclassArr" [value]="groupclass">
-                            {{groupclass.groupclass}}
+                        <mat-select multiple formControlName="g_ClassId">
+                        <mat-option *ngFor="let groupclass of groupclassArr" [value]="groupclass.groupClass">
+                            {{groupclass.groupClass}}
                         </mat-option>
                     </mat-select>
                         <mat-error *ngIf="f['g_ClassId'].hasError('required') || f['g_ClassId'].hasError('touched')">
                             {{'Labels.groupClassIsRequired' | translate}}
                         </mat-error>
                     </mat-form-field>
-                </div> -->
+                </div>
 
                 <div class="col-sm-6">
                     <div class="d-flex justify-content-between align-items-center">
