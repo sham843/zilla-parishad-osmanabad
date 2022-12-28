@@ -3,8 +3,8 @@
     <div class="login-right">
         <div class="d-flex justify-content-end py-2 pe-4">
             <a routerLink="../home" class="text-main text-decoration-none">
-                <div class="d-flex w-100">
-                    <mat-icon>keyboard_double_arrow_left</mat-icon>
+                <div class="d-flex w-100 align-items-center">
+                    <mat-icon class="mb-1">keyboard_double_arrow_left</mat-icon>
                     <span>Go to Home Page</span>
                 </div>
             </a>
@@ -25,8 +25,8 @@
                                             <mat-label>User Name</mat-label>
                                             <input matInput formControlName="userName"
                                                 (keypress)="validators.noSpaceAllow($event)">
-                                            <mat-error *ngIf="fc['userName'].hasError('required')">User Name Is
-                                                Required</mat-error>
+                                            <mat-error *ngIf="fc['userName'].hasError('required')">User Name is
+                                                required</mat-error>
                                         </mat-form-field>
                                     </div>
                                     <div class="mb-3 text-center">
@@ -36,18 +36,17 @@
                                                 formControlName="password" (keypress)="validators.noSpaceAllow($event)">
                                             <button mat-icon-button matSuffix (click)="hide = !hide" type="button"
                                                 [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
-                                                <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                                                <mat-icon class="PasswordEyeView">{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
                                             </button>
-                                            <mat-error *ngIf="fc['password'].hasError('required')">Password Is
-                                                Required</mat-error>
-                                            <mat-error *ngIf="fc['password'].hasError('pattern')">Enter Valid
+                                            <mat-error *ngIf="fc['password'].hasError('required')">Password is
+                                                required</mat-error>
+                                            <mat-error *ngIf="fc['password'].hasError('pattern')">Enter valid
                                                 Password</mat-error>
-
                                         </mat-form-field>
                                     </div>
                                     <div class="d-flex align-items-center justify-content-between">
                                         <button mat-flat-button class="btn-main" type="submit">Submit</button>
-                                        <a routerLink="../forgot-password" class="text-main">Forgot Password</a>
+                                        <a routerLink="../forgot-password" class="text-main">Forgot Password?</a>
                                     </div>
                                 </div>
                             </mat-tab>
@@ -59,10 +58,10 @@
                                             <mat-label>Mobile No.</mat-label>
                                             <input matInput formControlName="mobileNo" maxlength="10" minlength="10"
                                                 (keypress)="validators.onlyDigits($event)">
-                                            <mat-error *ngIf="fc['mobileNo'].hasError('required')">Mobile No Is
-                                                Required</mat-error>
-                                            <mat-error *ngIf="fc['mobileNo'].hasError('pattern')">Enter Valid Mobile
-                                                Number</mat-error>
+                                            <mat-error *ngIf="fc['mobileNo'].hasError('required')">Mobile no. is
+                                                required</mat-error>
+                                            <mat-error *ngIf="fc['mobileNo'].hasError('pattern')">Enter a valid mobile
+                                                no.</mat-error>
                                             <!-- <mat-error *ngIf="fc['mobileNo'].hasError('maxLength')"> Enter 10 Digit Number</mat-error>
                                         <mat-error *ngIf="fc['mobileNo'].hasError('minLength')"> Enter 10 Digit Number</mat-error> -->
                                         </mat-form-field>
@@ -75,17 +74,17 @@
                                                 (keypress)="validators.noSpaceAllow($event)">
                                             <button mat-icon-button matSuffix type="button" (click)="hide = !hide"
                                                 [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
-                                                <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                                                <mat-icon class="PasswordEyeView">{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
                                             </button>
-                                            <mat-error *ngIf="fc['passwordOff'].hasError('required')">Password Is
-                                                Required</mat-error>
-                                            <mat-error *ngIf="fc['passwordOff'].hasError('pattern')">Enter Valid
+                                            <mat-error *ngIf="fc['passwordOff'].hasError('required')">Password is
+                                                required</mat-error>
+                                            <mat-error *ngIf="fc['passwordOff'].hasError('pattern')">Enter valid
                                                 Password</mat-error>
                                         </mat-form-field>
                                     </div>
                                     <div class="d-flex align-items-center justify-content-between">
                                         <button mat-flat-button class="btn-main" type="submit">Submit</button>
-                                        <a routerLink="../forgot-password" class="text-main">Forgot Password</a>
+                                        <a routerLink="../forgot-password" class="text-main">Forgot Password?</a>
                                     </div>
                                 </div>
                             </mat-tab>
