@@ -56,7 +56,7 @@ export class StudentRegistrationComponent {
       this.languageFlag = lang;
       let tableData = {
         pageNumber: this.pageNumber,
-        img: '', blink: '', badge: '', isBlock: '', pagintion: true,
+        img: 'docPath', blink: '', badge: '', isBlock: '', pagintion: true,
         displayedColumns: this.languageFlag == 'English' ? this.displayedColumns : this.marathiDisplayedColumns,
         tableData: this.tableDataArray,
         tableSize: this.tableDatasize,
@@ -80,15 +80,15 @@ export class StudentRegistrationComponent {
     let pageNo
     this.cardViewFlag ? pageNo = (this.cardCurrentPage + 1) : (pageNo = this.pageNumber, this.cardCurrentPage = 0);
     let str = `?pageno=${pageNo}&pagesize=10&textSearch=${this.searchContent.value || ''}&lan=${this.languageFlag || ''}`;
-    let reportStr = '?pageno=1&pagesize='+(this.totalCount *10) +'&textSearch=' + this.searchContent.value +'&lan='+this.languageFlag;
+    let reportStr = '?pageno=1&pagesize=' + (this.totalCount * 10) + '&textSearch=' + this.searchContent.value + '&lan=' + this.languageFlag;
     this.apiService.setHttp('GET', 'zp-osmanabad/Student/GetAll' + (flag == 'reportFlag' ? reportStr : str), false, false, false, 'baseUrl');
     this.apiService.getHttp().subscribe({
       next: (res: any) => {
         if (res.statusCode == 200) {
           this.ngxSpinner.hide();
           flag != 'reportFlag' ? this.tableDataArray = res.responseData.responseData1 : this.tableDataArray = this.tableDataArray;
-          this.tableDataArray.map((res:any)=>{
-            res.docPath = res.documentResponse[0]?.docPath                      
+          this.tableDataArray.map((res: any) => {
+            res.docPath = res.documentResponse[0]?.docPath
           })
           this.totalCount = res.responseData.responseData2.pageCount;
           this.tableDatasize = res.responseData.responseData2.pageCount;
@@ -115,6 +115,7 @@ export class StudentRegistrationComponent {
           this.tableDataArray = [];
           this.tableDatasize = 0;
         }
+        
         let tableData = {
           pageNumber: this.pageNumber,
           img: 'docPath', blink: '', badge: '', isBlock: '', pagintion: this.tableDatasize > 10 ? true : false,
@@ -123,12 +124,6 @@ export class StudentRegistrationComponent {
           tableSize: this.tableDatasize,
           tableHeaders: this.languageFlag == 'English' ? this.displayedheaders : this.marathiDisplayedheaders
         };
-
-        // this.tableDataForcard = {
-        //   pageNumber: this.pageNumber,
-        //   tableData: this.tableDataArray,
-        //   tableSize: this.tableDatasize,
-        // };
         this.apiService.tableData.next(tableData);
 
       },
@@ -261,18 +256,21 @@ export class StudentRegistrationComponent {
 
   downloadPdf() {
     this.getTableData('reportFlag')
-    if(this.studentData.length > 0){
-    let keyPDFHeader = ['SrNo', "ID", "Full Name", "Gender", "Contact No.", "Standard", "School Name", "Caste", "Taluka", "Center"];
-    let ValueData =
-      this.studentData.reduce(
-        (acc: any, obj: any) => [...acc, Object.values(obj).map((value) => value)], []
-      );// Value Name
-    console.log("ValueData", ValueData);
-    let objData: any = {
-      'topHedingName': 'Student Report',
-      'createdDate': 'Created on:' + new Date()
+    if (this.studentData.length > 0) {
+      let keyPDFHeader = ['SrNo', "ID", "Full Name", "Gender", "Contact No.", "Standard", "School Name", "Caste", "Taluka", "Center"];
+      let ValueData =
+        this.studentData.reduce(
+          (acc: any, obj: any) => [...acc, Object.values(obj).map((value) => value)], []
+        );// Value Name
+      console.log("ValueData", ValueData);
+      let objData: any = {
+        'topHedingName': 'Student Report',
+        'createdDate': 'Created on:' + new Date()
+      }
+      this.downloadPdfservice.downLoadPdf(keyPDFHeader, ValueData, objData);
+    } else {
+      this.commonMethods.snackBar("No Data Found", 1);
     }
-    this.downloadPdfservice.downLoadPdf(keyPDFHeader, ValueData, objData);}
   }
 
 }
