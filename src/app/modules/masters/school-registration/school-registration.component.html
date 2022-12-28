@@ -112,15 +112,22 @@
                                 </span>
                             </button>
                             <mat-menu #menu="matMenu">
-                                <button mat-menu-item (click)="addUpdateAgency(data)">Edit
-                                    <span class="material-symbols-outlined">
-                                        create
-                                    </span>
+                                <button mat-menu-item (click)="addUpdateAgency(data)">
+                                    <div class="d-flex justify-content-between">
+                                        Edit
+                                        <span class="material-symbols-outlined ">
+                                            create
+                                        </span>
+                                    </div>
+                                   
                                 </button>
-                                <button mat-menu-item (click)="globalDialogOpen(data)">Delete
+                                <button mat-menu-item (click)="globalDialogOpen(data)">
+                                    <div class="d-flex justify-content-between">
+                                    Delete
                                     <span class="material-symbols-outlined">
                                         delete
                                     </span>
+                                </div>
                                 </button>
                             </mat-menu>
                         </mat-card-header>
