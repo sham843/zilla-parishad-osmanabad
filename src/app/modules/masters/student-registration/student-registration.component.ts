@@ -23,7 +23,7 @@ export class StudentRegistrationComponent {
   totalCount: number = 0;
   cardCurrentPage: number = 0;
   studentData = new Array();
-  languageFlag!: string
+  languageFlag!: string;
   tableDatasize!: Number;
 
   displayedColumns = ['docPath', 'srNo', 'fullName', 'standard', 'parentMobileNo', 'gender', 'action'];

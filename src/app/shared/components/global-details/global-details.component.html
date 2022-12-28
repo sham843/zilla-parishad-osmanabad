@@ -28,10 +28,10 @@
     <mat-card-content>
         <div class="row">
             <div class="col-sm-5">
-                <app-table></app-table>
+                <app-table (recObjToChild)="childTableCompInfo($event)"></app-table>
             </div>
             <div class="col-sm-7">
-                <app-student-details></app-student-details>
+                <app-student-details [item]="currentItem"></app-student-details>
             </div>
         </div>
     </mat-card-content>

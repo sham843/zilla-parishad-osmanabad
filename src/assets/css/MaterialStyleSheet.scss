@@ -107,5 +107,10 @@ input:-webkit-autofill:active {
     font-size: 0.7rem;
     letter-spacing: normal;
 }
-
-
+.mdc-button .mdc-button__label {
+    line-height: initial !important;
+}
+.mat-mdc-checkbox .mdc-checkbox .mdc-checkbox__native-control:enabled:checked~.mdc-checkbox__background{
+    border-color: var(--main-color) !important;
+    background-color: var(--main-color) !important;
+}
