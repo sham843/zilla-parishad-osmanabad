@@ -5,7 +5,7 @@
 .mdc-list-item__primary-text {
     width: 100% !important;
     font-size: 0.85rem !important;
-    font-family: 'Poppins', sans-serif !important;
+    font-family: 'Noto Sans Devanagari', sans-serif !important;
 }
 
 mat-label,
@@ -27,7 +27,7 @@ textarea.mat-input-element,
 .mdc-button__label,
 .mat-mdc-card-subtitle,
 .mat-tab-label-content {
-    font-family: 'Poppins', sans-serif !important;
+    font-family: 'Noto Sans Devanagari', sans-serif !important;
     font-size: 0.85rem !important;
     letter-spacing: normal !important;
 }
@@ -103,9 +103,14 @@ input:-webkit-autofill:active {
 
 .mat-mdc-form-field-error {
     margin: 0 !important;
-    font-family: 'Poppins', sans-serif !important;
+    font-family: 'Noto Sans Devanagari', sans-serif !important;
     font-size: 0.7rem;
     letter-spacing: normal;
 }
-
-
+.mdc-button .mdc-button__label {
+    line-height: initial !important;
+}
+.mat-mdc-checkbox .mdc-checkbox .mdc-checkbox__native-control:enabled:checked~.mdc-checkbox__background{
+    border-color: var(--main-color) !important;
+    background-color: var(--main-color) !important;
+}

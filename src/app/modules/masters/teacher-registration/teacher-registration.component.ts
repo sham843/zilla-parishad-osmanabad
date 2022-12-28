@@ -96,7 +96,7 @@ export class TeacherRegistrationComponent {
         this.pageNumber = _obj.pageNumber;
         this.getTableData();
         break;
-      case 'Edit' || 'Delete':
+      case 'Edit':
         this.addUpdateTeacher(_obj);
         break;
       case 'Delete':
@@ -107,13 +107,25 @@ export class TeacherRegistrationComponent {
 
   addUpdateTeacher(obj?: any) {
     // let obj: any;
-    this.dialog.open(AddUpdateTeacherRegistrationComponent, {
+    const dialogRef = this.dialog.open(AddUpdateTeacherRegistrationComponent, {
       width: '900px',
       height: '700px',
       data: obj,
       disableClose: true,
       autoFocus: false
-    })
+    });
+    dialogRef.afterClosed().subscribe((result: any) => {
+      if (result == 'yes' && obj) {
+        this.clearFilterData();
+        this.getTableData();
+        this.pageNumber = this.pageNumber;
+      }
+      else if(result == 'yes'){
+        this.getTableData();
+        this.clearFilterData();
+        this.pageNumber = 1;
+      }
+    });
   }
 
   globalDialogOpen(obj: any) {

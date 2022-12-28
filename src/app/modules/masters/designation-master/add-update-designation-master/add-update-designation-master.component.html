@@ -21,15 +21,15 @@
                                 [value]="designation.designationLevel">{{webStorage.getLangauge() == 'EN' ?
                                 designation.designationLevel : designation.m_DesignationLevel}}</mat-option>                           
                         </mat-select>
-                        <mat-error
+                        <!-- <mat-error
                             *ngIf="f['designationLevelId'].hasError('required') || f['designationLevelId'].hasError('touched')">Company
-                            {{'Labels.DesignationLevelReq' | translate}}</mat-error>
+                            {{'Labels.DesignationLevelReq' | translate}}</mat-error> -->
                     </mat-form-field>
                 </div>
                 <div class="col-sm">
                     <ng-container >
                         <mat-form-field appearance="outline" class="w-100 ">
-                            <mat-label>{{'Labels.AddDesignation' | translate}}</mat-label>
+                            <mat-label>{{'Labels.Designation' | translate}}</mat-label>
                             <input matInput formControlName="designationType"
                                 maxlength="30"
                                 (keypress)="validation.noFirstSpaceAllow($event)">

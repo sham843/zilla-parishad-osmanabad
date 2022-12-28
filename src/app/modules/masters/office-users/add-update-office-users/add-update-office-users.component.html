@@ -1,8 +1,7 @@
 <mat-card class="plain-card">
-
     <mat-card-header class="card-header">
         <div class="d-flex align-items-center justify-content-between w-100">
-            <h6 class="text-main mb-0">
+            <h6 class="text-main mb-0 fw-bold">
                 {{'Labels.registerOfficeUsers' | translate}}</h6>
             <button mat-icon-button mat-dialog-close class="btn-modal-close">
                 <mat-icon>
@@ -13,11 +12,11 @@
     </mat-card-header>
     <form [formGroup]="officeForm" (ngSubmit)="submitOfficeData()">
     <mat-card-content class="card-body mb-0">
-        <div class="row">
+        <div class="row gy-2">
             <div class="col-sm-4">
                 <mat-form-field appearance="outline" class="w-100 ">
                     <mat-label>{{'Labels.level' | translate}}</mat-label>
-                    <mat-select  formControlName="designationLevelId"  (selectionChange)="onchangeLevel($event); onchangeValidation($event)">
+                    <mat-select  formControlName="designationLevelId"  (selectionChange)="onchangeLevel($event); onchangeValidation($event, 'Level')">
                         <mat-option [value]="level.id" *ngFor="let level of levels">{{webStorageService.languageFlag =='mr-IN' ? level.m_DesignationLevel : level.designationLevel}}</mat-option>
                     </mat-select>
                     <mat-error *ngIf="fc['designationLevelId'].hasError('required')">{{'Labels.levelRequired' | translate}}</mat-error>
@@ -27,7 +26,7 @@
             <div class="col-sm-4">
                 <mat-form-field appearance="outline" class="w-100 " *ngIf="officeForm.value.designationLevelId != 5 && officeForm.value.designationLevelId != 6 && officeForm.value.designationLevelId != 7">
                     <mat-label>{{'Labels.designation' | translate}}</mat-label>
-                    <mat-select  formControlName="designationId" (selectionChange)="getCenterDrop()">
+                    <mat-select  formControlName="designationId" (selectionChange)="getCenterDrop(); onchangeValidation($event, 'Designation')">
                         <mat-option  [value]="desig.id" *ngFor="let desig of designations">{{webStorageService.languageFlag =='mr-IN' ? desig.m_DesignationType: desig.designationType}}</mat-option>
                     </mat-select>
                     <mat-error *ngIf="fc['designationId'].hasError('required')">{{'Labels.DesignationTypeReq' | translate}}</mat-error>
@@ -49,11 +48,6 @@
                     <mat-error *ngIf="fc['centerId'].hasError('required')">{{'Labels.kendraRequired' | translate}}</mat-error>
                 </mat-form-field>
             </div>
-           
-        </div>
-
-        <div class="row">
-            <!-- designationLevelId taluka  -->
             <ng-container *ngIf="officeForm.value.designationLevelId == 2 && officeForm.value.designationId == 20" > 
                 <div class="col-sm-4">
                     <mat-form-field appearance="outline" class="w-100">
@@ -89,9 +83,7 @@
                     </mat-form-field>
                 </div>
             </ng-container>
-        </div>
 
-        <div class="row">
             <ng-container *ngIf="officeForm.value.designationLevelId == 2 && officeForm.value.designationId == 17" >
                 <div class="col-sm-4">
                     <mat-form-field appearance="outline" class="w-100">
@@ -129,12 +121,7 @@
                     </mat-form-field>
                 </div>
             </ng-container>
-        </div>
 
-
-
-        <!-- Same for all level -->
-        <div class="row">
             <div class="col-sm-4">
                 <mat-form-field appearance="outline" class="w-100">
                     <mat-label>{{'Labels.name' | translate}}</mat-label>
@@ -176,9 +163,6 @@
                     </mat-form-field>
                 </div>
         </div>
-
-        
-        
     </mat-card-content>
     <mat-card-footer class="d-flex justify-content-end card-footer mb-0">
         <button mat-flat-button type="button" mat-dialog-close class="btn-second me-2">{{'Labels.cancel' | translate}}</button>
