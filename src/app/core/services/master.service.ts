@@ -69,7 +69,7 @@ export class MasterService {
     });
   }
 
-  getAllSubject(langFlag: string) {
+  getAllSubject(langFlag?: string) {
     return new Observable((obj) => {
       this.apiService.setHttp('GET', 'zp-osmanabad/master/GetAllSubject?flag_lang=' + langFlag, false, false, false, 'baseUrl');
       this.apiService.getHttp().subscribe({
