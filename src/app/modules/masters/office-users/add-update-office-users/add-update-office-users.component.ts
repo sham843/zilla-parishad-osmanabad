@@ -187,19 +187,19 @@ export class AddUpdateOfficeUsersComponent implements OnInit {
       this.fc['kendraEmailId'].clearValidators();
       this.fc['kendraEmailId'].updateValueAndValidity();
     }
-    // else if(event == 17 && label == 'Designation'){
-    //   this.fc['centerId'].clearValidators();
-    //   this.fc['centerId'].updateValueAndValidity();
+    else if(event == 17 && label == 'Designation'){
+      this.fc['centerId'].clearValidators();
+      this.fc['centerId'].updateValueAndValidity();
 
-    //   this.fc['schoolId'].clearValidators();
-    //   this.fc['schoolId'].updateValueAndValidity();
+      this.fc['schoolId'].clearValidators();
+      this.fc['schoolId'].updateValueAndValidity();
 
-    //   this.fc['kendraMobileNo'].clearValidators();
-    //   this.fc['kendraMobileNo'].updateValueAndValidity();
+      this.fc['kendraMobileNo'].clearValidators();
+      this.fc['kendraMobileNo'].updateValueAndValidity();
 
-    //   this.fc['kendraEmailId'].clearValidators();
-    //   this.fc['kendraEmailId'].updateValueAndValidity();
-    // }
+      this.fc['kendraEmailId'].clearValidators();
+      this.fc['kendraEmailId'].updateValueAndValidity();
+    }
     
   }
 
