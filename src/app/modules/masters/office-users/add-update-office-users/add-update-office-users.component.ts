@@ -110,7 +110,7 @@ export class AddUpdateOfficeUsersComponent implements OnInit {
   }
 
   getAllSchoolsByCenterId(){
-    let centerId = this.officeForm.value.designationLevelId;
+    let centerId = this.officeForm.value.centerId;
     this.masterService.getAllSchoolsByCenterId(this.webStorageService.languageFlag, centerId).subscribe({
       next: (resp: any)=>{
         resp.statusCode == "200" ?(console.log(resp), this.schools = resp.responseData ): this.schools = [];
@@ -173,7 +173,30 @@ export class AddUpdateOfficeUsersComponent implements OnInit {
 
   onchangeValidation(event: any){
     if(event == 1){
+      this.fc['centerId'].clearValidators();
+      this.fc['centerId'].updateValueAndValidity();
 
+      this.fc['schoolId'].clearValidators();
+      this.fc['schoolId'].updateValueAndValidity();
+
+      this.fc['kendraMobileNo'].clearValidators();
+      this.fc['kendraMobileNo'].updateValueAndValidity();
+
+      this.fc['kendraEmailId'].clearValidators();
+      this.fc['kendraEmailId'].updateValueAndValidity();
+    }
+    if(event == 2){
+      this.fc['centerId'].clearValidators();
+      this.fc['centerId'].updateValueAndValidity();
+
+      this.fc['schoolId'].clearValidators();
+      this.fc['schoolId'].updateValueAndValidity();
+
+      this.fc['kendraMobileNo'].clearValidators();
+      this.fc['kendraMobileNo'].updateValueAndValidity();
+
+      this.fc['kendraEmailId'].clearValidators();
+      this.fc['kendraEmailId'].updateValueAndValidity();
     }
   }
 
