@@ -69,6 +69,15 @@ getDesiganationType() {
     this.getTableData()
   }
 
+  filterData(){
+    if(this.searchContent.value){
+      this.getTableData();
+      this.pageNumber = 1;
+      this.getofficeReport();
+      
+
+    }
+  }
   //#region ------------------------------------- Designation-Master Table-Data ------------------------------- //
   getTableData(flag?:string) {
     this.tableDataArray = [];
