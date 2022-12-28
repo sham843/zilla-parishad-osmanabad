@@ -1,0 +1,40 @@
+
+#tooltip {
+    font-size: 1.8rem;
+    font-weight: 500;
+    color: #fff;
+    position: relative;
+  }
+  
+  #tooltip::before {
+    content: attr(data-tooltip);
+    font-size: 13px;
+    position: absolute;
+    right: -48px;
+    top: 4px;
+    background: #039286;
+    padding: 5px 10px;
+    opacity: 0;
+    color: #fff;
+    z-index: 5;
+    border-radius: 5px;
+    transition: 100ms opacity;
+}
+  #tooltip::after {
+    content: "";
+    position: absolute;
+    right: -10px;
+    top: 14px;
+    width: 8px;
+    height: 8px;
+    background: #039286;
+    opacity: 0;
+    transform: rotate(45deg);
+    transition: 100ms opacity;
+  }
+  
+  #tooltip:hover::before,
+  #tooltip:hover::after {
+    opacity: 1;
+  }
+  
