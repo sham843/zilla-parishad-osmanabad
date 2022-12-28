@@ -32,7 +32,7 @@
                     <mat-form-field appearance="outline" class="w-100 ">
                         <mat-label>{{'Labels.taluka' | translate}}</mat-label>
                         <mat-select formControlName="talukaId"
-                            (selectionChange)="clearDropdown('Taluka'); getCenter();">
+                            (selectionChange)="clearDropdown('Taluka'); getCenter(); getVillage();">
                             <mat-option *ngFor="let taluka of talukaArr" [value]="taluka.id">
                                 {{webStorageS.getLangauge() == 'EN' ?
                                 taluka.taluka : taluka.m_Taluka}}
@@ -47,7 +47,7 @@
                     <mat-form-field appearance="outline" class="w-100 ">
                         <mat-label>{{'Labels.kendra' | translate}}</mat-label>
                         <mat-select formControlName="centerId"
-                            (selectionChange)="clearDropdown('Kendra'); getVillage();">
+                            (selectionChange)="clearDropdown('Kendra');">
                             <mat-option *ngFor="let center of centerArr" [value]="center.id">
                                 {{webStorageS.getLangauge() == 'EN' ?
                                 center.center : center.m_Center}}
@@ -141,14 +141,14 @@
                 <div class="col-sm-6">
                     <mat-form-field appearance="outline" class="w-100">
                         <mat-label>{{'Labels.groupClass' | translate}}</mat-label>
-                        <mat-select multiple formControlName="g_ClassId">
-                        <mat-option *ngFor="let groupclass of groupclassArr" [value]="groupclass.groupClass">
-                            {{groupclass.groupClass}}
+                        <mat-select multiple formControlName="highestClass">
+                        <mat-option *ngFor="let groupclass of groupclassArr" [value]="groupclass">
+                            {{groupclass}}
                         </mat-option>
                     </mat-select>
-                        <mat-error *ngIf="f['g_ClassId'].hasError('required') || f['g_ClassId'].hasError('touched')">
+                        <!-- <mat-error *ngIf="f['highestClass'].hasError('required') || f['highestClass'].hasError('touched')">
                             {{'Labels.groupClassIsRequired' | translate}}
-                        </mat-error>
+                        </mat-error> -->
                     </mat-form-field>
                 </div>
 

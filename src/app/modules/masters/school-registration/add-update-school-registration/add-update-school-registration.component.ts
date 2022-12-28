@@ -44,7 +44,6 @@ export class AddUpdateSchoolRegistrationComponent {
     this.getSchoolMngDesc();
     this.getGroupClass();
 
-
     if (this.data) {
       this.onEdit();
     }
@@ -160,10 +159,7 @@ export class AddUpdateSchoolRegistrationComponent {
 
   getGroupClass() {
     for(var i = 1; i < 8; i++){
-      var temp = {
-        id : i,
-        groupClass: i
-      }
+      var temp = [i]
       this.groupclassArr.push(temp);
     }
     // this.masterService.getAllGroupClass(this.webStorageS.languageFlag).subscribe({
