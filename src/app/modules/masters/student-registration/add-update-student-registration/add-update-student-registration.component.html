@@ -114,41 +114,21 @@
                 <div class="col-sm-4">
                     <div class="d-flex justify-content-between align-items-center">
                         <div class="upload-btn-wrapper">
-                            <button class="upload-btn">Upload a file</button>
-                            <input type="file" name="myfile" />
+                            <button class="upload-btn" type="button" (click)="uploadImage.click()">Upload a file</button>
+                            <input type="file" name="myfile" (change)="fileUpload($event,'img')" #uploadImage/>
                         </div>
-                        <div class="action-btn">
-                            <button mat-icon-button class="btn-icon text-primary">
+                        <div class="action-btn" *ngIf="uploadImg">
+                            <button mat-icon-button class="btn-icon text-primary" type="button" (click)="viewImages('photo')">
                                 <mat-icon>content_copy</mat-icon>
                             </button>
-                            <button mat-icon-button class="btn-icon text-danger">
+                            <button mat-icon-button class="btn-icon text-danger" type="button" (click)="deleteImage('photo')">
                                 <mat-icon>delete</mat-icon>
                             </button>
                         </div>
-                    </div>
-                    <!-- <input type="file" id="real-file" (change)="fileUpload($event,'img')" hidden="hidden"
-                        #uploadImage />
-                    <mat-form-field appearance="outline" class="w-100 ">
-                        <mat-label>{{'Labels.uploadPhoto'| translate}}</mat-label>
-                        <input matInput formControlName="photo" readonly >
-                        <span class="uploadView">
-                            <mat-icon matSuffix *ngIf="!stuRegistrationForm.value.photo">
-                                <span class="material-symbols-outlined" (click)="uploadImage.click()">
-                                    upload
-                                </span>
-                            </mat-icon>
-                            <mat-icon matSuffix *ngIf="stuRegistrationForm.value.photo" class="w-auto">
-                                <span class="material-symbols-outlined text-primary" (click)="viewImages('photo')">
-                                    visibility
-                                </span>
-                                <span class="material-symbols-outlined text-danger"  (click)="deleteImage('photo')">
-                                    clear
-                                </span>
-                            </mat-icon>
-                        </span>
-                        <mat-error *ngIf="fc['photo'].hasError('required')">{{'Labels.uploadImg'| translate}}</mat-error>
-                    </mat-form-field> -->
-                    
+                    </div>  
+                    <ng-container *ngIf="imgFlag">
+                        <span style="font-size: 11px;" class="text-danger">please Upload Image</span>
+                    </ng-container>                  
                 </div>
                 <div class="col-sm-4">
                     <mat-form-field appearance="outline" class="w-100 ">
@@ -241,42 +221,23 @@
                 <div class="col-sm-4">
                     <div class="d-flex justify-content-between align-items-center">
                         <div class="upload-btn-wrapper">
-                            <button class="upload-btn">Upload a file</button>
-                            <input type="file" name="myfile" />
+                            <button class="upload-btn" type="button" (click)="uploadAadhar.click()">Upload a file</button>
+                            <input type="file" name="myfile" (change)="fileUpload($event,'aadhar')" #uploadAadhar/>
                         </div>
-                        <div class="action-btn">
-                            <button mat-icon-button class="btn-icon text-primary">
+                        <div class="action-btn" *ngIf="uploadAadhaar">
+                            <button mat-icon-button class="btn-icon text-primary" type="button" (click)="viewImages('aadharPhoto')">
                                 <mat-icon>content_copy</mat-icon>
                             </button>
-                            <button mat-icon-button class="btn-icon text-danger">
+                            <button mat-icon-button class="btn-icon text-danger" type="button" (click)="deleteImage('aadharPhoto')">
                                 <mat-icon>delete</mat-icon>
                             </button>
                         </div>
                     </div>
-                    <!-- <input type="file" id="real-file" (change)="fileUpload($event,'aadhar')" hidden="hidden"
-                        #uploadAadhar />
-                    <mat-form-field appearance="outline" class="w-100 ">
-                        <mat-label>{{'Labels.aadhaarPhoto'| translate}}</mat-label>
-                        <input matInput formControlName="aadharPhoto" readonly> 
-                        <span class="aadhar-uploadView">
-                            <mat-icon matSuffix *ngIf="!stuRegistrationForm.value.aadharPhoto">
-                                <span class="material-symbols-outlined" (click)="uploadAadhar.click()">
-                                    upload
-                                </span>
-                            </mat-icon>
-                            <mat-icon matSuffix *ngIf="stuRegistrationForm.value.aadharPhoto" class="w-auto">
-                                <span class="material-symbols-outlined text-primary" (click)="viewImages('aadharPhoto')">
-                                    visibility
-                                </span>
-                                <span class="material-symbols-outlined text-danger" (click)="deleteImage('aadharPhoto')">
-                                    clear
-                                </span>
-                            </mat-icon>
-                        </span>
-                        <mat-error *ngIf="fc['aadharPhoto'].hasError('required')">{{'Labels.uploadImg'| translate}}</mat-error>
-                    </mat-form-field>       -->
+                    <ng-container *ngIf="aadhaarFlag">
+                        <span style="font-size: 11px;" class="text-danger">please Upload Aadhaar Image</span>
+                    </ng-container>
                    
-                           
+                   
                 </div>
             </div>
             
