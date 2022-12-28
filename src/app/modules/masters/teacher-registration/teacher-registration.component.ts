@@ -29,7 +29,7 @@ export class TeacherRegistrationComponent {
 
   @HostBinding('class') className = '';
   constructor(private dialog: MatDialog, private overlay: OverlayContainer, private apiService: ApiService, private errors: ErrorsService,
-    private webStorageS: WebStorageService, private downloadFileService: DownloadPdfExcelService, private commonMethodS : CommonMethodsService) {
+    public webStorageS: WebStorageService, private downloadFileService: DownloadPdfExcelService, private commonMethodS : CommonMethodsService) {
   }
 
   ngOnInit(): void {
@@ -63,12 +63,13 @@ export class TeacherRegistrationComponent {
     this.apiService.getHttp().subscribe({
 
       next: (res: any) => {
+        console.log("table res : ",res);
+        
         if (res.statusCode == "200") {
           this.tableDataArray = res.responseData.responseData1;
           
           this.totalCount = res.responseData.responseData2.pageCount;
           tableDatasize = res.responseData.responseData2.pageCount;
-          console.log("tableDatasize teavche resppp", tableDatasize);
 
         } else {
           this.tableDataArray = [];

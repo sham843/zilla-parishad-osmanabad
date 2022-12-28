@@ -74,7 +74,7 @@
 
         <ng-container *ngIf="cardViewFlag">
             <div class="row">
-                <div class="col-sm-4 mb-3" *ngFor="let data of tableDataArray">
+                <div class="col-sm-4 mb-3" *ngFor="let data of tableDataArray; let i=index">
                     <mat-card>
                         <mat-card-header class="d-flex justify-content-end">
                             <button mat-flat-button [matMenuTriggerFor]="menu">
@@ -104,19 +104,21 @@
                                 <ng-container *ngIf="!data.uploadImage">
                                     <img src="assets/images/user.jpg" height="60px">
                                 </ng-container>
-                                <p>{{data.name}}</p>
+                                <p>{{webStorageS.getLangauge() == 'EN' ? data.name : data.m_Name}}</p>
+                                <p>{{webStorageS.getLangauge() == 'EN' ? data.educationalQualification : data.educationalQualification}}</p>
                             </div>
                             <div class="row">
                                 <div class="col-6 col-sm  form-label">
-                                    Mobile No : 
+                                    {{'Labels.mobileNo'| translate}} : 
                                 </div>
                                 <div class="col-6 col-sm  form-deta">
-                                    {{data.mobileNo}}
+                                    {{webStorageS.getLangauge() == 'EN' ?
+                                    data.mobileNo : data.mobileNo}}
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-6 col-sm form-label">
-                                    Email ID : 
+                                    {{'Labels.emailID'| translate}} : 
                                 </div>
                                 <div class="col-6 col-sm form-deta">
                                     {{data.emailId}}
@@ -124,14 +126,15 @@
                             </div>
                             <div class="row">
                                 <div class="col-6 col-sm form-label">
-                                    Gender : 
+                                    {{'Labels.gender'| translate}} : 
                                 </div>
                                 <div class="col-6 col-sm form-deta">
-                                    {{data.gender}}
+                                    {{webStorageS.getLangauge() == 'EN' ?
+                                    data.gender : data.m_Gender}}
                                 </div>
                             </div>
                             <div class="text-center mb-3">
-                                <button mat-flat-button class="btn-main">Read More</button>
+                                <button mat-flat-button class="btn-main">{{'Labels.readMore' | translate}}</button>
                             </div>
                         </mat-card-content>
                     </mat-card>
