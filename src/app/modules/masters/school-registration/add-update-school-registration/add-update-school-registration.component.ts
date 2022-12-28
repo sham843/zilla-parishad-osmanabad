@@ -28,6 +28,7 @@ export class AddUpdateSchoolRegistrationComponent {
   schoolRegForm !: FormGroup;
   uploadImg: any;
   editFlag: boolean = false;
+  img : boolean = false;
 
   constructor(private masterService: MasterService, private errors: ErrorsService, private fb: FormBuilder, private fileUpload: FileUploadService,
     private apiService: ApiService, private commonMethod: CommonMethodsService, @Inject(MAT_DIALOG_DATA) public data: any,
@@ -171,7 +172,7 @@ export class AddUpdateSchoolRegistrationComponent {
 
   //#region ------------------------------------------------- Upload Image start here --------------------------------------------// 
   imgUpload(event: any) {
-
+    this.img = true;
     this.fileUpload.uploadDocuments(event, 'Upload', 'jpg, jpeg, png').subscribe((res: any) => {
       if (res.statusCode == 200) {
         this.uploadImg = res.responseData;
@@ -197,7 +198,14 @@ export class AddUpdateSchoolRegistrationComponent {
   onSubmit() {
     let formValue = this.schoolRegForm.value;
     formValue.uploadImage ? formValue.uploadImage = this.uploadImg : '';
-    !this.uploadImg ? formValue.uploadImage = '' : formValue.uploadImage = formValue.uploadImage;
+    if(this.editFlag == true){
+      if(this.data.uploadImage){
+        this.img ? formValue.uploadImage = this.uploadImg  : formValue.uploadImage = this.data.uploadImage 
+      } 
+      else{
+        formValue.uploadImage = this.schoolRegForm.value.uploadImage;
+      }
+    }
 
     let url;
     this.editFlag ? url = 'ZP-Osmanabad/School/Update' : url = 'ZP-Osmanabad/School/Add';

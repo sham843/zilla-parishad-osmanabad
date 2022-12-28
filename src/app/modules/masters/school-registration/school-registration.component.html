@@ -169,7 +169,7 @@
                     </mat-card>
                 </div>
             </div>
-            <ng-container *ngIf="tableDataArray.length > 9">
+            <ng-container *ngIf="tableDataArray.length >= 10">
                 <mat-paginator [length]="totalCount" [pageIndex]="cardCurrentPage" [pageSize]="10"
                     [pageSizeOptions]="[10]" [showFirstLastButtons]="true" (page)="onPageChanged($event)">
                 </mat-paginator>
@@ -179,8 +179,6 @@
                         Data not available
                     </div>
                 </div>
-
-            
         </ng-container>
     </mat-card-content>
 </mat-card>
