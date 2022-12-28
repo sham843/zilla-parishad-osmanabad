@@ -159,14 +159,20 @@ export class AddUpdateSchoolRegistrationComponent {
   }
 
   getGroupClass() {
-    this.masterService.getAllGroupClass(this.webStorageS.languageFlag).subscribe({
-      next: (res: any) => {
-        res.statusCode == 200 ? (this.groupclassArr = res.responseData, console.log("group class : ",res)
-         ): this.groupclassArr = [];
-        this.editFlag ? this.f['g_ClassId'].setValue(this.data.g_ClassId) : '';
-      },
-      error: ((err: any) => { this.errors.handelError(err) })
-    });
+    for(var i = 1; i < 8; i++){
+      var temp = {
+        id : i,
+        groupClass: i
+      }
+      this.groupclassArr.push(temp);
+    }
+    // this.masterService.getAllGroupClass(this.webStorageS.languageFlag).subscribe({
+    //   next: (res: any) => {        
+    //     res.statusCode == 200 ? (this.groupclassArr = res.responseData): this.groupclassArr = [];
+    //     this.editFlag ? this.f['g_ClassId'].setValue(this.data.g_ClassId) : '';
+    //   },
+    //   error: ((err: any) => { this.errors.handelError(err) })
+    // });    
   }
   //#endregion ------------------------------------------- School Registration Dropdown end here ----------------------------------------// 
 
