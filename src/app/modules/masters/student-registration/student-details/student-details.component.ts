@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 // import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
@@ -22,12 +22,13 @@ import { MatSelectModule } from '@angular/material/select';
   ]
 })
 export class StudentDetailsComponent {
-  data: any
+  @Input() item : any; // decorate the property with @Input()
+  constructor() { 
+      console.log(this.item);      
+    }
 
-  // constructor(public dialogRef: MatDialogRef<StudentDetailsComponent>,
-  //   @Inject(MAT_DIALOG_DATA) public data: any) { 
-  //     console.log(this.data);
-      
-  //   }
+    ngOnInit(){
+      console.log(this.item);   
+    }
 
 }
