@@ -1,7 +1,7 @@
 <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
-        <li class="breadcrumb-item" aria-current="page">Masters</li>
-        <li class="breadcrumb-item active" aria-current="page">Teacher Registration</li>
+        <li class="breadcrumb-item" aria-current="page">{{'Labels.master'| translate}}</li>
+        <li class="breadcrumb-item active" aria-current="page">{{'Labels.teacherRegistration'| translate}}</li>
     </ol>
 </nav>
 <app-page-statistics></app-page-statistics>
@@ -10,7 +10,7 @@
     <mat-card-header class="card-header">
         <div class="d-flex align-items-center justify-content-between flex-wrap w-100">
             <div class="text-main fw-bold mb-sm-0 mb-2">
-                Teacher's List
+                {{'Labels.teacherList'| translate}}
             </div>
             <div class="d-flex align-items-center justify-content-end gap-2">
                 <button mat-flat-button class="btn-main btn-icon"
@@ -46,9 +46,8 @@
                     </button>
                 </mat-menu> -->
                 <button mat-flat-button class="btn-main" (click)="addUpdateTeacher()">
-                    <mat-icon>
-                        add
-                    </mat-icon>Add Teacher
+                    <mat-icon>add</mat-icon>
+                    {{'Labels.addTeacher'| translate}}
                 </button>
             </div>
         </div>
@@ -57,13 +56,13 @@
         <div class="row gx-2 w-100">
             <div class="col-sm-3">
                 <mat-form-field appearance="outline" class="w-100">
-                    <mat-label>Search by Name/Contact/Email</mat-label>
+                    <mat-label>{{'Labels.SearchByNameContactEmail'| translate}}</mat-label>
                     <input matInput [formControl]="searchContent">
                 </mat-form-field>
             </div>
             <div class="col-sm-auto">
-                <button mat-flat-button class="btn-main" (click)="onFilterClick()">Search</button>
-                <button mat-flat-button class="btn-second ms-2" (click)="clearFilterData()">Clear</button>
+                <button mat-flat-button class="btn-main" (click)="onFilterClick()">{{'Labels.filter'| translate}}</button>
+                <button mat-flat-button class="btn-second ms-2" (click)="clearFilterData()">{{'Labels.clear'| translate}}</button>
             </div>
         </div>
     </mat-card-header>
