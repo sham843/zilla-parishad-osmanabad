@@ -1,6 +1,7 @@
 import { Component, Inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { NgxSpinnerService } from 'ngx-spinner';
 import { ApiService } from 'src/app/core/services/api.service';
 import { CommonMethodsService } from 'src/app/core/services/common-methods.service';
 import { ErrorsService } from 'src/app/core/services/errors.service';
@@ -19,7 +20,7 @@ export class AddUpdateAgencyRegistrationComponent {
   talukaData = new Array();
   editData: any;
   constructor(public dialogRef: MatDialogRef<AddUpdateAgencyRegistrationComponent>, private api: ApiService, public webStorageService: WebStorageService,
-    private fb: FormBuilder, private master: MasterService, public validation: ValidationService,
+    private fb: FormBuilder, private master: MasterService, public validation: ValidationService,private ngxSpinner: NgxSpinnerService,
     private common: CommonMethodsService, @Inject(MAT_DIALOG_DATA) public data: any, private errors: ErrorsService) { }
 
   ngOnInit() {
@@ -73,24 +74,28 @@ export class AddUpdateAgencyRegistrationComponent {
   }
 
   onSubmit(clear: any) {
+    this.ngxSpinner.show();
     let obj = this.agencyRegisterForm.value;
     obj.districtId = 1;
     if (this.agencyRegisterForm.valid && obj.emailId != obj.agency_EmailId && obj.contact_No != obj.agency_MobileNo) {
       this.api.setHttp(this.data ? 'put' : 'post', 'zp-osmanabad/Agency/' + (this.data ? 'Update' : 'Add'), false, obj, false, 'baseUrl');
       this.api.getHttp().subscribe({
         next: (res: any) => {
-          res.statusCode == 200 ? (this.common.snackBar(res.statusMessage, 0), this.dialogRef.close('Yes'), this.onCancel(clear)) : this.common.snackBar(res.statusMessage, 1);
+          res.statusCode == 200 ? (this.common.snackBar(res.statusMessage, 0), this.dialogRef.close('Yes'), this.onCancel(clear), this.ngxSpinner.hide()) : this.common.snackBar(res.statusMessage, 1);
+          res.statusMessage == "Agency_MobileNo Already Exist." ? this.ngxSpinner.hide() : ''
         },
         error: ((err: any) => { this.errors.handelError(err) })
       })
     }
     else if (this.agencyRegisterForm.invalid) {
-      this.common.snackBar(this.webStorageService.languageFlag == 'EN' ? 'Please Enter Mandatory Fields' : 'कृपया अनिवार्य फील्ड प्रविष्ट करा', 1)
+      this.common.snackBar(this.webStorageService.languageFlag == 'EN' ? 'Please Enter Mandatory Fields' : 'कृपया अनिवार्य फील्ड प्रविष्ट करा', 1);
+      this.ngxSpinner.hide();
       return;
     }
     else {
       obj.emailId == obj.agency_EmailId ? this.common.snackBar(this.webStorageService.languageFlag == 'EN' ? 'Email Id & Agency Email Id Can Not Be Same' : 'ईमेल आयडी आणि एजन्सीचा ईमेल आयडी एकच असू शकत नाही', 1) : '';
       obj.contact_No == obj.agency_MobileNo ? this.common.snackBar(this.webStorageService.languageFlag == 'EN' ? 'Contact Number & Agency Contact Number Can Not Be Same' : 'संपर्क क्रमांक आणि एजन्सीचा संपर्क क्रमांक एकच असू शकत नाही', 1) : '';
+      this.ngxSpinner.hide();
       return;
     }
   }

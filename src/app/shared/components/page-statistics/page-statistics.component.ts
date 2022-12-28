@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
@@ -9,6 +9,10 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatSortModule } from '@angular/material/sort';
 import { MatTableModule } from '@angular/material/table';
 import { TranslateModule } from '@ngx-translate/core';
+import { NgxSpinnerService } from 'ngx-spinner';
+import { ApiService } from 'src/app/core/services/api.service';
+import { ErrorsService } from 'src/app/core/services/errors.service';
+import { WebStorageService } from 'src/app/core/services/web-storage.service';
 
 @Component({
   selector: 'app-page-statistics',
@@ -26,6 +30,31 @@ import { TranslateModule } from '@ngx-translate/core';
     TranslateModule
     ]
 })
-export class PageStatisticsComponent {
+export class PageStatisticsComponent implements OnInit {
+
+  statisticsArray = new Array();
+
+  constructor(private apiService: ApiService,
+    private ngxSpinner: NgxSpinnerService,
+    public webStorage: WebStorageService,
+    private errors: ErrorsService){
+
+  }
+
+  ngOnInit(): void {
+    this.getStatisticsDetails();
+  }
+
+  getStatisticsDetails(){
+    this.apiService.setHttp('get', 'zp-osmanabad/Dashboard/GetMasterDataCount', false, false, false, 'baseUrl');
+    this.apiService.getHttp().subscribe({
+      next: (res: any) => {
+        if (res.statusCode == 200) {
+          this.statisticsArray.push(res?.responseData);          
+        }
+      },
+      error: ((err: any) => { this.ngxSpinner.hide(); this.errors.handelError(err) })
+    });
+  }
 
 }

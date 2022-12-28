@@ -30,8 +30,8 @@
             <div class="col-sm-5">
                 <app-table (recObjToChild)="childTableCompInfo($event)"></app-table>
             </div>
-            <div class="col-sm-7">
-                <app-student-details [item]="currentItem"></app-student-details>
+            <div class="col-sm-7" *ngIf="currentItem">
+                <app-student-details [data]="currentItem"></app-student-details>
             </div>
         </div>
     </mat-card-content>

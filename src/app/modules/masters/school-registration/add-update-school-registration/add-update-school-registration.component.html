@@ -138,7 +138,7 @@
                     </mat-form-field>
                 </div>
 
-                <div class="col-sm-6">
+                <!-- <div class="col-sm-6">
                     <mat-form-field appearance="outline" class="w-100">
                         <mat-label>{{'Labels.groupClass' | translate}}</mat-label>
                         <mat-select formControlName="g_ClassId">
@@ -146,6 +146,25 @@
                                 {{webStorageS.getLangauge() == 'EN' ?
                                 groupclass.groupClass : groupclass.m_GroupClass}}
                             </mat-option>
+                        </mat-select>
+                        <mat-error *ngIf="f['g_ClassId'].hasError('required') || f['g_ClassId'].hasError('touched')">
+                            {{'Labels.groupClassIsRequired' | translate}}
+                        </mat-error>
+                    </mat-form-field>
+                </div> -->
+
+                <div class="col-sm-6">
+                    <mat-form-field appearance="outline" class="w-100">
+                        <mat-label>{{'Labels.groupClass' | translate}}</mat-label>
+                        <mat-select formControlName="g_ClassId" multiple>
+                            <mat-select-trigger>
+                                {{schoolRegForm.value.g_ClassId?.[0] || ''}}
+                                <span *ngIf="(schoolRegForm.value.g_ClassId || 0) > 1" class="example-additional-selection">
+                                  (+{{(schoolRegForm.value.g_ClassId || 0) - 1}} {{schoolRegForm.value.g_ClassId === 2 ? 'other' : 'others'}})
+                                </span>
+                              </mat-select-trigger>
+                              <mat-option *ngFor="let groupclass of groupclassArr" [value]="groupclass">{{webStorageS.getLangauge() == 'EN' ?
+                                groupclass.groupClass : groupclass.m_GroupClass}}</mat-option>
                         </mat-select>
                         <mat-error *ngIf="f['g_ClassId'].hasError('required') || f['g_ClassId'].hasError('touched')">
                             {{'Labels.groupClassIsRequired' | translate}}

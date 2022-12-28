@@ -22,13 +22,12 @@ import { MatSelectModule } from '@angular/material/select';
   ]
 })
 export class StudentDetailsComponent {
-  @Input() item : any; // decorate the property with @Input()
-  constructor() { 
-      console.log(this.item);      
+  @Input() data : any; // decorate the property with @Input()
+  constructor() {      
     }
 
     ngOnInit(){
-      console.log(this.item);   
+      console.log(this.data);   
     }
 
 }

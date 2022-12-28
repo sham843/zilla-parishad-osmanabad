@@ -49,9 +49,9 @@ export class MasterService {
     });
   }
 
-  getAllCenter(langFlag?: string) {
+  getAllCenter(langFlag?: string, talukaId?: number) {
     return new Observable((obj) => {
-      this.apiService.setHttp('GET', 'zp-osmanabad/master/GetAllCenterByTalukaId?flag_lang=' + langFlag, false, false, false, 'baseUrl');
+      this.apiService.setHttp('GET', 'zp-osmanabad/master/GetAllCenterByTalukaId?flag_lang=' + langFlag+'&TalukaId='+talukaId, false, false, false, 'baseUrl');
       this.apiService.getHttp().subscribe({
         next: (res: any) => { if (res.statusCode == "200") {obj.next(res) } else { obj.error(res); } },
         error: (e: any) => { obj.error(e) }
@@ -69,7 +69,7 @@ export class MasterService {
     });
   }
 
-  getAllSubject(langFlag: string) {
+  getAllSubject(langFlag?: string) {
     return new Observable((obj) => {
       this.apiService.setHttp('GET', 'zp-osmanabad/master/GetAllSubject?flag_lang=' + langFlag, false, false, false, 'baseUrl');
       this.apiService.getHttp().subscribe({

@@ -91,8 +91,6 @@ export class AddUpdateSchoolRegistrationComponent {
       next: (res: any) => {
         res.statusCode == 200 ? (this.districtArr = res.responseData, this.schoolRegForm.controls['districtId'].setValue(1)) : this.districtArr = [];
         this.getTaluka();
-
-
         this.editFlag ? (this.f['districtId'].setValue(this.data.districtId), this.getTaluka()) : '';
       },
       error: ((err: any) => { this.errors.handelError(err) })
@@ -110,7 +108,7 @@ export class AddUpdateSchoolRegistrationComponent {
   }
 
   getCenter() {
-    this.masterService.getAllCenter(this.webStorageS.languageFlag).subscribe({
+    this.masterService.getAllCenter(this.webStorageS.languageFlag, this.schoolRegForm.value.talukaId).subscribe({
       next: (res: any) => {
         res.statusCode == 200 ? this.centerArr = res.responseData : this.centerArr = [];
         this.editFlag ? (this.f['centerId'].setValue(this.data.centerId), this.getVillage()) : '';

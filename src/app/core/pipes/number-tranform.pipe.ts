@@ -14,7 +14,7 @@ export class NumberTransformPipe implements PipeTransform {
 
   //Marathi number transform
   transform(value: any) {
-      let number = new Intl.NumberFormat(this.webStorage.numFormat).format(value);        
+      let number = this.webStorage.numberTransformFunction(value);        
       return number
   }
   
