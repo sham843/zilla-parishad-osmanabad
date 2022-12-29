@@ -7,6 +7,7 @@ import { CommonMethodsService } from 'src/app/core/services/common-methods.servi
 import { DownloadPdfExcelService } from 'src/app/core/services/download-pdf-excel.service';
 import { ErrorsService } from 'src/app/core/services/errors.service';
 import { WebStorageService } from 'src/app/core/services/web-storage.service';
+import { GlobalDetailComponent } from 'src/app/shared/components/global-detail/global-detail.component';
 import { GlobalDialogComponent } from 'src/app/shared/components/global-dialog/global-dialog.component';
 import { AddUpdateTeacherRegistrationComponent } from './add-update-teacher-registration/add-update-teacher-registration.component';
 
@@ -127,6 +128,9 @@ export class TeacherRegistrationComponent {
       case 'Delete':
         this.globalDialogOpen(_obj);
         break;
+        case 'View':
+          this.openDetailsDialog(_obj);
+          break;
     }
   }
 
@@ -263,4 +267,31 @@ export class TeacherRegistrationComponent {
     this.cardCurrentPage = event.pageIndex;
     this.selectGrid('Card');
   }
+
+  openDetailsDialog(obj:any){
+    console.log(obj);
+    var data = {
+      headerImage: obj.uploadImage,
+      header: this.webStorageS.languageFlag == 'EN' ? obj.name : obj.m_Name,
+      subheader: this.webStorageS.languageFlag == 'EN' ? obj.gender : obj.m_Gender,
+      labelHeader: this.webStorageS.languageFlag == 'EN' ? ['Mobile No.', 'Email ID','Village', 'Taluka'] : ['मोबाईल क्र.', 'ई - मेल आयडी', 'गाव', 'तालुका'],
+      labelKey: this.webStorageS.languageFlag == 'EN' ? ['mobileNo', 'emailId', 'village', 'taluka']: ['mobileNo', 'emailId', 'village', 'taluka'],
+      Obj: obj,
+      chart: false
+    }
+    const viewDialogRef = this.dialog.open(GlobalDetailComponent, {
+      width: '900px',
+      height: '650px',
+      data: data,
+      disableClose: true,
+      autoFocus: false
+    });
+    viewDialogRef.afterClosed().subscribe((result: any) => {
+     if (result == 'yes') {
+      this.getTableData();
+      }
+      
+    });
+    
+}
 }
