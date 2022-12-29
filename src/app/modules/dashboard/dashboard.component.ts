@@ -52,7 +52,7 @@ export class DashboardComponent implements OnInit,AfterViewInit {
       filtersubjectId: []
     })
     this.getTalukas();
-    this.getCenters();
+    // this.getCenters();
     // this.getschools();
     this.getdashboardCount();
   }
