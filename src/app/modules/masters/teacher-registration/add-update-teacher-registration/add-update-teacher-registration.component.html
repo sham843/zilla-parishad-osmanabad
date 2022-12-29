@@ -193,7 +193,7 @@
                         <mat-label>{{'Labels.graduateTeacherSubject'| translate}}</mat-label>
                         <mat-select formControlName="graduate_SubjectId" >
                             <mat-option *ngFor="let GradateTeacherSubject of GradateTeacherSubjectArray"
-                            [value]="GradateTeacherSubject.id">{{GradateTeacherSubject.subject}}</mat-option>                          
+                            [value]="GradateTeacherSubject.id">{{GradateTeacherSubject.subjectName}}</mat-option>                          
                         </mat-select>
                         <!-- <mat-error *ngIf="td['graduate_SubjectId'].hasError('required')">Teacher Subject Is Required</mat-error>                      -->
                     </mat-form-field>
