@@ -13,9 +13,9 @@
               </a>
           </div>
           <ul class="sub-menu">
-              <li><a class="link_name">{{pages.pageNameView}}</a></li>
+              <li><a class="link_name">{{WebStorageService.languageFlag == 'EN' ? pages.pageNameView : pages.m_PageNameView}}</a></li>
               <li><a routerlinkactive="active" ng-reflect-router-link-active="active"
-                       href="/{{pages.pageURL}}">{{pages.pageName}}</a>
+                       href="/{{pages.pageURL}}">{{WebStorageService.languageFlag == 'EN' ? pages.pageName : pages.m_PageName}}</a>
               </li>
           </ul>
       </li>
@@ -29,10 +29,10 @@
               </a>
           </div>
           <ul class="sub-menu">
-              <li><a class="link_name">{{pages.pageNameView}}</a></li>
+              <li><a class="link_name">{{WebStorageService.languageFlag == 'EN' ? pages.pageNameView : pages.m_PageNameView}}</a></li>
               <li *ngFor="let page of pages.pageURL; let pageUrlIndex = index">
                 <a routerlinkactive="active" ng-reflect-router-link-active="active" href="/{{page}}">
-                  <ng-container *ngFor="let pageName of pages.pageName; let pageNameIndex = index">
+                  <ng-container *ngFor="let pageName of WebStorageService.languageFlag == 'EN' ? pages.pageName : pages.m_PageName; let pageNameIndex = index">
                     <ng-container *ngIf="pageNameIndex == pageUrlIndex">{{pageName}}</ng-container>
                   </ng-container>
                 </a>
