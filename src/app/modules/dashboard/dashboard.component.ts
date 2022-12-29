@@ -307,27 +307,27 @@ export class DashboardComponent implements OnInit,AfterViewInit {
     this.apiService.getHttp().subscribe({
       next: (res: any) => { 
         if (res.statusCode == "200") {
-          this.barChartByTalukaData=res.responseData.responseData1;
-          const subjectSet = [...new Set(this.barChartByTalukaData.map(sub => (TalukaId || filterformData?.filtercenterId)? sub.center :sub.taluka))];
-          let dataArray:any[]=[];
-          subjectSet.map((x:any)=>{
-            const  filterSubject=this.barChartByTalukaData.filter((y:any)=> y.taluka==x);
-            let dataObjArray:any[]=[];
-            filterSubject.map((z:any)=>{
-              const subData = {
-                name: z.m_OptionName,
-                data: [z.percentage]
-              }
-              dataObjArray.push(subData);
-            })
-             dataArray.push(dataObjArray);
-           })
-           this.barchartOptions.series.push(dataArray);
-           this.barchartOptions.xaxis.categories.push(subjectSet);
-            this.showBarChartS=true;
-           console.log(this.barchartOptions)
-          } 
-       },
+          this.barChartByTalukaData = res.responseData.responseData1;
+          const talukaSet = [...new Set(this.barChartByTalukaData.map(sub => (TalukaId || filterformData?.filtercenterId) ? sub.center : sub.taluka))];
+          const subjectSet = [...new Set(this.barChartByTalukaData.map(sub => sub.m_OptionName))];
+          let arrayObjectData:any[]=[];
+          subjectSet.map((x: any) => {
+            const filterSubject = this.barChartByTalukaData.filter((y: any) => y.m_OptionName == x);
+            //const dataset(filterSubject.map(sub => sub.percentage))]
+            //console.log(dataset)
+            const subData = {
+              name: x,
+              data: filterSubject.map(sub => sub.percentage)
+            }
+            arrayObjectData.push(subData);
+          })
+          this.barchartOptions.series.push(arrayObjectData)
+          this.barchartOptions.xaxis.categories.push(talukaSet);
+          this.showBarChartS=true;
+          console.log(this.barchartOptions)
+        }
+
+      },
       error: (error:any) => { this.error.handelError(error.message) }
     });
   }

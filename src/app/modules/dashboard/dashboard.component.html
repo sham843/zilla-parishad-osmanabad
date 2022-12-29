@@ -276,14 +276,18 @@
                         </div>
                     </div>
                 </form>
-                <div class="row" *ngIf="showBarChartS" id="taluka-charts">
-                    <div class="col-sm border-end" *ngFor="let bar of barchartOptions.series[1]; let i=index">
+                <div class="row" *ngIf="showBarChartS">
+                    <!-- <div class="col-sm border-end" *ngFor="let bar of barchartOptions.series[1]; let i=index">
                         <h6 class="small fw-bold text-center mb-0">{{this.barchartOptions.xaxis.categories[1][i]}}</h6>
                         <apx-chart [series]="bar" [chart]="barchartOptions.chart"
                             [dataLabels]="barchartOptions.dataLabels" [plotOptions]="barchartOptions.plotOptions"
                             [responsive]="barchartOptions.responsive" [xaxis]="barchartOptions.xaxis"
                             [legend]="barchartOptions.legend" [fill]="barchartOptions.fill"></apx-chart>
-                    </div>
+                    </div> -->
+                    <apx-chart [series]="barchartOptions.series[1]" [chart]="barchartOptions.chart"
+                    [dataLabels]="barchartOptions.dataLabels" [plotOptions]="barchartOptions.plotOptions"
+                    [responsive]="barchartOptions.responsive" [xaxis]="barchartOptions.xaxis"
+                    [legend]="barchartOptions.legend" [fill]="barchartOptions.fill"></apx-chart>
                 </div>
             </mat-card-content>
         </mat-card>
