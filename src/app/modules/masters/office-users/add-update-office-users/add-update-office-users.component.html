@@ -16,7 +16,7 @@
             <div class="col-sm-6">
                 <mat-form-field appearance="outline" class="w-100 ">
                     <mat-label>{{'Labels.level' | translate}}</mat-label>
-                    <mat-select  formControlName="designationLevelId"  (selectionChange)="onchangeLevel($event); onchangeValidation($event, 'Level')">
+                    <mat-select  formControlName="designationLevelId"  (selectionChange)="onchangeLevel($event); onchangeValidation($event, 'Level');">
                         <mat-option [value]="level.id" *ngFor="let level of levels">{{webStorageService.languageFlag =='mr-IN' ? level.m_DesignationLevel : level.designationLevel}}</mat-option>
                     </mat-select>
                     <!-- <mat-error *ngIf="fc['designationLevelId'].hasError('required')">{{'Labels.levelRequired' | translate}}</mat-error> -->
