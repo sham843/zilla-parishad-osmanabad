@@ -158,7 +158,7 @@
                 </div>
                 <div class="col-sm-6">
                     <mat-form-field appearance="outline" class="w-100">
-                        <mat-label>Lowest Class</mat-label>
+                        <mat-label>Lowest Class {{'Labels.LowestClass' | translate}}</mat-label>
                         <mat-select formControlName="lowestClass" (selectionChange)="getHighestGroupClass();">
                         <mat-option *ngFor="let lowestGroup of lowestGroupclassArr" [value]="lowestGroup.lowestClass">
                             {{lowestGroup.value}}
@@ -172,7 +172,7 @@
 
                 <div class="col-sm-6">
                     <mat-form-field appearance="outline" class="w-100">
-                        <mat-label>Highest Class</mat-label>
+                        <mat-label> {{'Labels.HighestClass' | translate}}</mat-label>
                         <mat-select formControlName="highestClass">
                         <mat-option *ngFor="let highestGroup of highestGroupclassArr" [value]="highestGroup.lowestClass">
                             {{highestGroup.value}}
