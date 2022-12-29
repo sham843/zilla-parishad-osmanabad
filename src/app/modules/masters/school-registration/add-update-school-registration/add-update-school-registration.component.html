@@ -174,7 +174,7 @@
                     <mat-form-field appearance="outline" class="w-100">
                         <mat-label>Highest Class</mat-label>
                         <mat-select formControlName="highestClass">
-                        <mat-option *ngFor="let highestGroup of highestGroupclassArr" [value]="highestGroup.highestClass">
+                        <mat-option *ngFor="let highestGroup of highestGroupclassArr" [value]="highestGroup.lowestClass">
                             {{highestGroup.value}}
                         </mat-option>
                     </mat-select>

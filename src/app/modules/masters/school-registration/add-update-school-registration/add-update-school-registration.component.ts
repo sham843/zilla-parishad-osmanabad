@@ -150,7 +150,7 @@ export class AddUpdateSchoolRegistrationComponent {
     this.masterService.GetSchoolMngDescById(this.webStorageS.languageFlag).subscribe({
       next: (res: any) => {
         res.statusCode == 200 ? this.schoolMngArr = res.responseData : this.schoolMngArr = [];
-        this.editFlag ? (this.f['s_ManagementId'].setValue(this.data.s_ManagementId), this.getHighestGroupClass()) : '';
+        this.editFlag ? (this.f['s_ManagementId'].setValue(this.data.s_ManagementId), this.getLowestGroupClass()) : '';
       },
       error: ((err: any) => { this.errors.handelError(err) })
     });
@@ -166,6 +166,7 @@ export class AddUpdateSchoolRegistrationComponent {
       {lowestClass : 6 ,value : 6},
       {lowestClass : 7 ,value : 7},
     ]
+    this.editFlag ? (this.f['lowestClass'].setValue(this.data.lowestClass), this.getHighestGroupClass()) : '';
     // for(var i = 1; i < 8; i++){
     //   var temp = [i];
     //   this.lowestGroupclassArr.push(temp);
@@ -188,13 +189,19 @@ export class AddUpdateSchoolRegistrationComponent {
     
     let lowestClass = this.schoolRegForm.value.lowestClass;
 
+      let findObj = this.lowestGroupclassArr.filter((res:any)=>{
+       return res.lowestClass >= lowestClass 
+          
+      })
+      this.highestGroupclassArr=findObj;     
       
+      this.editFlag ? this.f['highestClass'].setValue(this.data.highestClass) : '';
     
-      for(var j = lowestClass; j < this.lowestGroupclassArr.length; j++){
-        var temp = [j];
-        this.highestGroupclassArr.push(temp);
-        console.log("highest : ", this.highestGroupclassArr);
-      }
+      // for(var j = lowestClass; j < this.lowestGroupclassArr.length; j++){
+      //   var temp = [j];
+      //  
+      //   console.log("highest : ", this.highestGroupclassArr);
+      // }
     
   }
   //#endregion ------------------------------------------- School Registration Dropdown end here ----------------------------------------// 
@@ -245,7 +252,7 @@ export class AddUpdateSchoolRegistrationComponent {
 
 
     console.log("FormValue : ", formValue);
-return;
+// return;
     let url;
     this.editFlag ? url = 'ZP-Osmanabad/School/Update' : url = 'ZP-Osmanabad/School/Add';
 
