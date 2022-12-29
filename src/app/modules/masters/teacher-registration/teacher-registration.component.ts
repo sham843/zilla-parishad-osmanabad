@@ -76,7 +76,7 @@ export class TeacherRegistrationComponent {
           tableDatasize = 0;
         }
         let displayedColumns = ['uploadImage','srNo', 'name', 'mobileNo', 'emailId', 'village', 'taluka', 'action'];
-        let displayedheaders = ['#','Sr. No.', 'Name', 'Contact No.', 'Email ID', 'Village', 'Taluka', 'action'];
+        let displayedheaders = ['#','Sr. No.', 'Teacher Name', 'Contact No.', 'Email ID', 'Village', 'Taluka', 'action'];
         let tableData = {
           pageNumber: this.pageNumber,
           img: 'uploadImage', blink: '', badge: '', isBlock: '', pagintion: true,

@@ -10,7 +10,7 @@ export class SidebarComponent {
 
   loginPages = new Array();
 
-  constructor(private WebStorageService: WebStorageService) {
+  constructor(public WebStorageService: WebStorageService) {
     let data: any = this.WebStorageService.getAllPageName();
     this.sideBarMenu(data);
   }
@@ -30,10 +30,12 @@ export class SidebarComponent {
         let existingIndex: any = this.loginPages.indexOf(existing[0]);
         this.loginPages[existingIndex].pageURL = this.loginPages[existingIndex].pageURL.concat(item.pageURL);
         this.loginPages[existingIndex].pageName = this.loginPages[existingIndex].pageName.concat(item.pageName);
+        this.loginPages[existingIndex].m_PageName = this.loginPages[existingIndex].m_PageName.concat(item.m_PageName);
       } else {
         if (typeof item.pageName == 'string')
           item.pageURL = [item.pageURL];
-        item.pageName = [item.pageName];
+          item.pageName = [item.pageName];
+          item.m_PageName = [item.m_PageName];
         this.loginPages.push(item);
       }
     });

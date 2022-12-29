@@ -2,9 +2,11 @@ import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
 import { ApiService } from 'src/app/core/services/api.service';
+import { CommonMethodsService } from 'src/app/core/services/common-methods.service';
 import { ErrorsService } from 'src/app/core/services/errors.service';
 import { MasterService } from 'src/app/core/services/master.service';
 import { WebStorageService } from 'src/app/core/services/web-storage.service';
+declare var $: any;
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
@@ -26,13 +28,16 @@ export class DashboardComponent implements OnInit,AfterViewInit {
   showBarChartF:boolean=false;
   selectedObj!:object|any;
   barChartByTalukaData=new Array();
+  graphInstance: any;
   get f() { return this.filterForm.controls }
   get fBgraph() { return this.filterFormForBarGraph.controls}
   constructor(public translate: TranslateService, private masterService: MasterService,
     public webStorage: WebStorageService, private fb: FormBuilder, private apiService:ApiService,
-    private error:ErrorsService) {
+    private error:ErrorsService, private commonMethods:CommonMethodsService) {
+    this.getBarChartOption();
     this.getChart();
   }
+  
   ngOnInit() {
     this.filterForm = this.fb.group({
       talukaId: [],
@@ -47,13 +52,16 @@ export class DashboardComponent implements OnInit,AfterViewInit {
     this.getTalukas();
     this.getCenters();
     this.getschools();
-    this.getBarChartOption();
     this.getdashboardCount();
-    this.getSubject();
+    
   }
-  ngAfterViewInit(){
-   // this.getdashboardCount();
-
+  ngAfterViewInit() {
+    this.showSvgMap(this.commonMethods.mapRegions());
+    $(document).on('click', '#mapsvg  path', (e: any) => {
+      let getClickedId = e.currentTarget;
+      let distrctId = $(getClickedId).attr('id');
+      console.log(distrctId);
+    })
   }
   getTalukas() {
     this.masterService.getAllTaluka().subscribe((res: any) => {
@@ -70,9 +78,11 @@ export class DashboardComponent implements OnInit,AfterViewInit {
       this.schoolData = res.responseData;
     })
   }
-  getSubject(){
+  getSubject(GroupId:any){
+    console.log(GroupId)
     this.masterService.getAllSubject().subscribe((res: any) => {
       this.subjectData = res.responseData;
+      this.fBgraph['filtersubjectId'].patchValue(this.subjectData[0].id)
     })
   }
   getChart() {
@@ -231,6 +241,7 @@ export class DashboardComponent implements OnInit,AfterViewInit {
       }
     })
     this.getBarChart(obj);
+    this.getSubject(obj.GroupId)
   }
   getPieChartData(){
     const serriesArray= [0,0,0];
@@ -282,7 +293,7 @@ export class DashboardComponent implements OnInit,AfterViewInit {
     this.barChartData=[];
     const TalukaId= filterformData?.talukaId? filterformData?.talukaId :formDatafilterbyTaluka?.filtertalukaId;
     const str= TalukaId?(this.selectedObj.GroupId==1?'GetDataFor1st2ndStdByTaluka':'GetDataFor3rdAboveStdByTaluka'):(this.selectedObj.GroupId==1?'GetDataFor1st2ndStdByCenter':'GetDataFor3rdAboveStdByCenter')
-    this.apiService.setHttp('GET', 'zp-osmanabad/Dashboard/'+str+'?TalukaId='+(TalukaId||0)+(!TalukaId?'&CenterId='+(filterformData?.centerId ||0):'')+'&GroupId='+this.selectedObj?.GroupId+ '&', false, false, false, 'baseUrl');
+    this.apiService.setHttp('GET', 'zp-osmanabad/Dashboard/'+str+'?TalukaId='+(TalukaId||0)+(!TalukaId?'&CenterId='+(filterformData?.centerId ||0):'')+'&GroupId='+this.selectedObj?.GroupId+ '&SubjectId='+(formDatafilterbyTaluka.filtersubjectId|0), false, false, false, 'baseUrl');
     this.apiService.getHttp().subscribe({
       next: (res: any) => { 
         if (res.statusCode == "200") {
@@ -293,6 +304,92 @@ export class DashboardComponent implements OnInit,AfterViewInit {
        },
       error: (error:any) => { this.error.handelError(error.message) }
     });
+  }
+
+
+  //---------------------------- svg Map ------------------------//
+  showSvgMap(data: any) {
+    this.graphInstance ? this.graphInstance.destroy() : '';
+    let createMap: any = document.getElementById("#mapsvg");
+
+    this.graphInstance = createMap?.mapSvg({
+      width: 550,
+      height: 430,
+      colors: {
+        baseDefault: "#bfddff",
+        background: "#fff",
+        selected: "#272848",
+        hover: "#ebebeb",
+        directory: "#bfddff",
+        status: {}
+      },
+      regions: data,
+      viewBox: [0, 0, 763.614, 599.92],
+      cursor: "pointer",
+      zoom: {
+        on: false,
+        limit: [0, 50],
+        delta: 2,
+        buttons: {
+          on: true,
+          location: "left"
+        },
+        mousewheel: true
+      },
+      tooltips: {
+        mode: "title",
+        off: true,
+        priority: "local",
+        position: "bottom"
+      },
+      popovers: {
+        mode: "on",
+        on: false,
+        priority: "local",
+        position: "top",
+        centerOn: false,
+        width: 300,
+        maxWidth: 50,
+        maxHeight: 50,
+        resetViewboxOnClose: false,
+        mobileFullscreen: false
+      },
+      gauge: {
+        on: false,
+        labels: {
+          low: "low",
+          high: "high"
+        },
+        colors: {
+          lowRGB: {
+            r: 211,
+            g: 227,
+            b: 245,
+            a: 1
+          },
+          highRGB: {
+            r: 67,
+            g: 109,
+            b: 154,
+            a: 1
+          },
+          low: "#d3e3f5",
+          high: "#436d9a",
+          diffRGB: {
+            r: -144,
+            g: -118,
+            b: -91,
+            a: 0
+          }
+        },
+        min: 0,
+        max: false
+      },
+      source: "assets/distSVG/Osmanabad.svg",
+      title: "Maharashtra-bg_o",
+      responsive: true
+    });
+    // });
   }
 
 }
