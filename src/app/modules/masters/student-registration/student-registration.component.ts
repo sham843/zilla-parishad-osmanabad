@@ -223,9 +223,10 @@ export class StudentRegistrationComponent {
         headerImage: obj.documentResponse[0].docPath,
         header: this.webService.languageFlag == 'EN' ? obj.fullName : obj.m_FullName,
         subheader: this.webService.languageFlag == 'EN' ? obj.gender : obj.m_Gender,
-        labelHeader: this.webService.languageFlag == 'EN' ? ['Father Name', 'Parent Mobile No.'] : ['वडीलांचे नावं', 'पालक मोबाईल क्र.'],
-        labelKey: this.webService.languageFlag == 'EN' ? ['fatherFullName', 'parentMobileNo'] : ['m_FatherFullName', 'parentMobileNo'],
-        Obj: obj
+        labelHeader: this.webService.languageFlag == 'EN' ? ['Father Name', 'Parent Mobile No.', 'Father Name', 'Parent Mobile No.'] : ['वडीलांचे नावं', 'पालक मोबाईल क्र.'],
+        labelKey: this.webService.languageFlag == 'EN' ? ['fatherFullName', 'parentMobileNo', 'fatherFullName', 'parentMobileNo'] : ['m_FatherFullName', 'parentMobileNo'],
+        Obj: obj,
+        chart: true
       }
       const viewDialogRef = this.dialog.open(GlobalDetailComponent, {
         width: '900px',
