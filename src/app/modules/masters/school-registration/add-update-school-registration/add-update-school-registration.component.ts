@@ -68,11 +68,11 @@ export class AddUpdateSchoolRegistrationComponent {
       "s_CategoryId": ['', Validators.required],
       "s_ManagementId": ['', Validators.required],
       "s_TypeId": ['', Validators.required],
-      // "g_ClassId": ['', Validators.required],
+      "g_ClassId": 0,
       "lan": "EN",
       "localID": 0,
-      "lowestClass": 0,
-      "highestClass":0,
+      "lowestClass": ['', Validators.required],
+      "highestClass":['', Validators.required],
       "timesStamp": new Date(),
       "uploadImage": [''],
       "createdBy": data.createdBy,
@@ -167,42 +167,17 @@ export class AddUpdateSchoolRegistrationComponent {
       {lowestClass : 7 ,value : 7},
     ]
     this.editFlag ? (this.f['lowestClass'].setValue(this.data.lowestClass), this.getHighestGroupClass()) : '';
-    // for(var i = 1; i < 8; i++){
-    //   var temp = [i];
-    //   this.lowestGroupclassArr.push(temp);
-    //   console.log("lowest  : ", this.lowestGroupclassArr); 
-    // }
   }
 
   getHighestGroupClass(){
-    console.log("lowest value : ", this.schoolRegForm.value.lowestClass);
-
-    // this.highestGroupclassArr=[
-    //   {highestClass : 1 ,value : 1},
-    //   {highestClass : 2 ,value : 2},
-    //   {highestClass : 3 ,value : 3},
-    //   {highestClass : 4 ,value : 4},
-    //   {highestClass : 5 ,value : 5},
-    //   {highestClass : 6 ,value : 6},
-    //   {highestClass : 7 ,value : 7},
-    // ]
-    
     let lowestClass = this.schoolRegForm.value.lowestClass;
 
       let findObj = this.lowestGroupclassArr.filter((res:any)=>{
        return res.lowestClass >= lowestClass 
-          
       })
       this.highestGroupclassArr=findObj;     
       
       this.editFlag ? this.f['highestClass'].setValue(this.data.highestClass) : '';
-    
-      // for(var j = lowestClass; j < this.lowestGroupclassArr.length; j++){
-      //   var temp = [j];
-      //  
-      //   console.log("highest : ", this.highestGroupclassArr);
-      // }
-    
   }
   //#endregion ------------------------------------------- School Registration Dropdown end here ----------------------------------------// 
 
@@ -244,15 +219,6 @@ export class AddUpdateSchoolRegistrationComponent {
       }
     }
 
-    // formValue.lowestClass = formValue.lowestClass[0];
-    // formValue.highestClass = formValue.highestClass[0];
-    // console.log("formValue.lowestClass",formValue.lowestClass[0]);
-    
-    // formValue.highestClass = this.schoolRegForm.value.highestClass;
-
-
-    console.log("FormValue : ", formValue);
-// return;
     let url;
     this.editFlag ? url = 'ZP-Osmanabad/School/Update' : url = 'ZP-Osmanabad/School/Add';
 
@@ -285,8 +251,6 @@ export class AddUpdateSchoolRegistrationComponent {
   //#region ------------------------------------------------- Edit Record start here --------------------------------------------//
   onEdit() {
     this.editFlag = true;
-    console.log("editObj",this.data);
-    
     this.data.uploadImage ? this.schoolRegForm.value.uploadImage = this.data.uploadImage : '';
     this.uploadImg = this.data?.uploadImage
 
