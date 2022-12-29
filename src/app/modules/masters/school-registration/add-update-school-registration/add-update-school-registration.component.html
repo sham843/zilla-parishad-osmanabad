@@ -138,12 +138,26 @@
                     </mat-form-field>
                 </div>
 
-                <div class="col-sm-6">
+                <div class="col-sm-3">
                     <mat-form-field appearance="outline" class="w-100">
-                        <mat-label>{{'Labels.groupClass' | translate}}</mat-label>
-                        <mat-select multiple formControlName="highestClass">
-                        <mat-option *ngFor="let groupclass of groupclassArr" [value]="groupclass">
-                            {{groupclass}}
+                        <mat-label>Lowest Class</mat-label>
+                        <mat-select formControlName="lowestClass" (selectionChange)="getHighestGroupClass();">
+                        <mat-option *ngFor="let lowestGroup of lowestGroupclassArr" [value]="lowestGroup.lowestClass">
+                            {{lowestGroup.value}}
+                        </mat-option>
+                    </mat-select>
+                        <!-- <mat-error *ngIf="f['lowestClass'].hasError('required') || f['lowestClass'].hasError('touched')">
+                            {{'Labels.groupClassIsRequired' | translate}}
+                        </mat-error> -->
+                    </mat-form-field>
+                </div>
+
+                <div class="col-sm-3">
+                    <mat-form-field appearance="outline" class="w-100">
+                        <mat-label>Highest Class</mat-label>
+                        <mat-select formControlName="highestClass">
+                        <mat-option *ngFor="let highestGroup of highestGroupclassArr" [value]="highestGroup.highestClass">
+                            {{highestGroup.value}}
                         </mat-option>
                     </mat-select>
                         <!-- <mat-error *ngIf="f['highestClass'].hasError('required') || f['highestClass'].hasError('touched')">
