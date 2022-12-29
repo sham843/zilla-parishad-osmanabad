@@ -414,5 +414,29 @@ export class AddUpdateStudentRegistrationComponent {
     }
   }
 
+  checkMobileNo(){
+    let mobileNo = this.stuRegistrationForm.value.mobileNo;
+    console.log(mobileNo);
+    this.apiService.setHttp('get', 'zp-osmanabad/Student/GetGaurdianByMobileNo?MobileNo='+mobileNo+'&lan=EN', false, false, false, 'baseUrl');
+      this.apiService.getHttp().subscribe({
+        next: (res: any) => {
+          if (res.statusCode == 200) {
+            if(this.languageFlag == 'EN'){
+              this.fc['fatherFullName'].setValue(res.responseData?.fatherFullName);
+              this.fc['motherName'].setValue(res.responseData?.motherName);
+            }else{
+              this.fc['fatherFullName'].setValue(res.responseData?.m_FatherFullName);
+              this.fc['motherName'].setValue(res.responseData?.m_MotherName)
+            }
+            // this.commonMethods.snackBar(res.statusMessage, 0);
+          } else {
+            this.commonMethods.checkEmptyData(res.statusMessage) == false ? this.errors.handelError(res.statusCode) : this.commonMethods.snackBar(res.statusMessage, 1);
+          }
+        },
+        error: ((err: any) => { this.ngxSpinner.hide(); this.errors.handelError(err) })
+      });
+    
+  }
+
 
 }
