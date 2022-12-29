@@ -268,7 +268,8 @@ export class AddUpdateStudentRegistrationComponent {
     let obj = this.stuRegistrationForm.value;
     let postObj = {
       ... this.webService.createdByProps(),
-      "id": this.editFlag ? this.editObj.id : 0,
+      "id": this.editObj ? this.editObj.id : 0,
+      "gaurdianId": this.editObj ? this.editObj.gaurdianId : 0,
       "fName": obj.fName || '',
       "f_MName": obj.f_MName || '',
       "mName": obj.mName || '',
@@ -299,13 +300,15 @@ export class AddUpdateStudentRegistrationComponent {
       "motherName": obj.motherName,
       "mobileNo": obj.mobileNo,
       "gaurdianModel": {
-        "id": 0,
-        "studentId": this.editFlag ? this.editObj.id : 0,
+        ... this.webService.createdByProps(),
+        "id": this.editObj ? this.editObj.gaurdianId : 0,
         "fatherFullName": obj.fatherFullName || '',
         "m_FatherFullName": '',
         "motherName": obj.motherName || '',
         "m_MotherName": '',
-        "mobileNo": obj.mobileNo
+        "mobileNo": obj.mobileNo,
+        "timestamp": new Date(),
+        "localId": 0
       },
       "documentModel": this.imageArray,
       "lan": this.languageFlag

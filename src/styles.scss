@@ -317,3 +317,9 @@ body {
   color: #000;
   font-size: 1rem;
 }
+#taluka-charts .apexcharts-legend{
+  display: none !important;
+}
+#taluka-charts .apexcharts-canvas{
+  margin: -21px !important;
+}

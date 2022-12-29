@@ -10,14 +10,13 @@
                 </button>
             </div>
         </mat-card-header>
-
         <mat-card-content class="card-body">
             <mat-card-subtitle class="mb-2">{{'Labels.personalDetails'| translate}}</mat-card-subtitle>
             <div class="row">
                 <div class="col-sm">
                     <mat-form-field appearance="outline" class="w-100">
                         <mat-label> {{'Labels.teacherName'| translate}}</mat-label>
-                        <input appAutofocus matInput formControlName="name" maxlength="100" (keypress)="validation.noFirstSpaceAllow($event)">
+                        <input appAutofocus matInput formControlName="name" maxlength="100" (keypress)="validation.noFirstSpaceAllow($event);validation.onlyAlphabets($event)">
                         <!-- <mat-error *ngIf="f['name'].hasError('required')">
                             Teacher Name Is Required</mat-error> -->
                     </mat-form-field>
@@ -140,18 +139,18 @@
                     <div class="col-sm-4">
                         <mat-form-field appearance="outline" class="w-100 ">
                             <mat-label>{{'Labels.district'| translate}}</mat-label>
-                            <mat-select formControlName="districtId" (selectionChange)="clearDropdown('Taluka');getVillage();getCluster()" >
-                                <mat-option *ngFor="let district of districtArray"
-                                [value]="district.id">{{district.district}}</mat-option>                             
+                            <mat-select formControlName="districtId" [disabled]="teacherRegForm.value.teacherDetails.districtId == 1">
+                                <mat-option *ngFor="let districtObj of districtArrayTeacherDeatails"
+                                [value]="districtObj.id">{{districtObj.district}}</mat-option>                             
                             </mat-select>
                         </mat-form-field>
                     </div>
                     <div class="col-sm-4">
                         <mat-form-field appearance="outline" class="w-100 ">
                             <mat-label>{{'Labels.taluka'| translate}}</mat-label>
-                            <mat-select formControlName="talukaId">
-                                <mat-option *ngFor="let taluka of talukaArray"
-                                [value]="taluka.id">{{taluka.taluka}}</mat-option>                              
+                            <mat-select formControlName="talukaId" (selectionChange)="clearDropdown('talukaTeacherDetails');getCluster()">
+                                <mat-option *ngFor="let talukaObj of talukaArrayTeacherDetails"
+                                [value]="talukaObj.id">{{talukaObj.taluka}}</mat-option>                              
                             </mat-select>
                         </mat-form-field>
                     </div>
@@ -160,7 +159,7 @@
                 <div class="col-sm-4">
                     <mat-form-field appearance="outline" class="w-100 ">
                         <mat-label>{{'Labels.clusterName'| translate}}</mat-label>
-                        <mat-select formControlName="clusterId" >
+                        <mat-select formControlName="clusterId" (selectionChange)="getAllSchool()">
                             <mat-option *ngFor="let cluster of clusterArray"
                             [value]="cluster.id">{{cluster.center}}</mat-option>                          
                         </mat-select>
@@ -193,7 +192,7 @@
                         <mat-label>{{'Labels.graduateTeacherSubject'| translate}}</mat-label>
                         <mat-select formControlName="graduate_SubjectId" >
                             <mat-option *ngFor="let GradateTeacherSubject of GradateTeacherSubjectArray"
-                            [value]="GradateTeacherSubject.id">{{GradateTeacherSubject.subjectName}}</mat-option>                          
+                            [value]="GradateTeacherSubject.id">{{GradateTeacherSubject.subject}}</mat-option>                          
                         </mat-select>
                         <!-- <mat-error *ngIf="td['graduate_SubjectId'].hasError('required')">Teacher Subject Is Required</mat-error>                      -->
                     </mat-form-field>
@@ -211,7 +210,7 @@
                 <div class="col-sm-4">
                     <mat-form-field appearance="outline" class="w-100 ">
                         <mat-label>{{'Labels.caste'| translate}}</mat-label>
-                        <mat-select formControlName="castId" >
+                        <mat-select formControlName="castId" (selectionChange)="changeValidators($event)" >
                             <mat-option *ngFor="let caste of casteArray"
                             [value]="caste.id">{{caste.caste}}</mat-option>                        
                         </mat-select>
@@ -267,8 +266,7 @@
                             <!-- <mat-error *ngIf="td['castverificationCommitteeName'].hasError('required')">Caste Verification Committee Name Is Required</mat-error> -->
                         </mat-form-field>
                     </div>
-                </ng-container>
-              
+                </ng-container>              
                 <div class="col-sm-4">
                     <mat-form-field appearance="outline" class="w-100">
                         <mat-label>{{'Labels.1stAppointmentDateInService'| translate}}</mat-label>
@@ -308,8 +306,7 @@
                             <mat-option *ngFor="let educationQuali of educationQualificationArray"
                             [value]="educationQuali.id">{{educationQuali.educationalQualification}}</mat-option>                          
                         </mat-select>
-                        <!-- <mat-error *ngIf="td['educationalQualificationId'].hasError('required')">Educational Qualification Is Required</mat-error> -->
-                     
+                        <!-- <mat-error *ngIf="td['educationalQualificationId'].hasError('required')">Educational Qualification Is Required</mat-error> -->                     
                     </mat-form-field>
                 </div>
                 <div class="col-sm-4">
@@ -317,11 +314,9 @@
                         <mat-label>{{'Labels.12thBranch'| translate}}</mat-label>
                         <mat-select formControlName="branchId12th" >
                             <mat-option *ngFor="let twelve of twelveBranchArray"
-                            [value]="twelve.id">{{twelve.branchName}}</mat-option>
-                          
+                            [value]="twelve.id">{{twelve.branchName}}</mat-option>                          
                         </mat-select>
-                        <!-- <mat-error *ngIf="td['branchId12th'].hasError('required')">12th Branch Is Required</mat-error> -->
-                     
+                        <!-- <mat-error *ngIf="td['branchId12th'].hasError('required')">12th Branch Is Required</mat-error> -->                     
                     </mat-form-field>
                 </div>
                 <div class="col-sm-4">
@@ -369,20 +364,18 @@
                 <div class="col-sm-4">
                     <mat-form-field appearance="outline" class="w-100 ">
                         <mat-label>{{'Labels.husbandWifeBothAreInService'| translate}}</mat-label>
-                        <mat-select formControlName="husbandWife_Both_Service" >
+                        <mat-select formControlName="husbandWife_Both_Service" (selectionChange)="removeValidators($event)" >
                             <mat-option *ngFor="let husbandWifeService of husbandWifeBothServiceArray"
-                            [value]="husbandWifeService.husbandWife_Both_Service">{{husbandWifeService.name}}</mat-option>
-                           
+                            [value]="husbandWifeService.husbandWife_Both_Service">{{husbandWifeService.name}}</mat-option>                           
                         </mat-select>
-                        <!-- <mat-error *ngIf="td['husbandWife_Both_Service'].hasError('required')">Husband-Wife Both Are In Service Is Required</mat-error> -->
-                      
+                        <!-- <mat-error *ngIf="td['husbandWife_Both_Service'].hasError('required')">Husband-Wife Both Are In Service Is Required</mat-error> -->                      
                     </mat-form-field>
                 </div>
                 <ng-container *ngIf="teacherRegForm.value.teacherDetails.husbandWife_Both_Service == 1 ">
                     <div class="col-sm-4">
                         <mat-form-field appearance="outline" class="w-100 ">
                             <mat-label>{{'Labels.ifYesThenNameAndOfficeName'| translate}}</mat-label>
-                            <input matInput formControlName="husbandWife_OfficeName">
+                            <input matInput formControlName="husbandWife_OfficeName" (keypress)="validation.noFirstSpaceAllow($event)">
                         </mat-form-field>
                     </div>
                 </ng-container>             
@@ -391,26 +384,22 @@
                         <mat-label> {{'Labels.areYouDisabled'| translate}}</mat-label>
                         <mat-select formControlName="isDisabled" >
                             <mat-option *ngFor="let disabled of AreyouDisabled"
-                            [value]="disabled.isDisabled">{{disabled.name}}</mat-option>
-                            
+                            [value]="disabled.isDisabled">{{disabled.name}}</mat-option>                            
                         </mat-select>
-                        <!-- <mat-error *ngIf="td['isDisabled'].hasError('required')">Are You Disabled Is Required</mat-error> -->
-                      
+                        <!-- <mat-error *ngIf="td['isDisabled'].hasError('required')">Are You Disabled Is Required</mat-error> -->                      
                     </mat-form-field>
                 </div>
                 <div class="col-sm-4">
                     <mat-form-field appearance="outline" class="w-100 ">
                         <mat-label> {{'Labels.interDistrictTransferred'| translate}}</mat-label>
-                        <mat-select formControlName="interDistrictTransferred" >
+                        <mat-select formControlName="interDistrictTransferred" (selectionChange)="interDistrictTrafValidators($event)" >
                             <mat-option *ngFor="let interDistrict of interDistrictTransferredArray"
-                            [value]="interDistrict.interDistrictTransferred">{{interDistrict.name}}</mat-option>
-                          
+                            [value]="interDistrict.interDistrictTransferred">{{interDistrict.name}}</mat-option>                          
                         </mat-select>
                         <!-- <mat-error *ngIf="td['interDistrictTransferred'].hasError('required')">Inter District Transferred Is Required</mat-error> -->
                       
                     </mat-form-field>
                 </div>
-
                 <ng-container *ngIf="teacherRegForm.value.teacherDetails.interDistrictTransferred == 1 ">
                     <div class="col-sm-4">
                         <mat-form-field appearance="outline" class="w-100">
@@ -436,7 +425,6 @@
                             <mat-label>{{'Labels.theOriginalDistrictOfInterDistrictTransfer'| translate}}</mat-label>
                             <input matInput formControlName="theOriginalDistrictInterDistrictTransfer" >
                             <!-- <mat-error *ngIf="td['theOriginalDistrictInterDistrictTransfer'].hasError('required')">The Original District Inter District Transfer Is Required</mat-error> -->
-
                         </mat-form-field>
                     </div>
                 </ng-container>             
@@ -456,8 +444,7 @@
                             <mat-option *ngFor="let passComputerExam of haveYouPassedComputerExamArray"
                             [value]="passComputerExam.haveYouPassedComputerExam">{{passComputerExam.name}}</mat-option>                           
                         </mat-select>
-                        <!-- <mat-error *ngIf="td['haveYouPassedComputerExam'].hasError('required')">Have You Passed Computer Exam Is Required</mat-error> -->
-                      
+                        <!-- <mat-error *ngIf="td['haveYouPassedComputerExam'].hasError('required')">Have You Passed Computer Exam Is Required</mat-error> -->                      
                     </mat-form-field>
                 </div>
                 <div class="col-sm-4">

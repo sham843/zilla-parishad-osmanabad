@@ -45,7 +45,7 @@
         "clear":"Clear",
         "AddDesignation":"Add Designation",
         "SelectDesignation": "Select Designation",
-        "RegisterDesignation":"Register Designation",
+        "RegisterDesignation":"Update Designation",
         "DesignationLevel":"Designation Level",
         "DesignationLevelReq":"Designation level is required",
         "DesignationType":"Designation Type",
@@ -61,6 +61,7 @@
         "kendra" : "Kendra",
         "village" : "Village",
         "school" : "School Name",
+        "SchoolName":"School",
         "school(Marathi)" : "School Name(Marathi)",
         "schoolTypeDescription" : "School Type",
         "schoolCategoryDescription" : "School Category ",
@@ -219,10 +220,10 @@
         "OfficeUsers" : "Office Users",
         "Student" : "Student",
         "Designation" : "Designation",
+        "DesignationLists" : "Designation List",
         "agencyReg" : "Agency Register",
         "GenderRequired" : "Gender is required",
         "AddressDetails" : "Address Details",
-
         "Agencydetail" : "Agency Details",
         "Persondetails" : "Contact Person Details",
         "Designation(Marathi)" :"Designation (Marathi)"

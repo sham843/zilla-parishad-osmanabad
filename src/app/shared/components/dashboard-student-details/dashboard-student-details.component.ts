@@ -14,9 +14,9 @@ import { StudentDetailsComponent } from 'src/app/modules/masters/student-registr
 import { TableComponent } from '../table/table.component';
 
 @Component({
-  selector: 'app-global-details',
-  templateUrl: './global-details.component.html',
-  styleUrls: ['./global-details.component.scss'],
+  selector: 'app-dashboard-student-global-details',
+  templateUrl: './dashboard-student-details.component.html',
+  styleUrls: ['./dashboard-student-details.component.scss'],
   standalone: true,
   imports: [
     CommonModule,
@@ -29,7 +29,7 @@ import { TableComponent } from '../table/table.component';
     ReactiveFormsModule
   ]
 })
-export class GlobalDetailsComponent {
+export class DashboardStudentGlobalDetailsComponent {
   pageNumber: number = 1;
   tableDataArray = new Array();
   totalCount!:number;
