@@ -109,7 +109,7 @@ export class StudentRegistrationComponent {
             }
             this.studentData.push(obj);
           });
-          if (this.studentData.length > 0) {
+          if (this.studentData.length > 0 && flag == 'reportFlag') {
             let keyPDFHeader = ['SrNo', "ID", "Full Name", "Gender", "Contact No.", "Standard", "School Name", "Caste", "Taluka", "Center"];
             let ValueData =
               this.studentData.reduce(
