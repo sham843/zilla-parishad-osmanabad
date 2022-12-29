@@ -109,6 +109,21 @@ export class StudentRegistrationComponent {
             }
             this.studentData.push(obj);
           });
+          if (this.studentData.length > 0) {
+            let keyPDFHeader = ['SrNo', "ID", "Full Name", "Gender", "Contact No.", "Standard", "School Name", "Caste", "Taluka", "Center"];
+            let ValueData =
+              this.studentData.reduce(
+                (acc: any, obj: any) => [...acc, Object.values(obj).map((value) => value)], []
+              );// Value Name
+            console.log("ValueData", ValueData);
+            let objData: any = {
+              'topHedingName': 'Student Report',
+              'createdDate': 'Created on:' + new Date()
+            }
+            this.downloadPdfservice.downLoadPdf(keyPDFHeader, ValueData, objData);
+          } else {
+            this.commonMethods.snackBar("No Data Found", 1);
+          }
 
         } else {
           this.ngxSpinner.hide();
@@ -162,10 +177,11 @@ export class StudentRegistrationComponent {
     dialogRef.afterClosed().subscribe((result: any) => {
       if (result == 'yes' && obj) {
         this.pageNumber = obj.pageNumber;
+        this.getTableData();
       } else if (result == 'yes') {
         this.pageNumber = 1;
+        this.getTableData();
       }
-      this.getTableData();
     });
   }
 
@@ -264,21 +280,21 @@ export class StudentRegistrationComponent {
 
   downloadPdf() {
     this.getTableData('reportFlag')
-    if (this.studentData.length > 0) {
-      let keyPDFHeader = ['SrNo', "ID", "Full Name", "Gender", "Contact No.", "Standard", "School Name", "Caste", "Taluka", "Center"];
-      let ValueData =
-        this.studentData.reduce(
-          (acc: any, obj: any) => [...acc, Object.values(obj).map((value) => value)], []
-        );// Value Name
-      console.log("ValueData", ValueData);
-      let objData: any = {
-        'topHedingName': 'Student Report',
-        'createdDate': 'Created on:' + new Date()
-      }
-      this.downloadPdfservice.downLoadPdf(keyPDFHeader, ValueData, objData);
-    } else {
-      this.commonMethods.snackBar("No Data Found", 1);
-    }
+    // if (this.studentData.length > 0) {
+    //   let keyPDFHeader = ['SrNo', "ID", "Full Name", "Gender", "Contact No.", "Standard", "School Name", "Caste", "Taluka", "Center"];
+    //   let ValueData =
+    //     this.studentData.reduce(
+    //       (acc: any, obj: any) => [...acc, Object.values(obj).map((value) => value)], []
+    //     );// Value Name
+    //   console.log("ValueData", ValueData);
+    //   let objData: any = {
+    //     'topHedingName': 'Student Report',
+    //     'createdDate': 'Created on:' + new Date()
+    //   }
+    //   this.downloadPdfservice.downLoadPdf(keyPDFHeader, ValueData, objData);
+    // } else {
+    //   this.commonMethods.snackBar("No Data Found", 1);
+    // }
   }
 
 }

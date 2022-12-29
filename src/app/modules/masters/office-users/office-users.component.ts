@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
+import { NgxSpinnerService } from 'ngx-spinner';
 import { ApiService } from 'src/app/core/services/api.service';
 import { CommonMethodsService } from 'src/app/core/services/common-methods.service';
 import { DownloadPdfExcelService } from 'src/app/core/services/download-pdf-excel.service';
@@ -18,6 +19,7 @@ export class OfficeUsersComponent {
 
   pageNumber: number = 1;
   resultDownloadArr = new Array();
+  totalCount: number = 0;
   searchContent = new FormControl('');
   langTypeName : any;
   tableData : any;
@@ -27,35 +29,67 @@ export class OfficeUsersComponent {
   displayedheadersEnglish = ['Sr. No.', 'Name', 'Designation', 'Contact No.', 'Email ID', 'Office Name', 'action'];
   displayedheadersMarathi = ['अनुक्रमांक', 'नाव', 'पदनाम', 'संपर्क क्र.', 'ई - मेल आयडी', 'ऑफिसचे नाव', 'कृती'];
   constructor(private apiService: ApiService, private errors: ErrorsService, private dialog: MatDialog, private commonService: CommonMethodsService,
-    private webStorageService: WebStorageService, private downloadFileService: DownloadPdfExcelService) { }
+    private webStorageService: WebStorageService, private downloadFileService: DownloadPdfExcelService,
+    private ngxSpinner: NgxSpinnerService,) { }
 
   ngOnInit() {
     this.getTableData();
-    this.getofficeReport();
+    // this.getofficeReport();
     this.languageChange();
   }
 
   onPagintion(pageNo: number) {
     this.pageNumber = pageNo;
-    this.getTableData()
+    this.getTableData();
   }
 
   getTableData(flag?: string) {
+    this.ngxSpinner.show();
     this.pageNumber = flag == 'filter' ? 1 : this.pageNumber;
+    if (flag == 'filter' && !this.searchContent.value) {
+      this.ngxSpinner.hide();
+      return
+    }
+    let reportStr = `?textSearch=${this.searchContent.value}&pageno=${this.pageNumber}&pagesize=${(this.totalCount * 10)}&lan=${this.webStorageService.languageFlag}`;
 
-    let tableDatasize!: Number;
     let str = `?textSearch=${this.searchContent.value}&pageno=${this.pageNumber}&pagesize=10&lan=${this.webStorageService.languageFlag}`;
-    this.apiService.setHttp('GET', 'zp_osmanabad/Office/GetAllOffice' + str, false, false, false, 'baseUrl');
+    this.apiService.setHttp('GET', 'zp_osmanabad/Office/GetAllOffice' + (flag == 'reportFlag' ? reportStr : str), false, false, false, 'baseUrl');
     this.apiService.getHttp().subscribe({
       next: (res: any) => {
         if (res.statusCode == "200") {
-          console.log("Table res : ",res);
-          
-          this.tableDataArray = res.responseData.responseData1;
-          tableDatasize = res.responseData.responseData2.pageCount;
+          this.ngxSpinner.hide();  
+          flag != 'reportFlag' ? this.tableDataArray = res.responseData.responseData1 : this.tableDataArray = this.tableDataArray;
+          // this.tableDataArray = res.responseData.responseData1;
+          this.tableDatasize = res.responseData.responseData2.pageCount;
+          this.totalCount = res.responseData.responseData2.pageCount;
+          this.resultDownloadArr = [];
+          let data: [] = flag == 'reportFlag' ? res.responseData.responseData1 : [];
+          data.find((ele: any, i: any) => {
+            let obj = {
+              "Sr.No": i+1,
+              "name": ele.name,
+              "designation": ele.designation,
+              "mobileNo": ele.mobileNo,
+              "emailId": ele.emailId,
+            }
+            this.resultDownloadArr.push(obj);
+          });
+          if (this.resultDownloadArr.length > 0) {
+            let keyPDFHeader = ['SrNo', "Name", "Designation", "MobileNo","EmailID"];
+            let ValueData =
+              this.resultDownloadArr.reduce(
+                (acc: any, obj: any) => [...acc, Object.values(obj).map((value) => value)], []
+              );       
+              let objData:any = {
+                'topHedingName': 'Office Data',
+                'createdDate':'Created on:'+new Date()
+              }
+            this.downloadFileService.downLoadPdf(keyPDFHeader, ValueData, objData);
+          }
         } else {
+          this.ngxSpinner.hide();
           this.tableDataArray = [];
-          tableDatasize = 0;
+          this.tableDatasize = 0;
         }
         // let displayedColumns = ['srNo', 'name', 'designation', 'mobileNo', 'emailId', 'm_Name', 'action'];
         // let displayedheaders = ['Sr. No.', 'Name', 'Designation', 'Contact No.', 'Email ID', 'Office Name', 'action'];
@@ -63,7 +97,7 @@ export class OfficeUsersComponent {
           pageNumber: this.pageNumber,
           img: '', blink: '', badge: '', isBlock: '', pagintion: true,
           displayedColumns: this.displayedColumns, tableData: this.tableDataArray,
-          tableSize: tableDatasize,
+          tableSize: this.tableDatasize,
           tableHeaders: this.langTypeName == 'English' ? this.displayedheadersEnglish : this.displayedheadersMarathi
         };
         this.apiService.tableData.next(tableData);
@@ -141,8 +175,6 @@ export class OfficeUsersComponent {
       "lan": this.webStorageService.languageFlag
     }]
     console.log("deleteObj", deleteObj);
-
-
     this.apiService.setHttp('DELETE', 'zp_osmanabad/Office/DeleteOffice', false, deleteObj, false, 'baseUrl');
     this.apiService.getHttp().subscribe({
       next: (resp: any) => {
@@ -155,51 +187,32 @@ export class OfficeUsersComponent {
     })
   }
 
-  getofficeReport(){
-    let str = `?textSearch=${this.searchContent.value}&lan=${this.webStorageService.languageFlag}`;
-    this.apiService.setHttp('GET', 'zp_osmanabad/Office/GetAllOffice' + str, false, false, false, 'baseUrl');
-    this.apiService.getHttp().subscribe({
-      next: (res: any) => {
-        this.resultDownloadArr = [];
-        if (res.statusCode == "200") {
-          let data = res.responseData.responseData1;
-          data.map((ele: any, i: any)=>{
-            let obj = {
-              "Sr.No": i+1,
-              "name": ele.name,
-              "designation": ele.designation,
-              "mobileNo": ele.mobileNo,
-              "emailId": ele.emailId,
-            }
-            this.resultDownloadArr.push(obj);
-          });
-        }
-      },
-      error: ((err: any) => { this.errors.handelError(err.message) })
-    });
-  }
 
   downloadPdf() {
-    let keyPDFHeader = ['SrNo', "Name", "Designation", "MobileNo","EmailId"];
-        let ValueData =
-          this.resultDownloadArr.reduce(
-            (acc: any, obj: any) => [...acc, Object.values(obj).map((value) => value)], []
-          );       
-          let objData:any = {
-            'topHedingName': 'Office Data',
-            'createdDate':'Created on:'+new Date()
-          }
-        this.downloadFileService.downLoadPdf(keyPDFHeader, ValueData, objData);
+    this.getTableData('reportFlag');
+    // if (this.resultDownloadArr.length > 0) {
+    //   let keyPDFHeader = ['SrNo', "Name", "Designation", "MobileNo","EmailID"];
+    //   let ValueData =
+    //     this.resultDownloadArr.reduce(
+    //       (acc: any, obj: any) => [...acc, Object.values(obj).map((value) => value)], []
+    //     );       
+    //     let objData:any = {
+    //       'topHedingName': 'Office Data',
+    //       'createdDate':'Created on:'+new Date()
+    //     }
+    //   this.downloadFileService.downLoadPdf(keyPDFHeader, ValueData, objData);
+    // }
+    
   }
 
   filterData(){
     this.getTableData();
-    this.getofficeReport();
+    // this.getofficeReport();
   }
 
   clearFilterData() {
     this.searchContent.setValue('');
     this.getTableData();
-    this.getofficeReport();
+    // this.getofficeReport();
   }
 }

@@ -46,7 +46,7 @@ export class SchoolRegistrationComponent {
   ngOnInit() {
     this.getTableData();
     this.getDistrict();
-    this.getofficeReport();
+    // this.getofficeReport();
     this.webStorageS.langNameOnChange.subscribe(lang => {
       this.langTypeName = lang;
       this.languageChange();
@@ -72,25 +72,47 @@ export class SchoolRegistrationComponent {
         tableHeaders: this.langTypeName == 'English' ? this.displayedheadersEnglish : this.displayedheadersMarathi
       };
       this.apiService.tableData.next(this.tableData);
-    })
+    });
   }
   
   getTableData(flag?: string) {
     this.tableDataArray = [];
 
     this.pageNumber = flag == 'filter' ? 1 : this.pageNumber;
-    let pageNo = this.cardViewFlag ? (this.cardCurrentPage + 1) : this.pageNumber;
+    // let pageNo = this.cardViewFlag ? (this.cardCurrentPage + 1) : this.pageNumber;
+
+    let pageNo
+    this.cardViewFlag ? pageNo = (this.cardCurrentPage + 1) : (pageNo = this.pageNumber, this.cardCurrentPage = 0);
 
     let str = `?pageno=${pageNo}&pagesize=10&DistrictId=${this.districtId.value ? this.districtId.value : 0}
     &TalukaId=${this.talukaId.value ? this.talukaId.value : 0}&VillageId=${this.villageId.value ? this.villageId.value : 0}&lan=${this.webStorageS.languageFlag}`;
-    this.apiService.setHttp('GET', 'ZP-Osmanabad/School/GetAll' + str, false, false, false, 'baseUrl');
+    
+    let reportStr = `?pageno=1&pagesize=` + (this.totalCount * 10) + `&DistrictId=${this.districtId.value ? this.districtId.value : 0}
+    &TalukaId=${this.talukaId.value ? this.talukaId.value : 0}&VillageId=${this.villageId.value ? this.villageId.value : 0}&lan=${this.webStorageS.languageFlag}`;
+    
+    this.apiService.setHttp('GET', 'ZP-Osmanabad/School/GetAll' + (flag == 'reportFlag' ? reportStr : str), false, false, false, 'baseUrl');
     this.apiService.getHttp().subscribe({
 
       next: (res: any) => {
         if (res.statusCode == 200) {
-          this.tableDataArray = res.responseData.responseData1;
+          flag != 'reportFlag' ? this.tableDataArray = res.responseData.responseData1 : this.tableDataArray = this.tableDataArray;
+          // this.tableDataArray = res.responseData.responseData1;
           this.totalCount = res.responseData.responseData2.pageCount;
           this.tableDatasize = res.responseData.responseData2.pageCount;
+
+          this.resultDownloadArr = [];
+          let data: [] = flag == 'reportFlag' ? res.responseData.responseData1 : [];
+      
+            data.find((ele: any, i: any) => {
+              let obj = {
+                srNo : i + 1,
+                schoolName : ele.schoolName,
+                district : ele.district,
+                taluka : ele.taluka,
+                village : ele.village,
+              }
+              this.resultDownloadArr.push(obj);
+            });
         }
         else {
           this.tableDataArray = [];
