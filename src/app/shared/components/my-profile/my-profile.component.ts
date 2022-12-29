@@ -7,11 +7,14 @@ import { MatInputModule } from '@angular/material/input';
 import { ApiService } from 'src/app/core/services/api.service';
 import { ErrorsService } from 'src/app/core/services/errors.service';
 import { WebStorageService } from 'src/app/core/services/web-storage.service';
-import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { FileUploadService } from 'src/app/core/services/file-upload.service';
 import { CommonMethodsService } from 'src/app/core/services/common-methods.service';
 import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { AddUpdateAgencyRegistrationComponent } from 'src/app/modules/masters/agency-registration/add-update-agency-registration/add-update-agency-registration.component';
+import { ValidationService } from 'src/app/core/services/validation.service';
+import { TranslateModule } from '@ngx-translate/core';
+import { CommonModule } from '@angular/common';
 
 
 @Component({
@@ -27,7 +30,9 @@ import { AddUpdateAgencyRegistrationComponent } from 'src/app/modules/masters/ag
     MatInputModule,
     FormsModule,
     ReactiveFormsModule,
-    MatDialogModule
+    MatDialogModule,
+    TranslateModule,
+    CommonModule
   ]
 })
 export class MyProfileComponent {
@@ -38,7 +43,7 @@ export class MyProfileComponent {
 
   constructor(private api: ApiService, private error: ErrorsService,private fileUpl: FileUploadService,
     private webStorage: WebStorageService, private fb: FormBuilder, public dialogRef: MatDialogRef<AddUpdateAgencyRegistrationComponent>,
-    private commonMethods : CommonMethodsService) { this.dialogRef.disableClose = true}
+    private commonMethods : CommonMethodsService, public validation : ValidationService) { this.dialogRef.disableClose = true}
 
   ngOnInit() {
     this.getUserById();
@@ -61,8 +66,8 @@ export class MyProfileComponent {
   defaultForm(data ? :any) {
     this.userProfile = this.fb.group({
       "name": [data?  data?.name :''],
-      "mobileNo": [data ? data?.mobileNo :''],
-      "emailId": [data ? data?.emailId :''],
+      "mobileNo": [data ? data?.mobileNo :'',[Validators.required, Validators.pattern(this.validation.mobile_No)]],
+      "emailId": [data ? data?.emailId :'', [Validators.required, Validators.pattern(this.validation.email)]],
       "profilePhoto": [data ? data?.profilePhoto : this.uploadImg],
     })
   data ? this.uploadImg = data.profilePhoto :  this.uploadImg  =  "assets/images/user.jpg"
