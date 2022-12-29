@@ -26,8 +26,8 @@ export class OfficeUsersComponent {
   tableDataArray = new Array();
   tableDatasize!: Number;
   displayedColumns = new Array();
-  displayedheadersEnglish = ['Sr. No.', 'Name', 'Designation', 'Contact No.', 'Email ID', 'Office Name', 'action'];
-  displayedheadersMarathi = ['अनुक्रमांक', 'नाव', 'पदनाम', 'संपर्क क्र.', 'ई - मेल आयडी', 'ऑफिसचे नाव', 'कृती'];
+  displayedheadersEnglish = ['Sr. No.', 'Name', 'Designation', 'Contact No.', 'Email ID', 'action'];
+  displayedheadersMarathi = ['अनुक्रमांक', 'नाव', 'पदनाम', 'संपर्क क्र.', 'ई - मेल आयडी', 'कृती'];
   constructor(private apiService: ApiService, private errors: ErrorsService, private dialog: MatDialog, private commonService: CommonMethodsService,
     private webStorageService: WebStorageService, private downloadFileService: DownloadPdfExcelService,
     private ngxSpinner: NgxSpinnerService,) { }
@@ -35,7 +35,10 @@ export class OfficeUsersComponent {
   ngOnInit() {
     this.getTableData();
     // this.getofficeReport();
-    this.languageChange();
+    this.webStorageService.langNameOnChange.subscribe(lang => {
+      this.langTypeName = lang;
+      this.languageChange();
+    });
   }
 
   onPagintion(pageNo: number) {
@@ -56,6 +59,8 @@ export class OfficeUsersComponent {
     this.apiService.setHttp('GET', 'zp_osmanabad/Office/GetAllOffice' + (flag == 'reportFlag' ? reportStr : str), false, false, false, 'baseUrl');
     this.apiService.getHttp().subscribe({
       next: (res: any) => {
+        console.log("Table res : ", res);
+        
         if (res.statusCode == "200") {
           this.ngxSpinner.hide();  
           flag != 'reportFlag' ? this.tableDataArray = res.responseData.responseData1 : this.tableDataArray = this.tableDataArray;
@@ -93,14 +98,15 @@ export class OfficeUsersComponent {
         }
         // let displayedColumns = ['srNo', 'name', 'designation', 'mobileNo', 'emailId', 'm_Name', 'action'];
         // let displayedheaders = ['Sr. No.', 'Name', 'Designation', 'Contact No.', 'Email ID', 'Office Name', 'action'];
-        let tableData = {
-          pageNumber: this.pageNumber,
-          img: '', blink: '', badge: '', isBlock: '', pagintion: true,
-          displayedColumns: this.displayedColumns, tableData: this.tableDataArray,
-          tableSize: this.tableDatasize,
-          tableHeaders: this.langTypeName == 'English' ? this.displayedheadersEnglish : this.displayedheadersMarathi
-        };
-        this.apiService.tableData.next(tableData);
+        // let tableData = {
+        //   pageNumber: this.pageNumber,
+        //   img: '', blink: '', badge: '', isBlock: '', pagintion: true,
+        //   displayedColumns: this.displayedColumns, tableData: this.tableDataArray,
+        //   tableSize: this.tableDatasize,
+        //   tableHeaders: this.langTypeName == 'English' ? this.displayedheadersEnglish : this.displayedheadersMarathi
+        // };
+        // this.apiService.tableData.next(tableData);
+        this.languageChange();
       },
       error: ((err: any) => { this.errors.handelError(err.message) })
     });
@@ -109,7 +115,7 @@ export class OfficeUsersComponent {
   languageChange() {
     this.webStorageService.langNameOnChange.subscribe(lang => {
       this.langTypeName = lang;
-      this.displayedColumns = ['srNo', this.langTypeName == 'English' ? 'name' : 'm_Name', 'designation', 'mobileNo', 'emailId', 'taluka', 'action'];
+      this.displayedColumns = ['srNo', this.langTypeName == 'English' ? 'officeName' : 'm_OfficeName', this.langTypeName == 'English' ? 'designation' : 'm_Designation', 'mobileNo', 'emailId', 'action'];
       this.tableData = {
         pageNumber: this.pageNumber,
         img: '', blink: '', badge: '', isBlock: '', pagintion: true,
