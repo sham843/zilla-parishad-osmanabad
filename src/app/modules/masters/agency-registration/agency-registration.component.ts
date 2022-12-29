@@ -24,8 +24,8 @@ export class AgencyRegistrationComponent {
   tableData: any;
   tableDataArray = new Array();
   tableDatasize!: Number;
-  displayedheadersEnglish = ['Sr.No.', 'Agency Name', 'Contact No.', 'Email ID', 'Action'];
-  displayedheadersMarathi = ['अनुक्रमांक', 'नाव', 'संपर्क क्र.', 'ई - मेल आयडी', 'कृती'];
+  displayedheadersEnglish = ['Sr. No.', 'Agency Name', 'Agency Mobile No.', 'Email ID', 'Action'];
+  displayedheadersMarathi = ['अनुक्रमांक', 'एजन्सी नाव', 'एजन्सी मोबाईल क्र.', 'ई-मेल आयडी', 'कृती'];
   langTypeName: any;
 
   constructor(private dialog: MatDialog, private apiService: ApiService,  private ngxSpinner: NgxSpinnerService,
@@ -64,6 +64,10 @@ export class AgencyRegistrationComponent {
     this.ngxSpinner.show();
     this.pageNumber = flag == 'filter' ? 1 : this.pageNumber;
     flag == 'filter' ? this.agencyReport = [] : '';
+    if (flag == 'filter' && !this.filterForm.value.searchText) {
+      this.ngxSpinner.hide();
+      return
+    }
     let obj = this.filterForm.value;
     let str = `pageno=${this.pageNumber}&pagesize=10&&TextSearch=${obj.searchText}&lan=${this.webStroageService.languageFlag}`;
     let reportStr = `TextSearch=${obj.searchText}`

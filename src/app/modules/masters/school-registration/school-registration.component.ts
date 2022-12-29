@@ -59,7 +59,7 @@ export class SchoolRegistrationComponent {
   }
 
   //#region ------------------------------------------- School Registration Table Data start here ----------------------------------------// 
-  
+
   languageChange() {
     this.webStorageS.langNameOnChange.subscribe(lang => {
       this.langTypeName = lang;
@@ -74,51 +74,75 @@ export class SchoolRegistrationComponent {
       this.apiService.tableData.next(this.tableData);
     });
   }
-  
+
   getTableData(flag?: string) {
-    this.tableDataArray = [];
-
+    // this.tableDataArray = [];
     this.pageNumber = flag == 'filter' ? 1 : this.pageNumber;
-    // let pageNo = this.cardViewFlag ? (this.cardCurrentPage + 1) : this.pageNumber;
-
     let pageNo
     this.cardViewFlag ? pageNo = (this.cardCurrentPage + 1) : (pageNo = this.pageNumber, this.cardCurrentPage = 0);
-
     let str = `?pageno=${pageNo}&pagesize=10&DistrictId=${this.districtId.value ? this.districtId.value : 0}
     &TalukaId=${this.talukaId.value ? this.talukaId.value : 0}&VillageId=${this.villageId.value ? this.villageId.value : 0}&lan=${this.webStorageS.languageFlag}`;
-    
+
     let reportStr = `?pageno=1&pagesize=` + (this.totalCount * 10) + `&DistrictId=${this.districtId.value ? this.districtId.value : 0}
     &TalukaId=${this.talukaId.value ? this.talukaId.value : 0}&VillageId=${this.villageId.value ? this.villageId.value : 0}&lan=${this.webStorageS.languageFlag}`;
-    
-    this.apiService.setHttp('GET', 'ZP-Osmanabad/School/GetAll' + (flag == 'reportFlag' ? reportStr : str), false, false, false, 'baseUrl');
+
+    this.apiService.setHttp('GET', 'ZP-Osmanabad/School/GetAll' + (flag == 'reprtFlag' ? reportStr : str), false, false, false, 'baseUrl');
     this.apiService.getHttp().subscribe({
 
       next: (res: any) => {
         if (res.statusCode == 200) {
-          flag != 'reportFlag' ? this.tableDataArray = res.responseData.responseData1 : this.tableDataArray = this.tableDataArray;
-          // this.tableDataArray = res.responseData.responseData1;
+          flag != 'reprtFlag' ? this.tableDataArray = res.responseData.responseData1 : this.tableDataArray = this.tableDataArray;
           this.totalCount = res.responseData.responseData2.pageCount;
           this.tableDatasize = res.responseData.responseData2.pageCount;
 
           this.resultDownloadArr = [];
-          let data: [] = flag == 'reportFlag' ? res.responseData.responseData1 : [];
-      
-            data.find((ele: any, i: any) => {
-              let obj = {
-                srNo : i + 1,
-                schoolName : ele.schoolName,
-                district : ele.district,
-                taluka : ele.taluka,
-                village : ele.village,
-              }
-              this.resultDownloadArr.push(obj);
-            });
+          let data: [] = flag == 'reprtFlag' ? res.responseData.responseData1 : [];
+
+          data.find((ele: any, i: any) => {
+            let obj = {
+              srNo: i + 1,
+              schoolName: ele.schoolName,
+              district: ele.district,
+              taluka: ele.taluka,
+              village: ele.village,
+            }
+            this.resultDownloadArr.push(obj);
+          });
+          // download pdf call
+          if (this.resultDownloadArr.length > 0) {
+            let keyPDFHeader = ['SrNo', "Name", "District", "Taluka", "Village"];
+            let ValueData =
+              this.resultDownloadArr.reduce(
+                (acc: any, obj: any) => [...acc, Object.values(obj).map((value) => value)], []
+              );
+            let objData: any = {
+              'topHedingName': 'School Registration Data',
+              'createdDate': 'Created on:' + new Date()
+            }
+            if(ValueData.length > 0){
+              this.downloadFileService.downLoadPdf(keyPDFHeader, ValueData, objData);
+            }
+            else{
+              this.commonMethodS.snackBar("Data not Available", 0);
+            }
+          }
+           // End download pdf call
+
         }
         else {
           this.tableDataArray = [];
           this.tableDatasize = 0;
         }
-        this.languageChange();
+
+        this.tableData = {
+          pageNumber: this.pageNumber,
+          img: 'uploadImage', blink: '', badge: '', isBlock: '', pagintion: true,
+          displayedColumns: this.displayedColumns, tableData: this.tableDataArray,
+          tableSize: this.tableDatasize,
+          tableHeaders: this.langTypeName == 'English' ? this.displayedheadersEnglish : this.displayedheadersMarathi
+        };
+        this.apiService.tableData.next(this.tableData);
+        // this.languageChange();
       },
       error: ((err: any) => { this.commonMethodS.checkEmptyData(err.statusText) == false ? this.errors.handelError(err.statusCode) : this.commonMethodS.snackBar(err.statusText, 1); })
     });
@@ -190,7 +214,7 @@ export class SchoolRegistrationComponent {
         this.getTableData();
         this.pageNumber = this.pageNumber;
       }
-      else if(result == 'yes'){
+      else if (result == 'yes') {
         this.getTableData();
         this.onClear();
         this.pageNumber = 1;
@@ -235,7 +259,7 @@ export class SchoolRegistrationComponent {
   filterData() {
     if (this.districtId.value || this.talukaId.value || this.villageId.value) {
       this.getTableData();
-        this.getofficeReport();
+
     }
   }
   //#endregion ---------------------------------------------- Filter Form end here ----------------------------------------// 
@@ -280,54 +304,11 @@ export class SchoolRegistrationComponent {
     this.getTableData();
   }
 
-  //#region ---------------------------------------------- PDF Download start here ----------------------------------------// 
-  getofficeReport() {
-    let str = `?&DistrictId=${this.districtId.value ? this.districtId.value : 0}
-     &TalukaId=${this.talukaId.value ? this.talukaId.value : 0}&VillageId=${this.villageId.value ? this.villageId.value : 0}&lan=${this.webStorageS.languageFlag}`;
-    this.apiService.setHttp('GET', 'ZP-Osmanabad/School/GetAll' + str, false, false, false, 'baseUrl');
-    this.apiService.getHttp().subscribe({
-      next: (res: any) => {
-        
-        if (res.statusCode == 200) {
-          this.resultDownloadArr = [];
-          let data: [] = res.responseData.responseData1;
-          
-          // if(data.length < 0){
-            data.map((ele: any, i: any) => {
-              let obj = {
-                "Sr.No": i + 1,
-                "Name": ele.schoolName,
-                "District": ele.district,
-                "Taluka": ele.taluka,
-                "Village": ele.village,
-              }
-              this.resultDownloadArr.push(obj);
-            });
-          // }
-        }
-      },
-      error: ((err: any) => {
-        this.commonMethodS.checkEmptyData(err.statusText) == false ? this.errors.handelError(err.statusCode) : this.commonMethodS.snackBar(err.statusText, 1);
-      })
-    });
-  }
+  
+  //#endregion ---------------------------------------------- PDF Download start here ----------------------------------------// 
 
   downloadPdf() {
-    let keyPDFHeader = ['SrNo', "Name", "District", "Taluka", "Village"];
-    let ValueData =
-      this.resultDownloadArr.reduce(
-        (acc: any, obj: any) => [...acc, Object.values(obj).map((value) => value)], []
-      );
-    let objData: any = {
-      'topHedingName': 'School Registration Data',
-      'createdDate': 'Created on:' + new Date()
-    }
-    if(ValueData.length > 0){
-      this.downloadFileService.downLoadPdf(keyPDFHeader, ValueData, objData);
-    }
-    else{
-      this.commonMethodS.snackBar("Data not Available", 0);
-    }
+    this.getTableData('reprtFlag')
   }
   //#endregion ---------------------------------------------- PDF Download end here ----------------------------------------// 
 }
