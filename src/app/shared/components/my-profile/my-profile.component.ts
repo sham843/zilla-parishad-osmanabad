@@ -107,6 +107,7 @@ export class MyProfileComponent {
       "modifiedBy": 0,
       "modifiedDate": "2022-12-28T13:14:12.410Z"
     }
+    if(this.userProfile.valid){
     this.api.setHttp('put', 'zp_osmanabad/app-login/UpdateProfile', false, uploadData, false, 'baseUrl');
     this.api.getHttp().subscribe({
       next: (res: any) => {
@@ -116,5 +117,10 @@ export class MyProfileComponent {
         this.error.handelError(error.statusMessage)
       }
     })
+  }
+  else{
+    this.commonMethods.snackBar(this.webStorage.languageFlag == 'EN' ? 'Please Enter Mandatory Fields' : 'कृपया अनिवार्य फील्ड प्रविष्ट करा', 1);
+    return;
+  }
   }
 }
