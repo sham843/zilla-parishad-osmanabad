@@ -310,7 +310,6 @@ export class AddUpdateStudentRegistrationComponent {
       "documentModel": this.imageArray,
       "lan": this.languageFlag
     }
-
     if (this.stuRegistrationForm.invalid) {
       this.ngxSpinner.hide();
       if (!this.uploadImg) { this.imgFlag = true };
@@ -349,6 +348,15 @@ export class AddUpdateStudentRegistrationComponent {
 
   //#region ------------------------------------------- Image Logic Start Here -----------------------------------------------------------------
   fileUpload(event: any, name: string) {
+    if(this.imageArray.length){
+      let index
+      if(name == 'img'){
+        index = this.imageArray.findIndex((res:any)=> res.documentId == 1);
+      }else{
+        index = this.imageArray.findIndex((res:any)=> res.documentId == 2);
+      }
+      this.imageArray.splice(index,1);
+    }
     this.fileUpl.uploadDocuments(event, 'Upload', 'jpg, jpeg, png').subscribe((res: any) => {
       if (res.statusCode == 200) {
         if (name == 'img') {
