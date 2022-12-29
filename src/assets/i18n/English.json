@@ -61,6 +61,7 @@
         "kendra" : "Kendra",
         "village" : "Village",
         "school" : "School Name",
+        "SchoolName":"School",
         "school(Marathi)" : "School Name(Marathi)",
         "schoolTypeDescription" : "School Type",
         "schoolCategoryDescription" : "School Category ",
