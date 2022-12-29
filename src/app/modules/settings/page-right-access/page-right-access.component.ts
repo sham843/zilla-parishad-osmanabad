@@ -98,12 +98,6 @@ export class PageRightAccessComponent {
     this.getUserType();
   }
 
-
-  onPagintion(pageNo: number) {
-    this.pageNumber = pageNo;
-    this.getUserRightPageList()
-  }
-
   getUserRightPageList(flag?: string) {
     this.tableDataArray = [];
     this.pageNumber = flag == 'filter' ? 1 : this.pageNumber;
