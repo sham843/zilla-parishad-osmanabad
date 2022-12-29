@@ -72,7 +72,40 @@
                         </mat-error> -->
                     </mat-form-field>
                 </div>
-                <div class="col-sm-8">
+                <div class="col-sm-4">
+                    <mat-form-field appearance="outline" class="w-100">
+                        <mat-label>{{'Labels.schoolTypeDescription' | translate}}</mat-label>
+                        <mat-select formControlName="s_TypeId">
+                            <mat-option *ngFor="let schoolType of schoolTypeArr" [value]="schoolType.id">
+                                {{webStorageS.getLangauge() == 'EN' ?
+                                schoolType.schoolType : schoolType.m_SchoolType}}
+                            </mat-option>
+                        </mat-select>
+                        <!-- <mat-error *ngIf="f['s_TypeId'].hasError('required') || f['s_TypeId'].hasError('touched')">
+                            {{'Labels.schoolTypeDescriptionIsRequired' | translate}}
+                        </mat-error> -->
+                    </mat-form-field>
+                </div>
+                <div class="col-sm-4">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div class="upload-btn-wrapper">
+                            <button class="upload-btn">{{'Labels.uploadPhoto' | translate}}</button>
+                            <input type="file" name="myfile" formControlName="uploadImage"
+                                (change)="imgUpload($event)" />
+                        </div>
+                        <div class="action-btn">
+                            <button type="button" mat-icon-button class="btn-icon text-primary" *ngIf="uploadImg"
+                                (click)="viewImg()">
+                                <mat-icon>content_copy</mat-icon>
+                            </button>
+                            <button type="button" mat-icon-button class="btn-icon text-danger" *ngIf="uploadImg"
+                                (click)="clearImg()">
+                                <mat-icon>delete</mat-icon>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6">
                     <mat-form-field appearance="outline" class="w-100">
                         <mat-label>{{'Labels.school' | translate}}</mat-label>
                         <input matInput formControlName="schoolName" maxlength="50"
@@ -95,15 +128,16 @@
                 </div>
                 <div class="col-sm-6">
                     <mat-form-field appearance="outline" class="w-100">
-                        <mat-label>{{'Labels.schoolTypeDescription' | translate}}</mat-label>
-                        <mat-select formControlName="s_TypeId">
-                            <mat-option *ngFor="let schoolType of schoolTypeArr" [value]="schoolType.id">
+                        <mat-label>{{'Labels.schoolManagementDescription' | translate}}</mat-label>
+                        <mat-select formControlName="s_ManagementId">
+                            <mat-option *ngFor="let schoolMng of schoolMngArr" [value]="schoolMng.id">
                                 {{webStorageS.getLangauge() == 'EN' ?
-                                schoolType.schoolType : schoolType.m_SchoolType}}
+                                schoolMng.management_desc : schoolMng.m_Management_desc}}
                             </mat-option>
                         </mat-select>
-                        <!-- <mat-error *ngIf="f['s_TypeId'].hasError('required') || f['s_TypeId'].hasError('touched')">
-                            {{'Labels.schoolTypeDescriptionIsRequired' | translate}}
+                        <!-- <mat-error
+                            *ngIf="f['s_ManagementId'].hasError('required') || f['s_ManagementId'].hasError('touched')">
+                            {{'Labels.schoolManagementIsRequired' | translate}}
                         </mat-error> -->
                     </mat-form-field>
                 </div>
@@ -124,26 +158,24 @@
                 </div>
                 <div class="col-sm-6">
                     <mat-form-field appearance="outline" class="w-100">
-                        <mat-label>{{'Labels.schoolManagementDescription' | translate}}</mat-label>
-                        <mat-select formControlName="s_ManagementId">
-                            <mat-option *ngFor="let schoolMng of schoolMngArr" [value]="schoolMng.id">
-                                {{webStorageS.getLangauge() == 'EN' ?
-                                schoolMng.management_desc : schoolMng.m_Management_desc}}
-                            </mat-option>
-                        </mat-select>
-                        <!-- <mat-error
-                            *ngIf="f['s_ManagementId'].hasError('required') || f['s_ManagementId'].hasError('touched')">
-                            {{'Labels.schoolManagementIsRequired' | translate}}
+                        <mat-label>Lowest Class</mat-label>
+                        <mat-select formControlName="lowestClass" (selectionChange)="getHighestGroupClass();">
+                        <mat-option *ngFor="let lowestGroup of lowestGroupclassArr" [value]="lowestGroup.lowestClass">
+                            {{lowestGroup.value}}
+                        </mat-option>
+                    </mat-select>
+                        <!-- <mat-error *ngIf="f['lowestClass'].hasError('required') || f['lowestClass'].hasError('touched')">
+                            {{'Labels.groupClassIsRequired' | translate}}
                         </mat-error> -->
                     </mat-form-field>
                 </div>
 
                 <div class="col-sm-6">
                     <mat-form-field appearance="outline" class="w-100">
-                        <mat-label>{{'Labels.groupClass' | translate}}</mat-label>
-                        <mat-select multiple formControlName="highestClass">
-                        <mat-option *ngFor="let groupclass of groupclassArr" [value]="groupclass">
-                            {{groupclass}}
+                        <mat-label>Highest Class</mat-label>
+                        <mat-select formControlName="highestClass">
+                        <mat-option *ngFor="let highestGroup of highestGroupclassArr" [value]="highestGroup.lowestClass">
+                            {{highestGroup.value}}
                         </mat-option>
                     </mat-select>
                         <!-- <mat-error *ngIf="f['highestClass'].hasError('required') || f['highestClass'].hasError('touched')">
@@ -152,25 +184,7 @@
                     </mat-form-field>
                 </div>
 
-                <div class="col-sm-6">
-                    <div class="d-flex justify-content-between align-items-center">
-                        <div class="upload-btn-wrapper">
-                            <button class="upload-btn">{{'Labels.uploadPhoto' | translate}}</button>
-                            <input type="file" name="myfile" formControlName="uploadImage"
-                                (change)="imgUpload($event)" />
-                        </div>
-                        <div class="action-btn">
-                            <button type="button" mat-icon-button class="btn-icon text-primary" *ngIf="uploadImg"
-                                (click)="viewImg()">
-                                <mat-icon>content_copy</mat-icon>
-                            </button>
-                            <button type="button" mat-icon-button class="btn-icon text-danger" *ngIf="uploadImg"
-                                (click)="clearImg()">
-                                <mat-icon>delete</mat-icon>
-                            </button>
-                        </div>
-                    </div>
-                </div>
+            
             </div>
         </mat-card-content>
         <mat-card-footer class="card-footer">

@@ -23,9 +23,15 @@ export class TeacherRegistrationComponent {
   cardCurrentPage: number = 0;
   deleteObj: any;
   resultDownloadArr = new Array();
-
+  langTypeName: any;
+  tableDatasize!: Number;
+  tableData: any;
+  displayedColumns = new Array();
   toggleControl = new FormControl(false);
   cardViewFlag: boolean = false;
+
+  displayedheadersEnglish = ['#', 'Sr. No.', 'Teacher Name', 'Mobile No.', 'Email ID', 'Village', 'Taluka', 'action'];
+  displayedheadersMarathi = ['#', 'अनुक्रमांक', 'शिक्षकाचे नाव', 'मोबाईल क्र.', 'ई - मेल आयडी', 'गाव', 'तालुका', 'कृती'];
 
   @HostBinding('class') className = '';
   constructor(private dialog: MatDialog, private overlay: OverlayContainer, private apiService: ApiService, private errors: ErrorsService,
@@ -35,6 +41,10 @@ export class TeacherRegistrationComponent {
   ngOnInit(): void {
     this.getTableData();
     this.getofficeReport();
+    this.webStorageS.langNameOnChange.subscribe(lang => {
+      this.langTypeName = lang;
+      this.languageChange();
+    });
 
     this.toggleControl.valueChanges.subscribe((darkMode) => {
       const darkClassName = 'darkMode';
@@ -47,6 +57,21 @@ export class TeacherRegistrationComponent {
     });
   }
 
+  languageChange() {
+    this.webStorageS.langNameOnChange.subscribe(lang => {
+      this.langTypeName = lang;
+      this.displayedColumns = ['uploadImage', 'srNo', this.langTypeName == 'English' ? 'name' : 'm_Name', 'mobileNo', 'emailId', this.langTypeName == 'English' ? 'village' : 'm_Village', this.langTypeName == 'English' ? 'taluka' : 'm_Taluka', 'action'];
+      this.tableData = {
+        pageNumber: this.pageNumber,
+        img: 'uploadImage', blink: '', badge: '', isBlock: '', pagintion: true,
+        displayedColumns: this.displayedColumns, tableData: this.tableDataArray,
+        tableSize: this.tableDatasize,
+        tableHeaders: this.langTypeName == 'English' ? this.displayedheadersEnglish : this.displayedheadersMarathi
+      };
+      this.apiService.tableData.next(this.tableData);
+    });
+  }
+
   onPagintion(pageNo: number) {
     this.pageNumber = pageNo;
     this.getTableData()
@@ -54,7 +79,7 @@ export class TeacherRegistrationComponent {
 
   getTableData(flag?: string) {
     this.pageNumber = flag == 'filter' ? 1 : this.pageNumber;
-    let tableDatasize!: Number;
+    // let tableDatasize!: Number;
     let pageNo = this.cardViewFlag ? (this.cardCurrentPage + 1) : this.pageNumber;
 
     let str = `pageno=${pageNo}&pagesize=10&textSearch=${this.searchContent.value}&lan=${this.webStorageS.languageFlag}`;
@@ -69,23 +94,23 @@ export class TeacherRegistrationComponent {
           this.tableDataArray = res.responseData.responseData1;
           
           this.totalCount = res.responseData.responseData2.pageCount;
-          tableDatasize = res.responseData.responseData2.pageCount;
+          this.tableDatasize = res.responseData.responseData2.pageCount;
 
         } else {
           this.tableDataArray = [];
-          tableDatasize = 0;
+          this.tableDatasize = 0;
         }
-        let displayedColumns = ['uploadImage','srNo', 'name', 'mobileNo', 'emailId', 'village', 'taluka', 'action'];
-        let displayedheaders = ['#','Sr. No.', 'Teacher Name', 'Mobile No.', 'Email ID', 'Village', 'Taluka', 'action'];
-        let tableData = {
-          pageNumber: this.pageNumber,
-          img: 'uploadImage', blink: '', badge: '', isBlock: '', pagintion: true,
-          displayedColumns: displayedColumns, tableData: this.tableDataArray,
-          tableSize: tableDatasize,
-          tableHeaders: displayedheaders
-        };
-        this.apiService.tableData.next(tableData);
-        
+        this.languageChange();
+        // let displayedColumns = ['uploadImage','srNo', 'name', 'mobileNo', 'emailId', 'village', 'taluka', 'action'];
+        // let displayedheaders = ['#','Sr. No.', 'Teacher Name', 'Mobile No.', 'Email ID', 'Village', 'Taluka', 'action'];
+        // let tableData = {
+        //   pageNumber: this.pageNumber,
+        //   img: 'uploadImage', blink: '', badge: '', isBlock: '', pagintion: true,
+        //   displayedColumns: displayedColumns, tableData: this.tableDataArray,
+        //   tableSize: tableDatasize,
+        //   tableHeaders: displayedheaders
+        // };
+        // this.apiService.tableData.next(tableData);
       },
       error: ((err: any) => { this.errors.handelError(err) })
     });

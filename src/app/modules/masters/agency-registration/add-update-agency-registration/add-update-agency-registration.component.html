@@ -13,7 +13,7 @@
     </mat-card-header>
     <form [formGroup]="agencyRegisterForm" (ngSubmit)="onSubmit(clear)" #clear="ngForm">
         <mat-card-content class="card-body card-height-mid scrollbar">
-            <mat-card-subtitle class="mb-2 fw-bold">Agency Details</mat-card-subtitle>
+            <mat-card-subtitle class="mb-2 fw-bold">{{'Labels.Agencydetail' | translate}}</mat-card-subtitle>
             <div class="row gx-3">
                 <div class="col-sm-4">
                     <mat-form-field appearance="outline" class="w-100">
@@ -26,7 +26,7 @@
                 <div class="col-sm-4">
                     <mat-form-field appearance="outline" class="w-100">
                         <mat-label>{{'Labels.agencyName(Marathi)' | translate}}</mat-label>
-                        <input matInput formControlName="m_Agency_Name"  maxlength="50" (keypress)="validation.unicodeMarathiValidation($event)">
+                        <input matInput formControlName="m_Agency_Name"  maxlength="50" (keypress)="validation.noFirstSpaceAllow($event)">
                         <!-- <mat-error *ngIf="fc['m_Agency_Name'].hasError('required')">{{'Labels.agencyNameIsRequired' | translate}}</mat-error> -->
                         <mat-error *ngIf="fc['m_Agency_Name'].hasError('pattern')"> Please Enter Valid Agency Name</mat-error>
                     </mat-form-field>
@@ -76,7 +76,7 @@
                 </div>
             </div>
             
-            <mat-card-subtitle class="mb-2 fw-bold">Person Details</mat-card-subtitle>
+            <mat-card-subtitle class="mb-2 fw-bold">{{'Labels.Persondetails' | translate}}</mat-card-subtitle>
             <div class="row gx-4">
                 <div class="col-sm-4">
                     <mat-form-field appearance="outline" class="w-100">

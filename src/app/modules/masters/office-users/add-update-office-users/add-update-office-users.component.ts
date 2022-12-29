@@ -54,18 +54,18 @@ export class AddUpdateOfficeUsersComponent implements OnInit {
         "emailId": [this.data ? this.data.emailId :"", [Validators.required, Validators.pattern(this.validation.email)]],
         "address": [this.data ? this.data.address:"",[Validators.required,Validators.maxLength(500)]],
         "schoolId": [this.data ? this.data.schoolId:0, Validators.required],
-        "designationId": [this.data ? this.data.designationId : '',  Validators.required],
-        "designationLevelId": [this.data ? this.data.designationLevelId : "",  Validators.required],
+        "designationId": [this.data ? this.data.designationId : 0,  Validators.required],
+        "designationLevelId": [this.data ? this.data.designationLevelId : 0,  Validators.required],
         "stateId": [this.data ? this.data.stateId: 0],
-        "districtId": [this.data ? this.data.districtId: '',  Validators.required],
-        "talukaId": [this.data ? this.data.talukaId:'' ,  Validators.required],
+        "districtId": [this.data ? this.data.districtId: 0,  Validators.required],
+        "talukaId": [this.data ? this.data.talukaId:0 ,  Validators.required],
         "userTypeId": [this.data ? this.data.userTypeId:0],
         "subUserTypeId": [this.data ? this.data.subUserTypeId:0],
         "kendraMobileNo": [this.data ? this.data.kendraMobileNo:"", [Validators.required, Validators.pattern(this.validation.mobile_No)]],
         "kendraEmailId": [this.data ? this.data.kendraEmailId:"", [Validators.required, Validators.pattern(this.validation.email)]],
         "beoEmailId": [this.data ? this.data.beoEmailId:"" , [Validators.required, Validators.pattern(this.validation.email)]],
         "beoMobileNo": [this.data ? this.data.beoMobileNo:"",[Validators.required, Validators.pattern(this.validation.mobile_No)]],  
-        "centerId": [this.data ? this.data.centerId:'', Validators.required],
+        "centerId": [this.data ? this.data.centerId:0, Validators.required],
         "bitName": [this.data ? this.data.bitName:"",[Validators.required, Validators.pattern(this.validation.fullName)]],
         "lan": [this.webStorageService.languageFlag]
     })
@@ -145,7 +145,7 @@ export class AddUpdateOfficeUsersComponent implements OnInit {
 
   getCenterDrop(){
     console.log(this.officeForm.value.designationId);
-    this.masterService.getAllCenter(this.webStorageService.languageFlag).subscribe({
+    this.masterService.getAllCenter(this.webStorageService.languageFlag, this.officeForm.value.talukaId).subscribe({
       next: (resp: any)=>{
         resp.statusCode == "200" ? (console.log("resp cluster", resp),
         this.centers = resp.responseData) : this.centers = [];
@@ -158,7 +158,15 @@ export class AddUpdateOfficeUsersComponent implements OnInit {
 
   submitOfficeData(){
     console.log("all data submitted:", this.officeForm.value);
-    if(this.officeForm.valid){
+    // return
+    if(!this.officeForm.valid){
+      console.log("invalid");
+      
+      return
+    }
+    else{
+      console.log("hi");
+      
       this.apiService.setHttp(this.data ? 'PUT': 'POST', this.data ? 'zp_osmanabad/Office/UpdateOffice': 'zp_osmanabad/Office/AddOffice', false, this.officeForm.value, false, 'baseUrl');
       this.apiService.getHttp().subscribe({
         next: (res: any) => {
@@ -171,14 +179,12 @@ export class AddUpdateOfficeUsersComponent implements OnInit {
         })
       });
     }
-   
   }
 
   onchangeValidation(event : any,label: string){
-    console.log("validation label, event : ", event, label);
-    if(event == 1 || event == 2 && label == 'Level'){
-      this.fc['centerId'].clearValidators();
-      this.fc['centerId'].updateValueAndValidity();
+    if(event.value == 1 || event.value == 2 && label == 'Level'){
+      this.fc['address'].clearValidators();
+      this.fc['address'].updateValueAndValidity();
 
       this.fc['schoolId'].clearValidators();
       this.fc['schoolId'].updateValueAndValidity();
@@ -198,12 +204,12 @@ export class AddUpdateOfficeUsersComponent implements OnInit {
       this.fc['bitName'].clearValidators();
       this.fc['bitName'].updateValueAndValidity();
     }
-    else if(event == 5  && label == 'Level'){
+    else if(event.value == 5  && label == 'Level'){
+      this.fc['address'].clearValidators();
+      this.fc['address'].updateValueAndValidity();
+
       this.fc['designationId'].clearValidators();
       this.fc['designationId'].updateValueAndValidity();
-
-      this.fc['centerId'].clearValidators();
-      this.fc['centerId'].updateValueAndValidity();
 
       this.fc['schoolId'].clearValidators();
       this.fc['schoolId'].updateValueAndValidity();
@@ -220,8 +226,7 @@ export class AddUpdateOfficeUsersComponent implements OnInit {
       this.fc['beoEmailId'].clearValidators();
       this.fc['beoEmailId'].updateValueAndValidity();
     }
-
-    else if(event == 6 || event == 7  && label == 'Level'){
+    else if(event.value == 6 || event.value == 7  && label == 'Level'){
       this.fc['designationId'].clearValidators();
       this.fc['designationId'].updateValueAndValidity();
 
@@ -231,9 +236,6 @@ export class AddUpdateOfficeUsersComponent implements OnInit {
       this.fc['talukaId'].clearValidators();
       this.fc['talukaId'].updateValueAndValidity();
 
-      this.fc['centerId'].clearValidators();
-      this.fc['centerId'].updateValueAndValidity();
-
       this.fc['schoolId'].clearValidators();
       this.fc['schoolId'].updateValueAndValidity();
 
@@ -248,12 +250,11 @@ export class AddUpdateOfficeUsersComponent implements OnInit {
 
       this.fc['beoEmailId'].clearValidators();
       this.fc['beoEmailId'].updateValueAndValidity();
+
+      this.fc['bitName'].clearValidators();
+      this.fc['bitName'].updateValueAndValidity();
     }
-
-    else if(event == 17 && label == 'Designation'){
-      this.fc['centerId'].clearValidators();
-      this.fc['centerId'].updateValueAndValidity();
-
+    else if(event.value == 17 && label == 'Designation'){
       this.fc['schoolId'].clearValidators();
       this.fc['schoolId'].updateValueAndValidity();
 
@@ -266,10 +267,7 @@ export class AddUpdateOfficeUsersComponent implements OnInit {
       this.fc['bitName'].clearValidators();
       this.fc['bitName'].updateValueAndValidity();
     }
-    else if(event == 20 && label == 'Designation'){
-      this.fc['centerId'].clearValidators();
-      this.fc['centerId'].updateValueAndValidity();
-
+    else if(event.value == 20 && label == 'Designation'){
       this.fc['schoolId'].clearValidators();
       this.fc['schoolId'].updateValueAndValidity();
 
@@ -282,10 +280,7 @@ export class AddUpdateOfficeUsersComponent implements OnInit {
       this.fc['bitName'].clearValidators();
       this.fc['bitName'].updateValueAndValidity();
     }
-    else if(event == 18 || event == 19 || event == 21 && label == 'Designation'){
-      this.fc['centerId'].clearValidators();
-      this.fc['centerId'].updateValueAndValidity();
-
+    else if(event.value == 18 || event.value == 19 || event.value == 21 && label == 'Designation'){
       this.fc['schoolId'].clearValidators();
       this.fc['schoolId'].updateValueAndValidity();
 
@@ -304,7 +299,20 @@ export class AddUpdateOfficeUsersComponent implements OnInit {
       this.fc['bitName'].clearValidators();
       this.fc['bitName'].updateValueAndValidity();
     }
-    
   }
+
+  // clearDropDown(event : any){
+  //   console.log("event : ",event);
+    
+  //   if(label == 'Level'){
+  //     this.fc['districtId'].setValue('');
+  //     this.talukas = [];
+  //     this.designations = [];
+  //     this.fc['name'].setValue('');
+  //     this.fc['m_Name'].setValue('');
+  //     this.fc['mobileNo'].setValue('');
+  //     this.fc['emailId'].setValue('');
+  //   }
+  // }
 
 }

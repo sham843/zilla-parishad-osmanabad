@@ -1,0 +1,48 @@
+<mat-card class="plain-card h-100">
+    <mat-card-header class="card-header">
+        <div class="d-flex align-items-center justify-content-between w-100">
+            <h6 class="mb-0 text-main">{{'Labels.profile'| translate}}</h6>
+            <button type="button" mat-icon-button mat-dialog-close class="btn-modal-close">
+                <mat-icon>
+                    close
+                </mat-icon>
+            </button>
+        </div>
+    </mat-card-header>
+    <mat-card-content class="card-body">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="student-bg">
+                </div>
+                <div class="student-details">
+                    <div class="d-flex">
+                        <div class="flex-shrink-0">
+                            <img [src]="data?.headerImage" alt="student-image" height="80px">
+                        </div>
+                        <div class="flex-grow-1 ms-3 pt-4">
+                            <h5 class="mb-1 fw-bold">{{ data?.header }}</h5>
+                            <p class="text-muted mb-4">{{ data?.subheader }}</p>
+
+                            <div class="data-container">
+                                <div class="row mb-3 gy-3">
+                                    <div class="col-sm-4" *ngFor="let head of data.labelHeader; let j=index">
+                                        <span class="data-label">{{head}} :</span>
+                                        <div class="data-text">{{ data?.Obj[data?.labelKey[j]] || '-'}}</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <mat-card class="plain-card border" *ngIf="data?.chart == true">
+                                <mat-card-content class="card-body">
+                                    chart
+                                </mat-card-content>
+                            </mat-card>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </mat-card-content>
+
+</mat-card>

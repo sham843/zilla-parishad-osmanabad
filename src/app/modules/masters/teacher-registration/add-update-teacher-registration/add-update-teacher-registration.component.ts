@@ -553,7 +553,11 @@ export class AddUpdateTeacherRegistrationComponent {
       }
     }
 
-    formValue.assignTeacher = this.assignClassArray;
+    if(!this.teacherRegForm.valid){
+      return
+    }
+    else{
+      formValue.assignTeacher = this.assignClassArray;
     let postObj = this.teacherRegForm.value;
     console.log(postObj);
     let url;
@@ -573,6 +577,7 @@ export class AddUpdateTeacherRegistrationComponent {
         this.commonMethod.checkEmptyData(error.statusMessage) == false ? this.errorHandler.handelError(error.statusCode) : this.commonMethod.snackBar(error.statusMessage, 1);
       }
     })
+    }
   }
 
   onEdit(obj: any) {
