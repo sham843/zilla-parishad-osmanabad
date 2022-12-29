@@ -8,9 +8,10 @@ import { DownloadPdfExcelService } from 'src/app/core/services/download-pdf-exce
 import { ErrorsService } from 'src/app/core/services/errors.service';
 import { ValidationService } from 'src/app/core/services/validation.service';
 import { WebStorageService } from 'src/app/core/services/web-storage.service';
+import { GlobalDetailComponent } from 'src/app/shared/components/global-detail/global-detail.component';
 import { GlobalDialogComponent } from 'src/app/shared/components/global-dialog/global-dialog.component';
 import { AddUpdateStudentRegistrationComponent } from './add-update-student-registration/add-update-student-registration.component';
-import { StudentDetailsComponent } from './student-details/student-details.component';
+// import { StudentDetailsComponent } from './student-details/student-details.component';
 @Component({
   selector: 'app-student-registration',
   templateUrl: './student-registration.component.html',
@@ -110,7 +111,7 @@ export class StudentRegistrationComponent {
             }
             this.studentData.push(obj);
           });
-          if (this.studentData.length > 0) {
+          if (this.studentData.length > 0 && flag == 'reportFlag') {
             let keyPDFHeader = ['SrNo', "ID", "Full Name", "Gender", "Contact No.", "Standard", "School Name", "Caste", "Taluka", "Center"];
             let ValueData =
               this.studentData.reduce(
@@ -218,10 +219,19 @@ export class StudentRegistrationComponent {
 
   openDetailsDialog(obj:any){
       console.log(obj);
-      const viewDialogRef = this.dialog.open(StudentDetailsComponent, {
+      var data = {
+        headerImage: obj.documentResponse[0].docPath,
+        header: this.webService.languageFlag == 'EN' ? obj.fullName : obj.m_FullName,
+        subheader: this.webService.languageFlag == 'EN' ? obj.gender : obj.m_Gender,
+        labelHeader: this.webService.languageFlag == 'EN' ? ['Father Name', 'Parent Mobile No.', 'Father Name', 'Parent Mobile No.'] : ['वडीलांचे नावं', 'पालक मोबाईल क्र.'],
+        labelKey: this.webService.languageFlag == 'EN' ? ['fatherFullName', 'parentMobileNo', 'fatherFullName', 'parentMobileNo'] : ['m_FatherFullName', 'parentMobileNo'],
+        Obj: obj,
+        chart: true
+      }
+      const viewDialogRef = this.dialog.open(GlobalDetailComponent, {
         width: '900px',
         height: '650px',
-        data: obj,
+        data: data,
         disableClose: true,
         autoFocus: false
       });

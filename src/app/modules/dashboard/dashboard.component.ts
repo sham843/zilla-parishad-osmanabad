@@ -29,6 +29,7 @@ export class DashboardComponent implements OnInit,AfterViewInit {
   selectedObj!:object|any;
   barChartByTalukaData=new Array();
   graphInstance: any;
+  showBarChartS:boolean=false;
   get f() { return this.filterForm.controls }
   get fBgraph() { return this.filterFormForBarGraph.controls}
   constructor(public translate: TranslateService, private masterService: MasterService,
@@ -53,7 +54,6 @@ export class DashboardComponent implements OnInit,AfterViewInit {
     this.getCenters();
     this.getschools();
     this.getdashboardCount();
-    
   }
   ngAfterViewInit() {
     this.showSvgMap(this.commonMethods.mapRegions());
@@ -79,8 +79,7 @@ export class DashboardComponent implements OnInit,AfterViewInit {
     })
   }
   getSubject(GroupId:any){
-    console.log(GroupId)
-    this.masterService.getAllSubject().subscribe((res: any) => {
+    this.masterService.  GetAllSubjectsByGroupClassId('', GroupId).subscribe((res: any) => {
       this.subjectData = res.responseData;
       this.fBgraph['filtersubjectId'].patchValue(this.subjectData[0].id)
     })
@@ -109,59 +108,65 @@ export class DashboardComponent implements OnInit,AfterViewInit {
   }
   getBarChartOption() {
     this.barchartOptions = {
-      series:[],
-      // series: [
-      //   [
-      //     [{
-      //     name: "PRODUCT A",
-      //     data: [44]
-      //   },
-      //   {
-      //     name: "PRODUCT B",
-      //     data: [13]
-      //   },
-      //   {
-      //     name: "PRODUCT C",
-      //     data: [11]
-      //   }],
-      //   [{
-      //     name: "PRODUCT A",
-      //     data: [24]
-      //   },
-      //   {
-      //     name: "PRODUCT B",
-      //     data: [10]
-      //   },
-      //   {
-      //     name: "PRODUCT C",
-      //     data: [48]
-      //   }],
-      //   [{
-      //     name: "PRODUCT A",
-      //     data: [65]
-      //   },
-      //   {
-      //     name: "PRODUCT B",
-      //     data: [10]
-      //   },
-      //   {
-      //     name: "PRODUCT C",
-      //     data: [37]
-      //   }]
-      // ],
-      //   [[{
-      //     name: "PRODUCT A",
-      //     data: [65, 36, 25, 15]
-      //   },
-      //   {
-      //     name: "PRODUCT B",
-      //     data: [10, 70, 25, 42]
-      //   },
-      //   {
-      //     name: "PRODUCT C",
-      //     data: [37, 65, 74, 20]
-      //   }]],
-      // ],
+      //series:[],
+      series: [
+        [
+          [{
+          name: "PRODUCT A",
+          data: [44]
+        },
+        {
+          name: "PRODUCT B",
+          data: [13]
+        },
+        {
+          name: "PRODUCT C",
+          data: [11]
+        }],
+       
+        [{
+          name: "PRODUCT A",
+          data: [65]
+        },
+        {
+          name: "PRODUCT B",
+          data: [10]
+        },
+        {
+          name: "PRODUCT C",
+          data: [37]
+        }]
+      ],
+        
+      [
+        [{
+        name: "PRODUCT A",
+        data: [44]
+      },
+      {
+        name: "PRODUCT B",
+        data: [13]
+      },
+      {
+        name: "PRODUCT C",
+        data: [11]
+      }],
+     
+      [{
+        name: "PRODUCT A",
+        data: [65]
+      },
+      {
+        name: "PRODUCT B",
+        data: [10]
+      },
+      {
+        name: "PRODUCT C",
+        data: [37]
+      }]
+    ]
+     
+      ],
       chart: {
         type: "bar",
         height: 350,
@@ -240,8 +245,12 @@ export class DashboardComponent implements OnInit,AfterViewInit {
         x.status= obj.GroupId != x.GroupId? false: obj.status;
       }
     })
+    this.getSubject(obj.GroupId);
     this.getBarChart(obj);
-    this.getSubject(obj.GroupId)
+    setTimeout(() => {
+      this.getbarChartByTaluka();
+    }, 100);
+    
   }
   getPieChartData(){
     const serriesArray= [0,0,0];
@@ -262,7 +271,7 @@ export class DashboardComponent implements OnInit,AfterViewInit {
         if (res.statusCode == "200") {
           this.barChartData=res.responseData.responseData1;
          const subjectSet = [...new Set(this.barChartData.map(sub => sub.subjectName))];
-          this.barchartOptions.series=[];
+         this.barchartOptions.series=[];
           let dataArray:any[]=[];
           subjectSet.map((x:any)=>{
             const  filterSubject=this.barChartData.filter((y:any)=> y.subjectName==x);
@@ -270,21 +279,20 @@ export class DashboardComponent implements OnInit,AfterViewInit {
             filterSubject.map((z:any)=>{
               const subData = {
                 name: obj.GroupId==1 ? z.optionName : z.question,
-                data: [z.totalStudent]
+                data: [z.totalPercental]
               }
               dataObjArray.push(subData);
             })
              dataArray.push(dataObjArray);
            })
            this.barchartOptions.series.push(dataArray);
-           this.barchartOptions.xaxis.categories=subjectSet;
+           this.barchartOptions.xaxis.categories.push(subjectSet);
             this.showBarChartF=true;
           } 
        
        },
       error: (error:any) => { this.error.handelError(error.message) }
     });
-    this.getbarChartByTaluka();
   }
 
   getbarChartByTaluka(){
@@ -292,14 +300,31 @@ export class DashboardComponent implements OnInit,AfterViewInit {
     const formDatafilterbyTaluka= this.filterFormForBarGraph.value;
     this.barChartData=[];
     const TalukaId= filterformData?.talukaId? filterformData?.talukaId :formDatafilterbyTaluka?.filtertalukaId;
-    const str= TalukaId?(this.selectedObj.GroupId==1?'GetDataFor1st2ndStdByTaluka':'GetDataFor3rdAboveStdByTaluka'):(this.selectedObj.GroupId==1?'GetDataFor1st2ndStdByCenter':'GetDataFor3rdAboveStdByCenter')
+    // const CenterId= filterformData?.centerId? filterformData?.talukaId :formDatafilterbyTaluka?.filtercenterId;
+    const str= TalukaId?(this.selectedObj.GroupId==1?'GetDataFor1st2ndStdByCenter':'GetDataFor3rdAboveStdByCenter'):(this.selectedObj.GroupId==1?'GetDataFor1st2ndStdByTaluka':'GetDataFor3rdAboveStdByTaluka');
     this.apiService.setHttp('GET', 'zp-osmanabad/Dashboard/'+str+'?TalukaId='+(TalukaId||0)+(!TalukaId?'&CenterId='+(filterformData?.centerId ||0):'')+'&GroupId='+this.selectedObj?.GroupId+ '&SubjectId='+(formDatafilterbyTaluka.filtersubjectId|0), false, false, false, 'baseUrl');
     this.apiService.getHttp().subscribe({
       next: (res: any) => { 
         if (res.statusCode == "200") {
           this.barChartByTalukaData=res.responseData.responseData1;
-          console.log(this.barChartByTalukaData)
-            this.showBarChartF=true;
+          const subjectSet = [...new Set(this.barChartByTalukaData.map(sub => (TalukaId || filterformData?.filtercenterId)? sub.center :sub.taluka))];
+          let dataArray:any[]=[];
+          subjectSet.map((x:any)=>{
+            const  filterSubject=this.barChartByTalukaData.filter((y:any)=> y.taluka==x);
+            let dataObjArray:any[]=[];
+            filterSubject.map((z:any)=>{
+              const subData = {
+                name: z.m_OptionName,
+                data: [z.percentage]
+              }
+              dataObjArray.push(subData);
+            })
+             dataArray.push(dataObjArray);
+           })
+           this.barchartOptions.series.push(dataArray);
+           this.barchartOptions.xaxis.categories.push(subjectSet);
+            this.showBarChartS=true;
+           console.log(this.barchartOptions)
           } 
        },
       error: (error:any) => { this.error.handelError(error.message) }
@@ -386,10 +411,9 @@ export class DashboardComponent implements OnInit,AfterViewInit {
         max: false
       },
       source: "assets/distSVG/Osmanabad.svg",
-      title: "Maharashtra-bg_o",
+      title: "Osmanabad_Dist",
       responsive: true
     });
-    // });
   }
 
 }

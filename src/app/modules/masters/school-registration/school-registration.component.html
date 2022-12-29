@@ -89,9 +89,8 @@
                 </mat-form-field>
             </div>
             <div class="col-sm-auto">
-                <button mat-flat-button class="btn-main" (click)="filterData()">{{'Labels.filter' | translate}}</button>
-                <button mat-flat-button class="btn-second ms-2" (click)="onClear()">{{'Labels.clear' |
-                    translate}}</button>
+                <button mat-flat-button class="btn-main" (click)="getTableData('filter')">{{'Labels.filter' | translate}}</button>
+                <button mat-flat-button class="btn-second ms-2" (click)="onClear()">{{'Labels.clear' |translate}}</button>
             </div>
         </div>
     </mat-card-header>

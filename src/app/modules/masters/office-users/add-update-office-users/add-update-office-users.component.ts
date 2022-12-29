@@ -55,10 +55,10 @@ export class AddUpdateOfficeUsersComponent implements OnInit {
         "address": [this.data ? this.data.address:"",[Validators.required,Validators.maxLength(500)]],
         "schoolId": [this.data ? this.data.schoolId:0, Validators.required],
         "designationId": [this.data ? this.data.designationId : 0,  Validators.required],
-        "designationLevelId": [this.data ? this.data.designationLevelId : "",  Validators.required],
+        "designationLevelId": [this.data ? this.data.designationLevelId : 0,  Validators.required],
         "stateId": [this.data ? this.data.stateId: 0],
-        "districtId": [this.data ? this.data.districtId: '',  Validators.required],
-        "talukaId": [this.data ? this.data.talukaId:'' ,  Validators.required],
+        "districtId": [this.data ? this.data.districtId: 0,  Validators.required],
+        "talukaId": [this.data ? this.data.talukaId:0 ,  Validators.required],
         "userTypeId": [this.data ? this.data.userTypeId:0],
         "subUserTypeId": [this.data ? this.data.subUserTypeId:0],
         "kendraMobileNo": [this.data ? this.data.kendraMobileNo:"", [Validators.required, Validators.pattern(this.validation.mobile_No)]],
@@ -179,17 +179,12 @@ export class AddUpdateOfficeUsersComponent implements OnInit {
         })
       });
     }
-   
   }
 
   onchangeValidation(event : any,label: string){
-    console.log("validation label, event : ", event.value, label);
     if(event.value == 1 || event.value == 2 && label == 'Level'){
       this.fc['address'].clearValidators();
       this.fc['address'].updateValueAndValidity();
-
-      // this.fc['centerId'].clearValidators();
-      // this.fc['centerId'].updateValueAndValidity();
 
       this.fc['schoolId'].clearValidators();
       this.fc['schoolId'].updateValueAndValidity();
@@ -216,9 +211,6 @@ export class AddUpdateOfficeUsersComponent implements OnInit {
       this.fc['designationId'].clearValidators();
       this.fc['designationId'].updateValueAndValidity();
 
-      // this.fc['centerId'].clearValidators();
-      // this.fc['centerId'].updateValueAndValidity();
-
       this.fc['schoolId'].clearValidators();
       this.fc['schoolId'].updateValueAndValidity();
 
@@ -234,7 +226,6 @@ export class AddUpdateOfficeUsersComponent implements OnInit {
       this.fc['beoEmailId'].clearValidators();
       this.fc['beoEmailId'].updateValueAndValidity();
     }
-
     else if(event.value == 6 || event.value == 7  && label == 'Level'){
       this.fc['designationId'].clearValidators();
       this.fc['designationId'].updateValueAndValidity();
@@ -245,9 +236,6 @@ export class AddUpdateOfficeUsersComponent implements OnInit {
       this.fc['talukaId'].clearValidators();
       this.fc['talukaId'].updateValueAndValidity();
 
-      // this.fc['centerId'].clearValidators();
-      // this.fc['centerId'].updateValueAndValidity();
-
       this.fc['schoolId'].clearValidators();
       this.fc['schoolId'].updateValueAndValidity();
 
@@ -262,12 +250,11 @@ export class AddUpdateOfficeUsersComponent implements OnInit {
 
       this.fc['beoEmailId'].clearValidators();
       this.fc['beoEmailId'].updateValueAndValidity();
+
+      this.fc['bitName'].clearValidators();
+      this.fc['bitName'].updateValueAndValidity();
     }
-
     else if(event.value == 17 && label == 'Designation'){
-      // this.fc['centerId'].clearValidators();
-      // this.fc['centerId'].updateValueAndValidity();
-
       this.fc['schoolId'].clearValidators();
       this.fc['schoolId'].updateValueAndValidity();
 
@@ -281,9 +268,6 @@ export class AddUpdateOfficeUsersComponent implements OnInit {
       this.fc['bitName'].updateValueAndValidity();
     }
     else if(event.value == 20 && label == 'Designation'){
-      // this.fc['centerId'].clearValidators();
-      // this.fc['centerId'].updateValueAndValidity();
-
       this.fc['schoolId'].clearValidators();
       this.fc['schoolId'].updateValueAndValidity();
 
@@ -297,9 +281,6 @@ export class AddUpdateOfficeUsersComponent implements OnInit {
       this.fc['bitName'].updateValueAndValidity();
     }
     else if(event.value == 18 || event.value == 19 || event.value == 21 && label == 'Designation'){
-      // this.fc['centerId'].clearValidators();
-      // this.fc['centerId'].updateValueAndValidity();
-
       this.fc['schoolId'].clearValidators();
       this.fc['schoolId'].updateValueAndValidity();
 
@@ -318,7 +299,20 @@ export class AddUpdateOfficeUsersComponent implements OnInit {
       this.fc['bitName'].clearValidators();
       this.fc['bitName'].updateValueAndValidity();
     }
-    
   }
+
+  // clearDropDown(event : any){
+  //   console.log("event : ",event);
+    
+  //   if(label == 'Level'){
+  //     this.fc['districtId'].setValue('');
+  //     this.talukas = [];
+  //     this.designations = [];
+  //     this.fc['name'].setValue('');
+  //     this.fc['m_Name'].setValue('');
+  //     this.fc['mobileNo'].setValue('');
+  //     this.fc['emailId'].setValue('');
+  //   }
+  // }
 
 }

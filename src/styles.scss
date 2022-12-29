@@ -310,3 +310,10 @@ body {
 .inner-table thead th{
   background-color: var(--main-light-color);
 }
+.data-container .data-label{
+  color: #666;
+}
+.data-container .data-text{
+  color: #000;
+  font-size: 1rem;
+}
