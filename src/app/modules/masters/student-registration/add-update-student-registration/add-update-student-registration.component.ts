@@ -113,7 +113,7 @@ export class AddUpdateStudentRegistrationComponent {
           this.districtArr = [];
         }
       },
-      error: ((err: any) => { this.errors.handelError(err) })
+      error: ((err: any) => { this.errors.handelError(err.statusCode) })
     });
   }
 
@@ -129,7 +129,7 @@ export class AddUpdateStudentRegistrationComponent {
           this.talukaArr = [];
         }
       },
-      error: ((err: any) => { this.errors.handelError(err) })
+      error: ((err: any) => { this.errors.handelError(err.statusCode) })
     });
   }
 
@@ -146,7 +146,7 @@ export class AddUpdateStudentRegistrationComponent {
           this.centerArr = [];
         }
       },
-      error: ((err: any) => { this.errors.handelError(err) })
+      error: ((err: any) => { this.errors.handelError(err.statusCode) })
     });
   }
 
@@ -163,7 +163,7 @@ export class AddUpdateStudentRegistrationComponent {
           this.schoolArr = [];
         }
       },
-      error: ((err: any) => { this.errors.handelError(err) })
+      error: ((err: any) => { this.errors.handelError(err.statusCode) })
     });
   }
 
@@ -179,7 +179,7 @@ export class AddUpdateStudentRegistrationComponent {
           this.standardArr = [];
         }
       },
-      error: ((err: any) => { this.errors.handelError(err) })
+      error: ((err: any) => { this.errors.handelError(err.statusCode) })
     });
   }
 
@@ -195,7 +195,7 @@ export class AddUpdateStudentRegistrationComponent {
           this.genderArr = [];
         }
       },
-      error: ((err: any) => { this.errors.handelError(err) })
+      error: ((err: any) => { this.errors.handelError(err.statusCode) })
     });
   }
 
@@ -211,7 +211,7 @@ export class AddUpdateStudentRegistrationComponent {
           this.religionArr = [];
         }
       },
-      error: ((err: any) => { this.errors.handelError(err) })
+      error: ((err: any) => { this.errors.handelError(err.statusCode) })
     });
   }
 
@@ -230,7 +230,7 @@ export class AddUpdateStudentRegistrationComponent {
           this.casteArr = [];
         }
       },
-      error: ((err: any) => { this.errors.handelError(err) })
+      error: ((err: any) => { this.errors.handelError(err.statusCode) })
     });
   }
 

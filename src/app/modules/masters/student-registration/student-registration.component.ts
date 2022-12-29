@@ -73,11 +73,7 @@ export class StudentRegistrationComponent {
 
   getTableData(flag?: string) {
     this.ngxSpinner.show();
-    this.pageNumber = flag == 'filter' ? 1 : this.pageNumber;
-    if (flag == 'filter' && !this.searchContent.value) {
-      this.ngxSpinner.hide();
-      return
-    }
+    this.pageNumber = flag == 'filter' ? 1 : this.pageNumber;    
     let pageNo
     this.cardViewFlag ? pageNo = (this.cardCurrentPage + 1) : (pageNo = this.pageNumber, this.cardCurrentPage = 0);
     let str = `?pageno=${pageNo}&pagesize=10&textSearch=${this.searchContent.value || ''}&lan=${this.languageFlag || ''}`;
