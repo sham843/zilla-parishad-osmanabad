@@ -15,8 +15,6 @@ import { AddUpdateAgencyRegistrationComponent } from 'src/app/modules/masters/ag
 import { ValidationService } from 'src/app/core/services/validation.service';
 import { TranslateModule } from '@ngx-translate/core';
 import { CommonModule } from '@angular/common';
-
-
 @Component({
   standalone: true,
   selector: 'app-my-profile',
@@ -37,25 +35,25 @@ import { CommonModule } from '@angular/common';
 })
 export class MyProfileComponent {
   userProfile !: FormGroup;
-   uploadImg: string =  "";
-  imgFlag : boolean = false;
+  uploadImg: string = "";
+  imgFlag: boolean = false;
   @ViewChild('uploadImage') imageFile!: ElementRef;
 
-  constructor(private api: ApiService, private error: ErrorsService,private fileUpl: FileUploadService,
+  constructor(private api: ApiService, private error: ErrorsService, private fileUpl: FileUploadService,
     private webStorage: WebStorageService, private fb: FormBuilder, public dialogRef: MatDialogRef<AddUpdateAgencyRegistrationComponent>,
-    private commonMethods : CommonMethodsService, public validation : ValidationService) { this.dialogRef.disableClose = true}
+    private commonMethods: CommonMethodsService, public validation: ValidationService) { this.dialogRef.disableClose = true }
 
   ngOnInit() {
     this.getUserById();
     this.defaultForm();
-    
+
   }
 
   getUserById() {
     this.api.setHttp('get', `zp_osmanabad/app-login/GetTeacherProfile?TeacherId=${this.webStorage.getUserId()}`, false, false, false, 'baseUrl');
     this.api.getHttp().subscribe({
       next: (res: any) => {
-        res.statusCode == 200 ? this.defaultForm(res.responseData)  : '';
+        res.statusCode == 200 ? this.defaultForm(res.responseData) : '';
       },
       error: (error: any) => {
         this.error.handelError(error.statusMessage)
@@ -63,37 +61,37 @@ export class MyProfileComponent {
     })
   }
 
-  defaultForm(data ? :any) {
+  defaultForm(data?: any) {
     this.userProfile = this.fb.group({
-      "name": [data?  data?.name :''],
-      "mobileNo": [data ? data?.mobileNo :'',[Validators.required, Validators.pattern(this.validation.mobile_No)]],
-      "emailId": [data ? data?.emailId :'', [Validators.required, Validators.pattern(this.validation.email)]],
+      "name": [data ? data?.name : ''],
+      "mobileNo": [data ? data?.mobileNo : '', [Validators.required, Validators.pattern(this.validation.mobile_No)]],
+      "emailId": [data ? data?.emailId : '', [Validators.required, Validators.pattern(this.validation.email)]],
       "profilePhoto": [data ? data?.profilePhoto : this.uploadImg],
     })
-  data ? this.uploadImg = data.profilePhoto :  this.uploadImg  =  "assets/images/user.jpg"
+    data ? this.uploadImg = data.profilePhoto : this.uploadImg = "assets/images/user.jpg"
   }
-  get fc (){ return this.userProfile.controls}
+  get fc() { return this.userProfile.controls }
 
   fileUpload(event: any) {
     this.imgFlag = true;
     this.fileUpl.uploadDocuments(event, 'Upload', 'jpg, jpeg, png').subscribe((res: any) => {
       if (res.statusCode == 200) {
-          this.uploadImg = res.responseData;
-          this.fc['profilePhoto'].setValue(this.uploadImg)
-         
+        this.uploadImg = res.responseData;
+        this.fc['profilePhoto'].setValue(this.uploadImg)
+
         this.commonMethods.snackBar(res.statusMessage, 0);
       } else {
-         this.uploadImg = "assets/images/user.jpg"
+        this.uploadImg = "assets/images/user.jpg"
       }
     });
   }
 
-  removeImg(){
+  removeImg() {
     this.imageFile.nativeElement.value = '';
     this.uploadImg = "assets/images/user.jpg"
   }
 
-  onSubmit(){
+  onSubmit() {
     let obj = this.userProfile.value;
     let data = this.webStorage.getLoggedInLocalstorageData();
     let uploadData = {
@@ -107,20 +105,20 @@ export class MyProfileComponent {
       "modifiedBy": 0,
       "modifiedDate": "2022-12-28T13:14:12.410Z"
     }
-    if(this.userProfile.valid){
-    this.api.setHttp('put', 'zp_osmanabad/app-login/UpdateProfile', false, uploadData, false, 'baseUrl');
-    this.api.getHttp().subscribe({
-      next: (res: any) => {
-        res.statusCode == 200 ? (this.commonMethods.snackBar(res.statusMessage,0), this.dialogRef.close()  ): this.commonMethods.snackBar(res.statusMessage,1);
-      },
-      error: (error: any) => {
-        this.error.handelError(error.statusMessage)
-      }
-    })
-  }
-  else{
-    this.commonMethods.snackBar(this.webStorage.languageFlag == 'EN' ? 'Please Enter Mandatory Fields' : 'कृपया अनिवार्य फील्ड प्रविष्ट करा', 1);
-    return;
-  }
+    if (this.userProfile.valid) {
+      this.api.setHttp('put', 'zp_osmanabad/app-login/UpdateProfile', false, uploadData, false, 'baseUrl');
+      this.api.getHttp().subscribe({
+        next: (res: any) => {
+          res.statusCode == 200 ? (this.commonMethods.snackBar(res.statusMessage, 0), this.dialogRef.close()) : this.commonMethods.snackBar(res.statusMessage, 1);
+        },
+        error: (error: any) => {
+          this.error.handelError(error.statusMessage)
+        }
+      })
+    }
+    else {
+      this.commonMethods.snackBar(this.webStorage.languageFlag == 'EN' ? 'Please Enter Mandatory Fields' : 'कृपया अनिवार्य फील्ड प्रविष्ट करा', 1);
+      return;
+    }
   }
 }
