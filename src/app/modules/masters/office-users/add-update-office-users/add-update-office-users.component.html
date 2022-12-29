@@ -23,6 +23,30 @@
                 </mat-form-field>
             </div>
 
+            <ng-container *ngIf=" officeForm.value.designationLevelId != 6 && officeForm.value.designationLevelId != 7">
+                <div class="col-sm-6">
+                    <mat-form-field appearance="outline" class="w-100 ">
+                        <mat-label>{{'Labels.district' | translate}}</mat-label>
+                        <mat-select  formControlName="districtId">
+                            <mat-option [value]="dist.id" *ngFor="let dist of districts">{{webStorageService.languageFlag =='mr-IN' ? dist.m_District:  dist.district}}</mat-option>
+                        </mat-select>
+                    <!-- <mat-error *ngIf="fc['districtId'].hasError('required')">{{'Labels.districtIsRequired' | translate}}</mat-error> -->
+                    </mat-form-field>
+                </div>
+            </ng-container>
+            
+            <ng-container *ngIf=" officeForm.value.designationLevelId != 6 && officeForm.value.designationLevelId != 7">
+                <div class="col-sm-6">
+                    <mat-form-field appearance="outline" class="w-100">
+                        <mat-label>{{'Labels.taluka' | translate}}</mat-label>
+                        <mat-select  formControlName="talukaId">
+                            <mat-option [value]="taluka.id" *ngFor="let taluka of talukas">{{webStorageService.languageFlag =='mr-IN' ? taluka.m_Taluka : taluka.taluka}}</mat-option>
+                        </mat-select>
+                    <!-- <mat-error *ngIf="fc['talukaId'].hasError('required')">{{'Labels.talukaIsRequired' | translate}}</mat-error> -->
+                    </mat-form-field>
+                </div>
+            </ng-container>
+
             <div class="col-sm-6">
                 <mat-form-field appearance="outline" class="w-100 " *ngIf="officeForm.value.designationLevelId != 5 && officeForm.value.designationLevelId != 6 && officeForm.value.designationLevelId != 7">
                     <mat-label>{{'Labels.designation' | translate}}</mat-label>
@@ -56,30 +80,6 @@
                             <mat-option [value]="sch.id" *ngFor="let sch of schools">{{webStorageService.languageFlag =='mr-IN' ? sch.m_SchoolName : sch.schoolName}}</mat-option>
                         </mat-select>
                     <!-- <mat-error *ngIf="fc['schoolId'].hasError('required')">{{'Labels.schoolIsRequired' | translate}}</mat-error> -->
-                    </mat-form-field>
-                </div>
-            </ng-container>
-
-            <ng-container *ngIf=" officeForm.value.designationLevelId != 6 && officeForm.value.designationLevelId != 7">
-                <div class="col-sm-6">
-                    <mat-form-field appearance="outline" class="w-100 ">
-                        <mat-label>{{'Labels.district' | translate}}</mat-label>
-                        <mat-select  formControlName="districtId">
-                            <mat-option [value]="dist.id" *ngFor="let dist of districts">{{webStorageService.languageFlag =='mr-IN' ? dist.m_District:  dist.district}}</mat-option>
-                        </mat-select>
-                    <!-- <mat-error *ngIf="fc['districtId'].hasError('required')">{{'Labels.districtIsRequired' | translate}}</mat-error> -->
-                    </mat-form-field>
-                </div>
-            </ng-container>
-            
-            <ng-container *ngIf=" officeForm.value.designationLevelId != 6 && officeForm.value.designationLevelId != 7">
-                <div class="col-sm-6">
-                    <mat-form-field appearance="outline" class="w-100">
-                        <mat-label>{{'Labels.taluka' | translate}}</mat-label>
-                        <mat-select  formControlName="talukaId">
-                            <mat-option [value]="taluka.id" *ngFor="let taluka of talukas">{{webStorageService.languageFlag =='mr-IN' ? taluka.m_Taluka : taluka.taluka}}</mat-option>
-                        </mat-select>
-                    <!-- <mat-error *ngIf="fc['talukaId'].hasError('required')">{{'Labels.talukaIsRequired' | translate}}</mat-error> -->
                     </mat-form-field>
                 </div>
             </ng-container>
