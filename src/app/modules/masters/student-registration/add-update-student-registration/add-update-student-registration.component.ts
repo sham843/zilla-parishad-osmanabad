@@ -220,6 +220,8 @@ export class AddUpdateStudentRegistrationComponent {
     let id = this.stuRegistrationForm.value.religionId;
     this.masterService.getAllCaste(this.languageFlag, id).subscribe({
       next: (res: any) => {
+        console.log(res.statusCode);
+        
         if (res.statusCode == 200) {
           this.casteArr = res.responseData;
           this.editFlag ? this.stuRegistrationForm.controls['castId'].setValue(this.editObj.castId) : '';
@@ -313,6 +315,9 @@ export class AddUpdateStudentRegistrationComponent {
       "documentModel": this.imageArray,
       "lan": this.languageFlag
     }
+
+    console.log(postObj);
+    
     if (this.stuRegistrationForm.invalid) {
       this.ngxSpinner.hide();
       if (!this.uploadImg) { this.imgFlag = true };
@@ -351,16 +356,7 @@ export class AddUpdateStudentRegistrationComponent {
 
 
   //#region ------------------------------------------- Image Logic Start Here -----------------------------------------------------------------
-  fileUpload(event: any, name: string) {
-    if(this.imageArray.length){
-      let index
-      if(name == 'img'){
-        index = this.imageArray.findIndex((res:any)=> res.documentId == 1);
-      }else{
-        index = this.imageArray.findIndex((res:any)=> res.documentId == 2);
-      }
-      this.imageArray.splice(index,1);
-    }
+  fileUpload(event: any, name: string) {  
     this.fileUpl.uploadDocuments(event, 'Upload', 'jpg, jpeg, png').subscribe((res: any) => {
       if (res.statusCode == 200) {
         if (name == 'img') {
