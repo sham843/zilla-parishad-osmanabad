@@ -13,7 +13,7 @@
     </mat-card-header>
     <form [formGroup]="agencyRegisterForm" (ngSubmit)="onSubmit(clear)" #clear="ngForm">
         <mat-card-content class="card-body card-height-mid scrollbar">
-            <mat-card-subtitle class="mb-2 fw-bold">Agency Details</mat-card-subtitle>
+            <mat-card-subtitle class="mb-2 fw-bold">{{'Labels.Agencydetail' | translate}}</mat-card-subtitle>
             <div class="row gx-3">
                 <div class="col-sm-4">
                     <mat-form-field appearance="outline" class="w-100">
@@ -76,7 +76,7 @@
                 </div>
             </div>
             
-            <mat-card-subtitle class="mb-2 fw-bold">Person Details</mat-card-subtitle>
+            <mat-card-subtitle class="mb-2 fw-bold">{{'Labels.Persondetails' | translate}}</mat-card-subtitle>
             <div class="row gx-4">
                 <div class="col-sm-4">
                     <mat-form-field appearance="outline" class="w-100">

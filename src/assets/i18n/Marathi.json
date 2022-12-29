@@ -30,7 +30,7 @@
         "pleaseEnterValidMobileNumber" : "कृपया वैध मोबाईल क्रमांक प्रविष्ट करा",
         "pleaseEnterValidEmailId" : "कृपया वैध ई-मेल आयडी प्रविष्ट करा",
         "contactNumberIsRequired" : "संपर्क क्रमांक आवश्यक आहे",
-        "emailIdIsRequired" :"ईमेल आयडी आवश्यक आहे",
+        "emailIdIsRequired" :"ई-मेल आयडी आवश्यक आहे",
         "pleaseSelectTaluka" : "कृपया तालुका निवडा",
         "pleaseSelectCenter" : "कृपया केंद्र निवडा",
         "pleaseSelectSchool" : "कृपया शाळा निवडा",
@@ -76,7 +76,7 @@
         "schoolCategoryIsRequired" : "शाळा श्रेणी आवश्यक आहे",
         "schoolManagementIsRequired" : "शाळा व्यवस्थापन आवश्यक आहे",
         "groupClassIsRequired" : "गट वर्ग आवश्यक आहे",
-        "searchbyNameContactEmail" : "नाव/संपर्क/ई-मेल द्वारे शोधा",
+        "searchbyNameContactEmail" : "नाव/मोबाईल क्र./ई-मेल द्वारे शोधा",
         "studentFirstName" : "विद्यार्थीचे प्रथम नाव",
         "studentMiddelName" : "विद्यार्थीचे मधला नाव",
         "studentLastName" : "विद्यार्थीचे अडनाव",
@@ -222,6 +222,9 @@
         "Designation" : "पदनाम",
         "agencyReg" : "एजन्सी रजिस्टर",
         "GenderRequired" : "लिंग आवश्यक आहे",
-        "AddressDetails" : "पत्ता तपशील"
+        "AddressDetails" : "पत्ता तपशील",
+
+        "Agencydetail" : "एजन्सी तपशील",
+        "Persondetails" : "व्यक्तीचे तपशील"
     }
 }

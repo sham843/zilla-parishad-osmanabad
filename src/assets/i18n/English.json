@@ -52,7 +52,7 @@
         "DesignationTypeReq":"Designation is required",
         "AddDesignation(Marathi)":"Designation (Marathi)",
         "DesignationTypeMarathiReq":"Designation (Marathi) is required",
-        "searchbyNameContactEmail" :"Search By Name/Contact/Email",
+        "searchbyNameContactEmail" :"Agency Name/Mobile No./Email ID",
         "schoolRegistration" : "School Registration",
         "registerSchool" : "Register School",
         "updateSchool" : "Update School Details",
@@ -221,7 +221,10 @@
         "Designation" : "Designation",
         "agencyReg" : "Agency Register",
         "GenderRequired" : "Gender is required",
-        "AddressDetails" : "Address Details"
+        "AddressDetails" : "Address Details",
+
+        "Agencydetail" : "Agency Details",
+        "Persondetails" : "Person Details"
 
     }
 }
