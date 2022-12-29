@@ -446,7 +446,7 @@
                         <input matInput [matDatepicker]=" DateSeniority" readonly formControlName="dateOfSeniority">
                         <mat-datepicker-toggle matIconSuffix [for]="DateSeniority"></mat-datepicker-toggle>
                         <mat-datepicker #DateSeniority></mat-datepicker>
-                        <mat-error *ngIf="td['dateOfSeniority'].hasError('required')">Date Of Seniority Is Required</mat-error>
+                        <!-- <mat-error *ngIf="td['dateOfSeniority'].hasError('required')">Date Of Seniority Is Required</mat-error> -->
                     </mat-form-field>
                 </div>
                 <div class="col-sm-4">
@@ -456,7 +456,7 @@
                             <mat-option *ngFor="let passComputerExam of haveYouPassedComputerExamArray"
                             [value]="passComputerExam.haveYouPassedComputerExam">{{passComputerExam.name}}</mat-option>                           
                         </mat-select>
-                        <mat-error *ngIf="td['haveYouPassedComputerExam'].hasError('required')">Have You Passed Computer Exam Is Required</mat-error>
+                        <!-- <mat-error *ngIf="td['haveYouPassedComputerExam'].hasError('required')">Have You Passed Computer Exam Is Required</mat-error> -->
                       
                     </mat-form-field>
                 </div>
@@ -464,7 +464,7 @@
                     <mat-form-field appearance="outline" class="w-100 ">
                         <mat-label>{{'Labels.schoolNames&TalukaWorkEarlier'| translate}}</mat-label>
                           <input matInput formControlName="namesAndTalukasAllSchoolsWorkedEarlier">
-                          <mat-error *ngIf="td['haveYouPassedComputerExam'].hasError('required')">Names And Talukas All Schools Worked Earlier Is Required</mat-error>
+                          <!-- <mat-error *ngIf="td['haveYouPassedComputerExam'].hasError('required')">Names And Talukas All Schools Worked Earlier Is Required</mat-error> -->
                     </mat-form-field>
                 </div>
                 <div class="col-sm-6">

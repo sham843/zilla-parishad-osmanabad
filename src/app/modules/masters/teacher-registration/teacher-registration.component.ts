@@ -76,7 +76,7 @@ export class TeacherRegistrationComponent {
           tableDatasize = 0;
         }
         let displayedColumns = ['uploadImage','srNo', 'name', 'mobileNo', 'emailId', 'village', 'taluka', 'action'];
-        let displayedheaders = ['#','Sr. No.', 'Teacher Name', 'Contact No.', 'Email ID', 'Village', 'Taluka', 'action'];
+        let displayedheaders = ['#','Sr. No.', 'Teacher Name', 'Mobile No.', 'Email ID', 'Village', 'Taluka', 'action'];
         let tableData = {
           pageNumber: this.pageNumber,
           img: 'uploadImage', blink: '', badge: '', isBlock: '', pagintion: true,
@@ -198,7 +198,7 @@ export class TeacherRegistrationComponent {
   }
 
   downloadPdf() {
-    let keyPDFHeader = ['SrNo', "Name", "Contact No.", "Email ID", "Village", "Taluka"];
+    let keyPDFHeader = ['SrNo', "Teacher Name", "Mobile No.", "Email ID", "Village", "Taluka"];
     let ValueData =
       this.resultDownloadArr.reduce(
         (acc: any, obj: any) => [...acc, Object.values(obj).map((value) => value)], []

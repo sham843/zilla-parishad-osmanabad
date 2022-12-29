@@ -184,8 +184,9 @@ export class AddUpdateTeacherRegistrationComponent {
       console.log("array",this.editObj.assignTeacher);
 
      let findObj= this.assignClassArray.filter((ele: any)=>ele.standardId !== value)
-       console.log("delete this",findObj);    
-      //  console.log("fughkgf",findObj);
+       console.log("delete this",findObj);  
+       this.assignClassArray=[...findObj]  
+       console.log("fughkgf",this.assignClassArray);
        
       // let index = this.editObj.assignTeacher.indexOf(findIndex);
 
