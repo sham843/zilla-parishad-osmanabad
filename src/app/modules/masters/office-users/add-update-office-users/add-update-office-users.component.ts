@@ -49,7 +49,7 @@ export class AddUpdateOfficeUsersComponent implements OnInit {
         ...this.webStorageService.createdByProps(),
         "id": [this.data ? this.data.id : 0],
         "name": [this.data ? this.data.name :"",[Validators.required, Validators.pattern(this.validation.fullName)]],
-        "m_Name": [this.data ? this.data.m_Name:""],
+        "m_Name": [this.data ? this.data.m_Name:"", [Validators.required]],
         "mobileNo": [this.data ? this.data.mobileNo : "",[Validators.required, Validators.pattern(this.validation.mobile_No)]],
         "emailId": [this.data ? this.data.emailId :"", [Validators.required, Validators.pattern(this.validation.email)]],
         "address": [this.data ? this.data.address:"",[Validators.required,Validators.maxLength(500)]],
@@ -158,22 +158,24 @@ export class AddUpdateOfficeUsersComponent implements OnInit {
 
   submitOfficeData(){
     console.log("all data submitted:", this.officeForm.value);
-    this.apiService.setHttp(this.data ? 'PUT': 'POST', this.data ? 'zp_osmanabad/Office/UpdateOffice': 'zp_osmanabad/Office/AddOffice', false, this.officeForm.value, false, 'baseUrl');
-    this.apiService.getHttp().subscribe({
-      next: (res: any) => {
-       res.statusCode === "200" ? (console.log(res),this.commonService.snackBar(res.statusMessage, 0)):this.commonService.checkEmptyData(res.statusMessage) == false ? this.error.handelError(res.statusCode) : this.commonService.snackBar(res.statusMessage, 1);
-        this.dialogRef.close('Yes');
-      },
-      error: ((error: any) => {
-        this.error.handelError(error.status);
-        this.commonService.checkEmptyData(error.status) == false ? this.error.handelError(error.status) : this.commonService.snackBar(error.status, 1);
-      })
-    });
+    if(this.officeForm.valid){
+      this.apiService.setHttp(this.data ? 'PUT': 'POST', this.data ? 'zp_osmanabad/Office/UpdateOffice': 'zp_osmanabad/Office/AddOffice', false, this.officeForm.value, false, 'baseUrl');
+      this.apiService.getHttp().subscribe({
+        next: (res: any) => {
+         res.statusCode === "200" ? (console.log(res),this.commonService.snackBar(res.statusMessage, 0)):this.commonService.checkEmptyData(res.statusMessage) == false ? this.error.handelError(res.statusCode) : this.commonService.snackBar(res.statusMessage, 1);
+          this.dialogRef.close('Yes');
+        },
+        error: ((error: any) => {
+          this.error.handelError(error.status);
+          this.commonService.checkEmptyData(error.status) == false ? this.error.handelError(error.status) : this.commonService.snackBar(error.status, 1);
+        })
+      });
+    }
+   
   }
 
   onchangeValidation(event : any,label: string){
     console.log("validation label, event : ", event, label);
-    
     if(event == 1 || event == 2 && label == 'Level'){
       this.fc['centerId'].clearValidators();
       this.fc['centerId'].updateValueAndValidity();

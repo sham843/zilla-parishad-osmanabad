@@ -54,6 +54,32 @@
                     </mat-form-field>
                 </div>
                 <div class="col-sm-4">
+                    <mat-form-field appearance="outline" class="w-100 ">
+                        <mat-label>{{'Labels.standard'| translate}}</mat-label>
+                        <mat-select formControlName="standard">
+                            <mat-option *ngFor="let stan of standardArr" [value]="stan.id">{{languageFlag == 'EN'
+                                ?stan.standard:stan.m_Standard}}</mat-option>
+                        </mat-select>
+                        <!-- <mat-error *ngIf="fc['standard'].hasError('required')"> {{'Labels.pleaseSelectStandard'| translate}} </mat-error> -->
+                    </mat-form-field>
+                </div>
+                <div class="col-sm-4">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div class="upload-btn-wrapper">
+                            <button class="upload-btn" type="button" (click)="uploadAadhar.click()">Upload Student Photo</button>
+                            <input type="file" name="myfile" (change)="fileUpload($event,'aadhar')" #uploadAadhar/>
+                        </div>
+                        <div class="action-btn" *ngIf="uploadAadhaar">
+                            <button mat-icon-button class="btn-icon text-primary" type="button" (click)="viewImages('aadharPhoto')">
+                                <mat-icon>content_copy</mat-icon>
+                            </button>
+                            <button mat-icon-button class="btn-icon text-danger" type="button" (click)="deleteImage('aadharPhoto')">
+                                <mat-icon>delete</mat-icon>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-4">
                     <mat-form-field appearance="outline" class="w-100">
                         <mat-label>{{'Labels.studentFirstName'| translate}}</mat-label>
                         <input matInput formControlName="fName" (keypress)="validators.onlyAlphabets($event)">
@@ -101,7 +127,15 @@
                         <!-- <mat-error *ngIf="fc['l_MName'].hasError('required')">{{'Labels.enterStudentLastName'| translate}}</mat-error> -->
                     </mat-form-field>
                 </div>
-                <div class="col-sm-4">
+                <!-- <div class="col-sm-4">
+                    <mat-form-field appearance="outline" class="w-100">
+                        <mat-label>{{'Labels.studentLastNameMarathi'| translate}}</mat-label>
+                        <input matInput formControlName="l_MName" (keypress)="validators.unicodeMarathiValidation($event)"
+                        (keypress)="validators.noSpaceAllow($event)">
+                        <mat-error *ngIf="fc['l_MName'].hasError('required')">{{'Labels.enterStudentLastName'| translate}}</mat-error>
+                    </mat-form-field>
+                </div> -->
+                <!-- <div class="col-sm-4">
                     <div class="d-flex justify-content-between align-items-center">
                         <div class="upload-btn-wrapper">
                             <button class="upload-btn" type="button" (click)="uploadImage.click()">Upload a file</button>
@@ -119,17 +153,17 @@
                     <ng-container *ngIf="imgFlag">
                         <span style="font-size: 11px;" class="text-danger">please Upload Image</span>
                     </ng-container>                  
-                </div>
-                <div class="col-sm-4">
+                </div> -->
+                <!-- <div class="col-sm-4">
                     <mat-form-field appearance="outline" class="w-100 ">
                         <mat-label>{{'Labels.standard'| translate}}</mat-label>
                         <mat-select formControlName="standard">
                             <mat-option *ngFor="let stan of standardArr" [value]="stan.id">{{languageFlag == 'EN'
                                 ?stan.standard:stan.m_Standard}}</mat-option>
                         </mat-select>
-                        <!-- <mat-error *ngIf="fc['standard'].hasError('required')"> {{'Labels.pleaseSelectStandard'| translate}} </mat-error> -->
+                        <mat-error *ngIf="fc['standard'].hasError('required')"> {{'Labels.pleaseSelectStandard'| translate}} </mat-error>
                     </mat-form-field>
-                </div>
+                </div> -->
                 <div class="col-sm-4">
                     <mat-form-field appearance="outline" class="w-100">
                         <mat-label>{{'Labels.birthDate'| translate}}</mat-label>
@@ -209,7 +243,7 @@
                 <div class="col-sm-4">
                     <div class="d-flex justify-content-between align-items-center">
                         <div class="upload-btn-wrapper">
-                            <button class="upload-btn" type="button" (click)="uploadAadhar.click()">Upload a file</button>
+                            <button class="upload-btn" type="button" (click)="uploadAadhar.click()">Upload Aadhar photo</button>
                             <input type="file" name="myfile" (change)="fileUpload($event,'aadhar')" #uploadAadhar/>
                         </div>
                         <div class="action-btn" *ngIf="uploadAadhaar">
@@ -262,7 +296,7 @@
             </div>
         </mat-card-content>
         <mat-card-footer>
-            <mat-card-actions align="end">
+            <mat-card-actions align="end" class="me-3 mb-2">
                 <button mat-stroked-button class="btn-second me-2" type="button" mat-dialog-close>{{'Labels.cancel'|
                     translate}}</button>
                 <button mat-stroked-button class="btn-main" (click)="onSubmit()">{{editObj ? ('Labels.update'|
