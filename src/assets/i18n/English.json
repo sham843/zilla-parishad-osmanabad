@@ -45,7 +45,7 @@
         "clear":"Clear",
         "AddDesignation":"Add Designation",
         "SelectDesignation": "Select Designation",
-        "RegisterDesignation":"Register Designation",
+        "RegisterDesignation":"Update Designation",
         "DesignationLevel":"Designation Level",
         "DesignationLevelReq":"Designation level is required",
         "DesignationType":"Designation Type",
@@ -223,7 +223,6 @@
         "agencyReg" : "Agency Register",
         "GenderRequired" : "Gender is required",
         "AddressDetails" : "Address Details",
-
         "Agencydetail" : "Agency Details",
         "Persondetails" : "Contact Person Details",
         "Designation(Marathi)" :"Designation (Marathi)"
