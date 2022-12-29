@@ -33,8 +33,9 @@
                     <mat-form-field appearance="outline" class="w-100 ">
                         <mat-label>{{'Labels.gender'| translate}}</mat-label>
                         <mat-select formControlName="genderId" >
-                            <mat-option *ngFor="let gender of genderArray"
-                            [value]="gender.id">{{gender.gender}}</mat-option>                    
+                            <mat-option *ngFor="let gender of genderArray"                           
+                            [value]="gender.id"> {{webStorageS.getLangauge() == 'EN' ?
+                            gender.gender : gender.m_Gender}}</mat-option>                    
                         </mat-select>
                         <!-- <mat-error *ngIf="f['genderId'].hasError('required')">{{'Labels.GenderRequired'| translate}}</mat-error> -->
                     </mat-form-field>
@@ -88,8 +89,9 @@
                     <mat-form-field appearance="outline" class="w-100 ">
                         <mat-label>{{'Labels.district'| translate}}</mat-label>
                         <mat-select  formControlName="districtId" [disabled]="teacherRegForm.value.districtId == 1">
-                            <mat-option *ngFor="let distric of districtArray"
-                            [value]="distric.id">{{distric.district}}</mat-option>                   
+                            <mat-option *ngFor="let distric of districtArray"                            
+                            [value]="distric.id">{{webStorageS.getLangauge() == 'EN' ?
+                            distric.district : distric.m_District}}</mat-option>                   
                         </mat-select>
                         <!-- <mat-error *ngIf="f['districtId'].hasError('required')">{{'Labels.districtIsRequired'| translate}}</mat-error> -->
                     </mat-form-field>
@@ -98,8 +100,9 @@
                     <mat-form-field appearance="outline" class="w-100 ">
                         <mat-label>{{'Labels.taluka'| translate}}</mat-label>
                         <mat-select  formControlName="talukaId" (selectionChange)="clearDropdown('Taluka'); getVillage();" >
-                            <mat-option *ngFor="let taluka of talukaArray"
-                            [value]="taluka.id">{{taluka.taluka}}</mat-option>                         
+                            <mat-option *ngFor="let taluka of talukaArray"                           
+                            [value]="taluka.id"> {{webStorageS.getLangauge() == 'EN' ?
+                            taluka.taluka : taluka.m_Taluka}}</mat-option>                         
                         </mat-select>
                         <!-- <mat-error *ngIf="f['talukaId'].hasError('required')">{{'Labels.talukaIsRequired'| translate}}</mat-error> -->
                     </mat-form-field>
@@ -108,8 +111,9 @@
                     <mat-form-field appearance="outline" class="w-100 ">
                         <mat-label>{{'Labels.village'| translate}}</mat-label>
                         <mat-select formControlName="villageId" >
-                            <mat-option *ngFor="let village of villageArray"
-                            [value]="village.id">{{village.village}}</mat-option>                         
+                            <mat-option *ngFor="let village of villageArray"                          
+                            [value]="village.id">  {{webStorageS.getLangauge() == 'EN' ?
+                            village.village : village.m_Village}}</mat-option>                         
                         </mat-select>
                         <!-- <mat-error *ngIf="f['villageId'].hasError('required')">{{'Labels.villageIsRequired'| translate}}</mat-error> -->
                     </mat-form-field>
@@ -141,7 +145,8 @@
                             <mat-label>{{'Labels.district'| translate}}</mat-label>
                             <mat-select formControlName="districtId" [disabled]="teacherRegForm.value.teacherDetails.districtId == 1">
                                 <mat-option *ngFor="let districtObj of districtArrayTeacherDeatails"
-                                [value]="districtObj.id">{{districtObj.district}}</mat-option>                             
+                                [value]="districtObj.id">{{webStorageS.getLangauge() == 'EN' ?
+                                districtObj.district : districtObj.m_District}}</mat-option>                             
                             </mat-select>
                         </mat-form-field>
                     </div>
@@ -149,8 +154,9 @@
                         <mat-form-field appearance="outline" class="w-100 ">
                             <mat-label>{{'Labels.taluka'| translate}}</mat-label>
                             <mat-select formControlName="talukaId" (selectionChange)="clearDropdown('talukaTeacherDetails');getCluster()">
-                                <mat-option *ngFor="let talukaObj of talukaArrayTeacherDetails"
-                                [value]="talukaObj.id">{{talukaObj.taluka}}</mat-option>                              
+                                <mat-option *ngFor="let talukaObj of talukaArrayTeacherDetails"                               
+                                [value]="talukaObj.id"> {{webStorageS.getLangauge() == 'EN' ?
+                                talukaObj.taluka : talukaObj.m_Taluka}}</mat-option>                              
                             </mat-select>
                         </mat-form-field>
                     </div>
@@ -160,8 +166,9 @@
                     <mat-form-field appearance="outline" class="w-100 ">
                         <mat-label>{{'Labels.clusterName'| translate}}</mat-label>
                         <mat-select formControlName="clusterId" (selectionChange)="getAllSchool()">
-                            <mat-option *ngFor="let cluster of clusterArray"
-                            [value]="cluster.id">{{cluster.center}}</mat-option>                          
+                            <mat-option *ngFor="let cluster of clusterArray"                            
+                            [value]="cluster.id">{{webStorageS.getLangauge() == 'EN' ?
+                            cluster.taluka : cluster.m_Center}}</mat-option>                          
                         </mat-select>
                         <!-- <mat-error *ngIf="td['clusterId'].hasError('required')">Cluster Is Required</mat-error>                        -->
                     </mat-form-field>
@@ -170,8 +177,9 @@
                     <mat-form-field appearance="outline" class="w-100 ">
                         <mat-label>{{'Labels.workingSchoolName'| translate}}</mat-label>
                         <mat-select formControlName="schoolId" >
-                            <mat-option  *ngFor="let school of schoolArray"
-                            [value]="school.id">{{school.schoolName}}</mat-option>                          
+                            <mat-option  *ngFor="let school of schoolArray"                            
+                            [value]="school.id">{{webStorageS.getLangauge() == 'EN' ?
+                            school.schoolName : school.m_SchoolName}}</mat-option>                          
                         </mat-select>
                         <!-- <mat-error *ngIf="td['schoolId'].hasError('required')">{{'Labels.workingSchoolName'| translate}}</mat-error> -->
                     </mat-form-field>
@@ -181,8 +189,9 @@
                     <mat-form-field appearance="outline" class="w-100 ">
                         <mat-label>{{'Labels.Designation'| translate}}</mat-label>
                         <mat-select formControlName="designationId" >
-                            <mat-option *ngFor="let designation of designationArray"
-                            [value]="designation.id">{{designation.designationType}}</mat-option>                            
+                            <mat-option *ngFor="let designation of designationArray"                             
+                            [value]="designation.id">{{webStorageS.getLangauge() == 'EN' ?
+                            designation.designationType : designation.m_DesignationType}}</mat-option>                            
                         </mat-select>
                         <!-- <mat-error *ngIf="td['designationId'].hasError('required')">Designation Is Required</mat-error>                        -->
                     </mat-form-field>
@@ -191,8 +200,9 @@
                     <mat-form-field appearance="outline" class="w-100 ">
                         <mat-label>{{'Labels.graduateTeacherSubject'| translate}}</mat-label>
                         <mat-select formControlName="graduate_SubjectId" >
-                            <mat-option *ngFor="let GradateTeacherSubject of GradateTeacherSubjectArray"
-                            [value]="GradateTeacherSubject.id">{{GradateTeacherSubject.subject}}</mat-option>                          
+                            <mat-option *ngFor="let GradateTeacherSubject of GradateTeacherSubjectArray"                             
+                            [value]="GradateTeacherSubject.id">{{webStorageS.getLangauge() == 'EN' ?
+                            GradateTeacherSubject.subject : GradateTeacherSubject.m_Subject}}</mat-option>                          
                         </mat-select>
                         <!-- <mat-error *ngIf="td['graduate_SubjectId'].hasError('required')">Teacher Subject Is Required</mat-error>                      -->
                     </mat-form-field>
@@ -201,7 +211,7 @@
                     <mat-form-field appearance="outline" class="w-100 ">
                         <mat-label>{{'Labels.takingGraduatePayScale'| translate}}</mat-label>
                         <mat-select formControlName="isGraduate_PayScale" >
-                            <mat-option *ngFor="let payScale of isGraduatePayScaleArray"
+                            <mat-option *ngFor="let payScale of isGraduatePayScaleArray"                          
                             [value]="payScale.isGraduate_PayScale">{{payScale.name}}</mat-option>                      
                         </mat-select>
                         <!-- <mat-error *ngIf="td['isGraduate_PayScale'].hasError('required')">Graduate Pay Scale Subject Is Required</mat-error>                      -->

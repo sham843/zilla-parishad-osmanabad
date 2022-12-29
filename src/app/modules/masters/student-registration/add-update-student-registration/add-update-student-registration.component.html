@@ -244,6 +244,10 @@
                         <mat-error *ngIf="fc['mobileNo'].hasError('pattern')">{{'Labels.enterValidParentMobileNo'|
                             translate}}</mat-error>
                     </mat-form-field>
+                    <button *ngIf="stuRegistrationForm.value.mobileNo.length == 10" mat-icon-button class="btn-icon text-primary" type="button" (click)="checkMobileNo()">
+                        <!-- <mat-icon>content_copy</mat-icon> -->
+                        search
+                    </button>
                 </div>
                 <div class="col-sm-4">
                     <mat-form-field appearance="outline" class="w-100">
