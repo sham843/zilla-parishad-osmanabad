@@ -16,7 +16,7 @@
             <div class="col-sm-6">
                 <mat-form-field appearance="outline" class="w-100 ">
                     <mat-label>{{'Labels.level' | translate}}</mat-label>
-                    <mat-select  formControlName="designationLevelId"  (selectionChange)="onchangeLevel($event); onchangeValidation($event, 'Level');">
+                    <mat-select  formControlName="designationLevelId"  (selectionChange)="onchangeLevel($event); onchangeValidation($event, 'Level'); clearDropDown('Level')">
                         <mat-option [value]="level.id" *ngFor="let level of levels">{{webStorageService.languageFlag =='mr-IN' ? level.m_DesignationLevel : level.designationLevel}}</mat-option>
                     </mat-select>
                     <!-- <mat-error *ngIf="fc['designationLevelId'].hasError('required')">{{'Labels.levelRequired' | translate}}</mat-error> -->
@@ -27,7 +27,7 @@
                 <div class="col-sm-6">
                     <mat-form-field appearance="outline" class="w-100 ">
                         <mat-label>{{'Labels.district' | translate}}</mat-label>
-                        <mat-select  formControlName="districtId">
+                        <mat-select  formControlName="districtId" (selectionChange)="getTalukaDrop()">
                             <mat-option [value]="dist.id" *ngFor="let dist of districts">{{webStorageService.languageFlag =='mr-IN' ? dist.m_District:  dist.district}}</mat-option>
                         </mat-select>
                     <!-- <mat-error *ngIf="fc['districtId'].hasError('required')">{{'Labels.districtIsRequired' | translate}}</mat-error> -->
@@ -39,7 +39,7 @@
                 <div class="col-sm-6">
                     <mat-form-field appearance="outline" class="w-100">
                         <mat-label>{{'Labels.taluka' | translate}}</mat-label>
-                        <mat-select  formControlName="talukaId">
+                        <mat-select  formControlName="talukaId" (selectionChange)="clearDropDown('Taluka')">
                             <mat-option [value]="taluka.id" *ngFor="let taluka of talukas">{{webStorageService.languageFlag =='mr-IN' ? taluka.m_Taluka : taluka.taluka}}</mat-option>
                         </mat-select>
                     <!-- <mat-error *ngIf="fc['talukaId'].hasError('required')">{{'Labels.talukaIsRequired' | translate}}</mat-error> -->
@@ -50,7 +50,7 @@
             <div class="col-sm-6">
                 <mat-form-field appearance="outline" class="w-100 " *ngIf="officeForm.value.designationLevelId != 5 && officeForm.value.designationLevelId != 6 && officeForm.value.designationLevelId != 7">
                     <mat-label>{{'Labels.designation' | translate}}</mat-label>
-                    <mat-select  formControlName="designationId" (selectionChange)="getCenterDrop(); onchangeValidation($event, 'Designation')">
+                    <mat-select  formControlName="designationId" (selectionChange)="getCenterDrop(); onchangeValidation($event, 'Designation'); clearDropDown('Designation');">
                         <mat-option  [value]="desig.id" *ngFor="let desig of designations">{{webStorageService.languageFlag =='mr-IN' ? desig.m_DesignationType: desig.designationType}}</mat-option>
                     </mat-select>
                     <!-- <mat-error *ngIf="fc['designationId'].hasError('required')">{{'Labels.DesignationTypeReq' | translate}}</mat-error> -->
@@ -66,7 +66,7 @@
             <div class="col-sm-6" *ngIf="officeForm.value.designationId == 20 &&  officeForm.value.designationLevelId == 2">
                 <mat-form-field appearance="outline" class="w-100">
                     <mat-label>{{'Labels.kendra' | translate}}</mat-label>
-                    <mat-select  formControlName="centerId"  (selectionChange)="getAllSchoolsByCenterId()">
+                    <mat-select  formControlName="centerId"  (selectionChange)="getAllSchoolsByCenterId(); clearDropDown('Kendra')">
                         <mat-option [value]="centr.id" *ngFor="let centr of centers">{{webStorageService.languageFlag =='mr-IN' ? centr.m_Center : centr.center}}</mat-option>
                     </mat-select>
                     <!-- <mat-error *ngIf="fc['centerId'].hasError('required')">{{'Labels.kendraRequired' | translate}}</mat-error> -->
@@ -88,7 +88,7 @@
                 <div class="col-sm-6">
                     <mat-form-field appearance="outline" class="w-100">
                         <mat-label>{{'Labels.contactBeo' | translate}}</mat-label>
-                        <input matInput formControlName="beoMobileNo" (keypress)="validation.onlyDigits($event)">
+                        <input matInput formControlName="beoMobileNo" (keypress)="validation.onlyDigits($event)" maxlength="10">
                     <!-- <mat-error *ngIf="fc['beoMobileNo'].hasError('required')">{{'Labels.mobileIsRequired' | translate}}</mat-error> -->
                     <mat-error *ngIf="fc['beoMobileNo'].hasError('pattern')">{{'Labels.pleaseEnterValidMobileNumber' | translate}}</mat-error>
                     </mat-form-field>
@@ -107,7 +107,7 @@
                 <div class="col-sm-6">
                     <mat-form-field appearance="outline" class="w-100">
                         <mat-label>Contact No.(Kendra)</mat-label>
-                        <input matInput  formControlName="kendraMobileNo" (keypress)="validation.onlyDigits($event)">
+                        <input matInput  formControlName="kendraMobileNo" (keypress)="validation.onlyDigits($event)" maxlength="10">
                     <!-- <mat-error *ngIf="fc['kendraMobileNo'].hasError('required')">{{'Labels.mobileIsRequired' | translate}}</mat-error> -->
                     <mat-error *ngIf="fc['kendraMobileNo'].hasError('pattern')">{{'Labels.pleaseEnterValidMobileNumber' | translate}}</mat-error>
                     </mat-form-field>
@@ -140,7 +140,7 @@
             <div class="col-sm-6">
                 <mat-form-field appearance="outline" class="w-100">
                     <mat-label>{{'Labels.mobileNo' | translate}}</mat-label>
-                    <input matInput  formControlName="mobileNo" (keypress)="validation.onlyDigits($event)">
+                    <input matInput  formControlName="mobileNo" (keypress)="validation.onlyDigits($event)" maxlength="10">
                     <!-- <mat-error *ngIf="fc['mobileNo'].hasError('required')">{{'Labels.mobileIsRequired' | translate}}</mat-error> -->
                     <mat-error *ngIf="fc['mobileNo'].hasError('pattern')">{{'Labels.pleaseEnterValidMobileNumber' | translate}}</mat-error>
                 </mat-form-field>

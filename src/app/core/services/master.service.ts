@@ -19,7 +19,7 @@ export class MasterService {
     });
   }
 
-  getAllDistrict(langFlag: string) {
+  getAllDistrict(langFlag?: string) {
     return new Observable((obj) => {
       this.apiService.setHttp('GET', 'zp-osmanabad/master/GetAllDistrict?flag_lang=' + langFlag, false, false, false, 'baseUrl');
       this.apiService.getHttp().subscribe({
@@ -39,7 +39,7 @@ export class MasterService {
     });
   }
 
-  getAllVillage(langFlag: string, talukaId: any) {
+  getAllVillage(langFlag?: string, talukaId?: any) {
     return new Observable((obj) => {
       this.apiService.setHttp('GET', 'zp-osmanabad/master/GetAllVillageByTalukaId?flag_lang=' + langFlag + '&TalukaId=' + talukaId, false, false, false, 'baseUrl');
       this.apiService.getHttp().subscribe({
