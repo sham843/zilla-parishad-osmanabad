@@ -22,6 +22,7 @@ export class AgencyRegistrationComponent {
   agencyReport = new Array();
   displayedColumns = new Array();
   tableData: any;
+  totalCount: number = 0;
   tableDataArray = new Array();
   tableDatasize!: Number;
   displayedheadersEnglish = ['Sr. No.', 'Agency Name', 'Agency Mobile No.', 'Email ID', 'Action'];
@@ -64,44 +65,62 @@ export class AgencyRegistrationComponent {
     this.ngxSpinner.show();
     this.pageNumber = flag == 'filter' ? 1 : this.pageNumber;
     flag == 'filter' ? this.agencyReport = [] : '';
+    if (flag == 'filter' && !this.filterForm.value.searchText) {
+      this.ngxSpinner.hide();
+      return
+    }
     let obj = this.filterForm.value;
     let str = `pageno=${this.pageNumber}&pagesize=10&&TextSearch=${obj.searchText}&lan=${this.webStroageService.languageFlag}`;
-    let reportStr = `TextSearch=${obj.searchText}`
-    this.apiService.setHttp('GET', 'zp-osmanabad/Agency/GetAll?' + ( flag =='pdfDownload' ? reportStr : str ), false, false, false, 'baseUrl');
+    let reportStr = `pageno=${this.pageNumber}&pagesize=${this.totalCount * 10}&TextSearch=${obj.searchText}&lan=${this.webStroageService.languageFlag}`
+    this.apiService.setHttp('GET', 'zp-osmanabad/Agency/GetAll?' + ( flag =='pdfFlag' ? reportStr : str ), false, false, false, 'baseUrl');
     this.apiService.getHttp().subscribe({
       next: (res: any) => {
         if (res.statusCode == "200") {
           this.ngxSpinner.hide();
-          this.agencyReport = [];
+          this.agencyReport = []; //for pdfArray
           this.tableDataArray = res.responseData.responseData1;
           this.tableDatasize = res.responseData.responseData2.pageCount;
+          this.totalCount = res.responseData.responseData2.pageCount;          
           let data: [] = res.responseData.responseData1;
-          data.map((ele: any, i: any) => {
-            let obj = {
-              "Sr.No": i + 1,
-              "Name": ele.agency_Name,
-              "Contact No": ele.contact_No,
-              "Email ID": ele.agency_EmailId,
-            }
-            this.agencyReport.push(obj);
-          });
+          flag =='pdfFlag' ? this.downloadPdf(data): '';
         } else {
           this.ngxSpinner.hide();
           this.tableDataArray = [];
           this.tableDatasize = 0;
+          this.tableDatasize == 0 && flag =='pdfFlag' ? this.common.snackBar('No Record Found',1): '';
         }
-
-        let tableData = {
-          pageNumber: this.pageNumber,
-          img: '', blink: '', badge: '', isBlock: '', pagintion: true,
-          displayedColumns: this.displayedColumns, tableData: this.tableDataArray,
-          tableSize: this.tableDatasize,
-          tableHeaders: this.langTypeName == 'English' ? this.displayedheadersEnglish : this.displayedheadersMarathi
-        };
-        this.apiService.tableData.next(tableData);
+        this.getTableDataMarathi();
       },
       error: ((err: any) => { this.errors.handelError(err) })
     });
+  }
+
+  downloadPdf(data:any){         
+    data.map((ele: any, i: any) => {
+      let obj = {
+        "Sr.No": i + 1,
+        "Name": ele.agency_Name,
+        "Contact No": ele.contact_No,
+        "Email ID": ele.agency_EmailId,
+      }
+      this.agencyReport.push(obj);
+    });
+    if(this.agencyReport.length){
+        let keyPDFHeader = ['SrNo', "Name", "Contact No.", "Email Id"];
+        let ValueData =
+          this.agencyReport.reduce(
+            (acc: any, obj: any) => [...acc, Object.values(obj).map((value) => value)], []
+          );
+    
+        let objData: any = {
+          'topHedingName': 'Agency Report',
+          'createdDate': 'Created on:' + new Date()
+        }
+        this.downloadPdfservice.downLoadPdf(keyPDFHeader, ValueData, objData);
+      }
+      else{
+        this.common.snackBar('No Record Found',1)
+      }
   }
 
   onPagintion(pageNo: number) {
@@ -109,26 +128,26 @@ export class AgencyRegistrationComponent {
     this.getTableData()
   }
 
-  downloadPdf() {
-    if(this.agencyReport.length){
-    this.getTableData('pdfDownload')
-    let keyPDFHeader = ['SrNo', "Name", "Contact No.", "Email Id"];
-    let ValueData =
-      this.agencyReport.reduce(
-        (acc: any, obj: any) => [...acc, Object.values(obj).map((value) => value)], []
-      );
+  // downloadPdf() {
+  //   if(this.agencyReport.length){
+  //   this.getTableData('pdfFlag')
+  //   let keyPDFHeader = ['SrNo', "Name", "Contact No.", "Email Id"];
+  //   let ValueData =
+  //     this.agencyReport.reduce(
+  //       (acc: any, obj: any) => [...acc, Object.values(obj).map((value) => value)], []
+  //     );
 
-    let objData: any = {
-      'topHedingName': 'Agency Report',
-      'createdDate': 'Created on:' + new Date()
-    }
-    this.downloadPdfservice.downLoadPdf(keyPDFHeader, ValueData, objData);
-  }
-  else{
-    this.common.snackBar('No Record Found',1)
-  }
+  //   let objData: any = {
+  //     'topHedingName': 'Agency Report',
+  //     'createdDate': 'Created on:' + new Date()
+  //   }
+  //   this.downloadPdfservice.downLoadPdf(keyPDFHeader, ValueData, objData);
+  // }
+  // else{
+  //   this.common.snackBar('No Record Found',1)
+  // }
 
-  }
+  // }
 
   onClear() {
     if(this.filterForm.value.searchText !=null && this.filterForm.value.searchText != '' ){
