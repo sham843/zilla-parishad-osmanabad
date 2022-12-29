@@ -13,6 +13,7 @@ import { DashPipe } from 'src/app/core/pipes/dash.pipe';
 import { NumberTransformPipe } from 'src/app/core/pipes/number-tranform.pipe';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import {MatTooltipModule} from '@angular/material/tooltip';
+import { TranslateModule } from '@ngx-translate/core';
 @Component({
   selector: 'app-table',
   templateUrl: './table.component.html',
@@ -30,7 +31,8 @@ import {MatTooltipModule} from '@angular/material/tooltip';
     DashPipe,
     NumberTransformPipe,
     MatCheckboxModule,
-    MatTooltipModule
+    MatTooltipModule,
+    TranslateModule,
     ],
 
 })
