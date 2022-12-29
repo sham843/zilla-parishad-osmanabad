@@ -131,8 +131,8 @@
         "enterMotherName" :"Enter Mother Name",
         "enterFatherName" :"Enter Father Name",
         "enterParentMobileNo":"Enter Parent Mobile No.",
-        "enterValidParentMobileNo":"Enter Valid Parent Mobile No.",
-        "enterValidAadharNo":"Enter Valid Parent Aadhar No.",
+        "enterValidParentMobileNo":"Enter valid parent mobile no.",
+        "enterValidAadharNo":"Enter valid parent aadhar no.",
         "bit":"Name Of Bit",
         "bitRequired" : "Bit Name is required",
         "profile": "Profile",
@@ -224,7 +224,8 @@
         "AddressDetails" : "Address Details",
 
         "Agencydetail" : "Agency Details",
-        "Persondetails" : "Contact Person Details"
+        "Persondetails" : "Contact Person Details",
+        "Designation(Marathi)" :"Designation (Marathi)"
 
     }
 }

@@ -225,6 +225,8 @@
         "AddressDetails" : "पत्ता तपशील",
 
         "Agencydetail" : "एजन्सी तपशील",
-        "Persondetails" : "संपर्क व्यक्ती तपशील"
+        "Persondetails" : "संपर्क व्यक्ती तपशील",
+        "edit" : "सुधारणे",
+        "Designation(Marathi)" :"पदनाम (मराठी)"
     }
 }
