@@ -223,8 +223,8 @@ export class StudentRegistrationComponent {
         headerImage: obj.documentResponse[0].docPath,
         header: this.webService.languageFlag == 'EN' ? obj.fullName : obj.m_FullName,
         subheader: this.webService.languageFlag == 'EN' ? obj.gender : obj.m_Gender,
-        labelHeader: this.webService.languageFlag == 'EN' ? ['Father Name', 'Parent Mobile No.', 'Father Name', 'Parent Mobile No.'] : ['वडीलांचे नावं', 'पालक मोबाईल क्र.'],
-        labelKey: this.webService.languageFlag == 'EN' ? ['fatherFullName', 'parentMobileNo', 'fatherFullName', 'parentMobileNo'] : ['m_FatherFullName', 'parentMobileNo'],
+        labelHeader: this.webService.languageFlag == 'EN' ? ['Father Name', 'Parent Mobile No.','Aadhar No.','School Name','Standard'] : ['वडीलांचे नावं', 'पालक मोबाईल क्र.','आधार क्र.','शाळेचे नाव','इयत्ता'],
+        labelKey: this.webService.languageFlag == 'EN' ? ['fatherFullName', 'parentMobileNo', 'aadharNo','schoolName','standard'] : ['m_FatherFullName', 'parentMobileNo','aadharNo','m_SchoolName','standard'],
         Obj: obj,
         chart: true
       }

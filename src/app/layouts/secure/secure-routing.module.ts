@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { GlobalDetailsComponent } from 'src/app/shared/components/global-details/global-details.component';
+import { DashboardStudentGlobalDetailsComponent } from 'src/app/shared/components/dashboard-student-details/dashboard-student-details.component';
 import { SecureComponent } from './secure.component';
 
 const routes: Routes = [
@@ -14,7 +14,7 @@ const routes: Routes = [
   { path: 'teacher-registration', loadChildren: () => import('../../modules/masters/teacher-registration/teacher-registration.module').then(m => m.TeacherRegistrationModule), data: { breadcrumb: [{ title: 'Teacher Registration', active: true }] } },
   { path: 'office-users', loadChildren: () => import('../../modules/masters/office-users/office-users.module').then(m => m.OfficeUsersModule), data: { breadcrumb: [{ title: 'Office Users', active: true }] } },
   { path: 'page-right-access', loadChildren: () => import('../../modules/settings/page-right-access/page-right-access.module').then(m => m.PageRightAccessModule), data: { breadcrumb: [{ title: 'Page Right Access', active: true }] } },
-  { path: 'global-details', component: GlobalDetailsComponent }
+  { path: 'global-details', component: DashboardStudentGlobalDetailsComponent }
 ]
   
 
