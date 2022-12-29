@@ -111,7 +111,7 @@ export class SchoolRegistrationComponent {
             this.resultDownloadArr.push(obj);
           });
           // download pdf call
-          if (this.resultDownloadArr.length > 0) {
+          if (this.resultDownloadArr.length > 0 && flag == 'reprtFlag') {
             let keyPDFHeader = ['SrNo', "Name", "District", "Taluka", "Village"];
             let ValueData =
               this.resultDownloadArr.reduce(
@@ -254,9 +254,8 @@ export class SchoolRegistrationComponent {
     var data = {
       headerImage: obj.uploadImage,
       header: this.webStorageS.languageFlag == 'EN' ? obj.schoolName : obj.m_SchoolName,
-      // subheader: (obj.lowestClass, obj.highestClass), //schoolType
-      labelHeader: this.webStorageS.languageFlag == 'EN' ? ['Kendra Name', 'Taluka','District'] : ['केंद्राचे नाव', 'तालुका', 'जिल्हा'],
-      labelKey: this.webStorageS.languageFlag == 'EN' ? ['center','taluka', 'district'] : ['m_Center', 'm_Taluka','m_District'],
+      labelHeader: this.webStorageS.languageFlag == 'EN' ? ['Kendra Name', 'Taluka','District'] : ['केंद्राचे नाव', 'तालुका', 'जिल्हा', 'सर्वात खालचा वर्ग', 'सर्वोच्च वर्ग'],
+      labelKey: this.webStorageS.languageFlag == 'EN' ? ['center','taluka', 'district'] : ['m_Center', 'm_Taluka','m_District', 'lowestClass', 'highestClass'],
       Obj: obj,
       chart: false
     }
