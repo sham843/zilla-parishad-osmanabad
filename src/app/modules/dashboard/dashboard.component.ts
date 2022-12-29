@@ -302,7 +302,7 @@ export class DashboardComponent implements OnInit,AfterViewInit {
     this.barChartData=[];
     const TalukaId= filterformData?.talukaId? filterformData?.talukaId :formDatafilterbyTaluka?.filtertalukaId;
     const str= TalukaId?(this.selectedObj.GroupId==1?'GetDataFor1st2ndStdByCenter':'GetDataFor3rdAboveStdByCenter'):(this.selectedObj.GroupId==1?'GetDataFor1st2ndStdByTaluka':'GetDataFor3rdAboveStdByTaluka');
-    this.apiService.setHttp('GET', 'zp-osmanabad/Dashboard/'+str+'?TalukaId='+(TalukaId||0)+(TalukaId?'&CenterId='+(filterformData?.centerId ||0):'')+'&GroupId='+this.selectedObj?.GroupId+ '&SubjectId='+(formDatafilterbyTaluka.filtersubjectId|0), false, false, false, 'baseUrl');
+    this.apiService.setHttp('GET', 'zp-osmanabad/Dashboard/'+str+'?TalukaId='+(TalukaId||0)+(TalukaId?'&CenterId='+(formDatafilterbyTaluka?.filtercenterId ||0):'')+'&GroupId='+this.selectedObj?.GroupId+ '&SubjectId='+(formDatafilterbyTaluka.filtersubjectId|0), false, false, false, 'baseUrl');
     this.apiService.getHttp().subscribe({
       next: (res: any) => { 
         if (res.statusCode == "200") {
