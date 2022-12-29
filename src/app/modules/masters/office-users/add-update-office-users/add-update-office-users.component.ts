@@ -34,7 +34,7 @@ export class AddUpdateOfficeUsersComponent implements OnInit {
               
   ngOnInit(){
     this.defaultForm();
-    console.log("dataaa",this.data);
+    // console.log("dataaa",this.data);
     (!this.data) ? (this.getLevelDrop(), this.getTalukaDrop(), this.getDistrictDrop()): '';
   }
 
@@ -69,7 +69,7 @@ export class AddUpdateOfficeUsersComponent implements OnInit {
         "bitName": [this.data ? this.data.bitName:"",[Validators.required, Validators.pattern(this.validation.fullName)]],
         "lan": [this.webStorageService.languageFlag]
     })
-    this.data? (this.getLevelDrop(), this.getDistrictDrop(), this.getTalukaDrop(), this.getDesignationByLevelId()): ''
+    this.data? console.log("edit : ",this.data,this.getLevelDrop(), this.getDistrictDrop(), this.getTalukaDrop(), this.getDesignationByLevelId()): ''
     // this.getDistrictDrop();
     // this.getTalukaDrop();
     // this.getDesignationByLevelId();
@@ -80,7 +80,7 @@ export class AddUpdateOfficeUsersComponent implements OnInit {
   getLevelDrop(){
     this.masterService.GetAllDesignationLevel(this.webStorageService.languageFlag).subscribe({
       next: (resp: any)=>{
-        console.log("level",resp);
+        // console.log("level",resp);
         resp.statusCode == "200" ? this.levels = resp.responseData : this.levels = [];
       },
       error: ( error : any)=>{
@@ -97,10 +97,10 @@ export class AddUpdateOfficeUsersComponent implements OnInit {
 
   getDesignationByLevelId(){
     let levelId = this.officeForm.value.designationLevelId;
-    console.log(levelId);
+    // console.log(levelId);
     this.masterService.GetDesignationByLevelId(this.webStorageService.languageFlag, levelId).subscribe({
       next: (resp: any)=>{
-        console.log("designation : ",resp);
+        // console.log("designation : ",resp);
         resp.statusCode == "200" ? this.designations = resp.responseData : this.designations = [];
       },
       error: ( error : any)=>{
@@ -113,7 +113,7 @@ export class AddUpdateOfficeUsersComponent implements OnInit {
     let centerId = this.officeForm.value.centerId;
     this.masterService.getAllSchoolsByCenterId(this.webStorageService.languageFlag, centerId).subscribe({
       next: (resp: any)=>{
-        resp.statusCode == "200" ?(console.log(resp), this.schools = resp.responseData ): this.schools = [];
+        resp.statusCode == "200" ? (this.schools = resp.responseData ): this.schools = [];
       },
       error: ( error : any)=>{
         console.log("error is :", error);  
@@ -135,7 +135,7 @@ export class AddUpdateOfficeUsersComponent implements OnInit {
   getTalukaDrop(){
     this.masterService.getAllTaluka(this.webStorageService.languageFlag).subscribe({
       next: (resp: any)=>{
-        resp.statusCode == "200" ? (console.log(resp), this.talukas = resp.responseData) : this.talukas = [];
+        resp.statusCode == "200" ? (this.talukas = resp.responseData) : this.talukas = [];
       },
       error: ( error : any)=>{
         console.log("error is :", error);  
@@ -144,11 +144,10 @@ export class AddUpdateOfficeUsersComponent implements OnInit {
   }
 
   getCenterDrop(){
-    console.log(this.officeForm.value.designationId);
+    // console.log(this.officeForm.value.designationId);
     this.masterService.getAllCenter(this.webStorageService.languageFlag, this.officeForm.value.talukaId).subscribe({
       next: (resp: any)=>{
-        resp.statusCode == "200" ? (console.log("resp cluster", resp),
-        this.centers = resp.responseData) : this.centers = [];
+        resp.statusCode == "200" ? (this.centers = resp.responseData) : this.centers = [];
       },
       error: ( error : any)=>{
         console.log("error is :", error);  
@@ -158,19 +157,14 @@ export class AddUpdateOfficeUsersComponent implements OnInit {
 
   submitOfficeData(){
     console.log("all data submitted:", this.officeForm.value);
-    // return
     if(!this.officeForm.valid){
-      console.log("invalid");
-      
       return
     }
     else{
-      console.log("hi");
-      
       this.apiService.setHttp(this.data ? 'PUT': 'POST', this.data ? 'zp_osmanabad/Office/UpdateOffice': 'zp_osmanabad/Office/AddOffice', false, this.officeForm.value, false, 'baseUrl');
       this.apiService.getHttp().subscribe({
         next: (res: any) => {
-         res.statusCode === "200" ? (console.log(res),this.commonService.snackBar(res.statusMessage, 0)):this.commonService.checkEmptyData(res.statusMessage) == false ? this.error.handelError(res.statusCode) : this.commonService.snackBar(res.statusMessage, 1);
+         res.statusCode === "200" ? (this.commonService.snackBar(res.statusMessage, 0)):this.commonService.checkEmptyData(res.statusMessage) == false ? this.error.handelError(res.statusCode) : this.commonService.snackBar(res.statusMessage, 1);
           this.dialogRef.close('Yes');
         },
         error: ((error: any) => {
@@ -301,18 +295,44 @@ export class AddUpdateOfficeUsersComponent implements OnInit {
     }
   }
 
-  // clearDropDown(event : any){
-  //   console.log("event : ",event);
+  clearDropDown(label : string){
+    console.log("label : ",event);
     
-  //   if(label == 'Level'){
-  //     this.fc['districtId'].setValue('');
-  //     this.talukas = [];
-  //     this.designations = [];
-  //     this.fc['name'].setValue('');
-  //     this.fc['m_Name'].setValue('');
-  //     this.fc['mobileNo'].setValue('');
-  //     this.fc['emailId'].setValue('');
-  //   }
-  // }
+    if(label == 'Level'){
+      this.fc['districtId'].setValue('');
+      this.talukas = [];
+      this.designations = [];
+      this.fc['name'].setValue('');
+      this.fc['m_Name'].setValue('');
+      this.fc['mobileNo'].setValue('');
+      this.fc['emailId'].setValue('');
+    }
+    else if(label == 'Taluka'){
+      this.fc['designationId'].setValue('');
+      this.fc['name'].setValue('');
+      this.fc['m_Name'].setValue('');
+      this.fc['mobileNo'].setValue('');
+      this.fc['emailId'].setValue('');
+      this.fc['bitName'].setValue('');
+    }
+    else if(label == 'Designation'){
+      this.fc['name'].setValue('');
+      this.fc['m_Name'].setValue('');
+      this.fc['mobileNo'].setValue('');
+      this.fc['emailId'].setValue('');
+      this.fc['kendraMobileNo'].setValue('');
+      this.fc['kendraEmailId'].setValue('');
+      this.fc['centerId'].setValue('');
+    }
+    else if(label == 'Kendra'){
+      this.fc['schoolId'].setValue('');
+      this.fc['name'].setValue('');
+      this.fc['m_Name'].setValue('');
+      this.fc['mobileNo'].setValue('');
+      this.fc['emailId'].setValue('');
+      this.fc['kendraMobileNo'].setValue('');
+      this.fc['kendraEmailId'].setValue('');
+    }
+  }
 
 }
