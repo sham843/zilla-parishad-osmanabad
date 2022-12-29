@@ -88,7 +88,8 @@ export class StudentRegistrationComponent {
           this.ngxSpinner.hide();
           flag != 'reportFlag' ? this.tableDataArray = res.responseData.responseData1 : this.tableDataArray = this.tableDataArray;
           this.tableDataArray.map((res: any) => {
-            res.docPath = res.documentResponse[0]?.docPath
+          let  index = res.documentResponse.findIndex((ele:any)=> ele.documentId == 1);
+            res.docPath = res.documentResponse[index]?.docPath
           })
           this.totalCount = res.responseData.responseData2.pageCount;
           this.tableDatasize = res.responseData.responseData2.pageCount;
