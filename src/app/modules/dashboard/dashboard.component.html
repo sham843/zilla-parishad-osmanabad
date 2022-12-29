@@ -166,7 +166,7 @@
                         </table>
                     </div>
                     <div class="row" *ngIf="showBarChartF">
-                        <div class="col-sm-4 border-end" *ngFor="let bar of barchartOptions.series[0]; let i=index">
+                        <div class="col-sm border-end" *ngFor="let bar of barchartOptions.series[0]; let i=index">
                             <h6 class="small fw-bold text-center mb-0">{{this.barchartOptions.xaxis.categories[0][i]}} स्तर</h6>
                             <apx-chart [series]="bar" [chart]="barchartOptions.chart"
                                 [dataLabels]="barchartOptions.dataLabels" [plotOptions]="barchartOptions.plotOptions"
@@ -254,7 +254,7 @@
                                 </mat-select>
                             </mat-form-field>
                         </div>
-                        <div class="col-sm-3" *ngIf="f['talukaId'].value || fBgraph['filtertalukaId'].value">
+                        <div class="col-sm-3" *ngIf="f['talukaId'].value || (f['talukaId'].value && !fBgraph['filtertalukaId'].value)">
                             <mat-form-field appearance="outline" class="w-100">
                                 <mat-label>केंद्र निवडा</mat-label>
                                 <mat-select formControlName="filtercenterId" (selectionChange)="this.getbarChartByTaluka()">
@@ -284,10 +284,10 @@
                             [responsive]="barchartOptions.responsive" [xaxis]="barchartOptions.xaxis"
                             [legend]="barchartOptions.legend" [fill]="barchartOptions.fill"></apx-chart>
                     </div> -->
-                    <apx-chart [series]="barchartOptions.series[1]" [chart]="barchartOptions.chart"
-                    [dataLabels]="barchartOptions.dataLabels" [plotOptions]="barchartOptions.plotOptions"
-                    [responsive]="barchartOptions.responsive" [xaxis]="barchartOptions.xaxis"
-                    [legend]="barchartOptions.legend" [fill]="barchartOptions.fill"></apx-chart>
+                    <apx-chart [series]="barchartOptions1.series[0]" [chart]="barchartOptions1.chart"
+                    [dataLabels]="barchartOptions1.dataLabels" [plotOptions]="barchartOptions1.plotOptions"
+                    [responsive]="barchartOptions1.responsive" [xaxis]="barchartOptions1.xaxis"
+                    [legend]="barchartOptions1.legend" [fill]="barchartOptions1.fill"></apx-chart>
                 </div>
             </mat-card-content>
         </mat-card>

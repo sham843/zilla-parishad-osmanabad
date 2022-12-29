@@ -25,7 +25,7 @@
                                             <mat-label>User Name</mat-label>
                                             <input matInput formControlName="userName"
                                                 (keypress)="validators.noSpaceAllow($event)">
-                                            <mat-error *ngIf="fc['userName'].hasError('required')">User Name is
+                                            <mat-error *ngIf="fc['userName'].hasError('required')">User name is
                                                 required</mat-error>
                                         </mat-form-field>
                                     </div>
@@ -41,7 +41,7 @@
                                             <mat-error *ngIf="fc['password'].hasError('required')">Password is
                                                 required</mat-error>
                                             <mat-error *ngIf="fc['password'].hasError('pattern')">Enter valid
-                                                Password</mat-error>
+                                                password</mat-error>
                                         </mat-form-field>
                                     </div>
                                     <div class="d-flex align-items-center justify-content-between">
@@ -79,7 +79,7 @@
                                             <mat-error *ngIf="fc['passwordOff'].hasError('required')">Password is
                                                 required</mat-error>
                                             <mat-error *ngIf="fc['passwordOff'].hasError('pattern')">Enter valid
-                                                Password</mat-error>
+                                                password</mat-error>
                                         </mat-form-field>
                                     </div>
                                     <div class="d-flex align-items-center justify-content-between">

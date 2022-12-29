@@ -22,6 +22,7 @@ export class DashboardComponent implements OnInit,AfterViewInit {
   filterFormForBarGraph!: FormGroup;
   piechartOptions: any;
   barchartOptions: any;
+  barchartOptions1:any;
   dashboardCountData=new Array();
   tableColumn=new Array();
   barChartData=new Array();
@@ -51,8 +52,8 @@ export class DashboardComponent implements OnInit,AfterViewInit {
       filtersubjectId: []
     })
     this.getTalukas();
-    this.getCenters();
-    this.getschools();
+    // this.getCenters();
+    // this.getschools();
     this.getdashboardCount();
   }
   ngAfterViewInit() {
@@ -74,6 +75,7 @@ export class DashboardComponent implements OnInit,AfterViewInit {
     })
   }
   getschools() {
+    this.fBgraph['filtercenterId'].patchValue(this.f['centerId'].value)
     this.masterService.getAllSchoolsByCenterId('', (this.f['centerId'].value|0)).subscribe((res: any) => {
       this.schoolData = res.responseData;
     })
@@ -108,65 +110,63 @@ export class DashboardComponent implements OnInit,AfterViewInit {
   }
   getBarChartOption() {
     this.barchartOptions = {
-      //series:[],
-      series: [
-        [
-          [{
-          name: "PRODUCT A",
-          data: [44]
+      series:[],
+      chart: {
+        type: "bar",
+        height: 350,
+        columnWidth: '50%',
+        stacked: true,
+        stackType: "100%",
+        toolbar: {
+          show: false
         },
+      },
+      responsive: [
         {
-          name: "PRODUCT B",
-          data: [13]
-        },
-        {
-          name: "PRODUCT C",
-          data: [11]
-        }],
-       
-        [{
-          name: "PRODUCT A",
-          data: [65]
-        },
-        {
-          name: "PRODUCT B",
-          data: [10]
-        },
-        {
-          name: "PRODUCT C",
-          data: [37]
-        }]
+          breakpoint: 480,
+          options: {
+            legend: {
+              position: "bottom",
+              offsetX: -10,
+              offsetY: 0
+            }
+          }
+        }
       ],
-        
-      [
-        [{
-        name: "PRODUCT A",
-        data: [44]
+      xaxis: {
+        labels: {
+          show: false,
+        },
+        categories: [
+        ]
       },
-      {
-        name: "PRODUCT B",
-        data: [13]
+
+      yaxis: {
+        show: false,
+        showAlways: false,
+        floating: false,
+        axisTicks: {
+          show: false
+        },
+        axisBorder: {
+          show: false
+        },
+        labels: {
+          show: false
+        },
+
       },
-      {
-        name: "PRODUCT C",
-        data: [11]
-      }],
-     
-      [{
-        name: "PRODUCT A",
-        data: [65]
+      fill: {
+        opacity: 1
       },
-      {
-        name: "PRODUCT B",
-        data: [10]
-      },
-      {
-        name: "PRODUCT C",
-        data: [37]
-      }]
-    ]
-     
-      ],
+      legend: {
+        position: "right",
+        offsetX: 0,
+        offsetY: 50
+      }
+    };
+    this.barchartOptions1 = {
+      series:[],
       chart: {
         type: "bar",
         height: 350,
@@ -301,30 +301,30 @@ export class DashboardComponent implements OnInit,AfterViewInit {
     const formDatafilterbyTaluka= this.filterFormForBarGraph.value;
     this.barChartData=[];
     const TalukaId= filterformData?.talukaId? filterformData?.talukaId :formDatafilterbyTaluka?.filtertalukaId;
-    // const CenterId= filterformData?.centerId? filterformData?.talukaId :formDatafilterbyTaluka?.filtercenterId;
     const str= TalukaId?(this.selectedObj.GroupId==1?'GetDataFor1st2ndStdByCenter':'GetDataFor3rdAboveStdByCenter'):(this.selectedObj.GroupId==1?'GetDataFor1st2ndStdByTaluka':'GetDataFor3rdAboveStdByTaluka');
-    this.apiService.setHttp('GET', 'zp-osmanabad/Dashboard/'+str+'?TalukaId='+(TalukaId||0)+(!TalukaId?'&CenterId='+(filterformData?.centerId ||0):'')+'&GroupId='+this.selectedObj?.GroupId+ '&SubjectId='+(formDatafilterbyTaluka.filtersubjectId|0), false, false, false, 'baseUrl');
+    this.apiService.setHttp('GET', 'zp-osmanabad/Dashboard/'+str+'?TalukaId='+(TalukaId||0)+(TalukaId?'&CenterId='+(formDatafilterbyTaluka?.filtercenterId ||0):'')+'&GroupId='+this.selectedObj?.GroupId+ '&SubjectId='+(formDatafilterbyTaluka.filtersubjectId|0), false, false, false, 'baseUrl');
     this.apiService.getHttp().subscribe({
       next: (res: any) => { 
         if (res.statusCode == "200") {
           this.barChartByTalukaData = res.responseData.responseData1;
-          const talukaSet = [...new Set(this.barChartByTalukaData.map(sub => (TalukaId || filterformData?.filtercenterId) ? sub.center : sub.taluka))];
+          this.barchartOptions1.series=[];
+          this.barchartOptions1.xaxis.categories=[];
+          const talukaSet = [...new Set(this.barChartByTalukaData.map(sub => TalukaId  ? sub.center : sub.taluka))];
+
           const subjectSet = [...new Set(this.barChartByTalukaData.map(sub => sub.m_OptionName))];
           let arrayObjectData:any[]=[];
           subjectSet.map((x: any) => {
             const filterSubject = this.barChartByTalukaData.filter((y: any) => y.m_OptionName == x);
-            //const dataset(filterSubject.map(sub => sub.percentage))]
-            //console.log(dataset)
             const subData = {
               name: x,
               data: filterSubject.map(sub => sub.percentage)
             }
             arrayObjectData.push(subData);
           })
-          this.barchartOptions.series.push(arrayObjectData)
-          this.barchartOptions.xaxis.categories.push(talukaSet);
+          this.barchartOptions1.series.push(arrayObjectData)
+          this.barchartOptions1.xaxis.categories.push(talukaSet);
           this.showBarChartS=true;
-          console.log(this.barchartOptions)
+          console.log(this.barchartOptions1)
         }
 
       },
