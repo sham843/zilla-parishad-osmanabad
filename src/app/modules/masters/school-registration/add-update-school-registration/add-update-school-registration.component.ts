@@ -20,7 +20,8 @@ export class AddUpdateSchoolRegistrationComponent {
   districtArr = new Array();
   talukaArr = new Array();
   centerArr = new Array();
-  groupclassArr = new Array();
+  highestGroupclassArr = new Array();
+  lowestGroupclassArr = new Array();
   schoolTypeArr = new Array();
   villageArr = new Array();
   categoryArr = new Array();
@@ -29,7 +30,6 @@ export class AddUpdateSchoolRegistrationComponent {
   uploadImg: any;
   editFlag: boolean = false;
   img : boolean = false;
-  selectedObjects : any = [];
 
   constructor(private masterService: MasterService, private errors: ErrorsService, private fb: FormBuilder, private fileUpload: FileUploadService,
     private apiService: ApiService, private commonMethod: CommonMethodsService, @Inject(MAT_DIALOG_DATA) public data: any,
@@ -42,7 +42,7 @@ export class AddUpdateSchoolRegistrationComponent {
     this.getSchoolType();
     this.getCategoryDes();
     this.getSchoolMngDesc();
-    this.getGroupClass();
+    this.getLowestGroupClass();
 
     if (this.data) {
       this.onEdit();
@@ -68,11 +68,11 @@ export class AddUpdateSchoolRegistrationComponent {
       "s_CategoryId": ['', Validators.required],
       "s_ManagementId": ['', Validators.required],
       "s_TypeId": ['', Validators.required],
-      "g_ClassId": ['', Validators.required],
+      // "g_ClassId": ['', Validators.required],
       "lan": "EN",
       "localID": 0,
       "lowestClass": 0,
-      "highestClass": 0,
+      "highestClass":0,
       "timesStamp": new Date(),
       "uploadImage": [''],
       "createdBy": data.createdBy,
@@ -81,8 +81,7 @@ export class AddUpdateSchoolRegistrationComponent {
       "modifiedDate": data.modifiedDate,
       "isDeleted": data.isDeleted
     })
-    this.data ? this.onEdit() : ''
-
+    // this.data ? this.onEdit() : ''
   }
 
   //#region ---------------------------------------------- School Registration Dropdown start here ----------------------------------------// 
@@ -151,24 +150,52 @@ export class AddUpdateSchoolRegistrationComponent {
     this.masterService.GetSchoolMngDescById(this.webStorageS.languageFlag).subscribe({
       next: (res: any) => {
         res.statusCode == 200 ? this.schoolMngArr = res.responseData : this.schoolMngArr = [];
-        this.editFlag ? (this.f['s_ManagementId'].setValue(this.data.s_ManagementId), this.getGroupClass()) : '';
+        this.editFlag ? (this.f['s_ManagementId'].setValue(this.data.s_ManagementId), this.getHighestGroupClass()) : '';
       },
       error: ((err: any) => { this.errors.handelError(err) })
     });
   }
 
-  getGroupClass() {
-    for(var i = 1; i < 8; i++){
-      var temp = [i]
-      this.groupclassArr.push(temp);
-    }
-    // this.masterService.getAllGroupClass(this.webStorageS.languageFlag).subscribe({
-    //   next: (res: any) => {        
-    //     res.statusCode == 200 ? (this.groupclassArr = res.responseData): this.groupclassArr = [];
-    //     this.editFlag ? this.f['g_ClassId'].setValue(this.data.g_ClassId) : '';
-    //   },
-    //   error: ((err: any) => { this.errors.handelError(err) })
-    // });    
+  getLowestGroupClass() {
+    this.lowestGroupclassArr=[
+      {lowestClass : 1 ,value : 1},
+      {lowestClass : 2 ,value : 2},
+      {lowestClass : 3 ,value : 3},
+      {lowestClass : 4 ,value : 4},
+      {lowestClass : 5 ,value : 5},
+      {lowestClass : 6 ,value : 6},
+      {lowestClass : 7 ,value : 7},
+    ]
+    // for(var i = 1; i < 8; i++){
+    //   var temp = [i];
+    //   this.lowestGroupclassArr.push(temp);
+    //   console.log("lowest  : ", this.lowestGroupclassArr); 
+    // }
+  }
+
+  getHighestGroupClass(){
+    console.log("lowest value : ", this.schoolRegForm.value.lowestClass);
+
+    // this.highestGroupclassArr=[
+    //   {highestClass : 1 ,value : 1},
+    //   {highestClass : 2 ,value : 2},
+    //   {highestClass : 3 ,value : 3},
+    //   {highestClass : 4 ,value : 4},
+    //   {highestClass : 5 ,value : 5},
+    //   {highestClass : 6 ,value : 6},
+    //   {highestClass : 7 ,value : 7},
+    // ]
+    
+    let lowestClass = this.schoolRegForm.value.lowestClass;
+
+      
+    
+      for(var j = lowestClass; j < this.lowestGroupclassArr.length; j++){
+        var temp = [j];
+        this.highestGroupclassArr.push(temp);
+        console.log("highest : ", this.highestGroupclassArr);
+      }
+    
   }
   //#endregion ------------------------------------------- School Registration Dropdown end here ----------------------------------------// 
 
@@ -199,6 +226,7 @@ export class AddUpdateSchoolRegistrationComponent {
   //#region ------------------------------------------------- Add/Update Record start here --------------------------------------------//
   onSubmit() {
     let formValue = this.schoolRegForm.value;
+    
     formValue.uploadImage ? formValue.uploadImage = this.uploadImg : '';
     if(this.editFlag == true){
       if(this.data.uploadImage){
@@ -209,6 +237,15 @@ export class AddUpdateSchoolRegistrationComponent {
       }
     }
 
+    // formValue.lowestClass = formValue.lowestClass[0];
+    // formValue.highestClass = formValue.highestClass[0];
+    // console.log("formValue.lowestClass",formValue.lowestClass[0]);
+    
+    // formValue.highestClass = this.schoolRegForm.value.highestClass;
+
+
+    console.log("FormValue : ", formValue);
+return;
     let url;
     this.editFlag ? url = 'ZP-Osmanabad/School/Update' : url = 'ZP-Osmanabad/School/Add';
 
@@ -241,8 +278,11 @@ export class AddUpdateSchoolRegistrationComponent {
   //#region ------------------------------------------------- Edit Record start here --------------------------------------------//
   onEdit() {
     this.editFlag = true;
+    console.log("editObj",this.data);
+    
     this.data.uploadImage ? this.schoolRegForm.value.uploadImage = this.data.uploadImage : '';
     this.uploadImg = this.data?.uploadImage
+
   }
   //#endregiongion ---------------------------------------------- Edit Record end here --------------------------------------------//
 
