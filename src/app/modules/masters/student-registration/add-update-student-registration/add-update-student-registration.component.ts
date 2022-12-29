@@ -314,12 +314,13 @@ export class AddUpdateStudentRegistrationComponent {
       this.ngxSpinner.hide();
       if (!this.uploadImg) { this.imgFlag = true };
       if (!this.uploadAadhaar) { this.aadhaarFlag = true };
+      this.commonMethods.snackBar('Please Enter Mandatory Fields', 1);
       return
     } else {
       if (!this.uploadImg || !this.uploadAadhaar) {
         this.ngxSpinner.hide();
-        if (!this.uploadImg) { this.imgFlag = true };
-        if (!this.uploadAadhaar) { this.aadhaarFlag = true };
+        if (!this.uploadImg) { this.imgFlag = true , this.commonMethods.snackBar('Please Enter Mandatory Fields', 1);};
+        if (!this.uploadAadhaar) { this.aadhaarFlag = true , this.commonMethods.snackBar('Please Enter Mandatory Fields', 1);};
         return
       }
       let url = this.editObj ? 'UpdateStudent' : 'AddStudent'
