@@ -152,7 +152,7 @@ export class SchoolRegistrationComponent {
 
   //#region ---------------------------------------------- School Registration Dropdown start here ----------------------------------------// 
   getDistrict() {
-    this.masterService.getAllDistrict(this.webStorageS.languageFlag).subscribe({
+    this.masterService.getAllDistrict().subscribe({
       next: (res: any) => {
         if (res.statusCode == 200) {
           this.districtArr = res.responseData;
@@ -163,7 +163,7 @@ export class SchoolRegistrationComponent {
   }
 
   getTaluka() {
-    this.masterService.getAllTaluka(this.webStorageS.languageFlag).subscribe({
+    this.masterService.getAllTaluka().subscribe({
       next: (res: any) => {
         if (res.statusCode == 200) {
           this.talukaArr = res.responseData;
@@ -175,7 +175,7 @@ export class SchoolRegistrationComponent {
 
   getVillage() {
     let talukaId = this.talukaId.value;
-    this.masterService.getAllVillage(this.webStorageS.languageFlag, talukaId).subscribe({
+    this.masterService.getAllVillage('', talukaId).subscribe({
       next: (res: any) => {
         if (res.statusCode == 200) {
           this.villageArr = res.responseData;
