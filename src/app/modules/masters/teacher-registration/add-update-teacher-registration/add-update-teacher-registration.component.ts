@@ -7,6 +7,7 @@ import { ErrorsService } from 'src/app/core/services/errors.service';
 import { FileUploadService } from 'src/app/core/services/file-upload.service';
 import { MasterService } from 'src/app/core/services/master.service';
 import { ValidationService } from 'src/app/core/services/validation.service';
+import { WebStorageService } from 'src/app/core/services/web-storage.service';
 
 
 @Component({
@@ -60,7 +61,7 @@ export class AddUpdateTeacherRegistrationComponent {
     { standardId: 8, checked: false }
   ];
   constructor(private masterService: MasterService, private commonMethod: CommonMethodsService, private errorHandler: ErrorsService,
-    private fileUpload: FileUploadService, public validation: ValidationService,
+    private fileUpload: FileUploadService, public validation: ValidationService,public webStorageS: WebStorageService,
     private fb: FormBuilder, private service: ApiService, public dialogRef: MatDialogRef<AddUpdateTeacherRegistrationComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any) { }
 
@@ -224,8 +225,7 @@ export class AddUpdateTeacherRegistrationComponent {
     this.masterService.getAllGender('EN').subscribe({
       next: ((res: any) => {
         if (res.statusCode == '200' && res.responseData.length) {
-          this.genderArray = res.responseData;
-          console.log("gender", this.genderArray);
+          this.genderArray = res.responseData;         
           this.editFlag ? (this.teacherRegForm.controls['genderId'].setValue(this.editObj.genderID), this.getDistrict()) : this.getDistrict();this.getAllDistrictTeacherDetails();
         }
       }), error: (error: any) => {
@@ -238,7 +238,7 @@ export class AddUpdateTeacherRegistrationComponent {
     this.masterService.getAllDistrict('EN').subscribe({
       next: ((res: any) => {
         if (res.statusCode == '200' && res.responseData.length) {
-          this.districtArray = res.responseData;
+          this.districtArray = res.responseData;               
           this.teacherRegForm.controls['districtId'].setValue(1)
           this.editFlag ? (this.teacherRegForm.controls['districtId'].setValue(this.editObj.districtId), this.getTaluka()) : this.getTaluka();
         }
@@ -252,7 +252,7 @@ export class AddUpdateTeacherRegistrationComponent {
     this.masterService.getAllTaluka('EN').subscribe({
       next: ((res: any) => {
         if (res.statusCode == '200' && res.responseData.length) {
-          this.talukaArray = res.responseData;
+          this.talukaArray = res.responseData;          
           this.editFlag ? (this.teacherRegForm.controls['talukaId'].setValue(this.editObj.talukaId), this.getVillage()) : '';
         }
       }), error: (error: any) => {
@@ -266,7 +266,7 @@ export class AddUpdateTeacherRegistrationComponent {
     this.masterService.getAllVillage('EN', talukaId).subscribe({
       next: ((res: any) => {
         if (res.statusCode == '200' && res.responseData.length) {
-          this.villageArray = res.responseData;
+          this.villageArray = res.responseData;            
           this.editFlag ? (this.teacherRegForm.controls['villageId'].setValue(this.editObj.villageId), this.getAllDistrictTeacherDetails()) : '';
         }
       }), error: (error: any) => {
@@ -308,8 +308,7 @@ export class AddUpdateTeacherRegistrationComponent {
     this.masterService.getAllCenter('EN', talukaId).subscribe({
       next: ((res: any) => {
         if (res.statusCode == '200' && res.responseData.length) {
-          this.clusterArray = res.responseData;
-          console.log("this.clusterArray", this.clusterArray);
+          this.clusterArray = res.responseData;      
           this.editFlag ? (this.td['clusterId'].setValue(this.editObj.teacherDetails.clusterId), this.getAllSchool()) : '';
         }
       }), error: (error: any) => {
@@ -323,7 +322,7 @@ export class AddUpdateTeacherRegistrationComponent {
     this.masterService.getAllSchoolByCriteria('EN', talukaId, 0, clusterId).subscribe({
       next: ((res: any) => {
         if (res.statusCode == '200' && res.responseData.length) {
-          this.schoolArray = res.responseData;
+          this.schoolArray = res.responseData;        
           this.editFlag ? (this.td['schoolId'].setValue(this.editObj.teacherDetails.schoolId), this.getDesignation()) : '';
         }
       }), error: (error: any) => {
@@ -335,7 +334,7 @@ export class AddUpdateTeacherRegistrationComponent {
     this.masterService.GetDesignationByLevelId('EN', 0).subscribe({
       next: ((res: any) => {
         if (res.statusCode == '200' && res.responseData.length) {
-          this.designationArray = res.responseData;
+          this.designationArray = res.responseData;    
           this.editFlag ? (this.td['designationId'].setValue(this.editObj.teacherDetails.designationId), this.getGraduateTeacherSubject()) : this.getGraduateTeacherSubject();
         }
       }), error: (error: any) => {
