@@ -169,7 +169,7 @@ export class StudentRegistrationComponent {
     console.log(obj);
     const dialogRef = this.dialog.open(AddUpdateStudentRegistrationComponent, {
       width: '900px',
-      height: '650px',
+      // height: '650px',
       data: obj,
       disableClose: true,
       autoFocus: false
