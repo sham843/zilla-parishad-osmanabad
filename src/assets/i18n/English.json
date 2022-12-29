@@ -17,6 +17,7 @@
         "taluka" : "Taluka",
         "address" : "Address",
         "agencyAdd" :"Agency Address",
+        "AgencyList" : "Agency List",   
         "cancel": "Cancel",
         "submit" : "Submit",
         "update" : "Update",
