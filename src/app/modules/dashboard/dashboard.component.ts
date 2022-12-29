@@ -170,6 +170,7 @@ export class DashboardComponent implements OnInit,AfterViewInit {
       chart: {
         type: "bar",
         height: 350,
+        columnWidth: '50%',
         stacked: true,
         stackType: "100%",
         toolbar: {

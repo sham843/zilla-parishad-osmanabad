@@ -170,6 +170,7 @@ export class AddUpdateSchoolRegistrationComponent {
   }
 
   getHighestGroupClass(){
+    this.f['highestClass'].setValue('');
     let lowestClass = this.schoolRegForm.value.lowestClass;
 
       let findObj = this.lowestGroupclassArr.filter((res:any)=>{
