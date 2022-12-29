@@ -67,17 +67,21 @@
                     <div class="d-flex justify-content-between align-items-center">
                         <div class="upload-btn-wrapper">
                             <button class="upload-btn" type="button" (click)="uploadAadhar.click()">Upload Student Photo</button>
-                            <input type="file" name="myfile" (change)="fileUpload($event,'aadhar')" #uploadAadhar/>
+                            <input type="file" name="myfile" (change)="fileUpload($event,'img')" #uploadImage/>
                         </div>
-                        <div class="action-btn" *ngIf="uploadAadhaar">
-                            <button mat-icon-button class="btn-icon text-primary" type="button" (click)="viewImages('aadharPhoto')">
+                        <div class="action-btn" *ngIf="uploadImg">
+                            <button mat-icon-button class="btn-icon text-primary" type="button" (click)="viewImages('photo')">
                                 <mat-icon>content_copy</mat-icon>
                             </button>
-                            <button mat-icon-button class="btn-icon text-danger" type="button" (click)="deleteImage('aadharPhoto')">
+                            <button mat-icon-button class="btn-icon text-danger" type="button" (click)="deleteImage('photo')">
                                 <mat-icon>delete</mat-icon>
                             </button>
                         </div>
                     </div>
+                    <ng-container *ngIf="imgFlag">
+                        <span style="font-size: 11px;" class="text-danger">Please Upload Image</span>
+                    </ng-container> 
+
                 </div>
                 <div class="col-sm-4">
                     <mat-form-field appearance="outline" class="w-100">
@@ -256,10 +260,8 @@
                         </div>
                     </div>
                     <ng-container *ngIf="aadhaarFlag">
-                        <span style="font-size: 11px;" class="text-danger">please Upload Aadhaar Image</span>
+                        <span style="font-size: 11px;" class="text-danger">Please Upload Aadhaar Image</span>
                     </ng-container>
-                   
-                   
                 </div>
             </div>
             
