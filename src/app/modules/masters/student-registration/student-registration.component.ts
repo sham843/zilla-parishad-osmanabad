@@ -122,7 +122,7 @@ export class StudentRegistrationComponent {
             }
             this.downloadPdfservice.downLoadPdf(keyPDFHeader, ValueData, objData);
           } else {
-            this.commonMethods.snackBar("No Data Found", 1);
+            flag == 'reportFlag' ? this.commonMethods.snackBar("No Data Found", 1) :'';
           }
 
         } else {
