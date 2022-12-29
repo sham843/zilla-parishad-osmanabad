@@ -33,9 +33,9 @@
                             <input matInput formControlName="designationType"
                                 maxlength="30"
                                 (keypress)="validation.noFirstSpaceAllow($event)">
-                            <mat-error
+                            <!-- <mat-error
                                 *ngIf="f['designationType'].hasError('required') || f['designationType'].hasError('touched')">
-                                {{'Labels.DesignationTypeReq' | translate}}</mat-error>
+                                {{'Labels.DesignationTypeReq' | translate}}</mat-error> -->
                         </mat-form-field>
                     </ng-container>
                 </div>
@@ -45,9 +45,9 @@
                             <mat-label>{{'Labels.AddDesignation(Marathi)' | translate}}</mat-label>
                             <input matInput formControlName="m_DesignationType" maxlength="30"
                                 (keypress)="validation.noFirstSpaceAllow($event);validation.unicodeMarathiValidation($event)">
-                            <mat-error
+                            <!-- <mat-error
                                 *ngIf="f['m_DesignationType'].hasError('required') || f['m_DesignationType'].hasError('touched')">
-                                {{'Labels.DesignationTypeMarathiReq' | translate}}</mat-error>
+                                {{'Labels.DesignationTypeMarathiReq' | translate}}</mat-error> -->
                         </mat-form-field>
                     </ng-container>
                 </div>
