@@ -25,10 +25,8 @@
                     (click)="selectGrid('Card')">
                     <mat-icon>grid_view</mat-icon>
                 </button>
-                <button mat-flat-button class="bg-danger btn-icon text-white" title="Download as PDF" (click)="getTableData('pdfFlag')">
-                    <mat-icon>
-                        description
-                    </mat-icon>
+                <button mat-flat-button class="bg-danger btn-icon text-white" matTooltip="{{'Labels.DownloadPdf' | translate}}" matTooltipPosition="below"  matTooltipClass="tooltip"  (click)="getTableData('pdfFlag')">
+                    <mat-icon>description</mat-icon>
                   </button>
                 <!-- <button mat-flat-button class="btn-main btn-icon" [matMenuTriggerFor]="menu">
                     <mat-icon>

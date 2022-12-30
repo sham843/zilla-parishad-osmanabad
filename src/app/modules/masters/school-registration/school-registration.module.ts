@@ -20,6 +20,7 @@ import { PageStatisticsComponent } from 'src/app/shared/components/page-statisti
 import { GlobalImgComponent } from 'src/app/shared/components/global-img/global-img.component';
 import { TranslateModule } from '@ngx-translate/core';
 import { GridViewComponent } from 'src/app/shared/components/grid-view/grid-view.component';
+import { MatTooltipModule } from '@angular/material/tooltip';
 @NgModule({
   declarations: [
     AddUpdateSchoolRegistrationComponent,
@@ -43,7 +44,9 @@ import { GridViewComponent } from 'src/app/shared/components/grid-view/grid-view
     PageStatisticsComponent,
     GlobalImgComponent,
     TranslateModule,
-    GridViewComponent
+    GridViewComponent,
+    MatTooltipModule
+  
 ]
 })
 export class SchoolRegistrationModule { }
