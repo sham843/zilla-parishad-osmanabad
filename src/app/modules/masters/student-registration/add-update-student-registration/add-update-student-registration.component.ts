@@ -430,6 +430,8 @@ export class AddUpdateStudentRegistrationComponent {
             }
             // this.commonMethods.snackBar(res.statusMessage, 0);
           } else {
+            this.fc['fatherFullName'].setValue('');
+            this.fc['motherName'].setValue('');
             this.commonMethods.checkEmptyData(res.statusMessage) == false ? this.errors.handelError(res.statusCode) : this.commonMethods.snackBar(res.statusMessage, 1);
           }
         },
