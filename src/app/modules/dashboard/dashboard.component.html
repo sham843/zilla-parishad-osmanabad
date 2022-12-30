@@ -290,6 +290,64 @@
                     [legend]="barchartOptions1.legend" [fill]="barchartOptions1.fill"></apx-chart>
                 </div>
             </mat-card-content>
+            <div class="row">
+                <div class="col-sm-6">
+                    <mat-card-content class="card-body pt-0">
+                        <table class="table inner-table mb-3">
+                            <thead>
+                                <tr>
+                                    <th *ngFor="let header of displayedheaders">
+                                      {{header}}
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let item of tableDataTopPerformance; let i=index">
+                                    <!-- <td><img class="table-img" src="{{item['schoolImage'] ? item['schoolImage'] : 'assets/images/user.jpg'}}"></td> -->
+                                    <td>{{item['srNo']}}</td>
+                                    <td>{{item['schoolName']}}</td>
+                                    <td>{{item['totalStudent']}}</td>
+                                    <td>{{item['passpercentage']}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        
+                        <div *ngIf="  tableDataTopPerformance?.length ==0">
+                            <div class="alert alert-danger text-center py-2 ">
+                                Data not available
+                            </div>
+                        </div>
+                    </mat-card-content>
+                </div>
+                <div class="col-sm-6">
+                    <mat-card-content class="card-body pt-0">
+                        <table class="table inner-table mb-3">
+                            <thead>
+                                <tr>
+                                    <th *ngFor="let header of displayedheaders">
+                                      {{header}}
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let item of tableDataLowPerformance; let i=index">
+                                    <!-- <td><img class="table-img" src="{{item['schoolImage'] ? item['schoolImage'] : 'assets/images/user.jpg'}}"></td> -->
+                                    <td>{{item['srNo']}}</td>
+                                    <td>{{item['schoolName']}}</td>
+                                    <td>{{item['totalStudent']}}</td>
+                                    <td>{{item['passpercentage']}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div *ngIf="  tableDataLowPerformance?.length ==0">
+                            <div class="alert alert-danger text-center py-2 ">
+                                Data not available
+                            </div>
+                        </div> 
+                    </mat-card-content>
+                </div>
+            </div>
         </mat-card>
+       
     </div>
 </div>

@@ -31,6 +31,11 @@ export class DashboardComponent implements OnInit,AfterViewInit {
   barChartByTalukaData=new Array();
   graphInstance: any;
   showBarChartS:boolean=false;
+  tableDataTopPerformance=new Array();
+  tableDataLowPerformance=new Array();
+  displayedColumns=new Array();
+  displayedheaders=new Array;
+  
   get f() { return this.filterForm.controls }
   get fBgraph() { return this.filterFormForBarGraph.controls}
   constructor(public translate: TranslateService, private masterService: MasterService,
@@ -55,6 +60,7 @@ export class DashboardComponent implements OnInit,AfterViewInit {
     // this.getCenters();
     // this.getschools();
     this.getdashboardCount();
+    this.getTabledataByTaluka()
   }
   ngAfterViewInit() {
     this.showSvgMap(this.commonMethods.mapRegions());
@@ -310,7 +316,6 @@ export class DashboardComponent implements OnInit,AfterViewInit {
           this.barchartOptions1.series=[];
           this.barchartOptions1.xaxis.categories=[];
           const talukaSet = [...new Set(this.barChartByTalukaData.map(sub => TalukaId  ? sub.center : sub.taluka))];
-
           const subjectSet = [...new Set(this.barChartByTalukaData.map(sub => sub.m_OptionName))];
           let arrayObjectData:any[]=[];
           subjectSet.map((x: any) => {
@@ -332,6 +337,32 @@ export class DashboardComponent implements OnInit,AfterViewInit {
     });
   }
 
+  getTabledataByTaluka(){
+    const filterformData= this.filterForm.value;
+    const formDatafilterbyTaluka= this.filterFormForBarGraph.value;
+    this.barChartData=[];
+    const TalukaId= filterformData?.talukaId? filterformData?.talukaId :formDatafilterbyTaluka?.filtertalukaId;
+    this.apiService.setHttp('GET', 'zp-osmanabad/Dashboard/GetDataForTopLowSchool'+'?TalukaId='+(TalukaId||0)+(TalukaId?'&CenterId='+(formDatafilterbyTaluka?.filtercenterId ||0):''), false, false, false, 'baseUrl');
+    this.apiService.getHttp().subscribe({
+      next: (res: any) => { 
+        if (res.statusCode == "200") {
+          this.tableDataTopPerformance = res.responseData.responseData1;
+          this.tableDataLowPerformance = res.responseData.responseData2;
+          this.displayedColumns = ['schoolImage','srNo ', this.webStorage.languageFlag == 'EN' ? 'schoolName' : 'm_SchoolName', 'totalStudent', 'passpercentage'];
+          this.displayedheaders = ['#','Sr.No.', 'Name', 'Total Student', 'Percetage'];
+
+        }
+        else{
+           this.tableDataTopPerformance = [];
+          this.tableDataLowPerformance = [];
+        }
+          
+        
+
+      },
+      error: (error:any) => { this.error.handelError(error.message) }
+    });
+  }
 
   //---------------------------- svg Map ------------------------//
   showSvgMap(data: any) {
