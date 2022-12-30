@@ -19,6 +19,7 @@ import { PageStatisticsComponent } from 'src/app/shared/components/page-statisti
 import { GlobalDialogComponent } from 'src/app/shared/components/global-dialog/global-dialog.component';
 import { TranslateModule } from '@ngx-translate/core';
 import { AutofocusDirective } from 'src/app/core/directives/autofocus.directive';
+import { GridViewComponent } from 'src/app/shared/components/grid-view/grid-view.component';
 
 
 @NgModule({
@@ -44,7 +45,8 @@ import { AutofocusDirective } from 'src/app/core/directives/autofocus.directive'
     PageStatisticsComponent,
     GlobalDialogComponent,
     TranslateModule,
-    AutofocusDirective
+    AutofocusDirective,
+    GridViewComponent
   ]
 })
 export class AgencyRegistrationModule { }
