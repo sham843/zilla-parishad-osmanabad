@@ -72,6 +72,7 @@ export class StudentRegistrationComponent {
   //#region ----------------------------------------------------- Get Table Data Logic Start here -----------------------------------------------
 
   getTableData(flag?: string) {
+
     this.ngxSpinner.show();
     this.pageNumber = flag == 'filter' ? 1 : this.pageNumber;    
     let pageNo = this.pageNumber;
@@ -174,6 +175,7 @@ export class StudentRegistrationComponent {
       autoFocus: false
     });
     dialogRef.afterClosed().subscribe((result: any) => {
+      obj = JSON.parse(obj)
       if (result == 'yes' && obj) {
         this.pageNumber = obj.pageNumber;
         this.getTableData();

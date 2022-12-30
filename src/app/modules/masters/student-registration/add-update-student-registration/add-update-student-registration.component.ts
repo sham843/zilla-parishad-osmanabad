@@ -57,8 +57,6 @@ export class AddUpdateStudentRegistrationComponent {
   ngOnInit() {
     this.languageFlag = this.webService.languageFlag;
     this.formData();
-    console.log(JSON.parse(this.data));
-    
     this.data ? (this.editObj = JSON.parse(this.data), this.patchValue()) : this.allDropdownMethods();
   }
 
@@ -223,7 +221,7 @@ export class AddUpdateStudentRegistrationComponent {
     this.masterService.getAllCaste(this.languageFlag, id).subscribe({
       next: (res: any) => {
         console.log(res.statusCode);
-        
+
         if (res.statusCode == 200) {
           this.casteArr = res.responseData;
           this.editFlag ? this.stuRegistrationForm.controls['castId'].setValue(this.editObj.castId) : '';
@@ -320,7 +318,7 @@ export class AddUpdateStudentRegistrationComponent {
     }
 
     console.log(postObj);
-    
+
     if (this.stuRegistrationForm.invalid) {
       this.ngxSpinner.hide();
       if (!this.uploadImg) { this.imgFlag = true };
@@ -330,8 +328,8 @@ export class AddUpdateStudentRegistrationComponent {
     } else {
       if (!this.uploadImg || !this.uploadAadhaar) {
         this.ngxSpinner.hide();
-        if (!this.uploadImg) { this.imgFlag = true , this.commonMethods.snackBar('Please Enter Mandatory Fields', 1);};
-        if (!this.uploadAadhaar) { this.aadhaarFlag = true , this.commonMethods.snackBar('Please Enter Mandatory Fields', 1);};
+        if (!this.uploadImg) { this.imgFlag = true, this.commonMethods.snackBar('Please Enter Mandatory Fields', 1); };
+        if (!this.uploadAadhaar) { this.aadhaarFlag = true, this.commonMethods.snackBar('Please Enter Mandatory Fields', 1); };
         return
       }
       let url = this.editObj ? 'UpdateStudent' : 'AddStudent'
@@ -359,7 +357,7 @@ export class AddUpdateStudentRegistrationComponent {
 
 
   //#region ------------------------------------------- Image Logic Start Here -----------------------------------------------------------------
-  fileUpload(event: any, name: string) {  
+  fileUpload(event: any, name: string) {
     this.fileUpl.uploadDocuments(event, 'Upload', 'jpg, jpeg, png').subscribe((res: any) => {
       if (res.statusCode == 200) {
         if (name == 'img') {
@@ -404,45 +402,45 @@ export class AddUpdateStudentRegistrationComponent {
       this.imageArray.splice(index, 1);
     }
     console.log(this.imageArray);
-    
+
   }
 
   //#region ------------------------------------------- Image Logic Start Here -----------------------------------------------------------------
 
-  clearDropdown(name:any){
+  clearDropdown(name: any) {
     this.editFlag = false
-    if(name == 'talukaId'){
+    if (name == 'talukaId') {
       this.stuRegistrationForm.controls['centerId'].setValue('');
       this.stuRegistrationForm.controls['schoolId'].setValue('');
-    }else if(name == 'centerId'){
+    } else if (name == 'centerId') {
       this.stuRegistrationForm.controls['schoolId'].setValue('');
     }
   }
 
-  checkMobileNo(){
+  checkMobileNo() {
     let mobileNo = this.stuRegistrationForm.value.mobileNo;
     console.log(mobileNo);
-    this.apiService.setHttp('get', 'zp-osmanabad/Student/GetGaurdianByMobileNo?MobileNo='+mobileNo+'&lan=EN', false, false, false, 'baseUrl');
-      this.apiService.getHttp().subscribe({
-        next: (res: any) => {
-          if (res.statusCode == 200) {
-            if(this.languageFlag == 'EN'){
-              this.fc['fatherFullName'].setValue(res.responseData?.fatherFullName);
-              this.fc['motherName'].setValue(res.responseData?.motherName);
-            }else{
-              this.fc['fatherFullName'].setValue(res.responseData?.m_FatherFullName);
-              this.fc['motherName'].setValue(res.responseData?.m_MotherName)
-            }
-            // this.commonMethods.snackBar(res.statusMessage, 0);
+    this.apiService.setHttp('get', 'zp-osmanabad/Student/GetGaurdianByMobileNo?MobileNo=' + mobileNo + '&lan=EN', false, false, false, 'baseUrl');
+    this.apiService.getHttp().subscribe({
+      next: (res: any) => {
+        if (res.statusCode == 200) {
+          if (this.languageFlag == 'EN') {
+            this.fc['fatherFullName'].setValue(res.responseData?.fatherFullName);
+            this.fc['motherName'].setValue(res.responseData?.motherName);
           } else {
-            this.fc['fatherFullName'].setValue('');
-            this.fc['motherName'].setValue('');
-            this.commonMethods.checkEmptyData(res.statusMessage) == false ? this.errors.handelError(res.statusCode) : this.commonMethods.snackBar(res.statusMessage, 1);
+            this.fc['fatherFullName'].setValue(res.responseData?.m_FatherFullName);
+            this.fc['motherName'].setValue(res.responseData?.m_MotherName)
           }
-        },
-        error: ((err: any) => { this.ngxSpinner.hide(); this.errors.handelError(err) })
-      });
-    
+          // this.commonMethods.snackBar(res.statusMessage, 0);
+        } else {
+          this.fc['fatherFullName'].setValue('');
+          this.fc['motherName'].setValue('');
+          this.commonMethods.checkEmptyData(res.statusMessage) == false ? this.errors.handelError(res.statusCode) : this.commonMethods.snackBar(res.statusMessage, 1);
+        }
+      },
+      error: ((err: any) => { this.ngxSpinner.hide(); this.errors.handelError(err) })
+    });
+
   }
 
 
