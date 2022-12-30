@@ -140,6 +140,11 @@ export class DashboardComponent implements OnInit,AfterViewInit {
         toolbar: {
           show: false
         },
+        events: {
+          dataPointSelection: (event:any, chartContext:any) => {
+            console.log(event,chartContext);
+          }
+        }
       },
       theme: {
         monochrome: {
@@ -287,7 +292,7 @@ export class DashboardComponent implements OnInit,AfterViewInit {
     this.apiService.getHttp().subscribe({
       next: (res: any) => { 
         if (res.statusCode == "200") {
-          this.dashboardCountData.push(res.responseData);
+          this.dashboardCountData.push(res.responseData.responseData1[0]);
           this.tableColumn=[{label:'एकूण संख्या', GroupId:0,  ischeckboxShow:false, status:false},{label:'१ली ते 2री',GroupId:1,  ischeckboxShow:true, status:true},{label:'3री ते ५वी',GroupId:2, ischeckboxShow:true, status:false},{label:'६वी ते ८वी',GroupId:3, ischeckboxShow:true, status:false},];
           this.checkData(this.tableColumn[1]);
           this.getPieChartData();
@@ -313,12 +318,14 @@ export class DashboardComponent implements OnInit,AfterViewInit {
   }
   getPieChartData(){
     const serriesArray= [0,0,0];
+    console.log(this.dashboardCountData)
     serriesArray[0]= this.dashboardCountData[0].govtSchool|0;
     serriesArray[1]= this.dashboardCountData[0].privateSchool|0;
     serriesArray[2]= this.dashboardCountData[0].otherSchool|0;
     this.piechartOptions.colors=[];
     this.piechartOptions.series = serriesArray;
     this.piechartOptions.labels=['Goverment','Private','Other'];
+    console.log(this.piechartOptions)
     // this.piechartOptions.colors=['#CB4B4B', '#E76A63', '#E98754', '#EFB45B', '#65C889'];
   }
 
