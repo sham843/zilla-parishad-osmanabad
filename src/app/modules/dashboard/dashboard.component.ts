@@ -224,11 +224,7 @@ export class DashboardComponent implements OnInit,AfterViewInit {
         opacity: 1
       },
       legend: {
-<<<<<<< HEAD
-        position: "top",
-=======
         position: "bottom",
->>>>>>> e1484e0dd4b14245ee7d5c7a8c8fba6e39ac14bb
         offsetX: 0,
         offsetY: 50
       }
