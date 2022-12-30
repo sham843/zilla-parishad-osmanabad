@@ -22,6 +22,7 @@
         "submit" : "जतन करा",
         "update" : "अपडेट करा",
         "myprofile" : "माझे प्रोफाइल",
+        "UpdateDesignation":"अपडेट पदनाम",
         "pagerightaccess":"पृष्ठ अधिकार",
         "agencyNameIsRequired" : "एजन्सीचे नाव आवश्यक आहे",
         "contactPersonNameIsRequired" : "संपर्क व्यक्तीचे नाव आवश्यक आहे",
@@ -154,7 +155,7 @@
         "studentUpdate" : "विद्यार्थी अद्यतनित करा",
         "levelRequired" : "स्तर आवश्यक आहे",
         "uploadImg" :"कृपया प्रतिमा अपलोड करा",
-        "UpdateDesignation":"अपडेट पदनाम",
+
         "dataNotAvailable" : "डेटा उपलब्ध नाही",
         "teacherRegistration" : "शिक्षकांची नोंदणी",
         "teacherList" : "शिक्षकांची यादी",

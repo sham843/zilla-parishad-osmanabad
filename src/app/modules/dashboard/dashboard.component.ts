@@ -32,8 +32,6 @@ export class DashboardComponent implements OnInit,AfterViewInit {
   graphInstance: any;
   showBarChartS:boolean=false;
   tableDataTopPerformance=new Array();
-  tableDataLowPerformance=new Array();
-  displayedColumns=new Array();
   displayedheaders=new Array;
   
   get f() { return this.filterForm.controls }
@@ -338,6 +336,7 @@ export class DashboardComponent implements OnInit,AfterViewInit {
   }
 
   getTabledataByTaluka(){
+    this.tableDataTopPerformance = [];
     const filterformData= this.filterForm.value;
     const formDatafilterbyTaluka= this.filterFormForBarGraph.value;
     this.barChartData=[];
@@ -346,15 +345,14 @@ export class DashboardComponent implements OnInit,AfterViewInit {
     this.apiService.getHttp().subscribe({
       next: (res: any) => { 
         if (res.statusCode == "200") {
-          this.tableDataTopPerformance = res.responseData.responseData1;
-          this.tableDataLowPerformance = res.responseData.responseData2;
-          this.displayedColumns = ['schoolImage','srNo ', this.webStorage.languageFlag == 'EN' ? 'schoolName' : 'm_SchoolName', 'totalStudent', 'passpercentage'];
+          this.tableDataTopPerformance.push(res.responseData.responseData1);
+          this.tableDataTopPerformance.push(res.responseData.responseData2);
+          
           this.displayedheaders = ['#','Sr.No.', 'Name', 'Total Student', 'Percetage'];
 
         }
         else{
            this.tableDataTopPerformance = [];
-          this.tableDataLowPerformance = [];
         }
           
         
