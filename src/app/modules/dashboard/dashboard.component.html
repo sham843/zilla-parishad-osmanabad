@@ -106,7 +106,7 @@
             </mat-card-header>
             <mat-card-content class="card-body">
                 <div id="mapsvg" class="text-center">
-                    <!-- <img src="assets/distSVG/Osmanabad.svg" style="height: 200px;" class=""> -->
+                    <img src="assets/distSVG/Osmanabad.svg" style="height: 200px;" class="">
                 </div>
             </mat-card-content>
         </mat-card>
@@ -117,7 +117,7 @@
             </mat-card-header>
             <mat-card-content class="card-body">
                 <div id="chart">
-                    <apx-chart [series]="piechartOptions.series" [chart]="piechartOptions.chart"
+                    <apx-chart [series]="piechartOptions.series" [chart]="piechartOptions.chart" [theme]="piechartOptions.theme" [fill]="piechartOptions.fill"
                         [labels]="piechartOptions.labels" [responsive]="piechartOptions.responsive"></apx-chart>
                 </div>
             </mat-card-content>
@@ -128,7 +128,7 @@
             <mat-card-header class="card-header">
                 <div class="d-flex align-items-center justify-content-between w-100">
                     <div>सर्वेक्षण केलेल्या विद्यार्थ्यांची एकूण संख्या</div>
-                    <div>निवडलेली संख्या : <span class="fw-bold">{{selectedObj?.GroupId==1? dashboardCountData[0]?.totalStudent_1_2: selectedObj?.GroupId==2? dashboardCountData[0]?.totalStudent_3_5 :dashboardCountData[0]?.totalStudent_6_8}}</span></div>
+                    <!-- <div>निवडलेली संख्या : <span class="fw-bold">{{selectedObj?.GroupId==1? dashboardCountData[0]?.totalStudent_1_2: selectedObj?.GroupId==2? dashboardCountData[0]?.totalStudent_3_5 :dashboardCountData[0]?.totalStudent_6_8}}</span></div> -->
                 </div>
             </mat-card-header>
 
@@ -165,10 +165,10 @@
                             </tbody>
                         </table>
                     </div>
-                    <div class="row" *ngIf="showBarChartF">
-                        <div class="col-sm-3 border-end" *ngFor="let bar of barchartOptions.series[0]; let i=index">
+                    <div class="d-flex" *ngIf="showBarChartF">
+                        <div class="border-end" *ngFor="let bar of barchartOptions.series[0]; let i=index">
                             <h6 class="fw-bold text-center mb-0">{{this.barchartOptions.xaxis.categories[0][i]}} स्तर</h6>
-                            <apx-chart [series]="bar" [chart]="barchartOptions.chart"
+                            <apx-chart [series]="bar" [chart]="barchartOptions.chart" [theme]="barchartOptions.theme"
                                 [dataLabels]="barchartOptions.dataLabels" [plotOptions]="barchartOptions.plotOptions"
                                 [responsive]="barchartOptions.responsive" [xaxis]="barchartOptions.xaxis"
                                 [legend]="barchartOptions.legend" [fill]="barchartOptions.fill"></apx-chart>
@@ -284,7 +284,7 @@
                             [responsive]="barchartOptions.responsive" [xaxis]="barchartOptions.xaxis"
                             [legend]="barchartOptions.legend" [fill]="barchartOptions.fill"></apx-chart>
                     </div> -->
-                    <apx-chart [series]="barchartOptions1.series[0]" [chart]="barchartOptions1.chart"
+                    <apx-chart [series]="barchartOptions1.series[0]" [chart]="barchartOptions1.chart" [theme]="barchartOptions1.theme"
                     [dataLabels]="barchartOptions1.dataLabels" [plotOptions]="barchartOptions1.plotOptions"
                     [responsive]="barchartOptions1.responsive" [xaxis]="barchartOptions1.xaxis"
                     [legend]="barchartOptions1.legend" [fill]="barchartOptions1.fill"></apx-chart>
