@@ -23,22 +23,22 @@ export class AddUpdateOfficeUsersComponent implements OnInit {
   schools = new Array();
 
   constructor(private masterService: MasterService,
-              private fb: FormBuilder,
-              private apiService: ApiService,
-              private commonService: CommonMethodsService,
-              private error: ErrorsService,
-              private dialogRef: MatDialogRef<AddUpdateOfficeUsersComponent>,
-              @Inject(MAT_DIALOG_DATA) public data: any, 
-              public validation : ValidationService,
-              public webStorageService : WebStorageService){}
-              
-  ngOnInit(){
+    private fb: FormBuilder,
+    private apiService: ApiService,
+    private commonService: CommonMethodsService,
+    private error: ErrorsService,
+    private dialogRef: MatDialogRef<AddUpdateOfficeUsersComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: any,
+    public validation: ValidationService,
+    public webStorageService: WebStorageService) { }
+
+  ngOnInit() {
     this.defaultForm();
     // console.log("dataaa",this.data);
-    (!this.data) ? (this.getLevelDrop(), this.getTalukaDrop(), this.getDistrictDrop()): '';
+    (!this.data) ? (this.getLevelDrop(), this.getTalukaDrop(), this.getDistrictDrop()) : '';
   }
 
-  defaultForm(){
+  defaultForm() {
     this.officeForm = this.fb.group(
       {
         // "createdBy": [0],
@@ -48,123 +48,130 @@ export class AddUpdateOfficeUsersComponent implements OnInit {
         // "isDeleted": [true],
         ...this.webStorageService.createdByProps(),
         "id": [this.data ? this.data.id : 0],
-        "name": [this.data ? this.data.name :"",[Validators.required, Validators.pattern(this.validation.fullName)]],
-        "m_Name": [this.data ? this.data.m_Name:"", [Validators.required]],
-        "mobileNo": [this.data ? this.data.mobileNo : "",[Validators.required, Validators.pattern(this.validation.mobile_No)]],
-        "emailId": [this.data ? this.data.emailId :"", [Validators.required, Validators.pattern(this.validation.email)]],
-        "address": [this.data ? this.data.address:"",[Validators.required,Validators.maxLength(500)]],
-        "schoolId": [this.data ? this.data.schoolId:0, Validators.required],
-        "designationId": [this.data ? this.data.designationId : 0,  Validators.required],
-        "designationLevelId": [this.data ? this.data.designationLevelId : 0,  Validators.required],
-        "stateId": [this.data ? this.data.stateId: 0],
-        "districtId": [this.data ? this.data.districtId: 0,  Validators.required],
-        "talukaId": [this.data ? this.data.talukaId:0 ,  Validators.required],
-        "userTypeId": [this.data ? this.data.userTypeId:0],
-        "subUserTypeId": [this.data ? this.data.subUserTypeId:0],
-        "kendraMobileNo": [this.data ? this.data.kendraMobileNo:"", [Validators.required, Validators.pattern(this.validation.mobile_No)]],
-        "kendraEmailId": [this.data ? this.data.kendraEmailId:"", [Validators.required, Validators.pattern(this.validation.email)]],
-        "beoEmailId": [this.data ? this.data.beoEmailId:"" , [Validators.required, Validators.pattern(this.validation.email)]],
-        "beoMobileNo": [this.data ? this.data.beoMobileNo:"",[Validators.required, Validators.pattern(this.validation.mobile_No)]],  
-        "centerId": [this.data ? this.data.centerId:0, Validators.required],
-        "bitName": [this.data ? this.data.bitName:"",[Validators.required, Validators.pattern(this.validation.fullName)]],
-        "lan": [this.webStorageService.languageFlag]
-    })
-    this.data? console.log("edit : ",this.data,this.getLevelDrop(), this.getDistrictDrop(), this.getTalukaDrop(), this.getDesignationByLevelId()): ''
+        "name": [this.data ? this.data.officeName : "", [Validators.required, Validators.pattern(this.validation.fullName)]],
+        "m_Name": [this.data ? this.data.m_OfficeName : "", [Validators.required]],
+        "mobileNo": [this.data ? this.data.mobileNo : "", [Validators.required, Validators.pattern(this.validation.mobile_No)]],
+        "emailId": [this.data ? this.data.emailId : "", [Validators.required, Validators.pattern(this.validation.email)]],
+        "address": [this.data ? this.data.address : "", [Validators.maxLength(500)]],
+        "schoolId": [this.data ? this.data.schoolId : 0],
+        "designationId": [this.data ? this.data.designationId : 0],
+        "designationLevelId": [this.data ? this.data.designationLevelId : 0, Validators.required],
+        "stateId": [this.data ? 0 : 0],
+        "districtId": [this.data ? this.data.districtId : 0],
+        "talukaId": [this.data ? this.data.talukaId : 0],
+        "userTypeId": [this.data ? 0 : 0],
+        "subUserTypeId": [this.data ? 0 : 0],
+        "kendraMobileNo": [this.data ? this.data.kendraMobileNo : "", [Validators.pattern(this.validation.mobile_No)]],
+        "kendraEmailId": [this.data ? this.data.kendraEmailId : "", [Validators.pattern(this.validation.email)]],
+        "beoEmailId": [this.data ? this.data.beoEmailId : "", [Validators.pattern(this.validation.email)]],
+        "beoMobileNo": [this.data ? this.data.beoMobileNo : "", [Validators.pattern(this.validation.mobile_No)]],
+        "centerId": [''],
+        "bitName": [this.data ? this.data.bitName : "", [Validators.pattern(this.validation.fullName)]],
+        "lan": [this.webStorageService.languageFlag],
+      })
+    this.data ? console.log("edit : ", this.data, this.getLevelDrop(), this.getCenterDrop(), this.getDistrictDrop(), this.getTalukaDrop(), this.getDesignationByLevelId()) : ''
     // this.getDistrictDrop();
     // this.getTalukaDrop();
     // this.getDesignationByLevelId();
   }
 
-  get fc() { return this.officeForm.controls}
+  get fc() { return this.officeForm.controls }
 
-  getLevelDrop(){
+  getLevelDrop() {
     this.masterService.GetAllDesignationLevel(this.webStorageService.languageFlag).subscribe({
-      next: (resp: any)=>{
-        // console.log("level",resp);
+      next: (resp: any) => {
+        console.log("level",resp);
         resp.statusCode == "200" ? this.levels = resp.responseData : this.levels = [];
       },
-      error: ( error : any)=>{
-        console.log("error is :", error);  
+      error: (error: any) => {
+        console.log("error is :", error);
       }
     });
   }
 
-  onchangeLevel(event: any){
+  onchangeLevel(event: any) {
     console.log(event.value);
     this.designations = [];
     this.getDesignationByLevelId();
   }
 
-  getDesignationByLevelId(){
+  getDesignationByLevelId() {
     let levelId = this.officeForm.value.designationLevelId;
     // console.log(levelId);
     this.masterService.GetDesignationByLevelId(this.webStorageService.languageFlag, levelId).subscribe({
-      next: (resp: any)=>{
+      next: (resp: any) => {
         // console.log("designation : ",resp);
         resp.statusCode == "200" ? this.designations = resp.responseData : this.designations = [];
       },
-      error: ( error : any)=>{
-        console.log("error is getDesignationByLevelId:", error);  
-      }
-    }) 
-  }
-
-  getAllSchoolsByCenterId(){
-    let centerId = this.officeForm.value.centerId;
-    this.masterService.getAllSchoolsByCenterId(this.webStorageService.languageFlag, centerId).subscribe({
-      next: (resp: any)=>{
-        resp.statusCode == "200" ? (this.schools = resp.responseData ): this.schools = [];
-      },
-      error: ( error : any)=>{
-        console.log("error is :", error);  
-      }
-    });
-  }
-
-  getDistrictDrop(){
-    this.masterService.getAllDistrict(this.webStorageService.languageFlag).subscribe({
-      next: (resp: any)=>{
-        resp.statusCode == "200" ? this.districts = resp.responseData : this.districts = [];
-      },
-      error: ( error : any)=>{
-        console.log("error is :", error);  
-      }
-    });
-  }
-
-  getTalukaDrop(){
-    this.masterService.getAllTaluka(this.webStorageService.languageFlag).subscribe({
-      next: (resp: any)=>{
-        resp.statusCode == "200" ? (this.talukas = resp.responseData) : this.talukas = [];
-      },
-      error: ( error : any)=>{
-        console.log("error is :", error);  
-      }
-    });
-  }
-
-  getCenterDrop(){
-    // console.log(this.officeForm.value.designationId);
-    this.masterService.getAllCenter(this.webStorageService.languageFlag, this.officeForm.value.talukaId).subscribe({
-      next: (resp: any)=>{
-        resp.statusCode == "200" ? (this.centers = resp.responseData) : this.centers = [];
-      },
-      error: ( error : any)=>{
-        console.log("error is :", error);  
+      error: (error: any) => {
+        console.log("error is getDesignationByLevelId:", error);
       }
     })
   }
 
-  submitOfficeData(){
+  getAllSchoolsByCenterId() {
+    let centerId = this.officeForm.value.centerId;
+    this.masterService.getAllSchoolsByCenterId(this.webStorageService.languageFlag, centerId).subscribe({
+      next: (resp: any) => {
+        resp.statusCode == "200" ? (this.schools = resp.responseData) : this.schools = [];
+      },
+      error: (error: any) => {
+        console.log("error is :", error);
+      }
+    });
+  }
+
+  getDistrictDrop() {
+    this.masterService.getAllDistrict(this.webStorageService.languageFlag).subscribe({
+      next: (resp: any) => {
+        resp.statusCode == "200" ? this.districts = resp.responseData : this.districts = [];
+      },
+      error: (error: any) => {
+        console.log("error is :", error);
+      }
+    });
+  }
+
+  getTalukaDrop() {
+    this.masterService.getAllTaluka(this.webStorageService.languageFlag).subscribe({
+      next: (resp: any) => {
+        resp.statusCode == "200" ? (this.talukas = resp.responseData) : this.talukas = [];
+      },
+      error: (error: any) => {
+        console.log("error is :", error);
+      }
+    });
+  }
+
+  getCenterDrop() {
+    // console.log(this.officeForm.value.designationId);
+    this.masterService.getAllCenter(this.webStorageService.languageFlag, this.officeForm.value.talukaId).subscribe({
+      next: (resp: any) => {
+        resp.statusCode == "200" ? (this.centers = resp.responseData) : this.centers = [];
+        this.data ? (this.fc['centerId'].setValue(this.data.centerId)) : 0;
+      },
+      error: (error: any) => {
+        console.log("error is :", error);
+      }
+    })
+  }
+
+  submitOfficeData() {
     console.log("all data submitted:", this.officeForm.value);
-    if(!this.officeForm.valid){
+   
+    let formValue = this.officeForm.value;
+    formValue.designationLevelId == 6 ? formValue.districtId = 0 : formValue.districtId;
+    formValue.designationLevelId == 5 ? formValue.designationId = 0 : formValue.designationId;
+    formValue.designationLevelId == 6 ? formValue.centerId = 0 : formValue.centerId;
+
+    if (!this.officeForm.valid) {
       return
     }
-    else{
-      this.apiService.setHttp(this.data ? 'PUT': 'POST', this.data ? 'zp_osmanabad/Office/UpdateOffice': 'zp_osmanabad/Office/AddOffice', false, this.officeForm.value, false, 'baseUrl');
+    else {
+      this.apiService.setHttp(this.data ? 'PUT' : 'POST', this.data ? 'zp_osmanabad/Office/UpdateOffice' : 'zp_osmanabad/Office/AddOffice', false, this.officeForm.value, false, 'baseUrl');
       this.apiService.getHttp().subscribe({
         next: (res: any) => {
-         res.statusCode === "200" ? (this.commonService.snackBar(res.statusMessage, 0)):this.commonService.checkEmptyData(res.statusMessage) == false ? this.error.handelError(res.statusCode) : this.commonService.snackBar(res.statusMessage, 1);
+          res.statusCode === "200" ? (this.commonService.snackBar(res.statusMessage, 0)) : this.commonService.checkEmptyData(res.statusMessage) == false ? this.error.handelError(res.statusCode) : this.commonService.snackBar(res.statusMessage, 1);
           this.dialogRef.close('Yes');
         },
         error: ((error: any) => {
@@ -295,36 +302,88 @@ export class AddUpdateOfficeUsersComponent implements OnInit {
     }
   }
 
-  clearDropDown(label : string){
-    console.log("label : ",event);
-    
-    if(label == 'Level'){
+  // onchangeValidation(event: any, label: string) {
+  //   console.log("event, label", event.value, label);
+
+  //   if (event.value == 1 || event.value == 2 && label == 'Level') {
+  //     this.fc['districtId'].setValidators(Validators.required);
+  //     this.fc['districtId'].updateValueAndValidity();
+
+  //     this.fc['talukaId'].setValidators(Validators.required);
+  //     this.fc['talukaId'].updateValueAndValidity();
+
+  //     this.fc['designationId'].setValidators(Validators.required);
+  //     this.fc['designationId'].updateValueAndValidity();
+  //   }
+  //   else if (event.value == 5 && label == 'Level') {
+  //     this.fc['districtId'].setValidators(Validators.required);
+  //     this.fc['districtId'].updateValueAndValidity();
+
+  //     this.fc['talukaId'].setValidators(Validators.required);
+  //     this.fc['talukaId'].updateValueAndValidity();
+
+  //     this.fc['designationId'].setValidators(Validators.required);
+  //     this.fc['designationId'].updateValueAndValidity();
+
+  //     this.fc['bitName'].setValidators(Validators.required);
+  //     this.fc['bitName'].updateValueAndValidity();
+  //   }
+  //   else if (event.value == 6 || event.value == 7 && label == 'Level') {
+  //     this.fc['address'].setValidators(Validators.required);
+  //     this.fc['address'].updateValueAndValidity();
+  //   }
+  //   else if (event.value == 17 && label == 'Designation') {
+  //     this.fc['beoMobileNo'].setValidators(Validators.required);
+  //     this.fc['beoMobileNo'].updateValueAndValidity();
+
+  //     this.fc['beoEmailId'].setValidators(Validators.required);
+  //     this.fc['beoEmailId'].updateValueAndValidity();
+  //   }
+  //   else if (event.value == 20 && label == 'Designation') {
+  //     this.fc['centerId'].setValidators(Validators.required);
+  //     this.fc['centerId'].updateValueAndValidity();
+
+  //     // this.fc['schoolId'].setValidators(Validators.required);
+  //     // this.fc['schoolId'].updateValueAndValidity();
+
+  //     this.fc['kendraMobileNo'].setValidators(Validators.required);
+  //     this.fc['kendraMobileNo'].updateValueAndValidity();
+
+  //     this.fc['kendraEmailId'].setValidators(Validators.required);
+  //     this.fc['kendraEmailId'].updateValueAndValidity();
+  //   }
+  // }
+
+  clearDropDown(label: string) {
+    console.log("label : ");
+
+    if (label == 'Level') {
       this.fc['districtId'].setValue('');
       this.talukas = [];
       this.designations = [];
-      this.fc['name'].setValue('');
-      this.fc['m_Name'].setValue('');
-      this.fc['mobileNo'].setValue('');
-      this.fc['emailId'].setValue('');
+      // this.fc['name'].setValue('');
+      // this.fc['m_Name'].setValue('');
+      // this.fc['mobileNo'].setValue('');
+      // this.fc['emailId'].setValue('');
     }
-    else if(label == 'Taluka'){
+    else if (label == 'Taluka') {
       this.fc['designationId'].setValue('');
-      this.fc['name'].setValue('');
-      this.fc['m_Name'].setValue('');
-      this.fc['mobileNo'].setValue('');
-      this.fc['emailId'].setValue('');
+      // this.fc['name'].setValue('');
+      // this.fc['m_Name'].setValue('');
+      // this.fc['mobileNo'].setValue('');
+      // this.fc['emailId'].setValue('');
       this.fc['bitName'].setValue('');
     }
-    else if(label == 'Designation'){
-      this.fc['name'].setValue('');
-      this.fc['m_Name'].setValue('');
-      this.fc['mobileNo'].setValue('');
-      this.fc['emailId'].setValue('');
+    else if (label == 'Designation') {
+      // this.fc['name'].setValue('');
+      // this.fc['m_Name'].setValue('');
+      // this.fc['mobileNo'].setValue('');
+      // this.fc['emailId'].setValue('');
       this.fc['kendraMobileNo'].setValue('');
       this.fc['kendraEmailId'].setValue('');
       this.fc['centerId'].setValue('');
     }
-    else if(label == 'Kendra'){
+    else if (label == 'Kendra') {
       this.fc['schoolId'].setValue('');
       this.fc['name'].setValue('');
       this.fc['m_Name'].setValue('');
