@@ -32,7 +32,7 @@ export class TeacherRegistrationComponent {
   cardViewFlag: boolean = false;
 
   displayedheadersEnglish = ['#', 'Sr. No.', 'Teacher Name', 'Mobile No.', 'Email ID', 'Village', 'Taluka', 'action'];
-  displayedheadersMarathi = ['#', 'अनुक्रमांक', 'शिक्षकाचे नाव', 'मोबाईल क्र.', 'ई-मेल आयडी', 'गाव', 'तालुका', 'कृती'];
+  displayedheadersMarathi = ['#', 'अनुक्रमांक', 'शिक्षकाचे नाव', 'मोबाईल क्र.', 'एजन्सी ई-मेल आयडी ', 'गाव', 'तालुका', 'कृती'];
 
   @HostBinding('class') className = '';
   constructor(private dialog: MatDialog, private overlay: OverlayContainer, private apiService: ApiService, private errors: ErrorsService,
@@ -274,7 +274,7 @@ export class TeacherRegistrationComponent {
       headerImage: obj.uploadImage,
       header: this.webStorageS.languageFlag == 'EN' ? obj.name : obj.m_Name,
       subheader: this.webStorageS.languageFlag == 'EN' ? obj.gender : obj.m_Gender,
-      labelHeader: this.webStorageS.languageFlag == 'EN' ? ['Mobile No.', 'Email ID','Village', 'Taluka'] : ['मोबाईल क्र.', 'ई - मेल आयडी', 'गाव', 'तालुका'],
+      labelHeader: this.webStorageS.languageFlag == 'EN' ? ['Mobile No.', 'Email ID','Village', 'Taluka'] : ['मोबाईल क्र.', 'एजन्सी ई-मेल आयडी ', 'गाव', 'तालुका'],
       labelKey: this.webStorageS.languageFlag == 'EN' ? ['mobileNo', 'emailId', 'village', 'taluka']: ['mobileNo', 'emailId', 'village', 'taluka'],
       Obj: obj,
       chart: false
