@@ -188,7 +188,7 @@ export class DashboardComponent implements OnInit,AfterViewInit {
         opacity: 1
       },
       legend: {
-        position: "bottom",
+        position: "right",
       }
     };
     this.barchartOptions1 = {
@@ -226,7 +226,13 @@ export class DashboardComponent implements OnInit,AfterViewInit {
       ],
       xaxis: {
         labels: {
-          show: false,
+          show: true,
+          style: {
+            fontSize: '12px',
+            fontFamily: 'Helvetica, Arial, sans-serif',
+            fontWeight: 600,
+            cssClass: 'apexcharts-xaxis-label',
+        },
         },
         categories: [
         ]
@@ -366,7 +372,7 @@ export class DashboardComponent implements OnInit,AfterViewInit {
             arrayObjectData.push(subData);
           })
           this.barchartOptions1.series.push(arrayObjectData)
-          this.barchartOptions1.xaxis.categories.push(talukaSet);
+          this.barchartOptions1.xaxis.categories.push(...talukaSet);
           this.showBarChartS=true;
           console.log(this.barchartOptions1)
         }
