@@ -25,8 +25,8 @@ export class AgencyRegistrationComponent {
   totalCount: number = 0;
   tableDataArray = new Array();
   tableDatasize!: Number;
-  displayedheadersEnglish = ['Sr. No.', 'Agency Name', 'Agency Mobile No.', 'Email ID', 'Action'];
-  displayedheadersMarathi = ['अनुक्रमांक', 'एजन्सी नाव', 'एजन्सी मोबाईल क्र.', 'ई-मेल आयडी', 'कृती'];
+  displayedheadersEnglish = ['Sr. No.', 'Agency Name', 'Agency Mobile No.', 'Agency Email ID', 'Action'];
+  displayedheadersMarathi = ['अनुक्रमांक', 'एजन्सी नाव', 'एजन्सी मोबाईल क्र.', 'एजन्सी ई-मेल आयडी', 'कृती'];
   langTypeName: any;
 
   constructor(private dialog: MatDialog, private apiService: ApiService, private ngxSpinner: NgxSpinnerService,
