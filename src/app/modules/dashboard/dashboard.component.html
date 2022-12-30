@@ -166,8 +166,8 @@
                         </table>
                     </div>
                     <div class="row" *ngIf="showBarChartF">
-                        <div class="col-sm border-end" *ngFor="let bar of barchartOptions.series[0]; let i=index">
-                            <h6 class="small fw-bold text-center mb-0">{{this.barchartOptions.xaxis.categories[0][i]}} स्तर</h6>
+                        <div class="col-sm-3 border-end" *ngFor="let bar of barchartOptions.series[0]; let i=index">
+                            <h6 class="fw-bold text-center mb-0">{{this.barchartOptions.xaxis.categories[0][i]}} स्तर</h6>
                             <apx-chart [series]="bar" [chart]="barchartOptions.chart"
                                 [dataLabels]="barchartOptions.dataLabels" [plotOptions]="barchartOptions.plotOptions"
                                 [responsive]="barchartOptions.responsive" [xaxis]="barchartOptions.xaxis"

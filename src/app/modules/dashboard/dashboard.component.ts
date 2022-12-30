@@ -121,7 +121,7 @@ export class DashboardComponent implements OnInit,AfterViewInit {
       series:[],
       chart: {
         type: "bar",
-        height: 350,
+        height: 420,
         columnWidth: '50%',
         stacked: true,
         stackType: "100%",
@@ -135,8 +135,7 @@ export class DashboardComponent implements OnInit,AfterViewInit {
           options: {
             legend: {
               position: "bottom",
-              offsetX: -10,
-              offsetY: 0
+              colors: ['#005f57', '#327e78', '#4c8f89', '#669f9a', '#99bfbb'],
             }
           }
         }
@@ -169,9 +168,7 @@ export class DashboardComponent implements OnInit,AfterViewInit {
         opacity: 1
       },
       legend: {
-        position: "right",
-        offsetX: 0,
-        offsetY: 50
+        position: "bottom",
       }
     };
     this.barchartOptions1 = {
@@ -191,6 +188,7 @@ export class DashboardComponent implements OnInit,AfterViewInit {
           breakpoint: 480,
           options: {
             legend: {
+              colors: ['#005f57', '#327e78', '#4c8f89', '#669f9a', '#99bfbb'],
               position: "bottom",
               offsetX: -10,
               offsetY: 0
@@ -226,7 +224,11 @@ export class DashboardComponent implements OnInit,AfterViewInit {
         opacity: 1
       },
       legend: {
+<<<<<<< HEAD
         position: "top",
+=======
+        position: "bottom",
+>>>>>>> e1484e0dd4b14245ee7d5c7a8c8fba6e39ac14bb
         offsetX: 0,
         offsetY: 50
       }
