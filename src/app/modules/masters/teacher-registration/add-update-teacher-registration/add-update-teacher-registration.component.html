@@ -136,7 +136,7 @@
                             Permanent Address Is Required</mat-error> -->
                     </mat-form-field>
 
-                    <input type="checkbox" name="check" id="check1"  (change)="addSameAddress($event)"/>
+                    <input type="checkbox" name="check" id="check1" [checked]="checked" (change)="addSameAddress($event)"/>
                     <label for="check1">same as Current Address</label>
                 </div>
             </div>

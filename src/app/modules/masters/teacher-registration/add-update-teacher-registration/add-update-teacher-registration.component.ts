@@ -50,6 +50,7 @@ export class AddUpdateTeacherRegistrationComponent {
   districtArrayTeacherDeatails = new Array();
   talukaArrayTeacherDetails = new Array();
   img: boolean = false;
+  checked:boolean=false
 
   newAsssignClassArray = [
     { standardId: 1, checked: false },
@@ -68,7 +69,6 @@ export class AddUpdateTeacherRegistrationComponent {
 
   ngOnInit() {
     this.formData();
-
     (!this.data) ? this.getGender() : this.onEdit(this.data);
   }
   get f() {
@@ -225,9 +225,13 @@ export class AddUpdateTeacherRegistrationComponent {
   }
 
   addSameAddress(event:any){
-    console.log("event",event);
-   let sameAddress = this.teacherRegForm.value.currentAddress
-   this.f['permentAddress'].setValue(sameAddress);
+   this.checked=event.currentTarget.checked;
+    if(this.checked == true){
+      let sameAddress = this.teacherRegForm.value.currentAddress
+      this.f['permentAddress'].setValue(sameAddress);
+    }else{
+      this.f['permentAddress'].setValue('');
+    }   
   }
 
 
@@ -566,7 +570,7 @@ export class AddUpdateTeacherRegistrationComponent {
 
   onEdit(obj: any) {
     this.editFlag = true;
-    this.editObj = obj;
+    this.editObj = obj;  
     this.data.uploadImage ? this.teacherRegForm.value.uploadImage = obj.uploadImage : '';
     this.data.uploadImage ? this.showAddRemImg = true : this.showAddRemImg = false;
     this.assignClassArray = obj.assignTeacher;
@@ -576,6 +580,10 @@ export class AddUpdateTeacherRegistrationComponent {
           this.newAsssignClassArray[i].checked = true;
         }
       }
+    }
+    
+    if(obj.currentAddress == obj.permentAddress){
+      this.checked = true;
     }
     this.formData(); this.getGender();
   }

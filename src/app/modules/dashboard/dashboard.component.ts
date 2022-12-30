@@ -33,7 +33,7 @@ export class DashboardComponent implements OnInit,AfterViewInit {
   showBarChartS:boolean=false;
   tableDataTopPerformance=new Array();
   displayedheaders=new Array;
-  
+  graphSubjectData=new Array();
   get f() { return this.filterForm.controls }
   get fBgraph() { return this.filterFormForBarGraph.controls}
   constructor(public translate: TranslateService, private masterService: MasterService,
@@ -144,7 +144,7 @@ export class DashboardComponent implements OnInit,AfterViewInit {
       theme: {
         monochrome: {
           enabled: true,
-          color: '#CB4B4B',
+          color: '#039286',
           shadeTo: 'light',
           shadeIntensity: 0.65
         }
@@ -167,7 +167,19 @@ export class DashboardComponent implements OnInit,AfterViewInit {
         categories: [
         ]
       },
-
+      // tooltip: {
+      //   custom: function(series:any, seriesIndex:any, dataPointIndex:any, w :any) {
+      //     return (
+      //       '<div class="arrow_box">' +
+      //       "<span>" +
+      //       w.globals.labels[dataPointIndex] +
+      //       ": " +
+      //       series[seriesIndex][dataPointIndex] +
+      //       "</span>" +
+      //       "</div>"
+      //     );
+      //   }
+      // },
       yaxis: {
         show: false,
         showAlways: false,
@@ -206,7 +218,7 @@ export class DashboardComponent implements OnInit,AfterViewInit {
       theme: {
         monochrome: {
           enabled: true,
-          color: '#CB4B4B',
+          color: '#039286',
           shadeTo: 'light',
           shadeIntensity: 0.65
         }
@@ -226,12 +238,18 @@ export class DashboardComponent implements OnInit,AfterViewInit {
       ],
       xaxis: {
         labels: {
-          show: false,
+          show: true,
+          style: {
+            fontSize: '14px',
+            fontFamily: 'Noto Sans Devanagari, sans-serif',
+            fontWeight: 600,
+            cssClass: 'apexcharts-xaxis-label',
+        },
         },
         categories: [
         ]
       },
-
+      
       yaxis: {
         show: false,
         showAlways: false,
@@ -269,7 +287,7 @@ export class DashboardComponent implements OnInit,AfterViewInit {
     this.apiService.getHttp().subscribe({
       next: (res: any) => { 
         if (res.statusCode == "200") {
-          this.dashboardCountData.push(res.responseData);
+          this.dashboardCountData.push(res.responseData.responseData1);
           this.tableColumn=[{label:'एकूण संख्या', GroupId:0,  ischeckboxShow:false, status:false},{label:'१ली ते 2री',GroupId:1,  ischeckboxShow:true, status:true},{label:'3री ते ५वी',GroupId:2, ischeckboxShow:true, status:false},{label:'६वी ते ८वी',GroupId:3, ischeckboxShow:true, status:false},];
           this.checkData(this.tableColumn[1]);
           this.getPieChartData();
@@ -314,12 +332,12 @@ export class DashboardComponent implements OnInit,AfterViewInit {
         if (res.statusCode == "200") {
           this.barChartData=res.responseData.responseData1;
          const subjectSet = [...new Set(this.barChartData.map(sub => sub.m_SubjectName))];
+         this.graphSubjectData=subjectSet;
          this.barchartOptions.series=[];
          this.barchartOptions.xaxis.categories=[];
           let dataArray:any[]=[];
           subjectSet.map((x:any)=>{
             const  filterSubject=this.barChartData.filter((y:any)=> y.m_SubjectName==x);
-            console.log(filterSubject)
             let dataObjArray:any[]=[];
             filterSubject.map((z:any)=>{
               const subData = {
@@ -331,7 +349,8 @@ export class DashboardComponent implements OnInit,AfterViewInit {
              dataArray.push(dataObjArray);
            })
            this.barchartOptions.series.push(dataArray);
-           this.barchartOptions.xaxis.categories.push(subjectSet);
+           this.barchartOptions.xaxis.categories.push(...subjectSet);
+           console.log(this.barchartOptions)
             this.showBarChartF=true;
           } 
        
@@ -366,9 +385,8 @@ export class DashboardComponent implements OnInit,AfterViewInit {
             arrayObjectData.push(subData);
           })
           this.barchartOptions1.series.push(arrayObjectData)
-          this.barchartOptions1.xaxis.categories.push(talukaSet);
+          this.barchartOptions1.xaxis.categories.push(...talukaSet);
           this.showBarChartS=true;
-          console.log(this.barchartOptions1)
         }
 
       },
@@ -486,7 +504,6 @@ export class DashboardComponent implements OnInit,AfterViewInit {
       title: "Osmanabad_Dist",
       responsive: true
     });
-    console.log(this.graphInstance)
   }
 
 }
