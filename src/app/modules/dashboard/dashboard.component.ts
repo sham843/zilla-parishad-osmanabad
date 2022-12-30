@@ -444,6 +444,7 @@ export class DashboardComponent implements OnInit,AfterViewInit {
       title: "Osmanabad_Dist",
       responsive: true
     });
+    console.log(this.graphInstance)
   }
 
 }
