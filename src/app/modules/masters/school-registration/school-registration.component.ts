@@ -279,6 +279,8 @@ export class SchoolRegistrationComponent {
       this.districtId.reset();
       this.talukaId.reset();
       this.villageId.reset();
+      this.talukaArr = [];
+      this.villageArr = [];
       this.getTableData();
       this.pageNumber = 1;
     }

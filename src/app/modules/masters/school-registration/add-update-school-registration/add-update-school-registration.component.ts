@@ -110,6 +110,7 @@ export class AddUpdateSchoolRegistrationComponent {
   }
 
   getVillage() {
+    // debugger
     this.masterService.getAllVillage(this.webStorageS.languageFlag, this.schoolRegForm.value.talukaId).subscribe({
       next: (res: any) => {
         res.statusCode == 200 ? this.villageArr = res.responseData : this.villageArr = [];
@@ -264,10 +265,8 @@ export class AddUpdateSchoolRegistrationComponent {
     this.editFlag = false;
     if (dropdown == 'Taluka') {
       this.f['centerId'].setValue('');
-      this.villageArr = [];
-    }
-    else if (dropdown == 'Kendra') {
       this.f['villageId'].setValue('');
+      this.villageArr = [];
     }
     else if (dropdown == 'LowestClass') {
       this.f['highestClass'].setValue('');

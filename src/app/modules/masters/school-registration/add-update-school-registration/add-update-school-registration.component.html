@@ -47,7 +47,7 @@
                     <mat-form-field appearance="outline" class="w-100 ">
                         <mat-label>{{'Labels.kendra' | translate}}</mat-label>
                         <mat-select formControlName="centerId"
-                            (selectionChange)="clearDropdown('Kendra');">
+                           >
                             <mat-option *ngFor="let center of centerArr" [value]="center.id">
                                 {{webStorageS.getLangauge() == 'EN' ?
                                 center.center : center.m_Center}}
