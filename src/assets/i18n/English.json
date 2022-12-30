@@ -47,6 +47,7 @@
         "AddDesignation":"Add Designation",
         "SelectDesignation": "Select Designation",
         "RegisterDesignation":"Update Designation",
+        "registerDesignation":"Register Designation",
         "DesignationLevel":"Designation Level",
         "DesignationLevelReq":"Designation level is required",
         "DesignationType":"Designation Type",
