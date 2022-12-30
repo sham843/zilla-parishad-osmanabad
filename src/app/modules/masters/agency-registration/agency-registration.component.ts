@@ -8,6 +8,7 @@ import { DownloadPdfExcelService } from 'src/app/core/services/download-pdf-exce
 import { ErrorsService } from 'src/app/core/services/errors.service';
 import { ValidationService } from 'src/app/core/services/validation.service';
 import { WebStorageService } from 'src/app/core/services/web-storage.service';
+import { GlobalDetailComponent } from 'src/app/shared/components/global-detail/global-detail.component';
 import { GlobalDialogComponent } from 'src/app/shared/components/global-dialog/global-dialog.component';
 import { AddUpdateAgencyRegistrationComponent } from './add-update-agency-registration/add-update-agency-registration.component';
 
@@ -25,6 +26,7 @@ export class AgencyRegistrationComponent {
   totalCount: number = 0;
   tableDataArray = new Array();
   tableDatasize!: Number;
+  cardViewFlag: boolean = false;
   displayedheadersEnglish = ['Sr. No.', 'Agency Name', 'Agency Mobile No.', 'Email ID', 'Action'];
   displayedheadersMarathi = ['अनुक्रमांक', 'एजन्सी नाव', 'एजन्सी मोबाईल क्र.', 'ई-मेल आयडी', 'कृती'];
   langTypeName: any;
@@ -224,5 +226,64 @@ export class AgencyRegistrationComponent {
       result == 'yes' ? this.deleteAgencyRow(_obj) : '';
     });
   }
+
+  childGridCompInfo(obj: any) {
+    switch (obj.label) {
+      case 'Pagination':
+        this.pageNumber = obj.pageNumber;
+        console.log(this.pageNumber);
+        
+        this.getTableData();
+        // this.selectGrid('Card');
+        break;
+      case 'Edit':
+        this.addUpdateAgency(obj);
+        break;
+      case 'Delete':
+        this.deleteAgency(obj);
+        break;
+      case 'View':
+        this.openDetailsDialog(obj);
+      break;
+    }
+  }
+
+  openDetailsDialog(obj:any){
+    console.log(obj);
+    var data = {
+      headerImage: obj.documentResponse[0].docPath,
+      header: this.webStroageService.languageFlag == 'EN' ? obj.fullName : obj.m_FullName,
+      subheader: this.webStroageService.languageFlag == 'EN' ? obj.gender : obj.m_Gender,
+      labelHeader: this.webStroageService.languageFlag == 'EN' ? ['Father Name', 'Parent Mobile No.','Aadhar No.','Standard','School Name'] : ['वडीलांचे नावं', 'पालक मोबाईल क्र.','आधार क्र.','इयत्ता','शाळेचे नाव'],
+      labelKey: this.webStroageService.languageFlag == 'EN' ? ['fatherFullName', 'parentMobileNo', 'aadharNo','standard','schoolName'] : ['m_FatherFullName', 'parentMobileNo','aadharNo','standard','m_SchoolName'],
+      Obj: obj,
+      chart: false
+    }
+    const viewDialogRef = this.dialog.open(GlobalDetailComponent, {
+      width: '900px',
+      height: '650px',
+      data: data,
+      disableClose: true,
+      autoFocus: false
+    });
+    viewDialogRef.afterClosed().subscribe((result: any) => {
+     if (result == 'yes') {
+      this.getTableData();
+      }
+      
+    });
+}
+
+selectGrid(label: string) {
+  if (label == 'Table') {
+    this.cardViewFlag = false;
+    this.pageNumber = 1;
+  } else if (label == 'Card') {
+    this.cardViewFlag = true;
+    this.pageNumber = 1;
+    // this.cardCurrentPage = this.cardCurrentPage;
+  }
+  this.getTableData();
+}
 }
 

@@ -13,13 +13,13 @@
         {{'Labels.AgencyList' | translate}}
       </div>
       <div class="d-flex align-items-center justify-content-end gap-2">
-        <button mat-flat-button class="btn-main btn-icon">
+        <button mat-flat-button class="btn-main btn-icon" (click)="selectGrid('Table')">
           <mat-icon>
             table_view
           </mat-icon>
         </button>
 
-        <button mat-flat-button class="btn-second btn-icon">
+        <button mat-flat-button class="btn-second btn-icon" (click)="selectGrid('Card')">
           <mat-icon>
             grid_view
           </mat-icon>
@@ -71,6 +71,12 @@
     </mat-card-header>
   </form>
   <mat-card-content class="card-body pt-0">
+  <ng-container *ngIf="!cardViewFlag">
     <app-table (recObjToChild)="childCompInfo($event)"></app-table>
+  </ng-container>
+
+    <ng-container *ngIf="cardViewFlag">
+      <app-grid-view (gridToChild)="childGridCompInfo($event)"></app-grid-view>
+    </ng-container>
   </mat-card-content>
 </mat-card>
