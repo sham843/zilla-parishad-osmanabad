@@ -40,7 +40,7 @@ export class DashboardComponent implements OnInit,AfterViewInit {
     public webStorage: WebStorageService, private fb: FormBuilder, private apiService:ApiService,
     private error:ErrorsService, private commonMethods:CommonMethodsService) {
     this.getBarChartOption();
-    this.getChart();
+    this.getPieChart();
   }
   
   ngOnInit() {
@@ -55,8 +55,6 @@ export class DashboardComponent implements OnInit,AfterViewInit {
       filtersubjectId: []
     })
     this.getTalukas();
-    // this.getCenters();
-    // this.getschools();
     this.getdashboardCount();
     this.getTabledataByTaluka()
   }
@@ -69,13 +67,17 @@ export class DashboardComponent implements OnInit,AfterViewInit {
     })
   }
   getTalukas() {
+    this.talukaData=[];
     this.masterService.getAllTaluka().subscribe((res: any) => {
-      this.talukaData = res.responseData;
+      this.talukaData.push({ "id": 0, "taluka": "All", "m_Taluka": "सर्व"}, ...res.responseData);
+      this.f['talukaId'].patchValue(0);
     })
   }
   getCenters() {
+    this.centerData=[];
     this.masterService.getAllCenter('', (this.f['talukaId'].value|0)).subscribe((res: any) => {
-      this.centerData = res.responseData;
+      this.centerData.push({ "id": 0, "center": "All", "m_Center": "सर्व"}, ...res.responseData);
+      this.f['centerId'].patchValue(0);
     })
   }
   getschools() {
@@ -90,13 +92,26 @@ export class DashboardComponent implements OnInit,AfterViewInit {
       this.fBgraph['filtersubjectId'].patchValue(this.subjectData[0].id)
     })
   }
-  getChart() {
+  getPieChart() {
     this.piechartOptions = {
-      series: [44, 55, 13, 43, 22],
+      series: [],
       chart: {
         type: "donut"
       },
-      labels: ["Team A", "Team B", "Team C", "Team D", "Team E"],
+      theme: {
+        monochrome: {
+          enabled: true,
+          color: '#039286',
+          shadeTo: 'light',
+          shadeIntensity: 0.65
+        }
+      },
+      fill: {
+        type: "solid",
+        //colors: ["#00E396", "#F9CE1D", "#D4526E", "#D7263D", "#A300D6"]
+      },
+      // colors: [],
+       labels: [],
       responsive: [
         {
           breakpoint: 480,
@@ -104,6 +119,7 @@ export class DashboardComponent implements OnInit,AfterViewInit {
             chart: {
               width: 200
             },
+           
             legend: {
               position: "bottom"
             }
@@ -125,13 +141,21 @@ export class DashboardComponent implements OnInit,AfterViewInit {
           show: false
         },
       },
+      theme: {
+        monochrome: {
+          enabled: true,
+          color: '#CB4B4B',
+          shadeTo: 'light',
+          shadeIntensity: 0.65
+        }
+      },
       responsive: [
         {
           breakpoint: 480,
           options: {
             legend: {
               position: "bottom",
-              colors: ['#005f57', '#327e78', '#4c8f89', '#669f9a', '#99bfbb'],
+              // colors: [],
             }
           }
         }
@@ -160,7 +184,7 @@ export class DashboardComponent implements OnInit,AfterViewInit {
 
       },
       fill: {
-        colors: ['#005f57', '#327e78', '#4c8f89', '#669f9a', '#99bfbb'],
+        // colors: [],
         opacity: 1
       },
       legend: {
@@ -179,12 +203,20 @@ export class DashboardComponent implements OnInit,AfterViewInit {
           show: false
         },
       },
+      theme: {
+        monochrome: {
+          enabled: true,
+          color: '#CB4B4B',
+          shadeTo: 'light',
+          shadeIntensity: 0.65
+        }
+      },
       responsive: [
         {
           breakpoint: 480,
           options: {
             legend: {
-              colors: ['#005f57', '#327e78', '#4c8f89', '#669f9a', '#99bfbb'],
+              // colors: ['#CB4B4B', '#E76A63', '#E98754', '#EFB45B', '#65C889'],
               position: "bottom",
               offsetX: -10,
               offsetY: 0
@@ -216,7 +248,7 @@ export class DashboardComponent implements OnInit,AfterViewInit {
 
       },
       fill: {
-        colors: ['#005f57', '#327e78', '#4c8f89', '#669f9a', '#99bfbb'],
+        // colors: ['#CB4B4B', '#E76A63', '#E98754', '#EFB45B', '#65C889'],
         opacity: 1
       },
       legend: {
@@ -226,7 +258,11 @@ export class DashboardComponent implements OnInit,AfterViewInit {
       }
     };
   }
-
+  dashboardAPis(){
+     this.getbarChartByTaluka();
+     this.getdashboardCount();
+  }
+  
   getdashboardCount(){
     const formData= this.filterForm.value;
     this.apiService.setHttp('GET', 'zp-osmanabad/Dashboard/GetDashboardCount?TalukaId='+(formData?.talukaId ||0)+'&CenterId='+(formData?.centerId ||0)+'&SchoolId='+(formData?.schoolId ||0), false, false, false, 'baseUrl');
@@ -262,8 +298,10 @@ export class DashboardComponent implements OnInit,AfterViewInit {
     serriesArray[0]= this.dashboardCountData[0].govtSchool|0;
     serriesArray[1]= this.dashboardCountData[0].privateSchool|0;
     serriesArray[2]= this.dashboardCountData[0].otherSchool|0;
+    this.piechartOptions.colors=[];
     this.piechartOptions.series = serriesArray;
     this.piechartOptions.labels=['Goverment','Private','Other'];
+    // this.piechartOptions.colors=['#CB4B4B', '#E76A63', '#E98754', '#EFB45B', '#65C889'];
   }
 
   getBarChart(obj:any){
@@ -275,11 +313,13 @@ export class DashboardComponent implements OnInit,AfterViewInit {
       next: (res: any) => { 
         if (res.statusCode == "200") {
           this.barChartData=res.responseData.responseData1;
-         const subjectSet = [...new Set(this.barChartData.map(sub => sub.subjectName))];
+         const subjectSet = [...new Set(this.barChartData.map(sub => sub.m_SubjectName))];
          this.barchartOptions.series=[];
+         this.barchartOptions.xaxis.categories=[];
           let dataArray:any[]=[];
           subjectSet.map((x:any)=>{
-            const  filterSubject=this.barChartData.filter((y:any)=> y.subjectName==x);
+            const  filterSubject=this.barChartData.filter((y:any)=> y.m_SubjectName==x);
+            console.log(filterSubject)
             let dataObjArray:any[]=[];
             filterSubject.map((z:any)=>{
               const subData = {
@@ -313,7 +353,8 @@ export class DashboardComponent implements OnInit,AfterViewInit {
           this.barChartByTalukaData = res.responseData.responseData1;
           this.barchartOptions1.series=[];
           this.barchartOptions1.xaxis.categories=[];
-          const talukaSet = [...new Set(this.barChartByTalukaData.map(sub => TalukaId  ? sub.center : sub.taluka))];
+          let talukaSet:any=[]; 
+          talukaSet = [...new Set(this.barChartByTalukaData.map(sub => TalukaId  ? sub.center : sub.taluka))];
           const subjectSet = [...new Set(this.barChartByTalukaData.map(sub => sub.m_OptionName))];
           let arrayObjectData:any[]=[];
           subjectSet.map((x: any) => {
@@ -333,6 +374,7 @@ export class DashboardComponent implements OnInit,AfterViewInit {
       },
       error: (error:any) => { this.error.handelError(error.message) }
     });
+    this.getTabledataByTaluka();
   }
 
   getTabledataByTaluka(){

@@ -175,7 +175,7 @@ export class StudentRegistrationComponent {
       autoFocus: false
     });
     dialogRef.afterClosed().subscribe((result: any) => {
-      obj = JSON.parse(obj)
+      obj = obj ?  JSON.parse(obj) :''
       if (result == 'yes' && obj) {
         this.pageNumber = obj.pageNumber;
         this.getTableData();

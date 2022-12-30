@@ -188,7 +188,25 @@ export class SchoolRegistrationComponent {
         this.getTableData();
         break;
       case 'Edit' || 'Delete':
-        this.addUpdateAgency(obj);
+        this.addUpdateSchool(obj);
+        break;
+      case 'Delete':
+        this.globalDialogOpen(obj);
+        break;
+      case 'View':
+        this.openDetailsDialog(obj);
+        break;
+    }
+  }
+
+  childGridInfo(obj: any) {
+    switch (obj.label) {
+      case 'Pagination':
+        this.pageNumber = obj.pageNumber;
+        this.getTableData();
+        break;
+      case 'Edit' || 'Delete':
+        this.addUpdateSchool(obj);
         break;
       case 'Delete':
         this.globalDialogOpen(obj);
@@ -200,7 +218,7 @@ export class SchoolRegistrationComponent {
   }
 
   //#region ------------------------------------------- Open Dialog Box Function start here ----------------------------------------// 
-  addUpdateAgency(obj?: any) {
+  addUpdateSchool(obj?: any) {
     const dialogRef = this.dialog.open(AddUpdateSchoolRegistrationComponent, {
       width: '820px',
       data: obj,
@@ -229,7 +247,6 @@ export class SchoolRegistrationComponent {
       cancelButton: this.webStorageS.languageFlag == 'EN' ? 'Cancel' : 'रद्द करा',
       okButton: this.webStorageS.languageFlag == 'EN' ? 'Ok' : 'ओके'
     }
-
     const deleteDialogRef = this.dialog.open(GlobalDialogComponent, {
       width: '320px',
       data: dialoObj,
@@ -248,8 +265,8 @@ export class SchoolRegistrationComponent {
     var data = {
       headerImage: obj.uploadImage,
       header: this.webStorageS.languageFlag == 'EN' ? obj.schoolName : obj.m_SchoolName,
-      labelHeader: this.webStorageS.languageFlag == 'EN' ? ['Kendra Name', 'Taluka','District'] : ['केंद्राचे नाव', 'तालुका', 'जिल्हा', 'सर्वात खालचा वर्ग', 'सर्वोच्च वर्ग'],
-      labelKey: this.webStorageS.languageFlag == 'EN' ? ['center','taluka', 'district'] : ['m_Center', 'm_Taluka','m_District', 'lowestClass', 'highestClass'],
+      labelHeader: this.webStorageS.languageFlag == 'EN' ? ['Kendra Name', 'Taluka','District','Lowest Class', 'HighestClass'] : ['केंद्राचे नाव', 'तालुका', 'जिल्हा', 'सर्वात खालचा वर्ग', 'सर्वोच्च वर्ग'],
+      labelKey: this.webStorageS.languageFlag == 'EN' ? ['center','taluka', 'district','lowestClass','highestClass'] : ['m_Center', 'm_Taluka','m_District', 'lowestClass', 'highestClass'],
       Obj: obj,
       chart: false
     }
@@ -322,11 +339,17 @@ export class SchoolRegistrationComponent {
       this.cardViewFlag = false;
       this.pageNumber = 1;
       this.cardCurrentPage = 0;
-
       this.getTableData();
     } else if (label == 'Card')
       this.cardViewFlag = true;
     this.getTableData();
+  }
+
+  clearDropdown(dropdown: string) {
+    if (dropdown == 'Taluka') {
+      this.villageId.reset();
+      this.villageArr = [];
+    }
   }
 
   

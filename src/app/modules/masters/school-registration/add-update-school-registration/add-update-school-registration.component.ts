@@ -29,7 +29,7 @@ export class AddUpdateSchoolRegistrationComponent {
   schoolRegForm !: FormGroup;
   uploadImg: any;
   editFlag: boolean = false;
-  img : boolean = false;
+  img: boolean = false;
 
   constructor(private masterService: MasterService, private errors: ErrorsService, private fb: FormBuilder, private fileUpload: FileUploadService,
     private apiService: ApiService, private commonMethod: CommonMethodsService, @Inject(MAT_DIALOG_DATA) public data: any,
@@ -70,7 +70,7 @@ export class AddUpdateSchoolRegistrationComponent {
       "lan": "EN",
       "localID": 0,
       "lowestClass": ['', Validators.required],
-      "highestClass":['', Validators.required],
+      "highestClass": ['', Validators.required],
       "timesStamp": new Date(),
       "uploadImage": [''],
       ...this.webStorageS.createdByProps()
@@ -151,28 +151,28 @@ export class AddUpdateSchoolRegistrationComponent {
   }
 
   getLowestGroupClass() {
-    this.lowestGroupclassArr=[
-      {lowestClass : 1 ,value : 1},
-      {lowestClass : 2 ,value : 2},
-      {lowestClass : 3 ,value : 3},
-      {lowestClass : 4 ,value : 4},
-      {lowestClass : 5 ,value : 5},
-      {lowestClass : 6 ,value : 6},
-      {lowestClass : 7 ,value : 7},
+    this.lowestGroupclassArr = [
+      { lowestClass: 1, value: 1 },
+      { lowestClass: 2, value: 2 },
+      { lowestClass: 3, value: 3 },
+      { lowestClass: 4, value: 4 },
+      { lowestClass: 5, value: 5 },
+      { lowestClass: 6, value: 6 },
+      { lowestClass: 7, value: 7 },
     ]
     this.editFlag ? (this.f['lowestClass'].setValue(this.data.lowestClass), this.getHighestGroupClass()) : '';
   }
 
-  getHighestGroupClass(){
+  getHighestGroupClass() {
     this.f['highestClass'].setValue('');
     let lowestClass = this.schoolRegForm.value.lowestClass;
 
-      let findObj = this.lowestGroupclassArr.filter((res:any)=>{
-       return res.lowestClass >= lowestClass 
-      })
-      this.highestGroupclassArr=findObj;     
-      
-      this.editFlag ? this.f['highestClass'].setValue(this.data.highestClass) : '';
+    let findObj = this.lowestGroupclassArr.filter((res: any) => {
+      return res.lowestClass >= lowestClass
+    })
+    this.highestGroupclassArr = findObj;
+
+    this.editFlag ? this.f['highestClass'].setValue(this.data.highestClass) : '';
   }
   //#endregion ------------------------------------------- School Registration Dropdown end here ----------------------------------------// 
 
@@ -203,13 +203,13 @@ export class AddUpdateSchoolRegistrationComponent {
   //#region ------------------------------------------------- Add/Update Record start here --------------------------------------------//
   onSubmit() {
     let formValue = this.schoolRegForm.value;
-    
+
     formValue.uploadImage ? formValue.uploadImage = this.uploadImg : '';
-    if(this.editFlag == true){
-      if(this.data.uploadImage){
-        this.img ? formValue.uploadImage = this.uploadImg  : formValue.uploadImage = this.data.uploadImage 
-      } 
-      else{
+    if (this.editFlag == true) {
+      if (this.data.uploadImage) {
+        this.img ? formValue.uploadImage = this.uploadImg : formValue.uploadImage = this.data.uploadImage
+      }
+      else {
         formValue.uploadImage = this.schoolRegForm.value.uploadImage;
       }
     }
@@ -226,13 +226,8 @@ export class AddUpdateSchoolRegistrationComponent {
       this.apiService.getHttp().subscribe({
         next: (res: any) => {
           this.ngxSpinner.hide();
-          if (res.statusCode == 200) {
-            this.editFlag ? this.commonMethod.snackBar("Record Update Successfully", 0) : this.commonMethod.snackBar("Record Added Successfully", 0);
-            this.dialogRef.close('yes');
-          }
-          else {
-            this.commonMethod.checkEmptyData(res.statusMessage) == false ? this.errors.handelError(res.statusCode) : this.commonMethod.snackBar(res.statusMessage, 1);
-          }
+          res.statusCode === 200 ? (this.commonMethod.snackBar(res.statusMessage, 0)) : this.commonMethod.checkEmptyData(res.statusMessage) == false ? this.errors.handelError(res.statusCode) : this.commonMethod.snackBar(res.statusMessage, 0);
+          this.dialogRef.close('yes');
         },
         error: ((err: any) => {
           this.ngxSpinner.hide();
