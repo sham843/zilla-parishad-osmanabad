@@ -40,7 +40,7 @@ export class DashboardComponent implements OnInit,AfterViewInit {
     public webStorage: WebStorageService, private fb: FormBuilder, private apiService:ApiService,
     private error:ErrorsService, private commonMethods:CommonMethodsService) {
     this.getBarChartOption();
-    this.getChart();
+    this.getPieChart();
   }
   
   ngOnInit() {
@@ -55,8 +55,6 @@ export class DashboardComponent implements OnInit,AfterViewInit {
       filtersubjectId: []
     })
     this.getTalukas();
-    // this.getCenters();
-    // this.getschools();
     this.getdashboardCount();
     this.getTabledataByTaluka()
   }
@@ -94,7 +92,7 @@ export class DashboardComponent implements OnInit,AfterViewInit {
       this.fBgraph['filtersubjectId'].patchValue(this.subjectData[0].id)
     })
   }
-  getChart() {
+  getPieChart() {
     this.piechartOptions = {
       series: [44, 55, 13, 43, 22],
       chart: {
@@ -323,7 +321,8 @@ export class DashboardComponent implements OnInit,AfterViewInit {
           this.barChartByTalukaData = res.responseData.responseData1;
           this.barchartOptions1.series=[];
           this.barchartOptions1.xaxis.categories=[];
-          const talukaSet = [...new Set(this.barChartByTalukaData.map(sub => TalukaId  ? sub.center : sub.taluka))];
+          let talukaSet:any=[]; 
+          talukaSet = [...new Set(this.barChartByTalukaData.map(sub => TalukaId  ? sub.center : sub.taluka))];
           const subjectSet = [...new Set(this.barChartByTalukaData.map(sub => sub.m_OptionName))];
           let arrayObjectData:any[]=[];
           subjectSet.map((x: any) => {
