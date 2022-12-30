@@ -17,13 +17,13 @@
         </mat-card-header>
         <mat-card-content>
           <div class="text-center mb-3">
-            <img src="{{tData['docPath'] ? tData['docPath'] : 'assets/images/user.jpg'}}" alt="" height="60px">
+            <img src="{{tData['docPath'] || tData['uploadImage'] || 'assets/images/user.jpg'}}" alt="" height="60px">
           </div>
           <div class="row" *ngFor="let columns of displayedColumns; let j=index">
-            <div class="col-sm  form-label" *ngIf="'srNo' != columns && 'docPath' != columns && 'action' != columns">
+            <div class="col-sm  form-label" *ngIf=" '#' != columns && 'srNo' != columns && 'docPath' != columns && 'uploadImage' != columns && 'action' != columns">
               {{tableHeaders[j]}}
             </div>
-            <div class=" col-sm  form-deta" *ngIf="'srNo' != columns && 'docPath' != columns && 'action' != columns">
+            <div class=" col-sm  form-deta" *ngIf="'srNo' != columns && 'docPath' != columns && 'uploadImage' != columns && 'action' != columns">
               {{tData[columns]}}
             </div>
             <div class="text-center mb-3"*ngIf="'action' == columns">
