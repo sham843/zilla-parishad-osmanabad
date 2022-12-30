@@ -56,6 +56,7 @@
         "AddDesignation(Marathi)":"Designation (Marathi)",
         "DesignationTypeMarathiReq":"Designation (Marathi) is required",
         "searchbyNameContactEmail" :"Agency Name/Mobile No./Email ID",
+        "searchbyNameContactEmailTeacher" :"Teacher Name/Mobile No./Email ID",
         "schoolRegistration" : "School Registration",
         "registerSchool" : "School Registration ",
         "updateSchool" : "Update School Details",
