@@ -139,7 +139,7 @@
                 <div class="col-sm-4 ">
                     <div class="d-flex justify-content-between align-items-center">
                         <div class="upload-btn-wrapper">
-                            <button class="upload-btn" type="button" (click)="uploadImage.click()">Upload Student Photo</button>
+                            <button class="upload-btn" type="button" (click)="uploadImage.click()">{{'Labels.uploadPhoto' | translate}}</button>
                             <input type="file" name="myfile" [disabled]="uploadImg" (change)="fileUpload($event,'img')" #uploadImage/>
                         </div>
                         <div class="action-btn" *ngIf="uploadImg">
@@ -213,7 +213,7 @@
                 <div class="col-sm-4">
                     <div class="d-flex justify-content-between align-items-center">
                         <div class="upload-btn-wrapper">
-                            <button class="upload-btn" type="button"  (click)="uploadAadhar.click()">Upload Aadhar photo</button>
+                            <button class="upload-btn" type="button"  (click)="uploadAadhar.click()">{{'Labels.aadhaarPhoto' | translate}}</button>
                             <input type="file" name="myfile" [disabled]="uploadAadhaar" (change)="fileUpload($event,'aadhar')" #uploadAadhar/>
                         </div>
                         <div class="action-btn" *ngIf="uploadAadhaar">
