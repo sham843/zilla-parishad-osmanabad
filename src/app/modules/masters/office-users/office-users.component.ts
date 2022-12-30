@@ -7,6 +7,7 @@ import { CommonMethodsService } from 'src/app/core/services/common-methods.servi
 import { DownloadPdfExcelService } from 'src/app/core/services/download-pdf-excel.service';
 import { ErrorsService } from 'src/app/core/services/errors.service';
 import { WebStorageService } from 'src/app/core/services/web-storage.service';
+import { GlobalDetailComponent } from 'src/app/shared/components/global-detail/global-detail.component';
 import { GlobalDialogComponent } from 'src/app/shared/components/global-dialog/global-dialog.component';
 import { AddUpdateOfficeUsersComponent } from './add-update-office-users/add-update-office-users.component';
 
@@ -16,7 +17,7 @@ import { AddUpdateOfficeUsersComponent } from './add-update-office-users/add-upd
   styleUrls: ['./office-users.component.scss']
 })
 export class OfficeUsersComponent {
-
+  cardViewFlag: boolean = false;
   pageNumber: number = 1;
   resultDownloadArr = new Array();
   totalCount: number = 0;
@@ -219,4 +220,64 @@ export class OfficeUsersComponent {
     this.getTableData();
     // this.getofficeReport();
   }
+
+  selectGrid(label: string) {
+    if (label == 'Table') {
+      this.cardViewFlag = false;
+      this.pageNumber = 1;
+    } else if (label == 'Card') {
+      this.cardViewFlag = true;
+      this.pageNumber = 1;
+      // this.cardCurrentPage = this.cardCurrentPage;
+    }
+    this.getTableData();
+  }
+
+  childGridCompInfo(obj: any) {
+    switch (obj.label) {
+      case 'Pagination':
+        this.pageNumber = obj.pageNumber;
+        console.log(this.pageNumber);
+        
+        this.getTableData();
+        // this.selectGrid('Card');
+        break;
+      case 'Edit':
+        this.addUpdateOffice(obj);
+        break;
+      case 'Delete':
+        this.openDeleteDialog(obj);
+        break;
+      case 'View':
+        this.openDetailsDialog(obj);
+      break;
+    }
+  }
+
+  openDetailsDialog(obj:any){
+    console.log(obj);
+    var data = {
+      headerImage: obj.documentResponse[0].docPath,
+      header: this.webStorageService.languageFlag == 'EN' ? obj.fullName : obj.m_FullName,
+      subheader: this.webStorageService.languageFlag == 'EN' ? obj.gender : obj.m_Gender,
+      labelHeader: this.webStorageService.languageFlag == 'EN' ? ['Father Name', 'Parent Mobile No.','Aadhar No.','Standard','School Name'] : ['वडीलांचे नावं', 'पालक मोबाईल क्र.','आधार क्र.','इयत्ता','शाळेचे नाव'],
+      labelKey: this.webStorageService.languageFlag == 'EN' ? ['fatherFullName', 'parentMobileNo', 'aadharNo','standard','schoolName'] : ['m_FatherFullName', 'parentMobileNo','aadharNo','standard','m_SchoolName'],
+      Obj: obj,
+      chart: false
+    }
+    const viewDialogRef = this.dialog.open(GlobalDetailComponent, {
+      width: '900px',
+      height: '650px',
+      data: data,
+      disableClose: true,
+      autoFocus: false
+    });
+    viewDialogRef.afterClosed().subscribe((result: any) => {
+     if (result == 'yes') {
+      this.getTableData();
+      }
+      
+    });
+}
+
 }

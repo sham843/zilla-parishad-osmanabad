@@ -13,13 +13,13 @@
         {{'Labels.officeUser' | translate}}
       </div>
       <div class="d-flex gap-2">
-        <button mat-flat-button class="btn-main btn-icon" title="Table View">
+        <button mat-flat-button class="btn-main btn-icon" title="Table View" (click)="selectGrid('Table')">
           <mat-icon>
             table_view
           </mat-icon>
         </button>
 
-        <button mat-flat-button class="btn-second btn-icon" title="Card View">
+        <button mat-flat-button class="btn-second btn-icon" title="Card View" (click)="selectGrid('Card')">
           <mat-icon>
             grid_view
           </mat-icon>
@@ -55,6 +55,12 @@
     </div>
   </mat-card-header>
   <mat-card-content class="card-body pt-0">
-    <app-table (recObjToChild)="childCompInfo($event)"></app-table>
+    <ng-container *ngIf="!cardViewFlag">
+      <app-table (recObjToChild)="childCompInfo($event)"></app-table>
+    </ng-container>
+  
+      <ng-container *ngIf="cardViewFlag">
+        <app-grid-view (gridToChild)="childGridCompInfo($event)"></app-grid-view>
+      </ng-container>
   </mat-card-content>
 </mat-card>
