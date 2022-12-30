@@ -168,7 +168,7 @@
                         <mat-select formControlName="clusterId" (selectionChange)="getAllSchool()">
                             <mat-option *ngFor="let cluster of clusterArray"                            
                             [value]="cluster.id">{{webStorageS.getLangauge() == 'EN' ?
-                            cluster.taluka : cluster.m_Center}}</mat-option>                          
+                            cluster.center : cluster.m_Center}}</mat-option>                          
                         </mat-select>
                         <!-- <mat-error *ngIf="td['clusterId'].hasError('required')">Cluster Is Required</mat-error>                        -->
                     </mat-form-field>
@@ -220,7 +220,7 @@
                 <div class="col-sm-4">
                     <mat-form-field appearance="outline" class="w-100 ">
                         <mat-label>{{'Labels.caste'| translate}}</mat-label>
-                        <mat-select formControlName="castId" (selectionChange)="changeValidators($event)" >
+                        <mat-select formControlName="castId" (selectionChange)="castvalidation($event)" >
                             <mat-option *ngFor="let caste of casteArray"
                             [value]="caste.id">{{caste.caste}}</mat-option>                        
                         </mat-select>

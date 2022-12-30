@@ -10,6 +10,7 @@ import { CommonMethodsService } from 'src/app/core/services/common-methods.servi
 import { WebStorageService } from 'src/app/core/services/web-storage.service';
 import { DownloadPdfExcelService } from 'src/app/core/services/download-pdf-excel.service';
 import { GlobalDetailComponent } from 'src/app/shared/components/global-detail/global-detail.component';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-school-registration',
@@ -42,7 +43,8 @@ export class SchoolRegistrationComponent {
 
   constructor(private dialog: MatDialog, private apiService: ApiService, private errors: ErrorsService,
     private masterService: MasterService, private commonMethodS: CommonMethodsService, public webStorageS: WebStorageService,
-    private downloadFileService: DownloadPdfExcelService) { }
+    private downloadFileService: DownloadPdfExcelService,private ngxSpinner: NgxSpinnerService,
+    ) { }
 
   ngOnInit() {
     this.getTableData();
@@ -88,68 +90,60 @@ export class SchoolRegistrationComponent {
     let reportStr = `?pageno=1&pagesize=` + (this.totalCount * 10) + `&DistrictId=${this.districtId.value ? this.districtId.value : 0}
     &TalukaId=${this.talukaId.value ? this.talukaId.value : 0}&VillageId=${this.villageId.value ? this.villageId.value : 0}&lan=${this.webStorageS.languageFlag}`;
 
-    this.apiService.setHttp('GET', 'ZP-Osmanabad/School/GetAll' + (flag == 'reprtFlag' ? reportStr : str), false, false, false, 'baseUrl');
+    this.apiService.setHttp('GET', 'ZP-Osmanabad/School/GetAll' + (flag == 'pdfFlag' ? reportStr : str), false, false, false, 'baseUrl');
     this.apiService.getHttp().subscribe({
 
       next: (res: any) => {
         if (res.statusCode == 200) {
-          flag != 'reprtFlag' ? this.tableDataArray = res.responseData.responseData1 : this.tableDataArray = this.tableDataArray;
+          flag != 'pdfFlag' ? this.tableDataArray = res.responseData.responseData1 : this.tableDataArray = this.tableDataArray;
           this.totalCount = res.responseData.responseData2.pageCount;
           this.tableDatasize = res.responseData.responseData2.pageCount;
-
           this.resultDownloadArr = [];
-          let data: [] = flag == 'reprtFlag' ? res.responseData.responseData1 : [];
-
-          data.find((ele: any, i: any) => {
-            let obj = {
-              srNo: i + 1,
-              schoolName: ele.schoolName,
-              district: ele.district,
-              taluka: ele.taluka,
-              village: ele.village,
-            }
-            this.resultDownloadArr.push(obj);
-          });
-          // download pdf call
-          if (this.resultDownloadArr.length > 0 && flag == 'reprtFlag') {
-            let keyPDFHeader = ['SrNo', "Name", "District", "Taluka", "Village"];
-            let ValueData =
-              this.resultDownloadArr.reduce(
-                (acc: any, obj: any) => [...acc, Object.values(obj).map((value) => value)], []
-              );
-            let objData: any = {
-              'topHedingName': 'School Registration Data',
-              'createdDate': 'Created on:' + new Date()
-            }
-            if(ValueData.length > 0){
-              this.downloadFileService.downLoadPdf(keyPDFHeader, ValueData, objData);
-            }
-            else{
-              this.commonMethodS.snackBar("Data not Available", 0);
-            }
-          }
-           // End download pdf call
-
+          let data: [] = flag == 'pdfFlag' ? res.responseData.responseData1 : [];
+          flag == 'pdfFlag' ? this.downloadPdf(data) : '';
         }
         else {
+          this.ngxSpinner.hide();
           this.tableDataArray = [];
           this.tableDatasize = 0;
+          this.tableDatasize == 0 && flag == 'pdfFlag' ? this.commonMethodS.snackBar('No Record Found', 1) : '';
         }
-
-        this.tableData = {
-          pageNumber: this.pageNumber,
-          img: 'uploadImage', blink: '', badge: '', isBlock: '', pagintion: true,
-          displayedColumns: this.displayedColumns, tableData: this.tableDataArray,
-          tableSize: this.tableDatasize,
-          tableHeaders: this.langTypeName == 'English' ? this.displayedheadersEnglish : this.displayedheadersMarathi
-        };
-        this.apiService.tableData.next(this.tableData);
-        // this.languageChange();
+        this.languageChange();
       },
       error: ((err: any) => { this.commonMethodS.checkEmptyData(err.statusText) == false ? this.errors.handelError(err.statusCode) : this.commonMethodS.snackBar(err.statusText, 1); })
     });
   }
   //#endregion ------------------------------------------- School Registration Table Data end here ----------------------------------------// 
+
+   //#endregion ---------------------------------------------- PDF Download start here ----------------------------------------// 
+
+   downloadPdf(data: any){
+    data.find((ele: any, i: any) => {
+      let obj = {
+        srNo: i + 1,
+        schoolName: ele.schoolName,
+        district: ele.district,
+        taluka: ele.taluka,
+        village: ele.village,
+      }
+      this.resultDownloadArr.push(obj);
+    });
+    // download pdf call
+    if (this.resultDownloadArr.length > 0) {
+      let keyPDFHeader = ['SrNo', "Name", "District", "Taluka", "Village"];
+      let ValueData =
+        this.resultDownloadArr.reduce(
+          (acc: any, obj: any) => [...acc, Object.values(obj).map((value) => value)], []
+        );
+      let objData: any = {
+        'topHedingName': 'School Registration Data',
+        'createdDate': 'Created on:' + new Date()
+      }
+      ValueData.length > 0 ? this.downloadFileService.downLoadPdf(keyPDFHeader, ValueData, objData):''
+    }
+   }
+  //#endregion ---------------------------------------------- PDF Download end here ----------------------------------------// 
+
 
   //#region ---------------------------------------------- School Registration Dropdown start here ----------------------------------------// 
   getDistrict() {
@@ -336,10 +330,4 @@ export class SchoolRegistrationComponent {
   }
 
   
-  //#endregion ---------------------------------------------- PDF Download start here ----------------------------------------// 
-
-  downloadPdf() {
-    this.getTableData('reprtFlag')
-  }
-  //#endregion ---------------------------------------------- PDF Download end here ----------------------------------------// 
-}
+ }
