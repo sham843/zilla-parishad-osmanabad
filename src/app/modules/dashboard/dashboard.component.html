@@ -168,7 +168,7 @@
                     <div class="d-flex" *ngIf="showBarChartF">
                         <div class="border-end" *ngFor="let bar of barchartOptions.series[0]; let i=index">
                             <h6 class="fw-bold text-center mb-0">{{graphSubjectData[i]}}</h6>
-                            <apx-chart [series]="bar" [chart]="barchartOptions.chart" [theme]="barchartOptions.theme"
+                            <apx-chart [series]="bar" [chart]="barchartOptions.chart" 
                                 [dataLabels]="barchartOptions.dataLabels" [plotOptions]="barchartOptions.plotOptions"
                                 [responsive]="barchartOptions.responsive" [xaxis]="barchartOptions.xaxis"
                                 [legend]="barchartOptions.legend" [fill]="barchartOptions.fill"></apx-chart>

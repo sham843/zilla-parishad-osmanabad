@@ -141,21 +141,21 @@ export class DashboardComponent implements OnInit,AfterViewInit {
           show: false
         },
       },
-      theme: {
-        monochrome: {
-          enabled: true,
-          color: '#039286',
-          shadeTo: 'light',
-          shadeIntensity: 0.65
-        }
-      },
+      // theme: {
+      //   monochrome: {
+      //     enabled: true,
+      //     color: '#434AB3',
+      //     shadeTo: 'light',
+      //     shadeIntensity: 0.65
+      //   }
+      // },
       responsive: [
         {
           breakpoint: 480,
           options: {
             legend: {
               position: "bottom",
-              // colors: [],
+              colors: ['#CB4B4B', '#E76A63', '#E98754', '#EFB45B', '#65C889'],
             }
           }
         }
@@ -196,8 +196,8 @@ export class DashboardComponent implements OnInit,AfterViewInit {
 
       },
       fill: {
-        // colors: [],
-        opacity: 1
+        colors: ['#CB4B4B', '#E76A63', '#E98754', '#EFB45B', '#65C889'],
+        // opacity: 1
       },
       legend: {
         position: "bottom",
@@ -215,20 +215,20 @@ export class DashboardComponent implements OnInit,AfterViewInit {
           show: false
         },
       },
-      theme: {
-        monochrome: {
-          enabled: true,
-          color: '#039286',
-          shadeTo: 'light',
-          shadeIntensity: 0.65
-        }
-      },
+      // theme: {
+      //   monochrome: {
+      //     enabled: true,
+      //     color: '#CB4B4B',
+      //     shadeTo: 'light',
+      //     shadeIntensity: 0.65
+      //   }
+      // },
       responsive: [
         {
           breakpoint: 480,
           options: {
             legend: {
-              // colors: ['#CB4B4B', '#E76A63', '#E98754', '#EFB45B', '#65C889'],
+              colors: ['#CB4B4B', '#E76A63', '#E98754', '#EFB45B', '#65C889'],
               position: "bottom",
               offsetX: -10,
               offsetY: 0
@@ -266,7 +266,7 @@ export class DashboardComponent implements OnInit,AfterViewInit {
 
       },
       fill: {
-        // colors: ['#CB4B4B', '#E76A63', '#E98754', '#EFB45B', '#65C889'],
+        colors: ['#CB4B4B', '#E76A63', '#E98754', '#EFB45B', '#65C889'],
         opacity: 1
       },
       legend: {
