@@ -10,7 +10,7 @@
         <div class="col-sm-4">
             <mat-form-field appearance="outline" class="w-100">
                 <mat-label>तालुका निवडा</mat-label>
-                <mat-select formControlName="talukaId" (selectionChange)="this.getCenters();this.getbarChartByTaluka()">
+                <mat-select formControlName="talukaId" (selectionChange)="f['talukaId'].value!=0?this.getCenters():''; dashboardAPis()">
                     <mat-option *ngFor="let taluka of talukaData" [value]="taluka.id">
                         {{webStorage.languageFlag == 'EN'?taluka.taluka:taluka.m_Taluka}}
                     </mat-option>
@@ -20,7 +20,7 @@
         <div class="col-sm-4">
             <mat-form-field appearance="outline" class="w-100">
                 <mat-label>केंद्र निवडा</mat-label>
-                <mat-select formControlName="centerId" (selectionChange)="this.getschools()">
+                <mat-select formControlName="centerId" (selectionChange)="this.getschools() ;dashboardAPis()">
                     <mat-option *ngFor="let center of centerData" [value]="center.id">
                         {{webStorage.languageFlag == 'EN'?center.center:center.m_Center}}
                     </mat-option>
@@ -30,9 +30,9 @@
         <div class="col-sm-4">
             <mat-form-field appearance="outline" class="w-100">
                 <mat-label>शाळा निवडा</mat-label>
-                <mat-select formControlName="schoolId">
-                    <mat-option *ngFor="let school of schoolData" [value]="school.value">
-                        {{webStorage.languageFlag == 'EN'?school.schoolType :school.m_SchoolType }}
+                <mat-select formControlName="schoolId"  (selectionChange)="dashboardAPis()">
+                    <mat-option *ngFor="let school of schoolData" [value]="school.id">
+                        {{webStorage.languageFlag == 'EN'?school.schoolName :school.m_SchoolName }}
                     </mat-option>
                 </mat-select>
             </mat-form-field>
@@ -106,7 +106,7 @@
             </mat-card-header>
             <mat-card-content class="card-body">
                 <div id="mapsvg" class="text-center">
-                    <!-- <img src="assets/distSVG/Osmanabad.svg" style="height: 200px;" class=""> -->
+                    <img src="assets/distSVG/Osmanabad.svg" style="height: 200px;" class="">
                 </div>
             </mat-card-content>
         </mat-card>

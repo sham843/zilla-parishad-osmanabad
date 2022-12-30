@@ -69,13 +69,17 @@ export class DashboardComponent implements OnInit,AfterViewInit {
     })
   }
   getTalukas() {
+    this.talukaData=[];
     this.masterService.getAllTaluka().subscribe((res: any) => {
-      this.talukaData = res.responseData;
+      this.talukaData.push({ "id": 0, "taluka": "All", "m_Taluka": "सर्व"}, ...res.responseData);
+      this.f['talukaId'].patchValue(0);
     })
   }
   getCenters() {
+    this.centerData=[];
     this.masterService.getAllCenter('', (this.f['talukaId'].value|0)).subscribe((res: any) => {
-      this.centerData = res.responseData;
+      this.centerData.push({ "id": 0, "center": "All", "m_Center": "सर्व"}, ...res.responseData);
+      this.f['centerId'].patchValue(0);
     })
   }
   getschools() {
@@ -161,6 +165,7 @@ export class DashboardComponent implements OnInit,AfterViewInit {
 
       },
       fill: {
+        colors: ['#005f57', '#327e78', '#4c8f89', '#669f9a', '#99bfbb'],
         opacity: 1
       },
       legend: {
@@ -217,16 +222,21 @@ export class DashboardComponent implements OnInit,AfterViewInit {
 
       },
       fill: {
+        colors: ['#005f57', '#327e78', '#4c8f89', '#669f9a', '#99bfbb'],
         opacity: 1
       },
       legend: {
-        position: "right",
+        position: "top",
         offsetX: 0,
         offsetY: 50
       }
     };
   }
-
+  dashboardAPis(){
+     this.getbarChartByTaluka();
+     this.getdashboardCount();
+  }
+  
   getdashboardCount(){
     const formData= this.filterForm.value;
     this.apiService.setHttp('GET', 'zp-osmanabad/Dashboard/GetDashboardCount?TalukaId='+(formData?.talukaId ||0)+'&CenterId='+(formData?.centerId ||0)+'&SchoolId='+(formData?.schoolId ||0), false, false, false, 'baseUrl');
@@ -275,11 +285,13 @@ export class DashboardComponent implements OnInit,AfterViewInit {
       next: (res: any) => { 
         if (res.statusCode == "200") {
           this.barChartData=res.responseData.responseData1;
-         const subjectSet = [...new Set(this.barChartData.map(sub => sub.subjectName))];
+         const subjectSet = [...new Set(this.barChartData.map(sub => sub.m_SubjectName))];
          this.barchartOptions.series=[];
+         this.barchartOptions.xaxis.categories=[];
           let dataArray:any[]=[];
           subjectSet.map((x:any)=>{
-            const  filterSubject=this.barChartData.filter((y:any)=> y.subjectName==x);
+            const  filterSubject=this.barChartData.filter((y:any)=> y.m_SubjectName==x);
+            console.log(filterSubject)
             let dataObjArray:any[]=[];
             filterSubject.map((z:any)=>{
               const subData = {
@@ -333,6 +345,7 @@ export class DashboardComponent implements OnInit,AfterViewInit {
       },
       error: (error:any) => { this.error.handelError(error.message) }
     });
+    this.getTabledataByTaluka();
   }
 
   getTabledataByTaluka(){
