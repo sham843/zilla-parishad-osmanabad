@@ -29,8 +29,8 @@ export class AgencyRegistrationComponent {
   displayedheadersMarathi = ['अनुक्रमांक', 'एजन्सी नाव', 'एजन्सी मोबाईल क्र.', 'ई-मेल आयडी', 'कृती'];
   langTypeName: any;
 
-  constructor(private dialog: MatDialog, private apiService: ApiService,  private ngxSpinner: NgxSpinnerService,
-     private webStroageService: WebStorageService, private downloadPdfservice: DownloadPdfExcelService,
+  constructor(private dialog: MatDialog, private apiService: ApiService, private ngxSpinner: NgxSpinnerService,
+    private webStroageService: WebStorageService, private downloadPdfservice: DownloadPdfExcelService,
     private errors: ErrorsService, private fb: FormBuilder, private common: CommonMethodsService, public validation: ValidationService,
   ) { }
 
@@ -68,7 +68,7 @@ export class AgencyRegistrationComponent {
     let obj = this.filterForm.value;
     let str = `pageno=${this.pageNumber}&pagesize=10&&TextSearch=${obj.searchText}&lan=${this.webStroageService.languageFlag}`;
     let reportStr = `pageno=${this.pageNumber}&pagesize=${this.totalCount * 10}&TextSearch=${obj.searchText}&lan=${this.webStroageService.languageFlag}`
-    this.apiService.setHttp('GET', 'zp-osmanabad/Agency/GetAll?' + ( flag =='pdfFlag' ? reportStr : str ), false, false, false, 'baseUrl');
+    this.apiService.setHttp('GET', 'zp-osmanabad/Agency/GetAll?' + (flag == 'pdfFlag' ? reportStr : str), false, false, false, 'baseUrl');
     this.apiService.getHttp().subscribe({
       next: (res: any) => {
         if (res.statusCode == "200") {
@@ -76,14 +76,14 @@ export class AgencyRegistrationComponent {
           this.agencyReport = []; //for pdfArray
           this.tableDataArray = res.responseData.responseData1;
           this.tableDatasize = res.responseData.responseData2.pageCount;
-          this.totalCount = res.responseData.responseData2.pageCount;          
+          this.totalCount = res.responseData.responseData2.pageCount;
           let data: [] = res.responseData.responseData1;
-          flag =='pdfFlag' ? this.downloadPdf(data): '';
+          flag == 'pdfFlag' ? this.downloadPdf(data) : '';
         } else {
           this.ngxSpinner.hide();
           this.tableDataArray = [];
           this.tableDatasize = 0;
-          this.tableDatasize == 0 && flag =='pdfFlag' ? this.common.snackBar('No Record Found',1): '';
+          this.tableDatasize == 0 && flag == 'pdfFlag' ? this.common.snackBar('No Record Found', 1) : '';
         }
         this.getTableDataMarathi();
       },
@@ -91,7 +91,7 @@ export class AgencyRegistrationComponent {
     });
   }
 
-  downloadPdf(data:any){         
+  downloadPdf(data: any) {
     data.map((ele: any, i: any) => {
       let obj = {
         "Sr.No": i + 1,
@@ -101,22 +101,22 @@ export class AgencyRegistrationComponent {
       }
       this.agencyReport.push(obj);
     });
-    if(this.agencyReport.length){
-        let keyPDFHeader = ['SrNo', "Name", "Contact No.", "Email Id"];
-        let ValueData =
-          this.agencyReport.reduce(
-            (acc: any, obj: any) => [...acc, Object.values(obj).map((value) => value)], []
-          );
-    
-        let objData: any = {
-          'topHedingName': 'Agency Report',
-          'createdDate': 'Created on:' + new Date()
-        }
-        this.downloadPdfservice.downLoadPdf(keyPDFHeader, ValueData, objData);
+    if (this.agencyReport.length) {
+      let keyPDFHeader = ['SrNo', "Name", "Contact No.", "Email Id"];
+      let ValueData =
+        this.agencyReport.reduce(
+          (acc: any, obj: any) => [...acc, Object.values(obj).map((value) => value)], []
+        );
+
+      let objData: any = {
+        'topHedingName': 'Agency Report',
+        'createdDate': 'Created on:' + new Date()
       }
-      else{
-        this.common.snackBar('No Record Found',1)
-      }
+      this.downloadPdfservice.downLoadPdf(keyPDFHeader, ValueData, objData);
+    }
+    else {
+      this.common.snackBar('No Record Found', 1)
+    }
   }
 
   onPagintion(pageNo: number) {
@@ -124,34 +124,13 @@ export class AgencyRegistrationComponent {
     this.getTableData()
   }
 
-  // downloadPdf() {
-  //   if(this.agencyReport.length){
-  //   this.getTableData('pdfFlag')
-  //   let keyPDFHeader = ['SrNo', "Name", "Contact No.", "Email Id"];
-  //   let ValueData =
-  //     this.agencyReport.reduce(
-  //       (acc: any, obj: any) => [...acc, Object.values(obj).map((value) => value)], []
-  //     );
-
-  //   let objData: any = {
-  //     'topHedingName': 'Agency Report',
-  //     'createdDate': 'Created on:' + new Date()
-  //   }
-  //   this.downloadPdfservice.downLoadPdf(keyPDFHeader, ValueData, objData);
-  // }
-  // else{
-  //   this.common.snackBar('No Record Found',1)
-  // }
-
-  // }
-
   onClear() {
-    if(this.filterForm.value.searchText !=null && this.filterForm.value.searchText != '' ){
-    this.filterForm.reset();
-    this.filterData();
-    this.pageNumber = 1;
-    this.getTableData();
-  }
+    if (this.filterForm.value.searchText != null && this.filterForm.value.searchText != '') {
+      this.filterForm.reset();
+      this.filterData();
+      this.pageNumber = 1;
+      this.getTableData();
+    }
   }
 
   childCompInfo(_obj: any) {
@@ -203,10 +182,10 @@ export class AgencyRegistrationComponent {
 
   deleteAgency(_obj: any) {
     let dialoObj = {
-      header: this.langTypeName == 'English' ? 'Delete' :'हटवा',
-      title: this.langTypeName == 'English' ?  'Do You Want To Delete The Selected Agency ?': 'तुम्हाला एजन्सी रेकॉर्ड हटवायचा आहे का?',
-      cancelButton: this.langTypeName == 'English' ?  'Cancel' : 'रद्द करा',
-      okButton: this.langTypeName == 'English' ? 'Ok' :'ओके '
+      header: this.langTypeName == 'English' ? 'Delete' : 'हटवा',
+      title: this.langTypeName == 'English' ? 'Do You Want To Delete The Selected Agency ?' : 'तुम्हाला एजन्सी रेकॉर्ड हटवायचा आहे का?',
+      cancelButton: this.langTypeName == 'English' ? 'Cancel' : 'रद्द करा',
+      okButton: this.langTypeName == 'English' ? 'Ok' : 'ओके '
     }
     const dialogRef = this.dialog.open(GlobalDialogComponent, {
       width: '320px',
