@@ -153,7 +153,7 @@ export class StudentRegistrationComponent {
         this.getTableData();
         break;
       case 'Edit':
-        this.addUpdateAgency(obj);
+        this.addUpdateAgency(JSON.stringify(obj));
         break;
       case 'Delete':
         this.deteleDialogOpen(obj);

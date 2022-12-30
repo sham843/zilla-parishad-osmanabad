@@ -57,7 +57,9 @@ export class AddUpdateStudentRegistrationComponent {
   ngOnInit() {
     this.languageFlag = this.webService.languageFlag;
     this.formData();
-    this.data ? (this.editObj = this.data, this.patchValue()) : this.allDropdownMethods();
+    console.log(JSON.parse(this.data));
+    
+    this.data ? (this.editObj = JSON.parse(this.data), this.patchValue()) : this.allDropdownMethods();
   }
 
   allDropdownMethods() {
@@ -390,7 +392,6 @@ export class AddUpdateStudentRegistrationComponent {
   }
 
   deleteImage(name: string) {
-    debugger
     if (name == 'aadharPhoto') {
       this.uploadAadhaar = '';
       this.aadharFile.nativeElement.value = '';
