@@ -72,6 +72,7 @@ export class StudentRegistrationComponent {
   //#region ----------------------------------------------------- Get Table Data Logic Start here -----------------------------------------------
 
   getTableData(flag?: string) {
+
     this.ngxSpinner.show();
     this.pageNumber = flag == 'filter' ? 1 : this.pageNumber;    
     let pageNo = this.pageNumber;
@@ -153,7 +154,7 @@ export class StudentRegistrationComponent {
         this.getTableData();
         break;
       case 'Edit':
-        this.addUpdateAgency(JSON.stringify(obj));
+        this.addUpdateStudent(JSON.stringify(obj));
         break;
       case 'Delete':
         this.deteleDialogOpen(obj);
@@ -164,7 +165,7 @@ export class StudentRegistrationComponent {
     }
   }
 
-  addUpdateAgency(obj?: any) {
+  addUpdateStudent(obj?: any) {
     console.log(obj);
     const dialogRef = this.dialog.open(AddUpdateStudentRegistrationComponent, {
       width: '900px',
@@ -174,6 +175,7 @@ export class StudentRegistrationComponent {
       autoFocus: false
     });
     dialogRef.afterClosed().subscribe((result: any) => {
+      obj = obj ?  JSON.parse(obj) :''
       if (result == 'yes' && obj) {
         this.pageNumber = obj.pageNumber;
         this.getTableData();
@@ -195,7 +197,7 @@ export class StudentRegistrationComponent {
         // this.selectGrid('Card');
         break;
       case 'Edit':
-        this.addUpdateAgency(obj);
+        this.addUpdateStudent(obj);
         break;
       case 'Delete':
         this.deteleDialogOpen(obj);

@@ -68,8 +68,7 @@ export class AddUpdateTeacherRegistrationComponent {
 
   ngOnInit() {
     this.formData();
-    console.log("dataa",this.data);
-    
+
     (!this.data) ? this.getGender() : this.onEdit(this.data);
   }
   get f() {
@@ -158,8 +157,6 @@ export class AddUpdateTeacherRegistrationComponent {
   }
 
   castvalidation(obj: any) {
-   
-    
     if (obj.value != 7) {
       this.td["castCategoryId"].setValidators(Validators.required);
       this.td["castCertificateNo"].setValidators(Validators.required);
@@ -210,7 +207,6 @@ export class AddUpdateTeacherRegistrationComponent {
 
   addStand(stand: any, value: number) {
     this.assignclass = true;
-    console.log(stand.currentTarget.checked);
     let data =
     {
       "id": 0,
@@ -228,13 +224,18 @@ export class AddUpdateTeacherRegistrationComponent {
     }
   }
 
+  addSameAddress(event:any){
+    console.log("event",event);
+   let sameAddress = this.teacherRegForm.value.currentAddress
+   this.f['permentAddress'].setValue(sameAddress);
+  }
+
+
   getGender() {
     this.masterService.getAllGender('EN').subscribe({
       next: ((res: any) => {
         if (res.statusCode == '200' && res.responseData.length) {
-          this.genderArray = res.responseData;    
-          console.log("editt", this.editFlag);
-               
+          this.genderArray = res.responseData;       
           this.editFlag == true ? (this.teacherRegForm.controls['genderId'].setValue(this.editObj.genderID), this.getDistrict()) : (this.editFlag== false) ? (this.getDistrict(),this.getAllDistrictTeacherDetails()) : ''
         }
       }), error: (error: any) => {
@@ -356,7 +357,6 @@ export class AddUpdateTeacherRegistrationComponent {
       next: ((res: any) => {
         if (res.statusCode == '200' && res.responseData.length) {
           this.GradateTeacherSubjectArray = res.responseData;
-          console.log("this.GradateTeacherSubjectArray", this.GradateTeacherSubjectArray);
           this.editFlag ? (this.td['graduate_SubjectId'].setValue(this.editObj.teacherDetails.graduate_SubjectId), this.getGraduatePayScale()) : this.getGraduatePayScale();
         }
       }), error: (error: any) => {
@@ -367,8 +367,8 @@ export class AddUpdateTeacherRegistrationComponent {
 
   getGraduatePayScale() {
     this.isGraduatePayScaleArray = [
-      { id: 1, name: 'yes', isGraduate_PayScale: true },
-      { id: 2, name: 'no', isGraduate_PayScale: false }
+      { id: 1, name: 'yes', isGraduate_PayScale: true ,_name :'होय'},
+      { id: 2, name: 'no', isGraduate_PayScale: false ,_name :'नाही'}
     ];
     this.editFlag ? (this.td['isGraduate_PayScale'].setValue(this.editObj.teacherDetails.isGraduate_PayScale), this.getCaste()) : this.getCaste();
   }
@@ -377,7 +377,7 @@ export class AddUpdateTeacherRegistrationComponent {
     this.masterService.getAllCaste('EN', 1).subscribe({
       next: ((res: any) => {
         if (res.statusCode == '200' && res.responseData.length) {
-          this.casteArray = res.responseData;
+          this.casteArray = res.responseData;  
           this.editFlag ? (this.td['castId'].setValue(this.editObj.teacherDetails.castId), this.getCasteCategory()) : this.getCasteCategory();
         }
       }), error: (error: any) => {
@@ -390,7 +390,6 @@ export class AddUpdateTeacherRegistrationComponent {
       next: ((res: any) => {
         if (res.statusCode == '200' && res.responseData.length) {
           this.castCategoryArray = res.responseData;
-
           this.editFlag ? (this.td['castCategoryId'].setValue(this.editObj.teacherDetails.castCategoryId), this.getCasteVerification()) : this.getCasteVerification();
         }
       }), error: (error: any) => {
@@ -400,8 +399,8 @@ export class AddUpdateTeacherRegistrationComponent {
   }
   getCasteVerification() {
     this.casteVerification = [
-      { id: 1, name: 'yes', isCastVarificationDone: true },
-      { id: 2, name: 'no', isCastVarificationDone: false }
+      { id: 1, name: 'yes', isCastVarificationDone: true,_name :'होय' },
+      { id: 2, name: 'no', isCastVarificationDone: false ,_name :'नाही'}
     ];
     this.editFlag ? (this.td['isCastVarificationDone'].setValue(this.editObj.teacherDetails.isCastVarificationDone), this.getEducationQualification()) : this.getEducationQualification();
   }
@@ -434,7 +433,7 @@ export class AddUpdateTeacherRegistrationComponent {
     this.masterService.getOptionalSubjectCategoryDescById('EN',).subscribe({
       next: ((res: any) => {
         if (res.statusCode == '200' && res.responseData.length) {
-          this.optionalSubjectArray = res.responseData;
+          this.optionalSubjectArray = res.responseData;         
           this.editFlag ? (this.td['degreeOptionalSubjectsId'].setValue(this.editObj.teacherDetails.degreeOptionalSubjectsId), this.getDegreeUniversity()) : this.getDegreeUniversity();
         }
       }), error: (error: any) => {
@@ -448,6 +447,7 @@ export class AddUpdateTeacherRegistrationComponent {
       next: ((res: any) => {
         if (res.statusCode == '200' && res.responseData.length) {
           this.degreeUniversityArray = res.responseData;
+          
           this.editFlag ? (this.td['degreeUniversityId'].setValue(this.editObj.teacherDetails.degreeUniversityId), this.getProfesionalQualification()) : this.getProfesionalQualification();
         }
       }), error: (error: any) => {
@@ -460,7 +460,7 @@ export class AddUpdateTeacherRegistrationComponent {
     this.masterService.getProfessinalQualificationById('EN',).subscribe({
       next: ((res: any) => {
         if (res.statusCode == '200' && res.responseData.length) {
-          this.profesionalQualificationArray = res.responseData;
+          this.profesionalQualificationArray = res.responseData;        
           this.editFlag ? (this.td['professionalQualificationId'].setValue(this.editObj.teacherDetails.professionalQualificationId), this.gethusbandWifeBothService()) : this.gethusbandWifeBothService();
         }
       }), error: (error: any) => {
@@ -470,23 +470,23 @@ export class AddUpdateTeacherRegistrationComponent {
   }
   gethusbandWifeBothService() {
     this.husbandWifeBothServiceArray = [
-      { id: 1, name: 'yes', husbandWife_Both_Service: true },
-      { id: 2, name: 'no', husbandWife_Both_Service: false }
+      { id: 1, name: 'yes', husbandWife_Both_Service: true ,_name :'होय'},
+      { id: 2, name: 'no', husbandWife_Both_Service: false ,_name :'नाही'}
     ];
     this.editFlag ? (this.td['husbandWife_Both_Service'].setValue(this.editObj.teacherDetails.husbandWife_Both_Service), this.getAreyouDisabled()) : this.getAreyouDisabled();
   }
   getAreyouDisabled() {
     this.AreyouDisabled = [
-      { id: 1, name: 'yes', isDisabled: true },
-      { id: 2, name: 'no', isDisabled: false }
+      { id: 1, name: 'yes', isDisabled: true ,_name :'होय'},
+      { id: 2, name: 'no', isDisabled: false,_name :'नाही' }
     ];
     this.editFlag ? (this.td['isDisabled'].setValue(this.editObj.teacherDetails.isDisabled), this.getInterDistrictTransferred()) : this.getInterDistrictTransferred();
   }
 
   getInterDistrictTransferred() {
     this.interDistrictTransferredArray = [
-      { id: 1, name: 'yes', interDistrictTransferred: true },
-      { id: 2, name: 'no', interDistrictTransferred: false }
+      { id: 1, name: 'yes', interDistrictTransferred: true ,_name :'होय'},
+      { id: 2, name: 'no', interDistrictTransferred: false ,_name :'नाही'}
     ];
     this.editFlag ? (this.td['interDistrictTransferred'].setValue(this.editObj.teacherDetails.interDistrictTransferred), this.GetInterDistrictTransferType()) : this.GetInterDistrictTransferType();
   }
@@ -507,8 +507,8 @@ export class AddUpdateTeacherRegistrationComponent {
 
   getHaveYouPassedComputerExam() {
     this.haveYouPassedComputerExamArray = [
-      { id: 1, name: 'yes', haveYouPassedComputerExam: true },
-      { id: 2, name: 'no', haveYouPassedComputerExam: false }
+      { id: 1, name: 'yes', haveYouPassedComputerExam: true,_name :'होय' },
+      { id: 2, name: 'no', haveYouPassedComputerExam: false,_name :'नाही' }
     ];
     this.editFlag ? this.td['haveYouPassedComputerExam'].setValue(this.editObj.teacherDetails.haveYouPassedComputerExam) : '';
   }
@@ -527,10 +527,7 @@ export class AddUpdateTeacherRegistrationComponent {
 
   OnSubmit() {
     let formValue = this.teacherRegForm.value;
-    formValue.uploadImage ? formValue.uploadImage = this.uploadImg : '';
-    // !this.showAddRemImg ? formValue.uploadImage = '' : formValue.uploadImage = formValue.uploadImage;
-    
-   console.log(formValue);
+    formValue.uploadImage ? formValue.uploadImage = this.uploadImg : ''; 
     if (this.editFlag == true) {
       if (this.data.uploadImage) {
         this.img ? formValue.uploadImage = this.uploadImg : formValue.uploadImage = this.data.uploadImage
@@ -545,8 +542,7 @@ export class AddUpdateTeacherRegistrationComponent {
     }
     else {
       formValue.assignTeacher = this.assignClassArray;
-      let postObj = this.teacherRegForm.value;
-      // console.log(postObj);
+      let postObj = this.teacherRegForm.value;   
       this.ngxSpinner.show();
       let url;
       this.editFlag ? url = 'zp_osmanabad/Teacher/Update' : url = 'zp_osmanabad/Teacher/Add'
@@ -574,7 +570,6 @@ export class AddUpdateTeacherRegistrationComponent {
     this.data.uploadImage ? this.teacherRegForm.value.uploadImage = obj.uploadImage : '';
     this.data.uploadImage ? this.showAddRemImg = true : this.showAddRemImg = false;
     this.assignClassArray = obj.assignTeacher;
-
     for (let i = 0; i < this.newAsssignClassArray.length; i++) {
       for (let j = 0; j < obj.assignTeacher.length; j++) {
         if (this.newAsssignClassArray[i].standardId == obj.assignTeacher[j].standardId) {

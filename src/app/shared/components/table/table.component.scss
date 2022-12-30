@@ -2,14 +2,14 @@
 ::ng-deep .mat-mdc-tooltip::after {
   content: "";
     position: absolute !important;
-    left: -5px !important;
-    top: 7px !important;
-    width: 10px !important;
-    height: 10px !important;
-    border: 6px solid transparent !important;
+    left: -7.5px !important;
+    top: 9px !important;
+    width: 9px !important;
+    height: 0px !important;
+    border: 7px solid transparent !important;
     border-right-color: #616161 !important;
     background: transparent !important;
     opacity: 1 !important;
     transform: unset !important;
-    transition: 100ms opacity !important;
+    transition: 100ms opacity !important
   }
