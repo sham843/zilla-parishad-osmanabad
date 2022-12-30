@@ -19,7 +19,7 @@
                     <form [formGroup]="adminLoginForm" (ngSubmit)="onSubmit()" #clear="ngForm">
                         <mat-tab-group class="p-2" (focusChange)="checklogin($event,clear)">
                             <mat-tab label="Admin">
-                                <div class="overflow-hidden">
+                                <div class="overflow-hidden px-1">
                                     <div class="mb-2 text-center mt-5">
                                         <mat-form-field appearance="outline" class="w-100">
                                             <mat-label>User Name</mat-label>
@@ -52,7 +52,7 @@
                             </mat-tab>
 
                             <mat-tab label="Officer">
-                                <div class="overflow-hidden">
+                                <div class="overflow-hidden px-1">
                                     <div class="mb-2 text-center mt-5">
                                         <mat-form-field appearance="outline" class="w-100">
                                             <mat-label>Mobile No.</mat-label>

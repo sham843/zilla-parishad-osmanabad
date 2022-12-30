@@ -54,8 +54,6 @@ export class AddUpdateSchoolRegistrationComponent {
   }
 
   formFeild() {
-    let data = this.webStorageS.createdByProps();
-
     this.schoolRegForm = this.fb.group({
       "id": this.data ? this.data.id : 0,
       "schoolName": [this.data ? this.data.schoolName : '', [Validators.required, Validators.pattern('^[-_., a-zA-Z0-9]+$')]],
@@ -75,13 +73,8 @@ export class AddUpdateSchoolRegistrationComponent {
       "highestClass":['', Validators.required],
       "timesStamp": new Date(),
       "uploadImage": [''],
-      "createdBy": data.createdBy,
-      "createdDate": data.createdDate,
-      "modifiedBy": data.modifiedBy,
-      "modifiedDate": data.modifiedDate,
-      "isDeleted": data.isDeleted
-    })
-    // this.data ? this.onEdit() : ''
+      ...this.webStorageS.createdByProps()
+    });
   }
 
   //#region ---------------------------------------------- School Registration Dropdown start here ----------------------------------------// 
@@ -117,6 +110,7 @@ export class AddUpdateSchoolRegistrationComponent {
   }
 
   getVillage() {
+    // debugger
     this.masterService.getAllVillage(this.webStorageS.languageFlag, this.schoolRegForm.value.talukaId).subscribe({
       next: (res: any) => {
         res.statusCode == 200 ? this.villageArr = res.responseData : this.villageArr = [];
@@ -271,10 +265,11 @@ export class AddUpdateSchoolRegistrationComponent {
     this.editFlag = false;
     if (dropdown == 'Taluka') {
       this.f['centerId'].setValue('');
+      this.f['villageId'].setValue('');
       this.villageArr = [];
     }
-    else if (dropdown == 'Kendra') {
-      this.f['villageId'].setValue('');
+    else if (dropdown == 'LowestClass') {
+      this.f['highestClass'].setValue('');
     }
   }
   //#endregiongion ----------------------------------------------- Clear dropdown on change end here --------------------------------------------//

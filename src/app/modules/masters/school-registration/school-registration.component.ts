@@ -9,6 +9,7 @@ import { AddUpdateSchoolRegistrationComponent } from './add-update-school-regist
 import { CommonMethodsService } from 'src/app/core/services/common-methods.service';
 import { WebStorageService } from 'src/app/core/services/web-storage.service';
 import { DownloadPdfExcelService } from 'src/app/core/services/download-pdf-excel.service';
+import { GlobalDetailComponent } from 'src/app/shared/components/global-detail/global-detail.component';
 
 @Component({
   selector: 'app-school-registration',
@@ -64,7 +65,7 @@ export class SchoolRegistrationComponent {
     this.webStorageS.langNameOnChange.subscribe(lang => {
       this.getDistrict();
       this.langTypeName = lang;
-      this.displayedColumns = ['uploadImage', 'srNo', this.langTypeName == 'English' ? 'schoolName' : 'm_SchoolName', 'village', 'taluka', 'district', 'action'];
+      this.displayedColumns = ['uploadImage', 'srNo', this.langTypeName == 'English' ? 'schoolName' : 'm_SchoolName', this.langTypeName == 'English' ? 'village' : 'm_Village', this.langTypeName == 'English' ? 'taluka' : 'm_Taluka', this.langTypeName == 'English' ? 'district' : 'm_District', 'action'];
       this.tableData = {
         pageNumber: this.pageNumber,
         img: 'uploadImage', blink: '', badge: '', isBlock: '', pagintion: true,
@@ -110,7 +111,7 @@ export class SchoolRegistrationComponent {
             this.resultDownloadArr.push(obj);
           });
           // download pdf call
-          if (this.resultDownloadArr.length > 0) {
+          if (this.resultDownloadArr.length > 0 && flag == 'reprtFlag') {
             let keyPDFHeader = ['SrNo', "Name", "District", "Taluka", "Village"];
             let ValueData =
               this.resultDownloadArr.reduce(
@@ -198,6 +199,9 @@ export class SchoolRegistrationComponent {
       case 'Delete':
         this.globalDialogOpen(obj);
         break;
+      case 'View':
+        this.openDetailsDialog(obj);
+        break;
     }
   }
 
@@ -244,6 +248,30 @@ export class SchoolRegistrationComponent {
       }
     })
   }
+
+  openDetailsDialog(obj:any){
+    console.log(obj);
+    var data = {
+      headerImage: obj.uploadImage,
+      header: this.webStorageS.languageFlag == 'EN' ? obj.schoolName : obj.m_SchoolName,
+      labelHeader: this.webStorageS.languageFlag == 'EN' ? ['Kendra Name', 'Taluka','District'] : ['केंद्राचे नाव', 'तालुका', 'जिल्हा', 'सर्वात खालचा वर्ग', 'सर्वोच्च वर्ग'],
+      labelKey: this.webStorageS.languageFlag == 'EN' ? ['center','taluka', 'district'] : ['m_Center', 'm_Taluka','m_District', 'lowestClass', 'highestClass'],
+      Obj: obj,
+      chart: false
+    }
+    const viewDialogRef = this.dialog.open(GlobalDetailComponent, {
+      width: '900px',
+      height: '650px',
+      data: data,
+      disableClose: true,
+      autoFocus: false
+    });
+    viewDialogRef.afterClosed().subscribe((result: any) => {
+     if (result == 'yes') {
+      this.getTableData();
+      }
+    }); 
+}
   //#endregion ------------------------------------------- Open Dialog Box Function end here ----------------------------------------// 
 
   onClear() {
@@ -251,6 +279,8 @@ export class SchoolRegistrationComponent {
       this.districtId.reset();
       this.talukaId.reset();
       this.villageId.reset();
+      this.talukaArr = [];
+      this.villageArr = [];
       this.getTableData();
       this.pageNumber = 1;
     }

@@ -74,8 +74,9 @@
     </ng-container>
 
     <ng-container *ngIf="cardViewFlag">
+      <app-grid-view (gridToChild)="childGridCompInfo($event)"></app-grid-view>
       <!-- <app-card-grid-view (recObjToChild)="childGridCompInfo($event)"></app-card-grid-view> -->
-      <div class="row">
+      <!-- <div class="row">
         <div class="col-sm-4 mb-3" *ngFor="let data of tableDataArray">
           <mat-card>
             <mat-card-header class="d-flex justify-content-end">
@@ -90,11 +91,6 @@
                     create
                   </span>
                 </button>
-                <!-- <button mat-menu-item (click)="deteleDialogOpen(data)">Delete
-                  <span class="material-symbols-outlined">
-                    delete
-                  </span>
-                </button> -->
               </mat-menu>
             </mat-card-header>
             <mat-card-content>
@@ -139,8 +135,8 @@
         <mat-paginator [length]="totalCount" [pageIndex]="cardCurrentPage" [pageSize]="10" [pageSizeOptions]="[10]"
           [showFirstLastButtons]="true" (page)="onPageChanged($event)">
         </mat-paginator>
-      </ng-container>
-    </ng-container>
+      </ng-container> -->
+    </ng-container> 
 
   </mat-card-content>
 </mat-card>

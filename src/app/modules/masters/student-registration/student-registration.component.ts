@@ -73,13 +73,9 @@ export class StudentRegistrationComponent {
 
   getTableData(flag?: string) {
     this.ngxSpinner.show();
-    this.pageNumber = flag == 'filter' ? 1 : this.pageNumber;
-    if (flag == 'filter' && !this.searchContent.value) {
-      this.ngxSpinner.hide();
-      return
-    }
-    let pageNo
-    this.cardViewFlag ? pageNo = (this.cardCurrentPage + 1) : (pageNo = this.pageNumber, this.cardCurrentPage = 0);
+    this.pageNumber = flag == 'filter' ? 1 : this.pageNumber;    
+    let pageNo = this.pageNumber;
+    // this.cardViewFlag ? pageNo = (this.cardCurrentPage + 1) : (pageNo = this.pageNumber, this.cardCurrentPage = 0);
     let str = `?pageno=${pageNo}&pagesize=10&textSearch=${this.searchContent.value || ''}&lan=${this.languageFlag || ''}`;
     let reportStr = '?pageno=1&pagesize=' + (this.totalCount * 10) + '&textSearch=' + this.searchContent.value + '&lan=' + this.languageFlag;
     this.apiService.setHttp('GET', 'zp-osmanabad/Student/GetAll' + (flag == 'reportFlag' ? reportStr : str), false, false, false, 'baseUrl');
@@ -189,11 +185,24 @@ export class StudentRegistrationComponent {
 
 
   childGridCompInfo(obj: any) {
-    if (obj.label = 'Pagination') {
-      this.pageNumber = obj.pageNumber;
-      this.getTableData();
+    switch (obj.label) {
+      case 'Pagination':
+        this.pageNumber = obj.pageNumber;
+        console.log(this.pageNumber);
+        
+        this.getTableData();
+        // this.selectGrid('Card');
+        break;
+      case 'Edit':
+        this.addUpdateAgency(obj);
+        break;
+      case 'Delete':
+        this.deteleDialogOpen(obj);
+        break;
+      case 'View':
+        this.openDetailsDialog(obj);
+      break;
     }
-
   }
 
   onPageChanged(event: any) {
@@ -207,7 +216,8 @@ export class StudentRegistrationComponent {
       this.pageNumber = 1;
     } else if (label == 'Card') {
       this.cardViewFlag = true;
-      this.cardCurrentPage = this.cardCurrentPage;
+      this.pageNumber = 1;
+      // this.cardCurrentPage = this.cardCurrentPage;
     }
     this.getTableData();
   }
