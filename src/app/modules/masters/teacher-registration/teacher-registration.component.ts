@@ -32,7 +32,7 @@ export class TeacherRegistrationComponent {
   cardViewFlag: boolean = false;
 
   displayedheadersEnglish = ['#', 'Sr. No.', 'Teacher Name', 'Mobile No.', 'Email ID', 'Village', 'Taluka', 'action'];
-  displayedheadersMarathi = ['#', 'अनुक्रमांक', 'शिक्षकाचे नाव', 'मोबाईल क्र.', 'ई - मेल आयडी', 'गाव', 'तालुका', 'कृती'];
+  displayedheadersMarathi = ['#', 'अनुक्रमांक', 'शिक्षकाचे नाव', 'मोबाईल क्र.', 'ई-मेल आयडी', 'गाव', 'तालुका', 'कृती'];
 
   @HostBinding('class') className = '';
   constructor(private dialog: MatDialog, private overlay: OverlayContainer, private apiService: ApiService, private errors: ErrorsService,

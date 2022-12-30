@@ -106,10 +106,11 @@
                     </div>
                 </div>
                 <div class="col-sm-6">
+                   
                     <mat-form-field appearance="outline" class="w-100">
                         <mat-label>{{'Labels.school' | translate}}</mat-label>
-                        <input matInput formControlName="schoolName" maxlength="50"
-                            (keypress)="validationService.noFirstSpaceAllow($event);">
+                        <textarea matInput formControlName="schoolName" maxlength="50"
+                            (keypress)="validationService.noFirstSpaceAllow($event);"></textarea>
                         <!-- <mat-error *ngIf="f['schoolName'].hasError('required') || f['schoolName'].hasError('touched')">
                             {{'Labels.schoolNameIsRequired' | translate}}
                         </mat-error> -->
@@ -118,8 +119,8 @@
                 <div class="col-sm-6">
                     <mat-form-field appearance="outline" class="w-100">
                         <mat-label>{{'Labels.school(Marathi)' | translate}}</mat-label>
-                        <input matInput formControlName="m_SchoolName" maxlength="50"
-                            (keypress)="validationService.noFirstSpaceAllow($event); validationService.unicodeMarathiValidation($event);">
+                        <textarea matInput formControlName="m_SchoolName" maxlength="50"
+                            (keypress)="validationService.noFirstSpaceAllow($event); validationService.unicodeMarathiValidation($event);"></textarea>
                         <!-- <mat-error
                             *ngIf="f['m_SchoolName'].hasError('required') || f['m_SchoolName'].hasError('touched')">
                             {{'Labels.schoolNameIsRequired' | translate}}

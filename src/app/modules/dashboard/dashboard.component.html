@@ -10,7 +10,7 @@
         <div class="col-sm-4">
             <mat-form-field appearance="outline" class="w-100">
                 <mat-label>तालुका निवडा</mat-label>
-                <mat-select formControlName="talukaId" (selectionChange)="this.getCenters();this.getbarChartByTaluka()">
+                <mat-select formControlName="talukaId" (selectionChange)="f['talukaId'].value!=0?this.getCenters():''; dashboardAPis()">
                     <mat-option *ngFor="let taluka of talukaData" [value]="taluka.id">
                         {{webStorage.languageFlag == 'EN'?taluka.taluka:taluka.m_Taluka}}
                     </mat-option>
@@ -20,7 +20,7 @@
         <div class="col-sm-4">
             <mat-form-field appearance="outline" class="w-100">
                 <mat-label>केंद्र निवडा</mat-label>
-                <mat-select formControlName="centerId" (selectionChange)="this.getschools()">
+                <mat-select formControlName="centerId" (selectionChange)="this.getschools() ;dashboardAPis()">
                     <mat-option *ngFor="let center of centerData" [value]="center.id">
                         {{webStorage.languageFlag == 'EN'?center.center:center.m_Center}}
                     </mat-option>
@@ -30,9 +30,9 @@
         <div class="col-sm-4">
             <mat-form-field appearance="outline" class="w-100">
                 <mat-label>शाळा निवडा</mat-label>
-                <mat-select formControlName="schoolId">
-                    <mat-option *ngFor="let school of schoolData" [value]="school.value">
-                        {{webStorage.languageFlag == 'EN'?school.schoolType :school.m_SchoolType }}
+                <mat-select formControlName="schoolId"  (selectionChange)="dashboardAPis()">
+                    <mat-option *ngFor="let school of schoolData" [value]="school.id">
+                        {{webStorage.languageFlag == 'EN'?school.schoolName :school.m_SchoolName }}
                     </mat-option>
                 </mat-select>
             </mat-form-field>
@@ -166,8 +166,8 @@
                         </table>
                     </div>
                     <div class="row" *ngIf="showBarChartF">
-                        <div class="col-sm border-end" *ngFor="let bar of barchartOptions.series[0]; let i=index">
-                            <h6 class="small fw-bold text-center mb-0">{{this.barchartOptions.xaxis.categories[0][i]}} स्तर</h6>
+                        <div class="col-sm-3 border-end" *ngFor="let bar of barchartOptions.series[0]; let i=index">
+                            <h6 class="fw-bold text-center mb-0">{{this.barchartOptions.xaxis.categories[0][i]}} स्तर</h6>
                             <apx-chart [series]="bar" [chart]="barchartOptions.chart"
                                 [dataLabels]="barchartOptions.dataLabels" [plotOptions]="barchartOptions.plotOptions"
                                 [responsive]="barchartOptions.responsive" [xaxis]="barchartOptions.xaxis"

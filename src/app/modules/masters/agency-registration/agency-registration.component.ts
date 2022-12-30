@@ -185,7 +185,7 @@ export class AgencyRegistrationComponent {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      result == 'Yes' ? (this.getTableData()) : '';
+      result == 'Yes' && _obj ? (this.pageNumber = _obj.pageNumber, this.getTableData()) : (this.pageNumber = 1,this.getTableData());
     });
   }
 
