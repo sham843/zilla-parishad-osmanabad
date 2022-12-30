@@ -3,8 +3,10 @@ import { Component } from '@angular/core';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { ActivatedRoute } from '@angular/router';
+import { TranslateModule } from '@ngx-translate/core';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ApiService } from 'src/app/core/services/api.service';
 import { ErrorsService } from 'src/app/core/services/errors.service';
@@ -26,7 +28,10 @@ import { TableComponent } from '../table/table.component';
     TableComponent,
     StudentDetailsComponent,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    TranslateModule,
+    MatIconModule
+    
   ]
 })
 export class DashboardStudentGlobalDetailsComponent {
@@ -36,7 +41,7 @@ export class DashboardStudentGlobalDetailsComponent {
   tableDatasize!: Number;
   languageFlag!: string;
   editStudentId:any;
-  currentItem:any;
+  data:any;
   searchContent = new FormControl('');
 
   displayedColumns = ['docPath', 'srNo', 'fullName', 'Status'];
@@ -99,7 +104,17 @@ export class DashboardStudentGlobalDetailsComponent {
           this.tableDataArray.map((res: any) => {
             res.docPath = res.documentResponse[0]?.docPath
           }) 
-          this.currentItem =  this.tableDataArray[0]
+          let obj =  this.tableDataArray[0];
+          this.data = {
+            headerImage: obj.documentResponse[0].docPath,
+            header: this.webService.languageFlag == 'EN' ? obj.fullName : obj.m_FullName,
+            subheader: this.webService.languageFlag == 'EN' ? obj.gender : obj.m_Gender,
+            labelHeader: this.webService.languageFlag == 'EN' ? ['Father Name', 'Parent Mobile No.','Aadhar No.','Standard','School Name'] : ['वडीलांचे नावं', 'पालक मोबाईल क्र.','आधार क्र.','इयत्ता','शाळेचे नाव'],
+            labelKey: this.webService.languageFlag == 'EN' ? ['fatherFullName', 'parentMobileNo', 'aadharNo','standard','schoolName'] : ['m_FatherFullName', 'parentMobileNo','aadharNo','standard','m_SchoolName'],
+            Obj: obj,
+            chart: false
+          }
+          
           
         } else {
           this.ngxSpinner.hide();
@@ -114,7 +129,15 @@ export class DashboardStudentGlobalDetailsComponent {
   }
 
   viewDetails(obj:any){
-    this.currentItem = obj
+    this.data = {
+      headerImage: obj.documentResponse[0].docPath,
+      header: this.webService.languageFlag == 'EN' ? obj.fullName : obj.m_FullName,
+      subheader: this.webService.languageFlag == 'EN' ? obj.gender : obj.m_Gender,
+      labelHeader: this.webService.languageFlag == 'EN' ? ['Father Name', 'Parent Mobile No.','Aadhar No.','Standard','School Name'] : ['वडीलांचे नावं', 'पालक मोबाईल क्र.','आधार क्र.','इयत्ता','शाळेचे नाव'],
+      labelKey: this.webService.languageFlag == 'EN' ? ['fatherFullName', 'parentMobileNo', 'aadharNo','standard','schoolName'] : ['m_FatherFullName', 'parentMobileNo','aadharNo','standard','m_SchoolName'],
+      Obj: obj,
+      chart: false
+    }
   }
    
   childTableCompInfo(obj: any) {
