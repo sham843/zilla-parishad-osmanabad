@@ -237,7 +237,7 @@ export class StudentRegistrationComponent {
         labelHeader: this.webService.languageFlag == 'EN' ? ['Father Name', 'Parent Mobile No.','Aadhar No.','Standard','School Name'] : ['वडीलांचे नावं', 'पालक मोबाईल क्र.','आधार क्र.','इयत्ता','शाळेचे नाव'],
         labelKey: this.webService.languageFlag == 'EN' ? ['fatherFullName', 'parentMobileNo', 'aadharNo','standard','schoolName'] : ['m_FatherFullName', 'parentMobileNo','aadharNo','standard','m_SchoolName'],
         Obj: obj,
-        chart: true
+        chart: false
       }
       const viewDialogRef = this.dialog.open(GlobalDetailComponent, {
         width: '900px',
