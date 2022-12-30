@@ -232,7 +232,8 @@
         "AddressDetails" : "Address Details",
         "Agencydetail" : "Agency Details",
         "Persondetails" : "Contact Person Details",
-        "Designation(Marathi)" :"Designation (Marathi)"
+        "Designation(Marathi)" :"Designation (Marathi)",
+        "DownloadPdf" : "Download PDF"
 
     }
 }
