@@ -40,7 +40,7 @@
         "pleaseSelectReligion" : "Please select religion",
         "pleaseSelectCaste" : "Please select caste",
         "pleaseSelectPhysicallyDisabled" : "Please select physically disabled",
-
+        "pagerightaccess":"Page Right Access",
         "addressIsRequired" :"Address is required",
         "maximummLength500Characters" : "Maximumm length should be less than 500 characters",
         "clear":"Clear",
