@@ -37,7 +37,9 @@ export class GridViewComponent {
   ngOnInit() {
     this.tableInfo = [];
     this.apiService.tableData.subscribe((res: any) => {
-      this.tableInfo = res;      
+      this.tableInfo = res;   
+      console.log(res);
+         
       if (this.tableInfo) {
         this.displayedColumns = this.tableInfo.displayedColumns;
         this.tableSize = this.tableInfo.tableSize;

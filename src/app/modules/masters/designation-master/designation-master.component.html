@@ -24,7 +24,7 @@
                     </button>
                 </mat-menu> -->
                 <button mat-flat-button class="bg-danger btn-icon text-white" title="Download as PDF"
-                    (click)="downloadPdf()">
+                    (click)="getTableData('pdfFlag')">
                     <mat-icon>
                         description
                     </mat-icon>
@@ -54,7 +54,7 @@
                 </mat-form-field>
             </div>
             <div class="col-sm-auto">
-                <button (click)="filterData()" mat-flat-button class="btn-main">{{'Labels.filter' |
+                <button (click)="getTableData('filter')" mat-flat-button class="btn-main">{{'Labels.filter' |
                     translate}}</button>
                 <button mat-flat-button class="btn-second ms-2" (click)="clearForm()">{{'Labels.clear' |
                     translate}}</button>

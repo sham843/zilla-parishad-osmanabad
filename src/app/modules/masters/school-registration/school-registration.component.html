@@ -44,7 +44,7 @@
                     </button>
                 </mat-menu> -->
                 <button class="btn-main d-flex align-items-center justify-content-between" mat-flat-button
-                    (click)="addUpdateAgency()">
+                    (click)="addUpdateSchool()">
                     <mat-icon>
                         add
                     </mat-icon>
@@ -70,7 +70,7 @@
             <div class="col-sm-2">
                 <mat-form-field appearance="outline" class="w-100">
                     <mat-label>{{'Labels.taluka' | translate}}</mat-label>
-                    <mat-select [formControl]="talukaId" (selectionChange)="getVillage();">
+                    <mat-select [formControl]="talukaId" (selectionChange)="clearDropdown('Taluka');getVillage();">
                         <mat-option *ngFor="let taluka of talukaArr" [value]="taluka.id">
                             {{webStorageS.getLangauge() == 'EN' ?
                             taluka.taluka : taluka.m_Taluka}}
@@ -102,7 +102,8 @@
         </ng-container>
 
         <ng-container *ngIf="cardViewFlag">
-            <div class="row">
+            <app-grid-view (gridToChild)="childGridInfo($event)"></app-grid-view>
+            <!-- <div class="row">
                 <div class="col-sm-4 mb-3" *ngFor="let data of tableDataArray">
                     <mat-card>
                         <mat-card-header class="d-flex justify-content-end">
@@ -112,7 +113,7 @@
                                 </span>
                             </button>
                             <mat-menu #menu="matMenu">
-                                <button mat-menu-item (click)="addUpdateAgency(data)">
+                                <button mat-menu-item (click)="addUpdateSchool(data)">
                                     <div class="d-flex justify-content-between">
                                         Edit
                                         <span class="material-symbols-outlined ">
@@ -121,14 +122,14 @@
                                     </div>
                                    
                                 </button>
-                                <!-- <button mat-menu-item (click)="globalDialogOpen(data)">
+                                <button mat-menu-item (click)="globalDialogOpen(data)">
                                     <div class="d-flex justify-content-between">
                                     Delete
                                     <span class="material-symbols-outlined">
                                         delete
                                     </span>
                                 </div>
-                                </button> -->
+                                </button> 
                             </mat-menu>
                         </mat-card-header>
                         <mat-card-content>
@@ -187,7 +188,7 @@
                     <div class="alert alert-danger text-center py-2 ">
                         Data not available
                     </div>
-                </div>
+                </div> -->
         </ng-container>
     </mat-card-content>
 </mat-card>

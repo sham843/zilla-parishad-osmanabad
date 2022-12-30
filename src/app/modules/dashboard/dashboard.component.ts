@@ -94,11 +94,24 @@ export class DashboardComponent implements OnInit,AfterViewInit {
   }
   getPieChart() {
     this.piechartOptions = {
-      series: [44, 55, 13, 43, 22],
+      series: [],
       chart: {
         type: "donut"
       },
-      labels: ["Team A", "Team B", "Team C", "Team D", "Team E"],
+      theme: {
+        monochrome: {
+          enabled: true,
+          color: '#039286',
+          shadeTo: 'light',
+          shadeIntensity: 0.65
+        }
+      },
+      fill: {
+        type: "solid",
+        //colors: ["#00E396", "#F9CE1D", "#D4526E", "#D7263D", "#A300D6"]
+      },
+      // colors: [],
+       labels: [],
       responsive: [
         {
           breakpoint: 480,
@@ -106,6 +119,7 @@ export class DashboardComponent implements OnInit,AfterViewInit {
             chart: {
               width: 200
             },
+           
             legend: {
               position: "bottom"
             }
@@ -127,13 +141,21 @@ export class DashboardComponent implements OnInit,AfterViewInit {
           show: false
         },
       },
+      theme: {
+        monochrome: {
+          enabled: true,
+          color: '#CB4B4B',
+          shadeTo: 'light',
+          shadeIntensity: 0.65
+        }
+      },
       responsive: [
         {
           breakpoint: 480,
           options: {
             legend: {
               position: "bottom",
-              colors: ['#005f57', '#327e78', '#4c8f89', '#669f9a', '#99bfbb'],
+              // colors: [],
             }
           }
         }
@@ -162,7 +184,7 @@ export class DashboardComponent implements OnInit,AfterViewInit {
 
       },
       fill: {
-        colors: ['#005f57', '#327e78', '#4c8f89', '#669f9a', '#99bfbb'],
+        // colors: [],
         opacity: 1
       },
       legend: {
@@ -181,12 +203,20 @@ export class DashboardComponent implements OnInit,AfterViewInit {
           show: false
         },
       },
+      theme: {
+        monochrome: {
+          enabled: true,
+          color: '#CB4B4B',
+          shadeTo: 'light',
+          shadeIntensity: 0.65
+        }
+      },
       responsive: [
         {
           breakpoint: 480,
           options: {
             legend: {
-              colors: ['#005f57', '#327e78', '#4c8f89', '#669f9a', '#99bfbb'],
+              // colors: ['#CB4B4B', '#E76A63', '#E98754', '#EFB45B', '#65C889'],
               position: "bottom",
               offsetX: -10,
               offsetY: 0
@@ -218,7 +248,7 @@ export class DashboardComponent implements OnInit,AfterViewInit {
 
       },
       fill: {
-        colors: ['#005f57', '#327e78', '#4c8f89', '#669f9a', '#99bfbb'],
+        // colors: ['#CB4B4B', '#E76A63', '#E98754', '#EFB45B', '#65C889'],
         opacity: 1
       },
       legend: {
@@ -268,8 +298,10 @@ export class DashboardComponent implements OnInit,AfterViewInit {
     serriesArray[0]= this.dashboardCountData[0].govtSchool|0;
     serriesArray[1]= this.dashboardCountData[0].privateSchool|0;
     serriesArray[2]= this.dashboardCountData[0].otherSchool|0;
+    this.piechartOptions.colors=[];
     this.piechartOptions.series = serriesArray;
     this.piechartOptions.labels=['Goverment','Private','Other'];
+    // this.piechartOptions.colors=['#CB4B4B', '#E76A63', '#E98754', '#EFB45B', '#65C889'];
   }
 
   getBarChart(obj:any){

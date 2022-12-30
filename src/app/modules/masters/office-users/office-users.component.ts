@@ -54,13 +54,11 @@ export class OfficeUsersComponent {
       return
     }
     let reportStr = `?textSearch=${this.searchContent.value}&pageno=${this.pageNumber}&pagesize=${(this.totalCount * 10)}&lan=${this.webStorageService.languageFlag}`;
-
     let str = `?textSearch=${this.searchContent.value}&pageno=${this.pageNumber}&pagesize=10&lan=${this.webStorageService.languageFlag}`;
     this.apiService.setHttp('GET', 'zp_osmanabad/Office/GetAllOffice' + (flag == 'reportFlag' ? reportStr : str), false, false, false, 'baseUrl');
     this.apiService.getHttp().subscribe({
       next: (res: any) => {
         console.log("Table res : ", res);
-        
         if (res.statusCode == "200") {
           this.ngxSpinner.hide();  
           flag != 'reportFlag' ? this.tableDataArray = res.responseData.responseData1 : this.tableDataArray = this.tableDataArray;

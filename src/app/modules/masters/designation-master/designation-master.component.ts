@@ -24,7 +24,8 @@ export class DesignationMasterComponent {
   displayedColumns = new Array();
   displayedheaders = ['Sr.No.', 'Designation', 'Designation Level', 'Action'];
   displayedheadersMarathi = ['अनुक्रमांक', 'पदनाम', 'पदनाम स्तर','कृती',];
-  langTypeName: any
+  langTypeName: any;
+  totalCount: number = 0;
 
   constructor(private dialog: MatDialog, private apiService: ApiService, private errors: ErrorsService,
     private masterService:MasterService ,private commonMethod: CommonMethodsService, public webStorage : WebStorageService,
@@ -33,7 +34,6 @@ export class DesignationMasterComponent {
   ngOnInit() {
     this.getTableData(); 
     this.getDesiganationType();     
-    this.getofficeReport()
     this.webStorage.langNameOnChange.subscribe(lang => {
       this.langTypeName = lang;
       this.getTableTranslatedData();
@@ -69,34 +69,44 @@ getDesiganationType() {
     this.getTableData()
   }
 
-  filterData(){
-    if(this.searchContent.value){
-      this.getTableData();
-      this.pageNumber = 1;
-      this.getofficeReport();
-      
-
-    }
-  }
+  // filterData(){
+  //   if(this.searchContent.value){
+  //     this.getTableData('filter');
+  //     this.pageNumber = 1;
+  //   }
+  // }
   //#region ------------------------------------- Designation-Master Table-Data ------------------------------- //
   getTableData(flag?:string) {
+    // this.tableDataArray = [];
+    // if(localStorage.getItem('designation')){
+    //   this.pageNumber = JSON.parse(localStorage.getItem('designation')||'');
+    //   localStorage.removeItem('designation');
+    // }
+    // this.pageNumber = flag == 'filter'? 1 :this.pageNumber;
     // this.tableDataArray = [];  
     this.pageNumber =   flag == 'filter'? 1 :this.pageNumber;
+
     // let tableDataArray = new Array();
     // let tableDatasize!: Number; 
    
     let str = `pageno=${this.pageNumber}&pagesize=10&textSearch=${this.searchContent.value ? this.searchContent.value:''}&lan=${this.webStorage.languageFlag}`;
-    // let str = `Id=${this.searchContent.value?this.searchContent.value:0}&pageno=${this.pageNumber}&pagesize=10&lan=${this.webStorage.languageFlag}`;
-    this.apiService.setHttp('GET', 'zp_osmanabad/designation-master/GetAllByCriteria?' + str, false, false, false, 'baseUrl');
+    let reportStr = `pageno=${this.pageNumber}&pagesize=${this.totalCount* 10}&textSearch=${this.searchContent.value ? this.searchContent.value:''}&lan=${this.webStorage.languageFlag}`;
+    this.apiService.setHttp('GET', 'zp_osmanabad/designation-master/GetAllByCriteria?' + (flag == 'pdfFlag' ? reportStr : str), false, false, false, 'baseUrl');
     this.apiService.getHttp().subscribe({
 
       next: (res: any) => {
         if (res.statusCode == "200") {
-          this.tableDataArray = res.responseData.responseData1;
+          // this.tableDataArray = res.responseData.responseData1;
+          flag != 'pdfFlag' ? this.tableDataArray = res.responseData.responseData1 : this.tableDataArray = this.tableDataArray;
           this.tableDatasize = res.responseData.responseData2.pageCount;
+          this.totalCount = res.responseData.responseData2.pageCount;
+          this.resultDownloadArr = [];
+          let data: [] = res.responseData.responseData1;
+          flag == 'pdfFlag' ? this.downloadPdf(data) : '';
         } else {
           this.tableDataArray = [];
           this.tableDatasize = 0;
+          this.tableDatasize == 0 && flag == 'pdfFlag' ? this.commonMethod.snackBar('No Record Found', 1) : '';
         }
         this.getTableTranslatedData();
       },
@@ -187,30 +197,32 @@ getDesiganationType() {
     })
   }
 
-  getofficeReport(){
-    let str = `pageno=${this.pageNumber}&pagesize=10&textSearch=${this.searchContent.value ? this.searchContent.value:''}&lan=${this.webStorage.languageFlag}`;
-    this.apiService.setHttp('GET', 'zp_osmanabad/designation-master/GetAllByCriteria?' + str, false, false, false, 'baseUrl');
-    // let str = `Id=${this.searchContent.value?this.searchContent.value:0}&lan=${this.webStorage.languageFlag}`;
-    // this.apiService.setHttp('GET', 'zp_osmanabad/designation-master/GetAll?' + str, false, false, false, 'baseUrl');
-    this.apiService.getHttp().subscribe({
-      next: (res: any) => {
-        if (res.statusCode == "200") {          
-          let data:[] = res.responseData.responseData1;   
-          data.map((ele: any, i: any)=>{
-            let obj = {
-              "Sr.No": i+1,
-              "Designation Name": ele.designationName,
-              "Designation Level": ele.designationLevel,
-            }
-            this.resultDownloadArr.push(obj);
-          });
-        }
-      },
-      error: ((err: any) => { this.errors.handelError(err.message) })
-    });
-  }
+  // getofficeReport(){
+  //   let str = `pageno=${this.pageNumber}&pagesize=10&textSearch=${this.searchContent.value ? this.searchContent.value:''}&lan=${this.webStorage.languageFlag}`;
+  //   this.apiService.setHttp('GET', 'zp_osmanabad/designation-master/GetAllByCriteria?' + str, false, false, false, 'baseUrl');
+  //   // let str = `Id=${this.searchContent.value?this.searchContent.value:0}&lan=${this.webStorage.languageFlag}`;
+  //   // this.apiService.setHttp('GET', 'zp_osmanabad/designation-master/GetAll?' + str, false, false, false, 'baseUrl');
+  //   this.apiService.getHttp().subscribe({
+  //     next: (res: any) => {
+  //       if (res.statusCode == "200") {          
+  //         let data:[] = res.responseData.responseData1;   
 
-  downloadPdf() {
+          
+  //       }
+  //     },
+  //     error: ((err: any) => { this.errors.handelError(err.message) })
+  //   });
+  // }
+
+  downloadPdf(data: any) {
+    data.map((ele: any, i: any)=>{
+      let obj = {
+        "Sr.No": i+1,
+        "Designation Name": ele.designationName,
+        "Designation Level": ele.designationLevel,
+      }
+      this.resultDownloadArr.push(obj);
+    });
     let keyPDFHeader = ['srNo', 'designationName', 'designationLevel'];
         let ValueData =
           this.resultDownloadArr.reduce(
