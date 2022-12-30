@@ -71,20 +71,18 @@ export class AddUpdateTeacherRegistrationComponent {
     this.formData();
     (!this.data) ? this.getGender() : this.onEdit(this.data);
   }
+  //#region --------------------------get form Controls ---------------------------------
   get f() {
     return this.teacherRegForm.controls;
   }
   get td() {
     return ((this.teacherRegForm.get('teacherDetails') as FormGroup).controls)
   }
-
+//#endregion-------------------------- end form controls ---------------------------------
+//#region ---------------------------- start form object ---------------------------------
   formData() {
     this.teacherRegForm = this.fb.group({
-      "createdBy": 0,
-      "modifiedBy": 0,
-      "createdDate": new Date(),
-      "modifiedDate": new Date(),
-      "isDeleted": false,
+      ...this.webStorageS.createdByProps(),
       "id": [this.data ? this.data.id : 0],
       "name": [this.data ? this.data.name : '', [Validators.required, Validators.pattern(this.validation.fullName)]],
       "m_Name": [this.data ? this.data.m_Name : '', Validators.required],
@@ -108,11 +106,7 @@ export class AddUpdateTeacherRegistrationComponent {
       "localID": 0,
       "timestamp": new Date(),
       teacherDetails: this.fb.group({
-        "createdBy": 0,
-        "modifiedBy": 0,
-        "createdDate": new Date(),
-        "modifiedDate": new Date(),
-        "isDeleted": false,
+        ...this.webStorageS.createdByProps(),
         "id": 0,
         "teacherId": 0,
         "districtId":['', Validators.required],
@@ -155,7 +149,8 @@ export class AddUpdateTeacherRegistrationComponent {
       "assignTeacher": []
     })
   }
-
+//#endregion --------------------------- end form object ----------------------------------
+//#region ------------------ start update validation hide show field -----------------------
   castvalidation(obj: any) {
     if (obj.value != 7) {
       this.td["castCategoryId"].setValidators(Validators.required);
@@ -204,7 +199,8 @@ export class AddUpdateTeacherRegistrationComponent {
     this.td['interDistrictTransferType'].updateValueAndValidity();
     this.td['theOriginalDistrictInterDistrictTransfer'].updateValueAndValidity();
   }
-
+//#endregion ---------------- end update validation hide show field -------------------------
+//#region -------------------------start standard check box ----------------------------------
   addStand(stand: any, value: number) {
     this.assignclass = true;
     let data =
@@ -223,7 +219,8 @@ export class AddUpdateTeacherRegistrationComponent {
       this.assignClassArray = [...findObj]
     }
   }
-
+//#endregion-------------------------end standard check box ------------------------------------
+//#region --------------------------start permant address check box ----------------------------------
   addSameAddress(event:any){
    this.checked=event.currentTarget.checked;
     if(this.checked == true){
@@ -233,8 +230,9 @@ export class AddUpdateTeacherRegistrationComponent {
       this.f['permentAddress'].setValue('');
     }   
   }
+//#endregion --------------------------end permant address check box ----------------------------------
 
-
+//#region ------------------------------ start drop-down ---------------------------------------------
   getGender() {
     this.masterService.getAllGender('EN').subscribe({
       next: ((res: any) => {
@@ -517,6 +515,7 @@ export class AddUpdateTeacherRegistrationComponent {
     this.editFlag ? this.td['haveYouPassedComputerExam'].setValue(this.editObj.teacherDetails.haveYouPassedComputerExam) : '';
   }
 
+  //#endregion ----------------------------------end drop-down ------------------------------------------
   imgUpload(event: any) {
     this.img = true;
     this.fileUpload.uploadDocuments(event, 'Upload', 'jpg, jpeg, png').subscribe((res: any) => {
@@ -529,6 +528,7 @@ export class AddUpdateTeacherRegistrationComponent {
     });
   }
 
+  //#region  -------------------------------------start submit --------------------------------------------
   OnSubmit() {
     let formValue = this.teacherRegForm.value;
     formValue.uploadImage ? formValue.uploadImage = this.uploadImg : ''; 
@@ -567,13 +567,16 @@ export class AddUpdateTeacherRegistrationComponent {
       })
     }
   }
-
+//#endregion -------------------------------------end submit-----------------------------------------------
+//#region ---------------------------------------- start edit ----------------------------------------------
   onEdit(obj: any) {
     this.editFlag = true;
     this.editObj = obj;  
     this.data.uploadImage ? this.teacherRegForm.value.uploadImage = obj.uploadImage : '';
     this.data.uploadImage ? this.showAddRemImg = true : this.showAddRemImg = false;
     this.assignClassArray = obj.assignTeacher;
+
+    //---------------------------start patch assign class check-box---------------------------//
     for (let i = 0; i < this.newAsssignClassArray.length; i++) {
       for (let j = 0; j < obj.assignTeacher.length; j++) {
         if (this.newAsssignClassArray[i].standardId == obj.assignTeacher[j].standardId) {
@@ -581,13 +584,15 @@ export class AddUpdateTeacherRegistrationComponent {
         }
       }
     }
-    
+    //---------------------------end patch assign class check-box---------------------------//
+    //---------------------------star patch current and perment address check-box---------------------------//
     if(obj.currentAddress == obj.permentAddress){
       this.checked = true;
     }
+     //---------------------------end patch current and perment address check-box---------------------------//
     this.formData(); this.getGender();
   }
-
+//#endregion --------------------------------------- end edit ----------------------------------------------
   clearImg() {
     this.teacherRegForm.value.uploadImage = '';
     this.f['uploadImage'].setValue('');
