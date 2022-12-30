@@ -46,7 +46,7 @@
         "clear":"Clear",
         "AddDesignation":"Add Designation",
         "SelectDesignation": "Select Designation",
-        "RegisterDesignation":"Update Designation",
+        "UpdateDesignation":"Update Designation",
         "registerDesignation":"Register Designation",
         "DesignationLevel":"Designation Level",
         "DesignationLevelReq":"Designation level is required",
