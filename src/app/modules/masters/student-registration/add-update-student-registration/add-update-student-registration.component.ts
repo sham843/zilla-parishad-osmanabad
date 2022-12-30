@@ -257,6 +257,7 @@ export class AddUpdateStudentRegistrationComponent {
       physicallyDisabled: this.editObj?.isHandicaped ? 1 : 2
     });
     this.imageArray = this.editObj?.documentResponse;
+    console.log(this.imageArray);
     let aadharObj = this.editObj?.documentResponse?.find((res: any) => res.documentId == 2);
     let imageObj = this.editObj?.documentResponse?.find((res: any) => res.documentId == 1);
     this.uploadAadhaar = aadharObj?.docPath;
@@ -389,17 +390,20 @@ export class AddUpdateStudentRegistrationComponent {
   }
 
   deleteImage(name: string) {
+    debugger
     if (name == 'aadharPhoto') {
       this.uploadAadhaar = '';
       this.aadharFile.nativeElement.value = '';
-      let index = this.imageArray.findIndex((res: any) => { res.documentId == 2 });
+      let index = this.imageArray.findIndex(res => res.documentId == 2);
       this.imageArray.splice(index, 1);
     } else if (name == 'photo') {
       this.uploadImg = '';
       this.imageFile.nativeElement.value = '';
-      let index = this.imageArray.findIndex((res: any) => { res.documentId == 1 })
+      let index = this.imageArray.findIndex(res => res.documentId == 1);
       this.imageArray.splice(index, 1);
     }
+    console.log(this.imageArray);
+    
   }
 
   //#region ------------------------------------------- Image Logic Start Here -----------------------------------------------------------------
