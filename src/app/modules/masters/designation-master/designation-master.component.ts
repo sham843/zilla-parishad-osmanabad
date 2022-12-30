@@ -80,11 +80,7 @@ getDesiganationType() {
   }
   //#region ------------------------------------- Designation-Master Table-Data ------------------------------- //
   getTableData(flag?:string) {
-    this.tableDataArray = [];
-    if(localStorage.getItem('designation')){
-      this.pageNumber = JSON.parse(localStorage.getItem('designation')||'');
-      localStorage.removeItem('designation');
-    }
+    // this.tableDataArray = [];  
     this.pageNumber =   flag == 'filter'? 1 :this.pageNumber;
     // let tableDataArray = new Array();
     // let tableDatasize!: Number; 
@@ -139,8 +135,7 @@ getDesiganationType() {
      
       if(result == 'yes' && obj){     
         this.clearForm();
-        this.pageNumber = this.pageNumber;
-        localStorage.setItem('designation',JSON.stringify(this.pageNumber));
+        this.pageNumber = this.pageNumber;       
       }
       else if(result == 'yes' ){
         this.clearForm();

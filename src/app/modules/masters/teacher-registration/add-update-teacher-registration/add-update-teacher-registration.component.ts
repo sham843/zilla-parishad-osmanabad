@@ -1,6 +1,7 @@
 import { Component, Inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { NgxSpinnerService } from 'ngx-spinner';
 import { ApiService } from 'src/app/core/services/api.service';
 import { CommonMethodsService } from 'src/app/core/services/common-methods.service';
 import { ErrorsService } from 'src/app/core/services/errors.service';
@@ -61,13 +62,15 @@ export class AddUpdateTeacherRegistrationComponent {
     { standardId: 8, checked: false }
   ];
   constructor(private masterService: MasterService, private commonMethod: CommonMethodsService, private errorHandler: ErrorsService,
-    private fileUpload: FileUploadService, public validation: ValidationService,public webStorageS: WebStorageService,
+    private fileUpload: FileUploadService, public validation: ValidationService,public webStorageS: WebStorageService,private ngxSpinner : NgxSpinnerService,
     private fb: FormBuilder, private service: ApiService, public dialogRef: MatDialogRef<AddUpdateTeacherRegistrationComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any) { }
 
   ngOnInit() {
     this.formData();
-    !this.data ? this.getGender() : this.onEdit(this.data);
+    console.log("dataa",this.data);
+    
+    (!this.data) ? this.getGender() : this.onEdit(this.data);
   }
   get f() {
     return this.teacherRegForm.controls;
@@ -122,12 +125,12 @@ export class AddUpdateTeacherRegistrationComponent {
         "graduate_SubjectId": ['', Validators.required],
         "isGraduate_PayScale": ['', Validators.required],
         "castId": ['', Validators.required],
-        "castCategoryId": ['', Validators.required],
-        "castCertificateNo": [this.data ? this.data.teacherDetails.castCertificateNo : '', Validators.required],
-        "castCertificateOffice": [this.data ? this.data.teacherDetails.castCertificateOffice : '', Validators.required],
-        "isCastVarificationDone": ['', Validators.required],
-        "castValidityNoDate": [this.data ? this.data.teacherDetails.castValidityNoDate : '', Validators.required],
-        "castverificationCommitteeName": [this.data ? this.data.teacherDetails.castverificationCommitteeName : '', Validators.required],
+        "castCategoryId": [null],
+        "castCertificateNo": [this.data ? this.data.teacherDetails.castCertificateNo : ''],
+        "castCertificateOffice": [this.data ? this.data.teacherDetails.castCertificateOffice : ''],
+        "isCastVarificationDone": [null],
+        "castValidityNoDate": [this.data ? this.data.teacherDetails.castValidityNoDate : ''],
+        "castverificationCommitteeName": [this.data ? this.data.teacherDetails.castverificationCommitteeName : ''],
         "dateOfFirstAppoinmentService": [this.data ? this.data.teacherDetails.dateOfFirstAppoinmentService : '', Validators.required],
         "currentSchoolJoiningDate": [this.data ? this.data.teacherDetails.currentSchoolJoiningDate : '', Validators.required],
         "currentTalukaPresentDate": [this.data ? this.data.teacherDetails.currentTalukaPresentDate : '', Validators.required],
@@ -140,65 +143,69 @@ export class AddUpdateTeacherRegistrationComponent {
         "bEdPercentages": [this.data ? this.data.teacherDetails.bEdPercentages : ''],
         "bEdUniversityId": [this.data ? this.data.teacherDetails.bEdUniversityId : ''],
         "husbandWife_Both_Service": ['', Validators.required],
-        "husbandWife_OfficeName": [this.data ? this.data.teacherDetails.husbandWife_OfficeName : '', Validators.required],
+        "husbandWife_OfficeName": [this.data ? this.data.teacherDetails.husbandWife_OfficeName : ''],
         "isDisabled": ['', Validators.required],
         "interDistrictTransferred": ['', Validators.required],
-        "dateOFPresenceInterDistrictTransfer": [this.data ? this.data.teacherDetails.dateOFPresenceInterDistrictTransfer : '', Validators.required],
-        "interDistrictTransferType": ['', Validators.required],
-        "theOriginalDistrictInterDistrictTransfer": [this.data ? this.data.teacherDetails.theOriginalDistrictInterDistrictTransfer : '', Validators.required],
+        "dateOFPresenceInterDistrictTransfer": [this.data ? this.data.teacherDetails.dateOFPresenceInterDistrictTransfer : null],
+        "interDistrictTransferType": [null],
+        "theOriginalDistrictInterDistrictTransfer": [this.data ? this.data.teacherDetails.theOriginalDistrictInterDistrictTransfer : ''],
         "dateOfSeniority": [this.data ? this.data.teacherDetails.dateOfSeniority : '', Validators.required],
         "haveYouPassedComputerExam": ['', Validators.required],
         "namesAndTalukasAllSchoolsWorkedEarlier": [this.data ? this.data.teacherDetails.namesAndTalukasAllSchoolsWorkedEarlier : '', Validators.required]
       }),
       "assignTeacher": []
     })
-
   }
 
-  changeValidators(obj: any) {
- 
+  castvalidation(obj: any) {
+   
+    
     if (obj.value != 7) {
+      this.td["castCategoryId"].setValidators(Validators.required);
+      this.td["castCertificateNo"].setValidators(Validators.required);
+      this.td["castCertificateOffice"].setValidators(Validators.required);
+      this.td["isCastVarificationDone"].setValidators(Validators.required);
+      this.td["castValidityNoDate"].setValidators(Validators.required);
+      this.td["castverificationCommitteeName"].setValidators(Validators.required);   
+    }else{
       this.td['castCategoryId'].clearValidators();
-      this.td['castCategoryId'].updateValueAndValidity();
-
       this.td['castCertificateNo'].clearValidators();
-      this.td['castCertificateNo'].updateValueAndValidity();
-
       this.td['castCertificateOffice'].clearValidators();
-      this.td['castCertificateOffice'].updateValueAndValidity();
-
       this.td['isCastVarificationDone'].clearValidators();
-      this.td['isCastVarificationDone'].updateValueAndValidity();
-
       this.td['castValidityNoDate'].clearValidators();
-      this.td['castValidityNoDate'].updateValueAndValidity();
-
       this.td['castverificationCommitteeName'].clearValidators();
-      this.td['castverificationCommitteeName'].updateValueAndValidity();
-
     }
+    this.td['castCategoryId'].updateValueAndValidity();
+    this.td['castCertificateNo'].updateValueAndValidity();
+    this.td['castCertificateOffice'].updateValueAndValidity();
+    this.td['isCastVarificationDone'].updateValueAndValidity();
+    this.td['castValidityNoDate'].updateValueAndValidity();
+    this.td['castverificationCommitteeName'].updateValueAndValidity();
+    
   }
 
   removeValidators(obj: any) {
-    if (obj.value == false) {
+    if (obj.value == true) {
+      this.td["husbandWife_OfficeName"].setValidators(Validators.required);     
+    }else{
       this.td['husbandWife_OfficeName'].clearValidators();
-      this.td['husbandWife_OfficeName'].updateValueAndValidity();
     }
+    this.td['husbandWife_OfficeName'].updateValueAndValidity();
   }
 
-  interDistrictTrafValidators(obj:any){
-    if (obj.value == false) {
+  interDistrictTrafValidators(obj:any){   
+    if (obj.value == true) {
+      this.td["dateOFPresenceInterDistrictTransfer"].setValidators(Validators.required); 
+      this.td["interDistrictTransferType"].setValidators(Validators.required); 
+      this.td["theOriginalDistrictInterDistrictTransfer"].setValidators(Validators.required);      
+    }else{
       this.td['dateOFPresenceInterDistrictTransfer'].clearValidators();
-      this.td['dateOFPresenceInterDistrictTransfer'].updateValueAndValidity();
-
       this.td['interDistrictTransferType'].clearValidators();
-      this.td['interDistrictTransferType'].updateValueAndValidity();
-
       this.td['theOriginalDistrictInterDistrictTransfer'].clearValidators();
-      this.td['theOriginalDistrictInterDistrictTransfer'].updateValueAndValidity();
-
-     
     }
+    this.td['dateOFPresenceInterDistrictTransfer'].updateValueAndValidity();
+    this.td['interDistrictTransferType'].updateValueAndValidity();
+    this.td['theOriginalDistrictInterDistrictTransfer'].updateValueAndValidity();
   }
 
   addStand(stand: any, value: number) {
@@ -225,8 +232,10 @@ export class AddUpdateTeacherRegistrationComponent {
     this.masterService.getAllGender('EN').subscribe({
       next: ((res: any) => {
         if (res.statusCode == '200' && res.responseData.length) {
-          this.genderArray = res.responseData;         
-          this.editFlag ? (this.teacherRegForm.controls['genderId'].setValue(this.editObj.genderID), this.getDistrict()) : this.getDistrict();this.getAllDistrictTeacherDetails();
+          this.genderArray = res.responseData;    
+          console.log("editt", this.editFlag);
+               
+          this.editFlag == true ? (this.teacherRegForm.controls['genderId'].setValue(this.editObj.genderID), this.getDistrict()) : (this.editFlag== false) ? (this.getDistrict(),this.getAllDistrictTeacherDetails()) : ''
         }
       }), error: (error: any) => {
         this.commonMethod.checkEmptyData(error.statusText) == false ? this.errorHandler.handelError(error.statusCode) : this.commonMethod.snackBar(error.statusText, 1);
@@ -258,7 +267,7 @@ export class AddUpdateTeacherRegistrationComponent {
       }), error: (error: any) => {
         this.commonMethod.checkEmptyData(error.statusText) == false ? this.errorHandler.handelError(error.statusCode) : this.commonMethod.snackBar(error.statusText, 1);
       }
-    })
+    });
   }
 
   getVillage() {
@@ -281,7 +290,7 @@ export class AddUpdateTeacherRegistrationComponent {
         if (res.statusCode == '200' && res.responseData.length) {
           this.districtArrayTeacherDeatails = res.responseData;
           this.td['districtId'].setValue(1)
-          this.editFlag ? (this.td['districtId'].setValue(this.editObj.teacherDetails.districtId), this.getAllTalukaTeacherDeatails()) : this.getAllTalukaTeacherDeatails();this.getDesignation();
+          this.editFlag ? (this.td['districtId'].setValue(this.editObj.teacherDetails.districtId), this.getAllTalukaTeacherDeatails()) :!this.editFlag ? (this.getAllTalukaTeacherDeatails(),this.getDesignation()):'';
 
         }
       }), error: (error: any) => {
@@ -507,16 +516,21 @@ export class AddUpdateTeacherRegistrationComponent {
   imgUpload(event: any) {
     this.img = true;
     this.fileUpload.uploadDocuments(event, 'Upload', 'jpg, jpeg, png').subscribe((res: any) => {
+     if(res.statusCode ==200){
       this.uploadImg = res.responseData;
       this.showAddRemImg = true;
+     }else{
+      return;
+     }
     });
   }
 
   OnSubmit() {
-
     let formValue = this.teacherRegForm.value;
     formValue.uploadImage ? formValue.uploadImage = this.uploadImg : '';
-    !this.showAddRemImg ? formValue.uploadImage = '' : formValue.uploadImage = formValue.uploadImage;
+    // !this.showAddRemImg ? formValue.uploadImage = '' : formValue.uploadImage = formValue.uploadImage;
+    
+   console.log(formValue);
     if (this.editFlag == true) {
       if (this.data.uploadImage) {
         this.img ? formValue.uploadImage = this.uploadImg : formValue.uploadImage = this.data.uploadImage
@@ -532,13 +546,14 @@ export class AddUpdateTeacherRegistrationComponent {
     else {
       formValue.assignTeacher = this.assignClassArray;
       let postObj = this.teacherRegForm.value;
-      console.log(postObj);
+      // console.log(postObj);
+      this.ngxSpinner.show();
       let url;
       this.editFlag ? url = 'zp_osmanabad/Teacher/Update' : url = 'zp_osmanabad/Teacher/Add'
       this.service.setHttp(this.editFlag ? 'put' : 'post', url, false, postObj, false, 'baseUrl');
       this.service.getHttp().subscribe({
         next: ((res: any) => {
-          // this.ngxSpinner.hide();
+          this.ngxSpinner.hide();
           if (res.statusCode == '200') {
             this.dialogRef.close('yes');
           } else {
@@ -546,7 +561,7 @@ export class AddUpdateTeacherRegistrationComponent {
           }
         }),
         error: (error: any) => {
-          // this.ngxSpinner.hide();
+          this.ngxSpinner.hide();
           this.commonMethod.checkEmptyData(error.statusMessage) == false ? this.errorHandler.handelError(error.statusCode) : this.commonMethod.snackBar(error.statusMessage, 1);
         }
       })
