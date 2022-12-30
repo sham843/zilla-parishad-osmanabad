@@ -19,7 +19,9 @@ import { MatIconModule } from '@angular/material/icon';
 import { TableComponent } from 'src/app/shared/components/table/table.component';
 import { PageStatisticsComponent } from 'src/app/shared/components/page-statistics/page-statistics.component';
 import { GlobalDialogComponent } from 'src/app/shared/components/global-dialog/global-dialog.component';
+
 import { TranslateModule } from '@ngx-translate/core';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 @NgModule({
   declarations: [
@@ -44,7 +46,8 @@ import { TranslateModule } from '@ngx-translate/core';
     TableComponent,
     PageStatisticsComponent,
     GlobalDialogComponent,
-    TranslateModule
+    TranslateModule, 
+    MatTooltipModule
   ],
   providers:[]
 })

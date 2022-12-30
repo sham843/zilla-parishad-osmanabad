@@ -149,7 +149,7 @@ export class DashboardComponent implements OnInit,AfterViewInit {
       theme: {
         monochrome: {
           enabled: true,
-          color: '#CB4B4B',
+          color: '#039286',
           shadeTo: 'light',
           shadeIntensity: 0.65
         }
@@ -205,7 +205,7 @@ export class DashboardComponent implements OnInit,AfterViewInit {
         opacity: 1
       },
       legend: {
-        position: "right",
+        position: "bottom",
       }
     };
     this.barchartOptions1 = {
@@ -223,7 +223,7 @@ export class DashboardComponent implements OnInit,AfterViewInit {
       theme: {
         monochrome: {
           enabled: true,
-          color: '#CB4B4B',
+          color: '#039286',
           shadeTo: 'light',
           shadeIntensity: 0.65
         }
@@ -245,8 +245,8 @@ export class DashboardComponent implements OnInit,AfterViewInit {
         labels: {
           show: true,
           style: {
-            fontSize: '12px',
-            fontFamily: 'Helvetica, Arial, sans-serif',
+            fontSize: '14px',
+            fontFamily: 'Noto Sans Devanagari, sans-serif',
             fontWeight: 600,
             cssClass: 'apexcharts-xaxis-label',
         },
