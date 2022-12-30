@@ -123,8 +123,9 @@ export class StudentRegistrationComponent {
             flag == 'reportFlag' ? this.commonMethods.snackBar("No Data Found", 1) :'';
           }
 
-        } else {
+        } else {          
           this.ngxSpinner.hide();
+          flag == 'reportFlag' ? this.commonMethods.snackBar("No Data Found", 1) :'';
           this.tableDataArray = [];
           this.tableDatasize = 0;
         }
@@ -140,7 +141,7 @@ export class StudentRegistrationComponent {
         this.apiService.tableData.next(tableData);
 
       },
-      error: ((err: any) => { this.ngxSpinner.hide(); this.errors.handelError(err) })
+      error: ((err: any) => { this.ngxSpinner.hide(); this.errors.handelError(err.statusCode) })
     });
   }
   //#endregion ----------------------------------------------------- Get Table Data Logic End here -----------------------------------------------
