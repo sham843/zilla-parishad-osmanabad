@@ -26,6 +26,9 @@
             <div class=" col-sm  form-deta" *ngIf="'srNo' != columns && 'docPath' != columns && 'action' != columns">
               {{tData[columns]}}
             </div>
+            <div class="text-center mb-3"*ngIf="'action' == columns">
+              <button mat-flat-button class="btn-main" (click)="action(tData, 'View')">Read More</button>
+            </div>
           </div>
         </mat-card-content>
       </mat-card>
