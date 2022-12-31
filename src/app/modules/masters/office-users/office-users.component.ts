@@ -276,7 +276,6 @@ export class OfficeUsersComponent {
      if (result == 'yes') {
       this.getTableData();
       }
-      
     });
 }
 

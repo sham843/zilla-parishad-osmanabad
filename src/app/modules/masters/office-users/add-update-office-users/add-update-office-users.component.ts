@@ -1,6 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { NgxSpinnerService } from 'ngx-spinner';
 import { ApiService } from 'src/app/core/services/api.service';
 import { CommonMethodsService } from 'src/app/core/services/common-methods.service';
 import { ErrorsService } from 'src/app/core/services/errors.service';
@@ -30,7 +31,8 @@ export class AddUpdateOfficeUsersComponent implements OnInit {
     private dialogRef: MatDialogRef<AddUpdateOfficeUsersComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
     public validation: ValidationService,
-    public webStorageService: WebStorageService) { }
+    public webStorageService: WebStorageService,
+    private ngxSpinner: NgxSpinnerService) { }
 
   ngOnInit() {
     this.defaultForm();
@@ -159,10 +161,11 @@ export class AddUpdateOfficeUsersComponent implements OnInit {
   submitOfficeData() {
     console.log("all data submitted:", this.officeForm.value);
     if(this.officeForm.valid) {
+      this.ngxSpinner.show();
       this.apiService.setHttp(this.data ? 'PUT' : 'POST', this.data ? 'zp_osmanabad/Office/UpdateOffice' : 'zp_osmanabad/Office/AddOffice', false, this.officeForm.value, false, 'baseUrl');
       this.apiService.getHttp().subscribe({
         next: (res: any) => {
-          res.statusCode === "200" ? (this.commonService.snackBar(res.statusMessage, 0)) : this.commonService.checkEmptyData(res.statusMessage) == false ? this.error.handelError(res.statusCode) : this.commonService.snackBar(res.statusMessage, 1);
+          res.statusCode === "200" ? (this.ngxSpinner.hide(),this.commonService.snackBar(res.statusMessage, 0)) : this.commonService.checkEmptyData(res.statusMessage) == false ? this.error.handelError(res.statusCode) : this.commonService.snackBar(res.statusMessage, 1);
           this.dialogRef.close('Yes');
         },
         error: ((error: any) => {
@@ -322,18 +325,18 @@ export class AddUpdateOfficeUsersComponent implements OnInit {
       this.fc['designationId'].setValidators(Validators.required);
       this.fc['designationId'].updateValueAndValidity();
 
-      this.fc['bitName'].setValidators(Validators.required);
+      this.fc['bitName'].setValidators([Validators.required, Validators.pattern(this.validation.fullName)]);
       this.fc['bitName'].updateValueAndValidity();
     }
     else if (event.value == 6 || event.value == 7 && label == 'Level') {
-      this.fc['address'].setValidators(Validators.required);
+      this.fc['address'].setValidators([Validators.required, Validators.maxLength(500)]);
       this.fc['address'].updateValueAndValidity();
     }
     else if (event.value == 17 && label == 'Designation') {
-      this.fc['beoMobileNo'].setValidators(Validators.required);
+      this.fc['beoMobileNo'].setValidators([Validators.required, Validators.pattern(this.validation.mobile_No)]);
       this.fc['beoMobileNo'].updateValueAndValidity();
 
-      this.fc['beoEmailId'].setValidators(Validators.required);
+      this.fc['beoEmailId'].setValidators([Validators.required, Validators.pattern(this.validation.email)]);
       this.fc['beoEmailId'].updateValueAndValidity();
     }
     else if (event.value == 20 && label == 'Designation') {
@@ -343,10 +346,10 @@ export class AddUpdateOfficeUsersComponent implements OnInit {
       // this.fc['schoolId'].setValidators(Validators.required);
       // this.fc['schoolId'].updateValueAndValidity();
 
-      this.fc['kendraMobileNo'].setValidators(Validators.required);
+      this.fc['kendraMobileNo'].setValidators([Validators.required, Validators.pattern(this.validation.mobile_No)]);
       this.fc['kendraMobileNo'].updateValueAndValidity();
 
-      this.fc['kendraEmailId'].setValidators(Validators.required);
+      this.fc['kendraEmailId'].setValidators([Validators.required, Validators.pattern(this.validation.email)]);
       this.fc['kendraEmailId'].updateValueAndValidity();
     }
   }
