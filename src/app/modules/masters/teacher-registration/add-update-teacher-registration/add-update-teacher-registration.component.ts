@@ -166,6 +166,13 @@ export class AddUpdateTeacherRegistrationComponent {
       this.td['isCastVarificationDone'].clearValidators();
       this.td['castValidityNoDate'].clearValidators();
       this.td['castverificationCommitteeName'].clearValidators();
+      this.td['castCategoryId'].setValue('');
+      this.td['castCertificateNo'].setValue('');
+      this.td['castCertificateOffice'].setValue('');
+      this.td['isCastVarificationDone'].setValue('');
+      this.td['castValidityNoDate'].setValue('');
+      this.td['castverificationCommitteeName'].setValue('');    
+
     }
     this.td['castCategoryId'].updateValueAndValidity();
     this.td['castCertificateNo'].updateValueAndValidity();
@@ -181,6 +188,7 @@ export class AddUpdateTeacherRegistrationComponent {
       this.td["husbandWife_OfficeName"].setValidators(Validators.required);     
     }else{
       this.td['husbandWife_OfficeName'].clearValidators();
+      this.td['husbandWife_OfficeName'].setValue('');
     }
     this.td['husbandWife_OfficeName'].updateValueAndValidity();
   }
@@ -194,12 +202,18 @@ export class AddUpdateTeacherRegistrationComponent {
       this.td['dateOFPresenceInterDistrictTransfer'].clearValidators();
       this.td['interDistrictTransferType'].clearValidators();
       this.td['theOriginalDistrictInterDistrictTransfer'].clearValidators();
+
+      this.td['dateOFPresenceInterDistrictTransfer'].setValue('');
+      this.td['interDistrictTransferType'].setValue('');
+      this.td['theOriginalDistrictInterDistrictTransfer'].setValue('');
+      
     }
     this.td['dateOFPresenceInterDistrictTransfer'].updateValueAndValidity();
     this.td['interDistrictTransferType'].updateValueAndValidity();
     this.td['theOriginalDistrictInterDistrictTransfer'].updateValueAndValidity();
   }
 //#endregion ---------------- end update validation hide show field -------------------------
+
 //#region -------------------------start standard check box ----------------------------------
   addStand(stand: any, value: number) {
     this.assignclass = true;
@@ -220,6 +234,7 @@ export class AddUpdateTeacherRegistrationComponent {
     }
   }
 //#endregion-------------------------end standard check box ------------------------------------
+
 //#region --------------------------start permant address check box ----------------------------------
   addSameAddress(event:any){
    this.checked=event.currentTarget.checked;
@@ -343,7 +358,7 @@ export class AddUpdateTeacherRegistrationComponent {
     })
   }
   getDesignation() {
-    this.masterService.GetDesignationByLevelId('EN', 0).subscribe({
+    this.masterService.GetDesignationByLevelId('EN', 3).subscribe({
       next: ((res: any) => {
         if (res.statusCode == '200' && res.responseData.length) {
           this.designationArray = res.responseData;    
@@ -622,4 +637,5 @@ export class AddUpdateTeacherRegistrationComponent {
     }
   }
 
+ 
 }

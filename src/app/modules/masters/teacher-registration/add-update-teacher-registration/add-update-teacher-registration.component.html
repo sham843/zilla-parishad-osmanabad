@@ -16,7 +16,7 @@
                 <div class="col-sm">
                     <mat-form-field appearance="outline" class="w-100">
                         <mat-label> {{'Labels.teacherName'| translate}}</mat-label>
-                        <input appAutofocus matInput formControlName="name" maxlength="100" (keypress)="validation.noFirstSpaceAllow($event);validation.onlyAlphabets($event)">
+                        <input appAutofocus matInput formControlName="name" maxlength="100" (keypress)="validation.noFirstSpaceAllow($event);validation.alphabetsWithSpaces($event)">
                         <!-- <mat-error *ngIf="f['name'].hasError('required')">
                             Teacher Name Is Required</mat-error> -->
                     </mat-form-field>
@@ -224,7 +224,7 @@
                 <div class="col-sm-4">
                     <mat-form-field appearance="outline" class="w-100 ">
                         <mat-label>{{'Labels.caste'| translate}}</mat-label>
-                        <mat-select formControlName="castId" (selectionChange)="castvalidation($event)" >
+                        <mat-select formControlName="castId" (selectionChange)="castvalidation($event)">
                             <mat-option *ngFor="let caste of casteArray"                            
                             [value]="caste.id">{{webStorageS.getLangauge() == 'EN' ?
                             caste.caste : caste.m_Caste}} </mat-option>                        
