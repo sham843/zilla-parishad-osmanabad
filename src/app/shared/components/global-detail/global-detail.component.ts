@@ -24,7 +24,9 @@ import {MatButtonModule} from '@angular/material/button';
 })
 export class GlobalDetailComponent {
   
-  constructor(public dialogRef: MatDialogRef<GlobalDetailComponent>,@Inject(MAT_DIALOG_DATA) public data: any){  }
+  constructor(public dialogRef: MatDialogRef<GlobalDetailComponent>,@Inject(MAT_DIALOG_DATA) public data: any){ 
+    console.log("hsghsa",data);
+   }
 
   closeDialog(){
     this.dialogRef.close();
