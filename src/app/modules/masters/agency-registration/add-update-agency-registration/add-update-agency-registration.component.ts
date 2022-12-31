@@ -45,7 +45,7 @@ export class AddUpdateAgencyRegistrationComponent {
       "agency_Address": [data ? data.agency_Address : "", [Validators.required, Validators.maxLength(500)]],
       "districtId": [{ value: 1, disabled: true }],
       "talukaId": ["", Validators.required],
-      "lan": "",
+      "lan":  this.webStorageService.languageFlag,
       "localID": 0,
       "timestamp": new Date()
     })
