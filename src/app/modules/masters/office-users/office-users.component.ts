@@ -151,6 +151,9 @@ export class OfficeUsersComponent {
       case 'Delete':
         this.openDeleteDialog(obj);
         break;
+      case 'View':
+        this.openDetailsDialog(obj);
+        break;
     }
   }
 
@@ -257,11 +260,11 @@ export class OfficeUsersComponent {
   openDetailsDialog(obj:any){
     console.log(obj);
     var data = {
-      headerImage: obj.documentResponse[0].docPath,
-      header: this.webStorageService.languageFlag == 'EN' ? obj.fullName : obj.m_FullName,
-      subheader: this.webStorageService.languageFlag == 'EN' ? obj.gender : obj.m_Gender,
-      labelHeader: this.webStorageService.languageFlag == 'EN' ? ['Father Name', 'Parent Mobile No.','Aadhar No.','Standard','School Name'] : ['वडीलांचे नावं', 'पालक मोबाईल क्र.','आधार क्र.','इयत्ता','शाळेचे नाव'],
-      labelKey: this.webStorageService.languageFlag == 'EN' ? ['fatherFullName', 'parentMobileNo', 'aadharNo','standard','schoolName'] : ['m_FatherFullName', 'parentMobileNo','aadharNo','standard','m_SchoolName'],
+      headerImage: "assets/images/user.jpg",
+      header: this.webStorageService.languageFlag == 'EN' ? obj.officeName : obj.m_OfficeName,
+      subheader: this.webStorageService.languageFlag == 'EN' ? obj.designation : obj.m_Designation,
+      labelHeader: this.webStorageService.languageFlag == 'EN' ? ['Mobile Number', 'Email Id','DesignationLevel','Taluka','District'] : ['मोबाईल क्र.', 'ई-मेल आयडी','पदनाम स्तर','तालुका','शाळेचे नाव'],
+      labelKey: this.webStorageService.languageFlag == 'EN' ? ['mobileNo', 'emailId', 'designationLevel','taluka','district'] : ['mobileNo', 'emailId','m_DesignationLevel','m_Taluka','m_District'],
       Obj: obj,
       chart: false
     }
