@@ -368,6 +368,7 @@ export class DashboardComponent implements OnInit,AfterViewInit {
           this.tableColumn=[{label:'एकूण संख्या', GroupId:0,  ischeckboxShow:false, status:false},{label:'१ली ते 2री',GroupId:1,  ischeckboxShow:true, status:true},{label:'3री ते ५वी',GroupId:2, ischeckboxShow:true, status:false},{label:'६वी ते ८वी',GroupId:3, ischeckboxShow:true, status:false},];
           this.checkData(this.tableColumn[1]);
           this.getPieChartData();
+          
            } else { 
             this.dashboardCountData=[];
           }
@@ -390,19 +391,30 @@ export class DashboardComponent implements OnInit,AfterViewInit {
   }
   getPieChartData(){
     const serriesArray= [0,0,0];
-    const serriesArray1= [10,50,20];
-    const serriesArray2= [10,50,20];
-    console.log(this.dashboardCountData)
+    const serriesArray1= [0,0,0];
+    const serriesArray2= [0,0,0];
+    console.log("dashboardCountData", this.dashboardCountData);
+
     serriesArray[0]= this.dashboardCountData[0].govtSchool|0;
     serriesArray[1]= this.dashboardCountData[0].privateSchool|0;
     serriesArray[2]= this.dashboardCountData[0].otherSchool|0;
+
+    serriesArray1[0]= this.dashboardCountData[0].engMedSchool|0;
+    serriesArray1[1]= this.dashboardCountData[0].marMedSchool|0;
+    serriesArray1[2]= this.dashboardCountData[0].bothMedSchool|0;
+
+    serriesArray2[0]= this.dashboardCountData[0].boyStudent|0;
+    serriesArray2[1]= this.dashboardCountData[0].girlStudent|0;
+    serriesArray2[2]= this.dashboardCountData[0].otherStudent|0;
+
     this.piechartOptions.colors=[];
     this.piechartOptions.series = serriesArray;
     this.piechartOptions1.series = serriesArray1;
     this.piechartOptions2.series = serriesArray2;
     this.piechartOptions.labels=['Goverment','Private','Other'];
-    this.piechartOptions1.labels=['Goverment','Private','Other'];
-    this.piechartOptions2.labels=['Goverment','Private','Other'];
+    this.piechartOptions1.labels=['English-Medium','Marathi-Medium','Both'];
+    this.piechartOptions2.labels=['Boys','Girls','Other'];
+
     console.log(this.piechartOptions)
     // this.piechartOptions.colors=['#CB4B4B', '#E76A63', '#E98754', '#EFB45B', '#65C889'];
   }
@@ -416,6 +428,8 @@ export class DashboardComponent implements OnInit,AfterViewInit {
       next: (res: any) => { 
         if (res.statusCode == "200") {
           this.barChartData=res.responseData.responseData1;
+          console.log("barChartData",this.barChartData);
+          
          const subjectSet = [...new Set(this.barChartData.map(sub => sub.m_SubjectName))];
          this.graphSubjectData=subjectSet;
          this.barchartOptions.series=[];
