@@ -37,13 +37,12 @@ export class TeacherRegistrationComponent {
 
   @HostBinding('class') className = '';
   constructor(private dialog: MatDialog, private overlay: OverlayContainer, private apiService: ApiService, private errors: ErrorsService,
-    public webStorageS: WebStorageService, private downloadFileService: DownloadPdfExcelService, private commonMethodS : CommonMethodsService,
-    private ngxSpinner : NgxSpinnerService) {
+    public webStorageS: WebStorageService, private downloadFileService: DownloadPdfExcelService, private commonMethodS: CommonMethodsService,
+    private ngxSpinner: NgxSpinnerService) {
   }
 
   ngOnInit(): void {
     this.getTableData();
-    this.getofficeReport();
     this.webStorageS.langNameOnChange.subscribe(lang => {
       this.langTypeName = lang;
       this.languageChange();
@@ -91,24 +90,30 @@ export class TeacherRegistrationComponent {
     let pageNo = this.cardViewFlag ? (this.cardCurrentPage + 1) : this.pageNumber;
 
     let str = `pageno=${pageNo}&pagesize=10&textSearch=${this.searchContent.value}&lan=${this.webStorageS.languageFlag}`;
+    let reportStr = `pageno=${pageNo}&pagesize=${this.totalCount * 10}&textSearch=${this.searchContent.value}&lan=${this.webStorageS.languageFlag}`;
 
-    this.apiService.setHttp('GET', 'zp_osmanabad/Teacher/GetAll?' + str, false, false, false, 'baseUrl');
+    this.apiService.setHttp('GET', 'zp_osmanabad/Teacher/GetAll?' + (flag == 'pdfFlag' ? reportStr : str), false, false, false, 'baseUrl');
     this.apiService.getHttp().subscribe({
 
       next: (res: any) => {
-        console.log("table res : ",res);
-        
+        console.log("table res : ", res);
+
         if (res.statusCode == "200") {
-          this.ngxSpinner.hide(); 
-          this.tableDataArray = res.responseData.responseData1;
-          
+          this.ngxSpinner.hide();
+          flag != 'pdfFlag' ? this.tableDataArray = res.responseData.responseData1 : this.tableDataArray = this.tableDataArray;
+          // this.tableDataArray = res.responseData.responseData1;
+
           this.totalCount = res.responseData.responseData2.pageCount;
           this.tableDatasize = res.responseData.responseData2.pageCount;
-
+          this.resultDownloadArr = [];
+          let data: [] = flag == 'pdfFlag' ? res.responseData.responseData1 : [];
+          flag == 'pdfFlag' ? this.downloadPdf(data) : '';
         } else {
           this.ngxSpinner.hide();
           this.tableDataArray = [];
           this.tableDatasize = 0;
+          this.tableDatasize == 0 && flag == 'pdfFlag' ? this.commonMethodS.showPopup('No Record Found', 1) : '';
+
         }
         this.languageChange();
         // let displayedColumns = ['uploadImage','srNo', 'name', 'mobileNo', 'emailId', 'village', 'taluka', 'action'];
@@ -122,9 +127,42 @@ export class TeacherRegistrationComponent {
         // };
         // this.apiService.tableData.next(tableData);
       },
-      error: ((err: any) => { this.errors.handelError(err) })
+      error: ((err: any) => { this.commonMethodS.checkEmptyData(err.statusText) == false ? this.errors.handelError(err.statusCode) : this.commonMethodS.showPopup(err.statusText, 1); })
+      // error: ((err: any) => { this.errors.handelError(err) })
     });
   }
+
+  //#endregion ---------------------------------------------- PDF Download start here ----------------------------------------// 
+
+  downloadPdf(data: any) {
+    data.map((ele: any, i: any) => {
+      let obj = {
+        "Sr.No": i + 1,
+        "Name": ele.name,
+        "Contact No.": ele.mobileNo,
+        "Email ID": ele.emailId,
+        "Village": ele.village,
+        "Taluka": ele.taluka,
+      }
+      this.resultDownloadArr.push(obj);
+    });
+    // download pdf call
+    if (this.resultDownloadArr.length > 0) {
+      let keyPDFHeader = ['SrNo', "Teacher Name", "Mobile No.", "Email ID", "Village", "Taluka"];
+      let ValueData =
+        this.resultDownloadArr.reduce(
+          (acc: any, obj: any) => [...acc, Object.values(obj).map((value) => value)], []
+        );
+
+      let objData: any = {
+        'topHedingName': 'Teacher Registration Data',
+        'createdDate': 'Created on:' + new Date()
+      }
+      this.downloadFileService.downLoadPdf(keyPDFHeader, ValueData, objData);
+    }
+  }
+  //#endregion ---------------------------------------------- PDF Download end here ----------------------------------------// 
+
   childCompInfo(_obj: any) {
     switch (_obj.label) {
       case 'Pagination':
@@ -137,9 +175,9 @@ export class TeacherRegistrationComponent {
       case 'Delete':
         this.globalDialogOpen(_obj);
         break;
-        case 'View':
-          this.openDetailsDialog(_obj);
-          break;
+      case 'View':
+        this.openDetailsDialog(_obj);
+        break;
     }
   }
 
@@ -176,7 +214,7 @@ export class TeacherRegistrationComponent {
         this.getTableData();
         this.pageNumber = this.pageNumber;
       }
-      else if(result == 'yes'){
+      else if (result == 'yes') {
         this.getTableData();
         this.clearFilterData();
         this.pageNumber = 1;
@@ -214,10 +252,10 @@ export class TeacherRegistrationComponent {
       "modifiedDate": new Date(),
       "lan": this.webStorageS.languageFlag
     }
-    this.apiService.setHttp('delete','zp_osmanabad/Teacher/Delete', false, deleteObj, false, 'baseUrl');
+    this.apiService.setHttp('delete', 'zp_osmanabad/Teacher/Delete', false, deleteObj, false, 'baseUrl');
     this.apiService.getHttp().subscribe({
-      next : ( res : any )=>{
-        if(res.statusCode == "200"){
+      next: (res: any) => {
+        if (res.statusCode == "200") {
           this.commonMethodS.showPopup(res.statusMessage, 0);
           this.getTableData();
         }
@@ -228,49 +266,10 @@ export class TeacherRegistrationComponent {
     }
   }
 
-  getofficeReport() {
-    let str = `?&textSearch=${this.searchContent.value}&lan=${this.webStorageS.languageFlag}`;
-    this.apiService.setHttp('GET', 'zp_osmanabad/Teacher/GetAll' + str, false, false, false, 'baseUrl');
-    this.apiService.getHttp().subscribe({
-      next: (res: any) => {
-        if (res.statusCode == "200") {
-          this.resultDownloadArr = [];
-          let data: [] = res.responseData.responseData1;
-          data.map((ele: any, i: any) => {
-            let obj = {
-              "Sr.No": i + 1,
-              "Name": ele.name,
-              "Contact No.": ele.mobileNo,
-              "Email ID": ele.emailId,
-              "Village": ele.village,
-              "Taluka": ele.taluka,
-            }
-            this.resultDownloadArr.push(obj);
-          });
-        }
-      },
-      error: ((err: any) => { this.errors.handelError(err.message) })
-    });
-  }
-
-  downloadPdf() {
-    let keyPDFHeader = ['SrNo', "Teacher Name", "Mobile No.", "Email ID", "Village", "Taluka"];
-    let ValueData =
-      this.resultDownloadArr.reduce(
-        (acc: any, obj: any) => [...acc, Object.values(obj).map((value) => value)], []
-      );
-
-    let objData: any = {
-      'topHedingName': 'Teacher Registration Data',
-      'createdDate': 'Created on:' + new Date()
-    }
-    this.downloadFileService.downLoadPdf(keyPDFHeader, ValueData, objData);
-  }
 
   onFilterClick() {
     this.pageNumber = 1;
     this.getTableData();
-    this.getofficeReport();
   }
 
   clearFilterData() {
@@ -295,14 +294,14 @@ export class TeacherRegistrationComponent {
     this.selectGrid('Card');
   }
 
-  openDetailsDialog(obj:any){
+  openDetailsDialog(obj: any) {
     console.log(obj);
     var data = {
       headerImage: obj.uploadImage,
       header: this.webStorageS.languageFlag == 'EN' ? obj.name : obj.m_Name,
       subheader: this.webStorageS.languageFlag == 'EN' ? obj.gender : obj.m_Gender,
-      labelHeader: this.webStorageS.languageFlag == 'EN' ? ['Mobile No.', 'Email ID','Village', 'Taluka'] : ['मोबाईल क्र.', 'एजन्सी ई-मेल आयडी ', 'गाव', 'तालुका'],
-      labelKey: this.webStorageS.languageFlag == 'EN' ? ['mobileNo', 'emailId', 'village', 'taluka']: ['mobileNo', 'emailId', 'village', 'taluka'],
+      labelHeader: this.webStorageS.languageFlag == 'EN' ? ['Mobile No.', 'Email ID', 'Village', 'Taluka'] : ['मोबाईल क्र.', 'एजन्सी ई-मेल आयडी ', 'गाव', 'तालुका'],
+      labelKey: this.webStorageS.languageFlag == 'EN' ? ['mobileNo', 'emailId', 'village', 'taluka'] : ['mobileNo', 'emailId', 'village', 'taluka'],
       Obj: obj,
       chart: false
     }
@@ -314,11 +313,11 @@ export class TeacherRegistrationComponent {
       autoFocus: false
     });
     viewDialogRef.afterClosed().subscribe((result: any) => {
-     if (result == 'yes') {
-      this.getTableData();
+      if (result == 'yes') {
+        this.getTableData();
       }
-      
+
     });
-    
-}
+
+  }
 }

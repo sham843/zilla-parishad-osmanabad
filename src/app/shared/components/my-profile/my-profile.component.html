@@ -13,9 +13,9 @@
     <mat-card-content class="card-body">
         <div class="text-center mb-3">
             <div class="upload-btn-wrapper">
-                <img src="{{uploadImg}}" alt="profile-img" width="100" class="profile-image">
+                <img  src="{{uploadImg}}" alt="profile-img" width="100" class="profile-image">
                 <input type="file" id="img-upload" #uploadImage (change)="fileUpload($event)"/>
-                <div class="profile-buttons d-flex flex-column">
+                <div *ngIf="this.userType.subUserType != 'Admin'" class="profile-buttons d-flex flex-column">
                     <button type="button" class="btn bg-light text-primary" (click)="uploadImage.click()">
                         <i class='bx bx-plus'></i>
                     </button>

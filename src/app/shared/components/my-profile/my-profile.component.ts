@@ -39,6 +39,7 @@ export class MyProfileComponent {
   imgFlag: boolean = false;
   userType:any;
   @ViewChild('uploadImage') imageFile!: ElementRef;
+  
 
   constructor(private api: ApiService, private error: ErrorsService, private fileUpl: FileUploadService,
     private webStorage: WebStorageService, private fb: FormBuilder, public dialogRef: MatDialogRef<AddUpdateAgencyRegistrationComponent>,
@@ -50,6 +51,8 @@ export class MyProfileComponent {
     this.defaultForm();
     this.getUserByAdmin();
     this.userType = this.webStorage.getLoggedInLocalstorageData();
+    console.log("userType",this.userType);
+    
     
   }
 
@@ -94,7 +97,7 @@ export class MyProfileComponent {
       "emailId": [data ? data?.emailId : '', [Validators.required, Validators.pattern(this.validation.email)]],
       "profilePhoto": [data ? data?.profilePhoto : this.uploadImg],      
     })
-    data ? this.uploadImg = data.profilePhoto : this.uploadImg = "assets/images/user.jpg"
+    data && this.userType.subUserType != 'Admin' ? this.uploadImg = data.profilePhoto : this.uploadImg = "assets/images/user.jpg"
   }
   get fc() { return this.userProfile.controls }
 
