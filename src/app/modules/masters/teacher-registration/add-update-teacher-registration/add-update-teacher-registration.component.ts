@@ -557,7 +557,10 @@ export class AddUpdateTeacherRegistrationComponent {
     }
 
     if (!this.teacherRegForm.valid) {
-      return
+     
+        this.commonMethod.showPopup(this.webStorageS.languageFlag == 'EN' ? 'Please Enter Mandatory Fields' : 'कृपया अनिवार्य फील्ड प्रविष्ट करा', 1);
+        return
+      
     }
     else {
       formValue.assignTeacher = this.assignClassArray;
@@ -569,15 +572,13 @@ export class AddUpdateTeacherRegistrationComponent {
       this.service.getHttp().subscribe({
         next: ((res: any) => {
           this.ngxSpinner.hide();
-          if (res.statusCode == '200') {
+          res.statusCode === "200" ? (this.commonMethod.showPopup(res.statusMessage, 0)) : this.commonMethod.checkEmptyData(res.statusMessage) == false ? this.errorHandler.handelError(res.statusCode) : this.commonMethod.showPopup(res.statusMessage, 1);       
             this.dialogRef.close('yes');
-          } else {
-            this.commonMethod.checkEmptyData(res.statusMessage) == false ? this.errorHandler.handelError(res.statusCode) : this.commonMethod.snackBar(res.statusMessage, 1);
-          }
+         
         }),
         error: (error: any) => {
           this.ngxSpinner.hide();
-          this.commonMethod.checkEmptyData(error.statusMessage) == false ? this.errorHandler.handelError(error.statusCode) : this.commonMethod.snackBar(error.statusMessage, 1);
+          this.commonMethod.checkEmptyData(error.statusMessage) == false ? this.errorHandler.handelError(error.statusCode) : this.commonMethod.showPopup(error.statusMessage, 1);
         }
       })
     }
