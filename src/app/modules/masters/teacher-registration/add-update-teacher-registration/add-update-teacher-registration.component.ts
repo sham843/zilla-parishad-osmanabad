@@ -83,9 +83,9 @@ export class AddUpdateTeacherRegistrationComponent {
   formData() {
     this.teacherRegForm = this.fb.group({
       ...this.webStorageS.createdByProps(),
-      "id": [this.data ? this.data.id : 0],
-      "name": [this.data ? this.data.name : '', [Validators.required, Validators.pattern(this.validation.fullName)]],
-      "m_Name": [this.data ? this.data.m_Name : '', Validators.required],
+      "id": [this.data ? this.data?.id : 0],
+      "name": [this.data ? this.data?.name : '', [Validators.required, Validators.pattern(this.validation.fullName)]],
+      "m_Name": [this.data ? this.data?.m_Name : '', Validators.required],
       "address": [''],
       "stateId": 0,
       "districtId": ['', Validators.required],
@@ -95,13 +95,13 @@ export class AddUpdateTeacherRegistrationComponent {
       "userTypeId": 0,
       "subUserTypeId": 0,
       "genderId": ['', Validators.required],
-      "mobileNo": [this.data ? this.data.mobileNo : '', [Validators.required, Validators.pattern(this.validation.mobile_No)]],
-      "emailId": [this.data ? this.data.emailId : '', Validators.pattern(this.validation.email)],
-      "birthDate": [this.data ? this.data.birthDate : '', Validators.required],
-      "age": [this.data ? this.data.age : 0],
+      "mobileNo": [this.data ? this.data?.mobileNo : '', [Validators.required, Validators.pattern(this.validation.mobile_No)]],
+      "emailId": [this.data ? this.data?.emailId : '', Validators.pattern(this.validation.email)],
+      "birthDate": [this.data ? this.data?.birthDate : '', Validators.required],
+      "age": [this.data ? this.data?.age : 0],
       "uploadImage": [''],
-      "currentAddress": [this.data ? this.data.currentAddress : '', [Validators.required, Validators.pattern(this.validation.fullName)]],
-      "permentAddress": [this.data ? this.data.permentAddress : '', [Validators.required, Validators.pattern(this.validation.fullName)]],
+      "currentAddress": [this.data ? this.data?.currentAddress : '', [Validators.required, Validators.pattern(this.validation.fullName)]],
+      "permentAddress": [this.data ? this.data?.permentAddress : '', [Validators.required, Validators.pattern(this.validation.fullName)]],
       "lan": ['EN'],
       "localID": 0,
       "timestamp": new Date(),
@@ -119,32 +119,32 @@ export class AddUpdateTeacherRegistrationComponent {
         "isGraduate_PayScale": ['', Validators.required],
         "castId": ['', Validators.required],
         "castCategoryId": [null],
-        "castCertificateNo": [this.data ? this.data.teacherDetails.castCertificateNo : ''],
-        "castCertificateOffice": [this.data ? this.data.teacherDetails.castCertificateOffice : ''],
+        "castCertificateNo": [this.data ? this.data.teacherDetails?.castCertificateNo : ''],
+        "castCertificateOffice": [this.data ? this.data.teacherDetails?.castCertificateOffice : ''],
         "isCastVarificationDone": [null],
-        "castValidityNoDate": [this.data ? this.data.teacherDetails.castValidityNoDate : ''],
-        "castverificationCommitteeName": [this.data ? this.data.teacherDetails.castverificationCommitteeName : ''],
-        "dateOfFirstAppoinmentService": [this.data ? this.data.teacherDetails.dateOfFirstAppoinmentService : '', Validators.required],
-        "currentSchoolJoiningDate": [this.data ? this.data.teacherDetails.currentSchoolJoiningDate : '', Validators.required],
-        "currentTalukaPresentDate": [this.data ? this.data.teacherDetails.currentTalukaPresentDate : '', Validators.required],
-        "retirementDate": [this.data ? this.data.teacherDetails.retirementDate : '', Validators.required],
+        "castValidityNoDate": [this.data ? this.data.teacherDetails?.castValidityNoDate : ''],
+        "castverificationCommitteeName": [this.data ? this.data.teacherDetails?.castverificationCommitteeName : ''],
+        "dateOfFirstAppoinmentService": [this.data ? this.data.teacherDetails?.dateOfFirstAppoinmentService : '', Validators.required],
+        "currentSchoolJoiningDate": [this.data ? this.data.teacherDetails?.currentSchoolJoiningDate : '', Validators.required],
+        "currentTalukaPresentDate": [this.data ? this.data.teacherDetails?.currentTalukaPresentDate : '', Validators.required],
+        "retirementDate": [this.data ? this.data.teacherDetails?.retirementDate : '', Validators.required],
         "educationalQualificationId": ['', Validators.required],
         "branchId12th": ['', Validators.required],
         "degreeOptionalSubjectsId": ['', Validators.required],
         "degreeUniversityId": ['', Validators.required],
         "professionalQualificationId": ['', Validators.required],
-        "bEdPercentages": [this.data ? this.data.teacherDetails.bEdPercentages : ''],
-        "bEdUniversityId": [this.data ? this.data.teacherDetails.bEdUniversityId : ''],
+        "bEdPercentages": [this.data ? this.data.teacherDetails?.bEdPercentages : ''],
+        "bEdUniversityId": [this.data ? this.data.teacherDetails?.bEdUniversityId : ''],
         "husbandWife_Both_Service": ['', Validators.required],
-        "husbandWife_OfficeName": [this.data ? this.data.teacherDetails.husbandWife_OfficeName : ''],
+        "husbandWife_OfficeName": [this.data ? this.data.teacherDetails?.husbandWife_OfficeName : ''],
         "isDisabled": ['', Validators.required],
         "interDistrictTransferred": ['', Validators.required],
-        "dateOFPresenceInterDistrictTransfer": [this.data ? this.data.teacherDetails.dateOFPresenceInterDistrictTransfer : null],
+        "dateOFPresenceInterDistrictTransfer": [this.data ? this.data.teacherDetails?.dateOFPresenceInterDistrictTransfer : null],
         "interDistrictTransferType": [null],
-        "theOriginalDistrictInterDistrictTransfer": [this.data ? this.data.teacherDetails.theOriginalDistrictInterDistrictTransfer : ''],
-        "dateOfSeniority": [this.data ? this.data.teacherDetails.dateOfSeniority : '', Validators.required],
+        "theOriginalDistrictInterDistrictTransfer": [this.data ? this.data.teacherDetails?.theOriginalDistrictInterDistrictTransfer : ''],
+        "dateOfSeniority": [this.data ? this.data.teacherDetails?.dateOfSeniority : '', Validators.required],
         "haveYouPassedComputerExam": ['', Validators.required],
-        "namesAndTalukasAllSchoolsWorkedEarlier": [this.data ? this.data.teacherDetails.namesAndTalukasAllSchoolsWorkedEarlier : '', Validators.required]
+        "namesAndTalukasAllSchoolsWorkedEarlier": [this.data ? this.data.teacherDetails?.namesAndTalukasAllSchoolsWorkedEarlier : '', Validators.required]
       }),
       "assignTeacher": []
     })
@@ -253,7 +253,7 @@ export class AddUpdateTeacherRegistrationComponent {
       next: ((res: any) => {
         if (res.statusCode == '200' && res.responseData.length) {
           this.genderArray = res.responseData;       
-          this.editFlag == true ? (this.teacherRegForm.controls['genderId'].setValue(this.editObj.genderID), this.getDistrict()) : (this.editFlag== false) ? (this.getDistrict(),this.getAllDistrictTeacherDetails()) : ''
+          this.editFlag == true ? (this.teacherRegForm.controls['genderId'].setValue(this.editObj?.genderID), this.getDistrict()) : (this.editFlag== false) ? (this.getDistrict(),this.getAllDistrictTeacherDetails()) : ''
         }
       }), error: (error: any) => {
         this.commonMethod.checkEmptyData(error.statusText) == false ? this.errorHandler.handelError(error.statusCode) : this.commonMethod.snackBar(error.statusText, 1);
@@ -267,7 +267,7 @@ export class AddUpdateTeacherRegistrationComponent {
         if (res.statusCode == '200' && res.responseData.length) {
           this.districtArray = res.responseData;               
           this.teacherRegForm.controls['districtId'].setValue(1)
-          this.editFlag ? (this.teacherRegForm.controls['districtId'].setValue(this.editObj.districtId), this.getTaluka()) : this.getTaluka();
+          this.editFlag ? (this.teacherRegForm.controls['districtId'].setValue(this.editObj?.districtId), this.getTaluka()) : this.getTaluka();
         }
       }), error: (error: any) => {
         this.commonMethod.checkEmptyData(error.statusText) == false ? this.errorHandler.handelError(error.statusCode) : this.commonMethod.snackBar(error.statusText, 1);
@@ -280,7 +280,7 @@ export class AddUpdateTeacherRegistrationComponent {
       next: ((res: any) => {
         if (res.statusCode == '200' && res.responseData.length) {
           this.talukaArray = res.responseData;          
-          this.editFlag ? (this.teacherRegForm.controls['talukaId'].setValue(this.editObj.talukaId), this.getVillage()) : '';
+          this.editFlag ? (this.teacherRegForm.controls['talukaId'].setValue(this.editObj?.talukaId), this.getVillage()) : '';
         }
       }), error: (error: any) => {
         this.commonMethod.checkEmptyData(error.statusText) == false ? this.errorHandler.handelError(error.statusCode) : this.commonMethod.snackBar(error.statusText, 1);
@@ -294,7 +294,7 @@ export class AddUpdateTeacherRegistrationComponent {
       next: ((res: any) => {
         if (res.statusCode == '200' && res.responseData.length) {
           this.villageArray = res.responseData;            
-          this.editFlag ? (this.teacherRegForm.controls['villageId'].setValue(this.editObj.villageId), this.getAllDistrictTeacherDetails()) : '';
+          this.editFlag ? (this.teacherRegForm.controls['villageId'].setValue(this.editObj?.villageId), this.getAllDistrictTeacherDetails()) : '';
         }
       }), error: (error: any) => {
         this.commonMethod.checkEmptyData(error.statusText) == false ? this.errorHandler.handelError(error.statusCode) : this.commonMethod.snackBar(error.statusText, 1);
@@ -308,7 +308,7 @@ export class AddUpdateTeacherRegistrationComponent {
         if (res.statusCode == '200' && res.responseData.length) {
           this.districtArrayTeacherDeatails = res.responseData;
           this.td['districtId'].setValue(1)
-          this.editFlag ? (this.td['districtId'].setValue(this.editObj.teacherDetails.districtId), this.getAllTalukaTeacherDeatails()) :!this.editFlag ? (this.getAllTalukaTeacherDeatails(),this.getDesignation()):'';
+          this.editFlag ? (this.td['districtId'].setValue(this.editObj.teacherDetails?.districtId), this.getAllTalukaTeacherDeatails()) :!this.editFlag ? (this.getAllTalukaTeacherDeatails(),this.getDesignation()):'';
 
         }
       }), error: (error: any) => {
@@ -322,7 +322,7 @@ export class AddUpdateTeacherRegistrationComponent {
       next: ((res: any) => {
         if (res.statusCode == '200' && res.responseData.length) {
           this.talukaArrayTeacherDetails = res.responseData;
-          this.editFlag ? (this.td['talukaId'].setValue(this.editObj.teacherDetails.talukaId), this.getCluster()) : '';
+          this.editFlag ? (this.td['talukaId'].setValue(this.editObj.teacherDetails?.talukaId), this.getCluster()) : '';
         }
       }), error: (error: any) => {
         this.commonMethod.checkEmptyData(error.statusText) == false ? this.errorHandler.handelError(error.statusCode) : this.commonMethod.snackBar(error.statusText, 1);
@@ -336,7 +336,7 @@ export class AddUpdateTeacherRegistrationComponent {
       next: ((res: any) => {
         if (res.statusCode == '200' && res.responseData.length) {
           this.clusterArray = res.responseData;      
-          this.editFlag ? (this.td['clusterId'].setValue(this.editObj.teacherDetails.clusterId), this.getAllSchool()) : '';
+          this.editFlag ? (this.td['clusterId'].setValue(this.editObj.teacherDetails?.clusterId), this.getAllSchool()) : '';
         }
       }), error: (error: any) => {
         this.commonMethod.checkEmptyData(error.statusText) == false ? this.errorHandler.handelError(error.statusCode) : this.commonMethod.snackBar(error.statusText, 1);
@@ -350,7 +350,7 @@ export class AddUpdateTeacherRegistrationComponent {
       next: ((res: any) => {
         if (res.statusCode == '200' && res.responseData.length) {
           this.schoolArray = res.responseData;        
-          this.editFlag ? (this.td['schoolId'].setValue(this.editObj.teacherDetails.schoolId), this.getDesignation()) : '';
+          this.editFlag ? (this.td['schoolId'].setValue(this.editObj.teacherDetails?.schoolId), this.getDesignation()) : '';
         }
       }), error: (error: any) => {
         this.commonMethod.checkEmptyData(error.statusText) == false ? this.errorHandler.handelError(error.statusCode) : this.commonMethod.snackBar(error.statusText, 1);
@@ -362,7 +362,7 @@ export class AddUpdateTeacherRegistrationComponent {
       next: ((res: any) => {
         if (res.statusCode == '200' && res.responseData.length) {
           this.designationArray = res.responseData;    
-          this.editFlag ? (this.td['designationId'].setValue(this.editObj.teacherDetails.designationId), this.getGraduateTeacherSubject()) : this.getGraduateTeacherSubject();
+          this.editFlag ? (this.td['designationId'].setValue(this.editObj.teacherDetails?.designationId), this.getGraduateTeacherSubject()) : this.getGraduateTeacherSubject();
         }
       }), error: (error: any) => {
         this.commonMethod.checkEmptyData(error.statusText) == false ? this.errorHandler.handelError(error.statusCode) : this.commonMethod.snackBar(error.statusText, 1);
@@ -374,7 +374,7 @@ export class AddUpdateTeacherRegistrationComponent {
       next: ((res: any) => {
         if (res.statusCode == '200' && res.responseData.length) {
           this.GradateTeacherSubjectArray = res.responseData;
-          this.editFlag ? (this.td['graduate_SubjectId'].setValue(this.editObj.teacherDetails.graduate_SubjectId), this.getGraduatePayScale()) : this.getGraduatePayScale();
+          this.editFlag ? (this.td['graduate_SubjectId'].setValue(this.editObj.teacherDetails?.graduate_SubjectId), this.getGraduatePayScale()) : this.getGraduatePayScale();
         }
       }), error: (error: any) => {
         this.commonMethod.checkEmptyData(error.statusText) == false ? this.errorHandler.handelError(error.statusCode) : this.commonMethod.snackBar(error.statusText, 1);
@@ -387,7 +387,7 @@ export class AddUpdateTeacherRegistrationComponent {
       { id: 1, name: 'yes', isGraduate_PayScale: true ,_name :'होय'},
       { id: 2, name: 'no', isGraduate_PayScale: false ,_name :'नाही'}
     ];
-    this.editFlag ? (this.td['isGraduate_PayScale'].setValue(this.editObj.teacherDetails.isGraduate_PayScale), this.getCaste()) : this.getCaste();
+    this.editFlag ? (this.td['isGraduate_PayScale'].setValue(this.editObj.teacherDetails?.isGraduate_PayScale), this.getCaste()) : this.getCaste();
   }
 
   getCaste() {
@@ -395,7 +395,7 @@ export class AddUpdateTeacherRegistrationComponent {
       next: ((res: any) => {
         if (res.statusCode == '200' && res.responseData.length) {
           this.casteArray = res.responseData;  
-          this.editFlag ? (this.td['castId'].setValue(this.editObj.teacherDetails.castId), this.getCasteCategory()) : this.getCasteCategory();
+          this.editFlag ? (this.td['castId'].setValue(this.editObj.teacherDetails?.castId), this.getCasteCategory()) : this.getCasteCategory();
         }
       }), error: (error: any) => {
         this.commonMethod.checkEmptyData(error.statusText) == false ? this.errorHandler.handelError(error.statusCode) : this.commonMethod.snackBar(error.statusText, 1);
@@ -407,7 +407,7 @@ export class AddUpdateTeacherRegistrationComponent {
       next: ((res: any) => {
         if (res.statusCode == '200' && res.responseData.length) {
           this.castCategoryArray = res.responseData;
-          this.editFlag ? (this.td['castCategoryId'].setValue(this.editObj.teacherDetails.castCategoryId), this.getCasteVerification()) : this.getCasteVerification();
+          this.editFlag ? (this.td['castCategoryId'].setValue(this.editObj.teacherDetails?.castCategoryId), this.getCasteVerification()) : this.getCasteVerification();
         }
       }), error: (error: any) => {
         this.commonMethod.checkEmptyData(error.statusText) == false ? this.errorHandler.handelError(error.statusCode) : this.commonMethod.snackBar(error.statusText, 1);
@@ -419,7 +419,7 @@ export class AddUpdateTeacherRegistrationComponent {
       { id: 1, name: 'yes', isCastVarificationDone: true,_name :'होय' },
       { id: 2, name: 'no', isCastVarificationDone: false ,_name :'नाही'}
     ];
-    this.editFlag ? (this.td['isCastVarificationDone'].setValue(this.editObj.teacherDetails.isCastVarificationDone), this.getEducationQualification()) : this.getEducationQualification();
+    this.editFlag ? (this.td['isCastVarificationDone'].setValue(this.editObj.teacherDetails?.isCastVarificationDone), this.getEducationQualification()) : this.getEducationQualification();
   }
 
   getEducationQualification() {
@@ -427,7 +427,7 @@ export class AddUpdateTeacherRegistrationComponent {
       next: ((res: any) => {
         if (res.statusCode == '200' && res.responseData.length) {
           this.educationQualificationArray = res.responseData;
-          this.editFlag ? (this.td['educationalQualificationId'].setValue(this.editObj.teacherDetails.educationalQualificationId), this.getTwelveBranch()) : this.getTwelveBranch();
+          this.editFlag ? (this.td['educationalQualificationId'].setValue(this.editObj.teacherDetails?.educationalQualificationId), this.getTwelveBranch()) : this.getTwelveBranch();
         }
       }), error: (error: any) => {
         this.commonMethod.checkEmptyData(error.statusText) == false ? this.errorHandler.handelError(error.statusCode) : this.commonMethod.snackBar(error.statusText, 1);
@@ -439,7 +439,7 @@ export class AddUpdateTeacherRegistrationComponent {
       next: ((res: any) => {
         if (res.statusCode == '200' && res.responseData.length) {
           this.twelveBranchArray = res.responseData;
-          this.editFlag ? (this.td['branchId12th'].setValue(this.editObj.teacherDetails.branchId12th), this.getOptionalSubject()) : this.getOptionalSubject();
+          this.editFlag ? (this.td['branchId12th'].setValue(this.editObj.teacherDetails?.branchId12th), this.getOptionalSubject()) : this.getOptionalSubject();
         }
       }), error: (error: any) => {
         this.commonMethod.checkEmptyData(error.statusText) == false ? this.errorHandler.handelError(error.statusCode) : this.commonMethod.snackBar(error.statusText, 1);
@@ -451,7 +451,7 @@ export class AddUpdateTeacherRegistrationComponent {
       next: ((res: any) => {
         if (res.statusCode == '200' && res.responseData.length) {
           this.optionalSubjectArray = res.responseData;         
-          this.editFlag ? (this.td['degreeOptionalSubjectsId'].setValue(this.editObj.teacherDetails.degreeOptionalSubjectsId), this.getDegreeUniversity()) : this.getDegreeUniversity();
+          this.editFlag ? (this.td['degreeOptionalSubjectsId'].setValue(this.editObj.teacherDetails?.degreeOptionalSubjectsId), this.getDegreeUniversity()) : this.getDegreeUniversity();
         }
       }), error: (error: any) => {
         this.commonMethod.checkEmptyData(error.statusText) == false ? this.errorHandler.handelError(error.statusCode) : this.commonMethod.snackBar(error.statusText, 1);
@@ -465,7 +465,7 @@ export class AddUpdateTeacherRegistrationComponent {
         if (res.statusCode == '200' && res.responseData.length) {
           this.degreeUniversityArray = res.responseData;
           
-          this.editFlag ? (this.td['degreeUniversityId'].setValue(this.editObj.teacherDetails.degreeUniversityId), this.getProfesionalQualification()) : this.getProfesionalQualification();
+          this.editFlag ? (this.td['degreeUniversityId'].setValue(this.editObj.teacherDetails?.degreeUniversityId), this.getProfesionalQualification()) : this.getProfesionalQualification();
         }
       }), error: (error: any) => {
         this.commonMethod.checkEmptyData(error.statusText) == false ? this.errorHandler.handelError(error.statusCode) : this.commonMethod.snackBar(error.statusText, 1);
@@ -478,7 +478,7 @@ export class AddUpdateTeacherRegistrationComponent {
       next: ((res: any) => {
         if (res.statusCode == '200' && res.responseData.length) {
           this.profesionalQualificationArray = res.responseData;        
-          this.editFlag ? (this.td['professionalQualificationId'].setValue(this.editObj.teacherDetails.professionalQualificationId), this.gethusbandWifeBothService()) : this.gethusbandWifeBothService();
+          this.editFlag ? (this.td['professionalQualificationId'].setValue(this.editObj.teacherDetails?.professionalQualificationId), this.gethusbandWifeBothService()) : this.gethusbandWifeBothService();
         }
       }), error: (error: any) => {
         this.commonMethod.checkEmptyData(error.statusText) == false ? this.errorHandler.handelError(error.statusCode) : this.commonMethod.snackBar(error.statusText, 1);
@@ -490,14 +490,14 @@ export class AddUpdateTeacherRegistrationComponent {
       { id: 1, name: 'yes', husbandWife_Both_Service: true ,_name :'होय'},
       { id: 2, name: 'no', husbandWife_Both_Service: false ,_name :'नाही'}
     ];
-    this.editFlag ? (this.td['husbandWife_Both_Service'].setValue(this.editObj.teacherDetails.husbandWife_Both_Service), this.getAreyouDisabled()) : this.getAreyouDisabled();
+    this.editFlag ? (this.td['husbandWife_Both_Service'].setValue(this.editObj.teacherDetails?.husbandWife_Both_Service), this.getAreyouDisabled()) : this.getAreyouDisabled();
   }
   getAreyouDisabled() {
     this.AreyouDisabled = [
       { id: 1, name: 'yes', isDisabled: true ,_name :'होय'},
       { id: 2, name: 'no', isDisabled: false,_name :'नाही' }
     ];
-    this.editFlag ? (this.td['isDisabled'].setValue(this.editObj.teacherDetails.isDisabled), this.getInterDistrictTransferred()) : this.getInterDistrictTransferred();
+    this.editFlag ? (this.td['isDisabled'].setValue(this.editObj.teacherDetails?.isDisabled), this.getInterDistrictTransferred()) : this.getInterDistrictTransferred();
   }
 
   getInterDistrictTransferred() {
@@ -505,7 +505,7 @@ export class AddUpdateTeacherRegistrationComponent {
       { id: 1, name: 'yes', interDistrictTransferred: true ,_name :'होय'},
       { id: 2, name: 'no', interDistrictTransferred: false ,_name :'नाही'}
     ];
-    this.editFlag ? (this.td['interDistrictTransferred'].setValue(this.editObj.teacherDetails.interDistrictTransferred), this.GetInterDistrictTransferType()) : this.GetInterDistrictTransferType();
+    this.editFlag ? (this.td['interDistrictTransferred'].setValue(this.editObj.teacherDetails?.interDistrictTransferred), this.GetInterDistrictTransferType()) : this.GetInterDistrictTransferType();
   }
 
   GetInterDistrictTransferType() {
@@ -513,7 +513,7 @@ export class AddUpdateTeacherRegistrationComponent {
       next: ((res: any) => {
         if (res.statusCode == '200' && res.responseData.length) {
           this.interDistrictTransferTypeArray = res.responseData;
-          this.editFlag ? (this.td['interDistrictTransferType'].setValue(this.editObj.teacherDetails.interDistrictTransferType), this.getHaveYouPassedComputerExam()) : this.getHaveYouPassedComputerExam();
+          this.editFlag ? (this.td['interDistrictTransferType'].setValue(this.editObj.teacherDetails?.interDistrictTransferType), this.getHaveYouPassedComputerExam()) : this.getHaveYouPassedComputerExam();
 
         }
       }), error: (error: any) => {
@@ -527,7 +527,7 @@ export class AddUpdateTeacherRegistrationComponent {
       { id: 1, name: 'yes', haveYouPassedComputerExam: true,_name :'होय' },
       { id: 2, name: 'no', haveYouPassedComputerExam: false,_name :'नाही' }
     ];
-    this.editFlag ? this.td['haveYouPassedComputerExam'].setValue(this.editObj.teacherDetails.haveYouPassedComputerExam) : '';
+    this.editFlag ? this.td['haveYouPassedComputerExam'].setValue(this.editObj.teacherDetails?.haveYouPassedComputerExam) : '';
   }
 
   //#endregion ----------------------------------end drop-down ------------------------------------------
