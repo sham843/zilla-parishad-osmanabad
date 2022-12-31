@@ -209,13 +209,13 @@ export class TeacherRegistrationComponent {
     this.apiService.getHttp().subscribe({
       next : ( res : any )=>{
         if(res.statusCode == "200"){
-          this.commonMethodS.snackBar(res.statusMessage, 0);
+          this.commonMethodS.showPopup(res.statusMessage, 0);
           this.getTableData();
         }
       }
     })
     error: (error: any) => {
-      this.commonMethodS.checkEmptyData(error.statusText) == false ? this.errors.handelError(error.statusCode) : this.commonMethodS.snackBar(error.statusText, 1);
+      this.commonMethodS.checkEmptyData(error.statusText) == false ? this.errors.handelError(error.statusCode) : this.commonMethodS.showPopup(error.statusText, 1);
     }
   }
 
