@@ -119,12 +119,12 @@ export class StudentRegistrationComponent {
             }
             this.downloadPdfservice.downLoadPdf(keyPDFHeader, ValueData, objData);
           } else {
-            flag == 'reportFlag' ? this.commonMethods.snackBar("No Data Found", 1) :'';
+            flag == 'reportFlag' ? this.commonMethods.showPopup("No Data Found", 1) :'';
           }
 
         } else {          
           this.ngxSpinner.hide();
-          flag == 'reportFlag' ? this.commonMethods.snackBar("No Data Found", 1) :'';
+          flag == 'reportFlag' ? this.commonMethods.showPopup("No Data Found", 1) :'';
           this.tableDataArray = [];
           this.tableDatasize = 0;
         }
@@ -289,10 +289,10 @@ export class StudentRegistrationComponent {
     this.apiService.getHttp().subscribe({
       next: (res: any) => {
         if (res.statusCode == "200") {
-          this.commonMethods.snackBar(res.statusMessage, 0);
+          this.commonMethods.showPopup(res.statusMessage, 0);
           this.getTableData();
         } else {
-          this.commonMethods.snackBar(res.statusMessage, 1);
+          this.commonMethods.showPopup(res.statusMessage, 1);
         }
       },
       error: ((err: any) => { this.errors.handelError(err) })
