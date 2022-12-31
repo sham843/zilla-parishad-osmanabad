@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { MatSnackBar, } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
+import Swal from 'sweetalert2';
 
 
 @Injectable({
@@ -25,6 +26,25 @@ export class CommonMethodsService {
   sanckBarHide() {
     this.SnackBar.dismiss();
   }
+
+  tinyAlert(masg: any) {
+    Swal.fire(masg);
+  }
+
+  // show message and error    https://sweetalert2.github.io/ and https://www.positronx.io/angular-popup-notification-with-sweetalert2-example/
+  showPopup(msg: any, status: number) {
+    let popupClassArr: any = ['success', 'warning', 'info'];
+    Swal.fire({
+      text: msg,
+      icon: popupClassArr[status],
+      // showCancelButton: true,
+      confirmButtonText: 'ok',
+      // position: 'top-end',
+    })
+  
+  }
+
+  
 
   checkEmptyData(data: any) {
     let value: any;

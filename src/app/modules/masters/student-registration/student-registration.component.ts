@@ -27,7 +27,6 @@ export class StudentRegistrationComponent {
   studentData = new Array();
   languageFlag!: string;
   tableDatasize!: Number;
-
   displayedColumns = ['docPath', 'srNo', 'fullName', 'standard', 'parentMobileNo', 'gender', 'action'];
   marathiDisplayedColumns = ['docPath', 'srNo', 'm_FullName', 'm_Standard', 'parentMobileNo', 'm_Gender', 'action'];
   displayedheaders = ['#', 'Sr. No.', 'Name', 'Standard', 'Parents Contact No.', 'Gender', 'action'];
@@ -47,7 +46,6 @@ export class StudentRegistrationComponent {
     this.languageFlag = this.webService.languageFlag;
     this.languageChange();
     this.getTableData();
-
   }
 
   //#region ----------------------------------------------------- Language Change Logic Start here -----------------------------------------------

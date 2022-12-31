@@ -21,6 +21,8 @@ export class DashboardComponent implements OnInit,AfterViewInit {
   filterForm!: FormGroup;
   filterFormForBarGraph!: FormGroup;
   piechartOptions: any;
+  piechartOptions1: any;
+  piechartOptions2: any;
   barchartOptions: any;
   barchartOptions1:any;
   dashboardCountData=new Array();
@@ -94,6 +96,74 @@ export class DashboardComponent implements OnInit,AfterViewInit {
   }
   getPieChart() {
     this.piechartOptions = {
+      series: [],
+      chart: {
+        type: "donut"
+      },
+      theme: {
+        monochrome: {
+          enabled: true,
+          color: '#039286',
+          shadeTo: 'light',
+          shadeIntensity: 0.65
+        }
+      },
+      fill: {
+        type: "solid",
+        //colors: ["#00E396", "#F9CE1D", "#D4526E", "#D7263D", "#A300D6"]
+      },
+      // colors: [],
+       labels: [],
+      responsive: [
+        {
+          breakpoint: 480,
+          options: {
+            chart: {
+              width: 200
+            },
+           
+            legend: {
+              position: "bottom"
+            }
+          }
+        }
+      ]
+    };
+    this.piechartOptions1 = {
+      series: [],
+      chart: {
+        type: "donut"
+      },
+      theme: {
+        monochrome: {
+          enabled: true,
+          color: '#039286',
+          shadeTo: 'light',
+          shadeIntensity: 0.65
+        }
+      },
+      fill: {
+        type: "solid",
+        //colors: ["#00E396", "#F9CE1D", "#D4526E", "#D7263D", "#A300D6"]
+      },
+      // colors: [],
+       labels: [],
+      responsive: [
+        {
+          breakpoint: 480,
+          options: {
+            chart: {
+              width: 200
+            },
+           
+            legend: {
+              position: "bottom"
+            }
+          }
+        }
+      ]
+    };
+    this.piechartOptions2 = {
       series: [],
       chart: {
         type: "donut"
@@ -208,6 +278,8 @@ export class DashboardComponent implements OnInit,AfterViewInit {
         position: "bottom",
       }
     };
+
+
     this.barchartOptions1 = {
       series:[],
       chart: {
@@ -318,13 +390,19 @@ export class DashboardComponent implements OnInit,AfterViewInit {
   }
   getPieChartData(){
     const serriesArray= [0,0,0];
+    const serriesArray1= [10,50,20];
+    const serriesArray2= [10,50,20];
     console.log(this.dashboardCountData)
     serriesArray[0]= this.dashboardCountData[0].govtSchool|0;
     serriesArray[1]= this.dashboardCountData[0].privateSchool|0;
     serriesArray[2]= this.dashboardCountData[0].otherSchool|0;
     this.piechartOptions.colors=[];
     this.piechartOptions.series = serriesArray;
+    this.piechartOptions1.series = serriesArray1;
+    this.piechartOptions2.series = serriesArray2;
     this.piechartOptions.labels=['Goverment','Private','Other'];
+    this.piechartOptions1.labels=['Goverment','Private','Other'];
+    this.piechartOptions2.labels=['Goverment','Private','Other'];
     console.log(this.piechartOptions)
     // this.piechartOptions.colors=['#CB4B4B', '#E76A63', '#E98754', '#EFB45B', '#65C889'];
   }

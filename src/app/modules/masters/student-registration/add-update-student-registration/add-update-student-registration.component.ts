@@ -323,7 +323,7 @@ export class AddUpdateStudentRegistrationComponent {
       this.ngxSpinner.hide();
       if (!this.uploadImg) { this.imgFlag = true };
       if (!this.uploadAadhaar) { this.aadhaarFlag = true };
-      this.commonMethods.snackBar('Please Enter Mandatory Fields', 1);
+      this.commonMethods.showPopup('Please Enter Mandatory Fields', 1);
       return
     } else {
       if (!this.uploadImg || !this.uploadAadhaar) {

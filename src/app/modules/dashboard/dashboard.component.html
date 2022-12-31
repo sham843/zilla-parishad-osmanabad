@@ -10,7 +10,8 @@
         <div class="col-sm-4">
             <mat-form-field appearance="outline" class="w-100">
                 <mat-label>तालुका निवडा</mat-label>
-                <mat-select formControlName="talukaId" (selectionChange)="f['talukaId'].value!=0?this.getCenters():''; dashboardAPis()">
+                <mat-select formControlName="talukaId"
+                    (selectionChange)="f['talukaId'].value!=0?this.getCenters():''; dashboardAPis()">
                     <mat-option *ngFor="let taluka of talukaData" [value]="taluka.id">
                         {{webStorage.languageFlag == 'EN'?taluka.taluka:taluka.m_Taluka}}
                     </mat-option>
@@ -30,7 +31,7 @@
         <div class="col-sm-4">
             <mat-form-field appearance="outline" class="w-100">
                 <mat-label>शाळा निवडा</mat-label>
-                <mat-select formControlName="schoolId"  (selectionChange)="dashboardAPis()">
+                <mat-select formControlName="schoolId" (selectionChange)="dashboardAPis()">
                     <mat-option *ngFor="let school of schoolData" [value]="school.id">
                         {{webStorage.languageFlag == 'EN'?school.schoolName :school.m_SchoolName }}
                     </mat-option>
@@ -111,17 +112,18 @@
             </mat-card-content>
         </mat-card>
 
-        <mat-card class="plain-card">
+        <!-- <mat-card class="plain-card">
             <mat-card-header class="card-header">
                 Management wise Schools
             </mat-card-header>
             <mat-card-content class="card-body">
                 <div id="chart">
-                    <apx-chart [series]="piechartOptions.series" [chart]="piechartOptions.chart" [theme]="piechartOptions.theme" [fill]="piechartOptions.fill"
-                        [labels]="piechartOptions.labels" [responsive]="piechartOptions.responsive"></apx-chart>
+                    <apx-chart [series]="piechartOptions.series" [chart]="piechartOptions.chart"
+                        [theme]="piechartOptions.theme" [fill]="piechartOptions.fill" [labels]="piechartOptions.labels"
+                        [responsive]="piechartOptions.responsive"></apx-chart>
                 </div>
             </mat-card-content>
-        </mat-card>
+        </mat-card> -->
     </div>
     <div class="col-sm-8">
         <mat-card class="plain-card h-100">
@@ -145,7 +147,9 @@
                                         <div *ngIf="header.ischeckboxShow==true">
                                             <div class="d-flex align-items-center justify-content-start">
                                                 <div class="form-check">
-                                                    <input class="form-check-input" type="checkbox" [disabled]="header.status==true" [(ngModel)]="header.status" (click)="checkData(header)">
+                                                    <input class="form-check-input" type="checkbox"
+                                                        [disabled]="header.status==true" [(ngModel)]="header.status"
+                                                        (click)="checkData(header)">
                                                     <label class="form-check-label" for="flexCheckDefault">
                                                         {{header.label}}
                                                     </label>
@@ -168,7 +172,7 @@
                     <div class="d-flex" *ngIf="showBarChartF">
                         <div class="border-end" *ngFor="let bar of barchartOptions.series[0]; let i=index">
                             <h6 class="fw-bold text-center mb-0">{{graphSubjectData[i]}}</h6>
-                            <apx-chart [series]="bar" [chart]="barchartOptions.chart" 
+                            <apx-chart [series]="bar" [chart]="barchartOptions.chart"
                                 [dataLabels]="barchartOptions.dataLabels" [plotOptions]="barchartOptions.plotOptions"
                                 [responsive]="barchartOptions.responsive" [xaxis]="barchartOptions.xaxis"
                                 [legend]="barchartOptions.legend" [fill]="barchartOptions.fill"></apx-chart>
@@ -191,6 +195,51 @@
                 </div>
             </mat-card-content>
         </mat-card>
+    </div>
+    <div class="row mt-2">
+        <div class="col-sm-4">
+            <mat-card class="plain-card">
+                <mat-card-header class="card-header">
+                    Management wise Schools
+                </mat-card-header>
+                <mat-card-content class="card-body">
+                    <div id="chart">
+                        <apx-chart [series]="piechartOptions.series" [chart]="piechartOptions.chart"
+                            [theme]="piechartOptions.theme" [fill]="piechartOptions.fill" [labels]="piechartOptions.labels"
+                            [responsive]="piechartOptions.responsive"></apx-chart>
+                    </div>
+                </mat-card-content>
+            </mat-card>
+        </div>
+        <div class="col-sm-4">
+            <mat-card class="plain-card">
+                <mat-card-header class="card-header">
+                    Management wise Schools
+                </mat-card-header>
+                <mat-card-content class="card-body">
+                    <div id="chart">
+                        <apx-chart [series]="piechartOptions1.series" [chart]="piechartOptions1.chart"
+                            [theme]="piechartOptions1.theme" [fill]="piechartOptions1.fill" [labels]="piechartOptions1.labels"
+                            [responsive]="piechartOptions1.responsive"></apx-chart>
+                    </div>
+                </mat-card-content>
+            </mat-card>
+        </div>
+        <div class="col-sm-4">
+            <mat-card class="plain-card">
+                <mat-card-header class="card-header">
+                    Management wise Schools
+                </mat-card-header>
+                <mat-card-content class="card-body">
+                    <div id="chart">
+                        <apx-chart [series]="piechartOptions2.series" [chart]="piechartOptions2.chart"
+                            [theme]="piechartOptions2.theme" [fill]="piechartOptions2.fill" [labels]="piechartOptions2.labels"
+                            [responsive]="piechartOptions2.responsive"></apx-chart>
+                    </div>
+                </mat-card-content>
+            </mat-card>
+        </div>
+
     </div>
 </div>
 
@@ -247,17 +296,20 @@
                         <div class="col-sm-3" *ngIf="!f['talukaId'].value">
                             <mat-form-field appearance="outline" class="w-100">
                                 <mat-label>तालुका निवडा</mat-label>
-                                <mat-select formControlName="filtertalukaId" (selectionChange)="this.getbarChartByTaluka()">
+                                <mat-select formControlName="filtertalukaId"
+                                    (selectionChange)="this.getbarChartByTaluka()">
                                     <mat-option *ngFor="let taluka of talukaData" [value]="taluka.id">
                                         {{webStorage.languageFlag == 'EN'?taluka.taluka:taluka.m_Taluka}}
                                     </mat-option>
                                 </mat-select>
                             </mat-form-field>
                         </div>
-                        <div class="col-sm-3" *ngIf="f['talukaId'].value || (f['talukaId'].value && !fBgraph['filtertalukaId'].value)">
+                        <div class="col-sm-3"
+                            *ngIf="f['talukaId'].value || (f['talukaId'].value && !fBgraph['filtertalukaId'].value)">
                             <mat-form-field appearance="outline" class="w-100">
                                 <mat-label>केंद्र निवडा</mat-label>
-                                <mat-select formControlName="filtercenterId" (selectionChange)="this.getbarChartByTaluka()">
+                                <mat-select formControlName="filtercenterId"
+                                    (selectionChange)="this.getbarChartByTaluka()">
                                     <mat-option *ngFor="let center of centerData" [value]="center.id">
                                         {{webStorage.languageFlag == 'EN'?center.center:center.m_Center}}
                                     </mat-option>
@@ -267,7 +319,8 @@
                         <div class="col-sm-3">
                             <mat-form-field appearance="outline" class="w-100">
                                 <mat-label>Subject</mat-label>
-                                <mat-select formControlName="filtersubjectId" (selectionChange)="this.getbarChartByTaluka()">
+                                <mat-select formControlName="filtersubjectId"
+                                    (selectionChange)="this.getbarChartByTaluka()">
                                     <mat-option *ngFor="let subject of subjectData" [value]="subject.id ">
                                         {{webStorage.languageFlag == 'EN'?subject.subjectName :subject.m_SubjectName }}
                                     </mat-option>
@@ -284,10 +337,11 @@
                             [responsive]="barchartOptions.responsive" [xaxis]="barchartOptions.xaxis"
                             [legend]="barchartOptions.legend" [fill]="barchartOptions.fill"></apx-chart>
                     </div> -->
-                    <apx-chart [series]="barchartOptions1.series[0]" [chart]="barchartOptions1.chart" [theme]="barchartOptions1.theme"
-                    [dataLabels]="barchartOptions1.dataLabels" [plotOptions]="barchartOptions1.plotOptions"
-                    [responsive]="barchartOptions1.responsive" [xaxis]="barchartOptions1.xaxis"
-                    [legend]="barchartOptions1.legend" [fill]="barchartOptions1.fill"></apx-chart>
+                    <apx-chart [series]="barchartOptions1.series[0]" [chart]="barchartOptions1.chart"
+                        [theme]="barchartOptions1.theme" [dataLabels]="barchartOptions1.dataLabels"
+                        [plotOptions]="barchartOptions1.plotOptions" [responsive]="barchartOptions1.responsive"
+                        [xaxis]="barchartOptions1.xaxis" [legend]="barchartOptions1.legend"
+                        [fill]="barchartOptions1.fill"></apx-chart>
                 </div>
             </mat-card-content>
             <div class="row">
@@ -297,7 +351,7 @@
                             <thead>
                                 <tr>
                                     <th *ngFor="let header of displayedheaders">
-                                      {{header}}
+                                        {{header}}
                                     </th>
                                 </tr>
                             </thead>
@@ -305,13 +359,14 @@
                                 <tr *ngFor="let item of data; let j=index">
                                     <!-- <td><img class="table-img" src="{{item['schoolImage'] ? item['schoolImage'] : 'assets/images/user.jpg'}}"></td> -->
                                     <td>{{item['srNo']}}</td>
-                                    <td>{{webStorage.languageFlag == 'EN' ? item['schoolName'] : item['m_SchoolName']}}</td>
+                                    <td>{{webStorage.languageFlag == 'EN' ? item['schoolName'] : item['m_SchoolName']}}
+                                    </td>
                                     <td>{{item['totalStudent']}}</td>
                                     <td>{{item['passpercentage']}}</td>
                                 </tr>
                             </tbody>
                         </table>
-                        
+
                         <div *ngIf="  data?.length ==0">
                             <div class="alert alert-danger text-center py-2 ">
                                 Data not available
@@ -321,6 +376,6 @@
                 </div>
             </div>
         </mat-card>
-       
+
     </div>
 </div>

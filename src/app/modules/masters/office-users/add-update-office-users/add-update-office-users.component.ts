@@ -55,7 +55,7 @@ export class AddUpdateOfficeUsersComponent implements OnInit {
         "address": [this.data ? this.data.address : "", [Validators.maxLength(500)]],
         "schoolId": [this.data ? this.data.schoolId : 0],
         "designationId": [this.data ? this.data.designationId : 0],
-        "designationLevelId": [this.data ? this.data.designationLevelId : 0, Validators.required],
+        "designationLevelId": [this.data ? this.data.designationLevelId : null,[Validators.required]],
         "stateId": [this.data ? 0 : 0],
         "districtId": [this.data ? this.data.districtId : 0],
         "talukaId": [this.data ? this.data.talukaId : 0],
@@ -158,11 +158,7 @@ export class AddUpdateOfficeUsersComponent implements OnInit {
 
   submitOfficeData() {
     console.log("all data submitted:", this.officeForm.value);
-   
-    if (!this.officeForm.valid) {
-      return
-    }
-    else {
+    if(this.officeForm.valid) {
       this.apiService.setHttp(this.data ? 'PUT' : 'POST', this.data ? 'zp_osmanabad/Office/UpdateOffice' : 'zp_osmanabad/Office/AddOffice', false, this.officeForm.value, false, 'baseUrl');
       this.apiService.getHttp().subscribe({
         next: (res: any) => {
@@ -175,6 +171,12 @@ export class AddUpdateOfficeUsersComponent implements OnInit {
         })
       });
     }
+    if (this.officeForm.invalid) {
+      this.commonService.showPopup(this.webStorageService.languageFlag == 'EN' ? 'Please Enter Mandatory Fields' : 'कृपया अनिवार्य फील्ड प्रविष्ट करा', 1);
+      return
+    }
+
+
   }
 
   // onchangeValidation(event : any,label: string){
