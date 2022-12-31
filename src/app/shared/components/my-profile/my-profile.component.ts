@@ -37,6 +37,7 @@ export class MyProfileComponent {
   userProfile !: FormGroup;
   uploadImg: string = "";
   imgFlag: boolean = false;
+  userType:any;
   @ViewChild('uploadImage') imageFile!: ElementRef;
 
   constructor(private api: ApiService, private error: ErrorsService, private fileUpl: FileUploadService,
@@ -44,16 +45,23 @@ export class MyProfileComponent {
     private commonMethods: CommonMethodsService, public validation: ValidationService) { this.dialogRef.disableClose = true }
 
   ngOnInit() {
+    
     this.getUserById();
     this.defaultForm();
-
+    this.getUserByAdmin();
+    this.userType = this.webStorage.getLoggedInLocalstorageData();
+    
   }
 
   getUserById() {
     this.api.setHttp('get', `zp_osmanabad/app-login/GetTeacherProfile?TeacherId=${this.webStorage.getUserId()}`, false, false, false, 'baseUrl');
     this.api.getHttp().subscribe({
       next: (res: any) => {
+        console.log("res",res.responseData);
+        
         res.statusCode == 200 ? this.defaultForm(res.responseData) : '';
+        console.log();
+        
       },
       error: (error: any) => {
         this.error.handelError(error.statusMessage)
@@ -61,12 +69,30 @@ export class MyProfileComponent {
     })
   }
 
+  getUserByAdmin(){
+    // zp_osmanabad/user-registration/GetAdminProfile?Id=1&lan=EN
+    this.api.setHttp('get', `zp_osmanabad/user-registration/GetAdminProfile?Id=${this.webStorage.getUserId()}`, false, false, false, 'baseUrl');
+    this.api.getHttp().subscribe({
+      next: (res: any) => {
+        console.log("res",res.responseData);
+        
+        res.statusCode == 200 ? this.defaultForm(res.responseData) : '';
+        console.log();
+        
+      },
+      error: (error: any) => {
+        this.error.handelError(error.statusMessage)
+      }
+    })
+
+  }
+
   defaultForm(data?: any) {
     this.userProfile = this.fb.group({
       "name": [data ? data?.name : ''],
       "mobileNo": [data ? data?.mobileNo : '', [Validators.required, Validators.pattern(this.validation.mobile_No)]],
       "emailId": [data ? data?.emailId : '', [Validators.required, Validators.pattern(this.validation.email)]],
-      "profilePhoto": [data ? data?.profilePhoto : this.uploadImg],
+      "profilePhoto": [data ? data?.profilePhoto : this.uploadImg],      
     })
     data ? this.uploadImg = data.profilePhoto : this.uploadImg = "assets/images/user.jpg"
   }
@@ -94,6 +120,10 @@ export class MyProfileComponent {
   onSubmit() {
     let obj = this.userProfile.value;
     let data = this.webStorage.getLoggedInLocalstorageData();
+    // this.userType = this.webStorage.getUserType;
+   
+    
+
     let uploadData = {
       "id": data.id,
       "userTypeId": data.userTypeId,
@@ -101,11 +131,12 @@ export class MyProfileComponent {
       "name": obj.name,
       "mobileNo": obj.mobileNo,
       "emailId": obj.emailId,
-      "profilePhoto": obj.profilePhoto,
+       "profilePhoto":obj.profilePhoto ,
       "modifiedBy": 0,
       "modifiedDate": "2022-12-28T13:14:12.410Z"
     }
     if (this.userProfile.valid) {
+
       this.api.setHttp('put', 'zp_osmanabad/app-login/UpdateProfile', false, uploadData, false, 'baseUrl');
       this.api.getHttp().subscribe({
         next: (res: any) => {

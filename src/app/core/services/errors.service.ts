@@ -83,6 +83,6 @@ export class ErrorsService {
       }
     }
 
-    this.commonMethods.snackBar(msg, 1);
+    this.commonMethods.showPopup(msg, 1);
   }
 }
