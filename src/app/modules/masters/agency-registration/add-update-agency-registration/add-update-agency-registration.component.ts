@@ -45,7 +45,7 @@ export class AddUpdateAgencyRegistrationComponent {
       "agency_Address": [data ? data.agency_Address : "", [Validators.required, Validators.maxLength(500)]],
       "districtId": [{ value: 1, disabled: true }],
       "talukaId": ["", Validators.required],
-      "lan": "",
+      "lan":  this.webStorageService.languageFlag,
       "localID": 0,
       "timestamp": new Date()
     })
@@ -81,20 +81,20 @@ export class AddUpdateAgencyRegistrationComponent {
       this.api.setHttp(this.data ? 'put' : 'post', 'zp-osmanabad/Agency/' + (this.data ? 'Update' : 'Add'), false, obj, false, 'baseUrl');
       this.api.getHttp().subscribe({
         next: (res: any) => {
-          res.statusCode == 200 ? (this.common.snackBar(res.statusMessage, 0), this.dialogRef.close('Yes'), this.onCancel(clear), this.ngxSpinner.hide()) : (this.common.snackBar(res.statusMessage, 1), this.ngxSpinner.hide());
+          res.statusCode == 200 ? (this.common.showPopup(res.statusMessage, 0), this.dialogRef.close('Yes'), this.onCancel(clear), this.ngxSpinner.hide()) : (this.common.showPopup(res.statusMessage, 1), this.ngxSpinner.hide());
           res.statusMessage == "Agency_MobileNo Already Exist." ? this.ngxSpinner.hide() : ''
         },
         error: ((err: any) => { this.errors.handelError(err) })
       })
     }
     else if (this.agencyRegisterForm.invalid) {
-      this.common.snackBar(this.webStorageService.languageFlag == 'EN' ? 'Please Enter Mandatory Fields' : 'कृपया अनिवार्य फील्ड प्रविष्ट करा', 1);
+      this.common.showPopup(this.webStorageService.languageFlag == 'EN' ? 'Please Enter Mandatory Fields' : 'कृपया अनिवार्य फील्ड प्रविष्ट करा', 1);
       this.ngxSpinner.hide();
       return;
     }
     else {
-      obj.emailId == obj.agency_EmailId ? this.common.snackBar(this.webStorageService.languageFlag == 'EN' ? 'Email Id & Agency Email Id Can Not Be Same' : 'ईमेल आयडी आणि एजन्सीचा ईमेल आयडी एकच असू शकत नाही', 1) : '';
-      obj.contact_No == obj.agency_MobileNo ? this.common.snackBar(this.webStorageService.languageFlag == 'EN' ? 'Contact Number & Agency Contact Number Can Not Be Same' : 'संपर्क क्रमांक आणि एजन्सीचा संपर्क क्रमांक एकच असू शकत नाही', 1) : '';
+      obj.emailId == obj.agency_EmailId ? this.common.showPopup(this.webStorageService.languageFlag == 'EN' ? 'Email Id & Agency Email Id Can Not Be Same' : 'ईमेल आयडी आणि एजन्सीचा ईमेल आयडी एकच असू शकत नाही', 1) : '';
+      obj.contact_No == obj.agency_MobileNo ? this.common.showPopup(this.webStorageService.languageFlag == 'EN' ? 'Contact Number & Agency Contact Number Can Not Be Same' : 'संपर्क क्रमांक आणि एजन्सीचा संपर्क क्रमांक एकच असू शकत नाही', 1) : '';
       this.ngxSpinner.hide();
       return;
     }

@@ -67,7 +67,7 @@ export class AddUpdateSchoolRegistrationComponent {
       "s_ManagementId": ['', Validators.required],
       "s_TypeId": ['', Validators.required],
       "g_ClassId": 0,
-      "lan": "EN",
+      "lan": this.webStorageS.languageFlag,
       "localID": 0,
       "lowestClass": ['', Validators.required],
       "highestClass": ['', Validators.required],
@@ -218,6 +218,7 @@ export class AddUpdateSchoolRegistrationComponent {
     this.editFlag ? url = 'ZP-Osmanabad/School/Update' : url = 'ZP-Osmanabad/School/Add';
 
     if (!this.schoolRegForm.valid) {
+      this.commonMethod.showPopup(this.webStorageS.languageFlag == 'EN' ? 'Please Enter Mandatory Fields' : 'कृपया अनिवार्य फील्ड प्रविष्ट करा', 1);
       return
     }
     else {
@@ -226,12 +227,12 @@ export class AddUpdateSchoolRegistrationComponent {
       this.apiService.getHttp().subscribe({
         next: (res: any) => {
           this.ngxSpinner.hide();
-          res.statusCode === 200 ? (this.commonMethod.snackBar(res.statusMessage, 0)) : this.commonMethod.checkEmptyData(res.statusMessage) == false ? this.errors.handelError(res.statusCode) : this.commonMethod.snackBar(res.statusMessage, 0);
+          res.statusCode === 200 ? (this.commonMethod.showPopup(res.statusMessage, 0)) : this.commonMethod.checkEmptyData(res.statusMessage) == false ? this.errors.handelError(res.statusCode) : this.commonMethod.showPopup(res.statusMessage, 0);
           this.dialogRef.close('yes');
         },
         error: ((err: any) => {
           this.ngxSpinner.hide();
-          this.commonMethod.checkEmptyData(err.statusMessage) == false ? this.errors.handelError(err.statusCode) : this.commonMethod.snackBar(err.statusMessage, 1);
+          this.commonMethod.checkEmptyData(err.statusMessage) == false ? this.errors.handelError(err.statusCode) : this.commonMethod.showPopup(err.statusMessage, 1);
         })
       });
     }

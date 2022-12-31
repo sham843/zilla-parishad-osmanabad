@@ -109,7 +109,7 @@ export class AddUpdateStudentRegistrationComponent {
           this.stuRegistrationForm.controls['districtId'].setValue(1);
           this.getTaluka();
         } else {
-          this.commonMethods.checkEmptyData(res.statusMessage) == false ? this.errors.handelError(res.statusCode) : this.commonMethods.snackBar(res.statusMessage, 1);
+          this.commonMethods.checkEmptyData(res.statusMessage) == false ? this.errors.handelError(res.statusCode) : this.commonMethods.showPopup(res.statusMessage, 1);
           this.districtArr = [];
         }
       },
@@ -125,7 +125,7 @@ export class AddUpdateStudentRegistrationComponent {
           this.talukaArr = res.responseData;
           this.editFlag ? (this.stuRegistrationForm.controls['talukaId'].setValue(this.editObj.talukaId), this.getAllCenter()) : '';
         } else {
-          this.commonMethods.checkEmptyData(res.statusMessage) == false ? this.errors.handelError(res.statusCode) : this.commonMethods.snackBar(res.statusMessage, 1);
+          this.commonMethods.checkEmptyData(res.statusMessage) == false ? this.errors.handelError(res.statusCode) : this.commonMethods.showPopup(res.statusMessage, 1);
           this.talukaArr = [];
         }
       },
@@ -142,7 +142,7 @@ export class AddUpdateStudentRegistrationComponent {
           this.centerArr = res.responseData;
           this.editFlag ? (this.stuRegistrationForm.controls['centerId'].setValue(this.editObj.centerId), this.getAllSchoolsByCenterId()) : ''
         } else {
-          this.commonMethods.checkEmptyData(res.statusMessage) == false ? this.errors.handelError(res.statusCode) : this.commonMethods.snackBar(res.statusMessage, 1);
+          this.commonMethods.checkEmptyData(res.statusMessage) == false ? this.errors.handelError(res.statusCode) : this.commonMethods.showPopup(res.statusMessage, 1);
           this.centerArr = [];
         }
       },
@@ -159,7 +159,7 @@ export class AddUpdateStudentRegistrationComponent {
           this.schoolArr = res.responseData;
           this.editFlag ? this.stuRegistrationForm.controls['schoolId'].setValue(this.editObj.schoolId) : '';
         } else {
-          this.commonMethods.checkEmptyData(res.statusMessage) == false ? this.errors.handelError(res.statusCode) : this.commonMethods.snackBar(res.statusMessage, 1);
+          this.commonMethods.checkEmptyData(res.statusMessage) == false ? this.errors.handelError(res.statusCode) : this.commonMethods.showPopup(res.statusMessage, 1);
           this.schoolArr = [];
         }
       },
@@ -175,7 +175,7 @@ export class AddUpdateStudentRegistrationComponent {
           this.standardArr = res.responseData;
           this.editFlag ? this.stuRegistrationForm.controls['standard'].setValue(this.editObj.standardId) : '';
         } else {
-          this.commonMethods.checkEmptyData(res.statusMessage) == false ? this.errors.handelError(res.statusCode) : this.commonMethods.snackBar(res.statusMessage, 1);
+          this.commonMethods.checkEmptyData(res.statusMessage) == false ? this.errors.handelError(res.statusCode) : this.commonMethods.showPopup(res.statusMessage, 1);
           this.standardArr = [];
         }
       },
@@ -191,7 +191,7 @@ export class AddUpdateStudentRegistrationComponent {
           this.genderArr = res.responseData;
           this.editFlag ? this.stuRegistrationForm.controls['gender'].setValue(this.editObj.genderId) : '';
         } else {
-          this.commonMethods.checkEmptyData(res.statusMessage) == false ? this.errors.handelError(res.statusCode) : this.commonMethods.snackBar(res.statusMessage, 1);
+          this.commonMethods.checkEmptyData(res.statusMessage) == false ? this.errors.handelError(res.statusCode) : this.commonMethods.showPopup(res.statusMessage, 1);
           this.genderArr = [];
         }
       },
@@ -207,7 +207,7 @@ export class AddUpdateStudentRegistrationComponent {
           this.religionArr = res.responseData;
           this.editFlag ? (this.stuRegistrationForm.controls['religionId'].setValue(this.editObj.religionId), this.getCaste()) : '';
         } else {
-          this.commonMethods.checkEmptyData(res.statusMessage) == false ? this.errors.handelError(res.statusCode) : this.commonMethods.snackBar(res.statusMessage, 1);
+          this.commonMethods.checkEmptyData(res.statusMessage) == false ? this.errors.handelError(res.statusCode) : this.commonMethods.showPopup(res.statusMessage, 1);
           this.religionArr = [];
         }
       },
@@ -226,7 +226,7 @@ export class AddUpdateStudentRegistrationComponent {
           this.casteArr = res.responseData;
           this.editFlag ? this.stuRegistrationForm.controls['castId'].setValue(this.editObj.castId) : '';
         } else {
-          this.commonMethods.checkEmptyData(res.statusMessage) == false ? this.errors.handelError(res.statusCode) : this.commonMethods.snackBar(res.statusMessage, 1);
+          this.commonMethods.checkEmptyData(res.statusMessage) == false ? this.errors.handelError(res.statusCode) : this.commonMethods.showPopup(res.statusMessage, 1);
           this.casteArr = [];
         }
       },
@@ -323,13 +323,14 @@ export class AddUpdateStudentRegistrationComponent {
       this.ngxSpinner.hide();
       if (!this.uploadImg) { this.imgFlag = true };
       if (!this.uploadAadhaar) { this.aadhaarFlag = true };
-      this.commonMethods.showPopup('Please Enter Mandatory Fields', 1);
+      this.commonMethods.showPopup(this.webService.languageFlag == 'EN' ? 'Please Enter Mandatory Fields' : 'कृपया अनिवार्य फील्ड प्रविष्ट करा', 1);
+      
       return
     } else {
       if (!this.uploadImg || !this.uploadAadhaar) {
         this.ngxSpinner.hide();
-        if (!this.uploadImg) { this.imgFlag = true, this.commonMethods.snackBar('Please Enter Mandatory Fields', 1); };
-        if (!this.uploadAadhaar) { this.aadhaarFlag = true, this.commonMethods.snackBar('Please Enter Mandatory Fields', 1); };
+        if (!this.uploadImg) { this.imgFlag = true, this.commonMethods.showPopup(this.webService.languageFlag == 'EN' ? 'Please Enter Mandatory Fields' : 'कृपया अनिवार्य फील्ड प्रविष्ट करा', 1); };
+        if (!this.uploadAadhaar) { this.aadhaarFlag = true, this.commonMethods.showPopup(this.webService.languageFlag == 'EN' ? 'Please Enter Mandatory Fields' : 'कृपया अनिवार्य फील्ड प्रविष्ट करा', 1); };
         return
       }
       let url = this.editObj ? 'UpdateStudent' : 'AddStudent'
@@ -338,11 +339,11 @@ export class AddUpdateStudentRegistrationComponent {
         next: (res: any) => {
           if (res.statusCode == 200) {
             this.ngxSpinner.hide();
-            this.commonMethods.snackBar(res.statusMessage, 0);
+            this.commonMethods.showPopup(res.statusMessage, 0);
             this.dialogRef.close('yes')
           } else {
             this.ngxSpinner.hide();
-            this.commonMethods.checkEmptyData(res.statusMessage) == false ? this.errors.handelError(res.statusCode) : this.commonMethods.snackBar(res.statusMessage, 1);
+            this.commonMethods.checkEmptyData(res.statusMessage) == false ? this.errors.handelError(res.statusCode) : this.commonMethods.showPopup(res.statusMessage, 1);
           }
         },
         error: ((err: any) => { this.ngxSpinner.hide(); this.errors.handelError(err) })
@@ -365,7 +366,7 @@ export class AddUpdateStudentRegistrationComponent {
         } else {
           this.uploadAadhaar = res.responseData;
         }
-        this.commonMethods.snackBar(res.statusMessage, 0);
+        this.commonMethods.showPopup(res.statusMessage, 0);
         let obj = {
           "id": 0,
           "studentId": this.editFlag ? this.editObj.id : 0,
@@ -435,7 +436,7 @@ export class AddUpdateStudentRegistrationComponent {
         } else {
           this.fc['fatherFullName'].setValue('');
           this.fc['motherName'].setValue('');
-          this.commonMethods.checkEmptyData(res.statusMessage) == false ? this.errors.handelError(res.statusCode) : this.commonMethods.snackBar(res.statusMessage, 1);
+          this.commonMethods.checkEmptyData(res.statusMessage) == false ? this.errors.handelError(res.statusCode) : this.commonMethods.showPopup(res.statusMessage, 1);
         }
       },
       error: ((err: any) => { this.ngxSpinner.hide(); this.errors.handelError(err) })

@@ -68,7 +68,7 @@ export class AddUpdateDesignationMasterComponent {
           this.editFlag ? (this.designationForm.controls['designationLevelId'].setValue(this.editData.designationLevel)) : '';
         }
       }), error: (error: any) => {
-        this.commonMethod.checkEmptyData(error.statusText) == false ? this.errorHandler.handelError(error.statusCode) : this.commonMethod.snackBar(error.statusText, 1);
+        this.commonMethod.checkEmptyData(error.statusText) == false ? this.errorHandler.handelError(error.statusCode) : this.commonMethod.showPopup(error.statusText, 1);
       }
     })
   }
@@ -128,18 +128,18 @@ export class AddUpdateDesignationMasterComponent {
       this.service.getHttp().subscribe({
         next: ((res: any) => {
           this.ngxSpinner.hide();
-          if (res.statusCode == '200') {
+          res.statusCode === "200" ? (this.commonMethod.showPopup(res.statusMessage, 0)) : this.commonMethod.checkEmptyData(res.statusMessage) == false ? this.errorHandler.handelError(res.statusCode) : this.commonMethod.showPopup(res.statusMessage, 1);
+     
             this.dialogRef.close('yes');
-          } else {
-            this.commonMethod.checkEmptyData(res.statusMessage) == false ? this.errorHandler.handelError(res.statusCode) : this.commonMethod.snackBar(res.statusMessage, 1);
-          }
+        
         }),
         error: (error: any) => {
           this.ngxSpinner.hide();
-          this.commonMethod.checkEmptyData(error.statusMessage) == false ? this.errorHandler.handelError(error.statusCode) : this.commonMethod.snackBar(error.statusMessage, 1);
+          this.commonMethod.checkEmptyData(error.statusMessage) == false ? this.errorHandler.handelError(error.statusCode) : this.commonMethod.showPopup(error.statusMessage, 1);
         }
       })
     }else{
+      this.commonMethod.showPopup(this.webStorage.languageFlag == 'EN' ? 'Please Enter Mandatory Fields' : 'कृपया अनिवार्य फील्ड प्रविष्ट करा', 1);
       return;
     }
    

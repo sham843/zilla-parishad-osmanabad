@@ -10,6 +10,7 @@ import { WebStorageService } from 'src/app/core/services/web-storage.service';
 import { GlobalDetailComponent } from 'src/app/shared/components/global-detail/global-detail.component';
 import { GlobalDialogComponent } from 'src/app/shared/components/global-dialog/global-dialog.component';
 import { AddUpdateTeacherRegistrationComponent } from './add-update-teacher-registration/add-update-teacher-registration.component';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-teacher-registration',
@@ -36,7 +37,8 @@ export class TeacherRegistrationComponent {
 
   @HostBinding('class') className = '';
   constructor(private dialog: MatDialog, private overlay: OverlayContainer, private apiService: ApiService, private errors: ErrorsService,
-    public webStorageS: WebStorageService, private downloadFileService: DownloadPdfExcelService, private commonMethodS : CommonMethodsService) {
+    public webStorageS: WebStorageService, private downloadFileService: DownloadPdfExcelService, private commonMethodS : CommonMethodsService,
+    private ngxSpinner : NgxSpinnerService) {
   }
 
   ngOnInit(): void {
@@ -79,7 +81,12 @@ export class TeacherRegistrationComponent {
   }
 
   getTableData(flag?: string) {
+    this.ngxSpinner.show();
     this.pageNumber = flag == 'filter' ? 1 : this.pageNumber;
+    if (flag == 'filter' && !this.searchContent.value) {
+      this.ngxSpinner.hide();
+      return
+    }
     // let tableDatasize!: Number;
     let pageNo = this.cardViewFlag ? (this.cardCurrentPage + 1) : this.pageNumber;
 
@@ -92,12 +99,14 @@ export class TeacherRegistrationComponent {
         console.log("table res : ",res);
         
         if (res.statusCode == "200") {
+          this.ngxSpinner.hide(); 
           this.tableDataArray = res.responseData.responseData1;
           
           this.totalCount = res.responseData.responseData2.pageCount;
           this.tableDatasize = res.responseData.responseData2.pageCount;
 
         } else {
+          this.ngxSpinner.hide();
           this.tableDataArray = [];
           this.tableDatasize = 0;
         }
@@ -209,13 +218,13 @@ export class TeacherRegistrationComponent {
     this.apiService.getHttp().subscribe({
       next : ( res : any )=>{
         if(res.statusCode == "200"){
-          this.commonMethodS.snackBar(res.statusMessage, 0);
+          this.commonMethodS.showPopup(res.statusMessage, 0);
           this.getTableData();
         }
       }
     })
     error: (error: any) => {
-      this.commonMethodS.checkEmptyData(error.statusText) == false ? this.errors.handelError(error.statusCode) : this.commonMethodS.snackBar(error.statusText, 1);
+      this.commonMethodS.checkEmptyData(error.statusText) == false ? this.errors.handelError(error.statusCode) : this.commonMethodS.showPopup(error.statusText, 1);
     }
   }
 

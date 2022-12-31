@@ -90,7 +90,7 @@ export class AgencyRegistrationComponent {
           this.ngxSpinner.hide();
           this.tableDataArray = [];
           this.tableDatasize = 0;
-          this.tableDatasize == 0 && flag =='pdfFlag' ? this.common.snackBar('No Record Found',1): '';
+          this.tableDatasize == 0 && flag =='pdfFlag' ? this.common.showPopup('No Record Found',1): '';
         }
         this.getTableDataMarathi();
       },
@@ -122,7 +122,7 @@ export class AgencyRegistrationComponent {
         this.downloadPdfservice.downLoadPdf(keyPDFHeader, ValueData, objData);
       }
       else{
-        this.common.snackBar('No Record Found',1)
+        this.common.showPopup('No Record Found',1)
       }
   }
 

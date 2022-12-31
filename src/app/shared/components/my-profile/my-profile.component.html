@@ -63,7 +63,10 @@
     <mat-card-footer class="card-footer">
         <div class="d-flex w-100 justify-content-end align-items-center">
             <button type="button" mat-dialog-close mat-flat-button class="btn-second me-2">{{'Labels.cancel' | translate}}</button>
-            <button type="submit" mat-flat-button class="btn-main">{{'Labels.update' | translate}}</button>
+            <ng-container *ngIf="userType.userType != 'Admin'">
+                <button type="submit" mat-flat-button class="btn-main" >{{'Labels.update' | translate}}</button>
+            </ng-container>
+           
         </div>
     </mat-card-footer>
    </form>

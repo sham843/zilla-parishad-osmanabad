@@ -106,7 +106,7 @@ getDesiganationType() {
         } else {
           this.tableDataArray = [];
           this.tableDatasize = 0;
-          this.tableDatasize == 0 && flag == 'pdfFlag' ? this.commonMethod.snackBar('No Record Found', 1) : '';
+          this.tableDatasize == 0 && flag == 'pdfFlag' ? this.commonMethod.showPopup('No Record Found', 1) : '';
         }
         this.getTableTranslatedData();
       },
@@ -187,12 +187,12 @@ getDesiganationType() {
     this.apiService.getHttp().subscribe({
       next: ((res: any) => {
         if (res.statusCode == '200') {
-          this.commonMethod.snackBar(res.statusMessage, 0);
+          this.commonMethod.showPopup(res.statusMessage, 0);
           this.clearForm();
         }
       }),
       error: (error: any) => {
-        this.commonMethod.checkEmptyData(error.statusText) == false ? this.errorHandler.handelError(error.statusCode) : this.commonMethod.snackBar(error.statusText, 1);
+        this.commonMethod.checkEmptyData(error.statusText) == false ? this.errorHandler.handelError(error.statusCode) : this.commonMethod.showPopup(error.statusText, 1);
       }
     })
   }

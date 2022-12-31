@@ -106,11 +106,11 @@ export class SchoolRegistrationComponent {
           this.ngxSpinner.hide();
           this.tableDataArray = [];
           this.tableDatasize = 0;
-          this.tableDatasize == 0 && flag == 'pdfFlag' ? this.commonMethodS.snackBar('No Record Found', 1) : '';
+          this.tableDatasize == 0 && flag == 'pdfFlag' ? this.commonMethodS.showPopup('No Record Found', 1) : '';
         }
         this.languageChange();
       },
-      error: ((err: any) => { this.commonMethodS.checkEmptyData(err.statusText) == false ? this.errors.handelError(err.statusCode) : this.commonMethodS.snackBar(err.statusText, 1); })
+      error: ((err: any) => { this.commonMethodS.checkEmptyData(err.statusText) == false ? this.errors.handelError(err.statusCode) : this.commonMethodS.showPopup(err.statusText, 1); })
     });
   }
   //#endregion ------------------------------------------- School Registration Table Data end here ----------------------------------------// 
@@ -153,7 +153,7 @@ export class SchoolRegistrationComponent {
           this.districtArr = res.responseData;
         }
       },
-      error: ((err: any) => { this.commonMethodS.checkEmptyData(err.statusText) == false ? this.errors.handelError(err.statusCode) : this.commonMethodS.snackBar(err.statusText, 1); })
+      error: ((err: any) => { this.commonMethodS.checkEmptyData(err.statusText) == false ? this.errors.handelError(err.statusCode) : this.commonMethodS.showPopup(err.statusText, 1); })
     });
   }
 
@@ -164,7 +164,7 @@ export class SchoolRegistrationComponent {
           this.talukaArr = res.responseData;
         }
       },
-      error: ((err: any) => { this.commonMethodS.checkEmptyData(err.statusText) == false ? this.errors.handelError(err.statusCode) : this.commonMethodS.snackBar(err.statusText, 1); })
+      error: ((err: any) => { this.commonMethodS.checkEmptyData(err.statusText) == false ? this.errors.handelError(err.statusCode) : this.commonMethodS.showPopup(err.statusText, 1); })
     });
   }
 
@@ -176,7 +176,7 @@ export class SchoolRegistrationComponent {
           this.villageArr = res.responseData;
         }
       },
-      error: ((err: any) => { this.commonMethodS.checkEmptyData(err.statusText) == false ? this.errors.handelError(err.statusCode) : this.commonMethodS.snackBar(err.statusText, 1); })
+      error: ((err: any) => { this.commonMethodS.checkEmptyData(err.statusText) == false ? this.errors.handelError(err.statusCode) : this.commonMethodS.showPopup(err.statusText, 1); })
     });
   }
   //#endregion ------------------------------------------- School Registration Dropdown start here ----------------------------------------// 
@@ -318,13 +318,13 @@ export class SchoolRegistrationComponent {
     this.apiService.getHttp().subscribe({
       next: (res: any) => {
         if (res.statusCode == "200") {
-          this.commonMethodS.snackBar(res.statusMessage, 0);
+          this.commonMethodS.showPopup(res.statusMessage, 0);
           this.getTableData();
         }
       }
     })
     error: (error: any) => {
-      this.commonMethodS.checkEmptyData(error.statusText) == false ? this.errors.handelError(error.statusCode) : this.commonMethodS.snackBar(error.statusText, 1);
+      this.commonMethodS.checkEmptyData(error.statusText) == false ? this.errors.handelError(error.statusCode) : this.commonMethodS.showPopup(error.statusText, 1);
     }
   }
   //#endregion ---------------------------------------------- Delete Record Logic end here ----------------------------------------//  
