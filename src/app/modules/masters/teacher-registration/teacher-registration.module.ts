@@ -20,6 +20,7 @@ import { TableComponent } from 'src/app/shared/components/table/table.component'
 import { PageStatisticsComponent } from 'src/app/shared/components/page-statistics/page-statistics.component';
 import { AutofocusDirective } from 'src/app/core/directives/autofocus.directive';
 import { TranslateModule } from '@ngx-translate/core';
+import { GridViewComponent } from 'src/app/shared/components/grid-view/grid-view.component';
 
 @NgModule({
   declarations: [
@@ -46,7 +47,8 @@ import { TranslateModule } from '@ngx-translate/core';
     TableComponent,
     PageStatisticsComponent,
     AutofocusDirective,
-    TranslateModule
+    TranslateModule,
+    GridViewComponent
   ]
 })
 export class TeacherRegistrationModule { }

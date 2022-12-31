@@ -134,6 +134,24 @@ export class TeacherRegistrationComponent {
     }
   }
 
+  childGridInfo(obj: any) {
+    switch (obj.label) {
+      case 'Pagination':
+        this.pageNumber = obj.pageNumber;
+        this.getTableData();
+        break;
+      case 'Edit' || 'Delete':
+        this.addUpdateTeacher(obj);
+        break;
+      case 'Delete':
+        this.globalDialogOpen(obj);
+        break;
+      case 'View':
+        this.openDetailsDialog(obj);
+        break;
+    }
+  }
+
   addUpdateTeacher(obj?: any) {
     // let obj: any;
     const dialogRef = this.dialog.open(AddUpdateTeacherRegistrationComponent, {
