@@ -263,7 +263,7 @@ export class OfficeUsersComponent {
       headerImage: "assets/images/user.jpg",
       header: this.webStorageService.languageFlag == 'EN' ? obj.officeName : obj.m_OfficeName,
       subheader: this.webStorageService.languageFlag == 'EN' ? obj.designation : obj.m_Designation,
-      labelHeader: this.webStorageService.languageFlag == 'EN' ? ['Mobile Number', 'Email Id','DesignationLevel','Taluka','District'] : ['मोबाईल क्र.', 'ई-मेल आयडी','पदनाम स्तर','तालुका','शाळेचे नाव'],
+      labelHeader: this.webStorageService.languageFlag == 'EN' ? ['Mobile Number', 'Email Id','DesignationLevel','Taluka','District'] : ['मोबाईल क्र.', 'ई-मेल आयडी','पदनाम स्तर','तालुका','जिल्हा'],
       labelKey: this.webStorageService.languageFlag == 'EN' ? ['mobileNo', 'emailId', 'designationLevel','taluka','district'] : ['mobileNo', 'emailId','m_DesignationLevel','m_Taluka','m_District'],
       Obj: obj,
       chart: false

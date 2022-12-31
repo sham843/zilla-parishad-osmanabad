@@ -175,6 +175,9 @@ export class AgencyRegistrationComponent {
         break;
       case 'Block':
         break;
+        case 'View':
+          this.openDetailsDialog(_obj);
+        break;
     }
   }
 
@@ -251,11 +254,11 @@ export class AgencyRegistrationComponent {
   openDetailsDialog(obj:any){
     console.log(obj);
     var data = {
-      headerImage: obj.documentResponse[0].docPath,
-      header: this.webStroageService.languageFlag == 'EN' ? obj.fullName : obj.m_FullName,
+      headerImage: "assets/images/user.jpg",
+      header: this.webStroageService.languageFlag == 'EN' ? obj.agency_Name : obj.m_Agency_Name,
       subheader: this.webStroageService.languageFlag == 'EN' ? obj.gender : obj.m_Gender,
-      labelHeader: this.webStroageService.languageFlag == 'EN' ? ['Father Name', 'Parent Mobile No.','Aadhar No.','Standard','School Name'] : ['वडीलांचे नावं', 'पालक मोबाईल क्र.','आधार क्र.','इयत्ता','शाळेचे नाव'],
-      labelKey: this.webStroageService.languageFlag == 'EN' ? ['fatherFullName', 'parentMobileNo', 'aadharNo','standard','schoolName'] : ['m_FatherFullName', 'parentMobileNo','aadharNo','standard','m_SchoolName'],
+      labelHeader: this.webStroageService.languageFlag == 'EN' ? ['Mobile Number', 'Email Id','Taluka','District'] : ['मोबाईल क्र.', 'ई-मेल आयडी','तालुका','जिल्हा'],
+      labelKey: this.webStroageService.languageFlag == 'EN' ? ['agency_MobileNo', 'agency_EmailId','taluka','district'] : ['agency_MobileNo', 'agency_EmailId','m_Taluka','m_District'],
       Obj: obj,
       chart: false
     }
