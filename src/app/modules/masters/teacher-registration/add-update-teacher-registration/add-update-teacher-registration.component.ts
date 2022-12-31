@@ -102,7 +102,7 @@ export class AddUpdateTeacherRegistrationComponent {
       "uploadImage": [''],
       "currentAddress": [this.data ? this.data?.currentAddress : '', [Validators.required, Validators.pattern(this.validation.fullName)]],
       "permentAddress": [this.data ? this.data?.permentAddress : '', [Validators.required, Validators.pattern(this.validation.fullName)]],
-      "lan": ['EN'],
+      "lan": this.webStorageS.languageFlag,
       "localID": 0,
       "timestamp": new Date(),
       teacherDetails: this.fb.group({
