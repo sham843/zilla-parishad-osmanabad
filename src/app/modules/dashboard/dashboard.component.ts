@@ -1,5 +1,6 @@
 import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { ApiService } from 'src/app/core/services/api.service';
 import { CommonMethodsService } from 'src/app/core/services/common-methods.service';
@@ -37,11 +38,13 @@ export class DashboardComponent implements OnInit,AfterViewInit {
   displayedheaders=new Array;
   graphSubjectData=new Array();
   totalStudentSurveyData=new Array();
+  optionalSubjectindex!:number;
+  SharingObject:any;
   get f() { return this.filterForm.controls }
   get fBgraph() { return this.filterFormForBarGraph.controls}
   constructor(public translate: TranslateService, private masterService: MasterService,
     public webStorage: WebStorageService, private fb: FormBuilder, private apiService:ApiService,
-    private error:ErrorsService, private commonMethods:CommonMethodsService) {
+    private error:ErrorsService, private commonMethods:CommonMethodsService, private router:Router) {
     this.getBarChartOption();
     this.getPieChart();
   }
@@ -212,8 +215,11 @@ export class DashboardComponent implements OnInit,AfterViewInit {
           show: false
         },
         events: {
-          dataPointSelection: (event:any, chartContext:any) => {
-             console.log(event,chartContext);
+          dataPointSelection: (event:any, chartContext:any, config:any) => {
+          console.log(event,chartContext)
+          this.optionalSubjectindex=config.seriesIndex;
+          //selectedBarData=
+
           }
         }
       },
@@ -358,6 +364,21 @@ export class DashboardComponent implements OnInit,AfterViewInit {
      this.getbarChartByTaluka();
      this.getdashboardCount();
   }
+  selectedBar(selectedbar:any){
+   const index=this.barchartOptions.xaxis.categories.findIndex((i:any)=>i==selectedbar);
+   const data= this.barChartData.find((x:any)=> x.m_SubjectName==selectedbar && x.m_OptionName==this.barchartOptions.series[0][index][this.optionalSubjectindex].name);
+   const formData=this.filterForm.value
+    this.SharingObject={
+      GroupId:this.selectedObj.GroupId,
+      TalukaId:formData.talukaId,
+      CenterId:formData.centerId,
+      SchoolId:formData.schoolId,
+      SubjectId:data.subjectId,
+      OptionGrade:data.optionGrade
+    }
+    this.webStorage.selectedBarchartObjData.next(this.SharingObject);
+    this.router.navigate(['/global-details'])
+  }
   
   getdashboardCount(){
     const formData= this.filterForm.value;
@@ -370,7 +391,6 @@ export class DashboardComponent implements OnInit,AfterViewInit {
           this.tableColumn=[{label:'एकूण संख्या', GroupId:0,  ischeckboxShow:false, status:false},{label:'१ली ते 2वी',GroupId:1, subSTD:[{label:'१ली',subGroupId:1, status:false},{label:'2री',subGroupId:2, status:false}] , ischeckboxShow:true, status:true},{label:'3री ते ५वी',GroupId:2, subSTD:[{label:'3री',subGroupId:3, status:false},{label:'4री',subGroupId:4, status:false},{label:'5वी',subGroupId:5, status:false}] , ischeckboxShow:true, status:false},{label:'६वी ते ८वी',GroupId:3, subSTD:[{label:'६वी',subGroupId:6, status:false},{label:'7वी',subGroupId:7, status:false},{label:'८वी',subGroupId:8, status:false}], ischeckboxShow:true, status:false},];
           this.checkData(this.tableColumn[1]);
           this.getPieChartData();
-          
            } else { 
             this.dashboardCountData=[];
           }

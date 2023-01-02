@@ -7,6 +7,7 @@ import { BehaviorSubject } from 'rxjs';
 export class WebStorageService {
   languageFlag =  'EN';
   language = new BehaviorSubject('');
+  selectedBarchartObjData = new BehaviorSubject('');
   langNameOnChange = this.language.asObservable();
   private theme=new BehaviorSubject('');
   numFormat: any;
