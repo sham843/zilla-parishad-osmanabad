@@ -212,7 +212,7 @@ export class DashboardComponent implements OnInit,AfterViewInit {
         },
         events: {
           dataPointSelection: (event:any, chartContext:any) => {
-            console.log(event,chartContext);
+             console.log(event,chartContext);
           }
         }
       },
@@ -415,7 +415,7 @@ export class DashboardComponent implements OnInit,AfterViewInit {
     this.piechartOptions1.labels=['English-Medium','Marathi-Medium','Both'];
     this.piechartOptions2.labels=['Boys','Girls','Other'];
 
-    console.log(this.piechartOptions)
+    // console.log(this.piechartOptions)
     // this.piechartOptions.colors=['#CB4B4B', '#E76A63', '#E98754', '#EFB45B', '#65C889'];
   }
 
@@ -428,8 +428,6 @@ export class DashboardComponent implements OnInit,AfterViewInit {
       next: (res: any) => { 
         if (res.statusCode == "200") {
           this.barChartData=res.responseData.responseData1;
-          console.log("barChartData",this.barChartData);
-          
          const subjectSet = [...new Set(this.barChartData.map(sub => sub.m_SubjectName))];
          this.graphSubjectData=subjectSet;
          this.barchartOptions.series=[];
@@ -449,7 +447,6 @@ export class DashboardComponent implements OnInit,AfterViewInit {
            })
            this.barchartOptions.series.push(dataArray);
            this.barchartOptions.xaxis.categories.push(...subjectSet);
-           console.log(this.barchartOptions)
             this.showBarChartF=true;
           } 
        
@@ -473,10 +470,10 @@ export class DashboardComponent implements OnInit,AfterViewInit {
           this.barchartOptions1.xaxis.categories=[];
           let talukaSet:any=[]; 
           talukaSet = [...new Set(this.barChartByTalukaData.map(sub => TalukaId  ? sub.center : sub.taluka))];
-          const subjectSet = [...new Set(this.barChartByTalukaData.map(sub => sub.m_OptionName))];
+          const subjectSet = [...new Set(this.barChartByTalukaData.map(sub => sub.m_OptionName || sub.m_Question ))];
           let arrayObjectData:any[]=[];
           subjectSet.map((x: any) => {
-            const filterSubject = this.barChartByTalukaData.filter((y: any) => y.m_OptionName == x);
+            const filterSubject = this.barChartByTalukaData.filter((y: any) => (y.m_OptionName ||  y.m_Question) == x);
             const subData = {
               name: x,
               data: filterSubject.map(sub => sub.percentage)
@@ -485,6 +482,7 @@ export class DashboardComponent implements OnInit,AfterViewInit {
           })
           this.barchartOptions1.series.push(arrayObjectData)
           this.barchartOptions1.xaxis.categories.push(...talukaSet);
+          console.log(this.barchartOptions1);
           this.showBarChartS=true;
         }
 
