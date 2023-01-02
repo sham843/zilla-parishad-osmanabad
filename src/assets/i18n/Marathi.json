@@ -240,7 +240,8 @@
         "searchbyNameContactEmailTeacher" :"शिक्षकाचे नाव/मोबाइल क्रमांक/ईमेल आयडी",
         "DownloadPdf" : "PDF डाउनलोड करा",
         "InvalidDesignation" : "अवैध पदनाम",
-        "InvalidSchoolName" : "अवैध शाळेचे नाव"
+        "InvalidSchoolName" : "अवैध शाळेचे नाव",
+        "GridView" : "ग्रिड दृश्य"
     }
 }
 

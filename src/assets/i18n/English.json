@@ -236,7 +236,8 @@
         "Designation(Marathi)" :"Designation (Marathi)",
         "DownloadPdf" : "Download PDF",
         "InvalidDesignation" : "Invalid Designation",
-        "InvalidSchoolName" : "Invalid School Name"
+        "InvalidSchoolName" : "Invalid School Name",
+        "GridView" : "Grid View"
 
     }
 }
