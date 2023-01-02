@@ -237,7 +237,9 @@
         "DownloadPdf" : "Download PDF",
         "InvalidDesignation" : "Invalid Designation",
         "InvalidSchoolName" : "Invalid School Name",
-        "GridView" : "Grid View"
+        "GridView" : "Grid View",
+        "SaralvalidId":"Please enter 19 digit saral id"
+        
 
     }
 }
