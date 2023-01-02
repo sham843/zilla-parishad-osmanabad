@@ -8,16 +8,42 @@
 <mat-card class="plain-card h-100">
     <mat-card-header class="card-header pb-0">
         <div class="row w-100 gx-2">
-            <div class="col-sm-3">
-                <mat-form-field appearance="outline" class="w-100">
-                    <mat-label>Search By Name Contact No</mat-label>
-                    <input matInput [formControl]="searchContent" (keypress)="validators.noFirstSpaceAllow($event)">
-                </mat-form-field>
-            </div>
-            <div class="col-sm-auto">
-                <button mat-flat-button class="btn-main" (click)="getTableData('filter')">Search</button>
-                <button mat-flat-button class="btn-second ms-2" (click)="clearForm()">Clear</button>
-            </div>
+            <form [formGroup]="filterForm">
+                <div class="row">
+                    <div class="col-sm-4">
+                        <mat-form-field appearance="outline" class="w-100 ">
+                            <mat-label>{{'Labels.taluka'| translate}}</mat-label>
+                            <mat-select formControlName="talukaId" (selectionChange)="clearDropdown('talukaId');getAllCenter()">
+                                <mat-option *ngFor="let tal of talukaArr" [value]="tal.id">{{languageFlag == 'English' ?
+                                    tal.taluka:tal.m_Taluka }}</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-sm-4">
+                        <mat-form-field appearance="outline" class="w-100 ">
+                            <mat-label>{{'Labels.kendra'| translate}}</mat-label>
+                            <mat-select formControlName="centerId" (selectionChange)="clearDropdown('centerId');getAllSchoolsByCenterId()">
+                                <mat-option *ngFor="let cen of centerArr" [value]="cen.id">{{languageFlag == 'English'
+                                    ?cen.center:cen.m_Center}}</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-sm-8">
+                        <mat-form-field appearance="outline" class="w-100 ">
+                            <mat-label>{{'Labels.schoolList'| translate}}</mat-label>
+                            <mat-select formControlName="schoolId">
+                                <mat-option *ngFor="let sch of schoolArr" [value]="sch.id">{{languageFlag == 'English' ?
+                                    sch.schoolName:sch. m_SchoolName}}</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-sm-auto">
+                        <button mat-flat-button class="btn-main" (click)="getTableData('filter')">{{'Labels.filter'|
+                          translate}}</button>
+                        <button mat-flat-button class="btn-second ms-2" (click)="clearForm()">{{'Labels.clear'| translate}}</button>
+                      </div>
+                </div>
+            </form>
 
         </div>
     </mat-card-header>

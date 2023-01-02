@@ -1,5 +1,5 @@
 import { Component, Inject } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ApiService } from 'src/app/core/services/api.service';
@@ -30,6 +30,7 @@ export class AddUpdateSchoolRegistrationComponent {
   uploadImg: any;
   editFlag: boolean = false;
   img: boolean = false;
+  schoolDocument!: FormArray;
 
   constructor(private masterService: MasterService, private errors: ErrorsService, private fb: FormBuilder, private fileUpload: FileUploadService,
     private apiService: ApiService, private commonMethod: CommonMethodsService, @Inject(MAT_DIALOG_DATA) public data: any,
@@ -74,22 +75,37 @@ export class AddUpdateSchoolRegistrationComponent {
       "highestClass": ['', Validators.required],
       "timesStamp": new Date(),
       "uploadImage": [''],
-      "schoolDocument": [
-        {
+      schoolDocument : this.fb.array([
+        this.fb.group({
           "id": 0,
           "schoolId": 0,
           "documentId": 0,
-          "docPath": "string",
+          "docPath": "https://zposmservices.mahamining.com/Uploads/Upload/jpeg_01022023065210PM.jpeg",
           "createdBy": 0,
-          "createdDate": "2023-01-02T09:19:36.830Z",
+          "createdDate": new Date(),
           "modifiedBy": 0,
-          "modifiedDate": "2023-01-02T09:19:36.830Z",
+          "modifiedDate": new Date(),
           "isDeleted": true
-        }
-      ],
+        })
+      ]),
+      // "schoolDocument": [
+      //   {
+      //     "id": 0,
+      //     "schoolId": 0,
+      //     "documentId": 0,
+      //     "docPath": "https://zposmservices.mahamining.com/Uploads/Upload/jpeg_01022023065210PM.jpeg",
+      //     "createdBy": 0,
+      //     "createdDate": new Date(),
+      //     "modifiedBy": 0,
+      //     "modifiedDate": new Date(),
+      //     "isDeleted": true
+      //   }
+      // ],
+
       ...this.webStorageS.createdByProps()
     });
   }
+
 
   //#region ---------------------------------------------- School Registration Dropdown start here ----------------------------------------// 
   getDistrict() {
