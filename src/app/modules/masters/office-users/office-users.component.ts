@@ -249,7 +249,7 @@ export class OfficeUsersComponent {
     }
     const viewDialogRef = this.dialog.open(GlobalDetailComponent, {
       width: '900px',
-      height: '650px',
+      
       data: data,
       disableClose: true,
       autoFocus: false

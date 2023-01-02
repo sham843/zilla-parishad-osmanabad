@@ -40,6 +40,7 @@ export class DashboardComponent implements OnInit,AfterViewInit {
   totalStudentSurveyData=new Array();
   optionalSubjectindex!:number;
   SharingObject:any;
+  globalTalId:any;
   get f() { return this.filterForm.controls }
   get fBgraph() { return this.filterFormForBarGraph.controls}
   constructor(public translate: TranslateService, private masterService: MasterService,
@@ -64,19 +65,17 @@ export class DashboardComponent implements OnInit,AfterViewInit {
     this.getdashboardCount();
     this.getTabledataByTaluka()
   }
+ 
   ngAfterViewInit() {
     this.showSvgMap(this.commonMethods.mapRegions());
-    $(document).on('click', '#mapsvg  path', (e: any) => {
-      let getClickedId = e.currentTarget;
-      let distrctId = $(getClickedId).attr('id');
-      console.log(distrctId)
-    })
+    this.clickOnSvgMap();
   }
   getTalukas() {
     this.talukaData=[];
     this.masterService.getAllTaluka().subscribe((res: any) => {
       this.talukaData.push({ "id": 0, "taluka": "All", "m_Taluka": "सर्व"}, ...res.responseData);
-      this.f['talukaId'].patchValue(0);
+      const obj=this.talukaData.find((x:any)=> x.taluka=="Osmanabad")
+      this.f['talukaId'].patchValue(obj.id);
     })
   }
   getCenters() {
@@ -199,8 +198,6 @@ export class DashboardComponent implements OnInit,AfterViewInit {
           dataPointSelection: (event:any, chartContext:any, config:any) => {
           console.log(event,chartContext)
           this.optionalSubjectindex=config.seriesIndex;
-          //selectedBarData=
-
           }
         }
       },
@@ -230,19 +227,6 @@ export class DashboardComponent implements OnInit,AfterViewInit {
         categories: [
         ]
       },
-      // tooltip: {
-      //   custom: function(series:any, seriesIndex:any, dataPointIndex:any, w :any) {
-      //     return (
-      //       '<div class="arrow_box">' +
-      //       "<span>" +
-      //       w.globals.labels[dataPointIndex] +
-      //       ": " +
-      //       series[seriesIndex][dataPointIndex] +
-      //       "</span>" +
-      //       "</div>"
-      //     );
-      //   }
-      // },
       yaxis: {
         show: false,
         showAlways: false,
@@ -342,8 +326,10 @@ export class DashboardComponent implements OnInit,AfterViewInit {
     };
   }
   dashboardAPis(){
-     this.getbarChartByTaluka();
      this.getdashboardCount();
+     this.getBarChart(this.selectedObj);
+     this.getbarChartByTaluka();
+     
   }
   selectedBar(selectedbar:any){
    const index=this.barchartOptions.xaxis.categories.findIndex((i:any)=>i==selectedbar);
@@ -358,11 +344,12 @@ export class DashboardComponent implements OnInit,AfterViewInit {
       OptionGrade:data.optionGrade
     }
     this.webStorage.selectedBarchartObjData.next(this.SharingObject);
-    this.router.navigate(['/global-details'])
+    this.router.navigate(['/dashboard-student-details'])
   }
   
   getdashboardCount(){
     const formData= this.filterForm.value;
+    this.dashboardCountData=[];
     this.apiService.setHttp('GET', 'zp-osmanabad/Dashboard/GetDashboardCount?TalukaId='+(formData?.talukaId ||0)+'&CenterId='+(formData?.centerId ||0)+'&SchoolId='+(formData?.schoolId ||0), false, false, false, 'baseUrl');
     this.apiService.getHttp().subscribe({
       next: (res: any) => { 
@@ -420,13 +407,11 @@ export class DashboardComponent implements OnInit,AfterViewInit {
     this.piechartOptions.labels=['Goverment','Private','Other'];
     this.piechartOptions1.labels=['English-Medium','Marathi-Medium','Both'];
     this.piechartOptions2.labels=['Boys','Girls','Other'];
-
-    // console.log(this.piechartOptions)
-    // this.piechartOptions.colors=['#CB4B4B', '#E76A63', '#E98754', '#EFB45B', '#65C889'];
   }
 
   getBarChart(obj:any){
     const formData= this.filterForm.value;
+    this.showBarChartF=false;
     this.selectedObj=obj;
     this.barChartData=[];
     this.apiService.setHttp('GET', 'zp-osmanabad/Dashboard/'+(obj.GroupId==1?'GetDataFor1st2ndStd':'GetDataFor3rdAboveStd')+'?TalukaId='+(formData?.talukaId ||0)+'&CenterId='+(formData?.centerId ||0)+'&SchoolId='+(formData?.schoolId ||0)+'&GroupId='+obj?.GroupId, false, false, false, 'baseUrl');
@@ -462,6 +447,7 @@ export class DashboardComponent implements OnInit,AfterViewInit {
   }
 
   getbarChartByTaluka(){
+    this.showBarChartS=false;
     const filterformData= this.filterForm.value;
     const formDatafilterbyTaluka= this.filterFormForBarGraph.value;
     this.barChartData=[];
@@ -527,9 +513,9 @@ export class DashboardComponent implements OnInit,AfterViewInit {
   //---------------------------- svg Map ------------------------//
   showSvgMap(data: any) {
     this.graphInstance ? this.graphInstance.destroy() : '';
-    let createMap: any = document.getElementById("#mapsvg");
+    //let createMap: any = document.getElementById("#mapsvg");
 
-    this.graphInstance = createMap?.mapSvg({
+    this.graphInstance = $("#mapsvg").mapSvg({
       width: 550,
       height: 430,
       colors: {
@@ -605,6 +591,29 @@ export class DashboardComponent implements OnInit,AfterViewInit {
       source: "assets/distSVG/Osmanabad.svg",
       title: "Osmanabad_Dist",
       responsive: true
+    });
+  }
+  clickOnSvgMap(flag?:string){
+    if(flag == 'select'){
+      let checkTalActiveClass = $('#mapsvg   path').hasClass("talActive");
+      checkTalActiveClass ? $('#mapsvg path[id="' + this.globalTalId + '"]').removeAttr("style") : '';
+      this.svgMapAddOrRemoveClass();
+    }
+    
+    $(document).on('click', '#mapsvg  path', (e: any) => {
+      let getClickedId = e.currentTarget;
+      let talId = $(getClickedId).attr('id');
+      this.filterForm.controls['talukaId'].setValue(+talId);
+      this.svgMapAddOrRemoveClass();
+    })
+  }
+
+  svgMapAddOrRemoveClass(){
+    let checkTalActiveClass = $('#mapsvg   path').hasClass("talActive");
+    checkTalActiveClass?  $('#mapsvg   path#' +this.globalTalId).removeClass("talActive") : '';
+    this.talukaData.find(() => {
+      this.globalTalId = this.filterForm?.value?.talukaId;
+      $('#mapsvg path[id="' + this.filterForm?.value?.talukaId + '"]').addClass('talActive');
     });
   }
 

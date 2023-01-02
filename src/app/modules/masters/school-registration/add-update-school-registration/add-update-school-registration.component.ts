@@ -56,6 +56,7 @@ export class AddUpdateSchoolRegistrationComponent {
   formFeild() {
     this.schoolRegForm = this.fb.group({
       "id": this.data ? this.data.id : 0,
+      "schoolCode": "string",
       "schoolName": [this.data ? this.data.schoolName : '', [Validators.required, Validators.pattern('^[-_.,() a-zA-Z0-9]+$')]],
       "m_SchoolName": [this.data ? this.data.m_SchoolName : '', Validators.required],
       "stateId": 0,
@@ -73,6 +74,19 @@ export class AddUpdateSchoolRegistrationComponent {
       "highestClass": ['', Validators.required],
       "timesStamp": new Date(),
       "uploadImage": [''],
+      "schoolDocument": [
+        {
+          "id": 0,
+          "schoolId": 0,
+          "documentId": 0,
+          "docPath": "string",
+          "createdBy": 0,
+          "createdDate": "2023-01-02T09:19:36.830Z",
+          "modifiedBy": 0,
+          "modifiedDate": "2023-01-02T09:19:36.830Z",
+          "isDeleted": true
+        }
+      ],
       ...this.webStorageS.createdByProps()
     });
   }

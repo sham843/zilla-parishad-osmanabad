@@ -30,7 +30,7 @@
         <div class="col-sm-4">
             <mat-form-field appearance="outline" class="w-100">
                 <mat-label>शाळा निवडा</mat-label>
-                <mat-select formControlName="schoolId" (selectionChange)="dashboardAPis()">
+                <mat-select formControlName="schoolId" (selectionChange)="getbarChartByTaluka();getdashboardCount();">
                     <mat-option *ngFor="let school of schoolData" [value]="school.id">
                         {{webStorage.languageFlag == 'EN'?school.schoolName :school.m_SchoolName }}
                     </mat-option>
@@ -106,7 +106,7 @@
             </mat-card-header>
             <mat-card-content class="card-body">
                 <div id="mapsvg" class="text-center">
-                    <img src="assets/distSVG/Osmanabad.svg" style="height: 200px;" class="">
+                    <!-- <img src="assets/distSVG/Osmanabad.svg" style="height: 200px;" class=""> -->
                 </div>
             </mat-card-content>
         </mat-card>
