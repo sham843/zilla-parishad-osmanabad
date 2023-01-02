@@ -79,8 +79,7 @@ export class AgencyRegistrationComponent {
       next: (res: any) => {
         if (res.statusCode == "200") {
           this.ngxSpinner.hide();
-          this.agencyReport = []; //for pdfArray
-          // this.tableDataArray = res.responseData.responseData1;
+          this.agencyReport = []; 
           flag != 'pdfFlag' ? this.tableDataArray = res.responseData.responseData1 : this.tableDataArray = this.tableDataArray;
           this.tableDatasize = res.responseData.responseData2.pageCount;
           this.totalCount = res.responseData.responseData2.pageCount;          
@@ -130,27 +129,6 @@ export class AgencyRegistrationComponent {
     this.pageNumber = pageNo;
     this.getTableData()
   }
-
-  // downloadPdf() {
-  //   if(this.agencyReport.length){
-  //   this.getTableData('pdfFlag')
-  //   let keyPDFHeader = ['SrNo', "Name", "Contact No.", "Email Id"];
-  //   let ValueData =
-  //     this.agencyReport.reduce(
-  //       (acc: any, obj: any) => [...acc, Object.values(obj).map((value) => value)], []
-  //     );
-
-  //   let objData: any = {
-  //     'topHedingName': 'Agency Report',
-  //     'createdDate': 'Created on:' + new Date()
-  //   }
-  //   this.downloadPdfservice.downLoadPdf(keyPDFHeader, ValueData, objData);
-  // }
-  // else{
-  //   this.common.snackBar('No Record Found',1)
-  // }
-
-  // }
 
   onClear() {
     if(this.filterForm.value.searchText !=null && this.filterForm.value.searchText != '' ){
@@ -234,10 +212,7 @@ export class AgencyRegistrationComponent {
     switch (obj.label) {
       case 'Pagination':
         this.pageNumber = obj.pageNumber;
-        console.log(this.pageNumber);
-        
         this.getTableData();
-        // this.selectGrid('Card');
         break;
       case 'Edit':
         this.addUpdateAgency(obj);
@@ -283,7 +258,6 @@ selectGrid(label: string) {
   } else if (label == 'Card') {
     this.cardViewFlag = true;
     this.pageNumber = 1;
-    // this.cardCurrentPage = this.cardCurrentPage;
   }
   this.getTableData();
 }
