@@ -8,6 +8,8 @@ import {MatSelectModule} from '@angular/material/select';
 import {MatIconModule} from '@angular/material/icon';
 import {MatButtonModule} from '@angular/material/button';
 import { WebStorageService } from 'src/app/core/services/web-storage.service';
+import { LightboxModule } from '@ngx-gallery/lightbox';
+import { Gallery,ImageItem,GalleryModule,} from '@ngx-gallery/core';
 @Component({
   selector: 'app-global-detail',
   templateUrl: './global-detail.component.html',
@@ -20,14 +22,51 @@ import { WebStorageService } from 'src/app/core/services/web-storage.service';
     MatFormFieldModule,
     MatSelectModule,
     MatIconModule,
-    MatButtonModule
+    MatButtonModule,
+     LightboxModule,
+     GalleryModule
   ]
 })
 export class GlobalDetailComponent {
-  
-  constructor(public dialogRef: MatDialogRef<GlobalDetailComponent>,@Inject(MAT_DIALOG_DATA) public data: any, public webStorage: WebStorageService){ 
+  items: any=[];
+  dataArray = [
+    {
+      srcUrl: 'https://preview.ibb.co/jrsA6R/img12.jpg',
+      previewUrl: 'https://preview.ibb.co/jrsA6R/img12.jpg'
+    },
+    {
+      srcUrl: 'https://preview.ibb.co/kPE1D6/clouds.jpg',
+      previewUrl: 'https://preview.ibb.co/kPE1D6/clouds.jpg'
+    },
+    {
+      srcUrl: 'https://preview.ibb.co/mwsA6R/img7.jpg',
+      previewUrl: 'https://preview.ibb.co/mwsA6R/img7.jpg'
+    },
+    {
+      srcUrl: 'https://preview.ibb.co/kZGsLm/img8.jpg',
+      previewUrl: 'https://preview.ibb.co/kZGsLm/img8.jpg'
+    }
+  ]
+
+
+  constructor( public gallery: Gallery,public dialogRef: MatDialogRef<GlobalDetailComponent>,@Inject(MAT_DIALOG_DATA) public data: any, public webStorage: WebStorageService){ 
 
    }
+
+   ngOnInit() {
+    console.log(this.data);
+    
+    this.items = this.dataArray.map(item =>
+      new ImageItem({ src: item.srcUrl, thumb: item.previewUrl })
+    );
+    console.log(this.items);
+    
+    this.basicLightboxExample();
+   }
+
+   basicLightboxExample() {
+    this.gallery.ref().load(this.items);
+  }
 
   closeDialog(){
     this.dialogRef.close();
