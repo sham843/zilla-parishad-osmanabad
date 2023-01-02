@@ -6,6 +6,7 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { ApiService } from 'src/app/core/services/api.service';
+import { WebStorageService } from 'src/app/core/services/web-storage.service';
 
 @Component({
   selector: 'app-grid-view',
@@ -32,7 +33,8 @@ export class GridViewComponent {
   tableInfo: any;
   tableHeaders = new Array();
 
-  constructor(private apiService: ApiService) { }
+  constructor(private apiService: ApiService,
+              public webStorageService: WebStorageService) { }
 
   ngOnInit() {
     this.tableInfo = [];

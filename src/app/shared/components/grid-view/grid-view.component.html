@@ -37,4 +37,13 @@
     <mat-paginator *ngIf="tableInfo?.tableSize > 10 && tableInfo?.pagintion" showFirstLastButtons [length]="tableSize"
       (page)="action($event, 'Pagination')" [pageSizeOptions]="[10]" aria-label="Select page" class="m-0">
     </mat-paginator>
+
+    <div *ngIf="tableInfo?.tableSize == 0">
+      <div class="alert alert-danger text-center py-2 ">
+          Data not available
+          <!-- {{'Labels.dataNotAvailable' | translate}} -->
+      </div>
   </div>
+  </div>
+
+ 

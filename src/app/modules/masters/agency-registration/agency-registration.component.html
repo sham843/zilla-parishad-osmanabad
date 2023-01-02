@@ -13,13 +13,13 @@
         {{'Labels.AgencyList' | translate}}
       </div>
       <div class="d-flex align-items-center justify-content-end gap-2">
-        <button mat-flat-button class="btn-main btn-icon" (click)="selectGrid('Table')">
+        <button mat-flat-button class="btn-main btn-icon" [ngClass]="{'btn-main':!this.cardViewFlag, 'btn-second':this.cardViewFlag}" (click)="selectGrid('Table')">
           <mat-icon>
             table_view
           </mat-icon>
         </button>
 
-        <button mat-flat-button class="btn-second btn-icon" (click)="selectGrid('Card')">
+        <button mat-flat-button class="btn-second btn-icon"  [ngClass]="{'btn-main':this.cardViewFlag, 'btn-second':!this.cardViewFlag}" (click)="selectGrid('Card')">
           <mat-icon>
             grid_view
           </mat-icon>
