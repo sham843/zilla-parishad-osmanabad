@@ -260,7 +260,7 @@ export class OfficeUsersComponent {
       autoFocus: false
     });
     viewDialogRef.afterClosed().subscribe((result: any) => {
-     if (result == 'yes') {
+     if (result == 'Yes') {
       this.getTableData();
       }
     });
