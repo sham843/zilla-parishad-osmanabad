@@ -156,7 +156,7 @@ export class AddUpdateTeacherRegistrationComponent {
         "degreeOptionalSubjectsId": ['', Validators.required],
         "degreeUniversityId": ['', Validators.required],
         "professionalQualificationId": ['', Validators.required],
-        "bEdPercentages": [this.data ? this.data.teacherDetails?.bEdPercentages : ''],
+        "bEdPercentages": [this.data ? this.data.teacherDetails?.bEdPercentages : '',Validators.pattern('[0-9]+(\\.[0-9]+)?[%]?')],
         "bEdUniversityId": [this.data ? this.data.teacherDetails?.bEdUniversityId : ''],
         "husbandWife_Both_Service": [this.data ? this.data.teacherDetails?.husbandWife_Both_Service : '', Validators.required],
         "husbandWife_OfficeName": [this.data ? this.data.teacherDetails?.husbandWife_OfficeName : ''],
