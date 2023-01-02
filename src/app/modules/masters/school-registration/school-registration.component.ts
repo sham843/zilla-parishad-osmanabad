@@ -308,16 +308,17 @@ export class SchoolRegistrationComponent {
 
   //#region ---------------------------------------------- Delete Record Logic start here ----------------------------------------//  
   onClickDelete() {
+    let webStorageMethod = this.webStorageS.createdByProps();
     let deleteObj = {
       "id": this.deleteObj.id,
-      "modifiedBy": 0,
-      "modifiedDate": new Date(),
+      "modifiedBy": webStorageMethod.modifiedBy,
+      "modifiedDate": webStorageMethod.modifiedDate,
       "lan": this.webStorageS.languageFlag
     }
     this.apiService.setHttp('delete', 'ZP-Osmanabad/School/Delete', false, deleteObj, false, 'baseUrl');
     this.apiService.getHttp().subscribe({
       next: (res: any) => {
-        if (res.statusCode == "200") {
+        if (res.statusCode == 200) {
           this.commonMethodS.showPopup(res.statusMessage, 0);
           this.getTableData();
         }
