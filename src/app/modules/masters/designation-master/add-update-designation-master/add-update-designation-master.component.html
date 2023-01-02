@@ -36,6 +36,9 @@
                             <!-- <mat-error
                                 *ngIf="f['designationType'].hasError('required') || f['designationType'].hasError('touched')">
                                 {{'Labels.DesignationTypeReq' | translate}}</mat-error> -->
+                                <mat-error
+                                *ngIf="f['designationType'].hasError('pattern') || f['designationType'].hasError('touched')">
+                                {{'Labels.InvalidDesignation' | translate}}</mat-error>
                         </mat-form-field>
                     </ng-container>
                 </div>

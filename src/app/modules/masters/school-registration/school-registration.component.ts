@@ -65,7 +65,7 @@ export class SchoolRegistrationComponent {
 
   languageChange() {
     this.webStorageS.langNameOnChange.subscribe(lang => {
-      this.getDistrict();
+      // this.getDistrict();
       this.langTypeName = lang;
       this.displayedColumns = ['uploadImage', 'srNo', this.langTypeName == 'English' ? 'schoolName' : 'm_SchoolName', this.langTypeName == 'English' ? 'village' : 'm_Village', this.langTypeName == 'English' ? 'taluka' : 'm_Taluka', this.langTypeName == 'English' ? 'district' : 'm_District', 'action'];
       this.tableData = {
