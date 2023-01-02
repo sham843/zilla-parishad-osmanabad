@@ -1,4 +1,4 @@
-<mat-card class="plain-card h-100">
+<mat-card class="plain-card">
     <mat-card-header class="card-header">
         <div class="d-flex align-items-center justify-content-between w-100">
             <h6 class="mb-0 text-main">{{'Labels.profile'| translate}}</h6>
@@ -28,9 +28,9 @@
                                     <div class="col-sm-4" *ngFor="let head of data.labelHeader; let j=index">
                                         <span class="data-label">{{head}} :</span>
                                         <div class="data-text" *ngIf="data?.checkbox != head">{{ data?.Obj[data?.labelKey[j]] || '-'}}</div>
-                                        <div class="data-text" *ngIf="data?.checkbox == head">
-                                            <div *ngFor="let assign of data?.Obj?.assignSubject">                     
-                                                <span>{{ webStorage.languageFlag == 'EN' ? assign.subjectName : assign.m_SubjectName || '-'}}</span>                     
+                                        <div class="data-text d-flex" *ngIf="data?.checkbox == head">
+                                            <div *ngFor="let assign of data?.Obj?.assignSubject" class="d-flex me-2">                     
+                                                <span class="lang-badge">{{ webStorage.languageFlag == 'EN' ? assign.subjectName : assign.m_SubjectName || '-'}}</span>                     
                                             </div>
                                         </div>                                        
                                     </div>
