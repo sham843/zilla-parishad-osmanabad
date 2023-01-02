@@ -239,6 +239,7 @@
         "Designation(Marathi)" :"पदनाम (मराठी)",
         "searchbyNameContactEmailTeacher" :"शिक्षकाचे नाव/मोबाइल क्रमांक/ईमेल आयडी",
         "DownloadPdf" : "PDF डाउनलोड करा",
-        "InvalidDesignation" : "अवैध पदनाम"
+        "InvalidDesignation" : "अवैध पदनाम",
+        "InvalidSchoolName" : "अवैध शाळेचे नाव"
     }
 }

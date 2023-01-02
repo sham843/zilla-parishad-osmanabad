@@ -235,7 +235,8 @@
         "Persondetails" : "Contact Person Details",
         "Designation(Marathi)" :"Designation (Marathi)",
         "DownloadPdf" : "Download PDF",
-        "InvalidDesignation" : "Invalid Designation"
+        "InvalidDesignation" : "Invalid Designation",
+        "InvalidSchoolName" : "Invalid School Name"
 
     }
 }
