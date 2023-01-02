@@ -57,7 +57,8 @@ export class FileUploadService {
       else {
         obj.next('error');
         obj.error("Only " + allowedDocTypes + " file format allowed.");   
-        this.commonService.snackBar('Only Supported file Types... pdf, jpg, png, jpeg', 1)
+        let convertString = JSON.stringify(allowedDocTypes);
+        this.commonService.snackBar('Only Supported file Types... '+convertString, 1)
       }
     })
   }
