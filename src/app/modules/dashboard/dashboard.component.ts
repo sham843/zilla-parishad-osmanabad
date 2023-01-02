@@ -431,6 +431,7 @@ export class DashboardComponent implements OnInit,AfterViewInit {
 
   getBarChart(obj:any){
     const formData= this.filterForm.value;
+    this.showBarChartF=false;
     this.selectedObj=obj;
     this.barChartData=[];
     this.apiService.setHttp('GET', 'zp-osmanabad/Dashboard/'+(obj.GroupId==1?'GetDataFor1st2ndStd':'GetDataFor3rdAboveStd')+'?TalukaId='+(formData?.talukaId ||0)+'&CenterId='+(formData?.centerId ||0)+'&SchoolId='+(formData?.schoolId ||0)+'&GroupId='+obj?.GroupId, false, false, false, 'baseUrl');
@@ -466,6 +467,7 @@ export class DashboardComponent implements OnInit,AfterViewInit {
   }
 
   getbarChartByTaluka(){
+    this.showBarChartS=false;
     const filterformData= this.filterForm.value;
     const formDatafilterbyTaluka= this.filterFormForBarGraph.value;
     this.barChartData=[];
@@ -480,6 +482,7 @@ export class DashboardComponent implements OnInit,AfterViewInit {
           this.barchartOptions1.xaxis.categories=[];
           let talukaSet:any=[]; 
           talukaSet = [...new Set(this.barChartByTalukaData.map(sub => TalukaId  ? sub.center : sub.taluka))];
+          console.log(talukaSet)
           const subjectSet = [...new Set(this.barChartByTalukaData.map(sub => sub.m_OptionName || sub.m_Question ))];
           let arrayObjectData:any[]=[];
           subjectSet.map((x: any) => {
@@ -492,6 +495,7 @@ export class DashboardComponent implements OnInit,AfterViewInit {
           })
           this.barchartOptions1.series.push(arrayObjectData)
           this.barchartOptions1.xaxis.categories.push(...talukaSet);
+          console.log(this.barchartOptions1.xaxis.categories);
           this.showBarChartS=true;
         }
 
