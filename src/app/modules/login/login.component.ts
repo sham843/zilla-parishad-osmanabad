@@ -37,10 +37,10 @@ export class LoginComponent {
 
   get fc() { return this.adminLoginForm.controls }
 
-  checklogin(event: any,clear:any) {
-    this.loginUser = event.tab.textLabel;;
-    clear.resetForm();    
-  }
+  // checklogin(event: any,clear:any) {
+  //   this.loginUser = event.tab.textLabel;;
+  //   clear.resetForm();    
+  // }
 
  
 
