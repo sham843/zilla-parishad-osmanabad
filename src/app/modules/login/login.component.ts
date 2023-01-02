@@ -64,7 +64,7 @@ export class LoginComponent {
             this.commonMethods.snackBar(res.statusMessage, 1)
           }
         }),
-        error: ((err: any) => { this.errors.handelError(err) })
+        error: ((err: any) => { this.errors.handelError(err.statusCode) })
       })
     }
 

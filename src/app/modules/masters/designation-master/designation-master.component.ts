@@ -5,7 +5,7 @@ import { ApiService } from 'src/app/core/services/api.service';
 import { CommonMethodsService } from 'src/app/core/services/common-methods.service';
 import { DownloadPdfExcelService } from 'src/app/core/services/download-pdf-excel.service';
 import { ErrorsService } from 'src/app/core/services/errors.service';
-import { MasterService } from 'src/app/core/services/master.service';
+
 import { WebStorageService } from 'src/app/core/services/web-storage.service';
 import { GlobalDialogComponent } from 'src/app/shared/components/global-dialog/global-dialog.component';
 import { AddUpdateDesignationMasterComponent } from './add-update-designation-master/add-update-designation-master.component';
@@ -28,12 +28,12 @@ export class DesignationMasterComponent {
   totalCount: number = 0;
 
   constructor(private dialog: MatDialog, private apiService: ApiService, private errors: ErrorsService,
-    private masterService:MasterService ,private commonMethod: CommonMethodsService, public webStorage : WebStorageService,
+    private commonMethod: CommonMethodsService, public webStorage : WebStorageService,
     private errorHandler: ErrorsService ,private downloadFileService : DownloadPdfExcelService) { }
 
   ngOnInit() {
     this.getTableData(); 
-    this.getDesiganationType();     
+        
     this.webStorage.langNameOnChange.subscribe(lang => {
       this.langTypeName = lang;
       this.getTableTranslatedData();
@@ -53,15 +53,7 @@ getTableTranslatedData(){
   this.apiService.tableData.next(this.tableData);
 }
 
-getDesiganationType() {  
-  this.masterService.GetDesignationByLevelId(this.webStorage.languageFlag,0).subscribe({
-    next: ((res: any) => {
-      if (res.statusCode == '200' && res.responseData.length) {
-        this.DesiganationTypeArray = res.responseData;              
-      }
-    })
-  }) 
-}
+
 //#endregion ------------------------------------ End Designation-Master Dropdown --------------------------//
 
   onPagintion(pageNo: number) {
@@ -89,9 +81,9 @@ getDesiganationType() {
     // let tableDataArray = new Array();
     // let tableDatasize!: Number; 
    
-    let str = `pageno=${this.pageNumber}&pagesize=10&textSearch=${this.searchContent.value ? this.searchContent.value:''}&lan=${this.webStorage.languageFlag}`;
+    let str = `pageno=${this.pageNumber}&pagesize=10&lan=${this.webStorage.languageFlag}`;
     let reportStr = `pageno=${this.pageNumber}&pagesize=${this.totalCount* 10}&textSearch=${this.searchContent.value ? this.searchContent.value:''}&lan=${this.webStorage.languageFlag}`;
-    this.apiService.setHttp('GET', 'zp_osmanabad/designation-master/GetAllByCriteria?' + (flag == 'pdfFlag' ? reportStr : str), false, false, false, 'baseUrl');
+    this.apiService.setHttp('GET', 'zp_osmanabad/register-designation/GetAllByCriteria?' + (flag == 'pdfFlag' ? reportStr : str), false, false, false, 'baseUrl');
     this.apiService.getHttp().subscribe({
 
       next: (res: any) => {
@@ -239,6 +231,6 @@ getDesiganationType() {
   clearForm(){
     this.searchContent.reset();
     this.getTableData();
-    this.getDesiganationType();
+   
   }
 }
