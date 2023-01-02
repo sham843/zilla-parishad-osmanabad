@@ -21,6 +21,7 @@ import { TableComponent } from 'src/app/shared/components/table/table.component'
 import { PageStatisticsComponent } from 'src/app/shared/components/page-statistics/page-statistics.component';
 import { TranslateModule } from '@ngx-translate/core';
 import { GridViewComponent } from 'src/app/shared/components/grid-view/grid-view.component';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 @NgModule({
   declarations: [
@@ -47,7 +48,8 @@ import { GridViewComponent } from 'src/app/shared/components/grid-view/grid-view
     TableComponent,
     PageStatisticsComponent,
     TranslateModule,
-    GridViewComponent
+    GridViewComponent,
+    MatTooltipModule
   ]
 })
 export class StudentRegistrationModule {
