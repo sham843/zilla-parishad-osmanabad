@@ -1,45 +1,43 @@
 <div class="row">
-    <div class="col-sm-4 mb-3" *ngFor="let tData of tableInfo?.tableData; let j=index">
-      <mat-card>
-        <mat-card-header class="d-flex justify-content-end">
-          <button mat-flat-button [matMenuTriggerFor]="menu">
-            <span class="material-symbols-outlined">
-              more_horiz
-            </span>
-          </button>
-          <mat-menu #menu="matMenu">
-            <button mat-menu-item (click)="action(tData, 'Edit')">Edit
-              <span class="material-symbols-outlined">
-                create
-              </span>
-            </button>
-          </mat-menu>
+    <div class="col-sm-4 g-3" *ngFor="let tData of tableInfo?.tableData; let j=index">
+      <mat-card class="card card-view">
+        <mat-card-header class="card-header bg-transparent border-bottom-0">
+            <div class="d-flex justify-content-end w-100">
+              <button mat-icon-button (click)="action(tData, 'Edit')">
+                <mat-icon>
+                  edit
+                </mat-icon>
+              </button>
+            </div>
         </mat-card-header>
-        <mat-card-content>
+        <mat-card-content class="card-body form-container">
           <div class="text-center mb-3">
-            <img src="{{tData['docPath'] || tData['uploadImage'] || 'assets/images/user.jpg'}}" alt="" height="60px">
+            <img src="{{tData['docPath'] || tData['uploadImage'] || 'assets/images/user.jpg'}}" alt="user"class="user-img">
           </div>
           <div class="row" *ngFor="let columns of displayedColumns; let j=index">
-            <div class="col-sm  form-label" *ngIf=" '#' != columns && 'srNo' != columns && 'docPath' != columns && 'uploadImage' != columns && 'action' != columns">
+            <div class="col-sm-4 form-label" *ngIf=" '#' != columns && 'srNo' != columns && 'docPath' != columns && 'uploadImage' != columns && 'action' != columns">
               {{tableHeaders[j]}}
             </div>
-            <div class=" col-sm  form-deta" *ngIf="'srNo' != columns && 'docPath' != columns && 'uploadImage' != columns && 'action' != columns">
+            <div class=" col-sm form-data" *ngIf="'srNo' != columns && 'docPath' != columns && 'uploadImage' != columns && 'action' != columns">
               {{tData[columns]}}
             </div>
-            <div class="text-center mb-3"*ngIf="'action' == columns">
-              <button mat-flat-button class="btn-main" (click)="action(tData, 'View')">Read More</button>
+            <div class="text-end"*ngIf="'action' == columns">
+              <button mat-flat-button class="btn-main btn-icon" (click)="action(tData, 'View')">
+                <mat-icon>
+                  visibility
+                </mat-icon>
+              </button>
             </div>
           </div>
         </mat-card-content>
       </mat-card>
-
     </div>
     <mat-paginator *ngIf="tableInfo?.tableSize > 10 && tableInfo?.pagintion" showFirstLastButtons [length]="tableSize"
       (page)="action($event, 'Pagination')" [pageSizeOptions]="[10]" aria-label="Select page" class="m-0">
     </mat-paginator>
 
     <div *ngIf="tableInfo?.tableSize == 0">
-      <div class="alert alert-danger text-center py-2 ">
+      <div class="alert alert-danger text-center py-2 mb-0">
           Data not available
           <!-- {{'Labels.dataNotAvailable' | translate}} -->
       </div>

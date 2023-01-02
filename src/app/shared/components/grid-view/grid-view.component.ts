@@ -6,6 +6,7 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { ApiService } from 'src/app/core/services/api.service';
+import {MatIconModule} from '@angular/material/icon';
 import { WebStorageService } from 'src/app/core/services/web-storage.service';
 
 @Component({
@@ -18,7 +19,8 @@ import { WebStorageService } from 'src/app/core/services/web-storage.service';
     MatCardModule,
     MatButtonModule,
     MatMenuModule,
-    MatPaginatorModule
+    MatPaginatorModule,
+    MatIconModule
   ]
 })
 export class GridViewComponent {
