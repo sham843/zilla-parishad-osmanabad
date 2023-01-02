@@ -300,7 +300,8 @@ export class TeacherRegistrationComponent {
       labelHeader: this.webStorageS.languageFlag == 'EN' ? ['Mobile No.', 'Email ID', 'Village', 'Taluka', 'Subject'] : ['मोबाईल क्र.', 'एजन्सी ई-मेल आयडी ', 'गाव', 'तालुका', 'विषय'],
       labelKey: this.webStorageS.languageFlag == 'EN' ? ['mobileNo', 'emailId', 'village', 'taluka', 'assignSubject'] : ['mobileNo', 'emailId', 'village', 'taluka', 'assignSubject'],
       Obj: obj,
-      chart: false
+      chart: false,
+      checkbox: 'Subject'
     }
     const viewDialogRef = this.dialog.open(GlobalDetailComponent, {
       width: '900px',
