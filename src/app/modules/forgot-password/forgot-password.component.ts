@@ -85,7 +85,7 @@ export class ForgotPasswordComponent {
 
   sendOtp(flag: any) {
     this.sendOtpFlag = true;
-    this.mobileForm.invalid ? this.common.snackBar('Please Enter Mobile Number', 1) : '';
+    !this.mobileForm.value.mobileNo.length ? this.common.snackBar('Please Enter Mobile Number', 1) : '';
     let obj = this.mobileForm.value;
     this.obj.mobileNo = obj.mobileNo;
     if (this.mobileForm.invalid && flag == 'send') {
