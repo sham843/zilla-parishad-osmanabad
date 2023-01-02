@@ -35,6 +35,7 @@ export class CommonMethodsService {
   showPopup(msg: any, status: number) {
     let popupClassArr: any = ['success', 'warning', 'info'];
     Swal.fire({
+      allowOutsideClick: false,
       text: msg,
       icon: popupClassArr[status],
       // showCancelButton: true,
