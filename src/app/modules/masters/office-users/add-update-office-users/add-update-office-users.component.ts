@@ -165,7 +165,7 @@ export class AddUpdateOfficeUsersComponent implements OnInit {
       this.apiService.setHttp(this.data ? 'PUT' : 'POST', this.data ? 'zp_osmanabad/Office/UpdateOffice' : 'zp_osmanabad/Office/AddOffice', false, this.officeForm.value, false, 'baseUrl');
       this.apiService.getHttp().subscribe({
         next: (res: any) => {
-          res.statusCode === "200" ? (this.commonService.showPopup(res.statusMessage, 0)) : this.commonService.checkEmptyData(res.statusMessage) == false ? this.error.handelError(res.statusCode) : this.commonService.showPopup(res.statusMessage, 1);
+          res.statusCode == "200" ? (this.commonService.showPopup(res.statusMessage, 0)) : this.commonService.checkEmptyData(res.statusMessage) == false ? this.error.handelError(res.statusCode) : this.commonService.showPopup(res.statusMessage, 1);
           this.dialogRef.close('Yes');
         },
         error: ((error: any) => {

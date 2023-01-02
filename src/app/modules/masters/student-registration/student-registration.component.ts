@@ -195,7 +195,7 @@ export class StudentRegistrationComponent {
         // this.selectGrid('Card');
         break;
       case 'Edit':
-        this.addUpdateStudent(obj);
+        this.addUpdateStudent(JSON.stringify(obj));
         break;
       case 'Delete':
         this.deteleDialogOpen(obj);

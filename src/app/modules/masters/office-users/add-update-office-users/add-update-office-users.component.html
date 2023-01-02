@@ -76,7 +76,7 @@
                 <div class="col-sm-6">
                     <mat-form-field appearance="outline" class="w-100">
                         <mat-label>{{'Labels.school' | translate}}</mat-label>
-                        <mat-select formControlName="schoolId"> 
+                        <mat-select formControlName="schoolId"  > 
                             <mat-option [value]="sch.id" *ngFor="let sch of schools">{{webStorageService.languageFlag =='mr-IN' ? sch.m_SchoolName : sch.schoolName}}</mat-option>
                         </mat-select>
                     <!-- <mat-error *ngIf="fc['schoolId'].hasError('required')">{{'Labels.schoolIsRequired' | translate}}</mat-error> -->
@@ -108,7 +108,7 @@
                     <mat-form-field appearance="outline" class="w-100">
                         <mat-label>Contact No.(Kendra)</mat-label>
                         <input matInput  formControlName="kendraMobileNo" (keypress)="validation.onlyDigits($event)" maxlength="10">
-                    <mat-error *ngIf="fc['kendraMobileNo'].hasError('required')">{{'Labels.mobileIsRequired' | translate}}</mat-error>
+                    <!-- <mat-error *ngIf="fc['kendraMobileNo'].hasError('required')">{{'Labels.mobileIsRequired' | translate}}</mat-error> -->
                     <mat-error *ngIf="fc['kendraMobileNo'].hasError('pattern')">{{'Labels.pleaseEnterValidMobileNumber' | translate}}</mat-error>
                     </mat-form-field>
                 </div>

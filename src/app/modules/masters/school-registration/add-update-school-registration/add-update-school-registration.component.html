@@ -114,6 +114,9 @@
                         <!-- <mat-error *ngIf="f['schoolName'].hasError('required') || f['schoolName'].hasError('touched')">
                             {{'Labels.schoolNameIsRequired' | translate}}
                         </mat-error> -->
+                        <mat-error *ngIf="f['schoolName'].hasError('pattern') || f['schoolName'].hasError('touched')">
+                            {{'Labels.InvalidSchoolName' | translate}}
+                        </mat-error>
                     </mat-form-field>
                 </div>
                 <div class="col-sm-6">
