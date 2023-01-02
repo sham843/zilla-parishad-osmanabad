@@ -44,7 +44,7 @@
       <div class="col-sm-3">
         <mat-form-field appearance="outline" class="w-100">
           <mat-label>{{'Labels.searchByName' | translate}}</mat-label>
-          <input matInput [formControl]="searchContent">
+          <input matInput [formControl]="searchContent" (keypress)="validation.noFirstSpaceAllow($event)">
         </mat-form-field>
       </div>
        <div class="col-sm-auto">
