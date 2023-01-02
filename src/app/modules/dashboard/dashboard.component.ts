@@ -104,17 +104,12 @@ export class DashboardComponent implements OnInit,AfterViewInit {
       chart: {
         type: "donut"
       },
-      theme: {
-        monochrome: {
-          enabled: true,
-          color: '#039286',
-          shadeTo: 'light',
-          shadeIntensity: 0.65
-        }
+      legend: {
+        position: "bottom"
       },
       fill: {
         type: "solid",
-        //colors: ["#00E396", "#F9CE1D", "#D4526E", "#D7263D", "#A300D6"]
+        colors: ["#00E396", "#F9CE1D", "#D4526E", "#D7263D", "#A300D6"]
       },
       // colors: [],
        labels: [],
@@ -138,17 +133,10 @@ export class DashboardComponent implements OnInit,AfterViewInit {
       chart: {
         type: "donut"
       },
-      theme: {
-        monochrome: {
-          enabled: true,
-          color: '#039286',
-          shadeTo: 'light',
-          shadeIntensity: 0.65
-        }
-      },
+      
       fill: {
         type: "solid",
-        //colors: ["#00E396", "#F9CE1D", "#D4526E", "#D7263D", "#A300D6"]
+        colors: ["#00E396", "#F9CE1D", "#D4526E", "#D7263D", "#A300D6"]
       },
       // colors: [],
        labels: [],
@@ -172,17 +160,10 @@ export class DashboardComponent implements OnInit,AfterViewInit {
       chart: {
         type: "donut"
       },
-      theme: {
-        monochrome: {
-          enabled: true,
-          color: '#039286',
-          shadeTo: 'light',
-          shadeIntensity: 0.65
-        }
-      },
+     
       fill: {
         type: "solid",
-        //colors: ["#00E396", "#F9CE1D", "#D4526E", "#D7263D", "#A300D6"]
+        colors: ["#00E396", "#F9CE1D", "#D4526E", "#D7263D", "#A300D6"]
       },
       // colors: [],
        labels: [],
@@ -529,7 +510,7 @@ export class DashboardComponent implements OnInit,AfterViewInit {
           this.tableDataTopPerformance.push(res.responseData.responseData1);
           this.tableDataTopPerformance.push(res.responseData.responseData2);
           
-          this.displayedheaders = ['#','Sr.No.', 'Name', 'Total Student', 'Percetage'];
+          this.displayedheaders = ['#','Sr. No.', 'Name', 'Total Student', 'Percetage'];
 
         }
         else{

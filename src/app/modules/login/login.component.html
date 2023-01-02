@@ -16,8 +16,39 @@
                     <div class="logo d-flex align-items-center mb-5">
                         <img src="assets/images/logo.svg">
                     </div>
-                    <form [formGroup]="adminLoginForm" (ngSubmit)="onSubmit()" #clear="ngForm">
-                        <mat-tab-group class="p-2" (focusChange)="checklogin($event,clear)">
+                    <form [formGroup]="adminLoginForm" (ngSubmit)="onSubmit()">
+                        <h4>Login</h4>
+                        <div class="overflow-hidden px-1">
+                            <div class="mb-2 text-center mt-5">
+                                <mat-form-field appearance="outline" class="w-100">
+                                    <mat-label>User Name</mat-label>
+                                    <input matInput formControlName="userName"
+                                        (keypress)="validators.noSpaceAllow($event)">
+                                    <mat-error *ngIf="fc['userName'].hasError('required')">User name is
+                                        required</mat-error>
+                                </mat-form-field>
+                            </div>
+                            <div class="mb-3 text-center">
+                                <mat-form-field appearance="outline" class="w-100">
+                                    <mat-label>Password</mat-label>
+                                    <input matInput [type]="hide ? 'password' : 'text'"
+                                        formControlName="password" (keypress)="validators.noSpaceAllow($event)">
+                                    <button mat-icon-button matSuffix (click)="hide = !hide" type="button"
+                                        [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+                                        <mat-icon class="PasswordEyeView">{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                                    </button>
+                                    <mat-error *ngIf="fc['password'].hasError('required')">Password is
+                                        required</mat-error>
+                                    <mat-error *ngIf="fc['password'].hasError('pattern')">Enter valid
+                                        password</mat-error>
+                                </mat-form-field>
+                            </div>
+                            <div class="d-flex align-items-center justify-content-between">
+                                <button mat-flat-button class="btn-main" type="submit">Submit</button>
+                                <a routerLink="../forgot-password" class="text-main">Forgot Password?</a>
+                            </div>
+                        </div>
+                        <!-- <mat-tab-group class="p-2" (focusChange)="checklogin($event,clear)">
                             <mat-tab label="Admin">
                                 <div class="overflow-hidden px-1">
                                     <div class="mb-2 text-center mt-5">
@@ -62,8 +93,8 @@
                                                 required</mat-error>
                                             <mat-error *ngIf="fc['mobileNo'].hasError('pattern')">Enter a valid mobile
                                                 no.</mat-error>
-                                            <!-- <mat-error *ngIf="fc['mobileNo'].hasError('maxLength')"> Enter 10 Digit Number</mat-error>
-                                        <mat-error *ngIf="fc['mobileNo'].hasError('minLength')"> Enter 10 Digit Number</mat-error> -->
+                                            <mat-error *ngIf="fc['mobileNo'].hasError('maxLength')"> Enter 10 Digit Number</mat-error>
+                                        <mat-error *ngIf="fc['mobileNo'].hasError('minLength')"> Enter 10 Digit Number</mat-error>
                                         </mat-form-field>
                                     </div>
                                     <div class="mb-3 text-center">
@@ -88,7 +119,7 @@
                                     </div>
                                 </div>
                             </mat-tab>
-                        </mat-tab-group>
+                        </mat-tab-group> -->
                     </form>
                 </div>
             </div>

@@ -11,6 +11,7 @@ import { GlobalDetailComponent } from 'src/app/shared/components/global-detail/g
 import { GlobalDialogComponent } from 'src/app/shared/components/global-dialog/global-dialog.component';
 import { AddUpdateTeacherRegistrationComponent } from './add-update-teacher-registration/add-update-teacher-registration.component';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { ValidationService } from 'src/app/core/services/validation.service';
 
 @Component({
   selector: 'app-teacher-registration',
@@ -38,7 +39,7 @@ export class TeacherRegistrationComponent {
   @HostBinding('class') className = '';
   constructor(private dialog: MatDialog, private overlay: OverlayContainer, private apiService: ApiService, private errors: ErrorsService,
     public webStorageS: WebStorageService, private downloadFileService: DownloadPdfExcelService, private commonMethodS: CommonMethodsService,
-    private ngxSpinner: NgxSpinnerService) {
+    private ngxSpinner: NgxSpinnerService, public validation : ValidationService) {
   }
 
   ngOnInit(): void {
@@ -95,10 +96,8 @@ export class TeacherRegistrationComponent {
     this.apiService.setHttp('GET', 'zp_osmanabad/Teacher/GetAll?' + (flag == 'pdfFlag' ? reportStr : str), false, false, false, 'baseUrl');
     this.apiService.getHttp().subscribe({
 
-      next: (res: any) => {
-        console.log("table res : ", res);
-
-        if (res.statusCode == "200") {
+      next: (res: any) => {    
+        if (res.statusCode == 200) {
           this.ngxSpinner.hide();
           flag != 'pdfFlag' ? this.tableDataArray = res.responseData.responseData1 : this.tableDataArray = this.tableDataArray;
           // this.tableDataArray = res.responseData.responseData1;
@@ -112,8 +111,7 @@ export class TeacherRegistrationComponent {
           this.ngxSpinner.hide();
           this.tableDataArray = [];
           this.tableDatasize = 0;
-          this.tableDatasize == 0 && flag == 'pdfFlag' ? this.commonMethodS.showPopup('No Record Found', 1) : '';
-
+          this.tableDatasize == 0 && flag == 'pdfFlag' ? this.commonMethodS.showPopup(this.webStorageS.languageFlag == 'EN' ? 'No Record Found' : 'रेकॉर्ड उपलब्ध नाही', 1) : '';
         }
         this.languageChange();
         // let displayedColumns = ['uploadImage','srNo', 'name', 'mobileNo', 'emailId', 'village', 'taluka', 'action'];
@@ -255,7 +253,7 @@ export class TeacherRegistrationComponent {
     this.apiService.setHttp('delete', 'zp_osmanabad/Teacher/Delete', false, deleteObj, false, 'baseUrl');
     this.apiService.getHttp().subscribe({
       next: (res: any) => {
-        if (res.statusCode == "200") {
+        if (res.statusCode == 200) {
           this.commonMethodS.showPopup(res.statusMessage, 0);
           this.getTableData();
         }
@@ -282,11 +280,10 @@ export class TeacherRegistrationComponent {
       this.cardViewFlag = false;
       this.pageNumber = 1;
       this.cardCurrentPage = 0;
-
-      this.getTableData();
+      this.clearFilterData();
     } else if (label == 'Card')
       this.cardViewFlag = true;
-    this.getTableData();
+    this.clearFilterData();
   }
 
   onPageChanged(event: any) {
@@ -300,8 +297,8 @@ export class TeacherRegistrationComponent {
       headerImage: obj.uploadImage,
       header: this.webStorageS.languageFlag == 'EN' ? obj.name : obj.m_Name,
       subheader: this.webStorageS.languageFlag == 'EN' ? obj.gender : obj.m_Gender,
-      labelHeader: this.webStorageS.languageFlag == 'EN' ? ['Mobile No.', 'Email ID', 'Village', 'Taluka'] : ['मोबाईल क्र.', 'एजन्सी ई-मेल आयडी ', 'गाव', 'तालुका'],
-      labelKey: this.webStorageS.languageFlag == 'EN' ? ['mobileNo', 'emailId', 'village', 'taluka'] : ['mobileNo', 'emailId', 'village', 'taluka'],
+      labelHeader: this.webStorageS.languageFlag == 'EN' ? ['Mobile No.', 'Email ID', 'Village', 'Taluka', 'Subject'] : ['मोबाईल क्र.', 'एजन्सी ई-मेल आयडी ', 'गाव', 'तालुका', 'विषय'],
+      labelKey: this.webStorageS.languageFlag == 'EN' ? ['mobileNo', 'emailId', 'village', 'taluka', 'assignSubject'] : ['mobileNo', 'emailId', 'village', 'taluka', 'assignSubject'],
       Obj: obj,
       chart: false
     }

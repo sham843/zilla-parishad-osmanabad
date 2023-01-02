@@ -21,6 +21,7 @@ import { PageStatisticsComponent } from 'src/app/shared/components/page-statisti
 import { AutofocusDirective } from 'src/app/core/directives/autofocus.directive';
 import { TranslateModule } from '@ngx-translate/core';
 import { GridViewComponent } from 'src/app/shared/components/grid-view/grid-view.component';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 @NgModule({
   declarations: [
@@ -48,7 +49,8 @@ import { GridViewComponent } from 'src/app/shared/components/grid-view/grid-view
     PageStatisticsComponent,
     AutofocusDirective,
     TranslateModule,
-    GridViewComponent
+    GridViewComponent,
+    MatTooltipModule
   ]
 })
 export class TeacherRegistrationModule { }

@@ -27,7 +27,7 @@
                         grid_view
                     </mat-icon>
                 </button>
-                <button mat-flat-button class="bg-danger btn-icon text-white" title="Download as PDF" (click)="getTableData('pdfFlag')">
+                <button mat-flat-button class="bg-danger btn-icon text-white" matTooltip="{{'Labels.DownloadPdf' | translate}}" matTooltipPosition="below"  matTooltipClass="tooltip" (click)="getTableData('pdfFlag')">
                     <mat-icon>
                         description
                     </mat-icon>
@@ -57,7 +57,7 @@
             <div class="col-sm-3">
                 <mat-form-field appearance="outline" class="w-100">
                     <mat-label>{{'Labels.searchbyNameContactEmailTeacher'| translate}}</mat-label>
-                    <input matInput [formControl]="searchContent">
+                    <input matInput [formControl]="searchContent" (keypress)="validation.noFirstSpaceAllow($event)">
                 </mat-form-field>
             </div>
             <div class="col-sm-auto">
