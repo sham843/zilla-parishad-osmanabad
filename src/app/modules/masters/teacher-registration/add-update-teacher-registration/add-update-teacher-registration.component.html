@@ -230,13 +230,14 @@
                     <div class="col-sm-4">
                         <mat-form-field appearance="outline" class="w-100 ">
                             <mat-label>{{'Labels.bEdPercentages'| translate}}</mat-label>
-                            <input matInput formControlName="bEdPercentages">
+                            <input matInput formControlName="bEdPercentages" maxlength="10" (keypress)="validation.noFirstSpaceAllow($event)" >
+                            <mat-error *ngIf="td['bEdPercentages'].hasError('pattern')">Please Enter Valid Percentage</mat-error> 
                         </mat-form-field>
                     </div>
                     <div class="col-sm-4">
                         <mat-form-field appearance="outline" class="w-100 ">
                             <mat-label>{{'Labels.bEdUniversity'| translate}}</mat-label>
-                            <input matInput formControlName="bEdUniversityId">
+                            <input matInput formControlName="bEdUniversityId" maxlength="50" (keypress)="validation.noFirstSpaceAllow($event)">
                         </mat-form-field>
                     </div>
                 </div>
