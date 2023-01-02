@@ -55,6 +55,15 @@
             </div>
         </div>
 
+        <div class="gallerize-example">
+            <h2>Lightbox Example</h2>
+            <p class="container">
+                <img *ngFor="let item of items; index as i" 
+                 [lightbox]="i"
+                 [src]="item.data.src">
+            </p>  
+        </div>
+
     </mat-card-content>
 
 </mat-card>
