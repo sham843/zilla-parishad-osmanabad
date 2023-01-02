@@ -244,10 +244,11 @@ export class TeacherRegistrationComponent {
   }
 
   onClickDelete() {
+    let webStorageMethod = this.webStorageS.createdByProps();
     let deleteObj = {
       "id": this.deleteObj.id,
-      "modifiedBy": 0,
-      "modifiedDate": new Date(),
+      "modifiedBy": webStorageMethod.modifiedBy,
+      "modifiedDate": webStorageMethod.modifiedDate,
       "lan": this.webStorageS.languageFlag
     }
     this.apiService.setHttp('delete', 'zp_osmanabad/Teacher/Delete', false, deleteObj, false, 'baseUrl');
