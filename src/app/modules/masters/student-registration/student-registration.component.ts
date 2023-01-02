@@ -280,11 +280,12 @@ export class StudentRegistrationComponent {
   }
 
   deleteRecord(id: any) {
+    let webStorageMethod = this.webService.createdByProps();
     let deleteObj = {
       "id": id,
-      "modifiedBy": this.webService.getUserId(),
-      "modifiedDate": new Date(),
-      "lan": this.languageFlag == 'English' ? 'EN' : 'mr-IN'
+      "modifiedBy": webStorageMethod.modifiedBy,
+      "modifiedDate": webStorageMethod.modifiedDate,
+      "lan": this.webService.languageFlag
     }
     this.apiService.setHttp('delete', 'zp-osmanabad/Student/DeleteStudent', false, deleteObj, false, 'baseUrl');
     this.apiService.getHttp().subscribe({
