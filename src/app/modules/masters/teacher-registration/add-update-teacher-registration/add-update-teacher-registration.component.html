@@ -60,17 +60,17 @@
                 </div>
                 <div class="col-sm-4">
                         <div class="d-flex justify-content-between align-items-center">
-                            <div class="upload-btn-wrapper">
+                            <div class="upload-btn-wrapper" >
                                 <button class="upload-btn">{{'Labels.uploadPhoto' | translate}}</button>
                                 <input type="file" name="myfile" formControlName="uploadImage"
-                                    (change)="imgUpload($event)" />
+                                  (change)="imgUpload($event)" />
                             </div>
-                            <div class="action-btn">
-                                <button type="button" mat-icon-button class="btn-icon text-primary" *ngIf="uploadImg"
+                            <div class="action-btn" >
+                                <button type="button" mat-icon-button class="btn-icon text-primary" *ngIf="showAddRemImg"
                                     (click)="viewImg()">
                                     <mat-icon>content_copy</mat-icon>
                                 </button>
-                                <button type="button" mat-icon-button class="btn-icon text-danger" *ngIf="uploadImg"
+                                <button type="button" mat-icon-button class="btn-icon text-danger" *ngIf="showAddRemImg"
                                     (click)="clearImg()">
                                     <mat-icon>delete</mat-icon>
                                 </button>
