@@ -30,7 +30,7 @@
         <div class="col-sm-4">
             <mat-form-field appearance="outline" class="w-100">
                 <mat-label>शाळा निवडा</mat-label>
-                <mat-select formControlName="schoolId" (selectionChange)="dashboardAPis()">
+                <mat-select formControlName="schoolId" (selectionChange)="getbarChartByTaluka();getdashboardCount();">
                     <mat-option *ngFor="let school of schoolData" [value]="school.id">
                         {{webStorage.languageFlag == 'EN'?school.schoolName :school.m_SchoolName }}
                     </mat-option>

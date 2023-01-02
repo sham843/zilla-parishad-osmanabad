@@ -241,7 +241,8 @@
         "DownloadPdf" : "PDF डाउनलोड करा",
         "InvalidDesignation" : "अवैध पदनाम",
         "InvalidSchoolName" : "अवैध शाळेचे नाव",
-        "GridView" : "ग्रिड दृश्य"
+        "GridView" : "ग्रिड दृश्य",
+        "SaralvalidId":"कृपया 19 अंकी सरल आयडी प्रविष्ट करा"
     }
 }
 

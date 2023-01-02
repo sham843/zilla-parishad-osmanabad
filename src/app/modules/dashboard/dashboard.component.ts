@@ -76,7 +76,8 @@ export class DashboardComponent implements OnInit,AfterViewInit {
     this.talukaData=[];
     this.masterService.getAllTaluka().subscribe((res: any) => {
       this.talukaData.push({ "id": 0, "taluka": "All", "m_Taluka": "सर्व"}, ...res.responseData);
-      this.f['talukaId'].patchValue(0);
+      const obj=this.talukaData.find((x:any)=> x.taluka=="Osmanabad")
+      this.f['talukaId'].patchValue(obj.id);
     })
   }
   getCenters() {
@@ -199,8 +200,6 @@ export class DashboardComponent implements OnInit,AfterViewInit {
           dataPointSelection: (event:any, chartContext:any, config:any) => {
           console.log(event,chartContext)
           this.optionalSubjectindex=config.seriesIndex;
-          //selectedBarData=
-
           }
         }
       },
@@ -342,8 +341,10 @@ export class DashboardComponent implements OnInit,AfterViewInit {
     };
   }
   dashboardAPis(){
-     this.getbarChartByTaluka();
      this.getdashboardCount();
+     this.getBarChart(this.selectedObj);
+     this.getbarChartByTaluka();
+     
   }
   selectedBar(selectedbar:any){
    const index=this.barchartOptions.xaxis.categories.findIndex((i:any)=>i==selectedbar);
@@ -363,12 +364,14 @@ export class DashboardComponent implements OnInit,AfterViewInit {
   
   getdashboardCount(){
     const formData= this.filterForm.value;
+    this.dashboardCountData=[];
     this.apiService.setHttp('GET', 'zp-osmanabad/Dashboard/GetDashboardCount?TalukaId='+(formData?.talukaId ||0)+'&CenterId='+(formData?.centerId ||0)+'&SchoolId='+(formData?.schoolId ||0), false, false, false, 'baseUrl');
     this.apiService.getHttp().subscribe({
       next: (res: any) => { 
         if (res.statusCode == "200") {
           this.dashboardCountData.push(res.responseData.responseData1[0]);
           this.totalStudentSurveyData=res.responseData.responseData2;
+          console.log(this.totalStudentSurveyData)
           this.tableColumn=[{label:'एकूण संख्या', GroupId:0,  ischeckboxShow:false, status:false},{label:'१ली ते 2वी',GroupId:1, subSTD:[{label:'१ली',subGroupId:1, status:false},{label:'2री',subGroupId:2, status:false}] , ischeckboxShow:true, status:true},{label:'3री ते ५वी',GroupId:2, subSTD:[{label:'3री',subGroupId:3, status:false},{label:'4री',subGroupId:4, status:false},{label:'5वी',subGroupId:5, status:false}] , ischeckboxShow:true, status:false},{label:'६वी ते ८वी',GroupId:3, subSTD:[{label:'६वी',subGroupId:6, status:false},{label:'7वी',subGroupId:7, status:false},{label:'८वी',subGroupId:8, status:false}], ischeckboxShow:true, status:false},];
           this.checkData(this.tableColumn[1]);
           this.getPieChartData();
@@ -427,6 +430,7 @@ export class DashboardComponent implements OnInit,AfterViewInit {
 
   getBarChart(obj:any){
     const formData= this.filterForm.value;
+    this.showBarChartF=false;
     this.selectedObj=obj;
     this.barChartData=[];
     this.apiService.setHttp('GET', 'zp-osmanabad/Dashboard/'+(obj.GroupId==1?'GetDataFor1st2ndStd':'GetDataFor3rdAboveStd')+'?TalukaId='+(formData?.talukaId ||0)+'&CenterId='+(formData?.centerId ||0)+'&SchoolId='+(formData?.schoolId ||0)+'&GroupId='+obj?.GroupId, false, false, false, 'baseUrl');
@@ -462,6 +466,7 @@ export class DashboardComponent implements OnInit,AfterViewInit {
   }
 
   getbarChartByTaluka(){
+    this.showBarChartS=false;
     const filterformData= this.filterForm.value;
     const formDatafilterbyTaluka= this.filterFormForBarGraph.value;
     this.barChartData=[];
@@ -476,6 +481,7 @@ export class DashboardComponent implements OnInit,AfterViewInit {
           this.barchartOptions1.xaxis.categories=[];
           let talukaSet:any=[]; 
           talukaSet = [...new Set(this.barChartByTalukaData.map(sub => TalukaId  ? sub.center : sub.taluka))];
+          console.log(talukaSet)
           const subjectSet = [...new Set(this.barChartByTalukaData.map(sub => sub.m_OptionName || sub.m_Question ))];
           let arrayObjectData:any[]=[];
           subjectSet.map((x: any) => {
@@ -488,6 +494,7 @@ export class DashboardComponent implements OnInit,AfterViewInit {
           })
           this.barchartOptions1.series.push(arrayObjectData)
           this.barchartOptions1.xaxis.categories.push(...talukaSet);
+          console.log(this.barchartOptions1.xaxis.categories);
           this.showBarChartS=true;
         }
 
