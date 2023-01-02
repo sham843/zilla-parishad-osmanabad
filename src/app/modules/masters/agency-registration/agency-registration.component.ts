@@ -173,11 +173,12 @@ export class AgencyRegistrationComponent {
   }
 
   deleteAgencyRow(_obj: any) {
+    let webStorageMethod = this.webStroageService.createdByProps();
     let obj = {
       "id": _obj.id,
-      "modifiedBy": 0,
-      "modifiedDate": new Date(),
-      "lan": ""
+      "modifiedBy": webStorageMethod.modifiedBy,
+      "modifiedDate": webStorageMethod.modifiedDate,
+      "lan": this.webStroageService.languageFlag
     }
 
     this.apiService.setHttp('delete', 'zp-osmanabad/Agency/Delete', false, obj, false, 'baseUrl');
