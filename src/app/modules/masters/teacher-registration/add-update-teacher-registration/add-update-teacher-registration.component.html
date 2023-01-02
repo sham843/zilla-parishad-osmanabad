@@ -57,7 +57,7 @@
                 <div class="col-sm">
                     <mat-form-field appearance="outline" class="w-100">
                         <mat-label>{{'Labels.emailID'| translate}}</mat-label>
-                        <input matInput formControlName="emailId" (keypress)="validation.emailRegex($event)">
+                        <input matInput formControlName="emailId" >
                         <mat-error *ngIf="f['emailId'].hasError('pattern') ">
                             invalid EmailId</mat-error>
                     </mat-form-field>
