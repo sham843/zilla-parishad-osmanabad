@@ -168,10 +168,11 @@ export class OfficeUsersComponent {
   }
 
   deleteOffice(obj: any) {
+    let webStorageMethod = this.webStorageService.createdByProps();
     let deleteObj = [{
       "id": obj.id,
       "deletedBy": 1,
-      "modifiedDate": new Date(),
+      "modifiedDate": webStorageMethod.modifiedDate,
       "lan": this.webStorageService.languageFlag
     }]
     console.log("deleteObj", deleteObj);
