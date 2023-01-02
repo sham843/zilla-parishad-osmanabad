@@ -192,10 +192,10 @@ export class OfficeUsersComponent {
     this.getTableData('reportFlag');
   }
 
-  filterData(){
-    this.getTableData();
-    // this.getofficeReport();
-  }
+  // filterData(){
+  //   this.getTableData();
+  //   // this.getofficeReport();
+  // }
 
   clearFilterData() {
     this.searchContent.setValue('');

@@ -18,7 +18,7 @@ import { WebStorageService } from 'src/app/core/services/web-storage.service';
     MatCardModule,
     MatButtonModule,
     MatMenuModule,
-    MatPaginatorModule
+    MatPaginatorModule,
   ]
 })
 export class GridViewComponent {
