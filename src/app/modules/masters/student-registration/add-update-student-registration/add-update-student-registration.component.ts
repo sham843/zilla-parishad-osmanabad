@@ -359,7 +359,7 @@ export class AddUpdateStudentRegistrationComponent {
 
   //#region ------------------------------------------- Image Logic Start Here -----------------------------------------------------------------
   fileUpload(event: any, name: string) {
-    this.fileUpl.uploadDocuments(event, 'Upload', 'jpg, jpeg, png').subscribe((res: any) => {
+    this.fileUpl.uploadDocuments(event, 'Upload', 'jpg, jpeg, png, pdf').subscribe((res: any) => {
       if (res.statusCode == 200) {
         if (name == 'img') {
           this.uploadImg = res.responseData;
