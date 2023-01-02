@@ -7,6 +7,7 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatSelectModule} from '@angular/material/select';
 import {MatIconModule} from '@angular/material/icon';
 import {MatButtonModule} from '@angular/material/button';
+import { WebStorageService } from 'src/app/core/services/web-storage.service';
 @Component({
   selector: 'app-global-detail',
   templateUrl: './global-detail.component.html',
@@ -24,7 +25,7 @@ import {MatButtonModule} from '@angular/material/button';
 })
 export class GlobalDetailComponent {
   
-  constructor(public dialogRef: MatDialogRef<GlobalDetailComponent>,@Inject(MAT_DIALOG_DATA) public data: any){ 
+  constructor(public dialogRef: MatDialogRef<GlobalDetailComponent>,@Inject(MAT_DIALOG_DATA) public data: any, public webStorage: WebStorageService){ 
 
    }
 

@@ -29,9 +29,8 @@
                                         <span class="data-label">{{head}} :</span>
                                         <div class="data-text" *ngIf="data?.checkbox != head">{{ data?.Obj[data?.labelKey[j]] || '-'}}</div>
                                         <div class="data-text" *ngIf="data?.checkbox == head">
-                                            <div class="teacherForm" *ngFor="let assign of data?.Obj?.assignTeacher">                     
-                                                <input type="checkbox" name="check" id="{{assign.standardId}}" [checked]="true"/>
-                                                <label for="{{assign.standardId}}" class="pb-0">{{assign.standardId}}</label>                      
+                                            <div *ngFor="let assign of data?.Obj?.assignSubject">                     
+                                                <span>{{ webStorage.languageFlag == 'EN' ? assign.subjectName : assign.m_SubjectName || '-'}}</span>                     
                                             </div>
                                         </div>                                        
                                     </div>
