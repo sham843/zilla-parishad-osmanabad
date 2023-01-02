@@ -335,6 +335,8 @@ export class AddUpdateTeacherRegistrationComponent {
 
   getCluster() {
     let talukaId = this.teacherRegForm.value.teacherDetails.talukaId;
+    console.log("talukaId",talukaId);
+    
     this.masterService.getAllCenter('EN', talukaId).subscribe({
       next: ((res: any) => {
         if (res.statusCode == 200 && res.responseData.length) {
@@ -591,7 +593,7 @@ export class AddUpdateTeacherRegistrationComponent {
 //#endregion -------------------------------------end submit-----------------------------------------------
 //#region ---------------------------------------- start edit ----------------------------------------------
   onEdit(obj: any) {
-    console.log("editObj",obj);
+    // console.log("editObj",obj);
     
     this.editFlag = true;
     this.editObj = obj;  
@@ -617,9 +619,9 @@ export class AddUpdateTeacherRegistrationComponent {
   }
 //#endregion --------------------------------------- end edit ----------------------------------------------
   clearImg() {
+    this.uploadImg = '';
     this.teacherRegForm.value.uploadImage = '';
     this.f['uploadImage'].setValue('');
-    this.showAddRemImg = false;
   }
 
   viewImg() {

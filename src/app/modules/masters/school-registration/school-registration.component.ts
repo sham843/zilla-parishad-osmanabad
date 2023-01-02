@@ -106,7 +106,7 @@ export class SchoolRegistrationComponent {
           this.ngxSpinner.hide();
           this.tableDataArray = [];
           this.tableDatasize = 0;
-          this.tableDatasize == 0 && flag == 'pdfFlag' ? this.commonMethodS.showPopup('No Record Found', 1) : '';
+          this.tableDatasize == 0 && flag == 'pdfFlag' ? this.commonMethodS.showPopup(this.webStorageS.languageFlag == 'EN' ? 'No Record Found' : 'रेकॉर्ड उपलब्ध नाही', 1) : '';
         }
         this.languageChange();
       },
