@@ -193,7 +193,7 @@
                 <div class="col-sm-4">
                     <mat-form-field appearance="outline" class="w-100">
                         <mat-label>{{'Labels.saralId'| translate}}</mat-label>
-                        <input matInput formControlName="saralId" minlength="19" maxlength="19" (keypress)="validators.noSpaceAllow($event)">
+                        <input matInput formControlName="saralId" minlength="19" maxlength="19" (keypress)="validators.onlyDigits($event)">
                         <mat-error *ngIf="fc['saralId'].hasError('minlength')">{{'Labels.SaralvalidId'|
                             translate}}</mat-error>
                             <mat-error *ngIf="fc['saralId'].hasError('maxlength')">{{'Labels.SaralvalidId'|
