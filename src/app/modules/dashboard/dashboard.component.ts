@@ -40,6 +40,7 @@ export class DashboardComponent implements OnInit,AfterViewInit {
   totalStudentSurveyData=new Array();
   optionalSubjectindex!:number;
   SharingObject:any;
+  globalTalId:any;
   get f() { return this.filterForm.controls }
   get fBgraph() { return this.filterFormForBarGraph.controls}
   constructor(public translate: TranslateService, private masterService: MasterService,
@@ -64,13 +65,10 @@ export class DashboardComponent implements OnInit,AfterViewInit {
     this.getdashboardCount();
     this.getTabledataByTaluka()
   }
+ 
   ngAfterViewInit() {
     this.showSvgMap(this.commonMethods.mapRegions());
-    $(document).on('click', '#mapsvg  path', (e: any) => {
-      let getClickedId = e.currentTarget;
-      let distrctId = $(getClickedId).attr('id');
-      console.log(distrctId)
-    })
+    this.clickOnSvgMap();
   }
   getTalukas() {
     this.talukaData=[];
@@ -229,19 +227,6 @@ export class DashboardComponent implements OnInit,AfterViewInit {
         categories: [
         ]
       },
-      // tooltip: {
-      //   custom: function(series:any, seriesIndex:any, dataPointIndex:any, w :any) {
-      //     return (
-      //       '<div class="arrow_box">' +
-      //       "<span>" +
-      //       w.globals.labels[dataPointIndex] +
-      //       ": " +
-      //       series[seriesIndex][dataPointIndex] +
-      //       "</span>" +
-      //       "</div>"
-      //     );
-      //   }
-      // },
       yaxis: {
         show: false,
         showAlways: false,
@@ -359,7 +344,7 @@ export class DashboardComponent implements OnInit,AfterViewInit {
       OptionGrade:data.optionGrade
     }
     this.webStorage.selectedBarchartObjData.next(this.SharingObject);
-    this.router.navigate(['/global-details'])
+    this.router.navigate(['/dashboard-student-details'])
   }
   
   getdashboardCount(){
@@ -371,7 +356,6 @@ export class DashboardComponent implements OnInit,AfterViewInit {
         if (res.statusCode == "200") {
           this.dashboardCountData.push(res.responseData.responseData1[0]);
           this.totalStudentSurveyData=res.responseData.responseData2;
-          console.log(this.totalStudentSurveyData)
           this.tableColumn=[{label:'एकूण संख्या', GroupId:0,  ischeckboxShow:false, status:false},{label:'१ली ते 2वी',GroupId:1, subSTD:[{label:'१ली',subGroupId:1, status:false},{label:'2री',subGroupId:2, status:false}] , ischeckboxShow:true, status:true},{label:'3री ते ५वी',GroupId:2, subSTD:[{label:'3री',subGroupId:3, status:false},{label:'4री',subGroupId:4, status:false},{label:'5वी',subGroupId:5, status:false}] , ischeckboxShow:true, status:false},{label:'६वी ते ८वी',GroupId:3, subSTD:[{label:'६वी',subGroupId:6, status:false},{label:'7वी',subGroupId:7, status:false},{label:'८वी',subGroupId:8, status:false}], ischeckboxShow:true, status:false},];
           this.checkData(this.tableColumn[1]);
           this.getPieChartData();
@@ -423,9 +407,6 @@ export class DashboardComponent implements OnInit,AfterViewInit {
     this.piechartOptions.labels=['Goverment','Private','Other'];
     this.piechartOptions1.labels=['English-Medium','Marathi-Medium','Both'];
     this.piechartOptions2.labels=['Boys','Girls','Other'];
-
-    // console.log(this.piechartOptions)
-    // this.piechartOptions.colors=['#CB4B4B', '#E76A63', '#E98754', '#EFB45B', '#65C889'];
   }
 
   getBarChart(obj:any){
@@ -481,7 +462,6 @@ export class DashboardComponent implements OnInit,AfterViewInit {
           this.barchartOptions1.xaxis.categories=[];
           let talukaSet:any=[]; 
           talukaSet = [...new Set(this.barChartByTalukaData.map(sub => TalukaId  ? sub.center : sub.taluka))];
-          console.log(talukaSet)
           const subjectSet = [...new Set(this.barChartByTalukaData.map(sub => sub.m_OptionName || sub.m_Question ))];
           let arrayObjectData:any[]=[];
           subjectSet.map((x: any) => {
@@ -494,7 +474,6 @@ export class DashboardComponent implements OnInit,AfterViewInit {
           })
           this.barchartOptions1.series.push(arrayObjectData)
           this.barchartOptions1.xaxis.categories.push(...talukaSet);
-          console.log(this.barchartOptions1.xaxis.categories);
           this.showBarChartS=true;
         }
 
@@ -534,9 +513,9 @@ export class DashboardComponent implements OnInit,AfterViewInit {
   //---------------------------- svg Map ------------------------//
   showSvgMap(data: any) {
     this.graphInstance ? this.graphInstance.destroy() : '';
-    let createMap: any = document.getElementById("#mapsvg");
+    //let createMap: any = document.getElementById("#mapsvg");
 
-    this.graphInstance = createMap?.mapSvg({
+    this.graphInstance = $("#mapsvg").mapSvg({
       width: 550,
       height: 430,
       colors: {
@@ -612,6 +591,29 @@ export class DashboardComponent implements OnInit,AfterViewInit {
       source: "assets/distSVG/Osmanabad.svg",
       title: "Osmanabad_Dist",
       responsive: true
+    });
+  }
+  clickOnSvgMap(flag?:string){
+    if(flag == 'select'){
+      let checkTalActiveClass = $('#mapsvg   path').hasClass("talActive");
+      checkTalActiveClass ? $('#mapsvg path[id="' + this.globalTalId + '"]').removeAttr("style") : '';
+      this.svgMapAddOrRemoveClass();
+    }
+    
+    $(document).on('click', '#mapsvg  path', (e: any) => {
+      let getClickedId = e.currentTarget;
+      let talId = $(getClickedId).attr('id');
+      this.filterForm.controls['talukaId'].setValue(+talId);
+      this.svgMapAddOrRemoveClass();
+    })
+  }
+
+  svgMapAddOrRemoveClass(){
+    let checkTalActiveClass = $('#mapsvg   path').hasClass("talActive");
+    checkTalActiveClass?  $('#mapsvg   path#' +this.globalTalId).removeClass("talActive") : '';
+    this.talukaData.find(() => {
+      this.globalTalId = this.filterForm?.value?.talukaId;
+      $('#mapsvg path[id="' + this.filterForm?.value?.talukaId + '"]').addClass('talActive');
     });
   }
 
