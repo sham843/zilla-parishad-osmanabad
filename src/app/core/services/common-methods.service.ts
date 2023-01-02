@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { MatSnackBar, } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
 import Swal from 'sweetalert2';
+import { WebStorageService } from './web-storage.service';
 
 
 @Injectable({
@@ -11,7 +12,8 @@ export class CommonMethodsService {
 
   constructor(private SnackBar: MatSnackBar,
     private router: Router,
-    private activatedRoute: ActivatedRoute) { }
+    private activatedRoute: ActivatedRoute,
+    public webStorageService: WebStorageService) { }
 
   snackBar(data: string, status: number) {
     let snackClassArr: any = ['snack-success', 'snack-danger', 'snack-warning'];
@@ -39,7 +41,7 @@ export class CommonMethodsService {
       text: msg,
       icon: popupClassArr[status],
       // showCancelButton: true,
-      confirmButtonText: 'ok',
+      confirmButtonText: this.webStorageService.languageFlag == 'EN'?  'ok' : 'ओके',
       // position: 'top-end',
     })
   
