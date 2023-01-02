@@ -121,8 +121,8 @@
         "edit" : "Edit",
         "officeUser" : "Office Users",
         "addUser" : "Add User",
-        "searchByName" : "Search By Name",
-        "registerOfficeUsers" : "Update Office User Details",
+        "searchByName" : "Office Name/Mobile No.",
+        "registerOfficeUsers" : "Office User Registration",
         "level" : "Level",
         "designation" : "Designation (Officer)",
         "name" : "Name",
@@ -236,7 +236,12 @@
         "Designation(Marathi)" :"Designation (Marathi)",
         "DownloadPdf" : "Download PDF",
         "InvalidDesignation" : "Invalid Designation",
-        "InvalidSchoolName" : "Invalid School Name"
+        "InvalidSchoolName" : "Invalid School Name",
+        "GridView" : "Grid View",
+        "SaralvalidId":"Please enter 19 digit saral id",
+        "OfficeUsersList" : "Office Users List",
+        "updateOfficeUser" : "Update Office Users"
+        
 
     }
 }

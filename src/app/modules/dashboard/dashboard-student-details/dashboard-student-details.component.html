@@ -1,59 +1,36 @@
 <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
-        <li class="breadcrumb-item" aria-current="page">Student Details</li>
-      <!-- <li class="breadcrumb-item active" aria-current="page">Agency Registration</li> -->
+        <li class="breadcrumb-item" routerLink="../dashboard">Dashbaord</li>
+        <li class="breadcrumb-item active" aria-current="page">Student Details</li>
     </ol>
-  </nav>
-<!-- <div class="row w-100">
-    <div class="col-sm-3">
-        <mat-form-field appearance="outline" class="w-100">
-            <mat-label>विद्यार्थी नाव</mat-label>
-            <input matInput formControlName="" >
-        </mat-form-field>
-    </div>
-    <div class="col-sm-3">
-        <mat-form-field appearance="outline" class="w-100">
-            <mat-label>वर्ग</mat-label>
-            <input matInput formControlName="">
-        </mat-form-field>
-    </div>
-    <div class="col-sm-3">
-        <mat-form-field appearance="outline" class="w-100">
-            <mat-label>शाळा निवडा</mat-label>
-            <input matInput formControlName="">
-        </mat-form-field>
-    </div>
-</div> -->
-<div class="row w-100 ">
-    <div class="col-sm-3">
-      <mat-form-field appearance="outline" class="w-100">
-        <mat-label>Search By Name Contact No</mat-label>
-        <input matInput [formControl]="searchContent" (keypress)="validators.noFirstSpaceAllow($event)">
-      </mat-form-field>
-    </div>
-    <div class="col-sm-auto">
-      <button mat-flat-button class="btn-main" (click)="getTableData('filter')">filter</button>
-      <button mat-flat-button class="btn-second ms-2" (click)="clearForm()" >clear</button>
-    </div>
+</nav>
 
-  </div>
 <mat-card class="plain-card h-100">
-    <mat-card-content>
+    <mat-card-header class="card-header pb-0">
+        <div class="row w-100 gx-2">
+            <div class="col-sm-3">
+                <mat-form-field appearance="outline" class="w-100">
+                    <mat-label>Search By Name Contact No</mat-label>
+                    <input matInput [formControl]="searchContent" (keypress)="validators.noFirstSpaceAllow($event)">
+                </mat-form-field>
+            </div>
+            <div class="col-sm-auto">
+                <button mat-flat-button class="btn-main" (click)="getTableData('filter')">Search</button>
+                <button mat-flat-button class="btn-second ms-2" (click)="clearForm()">Clear</button>
+            </div>
+
+        </div>
+    </mat-card-header>
+    <mat-card-content class="card-body pt-0">
         <div class="row">
             <div class="col-sm-5">
                 <app-table (recObjToChild)="childTableCompInfo($event)"></app-table>
             </div>
             <div class="col-sm-7">
-                <!-- <app-student-details [data]="currentItem"></app-student-details> -->
                 <mat-card class="plain-card h-100">
                     <mat-card-header class="card-header">
                         <div class="d-flex align-items-center justify-content-between w-100">
                             <h6 class="mb-0 text-main">{{'Labels.profile'| translate}}</h6>
-                            <!-- <button type="button" mat-icon-button class="btn-modal-close">
-                                <mat-icon>
-                                    close
-                                </mat-icon>
-                            </button> -->
                         </div>
                     </mat-card-header>
                     <mat-card-content class="card-body">
@@ -69,16 +46,18 @@
                                         <div class="flex-grow-1 ms-3 pt-4">
                                             <h5 class="mb-1 fw-bold">{{ data?.header }}</h5>
                                             <p class="text-muted mb-4">{{ data?.subheader }}</p>
-                
+
                                             <div class="data-container">
                                                 <div class="row mb-3 gy-3">
-                                                    <div class="col-sm-4" *ngFor="let head of data.labelHeader; let j=index">
+                                                    <div class="col-sm-4"
+                                                        *ngFor="let head of data?.labelHeader; let j=index">
                                                         <span class="data-label">{{head}} :</span>
-                                                        <div class="data-text">{{ data?.Obj[data?.labelKey[j]] || '-'}}</div>
+                                                        <div class="data-text">{{ data?.Obj[data?.labelKey[j]] || '-'}}
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
-                
+
                                             <mat-card class="plain-card border" *ngIf="data?.chart == true">
                                                 <mat-card-content class="card-body">
                                                     chart
@@ -89,9 +68,9 @@
                                 </div>
                             </div>
                         </div>
-                
+
                     </mat-card-content>
-                
+
                 </mat-card>
             </div>
         </div>

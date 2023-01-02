@@ -2,7 +2,7 @@
     <mat-card-header class="card-header">
         <div class="d-flex align-items-center justify-content-between w-100">
             <h6 class="text-main mb-0 fw-bold">
-                {{'Labels.registerOfficeUsers' | translate}}</h6>
+                {{ (data ? 'Labels.updateOfficeUser' : 'Labels.registerOfficeUsers') | translate}}</h6>
             <button mat-icon-button mat-dialog-close class="btn-modal-close">
                 <mat-icon>
                     close
@@ -171,7 +171,8 @@
     <mat-card-footer class="d-flex justify-content-end card-footer mb-0">
         <button mat-flat-button type="button" mat-dialog-close class="btn-second me-2">{{'Labels.cancel' | translate}}</button>
         <!-- <button mat-flat-button type="submit" class="btn-main">{{data ? 'Update' :'Submit'}}</button> -->
-        <button mat-flat-button type="submit" class="btn-main">{{data ? 'Update' : ('Labels.submit' | translate)}}</button>
+        <!-- <button mat-flat-button type="submit" class="btn-main">{{data ? 'Update' : ('Labels.submit' | translate)}}</button> -->
+        <button mat-flat-button type="submit" class="btn-main">{{ (data ? 'Labels.update' : 'Labels.submit') | translate}}</button>
     </mat-card-footer>
 </form>
 </mat-card>

@@ -49,6 +49,7 @@
 
 <div *ngIf="tableInfo?.tableData?.length ==0">
     <div class="alert alert-danger text-center py-2 ">
-        Data not available
+        <span *ngIf="webStorageService.languageFlag =='EN'" >Data not available</span> 
+        <span *ngIf="webStorageService.languageFlag =='mr-IN'" >डेटा उपलब्ध नाही</span> 
     </div>
 </div>

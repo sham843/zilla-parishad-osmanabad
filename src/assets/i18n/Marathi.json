@@ -120,8 +120,8 @@
         "readMore" : "पुढे वाचा",
         "officeUser" : "ऑफिस युजर",
         "addUser" : "युजरची माहिती भरा",
-        "searchByName" : "नावा द्वारे शोधा",
-        "registerOfficeUsers" : "ऑफिस युजरची नोंदणी",
+        "searchByName" : "कार्यालयाचे नाव/मोबाईल क्र.",
+        "registerOfficeUsers" : "कार्यालय वापरकर्ता नोंदणी",
         "level" : "स्तर",
         "designation" : "पद (अधिकारी)",
         "DesignationLists" : "पदनाम यादी",
@@ -240,7 +240,11 @@
         "searchbyNameContactEmailTeacher" :"शिक्षकाचे नाव/मोबाइल क्रमांक/ईमेल आयडी",
         "DownloadPdf" : "PDF डाउनलोड करा",
         "InvalidDesignation" : "अवैध पदनाम",
-        "InvalidSchoolName" : "अवैध शाळेचे नाव"
+        "InvalidSchoolName" : "अवैध शाळेचे नाव",
+        "GridView" : "ग्रिड दृश्य",
+        "SaralvalidId":"कृपया 19 अंकी सरल आयडी प्रविष्ट करा",
+        "OfficeUsersList" : "ऑफिस वापरकर्त्यांची यादी",
+        "updateOfficeUser" : "ऑफिस वापरकर्ते अपडेट करा"
     }
 }
 

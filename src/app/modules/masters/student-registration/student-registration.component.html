@@ -19,7 +19,7 @@
             table_view
           </mat-icon>
         </button>
-        <button mat-flat-button class="btn-second btn-icon"
+        <button mat-flat-button class="btn-second btn-icon"   matTooltip="{{'Labels.GridView' | translate}}" matTooltipPosition="below"  matTooltipClass="tooltip"
           [ngClass]="{'btn-main':this.cardViewFlag, 'btn-second':!this.cardViewFlag}" (click)="selectGrid('Card')">
           <mat-icon>
             grid_view
