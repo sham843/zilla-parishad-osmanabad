@@ -68,7 +68,7 @@ export class DashboardComponent implements OnInit,AfterViewInit {
  
   ngAfterViewInit() {
     this.showSvgMap(this.commonMethods.mapRegions());
-    this.clickOnSvgMap();
+    this.clickOnSvgMap('select');
   }
   getTalukas() {
     this.talukaData=[];
@@ -602,9 +602,11 @@ export class DashboardComponent implements OnInit,AfterViewInit {
     
     $(document).on('click', '#mapsvg  path', (e: any) => {
       let getClickedId = e.currentTarget;
-      let talId = $(getClickedId).attr('id');
+      let talId = $(getClickedId).attr('data-name').split(" ")[0];
       this.filterForm.controls['talukaId'].setValue(+talId);
+
       this.svgMapAddOrRemoveClass();
+      this.dashboardAPis();
     })
   }
 

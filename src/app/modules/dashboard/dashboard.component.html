@@ -10,7 +10,7 @@
             <mat-form-field appearance="outline" class="w-100">
                 <mat-label>तालुका निवडा</mat-label>
                 <mat-select formControlName="talukaId"
-                    (selectionChange)="f['talukaId'].value!=0?this.getCenters():''; dashboardAPis()">
+                    (selectionChange)="f['talukaId'].value!=0?this.getCenters():''; dashboardAPis();clickOnSvgMap('select')">
                     <mat-option *ngFor="let taluka of talukaData" [value]="taluka.id">
                         {{webStorage.languageFlag == 'EN'?taluka.taluka:taluka.m_Taluka}}
                     </mat-option>
