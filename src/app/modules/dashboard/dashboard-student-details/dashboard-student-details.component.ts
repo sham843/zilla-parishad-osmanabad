@@ -1,40 +1,18 @@
-import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { MatCardModule } from '@angular/material/card';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatIconModule } from '@angular/material/icon';
-import { MatInputModule } from '@angular/material/input';
+import { FormControl } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslateService } from '@ngx-translate/core';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ApiService } from 'src/app/core/services/api.service';
 import { ErrorsService } from 'src/app/core/services/errors.service';
 import { ValidationService } from 'src/app/core/services/validation.service';
 import { WebStorageService } from 'src/app/core/services/web-storage.service';
-import { StudentDetailsComponent } from 'src/app/modules/masters/student-registration/student-details/student-details.component';
-import { TableComponent } from '../table/table.component';
-
 @Component({
-  selector: 'app-dashboard-student-global-details',
+  selector: 'app-dashboard-student-details',
   templateUrl: './dashboard-student-details.component.html',
-  styleUrls: ['./dashboard-student-details.component.scss'],
-  standalone: true,
-  imports: [
-    CommonModule,
-    MatFormFieldModule,
-    MatCardModule,
-    MatInputModule,
-    TableComponent,
-    StudentDetailsComponent,
-    FormsModule,
-    ReactiveFormsModule,
-    TranslateModule,
-    MatIconModule
-    
-  ]
+  styleUrls: ['./dashboard-student-details.component.scss']
 })
-export class DashboardStudentGlobalDetailsComponent {
+export class DashboardStudentDetailsComponent {
   pageNumber: number = 1;
   tableDataArray = new Array();
   totalCount!:number;
@@ -57,8 +35,8 @@ export class DashboardStudentGlobalDetailsComponent {
     private webService: WebStorageService,
     private errors: ErrorsService,
     private route: ActivatedRoute,
-    public validators: ValidationService
-
+    public validators: ValidationService,
+    public translate: TranslateService
   ){}
   ngOnInit(){
     this.route.paramMap.subscribe((params) => {
