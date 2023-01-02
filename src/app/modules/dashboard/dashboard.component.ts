@@ -76,7 +76,8 @@ export class DashboardComponent implements OnInit,AfterViewInit {
     this.talukaData=[];
     this.masterService.getAllTaluka().subscribe((res: any) => {
       this.talukaData.push({ "id": 0, "taluka": "All", "m_Taluka": "सर्व"}, ...res.responseData);
-      this.f['talukaId'].patchValue(0);
+      const obj=this.talukaData.find((x:any)=> x.taluka=="Osmanabad")
+      this.f['talukaId'].patchValue(obj.id);
     })
   }
   getCenters() {
@@ -199,8 +200,6 @@ export class DashboardComponent implements OnInit,AfterViewInit {
           dataPointSelection: (event:any, chartContext:any, config:any) => {
           console.log(event,chartContext)
           this.optionalSubjectindex=config.seriesIndex;
-          //selectedBarData=
-
           }
         }
       },
