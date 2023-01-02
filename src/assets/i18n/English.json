@@ -234,7 +234,8 @@
         "Agencydetail" : "Agency Details",
         "Persondetails" : "Contact Person Details",
         "Designation(Marathi)" :"Designation (Marathi)",
-        "DownloadPdf" : "Download PDF"
+        "DownloadPdf" : "Download PDF",
+        "InvalidDesignation" : "Invalid Designation"
 
     }
 }
