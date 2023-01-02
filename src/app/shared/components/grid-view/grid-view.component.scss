@@ -1,0 +1,23 @@
+.card-view{
+    box-shadow: none;
+    border-radius:10px;
+    border: solid 1px #ddd;
+}
+.card-view .material-icons{
+    font-size: 18px !important;
+}
+.card-view .user-img{
+    height: 80px;
+    width: 80px;
+    border-radius: 50%;
+}
+.form-container{
+    font-size: 0.85rem;
+}
+.form-container .form-label{
+    color: #858585;
+}
+.form-container .form-data{
+    color: #333;
+    font-weight: 600;
+}

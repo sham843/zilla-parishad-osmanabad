@@ -15,6 +15,8 @@ import { AddUpdateAgencyRegistrationComponent } from 'src/app/modules/masters/ag
 import { ValidationService } from 'src/app/core/services/validation.service';
 import { TranslateModule } from '@ngx-translate/core';
 import { CommonModule } from '@angular/common';
+import { MasterService } from 'src/app/core/services/master.service'
+import { MatSelectModule } from '@angular/material/select';
 @Component({
   standalone: true,
   selector: 'app-my-profile',
@@ -30,41 +32,35 @@ import { CommonModule } from '@angular/common';
     ReactiveFormsModule,
     MatDialogModule,
     TranslateModule,
-    CommonModule
+    CommonModule,
+    MatSelectModule
   ]
 })
 export class MyProfileComponent {
   userProfile !: FormGroup;
-  uploadImg: string = "";
+  uploadImg: string = "assets/images/user.jpg";
   imgFlag: boolean = false;
-  userType:any;
+  userType: any;
+  editObj: any
+  designationData = new Array();
   @ViewChild('uploadImage') imageFile!: ElementRef;
-  
 
-  constructor(private api: ApiService, private error: ErrorsService, private fileUpl: FileUploadService,
-    private webStorage: WebStorageService, private fb: FormBuilder, public dialogRef: MatDialogRef<AddUpdateAgencyRegistrationComponent>,
+  constructor(private api: ApiService, private error: ErrorsService, private fileUpl: FileUploadService, private masterService: MasterService,
+    public webStorage: WebStorageService, private fb: FormBuilder, public dialogRef: MatDialogRef<AddUpdateAgencyRegistrationComponent>,
     private commonMethods: CommonMethodsService, public validation: ValidationService) { this.dialogRef.disableClose = true }
 
   ngOnInit() {
-    
     this.getUserById();
+    this.getUser();
     this.defaultForm();
-    this.getUserByAdmin();
     this.userType = this.webStorage.getLoggedInLocalstorageData();
-    console.log("userType",this.userType);
-    
-    
   }
 
   getUserById() {
     this.api.setHttp('get', `zp_osmanabad/app-login/GetTeacherProfile?TeacherId=${this.webStorage.getUserId()}`, false, false, false, 'baseUrl');
     this.api.getHttp().subscribe({
       next: (res: any) => {
-        console.log("res",res.responseData);
-        
         res.statusCode == 200 ? this.defaultForm(res.responseData) : '';
-        console.log();
-        
       },
       error: (error: any) => {
         this.error.handelError(error.statusMessage)
@@ -72,22 +68,45 @@ export class MyProfileComponent {
     })
   }
 
-  getUserByAdmin(){
-    // zp_osmanabad/user-registration/GetAdminProfile?Id=1&lan=EN
+  getUserByAdmin() {
     this.api.setHttp('get', `zp_osmanabad/user-registration/GetAdminProfile?Id=${this.webStorage.getUserId()}`, false, false, false, 'baseUrl');
     this.api.getHttp().subscribe({
       next: (res: any) => {
-        console.log("res",res.responseData);
-        
         res.statusCode == 200 ? this.defaultForm(res.responseData) : '';
-        console.log();
-        
       },
       error: (error: any) => {
         this.error.handelError(error.statusMessage)
       }
     })
 
+  }
+
+  getUserByOffice() {
+    this.api.setHttp('get', `zp_osmanabad/user-registration/GetOfficeProfileById?Id=${this.webStorage.getUserId()}`, false, false, false, 'baseUrl');
+    this.api.getHttp().subscribe({
+      next: (res: any) => {
+        res.statusCode == 200 ? (this.defaultForm(res.responseData), this.editObj = res.responseData, this.getDesignation()) : '';
+      },
+      error: (error: any) => {
+        this.error.handelError(error.statusMessage)
+      }
+    })
+  }
+
+  getUser() {
+    let data = this.webStorage.getLoggedInLocalstorageData();
+    data.userTypeId == 1 ? this.getUserByAdmin() : data.userTypeId == 2 ? this.getUserByOffice() : ""
+  }
+
+  getDesignation() {
+    let lan = this.webStorage.getLangauge();
+    this.masterService.GetDesignationByLevelId(lan, this.editObj.designationLevelId).subscribe({
+      next: (res: any) => {
+        this.designationData = res.responseData;
+      }, error: (error: any) => {
+        this.error.handelError(error.statusMessage)
+      }
+    });
   }
 
   defaultForm(data?: any) {
@@ -95,9 +114,9 @@ export class MyProfileComponent {
       "name": [data ? data?.name : ''],
       "mobileNo": [data ? data?.mobileNo : '', [Validators.required, Validators.pattern(this.validation.mobile_No)]],
       "emailId": [data ? data?.emailId : '', [Validators.required, Validators.pattern(this.validation.email)]],
-      "profilePhoto": [data ? data?.profilePhoto : this.uploadImg],      
+      "profilePhoto": [data ? this.uploadImg = data?.profilePhoto : this.uploadImg],
+      "designationLevelId": [data ? data?.designationLevelId : '']
     })
-    data && this.userType.subUserType != 'Admin' ? this.uploadImg = data.profilePhoto : this.uploadImg = "assets/images/user.jpg"
   }
   get fc() { return this.userProfile.controls }
 
@@ -106,8 +125,7 @@ export class MyProfileComponent {
     this.fileUpl.uploadDocuments(event, 'Upload', 'jpg, jpeg, png').subscribe((res: any) => {
       if (res.statusCode == 200) {
         this.uploadImg = res.responseData;
-        this.fc['profilePhoto'].setValue(this.uploadImg)
-
+        this.fc['profilePhoto'].setValue(this.uploadImg);
         this.commonMethods.snackBar(res.statusMessage, 0);
       } else {
         this.uploadImg = "assets/images/user.jpg"
@@ -118,15 +136,13 @@ export class MyProfileComponent {
   removeImg() {
     this.imageFile.nativeElement.value = '';
     this.uploadImg = "assets/images/user.jpg"
+    this.fc['profilePhoto'].setValue(this.uploadImg);
   }
 
   onSubmit() {
     let obj = this.userProfile.value;
     let data = this.webStorage.getLoggedInLocalstorageData();
-    // this.userType = this.webStorage.getUserType;
-   
-    
-
+    let lan = this.webStorage.getLangauge();
     let uploadData = {
       "id": data.id,
       "userTypeId": data.userTypeId,
@@ -134,13 +150,27 @@ export class MyProfileComponent {
       "name": obj.name,
       "mobileNo": obj.mobileNo,
       "emailId": obj.emailId,
-       "profilePhoto":obj.profilePhoto ,
+      "profilePhoto": obj.profilePhoto,
       "modifiedBy": 0,
       "modifiedDate": "2022-12-28T13:14:12.410Z"
     }
-    if (this.userProfile.valid) {
 
-      this.api.setHttp('put', 'zp_osmanabad/app-login/UpdateProfile', false, uploadData, false, 'baseUrl');
+    let obj1 = {
+      "id": data.id,
+      "refId": data.refId,
+      "name": obj.name,
+      "m_Name": "",
+      "mobileNo": obj.mobileNo,
+      "emailId": obj.emailId,
+      "designationId": this.editObj.designationId,
+      "profilePhoto": obj.profilePhoto,
+      "modifiedBy": 0,
+      "modifiedDate": new Date(),
+      "lan": lan
+    }
+
+    if (this.userProfile.valid) {
+      this.api.setHttp('put', 'zp_osmanabad/user-registration/' + (data.userTypeId == '1' ? 'UpdateProfile' : 'UpdateOfficerProfile'), false, data.userTypeId == 1 ? uploadData : obj1, false, 'baseUrl');
       this.api.getHttp().subscribe({
         next: (res: any) => {
           res.statusCode == 200 ? (this.commonMethods.snackBar(res.statusMessage, 0), this.dialogRef.close()) : this.commonMethods.snackBar(res.statusMessage, 1);

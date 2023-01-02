@@ -28,8 +28,8 @@ export class OfficeUsersComponent {
   tableDataArray = new Array();
   tableDatasize!: Number;
   displayedColumns = new Array();
-  displayedheadersEnglish = ['Sr. No.', 'Name', 'Designation', 'Contact No.', 'Email ID', 'action'];
-  displayedheadersMarathi = ['अनुक्रमांक', 'नाव', 'पदनाम', 'संपर्क क्र.', 'ई - मेल आयडी', 'कृती'];
+  displayedheadersEnglish = ['Sr. No.', 'Name', 'Designation', 'Mobile No.', 'Email ID', 'action'];
+  displayedheadersMarathi = ['अनुक्रमांक', 'नाव', 'पदनाम', 'मोबाईल क्र.', 'ई-मेल आयडी', 'कृती'];
   constructor(private apiService: ApiService, private errors: ErrorsService, private dialog: MatDialog, private commonService: CommonMethodsService,
     private webStorageService: WebStorageService, private downloadFileService: DownloadPdfExcelService, public validation  :ValidationService,
     private ngxSpinner: NgxSpinnerService,) { }
@@ -168,10 +168,11 @@ export class OfficeUsersComponent {
   }
 
   deleteOffice(obj: any) {
+    let webStorageMethod = this.webStorageService.createdByProps();
     let deleteObj = [{
       "id": obj.id,
-      "deletedBy": 1,
-      "modifiedDate": new Date(),
+      "deletedBy": this.webStorageService.getUserId(),
+      "modifiedDate": webStorageMethod.modifiedDate,
       "lan": this.webStorageService.languageFlag
     }]
     console.log("deleteObj", deleteObj);
@@ -192,10 +193,10 @@ export class OfficeUsersComponent {
     this.getTableData('reportFlag');
   }
 
-  filterData(){
-    this.getTableData();
-    // this.getofficeReport();
-  }
+  // filterData(){
+  //   this.getTableData();
+  //   // this.getofficeReport();
+  // }
 
   clearFilterData() {
     this.searchContent.setValue('');

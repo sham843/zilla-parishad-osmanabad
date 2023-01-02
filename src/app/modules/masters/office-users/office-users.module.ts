@@ -20,6 +20,7 @@ import { PageStatisticsComponent } from 'src/app/shared/components/page-statisti
 import { GlobalDialogComponent } from 'src/app/shared/components/global-dialog/global-dialog.component';
 import { TranslateModule } from '@ngx-translate/core';
 import { GridViewComponent } from 'src/app/shared/components/grid-view/grid-view.component';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 
 @NgModule({
@@ -45,7 +46,8 @@ import { GridViewComponent } from 'src/app/shared/components/grid-view/grid-view
     TableComponent,
     PageStatisticsComponent,
     TranslateModule,
-    GridViewComponent
+    GridViewComponent,
+    MatTooltipModule
   ]
 })
 export class OfficeUsersModule { }

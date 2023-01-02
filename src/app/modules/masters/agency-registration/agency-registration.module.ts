@@ -20,6 +20,7 @@ import { GlobalDialogComponent } from 'src/app/shared/components/global-dialog/g
 import { TranslateModule } from '@ngx-translate/core';
 import { AutofocusDirective } from 'src/app/core/directives/autofocus.directive';
 import { GridViewComponent } from 'src/app/shared/components/grid-view/grid-view.component';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 
 @NgModule({
@@ -46,7 +47,8 @@ import { GridViewComponent } from 'src/app/shared/components/grid-view/grid-view
     GlobalDialogComponent,
     TranslateModule,
     AutofocusDirective,
-    GridViewComponent
+    GridViewComponent,
+    MatTooltipModule
   ]
 })
 export class AgencyRegistrationModule { }

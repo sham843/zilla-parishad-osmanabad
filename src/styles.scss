@@ -135,6 +135,7 @@ body {
 .dashboard-table .highlightedRow {
   background-color: var(--main-light-color) !important;
   color: var(--main-color) !important;
+  cursor: pointer;
 }
 
 .dashboard-table .mat-column-docPath,

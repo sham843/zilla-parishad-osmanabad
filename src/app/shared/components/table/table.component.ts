@@ -14,6 +14,7 @@ import { NumberTransformPipe } from 'src/app/core/pipes/number-tranform.pipe';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import { TranslateModule } from '@ngx-translate/core';
+import { WebStorageService } from 'src/app/core/services/web-storage.service';
 @Component({
   selector: 'app-table',
   templateUrl: './table.component.html',
@@ -49,7 +50,8 @@ export class TableComponent implements OnInit {
   tableInfo: any;
   tableHeaders = new Array();
   highlightedRow!: number;
-  constructor(private apiService: ApiService) { }
+  constructor(private apiService: ApiService,
+              public webStorageService: WebStorageService) { }
 
 
   ngOnInit() {

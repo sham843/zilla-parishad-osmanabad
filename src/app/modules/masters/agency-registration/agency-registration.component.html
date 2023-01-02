@@ -19,13 +19,13 @@
           </mat-icon>
         </button>
 
-        <button mat-flat-button class="btn-second btn-icon"  [ngClass]="{'btn-main':this.cardViewFlag, 'btn-second':!this.cardViewFlag}" (click)="selectGrid('Card')">
+        <button mat-flat-button class="btn-second btn-icon"  matTooltip="{{'Labels.GridView' | translate}}" matTooltipPosition="below"  matTooltipClass="tooltip" [ngClass]="{'btn-main':this.cardViewFlag, 'btn-second':!this.cardViewFlag}" (click)="selectGrid('Card')">
           <mat-icon>
             grid_view
           </mat-icon>
         </button>
 
-        <button mat-flat-button class="bg-danger btn-icon text-white" title="Download as PDF" (click)="getTableData('pdfFlag')">
+        <button mat-flat-button class="bg-danger btn-icon text-white" matTooltip="{{'Labels.DownloadPdf' | translate}}" matTooltipPosition="below"  matTooltipClass="tooltip"  (click)="getTableData('pdfFlag')">
           <mat-icon>
             description
           </mat-icon>

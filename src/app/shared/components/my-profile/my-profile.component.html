@@ -28,8 +28,8 @@
         <div class="row">
             <div class="col-sm-6">
                 <mat-form-field appearance="outline" class="w-100">
-                    <mat-label>{{'Labels.teacherName' | translate}}</mat-label>
-                    <input matInput formControlName="name" readonly>
+                    <mat-label>{{'Labels.name' | translate}}</mat-label>
+                    <input matInput formControlName="name" [readonly]="this.userType.subUserType == 'Admin'">
                 </mat-form-field>
             </div>
             <!-- <div class="col-sm-6">
@@ -47,17 +47,28 @@
             <div class="col-sm-6">
                 <mat-form-field appearance="outline" class="w-100">
                     <mat-label>{{'Labels.contactNo.' | translate}}</mat-label>
-                    <input matInput formControlName="mobileNo" maxlength="10" (keypress)="validation.onlyDigits($event)">
+                    <input matInput formControlName="mobileNo" maxlength="10" (keypress)="validation.onlyDigits($event)" [readonly]="this.userType.subUserType == 'Admin'">
                     <mat-error *ngIf="fc['mobileNo'].hasError('pattern')">{{'Labels.pleaseEnterValidMobileNumber' | translate}}</mat-error>
                 </mat-form-field>
             </div>
             <div class="col-sm-6">
                 <mat-form-field appearance="outline" class="w-100">
                     <mat-label>{{'Labels.emailID' | translate}}</mat-label>
-                    <input matInput formControlName="emailId" maxlength="50" (keypress)="validation.noFirstSpaceAllow($event)">
+                    <input matInput formControlName="emailId" maxlength="50" (keypress)="validation.noFirstSpaceAllow($event)" [readonly]="this.userType.subUserType == 'Admin'">
                     <mat-error *ngIf="fc['emailId'].hasError('pattern')">{{'Labels.pleaseEnterValidEmailId' | translate}}</mat-error>
                 </mat-form-field>
             </div>
+
+            <div class="col-sm-6" *ngIf="this.userType.subUserType != 'Admin'">
+            <mat-form-field appearance="outline" class="w-100 ">
+                <mat-label>{{'Labels.Designation' | translate}}</mat-label>
+                <mat-select formControlName="designationLevelId" (Change)="getDesignation()">
+                    <mat-option *ngFor="let data of designationData"
+                        [value]="data.designationLevelId">{{webStorage.getLangauge() == 'EN' ?
+                        data.designationType : data.m_DesignationType}}</mat-option>                           
+                </mat-select>
+            </mat-form-field>
+           </div>
         </div>
     </mat-card-content>
     <mat-card-footer class="card-footer">
