@@ -95,10 +95,8 @@ export class TeacherRegistrationComponent {
     this.apiService.setHttp('GET', 'zp_osmanabad/Teacher/GetAll?' + (flag == 'pdfFlag' ? reportStr : str), false, false, false, 'baseUrl');
     this.apiService.getHttp().subscribe({
 
-      next: (res: any) => {
-        console.log("table res : ", res);
-
-        if (res.statusCode == "200") {
+      next: (res: any) => {    
+        if (res.statusCode == 200) {
           this.ngxSpinner.hide();
           flag != 'pdfFlag' ? this.tableDataArray = res.responseData.responseData1 : this.tableDataArray = this.tableDataArray;
           // this.tableDataArray = res.responseData.responseData1;
@@ -255,7 +253,7 @@ export class TeacherRegistrationComponent {
     this.apiService.setHttp('delete', 'zp_osmanabad/Teacher/Delete', false, deleteObj, false, 'baseUrl');
     this.apiService.getHttp().subscribe({
       next: (res: any) => {
-        if (res.statusCode == "200") {
+        if (res.statusCode == 200) {
           this.commonMethodS.showPopup(res.statusMessage, 0);
           this.getTableData();
         }
