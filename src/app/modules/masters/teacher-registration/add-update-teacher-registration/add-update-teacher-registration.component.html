@@ -2,7 +2,8 @@
     <mat-card class="plain-card">
         <mat-card-header class="card-header">
             <div class="d-flex align-items-center justify-content-between w-100">
-                <h6 class="text-main mb-0">{{editFlag ? ('Labels.registerTeacher'| translate):('Labels.registerTeacher'| translate)}}</h6>
+                <h6 class="text-main mb-0">{{editFlag ? ('Labels.registerTeacher'| translate):('Labels.registerTeacher'|
+                    translate)}}</h6>
                 <button mat-icon-button mat-dialog-close class="btn-modal-close">
                     <mat-icon>
                         close
@@ -10,13 +11,14 @@
                 </button>
             </div>
         </mat-card-header>
-        <mat-card-content class="card-body">
-            <mat-card-subtitle class="mb-2">{{'Labels.personalDetails'| translate}}</mat-card-subtitle>
+        <mat-card-content class="card-body card-height-full scrollbar">
+            <mat-card-subtitle class="mb-2 fw-bold">{{'Labels.personalDetails'| translate}}</mat-card-subtitle>
             <div class="row">
                 <div class="col-sm">
                     <mat-form-field appearance="outline" class="w-100">
                         <mat-label> {{'Labels.teacherName'| translate}}</mat-label>
-                        <input appAutofocus matInput formControlName="name" maxlength="100" (keypress)="validation.noFirstSpaceAllow($event);validation.alphabetsWithSpaces($event)">
+                        <input appAutofocus matInput formControlName="name" maxlength="100"
+                            (keypress)="validation.noFirstSpaceAllow($event);validation.alphabetsWithSpaces($event)">
                         <!-- <mat-error *ngIf="f['name'].hasError('required')">
                             Teacher Name Is Required</mat-error> -->
                     </mat-form-field>
@@ -24,7 +26,8 @@
                 <div class="col-sm">
                     <mat-form-field appearance="outline" class="w-100">
                         <mat-label>{{'Labels.teachernameMarathi'| translate}}</mat-label>
-                        <input matInput formControlName="m_Name" maxlength="100" (keypress)="validation.noFirstSpaceAllow($event);validation.unicodeMarathiValidation($event)">
+                        <input matInput formControlName="m_Name" maxlength="100"
+                            (keypress)="validation.noFirstSpaceAllow($event);validation.unicodeMarathiValidation($event)">
                         <!-- <mat-error *ngIf="f['m_Name'].hasError('required')">
                             Teacher Name (marathi) Is Required</mat-error> -->
                     </mat-form-field>
@@ -32,10 +35,10 @@
                 <div class="col-sm">
                     <mat-form-field appearance="outline" class="w-100 ">
                         <mat-label>{{'Labels.gender'| translate}}</mat-label>
-                        <mat-select formControlName="genderId" >
-                            <mat-option *ngFor="let gender of genderArray"                           
-                            [value]="gender.id"> {{webStorageS.getLangauge() == 'EN' ?
-                            gender.gender : gender.m_Gender}}</mat-option>                    
+                        <mat-select formControlName="genderId">
+                            <mat-option *ngFor="let gender of genderArray" [value]="gender.id">
+                                {{webStorageS.getLangauge() == 'EN' ?
+                                gender.gender : gender.m_Gender}}</mat-option>
                         </mat-select>
                         <!-- <mat-error *ngIf="f['genderId'].hasError('required')">{{'Labels.GenderRequired'| translate}}</mat-error> -->
                     </mat-form-field>
@@ -43,41 +46,42 @@
                 <div class="col-sm">
                     <mat-form-field appearance="outline" class="w-100">
                         <mat-label>{{'Labels.mobileNo'| translate}}</mat-label>
-                        <input matInput formControlName="mobileNo" maxlength="10" (keypress)="validation.onlyDigits($event)">
+                        <input matInput formControlName="mobileNo" maxlength="10"
+                            (keypress)="validation.onlyDigits($event)">
                         <!-- <mat-error *ngIf="f['mobileNo'].hasError('required') ">
                             Mobile Number Is Required</mat-error> -->
-                            <mat-error *ngIf="f['mobileNo'].hasError('pattern') ">
-                               Invalid Mobile Number</mat-error>
+                        <mat-error *ngIf="f['mobileNo'].hasError('pattern') ">
+                            Invalid Mobile Number</mat-error>
                     </mat-form-field>
                 </div>
                 <div class="col-sm">
                     <mat-form-field appearance="outline" class="w-100">
                         <mat-label>{{'Labels.emailID'| translate}}</mat-label>
-                        <input matInput formControlName="emailId" (keypress)="validation.emailRegex($event)"> 
+                        <input matInput formControlName="emailId" (keypress)="validation.emailRegex($event)">
                         <mat-error *ngIf="f['emailId'].hasError('pattern') ">
-                        invalid EmailId</mat-error>                 
+                            invalid EmailId</mat-error>
                     </mat-form-field>
                 </div>
                 <div class="col-sm-4">
-                        <div class="d-flex justify-content-between align-items-center">
-                            <div class="upload-btn-wrapper" >
-                                <button class="upload-btn">{{'Labels.uploadPhoto' | translate}}</button>
-                                <input type="file" name="myfile" formControlName="uploadImage"
-                                  (change)="imgUpload($event)" />
-                            </div>
-                            <div class="action-btn" >
-                                <button type="button" mat-icon-button class="btn-icon text-primary" *ngIf="showAddRemImg"
-                                    (click)="viewImg()">
-                                    <mat-icon>content_copy</mat-icon>
-                                </button>
-                                <button type="button" mat-icon-button class="btn-icon text-danger" *ngIf="showAddRemImg"
-                                    (click)="clearImg()">
-                                    <mat-icon>delete</mat-icon>
-                                </button>
-                            </div>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div class="upload-btn-wrapper">
+                            <button class="upload-btn">{{'Labels.uploadPhoto' | translate}}</button>
+                            <input type="file" name="myfile" formControlName="uploadImage"
+                                (change)="imgUpload($event)" />
                         </div>
+                        <div class="action-btn">
+                            <button type="button" mat-icon-button class="btn-icon text-primary" *ngIf="showAddRemImg"
+                                (click)="viewImg()">
+                                <mat-icon>content_copy</mat-icon>
+                            </button>
+                            <button type="button" mat-icon-button class="btn-icon text-danger" *ngIf="showAddRemImg"
+                                (click)="clearImg()">
+                                <mat-icon>delete</mat-icon>
+                            </button>
+                        </div>
+                    </div>
                     <!-- <mat-form-field appearance="outline" class="w-100 "> -->
-                        <!-- <mat-label>{{'Labels.uploadPhoto'| translate}}</mat-label>
+                    <!-- <mat-label>{{'Labels.uploadPhoto'| translate}}</mat-label>
                         <input type="file" formControlName="uploadImage" hidden="hidden" (change)="imgUpload($event)" #img>
                         <mat-icon matSuffix *ngIf="!showAddRemImg">
                             <span class="material-symbols-outlined" (click)="img.click()">upload</span>
@@ -100,15 +104,15 @@
                     </mat-form-field>
                 </div>
             </div>
-            <mat-card-subtitle class="mb-2">{{'Labels.AddressDetails'| translate}}</mat-card-subtitle>
+            <mat-card-subtitle class="mb-2 fw-bold">{{'Labels.AddressDetails'| translate}}</mat-card-subtitle>
             <div class="row">
                 <div class="col-sm-4">
                     <mat-form-field appearance="outline" class="w-100 ">
                         <mat-label>{{'Labels.district'| translate}}</mat-label>
-                        <mat-select  formControlName="districtId" [disabled]="teacherRegForm.value.districtId == 1">
-                            <mat-option *ngFor="let distric of districtArray"                            
-                            [value]="distric.id">{{webStorageS.getLangauge() == 'EN' ?
-                            distric.district : distric.m_District}}</mat-option>                   
+                        <mat-select formControlName="districtId" [disabled]="teacherRegForm.value.districtId == 1">
+                            <mat-option *ngFor="let distric of districtArray"
+                                [value]="distric.id">{{webStorageS.getLangauge() == 'EN' ?
+                                distric.district : distric.m_District}}</mat-option>
                         </mat-select>
                         <!-- <mat-error *ngIf="f['districtId'].hasError('required')">{{'Labels.districtIsRequired'| translate}}</mat-error> -->
                     </mat-form-field>
@@ -116,10 +120,11 @@
                 <div class="col-sm-4">
                     <mat-form-field appearance="outline" class="w-100 ">
                         <mat-label>{{'Labels.taluka'| translate}}</mat-label>
-                        <mat-select  formControlName="talukaId" (selectionChange)="clearDropdown('Taluka'); getVillage();" >
-                            <mat-option *ngFor="let taluka of talukaArray"                           
-                            [value]="taluka.id"> {{webStorageS.getLangauge() == 'EN' ?
-                            taluka.taluka : taluka.m_Taluka}}</mat-option>                         
+                        <mat-select formControlName="talukaId"
+                            (selectionChange)="clearDropdown('Taluka'); getVillage();">
+                            <mat-option *ngFor="let taluka of talukaArray" [value]="taluka.id">
+                                {{webStorageS.getLangauge() == 'EN' ?
+                                taluka.taluka : taluka.m_Taluka}}</mat-option>
                         </mat-select>
                         <!-- <mat-error *ngIf="f['talukaId'].hasError('required')">{{'Labels.talukaIsRequired'| translate}}</mat-error> -->
                     </mat-form-field>
@@ -127,10 +132,10 @@
                 <div class="col-sm-4">
                     <mat-form-field appearance="outline" class="w-100 ">
                         <mat-label>{{'Labels.village'| translate}}</mat-label>
-                        <mat-select formControlName="villageId" >
-                            <mat-option *ngFor="let village of villageArray"                          
-                            [value]="village.id">  {{webStorageS.getLangauge() == 'EN' ?
-                            village.village : village.m_Village}}</mat-option>                         
+                        <mat-select formControlName="villageId">
+                            <mat-option *ngFor="let village of villageArray" [value]="village.id">
+                                {{webStorageS.getLangauge() == 'EN' ?
+                                village.village : village.m_Village}}</mat-option>
                         </mat-select>
                         <!-- <mat-error *ngIf="f['villageId'].hasError('required')">{{'Labels.villageIsRequired'| translate}}</mat-error> -->
                     </mat-form-field>
@@ -140,7 +145,8 @@
                 <div class="col-sm-6">
                     <mat-form-field appearance="outline" class="w-100 ">
                         <mat-label>{{'Labels.currentAddress'| translate}}</mat-label>
-                        <textarea matInput formControlName="currentAddress" maxlength="100" (keypress)="validation.noFirstSpaceAllow($event)"></textarea>
+                        <textarea matInput formControlName="currentAddress" maxlength="100"
+                            (keypress)="validation.noFirstSpaceAllow($event)"></textarea>
                         <!-- <mat-error *ngIf="f['currentAddress'].hasError('required') ">
                             Current Address Is Required</mat-error> -->
                     </mat-form-field>
@@ -148,397 +154,401 @@
                 <div class="col-sm-6">
                     <mat-form-field appearance="outline" class="w-100 ">
                         <mat-label>{{'Labels.permanentAddress'| translate}}</mat-label>
-                        <textarea matInput formControlName="permentAddress" maxlength="100" (keypress)="validation.noFirstSpaceAllow($event)" ></textarea>
+                        <textarea matInput formControlName="permentAddress" maxlength="100"
+                            (keypress)="validation.noFirstSpaceAllow($event)"></textarea>
                         <!-- <mat-error *ngIf="f['permentAddress'].hasError('required') ">
                             Permanent Address Is Required</mat-error> -->
                     </mat-form-field>
-
-                    <input type="checkbox" name="check" id="check1" [checked]="checked" (change)="addSameAddress($event)"/>
-                    <label for="check1">same as Current Address</label>
+                    <div>
+                        <input type="checkbox" name="check" id="check1" [checked]="checked"
+                            (change)="addSameAddress($event)" />
+                        <label for="check1">same as Current Address</label>
+                    </div>
                 </div>
             </div>
-            <mat-card-subtitle class="mb-2">{{'Labels.educationalAndProfessionalDetails'| translate}}</mat-card-subtitle>         
+
             <div formGroupName="teacherDetails">
+                <mat-card-subtitle class="mb-2 fw-bold">Educational Qualification</mat-card-subtitle>
                 <div class="row">
                     <div class="col-sm-4">
                         <mat-form-field appearance="outline" class="w-100 ">
+                            <mat-label>{{'Labels.educationalQualification'| translate}}</mat-label>
+                            <mat-select formControlName="educationalQualificationId">
+                                <mat-option *ngFor="let educationQuali of educationQualificationArray"
+                                    [value]="educationQuali.id">{{webStorageS.getLangauge() == 'EN' ?
+                                    educationQuali.educationalQualification :
+                                    educationQuali.m_EducationalQualification}} </mat-option>
+                            </mat-select>
+                            <!-- <mat-error *ngIf="td['educationalQualificationId'].hasError('required')">Educational Qualification Is Required</mat-error> -->
+                        </mat-form-field>
+                    </div>
+                    <div class="col-sm-4">
+                        <mat-form-field appearance="outline" class="w-100 ">
+                            <mat-label>{{'Labels.12thBranch'| translate}}</mat-label>
+                            <mat-select formControlName="branchId12th">
+                                <mat-option *ngFor="let twelve of twelveBranchArray"
+                                    [value]="twelve.id">{{webStorageS.getLangauge() == 'EN' ?
+                                    twelve.branchName : twelve.m_BranchName}}</mat-option>
+                            </mat-select>
+                            <!-- <mat-error *ngIf="td['branchId12th'].hasError('required')">12th Branch Is Required</mat-error> -->
+                        </mat-form-field>
+                    </div>
+                    <div class="col-sm-4">
+                        <mat-form-field appearance="outline" class="w-100 ">
+                            <mat-label>{{'Labels.degreeOptionalSubjects'| translate}}</mat-label>
+                            <mat-select formControlName="degreeOptionalSubjectsId">
+                                <mat-option *ngFor="let optionalSubject of optionalSubjectArray"
+                                    [value]="optionalSubject.id"> {{webStorageS.getLangauge() == 'EN' ?
+                                    optionalSubject.subjectName : optionalSubject.m_SubjectName}}</mat-option>
+                            </mat-select>
+                            <!-- <mat-error *ngIf="td['degreeOptionalSubjectsId'].hasError('required')">Degree Optional Subjects Is Required</mat-error>                      -->
+                        </mat-form-field>
+                    </div>
+                    <div class="col-sm-4">
+                        <mat-form-field appearance="outline" class="w-100 ">
+                            <mat-label>{{'Labels.degreeUniversity'| translate}}</mat-label>
+                            <mat-select formControlName="degreeUniversityId">
+                                <mat-option *ngFor="let university of degreeUniversityArray"
+                                    [value]="university.id">{{webStorageS.getLangauge() == 'EN' ?
+                                    university.univesityName : university.m_UniversityName}}</mat-option>
+                            </mat-select>
+                            <!-- <mat-error *ngIf="td['degreeUniversityId'].hasError('required')">Degree University Is Required</mat-error>                        -->
+                        </mat-form-field>
+                    </div>
+                    <div class="col-sm-4">
+                        <mat-form-field appearance="outline" class="w-100 ">
+                            <mat-label>{{'Labels.professionalQualification'| translate}}</mat-label>
+                            <mat-select formControlName="professionalQualificationId">
+                                <mat-option *ngFor="let proQulification of profesionalQualificationArray"
+                                    [value]="proQulification.id">{{webStorageS.getLangauge() == 'EN' ?
+                                    proQulification.professinalQualification :
+                                    proQulification.m_ProfessinalQualification}}</mat-option>
+                            </mat-select>
+                            <!-- <mat-error *ngIf="td['professionalQualificationId'].hasError('required')">Professional Qualification Is Required</mat-error>                        -->
+                        </mat-form-field>
+                    </div>
+                    <div class="col-sm-4">
+                        <mat-form-field appearance="outline" class="w-100 ">
+                            <mat-label>{{'Labels.bEdPercentages'| translate}}</mat-label>
+                            <input matInput formControlName="bEdPercentages">
+                        </mat-form-field>
+                    </div>
+                    <div class="col-sm-4">
+                        <mat-form-field appearance="outline" class="w-100 ">
+                            <mat-label>{{'Labels.bEdUniversity'| translate}}</mat-label>
+                            <input matInput formControlName="bEdUniversityId">
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <mat-card-subtitle class="mb-2 fw-bold">Professional Qualification</mat-card-subtitle>
+                <div class="row">
+
+                    <div class="col-sm-4">
+                        <mat-form-field appearance="outline" class="w-100 ">
                             <mat-label>{{'Labels.district'| translate}}</mat-label>
-                            <mat-select formControlName="districtId" [disabled]="teacherRegForm.value.teacherDetails.districtId == 1">
+                            <mat-select formControlName="districtId"
+                                [disabled]="teacherRegForm.value.teacherDetails.districtId == 1">
                                 <mat-option *ngFor="let districtObj of districtArrayTeacherDeatails"
-                                [value]="districtObj.id">{{webStorageS.getLangauge() == 'EN' ?
-                                districtObj.district : districtObj.m_District}}</mat-option>                             
+                                    [value]="districtObj.id">{{webStorageS.getLangauge() == 'EN' ?
+                                    districtObj.district : districtObj.m_District}}</mat-option>
                             </mat-select>
                         </mat-form-field>
                     </div>
                     <div class="col-sm-4">
                         <mat-form-field appearance="outline" class="w-100 ">
                             <mat-label>{{'Labels.taluka'| translate}}</mat-label>
-                            <mat-select formControlName="talukaId" (selectionChange)="clearDropdown('talukaTeacherDetails');getCluster()">
-                                <mat-option *ngFor="let talukaObj of talukaArrayTeacherDetails"                               
-                                [value]="talukaObj.id"> {{webStorageS.getLangauge() == 'EN' ?
-                                talukaObj.taluka : talukaObj.m_Taluka}}</mat-option>                              
+                            <mat-select formControlName="talukaId"
+                                (selectionChange)="clearDropdown('talukaTeacherDetails');getCluster()">
+                                <mat-option *ngFor="let talukaObj of talukaArrayTeacherDetails" [value]="talukaObj.id">
+                                    {{webStorageS.getLangauge() == 'EN' ?
+                                    talukaObj.taluka : talukaObj.m_Taluka}}</mat-option>
                             </mat-select>
                         </mat-form-field>
                     </div>
-                </div>
-            <div class="row">
-                <div class="col-sm-4">
-                    <mat-form-field appearance="outline" class="w-100 ">
-                        <mat-label>{{'Labels.clusterName'| translate}}</mat-label>
-                        <mat-select formControlName="clusterId" (selectionChange)="getAllSchool()">
-                            <mat-option *ngFor="let cluster of clusterArray"                            
-                            [value]="cluster.id">{{webStorageS.getLangauge() == 'EN' ?
-                            cluster.center : cluster.m_Center}}</mat-option>                          
-                        </mat-select>
-                        <!-- <mat-error *ngIf="td['clusterId'].hasError('required')">Cluster Is Required</mat-error>                        -->
-                    </mat-form-field>
-                </div>
-                <div class="col-sm-4">
-                    <mat-form-field appearance="outline" class="w-100 ">
-                        <mat-label>{{'Labels.workingSchoolName'| translate}}</mat-label>
-                        <mat-select formControlName="schoolId" >
-                            <mat-option  *ngFor="let school of schoolArray"                            
-                            [value]="school.id">{{webStorageS.getLangauge() == 'EN' ?
-                            school.schoolName : school.m_SchoolName}}</mat-option>                          
-                        </mat-select>
-                        <!-- <mat-error *ngIf="td['schoolId'].hasError('required')">{{'Labels.workingSchoolName'| translate}}</mat-error> -->
-                    </mat-form-field>
-                </div>
-            
-                <div class="col-sm-4">
-                    <mat-form-field appearance="outline" class="w-100 ">
-                        <mat-label>{{'Labels.Designation'| translate}}</mat-label>
-                        <mat-select formControlName="designationId" >
-                            <mat-option *ngFor="let designation of designationArray"                             
-                            [value]="designation.id">{{webStorageS.getLangauge() == 'EN' ?
-                            designation.designationType : designation.m_DesignationType}}</mat-option>                            
-                        </mat-select>
-                        <!-- <mat-error *ngIf="td['designationId'].hasError('required')">Designation Is Required</mat-error>                        -->
-                    </mat-form-field>
-                </div>
-                <div class="col-sm-4">
-                    <mat-form-field appearance="outline" class="w-100 ">
-                        <mat-label>{{'Labels.graduateTeacherSubject'| translate}}</mat-label>
-                        <mat-select formControlName="graduate_SubjectId" >
-                            <mat-option *ngFor="let GradateTeacherSubject of GradateTeacherSubjectArray"                             
-                            [value]="GradateTeacherSubject.id">{{webStorageS.getLangauge() == 'EN' ?
-                            GradateTeacherSubject.subject : GradateTeacherSubject.m_Subject}}</mat-option>                          
-                        </mat-select>
-                        <!-- <mat-error *ngIf="td['graduate_SubjectId'].hasError('required')">Teacher Subject Is Required</mat-error>                      -->
-                    </mat-form-field>
-                </div>
-                <div class="col-sm-4">
-                    <mat-form-field appearance="outline" class="w-100 ">
-                        <mat-label>{{'Labels.takingGraduatePayScale'| translate}}</mat-label>
-                        <mat-select formControlName="isGraduate_PayScale" >
-                            <mat-option *ngFor="let payScale of isGraduatePayScaleArray"                                                 
-                            [value]="payScale.isGraduate_PayScale"> {{webStorageS.getLangauge() == 'EN' ?
-                            payScale.name : payScale._name}} </mat-option>                      
-                        </mat-select>
-                        <!-- <mat-error *ngIf="td['isGraduate_PayScale'].hasError('required')">Graduate Pay Scale Subject Is Required</mat-error>                      -->
-                    </mat-form-field>
-                </div>
-                <div class="col-sm-4">
-                    <mat-form-field appearance="outline" class="w-100 ">
-                        <mat-label>{{'Labels.caste'| translate}}</mat-label>
-                        <mat-select formControlName="castId" (selectionChange)="castvalidation($event)">
-                            <mat-option *ngFor="let caste of casteArray"                            
-                            [value]="caste.id">{{webStorageS.getLangauge() == 'EN' ?
-                            caste.caste : caste.m_Caste}} </mat-option>                        
-                        </mat-select>
-                        <!-- <mat-error *ngIf="td['castId'].hasError('required')">Caste Is Required</mat-error>                        -->
-                    </mat-form-field>
-                </div>
-                <ng-container *ngIf="teacherRegForm.value.teacherDetails.castId != 7 ">
                     <div class="col-sm-4">
                         <mat-form-field appearance="outline" class="w-100 ">
-                            <mat-label>{{'Labels.casteCategory'| translate}}</mat-label>
-                            <mat-select formControlName="castCategoryId">
-                                <mat-option *ngFor="let casteCategory of castCategoryArray"                                
-                                [value]="casteCategory.id">{{webStorageS.getLangauge() == 'EN' ?
-                                casteCategory.categoryName : casteCategory.m_CategoryName}} </mat-option>                               
+                            <mat-label>{{'Labels.clusterName'| translate}}</mat-label>
+                            <mat-select formControlName="clusterId" (selectionChange)="getAllSchool()">
+                                <mat-option *ngFor="let cluster of clusterArray"
+                                    [value]="cluster.id">{{webStorageS.getLangauge() == 'EN' ?
+                                    cluster.center : cluster.m_Center}}</mat-option>
                             </mat-select>
-                            <!-- <mat-error *ngIf="td['castCategoryId'].hasError('required')">Caste Category Is Required</mat-error>                           -->
+                            <!-- <mat-error *ngIf="td['clusterId'].hasError('required')">Cluster Is Required</mat-error>                        -->
+                        </mat-form-field>
+                    </div>
+                    <div class="col-sm-4">
+                        <mat-form-field appearance="outline" class="w-100 ">
+                            <mat-label>{{'Labels.workingSchoolName'| translate}}</mat-label>
+                            <mat-select formControlName="schoolId">
+                                <mat-option *ngFor="let school of schoolArray"
+                                    [value]="school.id">{{webStorageS.getLangauge() == 'EN' ?
+                                    school.schoolName : school.m_SchoolName}}</mat-option>
+                            </mat-select>
+                            <!-- <mat-error *ngIf="td['schoolId'].hasError('required')">{{'Labels.workingSchoolName'| translate}}</mat-error> -->
+                        </mat-form-field>
+                    </div>
+
+                    <div class="col-sm-4">
+                        <mat-form-field appearance="outline" class="w-100 ">
+                            <mat-label>{{'Labels.Designation'| translate}}</mat-label>
+                            <mat-select formControlName="designationId">
+                                <mat-option *ngFor="let designation of designationArray"
+                                    [value]="designation.id">{{webStorageS.getLangauge() == 'EN' ?
+                                    designation.designationType : designation.m_DesignationType}}</mat-option>
+                            </mat-select>
+                            <!-- <mat-error *ngIf="td['designationId'].hasError('required')">Designation Is Required</mat-error>                        -->
+                        </mat-form-field>
+                    </div>
+                    <div class="col-sm-4">
+                        <mat-form-field appearance="outline" class="w-100 ">
+                            <mat-label>{{'Labels.graduateTeacherSubject'| translate}}</mat-label>
+                            <mat-select formControlName="graduate_SubjectId">
+                                <mat-option *ngFor="let GradateTeacherSubject of GradateTeacherSubjectArray"
+                                    [value]="GradateTeacherSubject.id">{{webStorageS.getLangauge() == 'EN' ?
+                                    GradateTeacherSubject.subject : GradateTeacherSubject.m_Subject}}</mat-option>
+                            </mat-select>
+                            <!-- <mat-error *ngIf="td['graduate_SubjectId'].hasError('required')">Teacher Subject Is Required</mat-error>                      -->
+                        </mat-form-field>
+                    </div>
+                    <div class="col-sm-4">
+                        <mat-form-field appearance="outline" class="w-100 ">
+                            <mat-label>{{'Labels.takingGraduatePayScale'| translate}}</mat-label>
+                            <mat-select formControlName="isGraduate_PayScale">
+                                <mat-option *ngFor="let payScale of isGraduatePayScaleArray"
+                                    [value]="payScale.isGraduate_PayScale"> {{webStorageS.getLangauge() == 'EN' ?
+                                    payScale.name : payScale._name}} </mat-option>
+                            </mat-select>
+                            <!-- <mat-error *ngIf="td['isGraduate_PayScale'].hasError('required')">Graduate Pay Scale Subject Is Required</mat-error>                      -->
+                        </mat-form-field>
+                    </div>
+                    <div class="col-sm-4">
+                        <mat-form-field appearance="outline" class="w-100 ">
+                            <mat-label>{{'Labels.caste'| translate}}</mat-label>
+                            <mat-select formControlName="castId" (selectionChange)="castvalidation($event)">
+                                <mat-option *ngFor="let caste of casteArray"
+                                    [value]="caste.id">{{webStorageS.getLangauge() == 'EN' ?
+                                    caste.caste : caste.m_Caste}} </mat-option>
+                            </mat-select>
+                            <!-- <mat-error *ngIf="td['castId'].hasError('required')">Caste Is Required</mat-error>                        -->
+                        </mat-form-field>
+                    </div>
+                    <ng-container *ngIf="teacherRegForm.value.teacherDetails.castId != 7 ">
+                        <div class="col-sm-4">
+                            <mat-form-field appearance="outline" class="w-100 ">
+                                <mat-label>{{'Labels.casteCategory'| translate}}</mat-label>
+                                <mat-select formControlName="castCategoryId">
+                                    <mat-option *ngFor="let casteCategory of castCategoryArray"
+                                        [value]="casteCategory.id">{{webStorageS.getLangauge() == 'EN' ?
+                                        casteCategory.categoryName : casteCategory.m_CategoryName}} </mat-option>
+                                </mat-select>
+                                <!-- <mat-error *ngIf="td['castCategoryId'].hasError('required')">Caste Category Is Required</mat-error>                           -->
+                            </mat-form-field>
+                        </div>
+                        <div class="col-sm-4">
+                            <mat-form-field appearance="outline" class="w-100">
+                                <mat-label>{{'Labels.casteCertificateDate&Number'| translate}}</mat-label>
+                                <input matInput formControlName="castCertificateNo"
+                                    (keypress)="validation.noFirstSpaceAllow($event)">
+                                <!-- <mat-error *ngIf="td['castCertificateNo'].hasError('required')">cast Certificate Number Is Required</mat-error>  -->
+                            </mat-form-field>
+                        </div>
+                        <div class="col-sm-4">
+                            <mat-form-field appearance="outline" class="w-100">
+                                <mat-label>{{'Labels.casteCertificateOffice'| translate}}</mat-label>
+                                <input matInput formControlName="castCertificateOffice"
+                                    (keypress)="validation.noFirstSpaceAllow($event)">
+                                <!-- <mat-error *ngIf="td['castCertificateOffice'].hasError('required')">Cast Certificate Office Is Required</mat-error>  -->
+                            </mat-form-field>
+                        </div>
+                        <div class="col-sm-4">
+                            <mat-form-field appearance="outline" class="w-100 ">
+                                <mat-label>{{'Labels.casteVerificationDone'| translate}}</mat-label>
+                                <mat-select formControlName="isCastVarificationDone">
+                                    <mat-option *ngFor="let casteVeification of casteVerification"
+                                        [value]="casteVeification.isCastVarificationDone"> {{webStorageS.getLangauge()
+                                        == 'EN' ?
+                                        casteVeification.name : casteVeification._name}} </mat-option>
+                                </mat-select>
+                                <!-- <mat-error *ngIf="td['isCastVarificationDone'].hasError('required')">Caste Verification Is Required</mat-error>                            -->
+                            </mat-form-field>
+                        </div>
+                        <div class="col-sm-4">
+                            <mat-form-field appearance="outline" class="w-100">
+                                <mat-label>{{'Labels.casteVailidityDate&Number'| translate}}</mat-label>
+                                <input matInput formControlName="castValidityNoDate" maxlength="100"
+                                    (keypress)="validation.noFirstSpaceAllow($event)">
+                                <!-- <mat-error *ngIf="td['castValidityNoDate'].hasError('required')">Caste Validity Number Date Is Required</mat-error> -->
+                            </mat-form-field>
+                        </div>
+                        <div class="col-sm-4">
+                            <mat-form-field appearance="outline" class="w-100 ">
+                                <mat-label>{{'Labels.casteVerificationCommitteeName'| translate}}</mat-label>
+                                <input matInput formControlName="castverificationCommitteeName" maxlength="100">
+                                <!-- <mat-error *ngIf="td['castverificationCommitteeName'].hasError('required')">Caste Verification Committee Name Is Required</mat-error> -->
+                            </mat-form-field>
+                        </div>
+                    </ng-container>
+                    <div class="col-sm-4">
+                        <mat-form-field appearance="outline" class="w-100">
+                            <mat-label>{{'Labels.1stAppointmentDateInService'| translate}}</mat-label>
+                            <input matInput [matDatepicker]="dateService" readonly
+                                formControlName="dateOfFirstAppoinmentService">
+                            <mat-datepicker-toggle matIconSuffix [for]="dateService"></mat-datepicker-toggle>
+                            <mat-datepicker #dateService></mat-datepicker>
                         </mat-form-field>
                     </div>
                     <div class="col-sm-4">
                         <mat-form-field appearance="outline" class="w-100">
-                            <mat-label>{{'Labels.casteCertificateDate&Number'| translate}}</mat-label>
-                            <input matInput formControlName="castCertificateNo" (keypress)="validation.noFirstSpaceAllow($event)">
-                            <!-- <mat-error *ngIf="td['castCertificateNo'].hasError('required')">cast Certificate Number Is Required</mat-error>  -->
+                            <mat-label>{{'Labels.currentSchoolJoiningDate'| translate}}</mat-label>
+                            <input matInput [matDatepicker]="JoiningDate" readonly
+                                formControlName="currentSchoolJoiningDate">
+                            <mat-datepicker-toggle matIconSuffix [for]="JoiningDate"></mat-datepicker-toggle>
+                            <mat-datepicker #JoiningDate></mat-datepicker>
                         </mat-form-field>
                     </div>
                     <div class="col-sm-4">
                         <mat-form-field appearance="outline" class="w-100">
-                            <mat-label>{{'Labels.casteCertificateOffice'| translate}}</mat-label>
-                            <input matInput formControlName="castCertificateOffice" (keypress)="validation.noFirstSpaceAllow($event)">
-                            <!-- <mat-error *ngIf="td['castCertificateOffice'].hasError('required')">Cast Certificate Office Is Required</mat-error>  -->
+                            <mat-label>{{'Labels.currentTalukaPresentDate'| translate}}</mat-label>
+                            <input matInput [matDatepicker]="TalukaPresentDate" readonly
+                                formControlName="currentTalukaPresentDate">
+                            <mat-datepicker-toggle matIconSuffix [for]="TalukaPresentDate"></mat-datepicker-toggle>
+                            <mat-datepicker #TalukaPresentDate></mat-datepicker>
                         </mat-form-field>
                     </div>
                     <div class="col-sm-4">
+                        <mat-form-field appearance="outline" class="w-100">
+                            <mat-label> {{'Labels.retirementDate'| translate}}</mat-label>
+                            <input matInput [matDatepicker]="RetirementDate" readonly formControlName="retirementDate">
+                            <mat-datepicker-toggle matIconSuffix [for]="RetirementDate"></mat-datepicker-toggle>
+                            <mat-datepicker #RetirementDate></mat-datepicker>
+                        </mat-form-field>
+                    </div>
+
+                    <div class="col-sm-4">
                         <mat-form-field appearance="outline" class="w-100 ">
-                            <mat-label>{{'Labels.casteVerificationDone'| translate}}</mat-label>
-                            <mat-select formControlName="isCastVarificationDone" >
-                                <mat-option *ngFor="let casteVeification of casteVerification"                               
-                                [value]="casteVeification.isCastVarificationDone"> {{webStorageS.getLangauge() == 'EN' ?
-                                casteVeification.name : casteVeification._name}} </mat-option>                              
+                            <mat-label>{{'Labels.husbandWifeBothAreInService'| translate}}</mat-label>
+                            <mat-select formControlName="husbandWife_Both_Service"
+                                (selectionChange)="removeValidators($event)">
+                                <mat-option *ngFor="let husbandWifeService of husbandWifeBothServiceArray"
+                                    [value]="husbandWifeService.husbandWife_Both_Service">{{webStorageS.getLangauge() ==
+                                    'EN' ?
+                                    husbandWifeService.name : husbandWifeService._name}}</mat-option>
                             </mat-select>
-                            <!-- <mat-error *ngIf="td['isCastVarificationDone'].hasError('required')">Caste Verification Is Required</mat-error>                            -->
+                            <!-- <mat-error *ngIf="td['husbandWife_Both_Service'].hasError('required')">Husband-Wife Both Are In Service Is Required</mat-error> -->
                         </mat-form-field>
                     </div>
-                    <div class="col-sm-4">
-                        <mat-form-field appearance="outline" class="w-100">
-                            <mat-label>{{'Labels.casteVailidityDate&Number'| translate}}</mat-label>
-                            <input matInput formControlName="castValidityNoDate" maxlength="100" (keypress)="validation.noFirstSpaceAllow($event)">
-                            <!-- <mat-error *ngIf="td['castValidityNoDate'].hasError('required')">Caste Validity Number Date Is Required</mat-error> -->
-                        </mat-form-field>
-                    </div>
-                    <div class="col-sm-4">
-                        <mat-form-field appearance="outline" class="w-100 ">
-                            <mat-label>{{'Labels.casteVerificationCommitteeName'| translate}}</mat-label>
-                            <input matInput formControlName="castverificationCommitteeName" maxlength="100">
-                            <!-- <mat-error *ngIf="td['castverificationCommitteeName'].hasError('required')">Caste Verification Committee Name Is Required</mat-error> -->
-                        </mat-form-field>
-                    </div>
-                </ng-container>              
-                <div class="col-sm-4">
-                    <mat-form-field appearance="outline" class="w-100">
-                        <mat-label>{{'Labels.1stAppointmentDateInService'| translate}}</mat-label>
-                        <input matInput [matDatepicker]="dateService" readonly formControlName="dateOfFirstAppoinmentService">
-                        <mat-datepicker-toggle matIconSuffix [for]="dateService"></mat-datepicker-toggle>
-                        <mat-datepicker #dateService></mat-datepicker>
-                    </mat-form-field>
-                </div>
-                <div class="col-sm-4">
-                    <mat-form-field appearance="outline" class="w-100">
-                        <mat-label>{{'Labels.currentSchoolJoiningDate'| translate}}</mat-label>
-                        <input matInput [matDatepicker]="JoiningDate" readonly formControlName="currentSchoolJoiningDate">
-                        <mat-datepicker-toggle matIconSuffix [for]="JoiningDate"></mat-datepicker-toggle>
-                        <mat-datepicker #JoiningDate></mat-datepicker>
-                    </mat-form-field>
-                </div>
-                <div class="col-sm-4">
-                    <mat-form-field appearance="outline" class="w-100">
-                        <mat-label>{{'Labels.currentTalukaPresentDate'| translate}}</mat-label>
-                        <input matInput [matDatepicker]="TalukaPresentDate" readonly formControlName="currentTalukaPresentDate">
-                        <mat-datepicker-toggle matIconSuffix [for]="TalukaPresentDate"></mat-datepicker-toggle>
-                        <mat-datepicker #TalukaPresentDate></mat-datepicker>
-                    </mat-form-field>
-                </div>
-                <div class="col-sm-4">
-                    <mat-form-field appearance="outline" class="w-100">
-                        <mat-label> {{'Labels.retirementDate'| translate}}</mat-label>
-                        <input matInput [matDatepicker]="RetirementDate" readonly formControlName="retirementDate">
-                        <mat-datepicker-toggle matIconSuffix [for]="RetirementDate"></mat-datepicker-toggle>
-                        <mat-datepicker #RetirementDate></mat-datepicker>
-                    </mat-form-field>
-                </div>
-                <div class="col-sm-4">
-                    <mat-form-field appearance="outline" class="w-100 ">
-                        <mat-label>{{'Labels.educationalQualification'| translate}}</mat-label>
-                        <mat-select formControlName="educationalQualificationId" >
-                            <mat-option *ngFor="let educationQuali of educationQualificationArray"
-                            
-                            [value]="educationQuali.id">{{webStorageS.getLangauge() == 'EN' ?
-                            educationQuali.educationalQualification : educationQuali.m_EducationalQualification}} </mat-option>                          
-                        </mat-select>
-                        <!-- <mat-error *ngIf="td['educationalQualificationId'].hasError('required')">Educational Qualification Is Required</mat-error> -->                     
-                    </mat-form-field>
-                </div>
-                <div class="col-sm-4">
-                    <mat-form-field appearance="outline" class="w-100 ">
-                        <mat-label>{{'Labels.12thBranch'| translate}}</mat-label>
-                        <mat-select formControlName="branchId12th" >
-                            <mat-option *ngFor="let twelve of twelveBranchArray"                            
-                            [value]="twelve.id">{{webStorageS.getLangauge() == 'EN' ?
-                            twelve.branchName : twelve.m_BranchName}}</mat-option>                          
-                        </mat-select>
-                        <!-- <mat-error *ngIf="td['branchId12th'].hasError('required')">12th Branch Is Required</mat-error> -->                     
-                    </mat-form-field>
-                </div>
-                <div class="col-sm-4">
-                    <mat-form-field appearance="outline" class="w-100 ">
-                        <mat-label>{{'Labels.degreeOptionalSubjects'| translate}}</mat-label>
-                        <mat-select formControlName="degreeOptionalSubjectsId" >
-                            <mat-option *ngFor="let optionalSubject of optionalSubjectArray"                           
-                            [value]="optionalSubject.id"> {{webStorageS.getLangauge() == 'EN' ?
-                            optionalSubject.subjectName : optionalSubject.m_SubjectName}}</mat-option>                            
-                        </mat-select>
-                        <!-- <mat-error *ngIf="td['degreeOptionalSubjectsId'].hasError('required')">Degree Optional Subjects Is Required</mat-error>                      -->
-                    </mat-form-field>
-                </div>
-                <div class="col-sm-4">
-                    <mat-form-field appearance="outline" class="w-100 ">
-                        <mat-label>{{'Labels.degreeUniversity'| translate}}</mat-label>
-                        <mat-select formControlName="degreeUniversityId"  >
-                            <mat-option *ngFor="let university of degreeUniversityArray"                          
-                            [value]="university.id">{{webStorageS.getLangauge() == 'EN' ?
-                            university.univesityName : university.m_UniversityName}}</mat-option>                           
-                        </mat-select>
-                        <!-- <mat-error *ngIf="td['degreeUniversityId'].hasError('required')">Degree University Is Required</mat-error>                        -->
-                    </mat-form-field>
-                </div>
-                <div class="col-sm-4">
-                    <mat-form-field appearance="outline" class="w-100 ">
-                        <mat-label>{{'Labels.professionalQualification'| translate}}</mat-label>
-                        <mat-select formControlName="professionalQualificationId" >
-                            <mat-option *ngFor="let proQulification of profesionalQualificationArray"                            
-                            [value]="proQulification.id">{{webStorageS.getLangauge() == 'EN' ?
-                            proQulification.professinalQualification : proQulification.m_ProfessinalQualification}}</mat-option>                           
-                        </mat-select>
-                        <!-- <mat-error *ngIf="td['professionalQualificationId'].hasError('required')">Professional Qualification Is Required</mat-error>                        -->
-                    </mat-form-field>
-                </div>
-                <div class="col-sm-4">
-                    <mat-form-field appearance="outline" class="w-100 ">
-                        <mat-label>{{'Labels.bEdPercentages'| translate}}</mat-label>
-                        <input matInput formControlName="bEdPercentages">
-                    </mat-form-field>
-                </div>
-                <div class="col-sm-4">
-                    <mat-form-field appearance="outline" class="w-100 ">
-                        <mat-label>{{'Labels.bEdUniversity'| translate}}</mat-label>
-                        <input matInput formControlName="bEdUniversityId">
-                    </mat-form-field>
-                </div>
-                <div class="col-sm-4">
-                    <mat-form-field appearance="outline" class="w-100 ">
-                        <mat-label>{{'Labels.husbandWifeBothAreInService'| translate}}</mat-label>
-                        <mat-select formControlName="husbandWife_Both_Service" (selectionChange)="removeValidators($event)" >
-                            <mat-option *ngFor="let husbandWifeService of husbandWifeBothServiceArray"                          
-                            [value]="husbandWifeService.husbandWife_Both_Service">{{webStorageS.getLangauge() == 'EN' ?
-                            husbandWifeService.name : husbandWifeService._name}}</mat-option>                           
-                        </mat-select>
-                        <!-- <mat-error *ngIf="td['husbandWife_Both_Service'].hasError('required')">Husband-Wife Both Are In Service Is Required</mat-error> -->                      
-                    </mat-form-field>
-                </div>
-                <ng-container *ngIf="teacherRegForm.value.teacherDetails.husbandWife_Both_Service == 1 ">
+                    <ng-container *ngIf="teacherRegForm.value.teacherDetails.husbandWife_Both_Service == 1 ">
+                        <div class="col-sm-4">
+                            <mat-form-field appearance="outline" class="w-100 ">
+                                <mat-label>{{'Labels.ifYesThenNameAndOfficeName'| translate}}</mat-label>
+                                <input matInput formControlName="husbandWife_OfficeName"
+                                    (keypress)="validation.noFirstSpaceAllow($event)">
+                            </mat-form-field>
+                        </div>
+                    </ng-container>
                     <div class="col-sm-4">
                         <mat-form-field appearance="outline" class="w-100 ">
-                            <mat-label>{{'Labels.ifYesThenNameAndOfficeName'| translate}}</mat-label>
-                            <input matInput formControlName="husbandWife_OfficeName" (keypress)="validation.noFirstSpaceAllow($event)">
-                        </mat-form-field>
-                    </div>
-                </ng-container>             
-                <div class="col-sm-4">
-                    <mat-form-field appearance="outline" class="w-100 ">
-                        <mat-label> {{'Labels.areYouDisabled'| translate}}</mat-label>
-                        <mat-select formControlName="isDisabled" >
-                            <mat-option *ngFor="let disabled of AreyouDisabled"                            
-                            [value]="disabled.isDisabled">{{webStorageS.getLangauge() == 'EN' ?
-                            disabled.name : disabled._name}}</mat-option>                            
-                        </mat-select>
-                        <!-- <mat-error *ngIf="td['isDisabled'].hasError('required')">Are You Disabled Is Required</mat-error> -->                      
-                    </mat-form-field>
-                </div>
-                <div class="col-sm-4">
-                    <mat-form-field appearance="outline" class="w-100 ">
-                        <mat-label> {{'Labels.interDistrictTransferred'| translate}}</mat-label>
-                        <mat-select formControlName="interDistrictTransferred" (selectionChange)="interDistrictTrafValidators($event)" >
-                            <mat-option *ngFor="let interDistrict of interDistrictTransferredArray"                            
-                            [value]="interDistrict.interDistrictTransferred">{{webStorageS.getLangauge() == 'EN' ?
-                            interDistrict.name : interDistrict._name}}</mat-option>                          
-                        </mat-select>
-                        <!-- <mat-error *ngIf="td['interDistrictTransferred'].hasError('required')">Inter District Transferred Is Required</mat-error> -->
-                      
-                    </mat-form-field>
-                </div>
-                <ng-container *ngIf="teacherRegForm.value.teacherDetails.interDistrictTransferred == 1 ">
-                    <div class="col-sm-4">
-                        <mat-form-field appearance="outline" class="w-100">
-                            <mat-label> {{'Labels.DateOfPresenceByInterDistrictTransfer'| translate}}</mat-label>
-                            <input matInput [matDatepicker]=" DistrictTransfer" readonly
-                                formControlName="dateOFPresenceInterDistrictTransfer">
-                            <mat-datepicker-toggle matIconSuffix [for]="DistrictTransfer"></mat-datepicker-toggle>
-                            <mat-datepicker #DistrictTransfer></mat-datepicker>
-                        </mat-form-field>
-                    </div>
-                    <div class="col-sm-4">
-                        <mat-form-field appearance="outline" class="w-100 ">
-                            <mat-label> {{'Labels.interDistrictTransferType'| translate}}</mat-label>
-                            <mat-select formControlName="interDistrictTransferType" >
-                                <mat-option *ngFor="let interDistricttrasferType of interDistrictTransferTypeArray"                              
-                                [value]="interDistricttrasferType.id">{{webStorageS.getLangauge() == 'EN' ?
-                                interDistricttrasferType.interDistrictTransferType : interDistricttrasferType.m_InterDistrictTransferType}}</mat-option>                            
+                            <mat-label> {{'Labels.areYouDisabled'| translate}}</mat-label>
+                            <mat-select formControlName="isDisabled">
+                                <mat-option *ngFor="let disabled of AreyouDisabled"
+                                    [value]="disabled.isDisabled">{{webStorageS.getLangauge() == 'EN' ?
+                                    disabled.name : disabled._name}}</mat-option>
                             </mat-select>
-                            <!-- <mat-error *ngIf="td['interDistrictTransferType'].hasError('required')">Inter District Transfer Type Is Required</mat-error>                            -->
+                            <!-- <mat-error *ngIf="td['isDisabled'].hasError('required')">Are You Disabled Is Required</mat-error> -->
                         </mat-form-field>
                     </div>
                     <div class="col-sm-4">
                         <mat-form-field appearance="outline" class="w-100 ">
-                            <mat-label>{{'Labels.theOriginalDistrictOfInterDistrictTransfer'| translate}}</mat-label>
-                            <input matInput formControlName="theOriginalDistrictInterDistrictTransfer" >
-                            <!-- <mat-error *ngIf="td['theOriginalDistrictInterDistrictTransfer'].hasError('required')">The Original District Inter District Transfer Is Required</mat-error> -->
+                            <mat-label> {{'Labels.interDistrictTransferred'| translate}}</mat-label>
+                            <mat-select formControlName="interDistrictTransferred"
+                                (selectionChange)="interDistrictTrafValidators($event)">
+                                <mat-option *ngFor="let interDistrict of interDistrictTransferredArray"
+                                    [value]="interDistrict.interDistrictTransferred">{{webStorageS.getLangauge() == 'EN'
+                                    ?
+                                    interDistrict.name : interDistrict._name}}</mat-option>
+                            </mat-select>
+                            <!-- <mat-error *ngIf="td['interDistrictTransferred'].hasError('required')">Inter District Transferred Is Required</mat-error> -->
+
                         </mat-form-field>
                     </div>
-                </ng-container>             
-                <div class="col-sm-4">
-                    <mat-form-field appearance="outline" class="w-100">
-                        <mat-label>{{'Labels.dateOfSeniority'| translate}}</mat-label>
-                        <input matInput [matDatepicker]=" DateSeniority" readonly formControlName="dateOfSeniority">
-                        <mat-datepicker-toggle matIconSuffix [for]="DateSeniority"></mat-datepicker-toggle>
-                        <mat-datepicker #DateSeniority></mat-datepicker>
-                        <!-- <mat-error *ngIf="td['dateOfSeniority'].hasError('required')">Date Of Seniority Is Required</mat-error> -->
-                    </mat-form-field>
-                </div>
-                <div class="col-sm-4">
-                    <mat-form-field appearance="outline" class="w-100 ">
-                        <mat-label> {{'Labels.haveYouPassedComputerExam'| translate}}</mat-label>
-                        <mat-select formControlName="haveYouPassedComputerExam">
-                            <mat-option *ngFor="let passComputerExam of haveYouPassedComputerExamArray"                           
-                            [value]="passComputerExam.haveYouPassedComputerExam"> {{webStorageS.getLangauge() == 'EN' ?
-                            passComputerExam.name : passComputerExam._name}}</mat-option>                           
-                        </mat-select>
-                        <!-- <mat-error *ngIf="td['haveYouPassedComputerExam'].hasError('required')">Have You Passed Computer Exam Is Required</mat-error> -->                      
-                    </mat-form-field>
-                </div>
-                <div class="col-sm-4">
-                    <mat-form-field appearance="outline" class="w-100 ">
-                        <mat-label>{{'Labels.schoolNames&TalukaWorkEarlier'| translate}}</mat-label>
-                          <input matInput formControlName="namesAndTalukasAllSchoolsWorkedEarlier">
-                          <!-- <mat-error *ngIf="td['haveYouPassedComputerExam'].hasError('required')">Names And Talukas All Schools Worked Earlier Is Required</mat-error> -->
-                    </mat-form-field>
-                </div>
-                <div class="col-sm-6">
-                    <div>
-                    <div>  
-                    <mat-card-subtitle> {{'Labels.assignedClass'| translate}}</mat-card-subtitle>
-                    <div class="teacherForm" *ngFor="let assign of newAsssignClassArray">                     
-                            <input type="checkbox" name="check" id="{{assign.standardId}}" [checked]="assign.checked" (change)="addStand($event,assign.standardId)"/>
-                            <label for="{{assign.standardId}}" class="pb-0">{{assign.standardId}}</label>                      
+                    <ng-container *ngIf="teacherRegForm.value.teacherDetails.interDistrictTransferred == 1 ">
+                        <div class="col-sm-4">
+                            <mat-form-field appearance="outline" class="w-100">
+                                <mat-label> {{'Labels.DateOfPresenceByInterDistrictTransfer'| translate}}</mat-label>
+                                <input matInput [matDatepicker]=" DistrictTransfer" readonly
+                                    formControlName="dateOFPresenceInterDistrictTransfer">
+                                <mat-datepicker-toggle matIconSuffix [for]="DistrictTransfer"></mat-datepicker-toggle>
+                                <mat-datepicker #DistrictTransfer></mat-datepicker>
+                            </mat-form-field>
+                        </div>
+                        <div class="col-sm-4">
+                            <mat-form-field appearance="outline" class="w-100 ">
+                                <mat-label> {{'Labels.interDistrictTransferType'| translate}}</mat-label>
+                                <mat-select formControlName="interDistrictTransferType">
+                                    <mat-option *ngFor="let interDistricttrasferType of interDistrictTransferTypeArray"
+                                        [value]="interDistricttrasferType.id">{{webStorageS.getLangauge() == 'EN' ?
+                                        interDistricttrasferType.interDistrictTransferType :
+                                        interDistricttrasferType.m_InterDistrictTransferType}}</mat-option>
+                                </mat-select>
+                                <!-- <mat-error *ngIf="td['interDistrictTransferType'].hasError('required')">Inter District Transfer Type Is Required</mat-error>                            -->
+                            </mat-form-field>
+                        </div>
+                        <div class="col-sm-4">
+                            <mat-form-field appearance="outline" class="w-100 ">
+                                <mat-label>{{'Labels.theOriginalDistrictOfInterDistrictTransfer'|
+                                    translate}}</mat-label>
+                                <input matInput formControlName="theOriginalDistrictInterDistrictTransfer">
+                                <!-- <mat-error *ngIf="td['theOriginalDistrictInterDistrictTransfer'].hasError('required')">The Original District Inter District Transfer Is Required</mat-error> -->
+                            </mat-form-field>
+                        </div>
+                    </ng-container>
+                    <div class="col-sm-4">
+                        <mat-form-field appearance="outline" class="w-100">
+                            <mat-label>{{'Labels.dateOfSeniority'| translate}}</mat-label>
+                            <input matInput [matDatepicker]=" DateSeniority" readonly formControlName="dateOfSeniority">
+                            <mat-datepicker-toggle matIconSuffix [for]="DateSeniority"></mat-datepicker-toggle>
+                            <mat-datepicker #DateSeniority></mat-datepicker>
+                            <!-- <mat-error *ngIf="td['dateOfSeniority'].hasError('required')">Date Of Seniority Is Required</mat-error> -->
+                        </mat-form-field>
                     </div>
-                    <!-- <div class="teacherForm">
-                        <input type="checkbox" name="check" id="check1"  (change)="addStand($event, 1)"/>
-                        <label for="check1">1</label>
-                        <input type="checkbox" name="check" id="check2" (change)="addStand($event, 2)" />
-                        <label for="check2">2</label>
-                        <input type="checkbox" name="check" id="check3" (change)="addStand($event, 3)"/>
-                        <label for="check3">3</label>
-                        <input type="checkbox" name="check" id="check4"(change)="addStand($event, 4)" />
-                        <label for="check4">4</label>
-                        <input type="checkbox" name="check" id="check5" (change)="addStand($event, 5)" />
-                        <label for="check5">5</label>
-                        <input type="checkbox" name="check" id="check6" (change)="addStand($event, 6)" />
-                        <label for="check6">6</label>
-                        <input type="checkbox" name="check" id="check7" (change)="addStand($event, 7)" />
-                        <label for="check7">7</label>
-                        <input type="checkbox" name="check" id="check8" (change)="addStand($event, 8)" />
-                        <label for="check8">8</label>
-                        </div> -->
+                    <div class="col-sm-4">
+                        <mat-form-field appearance="outline" class="w-100 ">
+                            <mat-label> {{'Labels.haveYouPassedComputerExam'| translate}}</mat-label>
+                            <mat-select formControlName="haveYouPassedComputerExam">
+                                <mat-option *ngFor="let passComputerExam of haveYouPassedComputerExamArray"
+                                    [value]="passComputerExam.haveYouPassedComputerExam"> {{webStorageS.getLangauge() ==
+                                    'EN' ?
+                                    passComputerExam.name : passComputerExam._name}}</mat-option>
+                            </mat-select>
+                            <!-- <mat-error *ngIf="td['haveYouPassedComputerExam'].hasError('required')">Have You Passed Computer Exam Is Required</mat-error> -->
+                        </mat-form-field>
+                    </div>
+                    <div class="col-sm-4">
+                        <mat-form-field appearance="outline" class="w-100 ">
+                            <mat-label>{{'Labels.schoolNames&TalukaWorkEarlier'| translate}}</mat-label>
+                            <input matInput formControlName="namesAndTalukasAllSchoolsWorkedEarlier">
+                            <!-- <mat-error *ngIf="td['haveYouPassedComputerExam'].hasError('required')">Names And Talukas All Schools Worked Earlier Is Required</mat-error> -->
+                        </mat-form-field>
+                    </div>
                 </div>
-                </div>
+
+                <mat-card-subtitle class="mb-2 fw-bold"> {{'Labels.assignedClass'| translate}}</mat-card-subtitle>
+                <div class="teacherForm" *ngFor="let assign of newAsssignClassArray">
+                    <input type="checkbox" name="check" id="{{assign.standardId}}" [checked]="assign.checked"
+                        (change)="addStand($event,assign.standardId)" />
+                    <label for="{{assign.standardId}}" class="pb-0">{{assign.standardId}}</label>
                 </div>
             </div>
-        </div>
-    <!-- </div> -->
+            <!-- </div> -->
         </mat-card-content>
         <mat-card-footer class="card-footer">
-            <mat-card-actions align="end">
+            <div class="d-flex w-100 align-items-center justify-content-end">
                 <button mat-flat-button mat-dialog-close class="btn-second me-2">{{'Labels.cancel' |
                     translate}}</button>
                 <button mat-flat-button class="btn-main">{{editFlag ?( 'Labels.update' | translate) :('Labels.submit' |
                     translate)}}</button>
-            </mat-card-actions>
+            </div>
         </mat-card-footer>
     </mat-card>
 </form>

@@ -9,12 +9,16 @@
     top: 0;
     left: 0;
     color: #2c2c2c;
-    padding: 3px 10px;
+    width: 30px;
+    height: 30px;
+    line-height: 30px;
+    text-align: center;
     margin-right: 7px;
     border-radius: 6px;
     border: 1px solid #ccc;
-    background-color: #e6454500;
+    background-color: rgba(230, 69, 69, 0);
     transition: background-color 0.5s, top 0.1s;
+    cursor: pointer;
 }
 .teacherForm>input[type=checkbox] {
     height: 0px;
