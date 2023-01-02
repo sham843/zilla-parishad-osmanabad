@@ -220,8 +220,6 @@ export class AddUpdateStudentRegistrationComponent {
     let id = this.stuRegistrationForm.value.religionId;
     this.masterService.getAllCaste(this.languageFlag, id).subscribe({
       next: (res: any) => {
-        console.log(res.statusCode);
-
         if (res.statusCode == 200) {
           this.casteArr = res.responseData;
           this.editFlag ? this.stuRegistrationForm.controls['castId'].setValue(this.editObj.castId) : '';
@@ -409,12 +407,14 @@ export class AddUpdateStudentRegistrationComponent {
   //#region ------------------------------------------- Image Logic Start Here -----------------------------------------------------------------
 
   clearDropdown(name: any) {
-    this.editFlag = false
+    this.editFlag = false;
     if (name == 'talukaId') {
       this.stuRegistrationForm.controls['centerId'].setValue('');
       this.stuRegistrationForm.controls['schoolId'].setValue('');
     } else if (name == 'centerId') {
       this.stuRegistrationForm.controls['schoolId'].setValue('');
+    }else if (name == 'religionId') {
+      this.stuRegistrationForm.controls['castId'].setValue('');
     }
   }
 
