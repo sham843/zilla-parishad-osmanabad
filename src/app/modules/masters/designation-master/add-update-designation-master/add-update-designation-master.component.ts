@@ -105,8 +105,7 @@ export class AddUpdateDesignationMasterComponent {
       this.designationForm.value.designationLevelId = getDesignationLevelId?.id;
       let formValue = this.designationForm.value;
       let  data = this.webStorage.createdByProps();
-      console.log("data",data);
-      
+   
       let postObj = {
         "createdBy":  data.createdBy ,
         "modifiedBy": data.modifiedBy,
