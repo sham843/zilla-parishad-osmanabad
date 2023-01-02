@@ -252,7 +252,6 @@ export class AgencyRegistrationComponent {
   }
 
   openDetailsDialog(obj:any){
-    console.log(obj);
     var data = {
       headerImage: "assets/images/user.jpg",
       header: this.webStroageService.languageFlag == 'EN' ? obj.agency_Name : obj.m_Agency_Name,
