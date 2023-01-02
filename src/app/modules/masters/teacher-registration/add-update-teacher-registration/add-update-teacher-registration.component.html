@@ -488,7 +488,7 @@
                     <mat-card-subtitle> {{'Labels.assignedClass'| translate}}</mat-card-subtitle>
                     <div class="teacherForm" *ngFor="let assign of newAsssignClassArray">                     
                             <input type="checkbox" name="check" id="{{assign.standardId}}" [checked]="assign.checked" (change)="addStand($event,assign.standardId)"/>
-                            <label for="{{assign.standardId}}">{{assign.standardId}}</label>                      
+                            <label for="{{assign.standardId}}" class="pb-0">{{assign.standardId}}</label>                      
                     </div>
                     <!-- <div class="teacherForm">
                         <input type="checkbox" name="check" id="check1"  (change)="addStand($event, 1)"/>
