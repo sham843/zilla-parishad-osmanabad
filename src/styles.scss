@@ -310,6 +310,15 @@ body {
 .inner-table thead th{
   background-color: var(--main-light-color);
 }
+.inner-table thead th,
+.inner-table tbody td{
+  vertical-align: middle;
+}
+.inner-table .table-img{
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+}
 .data-container .data-label{
   color: #666;
 }
