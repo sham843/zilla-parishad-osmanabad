@@ -105,8 +105,7 @@ export class AddUpdateDesignationMasterComponent {
       this.designationForm.value.designationLevelId = getDesignationLevelId?.id;
       let formValue = this.designationForm.value;
       let  data = this.webStorage.createdByProps();
-      console.log("data",data);
-      
+   
       let postObj = {
         "createdBy":  data.createdBy ,
         "modifiedBy": data.modifiedBy,
@@ -123,7 +122,7 @@ export class AddUpdateDesignationMasterComponent {
       }
       this.ngxSpinner.show();
       let url;
-      this.editFlag ? url = 'zp_osmanabad/designation-master/UpdateRecord' : url = 'zp_osmanabad/designation-master/AddDesignation'
+      this.editFlag ? url = 'zp_osmanabad/register-designation/UpdateRecord' : url = 'zp_osmanabad/register-designation/AddDesignation'
       this.service.setHttp(this.editFlag ? 'put' : 'post', url, false, postObj, false, 'baseUrl');
       this.service.getHttp().subscribe({
         next: ((res: any) => {

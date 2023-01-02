@@ -84,8 +84,8 @@ export class AddUpdateStudentRegistrationComponent {
       gender: ['', Validators.required],
       religionId: ['', Validators.required],
       castId: ['', Validators.required],
-      saralId: [''],
-      mobileNo: ['', [Validators.required, Validators.pattern(this.validators.mobile_No)]],
+      saralId: ['',[Validators.maxLength(19),Validators.minLength(19)]],
+      mobileNo: ['', [Validators.required, Validators.pattern(this.validators.mobile_No)]],      
       fatherFullName: ['', Validators.required],
       // m_FatherFullName: ['', Validators.required],
       motherName: ['', Validators.required],
@@ -359,7 +359,7 @@ export class AddUpdateStudentRegistrationComponent {
 
   //#region ------------------------------------------- Image Logic Start Here -----------------------------------------------------------------
   fileUpload(event: any, name: string) {
-    this.fileUpl.uploadDocuments(event, 'Upload', 'jpg, jpeg, png').subscribe((res: any) => {
+    this.fileUpl.uploadDocuments(event, 'Upload', 'jpg, jpeg, png, pdf').subscribe((res: any) => {
       if (res.statusCode == 200) {
         if (name == 'img') {
           this.uploadImg = res.responseData;
