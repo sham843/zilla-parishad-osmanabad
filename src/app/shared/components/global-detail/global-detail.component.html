@@ -10,7 +10,7 @@
         </div>
     </mat-card-header>
     <mat-card-content class="card-body">
-        <div class="row">
+        <div class="row mb-3">
             <div class="col-sm-12">
                 <div class="student-bg">
                 </div>
@@ -29,17 +29,17 @@
                                         <span class="data-label" *ngIf="data?.checkbox != head">{{head}} :</span>
                                         <div class="data-text" *ngIf="data?.checkbox != head">{{
                                             data?.Obj[data?.labelKey[j]] || '-'}}</div>
-                                        
+
                                     </div>
-                                    <div class="col-sm-12" >
-                                        <span class="data-label"  *ngIf="data?.checkbox == 'Subject'">Subject :</span>
-                                        <div class="data-text d-flex flex-wrap" >
+                                    <div class="col-sm-12">
+                                        <span class="data-label" *ngIf="data?.checkbox == 'Subject'">Subject :</span>
+                                        <div class="data-text d-flex flex-wrap">
                                             <div *ngFor="let assign of data?.Obj?.assignSubject" class="lang-badge">
                                                 {{ webStorage.languageFlag == 'EN' ? assign.subjectName :
                                                 assign.m_SubjectName || '-'}}
                                             </div>
                                         </div>
-                                        
+
                                     </div>
                                 </div>
                             </div>
@@ -54,16 +54,11 @@
                 </div>
             </div>
         </div>
-
-        <div class="gallerize-example">
-            <h2>Lightbox Example</h2>
-            <p class="container">
-                <img *ngFor="let item of items; index as i" 
-                 [lightbox]="i"
-                 [src]="item.data.src">
-            </p>  
+        <div class="row g-3">
+            <div class="col-sm-3" *ngFor="let item of items; index as i">
+                <img [lightbox]="i" [src]="item.data.src" class="gallery-img">
+            </div>
         </div>
-
     </mat-card-content>
 
 </mat-card>
