@@ -1,7 +1,6 @@
 <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
         <li class="breadcrumb-item" aria-current="page">{{'Labels.dashboard' | translate}}</li>
-        <!-- <li class="breadcrumb-item active" aria-current="page">Library</li> -->
     </ol>
 </nav>
 <form [formGroup]="filterForm">
@@ -111,26 +110,13 @@
                 </div>
             </mat-card-content>
         </mat-card>
-
-        <!-- <mat-card class="plain-card">
-            <mat-card-header class="card-header">
-                Management wise Schools
-            </mat-card-header>
-            <mat-card-content class="card-body">
-                <div id="chart">
-                    <apx-chart [series]="piechartOptions.series" [chart]="piechartOptions.chart"
-                        [theme]="piechartOptions.theme" [fill]="piechartOptions.fill" [labels]="piechartOptions.labels"
-                        [responsive]="piechartOptions.responsive"></apx-chart>
-                </div>
-            </mat-card-content>
-        </mat-card> -->
     </div>
     <div class="col-sm-8">
         <mat-card class="plain-card h-100">
             <mat-card-header class="card-header">
                 <div class="d-flex align-items-center justify-content-between w-100">
                     <div>सर्वेक्षण केलेल्या विद्यार्थ्यांची एकूण संख्या</div>
-                    <!-- <div>निवडलेली संख्या : <span class="fw-bold">{{selectedObj?.GroupId==1? dashboardCountData[0]?.totalStudent_1_2: selectedObj?.GroupId==2? dashboardCountData[0]?.totalStudent_3_5 :dashboardCountData[0]?.totalStudent_6_8}}</span></div> -->
+                    <div>निवडलेली संख्या : <span class="fw-bold">{{selectedObj?.GroupId==1? dashboardCountData[0]?.totalStudent_1_2: selectedObj?.GroupId==2? dashboardCountData[0]?.totalStudent_3_5 :dashboardCountData[0]?.totalStudent_6_8}}</span></div>
                 </div>
             </mat-card-header>
 
@@ -147,15 +133,29 @@
                                         <div *ngIf="header.ischeckboxShow==true">
                                             <div class="d-flex align-items-center justify-content-start">
                                                 <div class="form-check">
-                                                    <input class="form-check-input" type="checkbox"
-                                                        [disabled]="header.status==true" [(ngModel)]="header.status"
-                                                        (click)="checkData(header)">
+                                                    <input class="form-check-input" type="radio" id="header.label" name="std" value="header.status" 
+                                                        [disabled]="header.status==true" (click)="checkData(header)" [checked]="header.status"
+                                                        >
                                                     <label class="form-check-label" for="flexCheckDefault">
                                                         {{header.label}}
                                                     </label>
                                                 </div>
                                             </div>
                                         </div>
+                                        <div class="row" *ngIf="header.status==true">
+                                            <div class="col-sm" *ngFor="let sub of header.subSTD">
+                                                <div class="d-flex align-items-center justify-content-start">
+                                                    <div class="form-check">
+                                                        <input class="form-check-input" type="checkbox"
+                                                            [(ngModel)]="sub.status">
+                                                        <label class="form-check-label" for="flexCheckDefault">
+                                                            {{sub.label}}
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
                                     </th>
                                 </tr>
                             </thead>
@@ -178,20 +178,6 @@
                                 [legend]="barchartOptions.legend" [fill]="barchartOptions.fill"></apx-chart>
                         </div>
                     </div>
-                    <!-- <div class="col-sm-4 border-end">
-                        <h6 class="small fw-bold text-center mb-0">गणित स्तर निवडा</h6>
-                        <apx-chart [series]="barchartOptions.series[1]" [chart]="barchartOptions.chart"
-                            [dataLabels]="barchartOptions.dataLabels" [plotOptions]="barchartOptions.plotOptions"
-                            [responsive]="barchartOptions.responsive" [xaxis]="barchartOptions.xaxis"
-                            [legend]="barchartOptions.legend" [fill]="barchartOptions.fill"></apx-chart>
-                    </div>
-                    <div class="col-sm-4">
-                        <h6 class="small fw-bold text-center mb-0">इंग्रजी स्तर निवडा</h6>
-                        <apx-chart [series]="barchartOptions.series[2]" [chart]="barchartOptions.chart"
-                            [dataLabels]="barchartOptions.dataLabels" [plotOptions]="barchartOptions.plotOptions"
-                            [responsive]="barchartOptions.responsive" [xaxis]="barchartOptions.xaxis"
-                            [legend]="barchartOptions.legend" [fill]="barchartOptions.fill"></apx-chart>
-                    </div> -->
                 </div>
             </mat-card-content>
         </mat-card>
@@ -249,45 +235,6 @@
             <mat-card-header class="card-header">
                 <div class="d-flex align-items-center flex-wrap justify-content-between w-100">
                     <div class="mb-3">तालुका निहाय मूल्यांकन</div>
-                    <!-- <form [formGroup]="filterFormForBarGraph">
-                        <div class="row">
-                            <div class="col-sm-4" *ngIf="!f['talukaId'].value">
-                                <mat-form-field appearance="outline" class="w-100">
-                                    <mat-label>तालुका निवडा</mat-label>
-                                    <mat-select formControlName="filtertalukaId" (selectionChange)="this.getbarChartByTaluka()">
-                                        <mat-option *ngFor="let taluka of talukaData" [value]="taluka.id">
-                                            {{webStorage.languageFlag == 'EN'?taluka.taluka:taluka.m_Taluka}}
-                                        </mat-option>
-                                    </mat-select>
-                                </mat-form-field>
-                            </div>
-                            <div class="col-sm-4" *ngIf="f['talukaId'].value || fBgraph['filtertalukaId'].value">
-                                <mat-form-field appearance="outline" class="w-100">
-                                    <mat-label>केंद्र निवडा</mat-label>
-                                    <mat-select formControlName="filtercenterId" (selectionChange)="this.getbarChartByTaluka()">
-                                        <mat-option *ngFor="let center of centerData" [value]="center.id">
-                                            {{webStorage.languageFlag == 'EN'?center.center:center.m_Center}}
-                                        </mat-option>
-                                    </mat-select>
-                                </mat-form-field>
-                            </div>
-                            <div class="col-sm-4">
-                                <mat-form-field appearance="outline" class="w-100">
-                                    <mat-label>Subject</mat-label>
-                                    <mat-select formControlName="filtersubjectId" (selectionChange)="this.getbarChartByTaluka()">
-                                        <mat-option *ngFor="let subject of subjectData" [value]="subject.id ">
-                                            {{webStorage.languageFlag == 'EN'?subject.subjectName :subject.m_SubjectName }}
-                                        </mat-option>
-                                    </mat-select>
-                                </mat-form-field>
-                            </div>
-                        </div>
-                    </form> -->
-                    <!-- <div class="d-flex align-items-center justify-content-between flex-wrap flex-sm-nowrap gap-2">
-                        
-                 
-                    </div> -->
-
                 </div>
             </mat-card-header>
             <mat-card-content class="card-body">

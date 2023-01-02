@@ -36,6 +36,7 @@ export class DashboardComponent implements OnInit,AfterViewInit {
   tableDataTopPerformance=new Array();
   displayedheaders=new Array;
   graphSubjectData=new Array();
+  totalStudentSurveyData=new Array();
   get f() { return this.filterForm.controls }
   get fBgraph() { return this.filterFormForBarGraph.controls}
   constructor(public translate: TranslateService, private masterService: MasterService,
@@ -65,7 +66,7 @@ export class DashboardComponent implements OnInit,AfterViewInit {
     $(document).on('click', '#mapsvg  path', (e: any) => {
       let getClickedId = e.currentTarget;
       let distrctId = $(getClickedId).attr('id');
-      console.log(distrctId);
+      console.log(distrctId)
     })
   }
   getTalukas() {
@@ -365,7 +366,8 @@ export class DashboardComponent implements OnInit,AfterViewInit {
       next: (res: any) => { 
         if (res.statusCode == "200") {
           this.dashboardCountData.push(res.responseData.responseData1[0]);
-          this.tableColumn=[{label:'एकूण संख्या', GroupId:0,  ischeckboxShow:false, status:false},{label:'१ली ते 2री',GroupId:1,  ischeckboxShow:true, status:true},{label:'3री ते ५वी',GroupId:2, ischeckboxShow:true, status:false},{label:'६वी ते ८वी',GroupId:3, ischeckboxShow:true, status:false},];
+          this.totalStudentSurveyData=res.responseData.responseData2;
+          this.tableColumn=[{label:'एकूण संख्या', GroupId:0,  ischeckboxShow:false, status:false},{label:'१ली ते 2वी',GroupId:1, subSTD:[{label:'१ली',subGroupId:1, status:false},{label:'2री',subGroupId:2, status:false}] , ischeckboxShow:true, status:true},{label:'3री ते ५वी',GroupId:2, subSTD:[{label:'3री',subGroupId:3, status:false},{label:'4री',subGroupId:4, status:false},{label:'5वी',subGroupId:5, status:false}] , ischeckboxShow:true, status:false},{label:'६वी ते ८वी',GroupId:3, subSTD:[{label:'६वी',subGroupId:6, status:false},{label:'7वी',subGroupId:7, status:false},{label:'८वी',subGroupId:8, status:false}], ischeckboxShow:true, status:false},];
           this.checkData(this.tableColumn[1]);
           this.getPieChartData();
           
@@ -378,10 +380,15 @@ export class DashboardComponent implements OnInit,AfterViewInit {
   }
   checkData(obj:any){
     this.tableColumn.map((x:any)=>{
-      if(x.status==true){
-        x.status= obj.GroupId != x.GroupId? false: obj.status;
-      }
+      x.status=false;
     })
+    const index=this.tableColumn.findIndex((x:any)=> x.GroupId==obj.GroupId);
+    this.tableColumn[index].status=true;
+    // this.tableColumn.map((x:any)=>{
+    //   if(x.status==true){
+    //     x.status= obj.GroupId == x.GroupId?true:false
+    //   }
+    // })
     this.getSubject(obj.GroupId);
     this.getBarChart(obj);
     setTimeout(() => {
@@ -393,8 +400,6 @@ export class DashboardComponent implements OnInit,AfterViewInit {
     const serriesArray= [0,0,0];
     const serriesArray1= [0,0,0];
     const serriesArray2= [0,0,0];
-    console.log("dashboardCountData", this.dashboardCountData);
-
     serriesArray[0]= this.dashboardCountData[0].govtSchool|0;
     serriesArray[1]= this.dashboardCountData[0].privateSchool|0;
     serriesArray[2]= this.dashboardCountData[0].otherSchool|0;
@@ -482,7 +487,6 @@ export class DashboardComponent implements OnInit,AfterViewInit {
           })
           this.barchartOptions1.series.push(arrayObjectData)
           this.barchartOptions1.xaxis.categories.push(...talukaSet);
-          console.log(this.barchartOptions1);
           this.showBarChartS=true;
         }
 

@@ -230,8 +230,9 @@ export class StudentRegistrationComponent {
 
   openDetailsDialog(obj:any){
       console.log(obj);
+      let  index = obj.documentResponse.findIndex((ele:any)=> ele.documentId == 1);
       var data = {
-        headerImage: obj.documentResponse[0].docPath,
+        headerImage: obj.documentResponse[index]?.docPath,
         header: this.webService.languageFlag == 'EN' ? obj.fullName : obj.m_FullName,
         subheader: this.webService.languageFlag == 'EN' ? obj.gender : obj.m_Gender,
         labelHeader: this.webService.languageFlag == 'EN' ? ['Father Name', 'Parent Mobile No.','Aadhar No.','Standard','School Name'] : ['वडीलांचे नावं', 'पालक मोबाईल क्र.','आधार क्र.','इयत्ता','शाळेचे नाव'],
