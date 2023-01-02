@@ -11,6 +11,7 @@ import { GlobalDetailComponent } from 'src/app/shared/components/global-detail/g
 import { GlobalDialogComponent } from 'src/app/shared/components/global-dialog/global-dialog.component';
 import { AddUpdateTeacherRegistrationComponent } from './add-update-teacher-registration/add-update-teacher-registration.component';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { ValidationService } from 'src/app/core/services/validation.service';
 
 @Component({
   selector: 'app-teacher-registration',
@@ -38,7 +39,7 @@ export class TeacherRegistrationComponent {
   @HostBinding('class') className = '';
   constructor(private dialog: MatDialog, private overlay: OverlayContainer, private apiService: ApiService, private errors: ErrorsService,
     public webStorageS: WebStorageService, private downloadFileService: DownloadPdfExcelService, private commonMethodS: CommonMethodsService,
-    private ngxSpinner: NgxSpinnerService) {
+    private ngxSpinner: NgxSpinnerService, public validation : ValidationService) {
   }
 
   ngOnInit(): void {
@@ -110,8 +111,7 @@ export class TeacherRegistrationComponent {
           this.ngxSpinner.hide();
           this.tableDataArray = [];
           this.tableDatasize = 0;
-          this.tableDatasize == 0 && flag == 'pdfFlag' ? this.commonMethodS.showPopup('No Record Found', 1) : '';
-
+          this.tableDatasize == 0 && flag == 'pdfFlag' ? this.commonMethodS.showPopup(this.webStorageS.languageFlag == 'EN' ? 'No Record Found' : 'रेकॉर्ड उपलब्ध नाही', 1) : '';
         }
         this.languageChange();
         // let displayedColumns = ['uploadImage','srNo', 'name', 'mobileNo', 'emailId', 'village', 'taluka', 'action'];
@@ -280,11 +280,10 @@ export class TeacherRegistrationComponent {
       this.cardViewFlag = false;
       this.pageNumber = 1;
       this.cardCurrentPage = 0;
-
-      this.getTableData();
+      this.clearFilterData();
     } else if (label == 'Card')
       this.cardViewFlag = true;
-    this.getTableData();
+    this.clearFilterData();
   }
 
   onPageChanged(event: any) {
