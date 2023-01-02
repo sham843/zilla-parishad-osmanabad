@@ -168,11 +168,12 @@ getTableTranslatedData(){
   //#endregion -------------------------------------------dialog box open function's end heare----------------------------------------//
 
   onClickDelete(obj:any){   
+    let webStorageMethod = this.webStorage.createdByProps();
      let deleteObj=  [{
       "id": obj.id,
       "deletedBy": 0,
-      "modifiedDate": new Date(),
-      "lan": "EN"
+      "modifiedDate": webStorageMethod.modifiedDate,
+      "lan": this.webStorage.languageFlag
     }]
 
     this.apiService.setHttp('delete', 'zp_osmanabad/designation-master/Delete', false, deleteObj, false, 'baseUrl');
