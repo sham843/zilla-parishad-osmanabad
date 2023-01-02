@@ -60,7 +60,7 @@
         "schoolRegistration" : "शाळेची नोंदणी",
         "registerSchool" : "शाळेची नोंदणी करा",
         "updateSchool" : "शाळेची नोंद अपडेट करा",
-        "addSchool" : "शाळेची माहिती भरा",
+        "addSchool" : "शाळेची नोंदणी करा",
         "LowestClass" : "सर्वात खालचा वर्ग",
         "HighestClass" : "सर्वोच्च वर्ग",
         "kendra" : "केंद्र",
@@ -221,7 +221,7 @@
         "hide" : "लपवा",
         "Urban" : "शहरी",
         "Rural" :"ग्रामीण",
-        "Teacher" : "शिक्षक",
+        "Teacher" : "शिक्षक",  
         "Female": "महिला",
         "Male" : "पुरुष",
         "Girls" : "मुली",
@@ -243,3 +243,4 @@
         "InvalidSchoolName" : "अवैध शाळेचे नाव"
     }
 }
+
