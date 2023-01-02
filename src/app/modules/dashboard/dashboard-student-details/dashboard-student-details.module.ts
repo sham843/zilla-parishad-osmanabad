@@ -13,6 +13,7 @@ import { DashboardStudentDetailsRoutingModule } from './dashboard-student-detail
 import { TableComponent } from 'src/app/shared/components/table/table.component';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import {MatButtonModule} from '@angular/material/button';
 
 @NgModule({
   declarations: [
@@ -32,6 +33,7 @@ import { MatInputModule } from '@angular/material/input';
     TableComponent,
     MatFormFieldModule,
     MatInputModule ,
+    MatButtonModule,
     AgmCoreModule.forRoot({
       apiKey: 'AIzaSyBhkYI4LMEqVhB6ejq12wpIA6CW5theKJw',
       language: 'en',
