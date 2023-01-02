@@ -32,8 +32,6 @@ export class LoginComponent {
     this.adminLoginForm = this.fb.group({
       userName: ['', [Validators.required]],
       password: ['', [Validators.required,Validators.pattern(this.validators.valPassword)]],
-      mobileNo: ['', [Validators.required,Validators.pattern(this.validators.mobile_No)]],
-      passwordOff: ['', [Validators.required,Validators.pattern(this.validators.valPassword)]]
     })
   }
 
@@ -44,31 +42,14 @@ export class LoginComponent {
     clear.resetForm();    
   }
 
-  updateValidations() {
-    if (this.loginUser == 'Admin') {
-      this.adminLoginForm.controls['userName'].setValidators([Validators.required]);
-      this.adminLoginForm.controls['password'].setValidators([Validators.required,Validators.pattern(this.validators.valPassword)]); 
-      this.adminLoginForm.controls['mobileNo'].setValidators([]);
-      this.adminLoginForm.controls['passwordOff'].setValidators([]);      
-    } else {
-      this.adminLoginForm.controls['mobileNo'].setValidators([Validators.required,Validators.pattern(this.validators.mobile_No)]);
-      this.adminLoginForm.controls['passwordOff'].setValidators([Validators.required,Validators.pattern(this.validators.valPassword)]);
-      this.adminLoginForm.controls['userName'].setValidators([]);
-      this.adminLoginForm.controls['password'].setValidators([]);
-    }
-    this.adminLoginForm.controls['userName'].updateValueAndValidity();
-    this.adminLoginForm.controls['password'].updateValueAndValidity();
-    this.adminLoginForm.controls['mobileNo'].updateValueAndValidity();
-    this.adminLoginForm.controls['passwordOff'].updateValueAndValidity();
-  }
+ 
 
   onSubmit() {
     let formValue = this.adminLoginForm.value;
-    this.updateValidations();
     if (this.adminLoginForm.invalid) {
       return
     } else {
-      let url = this.loginUser == 'Admin' ? 'zp_osmanabad/user-registration/' + formValue.userName + '/' + formValue.password : 'zp_osmanabad/user-registration/' + formValue.mobileNo + '/' + formValue.passwordOff
+      let url = 'zp_osmanabad/user-registration/' + formValue.userName + '/' + formValue.password 
 
       this.api.setHttp('get', url, false, false, false, 'baseUrl');
       this.api.getHttp().subscribe({
