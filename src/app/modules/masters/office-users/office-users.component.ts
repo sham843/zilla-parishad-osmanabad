@@ -28,7 +28,7 @@ export class OfficeUsersComponent {
   tableDataArray = new Array();
   tableDatasize!: Number;
   displayedColumns = new Array();
-  displayedheadersEnglish = ['Sr. No.', 'Name', 'Designation', 'Mobile No.', 'Email ID', 'action'];
+  displayedheadersEnglish = ['Sr. No.', 'Name', 'Designation', 'Contact No.', 'Email ID', 'action'];
   displayedheadersMarathi = ['अनुक्रमांक', 'नाव', 'पदनाम', 'संपर्क क्र.', 'ई - मेल आयडी', 'कृती'];
   constructor(private apiService: ApiService, private errors: ErrorsService, private dialog: MatDialog, private commonService: CommonMethodsService,
     private webStorageService: WebStorageService, private downloadFileService: DownloadPdfExcelService, public validation  :ValidationService,
@@ -72,7 +72,7 @@ export class OfficeUsersComponent {
           data.find((ele: any, i: any) => {
             let obj = {
               "Sr.No": i+1,
-              "name": ele.name,
+              "name": ele.officeName,
               "designation": ele.designation,
               "mobileNo": ele.mobileNo,
               "emailId": ele.emailId,
@@ -95,17 +95,8 @@ export class OfficeUsersComponent {
           this.ngxSpinner.hide();
           this.tableDataArray = [];
           this.tableDatasize = 0;
+          this.tableDatasize == 0 && flag =='reportFlag' ? this.commonService.showPopup('No Record Found',1): '';
         }
-        // let displayedColumns = ['srNo', 'name', 'designation', 'mobileNo', 'emailId', 'm_Name', 'action'];
-        // let displayedheaders = ['Sr. No.', 'Name', 'Designation', 'Contact No.', 'Email ID', 'Office Name', 'action'];
-        // let tableData = {
-        //   pageNumber: this.pageNumber,
-        //   img: '', blink: '', badge: '', isBlock: '', pagintion: true,
-        //   displayedColumns: this.displayedColumns, tableData: this.tableDataArray,
-        //   tableSize: this.tableDatasize,
-        //   tableHeaders: this.langTypeName == 'English' ? this.displayedheadersEnglish : this.displayedheadersMarathi
-        // };
-        // this.apiService.tableData.next(tableData);
         this.languageChange();
       },
       error: ((err: any) => { this.errors.handelError(err.message) })
@@ -187,7 +178,7 @@ export class OfficeUsersComponent {
     this.apiService.setHttp('DELETE', 'zp_osmanabad/Office/DeleteOffice', false, deleteObj, false, 'baseUrl');
     this.apiService.getHttp().subscribe({
       next: (resp: any) => {
-        resp.statusCode === "200" ? (console.log(resp), this.commonService.snackBar(resp.statusMessage, 0), this.getTableData()) : this.commonService.checkEmptyData(resp.statusMessage) == false ? this.errors.handelError(resp.statusCode) : this.commonService.snackBar(resp.statusMessage, 1);
+        resp.statusCode == "200" ? (console.log(resp), this.commonService.snackBar(resp.statusMessage, 0), this.getTableData()) : this.commonService.checkEmptyData(resp.statusMessage) == false ? this.errors.handelError(resp.statusCode) : this.commonService.snackBar(resp.statusMessage, 1);
       },
       error: (err: any) => {
         this.errors.handelError(err.status);
@@ -199,19 +190,6 @@ export class OfficeUsersComponent {
 
   downloadPdf() {
     this.getTableData('reportFlag');
-    // if (this.resultDownloadArr.length > 0) {
-    //   let keyPDFHeader = ['SrNo', "Name", "Designation", "MobileNo","EmailID"];
-    //   let ValueData =
-    //     this.resultDownloadArr.reduce(
-    //       (acc: any, obj: any) => [...acc, Object.values(obj).map((value) => value)], []
-    //     );       
-    //     let objData:any = {
-    //       'topHedingName': 'Office Data',
-    //       'createdDate':'Created on:'+new Date()
-    //     }
-    //   this.downloadFileService.downLoadPdf(keyPDFHeader, ValueData, objData);
-    // }
-    
   }
 
   filterData(){

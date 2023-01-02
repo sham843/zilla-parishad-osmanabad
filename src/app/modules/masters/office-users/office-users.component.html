@@ -13,13 +13,15 @@
         {{'Labels.officeUser' | translate}}
       </div>
       <div class="d-flex gap-2">
-        <button mat-flat-button class="btn-main btn-icon" title="Table View" (click)="selectGrid('Table')">
+        <button mat-flat-button class="btn-main btn-icon" title="Table View"
+        [ngClass]="{'btn-main':!this.cardViewFlag, 'btn-second':this.cardViewFlag}"(click)="selectGrid('Table')">
           <mat-icon>
             table_view
           </mat-icon>
         </button>
 
-        <button mat-flat-button class="btn-second btn-icon" title="Card View" (click)="selectGrid('Card')">
+        <button mat-flat-button class="btn-second btn-icon" title="Card View"
+        [ngClass]="{'btn-main':this.cardViewFlag, 'btn-second':!this.cardViewFlag}" (click)="selectGrid('Card')">
           <mat-icon>
             grid_view
           </mat-icon>
@@ -48,7 +50,7 @@
         </mat-form-field>
       </div>
        <div class="col-sm-auto">
-        <button mat-flat-button class="btn-main" (click)="filterData()">{{'Labels.filter' | translate}}</button>
+        <button mat-flat-button class="btn-main" (click)="getTableData('filter')">{{'Labels.filter' | translate}}</button>
         <button mat-flat-button class="btn-second ms-2" (click)="clearFilterData()">{{'Labels.clear' |
           translate}}</button>
       </div>
