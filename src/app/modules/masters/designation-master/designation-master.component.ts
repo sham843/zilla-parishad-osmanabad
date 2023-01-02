@@ -171,7 +171,7 @@ getTableTranslatedData(){
     let webStorageMethod = this.webStorage.createdByProps();
      let deleteObj=  [{
       "id": obj.id,
-      "deletedBy": 0,
+      "deletedBy": this.webStorage.getUserId(),
       "modifiedDate": webStorageMethod.modifiedDate,
       "lan": this.webStorage.languageFlag
     }]
