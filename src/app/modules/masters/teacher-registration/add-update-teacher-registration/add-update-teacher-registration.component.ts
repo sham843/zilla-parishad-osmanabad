@@ -39,7 +39,10 @@ export class AddUpdateTeacherRegistrationComponent {
   educationQualificationArray = new Array();
   profesionalQualificationArray = new Array();
   castCategoryArray = new Array();
-  casteVerification = new Array();
+  casteVerification = [
+    { id: 1, name: 'yes', isCastVarificationDone: true,_name :'होय' },
+    { id: 2, name: 'no', isCastVarificationDone: false ,_name :'नाही'}
+  ];
   husbandWifeBothServiceArray = new Array();
   AreyouDisabled = new Array();
   interDistrictTransferredArray = new Array();
@@ -121,7 +124,7 @@ export class AddUpdateTeacherRegistrationComponent {
         "castCategoryId": [null],
         "castCertificateNo": [this.data ? this.data.teacherDetails?.castCertificateNo : ''],
         "castCertificateOffice": [this.data ? this.data.teacherDetails?.castCertificateOffice : ''],
-        "isCastVarificationDone": [null],
+        "isCastVarificationDone": [this.data ? this.data.teacherDetails?.isCastVarificationDone : null],
         "castValidityNoDate": [this.data ? this.data.teacherDetails?.castValidityNoDate : ''],
         "castverificationCommitteeName": [this.data ? this.data.teacherDetails?.castverificationCommitteeName : ''],
         "dateOfFirstAppoinmentService": [this.data ? this.data.teacherDetails?.dateOfFirstAppoinmentService : '', Validators.required],
@@ -166,10 +169,10 @@ export class AddUpdateTeacherRegistrationComponent {
       this.td['isCastVarificationDone'].clearValidators();
       this.td['castValidityNoDate'].clearValidators();
       this.td['castverificationCommitteeName'].clearValidators();
-      this.td['castCategoryId'].setValue('');
+      this.td['castCategoryId'].setValue(null);
       this.td['castCertificateNo'].setValue('');
       this.td['castCertificateOffice'].setValue('');
-      this.td['isCastVarificationDone'].setValue('');
+      this.td['isCastVarificationDone'].setValue(null);
       this.td['castValidityNoDate'].setValue('');
       this.td['castverificationCommitteeName'].setValue('');    
 
@@ -203,8 +206,8 @@ export class AddUpdateTeacherRegistrationComponent {
       this.td['interDistrictTransferType'].clearValidators();
       this.td['theOriginalDistrictInterDistrictTransfer'].clearValidators();
 
-      this.td['dateOFPresenceInterDistrictTransfer'].setValue('');
-      this.td['interDistrictTransferType'].setValue('');
+      this.td['dateOFPresenceInterDistrictTransfer'].setValue(null);
+      this.td['interDistrictTransferType'].setValue(null);
       this.td['theOriginalDistrictInterDistrictTransfer'].setValue('');
       
     }
@@ -251,7 +254,7 @@ export class AddUpdateTeacherRegistrationComponent {
   getGender() {
     this.masterService.getAllGender('EN').subscribe({
       next: ((res: any) => {
-        if (res.statusCode == '200' && res.responseData.length) {
+        if (res.statusCode == 200 && res.responseData.length) {
           this.genderArray = res.responseData;       
           this.editFlag == true ? (this.teacherRegForm.controls['genderId'].setValue(this.editObj?.genderID), this.getDistrict()) : (this.editFlag== false) ? (this.getDistrict(),this.getAllDistrictTeacherDetails()) : ''
         }
@@ -264,7 +267,7 @@ export class AddUpdateTeacherRegistrationComponent {
   getDistrict() {
     this.masterService.getAllDistrict('EN').subscribe({
       next: ((res: any) => {
-        if (res.statusCode == '200' && res.responseData.length) {
+        if (res.statusCode == 200 && res.responseData.length) {
           this.districtArray = res.responseData;               
           this.teacherRegForm.controls['districtId'].setValue(1)
           this.editFlag ? (this.teacherRegForm.controls['districtId'].setValue(this.editObj?.districtId), this.getTaluka()) : this.getTaluka();
@@ -278,7 +281,7 @@ export class AddUpdateTeacherRegistrationComponent {
   getTaluka() {
     this.masterService.getAllTaluka('EN').subscribe({
       next: ((res: any) => {
-        if (res.statusCode == '200' && res.responseData.length) {
+        if (res.statusCode == 200 && res.responseData.length) {
           this.talukaArray = res.responseData;          
           this.editFlag ? (this.teacherRegForm.controls['talukaId'].setValue(this.editObj?.talukaId), this.getVillage()) : '';
         }
@@ -292,7 +295,7 @@ export class AddUpdateTeacherRegistrationComponent {
     let talukaId = this.teacherRegForm.value.talukaId
     this.masterService.getAllVillage('EN', talukaId).subscribe({
       next: ((res: any) => {
-        if (res.statusCode == '200' && res.responseData.length) {
+        if (res.statusCode == 200 && res.responseData.length) {
           this.villageArray = res.responseData;            
           this.editFlag ? (this.teacherRegForm.controls['villageId'].setValue(this.editObj?.villageId), this.getAllDistrictTeacherDetails()) : '';
         }
@@ -305,7 +308,7 @@ export class AddUpdateTeacherRegistrationComponent {
   getAllDistrictTeacherDetails() {
     this.masterService.getAllDistrict('EN').subscribe({
       next: ((res: any) => {
-        if (res.statusCode == '200' && res.responseData.length) {
+        if (res.statusCode == 200 && res.responseData.length) {
           this.districtArrayTeacherDeatails = res.responseData;
           this.td['districtId'].setValue(1)
           this.editFlag ? (this.td['districtId'].setValue(this.editObj.teacherDetails?.districtId), this.getAllTalukaTeacherDeatails()) :!this.editFlag ? (this.getAllTalukaTeacherDeatails(),this.getDesignation()):'';
@@ -320,7 +323,7 @@ export class AddUpdateTeacherRegistrationComponent {
   getAllTalukaTeacherDeatails() {
     this.masterService.getAllTaluka('EN').subscribe({
       next: ((res: any) => {
-        if (res.statusCode == '200' && res.responseData.length) {
+        if (res.statusCode == 200 && res.responseData.length) {
           this.talukaArrayTeacherDetails = res.responseData;
           this.editFlag ? (this.td['talukaId'].setValue(this.editObj.teacherDetails?.talukaId), this.getCluster()) : '';
         }
@@ -334,7 +337,7 @@ export class AddUpdateTeacherRegistrationComponent {
     let talukaId = this.teacherRegForm.value.teacherDetails.talukaId;
     this.masterService.getAllCenter('EN', talukaId).subscribe({
       next: ((res: any) => {
-        if (res.statusCode == '200' && res.responseData.length) {
+        if (res.statusCode == 200 && res.responseData.length) {
           this.clusterArray = res.responseData;      
           this.editFlag ? (this.td['clusterId'].setValue(this.editObj.teacherDetails?.clusterId), this.getAllSchool()) : '';
         }
@@ -348,7 +351,7 @@ export class AddUpdateTeacherRegistrationComponent {
     let clusterId = this.teacherRegForm.value.teacherDetails.clusterId;
     this.masterService.getAllSchoolByCriteria('EN', talukaId, 0, clusterId).subscribe({
       next: ((res: any) => {
-        if (res.statusCode == '200' && res.responseData.length) {
+        if (res.statusCode == 200 && res.responseData.length) {
           this.schoolArray = res.responseData;        
           this.editFlag ? (this.td['schoolId'].setValue(this.editObj.teacherDetails?.schoolId), this.getDesignation()) : '';
         }
@@ -360,7 +363,7 @@ export class AddUpdateTeacherRegistrationComponent {
   getDesignation() {
     this.masterService.GetDesignationByLevelId('EN', 3).subscribe({
       next: ((res: any) => {
-        if (res.statusCode == '200' && res.responseData.length) {
+        if (res.statusCode == 200 && res.responseData.length) {
           this.designationArray = res.responseData;    
           this.editFlag ? (this.td['designationId'].setValue(this.editObj.teacherDetails?.designationId), this.getGraduateTeacherSubject()) : this.getGraduateTeacherSubject();
         }
@@ -372,7 +375,7 @@ export class AddUpdateTeacherRegistrationComponent {
   getGraduateTeacherSubject() {
     this.masterService.getAllSubject('EN').subscribe({
       next: ((res: any) => {
-        if (res.statusCode == '200' && res.responseData.length) {
+        if (res.statusCode == 200 && res.responseData.length) {
           this.GradateTeacherSubjectArray = res.responseData;
           this.editFlag ? (this.td['graduate_SubjectId'].setValue(this.editObj.teacherDetails?.graduate_SubjectId), this.getGraduatePayScale()) : this.getGraduatePayScale();
         }
@@ -393,7 +396,7 @@ export class AddUpdateTeacherRegistrationComponent {
   getCaste() {
     this.masterService.getAllCaste('EN', 1).subscribe({
       next: ((res: any) => {
-        if (res.statusCode == '200' && res.responseData.length) {
+        if (res.statusCode == 200 && res.responseData.length) {
           this.casteArray = res.responseData;  
           this.editFlag ? (this.td['castId'].setValue(this.editObj.teacherDetails?.castId), this.getCasteCategory()) : this.getCasteCategory();
         }
@@ -405,27 +408,27 @@ export class AddUpdateTeacherRegistrationComponent {
   getCasteCategory() {
     this.masterService.getCastCategoryDescById('EN').subscribe({
       next: ((res: any) => {
-        if (res.statusCode == '200' && res.responseData.length) {
+        if (res.statusCode == 200 && res.responseData.length) {
           this.castCategoryArray = res.responseData;
-          this.editFlag ? (this.td['castCategoryId'].setValue(this.editObj.teacherDetails?.castCategoryId), this.getCasteVerification()) : this.getCasteVerification();
+          this.editFlag ? (this.td['castCategoryId'].setValue(this.editObj.teacherDetails?.castCategoryId), this.getEducationQualification()) : this.getEducationQualification();
         }
       }), error: (error: any) => {
         this.commonMethod.checkEmptyData(error.statusText) == false ? this.errorHandler.handelError(error.statusCode) : this.commonMethod.showPopup(error.statusText, 1);
       }
     })
   }
-  getCasteVerification() {
-    this.casteVerification = [
-      { id: 1, name: 'yes', isCastVarificationDone: true,_name :'होय' },
-      { id: 2, name: 'no', isCastVarificationDone: false ,_name :'नाही'}
-    ];
-    this.editFlag ? (this.td['isCastVarificationDone'].setValue(this.editObj.teacherDetails?.isCastVarificationDone), this.getEducationQualification()) : this.getEducationQualification();
-  }
+  // getCasteVerification() {
+  //   this.casteVerification = [
+  //     { id: 1, name: 'yes', isCastVarificationDone: true,_name :'होय' },
+  //     { id: 2, name: 'no', isCastVarificationDone: false ,_name :'नाही'}
+  //   ];
+  //   this.editFlag ? (this.td['isCastVarificationDone'].setValue(this.editObj.teacherDetails?.isCastVarificationDone), this.getEducationQualification()) : this.getEducationQualification();
+  // }
 
   getEducationQualification() {
     this.masterService.getEducationalQualificationById('EN').subscribe({
       next: ((res: any) => {
-        if (res.statusCode == '200' && res.responseData.length) {
+        if (res.statusCode == 200 && res.responseData.length) {
           this.educationQualificationArray = res.responseData;
           this.editFlag ? (this.td['educationalQualificationId'].setValue(this.editObj.teacherDetails?.educationalQualificationId), this.getTwelveBranch()) : this.getTwelveBranch();
         }
@@ -437,7 +440,7 @@ export class AddUpdateTeacherRegistrationComponent {
   getTwelveBranch() {
     this.masterService.getTwelveBranchCategoryDescById('EN',).subscribe({
       next: ((res: any) => {
-        if (res.statusCode == '200' && res.responseData.length) {
+        if (res.statusCode == 200 && res.responseData.length) {
           this.twelveBranchArray = res.responseData;
           this.editFlag ? (this.td['branchId12th'].setValue(this.editObj.teacherDetails?.branchId12th), this.getOptionalSubject()) : this.getOptionalSubject();
         }
@@ -449,7 +452,7 @@ export class AddUpdateTeacherRegistrationComponent {
   getOptionalSubject() {
     this.masterService.getOptionalSubjectCategoryDescById('EN',).subscribe({
       next: ((res: any) => {
-        if (res.statusCode == '200' && res.responseData.length) {
+        if (res.statusCode == 200 && res.responseData.length) {
           this.optionalSubjectArray = res.responseData;         
           this.editFlag ? (this.td['degreeOptionalSubjectsId'].setValue(this.editObj.teacherDetails?.degreeOptionalSubjectsId), this.getDegreeUniversity()) : this.getDegreeUniversity();
         }
@@ -462,7 +465,7 @@ export class AddUpdateTeacherRegistrationComponent {
   getDegreeUniversity() {
     this.masterService.getUniversityCategoryDescById('EN',).subscribe({
       next: ((res: any) => {
-        if (res.statusCode == '200' && res.responseData.length) {
+        if (res.statusCode == 200 && res.responseData.length) {
           this.degreeUniversityArray = res.responseData;
           
           this.editFlag ? (this.td['degreeUniversityId'].setValue(this.editObj.teacherDetails?.degreeUniversityId), this.getProfesionalQualification()) : this.getProfesionalQualification();
@@ -476,7 +479,7 @@ export class AddUpdateTeacherRegistrationComponent {
   getProfesionalQualification() {
     this.masterService.getProfessinalQualificationById('EN',).subscribe({
       next: ((res: any) => {
-        if (res.statusCode == '200' && res.responseData.length) {
+        if (res.statusCode == 200 && res.responseData.length) {
           this.profesionalQualificationArray = res.responseData;        
           this.editFlag ? (this.td['professionalQualificationId'].setValue(this.editObj.teacherDetails?.professionalQualificationId), this.gethusbandWifeBothService()) : this.gethusbandWifeBothService();
         }
@@ -511,7 +514,7 @@ export class AddUpdateTeacherRegistrationComponent {
   GetInterDistrictTransferType() {
     this.masterService.getAllInterDistrictTransferType('EN',).subscribe({
       next: ((res: any) => {
-        if (res.statusCode == '200' && res.responseData.length) {
+        if (res.statusCode == 200 && res.responseData.length) {
           this.interDistrictTransferTypeArray = res.responseData;
           this.editFlag ? (this.td['interDistrictTransferType'].setValue(this.editObj.teacherDetails?.interDistrictTransferType), this.getHaveYouPassedComputerExam()) : this.getHaveYouPassedComputerExam();
 
@@ -534,7 +537,7 @@ export class AddUpdateTeacherRegistrationComponent {
   imgUpload(event: any) {
     this.img = true;
     this.fileUpload.uploadDocuments(event, 'Upload', 'jpg, jpeg, png').subscribe((res: any) => {
-     if(res.statusCode ==200){
+     if(res.statusCode == 200){
       this.uploadImg = res.responseData;
       this.showAddRemImg = true;
      }else{
@@ -565,6 +568,8 @@ export class AddUpdateTeacherRegistrationComponent {
     else {
       formValue.assignTeacher = this.assignClassArray;
       let postObj = this.teacherRegForm.value;   
+      console.log("postValue",postObj);
+      
       this.ngxSpinner.show();
       let url;
       this.editFlag ? url = 'zp_osmanabad/Teacher/Update' : url = 'zp_osmanabad/Teacher/Add'
@@ -572,7 +577,7 @@ export class AddUpdateTeacherRegistrationComponent {
       this.service.getHttp().subscribe({
         next: ((res: any) => {
           this.ngxSpinner.hide();
-          res.statusCode === "200" ? (this.commonMethod.showPopup(res.statusMessage, 0)) : this.commonMethod.checkEmptyData(res.statusMessage) == false ? this.errorHandler.handelError(res.statusCode) : this.commonMethod.showPopup(res.statusMessage, 1);       
+          res.statusCode === 200 ? (this.commonMethod.showPopup(res.statusMessage, 0)) : this.commonMethod.checkEmptyData(res.statusMessage) == false ? this.errorHandler.handelError(res.statusCode) : this.commonMethod.showPopup(res.statusMessage, 1);       
             this.dialogRef.close('yes');
          
         }),
@@ -586,6 +591,8 @@ export class AddUpdateTeacherRegistrationComponent {
 //#endregion -------------------------------------end submit-----------------------------------------------
 //#region ---------------------------------------- start edit ----------------------------------------------
   onEdit(obj: any) {
+    console.log("editObj",obj);
+    
     this.editFlag = true;
     this.editObj = obj;  
     this.data.uploadImage ? this.teacherRegForm.value.uploadImage = obj.uploadImage : '';
