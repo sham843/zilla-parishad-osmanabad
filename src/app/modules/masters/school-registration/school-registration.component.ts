@@ -268,7 +268,8 @@ export class SchoolRegistrationComponent {
       labelHeader: this.webStorageS.languageFlag == 'EN' ? ['Kendra Name', 'Taluka','District','Lowest Class', 'HighestClass', 'Total Students'] : ['केंद्राचे नाव', 'तालुका', 'जिल्हा', 'सर्वात खालचा वर्ग', 'सर्वोच्च वर्ग', 'एकूण विद्यार्थी'],
       labelKey: this.webStorageS.languageFlag == 'EN' ? ['center','taluka', 'district','lowestClass','highestClass','studentCount'] : ['m_Center', 'm_Taluka','m_District', 'lowestClass', 'highestClass','studentCount'],
       Obj: obj,
-      chart: false
+      chart: false,
+      multipleImage: true
     }
     const viewDialogRef = this.dialog.open(GlobalDetailComponent, {
       width: '900px',
