@@ -100,9 +100,9 @@
 
 <div class="row mb-3">
     <div class="col-sm-4">
-        <mat-card class="mb-3 plain-card">
+        <mat-card class="plain-card h-100">
             <mat-card-header class="card-header">
-                नकाशा
+                <h6 class="mb-0 fw-bold">नकाशा</h6>
             </mat-card-header>
             <mat-card-content class="card-body">
                 <div id="mapsvg" class="text-center">
@@ -114,16 +114,16 @@
     <div class="col-sm-8">
         <mat-card class="plain-card h-100">
             <mat-card-header class="card-header">
-                <div class="d-flex align-items-center justify-content-between w-100">
+                <h6 class="d-flex align-items-center justify-content-between w-100 mb-0 fw-bold">
                     <div>सर्वेक्षण केलेल्या विद्यार्थ्यांची एकूण संख्या</div>
                     <div>निवडलेली संख्या : <span class="fw-bold">{{selectedObj?.GroupId==1? dashboardCountData[0]?.totalStudent_1_2: selectedObj?.GroupId==2? dashboardCountData[0]?.totalStudent_3_5 :dashboardCountData[0]?.totalStudent_6_8}}</span></div>
-                </div>
+                </h6>
             </mat-card-header>
 
             <mat-card-content class="card-body">
                 <div class="row">
                     <div class="col-sm-12">
-                        <table class="table inner-table mb-3">
+                        <table class="table inner-table mb-3 table-bordered">
                             <thead>
                                 <tr>
                                     <th *ngFor="let header of tableColumn">
@@ -131,7 +131,7 @@
                                             {{header.label}}
                                         </div>
                                         <div *ngIf="header.ischeckboxShow==true">
-                                            <div class="d-flex align-items-center justify-content-start">
+                                            <div class="d-flex align-items-center justify-content-center">
                                                 <div class="form-check">
                                                     <input class="form-check-input" type="radio" id="header.label" name="std" value="header.status" 
                                                         [disabled]="header.status==true" (click)="checkData(header)" [checked]="header.status"
@@ -155,7 +155,9 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        
+                                        <div *ngIf="header.status==false">
+                                            &nbsp;
+                                        </div>
                                     </th>
                                 </tr>
                             </thead>
@@ -182,51 +184,52 @@
             </mat-card-content>
         </mat-card>
     </div>
-    <div class="row mt-2">
-        <div class="col-sm-4">
-            <mat-card class="plain-card">
-                <mat-card-header class="card-header">
-                    Management wise Schools
-                </mat-card-header>
-                <mat-card-content class="card-body">
-                    <div id="chart">
-                        <apx-chart [series]="piechartOptions.series" [chart]="piechartOptions.chart"
-                            [theme]="piechartOptions.theme" [fill]="piechartOptions.fill" [labels]="piechartOptions.labels"
-                            [responsive]="piechartOptions.responsive"></apx-chart>
-                    </div>
-                </mat-card-content>
-            </mat-card>
-        </div>
-        <div class="col-sm-4">
-            <mat-card class="plain-card">
-                <mat-card-header class="card-header">
-                    Medium wise Schools
-                </mat-card-header>
-                <mat-card-content class="card-body">
-                    <div id="chart">
-                        <apx-chart [series]="piechartOptions1.series" [chart]="piechartOptions1.chart"
-                            [theme]="piechartOptions1.theme" [fill]="piechartOptions1.fill" [labels]="piechartOptions1.labels"
-                            [responsive]="piechartOptions1.responsive"></apx-chart>
-                    </div>
-                </mat-card-content>
-            </mat-card>
-        </div>
-        <div class="col-sm-4">
-            <mat-card class="plain-card">
-                <mat-card-header class="card-header">
-                    Gender wise Schools
-                </mat-card-header>
-                <mat-card-content class="card-body">
-                    <div id="chart">
-                        <apx-chart [series]="piechartOptions2.series" [chart]="piechartOptions2.chart"
-                            [theme]="piechartOptions2.theme" [fill]="piechartOptions2.fill" [labels]="piechartOptions2.labels"
-                            [responsive]="piechartOptions2.responsive"></apx-chart>
-                    </div>
-                </mat-card-content>
-            </mat-card>
-        </div>
+</div>
 
+<div class="row mb-3">
+    <div class="col-sm-4">
+        <mat-card class="plain-card h-100">
+            <mat-card-header class="card-header">
+                <h6 class="mb-0 fw-bold">Management wise Schools</h6>
+            </mat-card-header>
+            <mat-card-content class="card-body">
+                <div id="chart">
+                    <apx-chart [series]="piechartOptions.series" [chart]="piechartOptions.chart"
+                        [theme]="piechartOptions.theme" [fill]="piechartOptions.fill" [labels]="piechartOptions.labels"
+                        [responsive]="piechartOptions.responsive"></apx-chart>
+                </div>
+            </mat-card-content>
+        </mat-card>
     </div>
+    <div class="col-sm-4">
+        <mat-card class="plain-card h-100">
+            <mat-card-header class="card-header">
+                <h6 class="mb-0 fw-bold">Medium wise Schools</h6>
+            </mat-card-header>
+            <mat-card-content class="card-body">
+                <div id="chart">
+                    <apx-chart [series]="piechartOptions1.series" [chart]="piechartOptions1.chart"
+                        [theme]="piechartOptions1.theme" [fill]="piechartOptions1.fill" [labels]="piechartOptions1.labels"
+                        [responsive]="piechartOptions1.responsive"></apx-chart>
+                </div>
+            </mat-card-content>
+        </mat-card>
+    </div>
+    <div class="col-sm-4">
+        <mat-card class="plain-card h-100">
+            <mat-card-header class="card-header">
+                <h6 class="mb-0 fw-bold">Gender wise Schools</h6>
+            </mat-card-header>
+            <mat-card-content class="card-body">
+                <div id="chart">
+                    <apx-chart [series]="piechartOptions2.series" [chart]="piechartOptions2.chart"
+                        [theme]="piechartOptions2.theme" [fill]="piechartOptions2.fill" [labels]="piechartOptions2.labels"
+                        [responsive]="piechartOptions2.responsive"></apx-chart>
+                </div>
+            </mat-card-content>
+        </mat-card>
+    </div>
+
 </div>
 
 <div class="row">
@@ -234,12 +237,12 @@
         <mat-card class="plain-card">
             <mat-card-header class="card-header">
                 <div class="d-flex align-items-center flex-wrap justify-content-between w-100">
-                    <div class="mb-3">तालुका निहाय मूल्यांकन</div>
+                    <h6 class="mb-0 fw-bold">तालुका निहाय मूल्यांकन</h6>
                 </div>
             </mat-card-header>
-            <mat-card-content class="card-body">
+            <mat-card-header class="card-header pb-0 border-bottom-0">
                 <form [formGroup]="filterFormForBarGraph">
-                    <div class="row">
+                    <div class="row w-100">
                         <div class="col-sm-3" *ngIf="!f['talukaId'].value">
                             <mat-form-field appearance="outline" class="w-100">
                                 <mat-label>तालुका निवडा</mat-label>
@@ -276,24 +279,21 @@
                         </div>
                     </div>
                 </form>
+            </mat-card-header>
+            <mat-card-content class="card-body">
+                
                 <div class="row" *ngIf="showBarChartS">
-                    <!-- <div class="col-sm border-end" *ngFor="let bar of barchartOptions.series[1]; let i=index">
-                        <h6 class="small fw-bold text-center mb-0">{{this.barchartOptions.xaxis.categories[1][i]}}</h6>
-                        <apx-chart [series]="bar" [chart]="barchartOptions.chart"
-                            [dataLabels]="barchartOptions.dataLabels" [plotOptions]="barchartOptions.plotOptions"
-                            [responsive]="barchartOptions.responsive" [xaxis]="barchartOptions.xaxis"
-                            [legend]="barchartOptions.legend" [fill]="barchartOptions.fill"></apx-chart>
-                    </div> -->
-                    <apx-chart [series]="barchartOptions1.series[0]" [chart]="barchartOptions1.chart"
+                    <div class="col-sm-12">
+                        <apx-chart [series]="barchartOptions1.series[0]" [chart]="barchartOptions1.chart"
                         [theme]="barchartOptions1.theme" [dataLabels]="barchartOptions1.dataLabels"
                         [plotOptions]="barchartOptions1.plotOptions" [responsive]="barchartOptions1.responsive"
                         [xaxis]="barchartOptions1.xaxis" [legend]="barchartOptions1.legend"
                         [fill]="barchartOptions1.fill"></apx-chart>
+                    </div>
                 </div>
-            </mat-card-content>
-            <div class="row">
-                <div class="col-sm-6" *ngFor="let data of tableDataTopPerformance; let i=index">
-                    <mat-card-content class="card-body pt-0">
+
+                <div class="row">
+                    <div class="col-sm-6 border-end" *ngFor="let data of tableDataTopPerformance; let i=index">
                         <table class="table inner-table mb-3">
                             <thead>
                                 <tr>
@@ -319,9 +319,10 @@
                                 Data not available
                             </div>
                         </div>
-                    </mat-card-content>
+                    </div>
                 </div>
-            </div>
+            </mat-card-content>
+            
         </mat-card>
 
     </div>
