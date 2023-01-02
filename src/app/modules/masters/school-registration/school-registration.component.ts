@@ -38,7 +38,7 @@ export class SchoolRegistrationComponent {
   displayedColumns = new Array();
   tableDatasize!: Number;
   tableData: any;
-  displayedheadersEnglish = ['#', 'Sr. No.', 'Name', 'Village', 'Taluka', 'District', 'Action'];
+  displayedheadersEnglish = ['#', 'Sr. No.', 'School Name', 'Village', 'Taluka', 'District', 'Action'];
   displayedheadersMarathi = ['#', 'अनुक्रमांक', 'शाळेचे नाव', 'गाव', 'तालुका', 'जिल्हा', 'कृती'];
 
   constructor(private dialog: MatDialog, private apiService: ApiService, private errors: ErrorsService,
