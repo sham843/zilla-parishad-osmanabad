@@ -28,7 +28,7 @@ export class OfficeUsersComponent {
   tableDataArray = new Array();
   tableDatasize!: Number;
   displayedColumns = new Array();
-  displayedheadersEnglish = ['Sr. No.', 'Name', 'Designation', 'Contact No.', 'Email ID', 'action'];
+  displayedheadersEnglish = ['Sr. No.', 'Name', 'Designation', 'Mobile No.', 'Email ID', 'action'];
   displayedheadersMarathi = ['अनुक्रमांक', 'नाव', 'पदनाम', 'संपर्क क्र.', 'ई - मेल आयडी', 'कृती'];
   constructor(private apiService: ApiService, private errors: ErrorsService, private dialog: MatDialog, private commonService: CommonMethodsService,
     private webStorageService: WebStorageService, private downloadFileService: DownloadPdfExcelService, public validation  :ValidationService,
