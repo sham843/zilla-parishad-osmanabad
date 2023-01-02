@@ -58,9 +58,26 @@
                         invalid EmailId</mat-error>                 
                     </mat-form-field>
                 </div>
-                <div class="col-sm">
+                <div class="col-sm-4">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div class="upload-btn-wrapper">
+                                <button class="upload-btn">{{'Labels.uploadPhoto' | translate}}</button>
+                                <input type="file" name="myfile" formControlName="uploadImage"
+                                    (change)="imgUpload($event)" />
+                            </div>
+                            <div class="action-btn">
+                                <button type="button" mat-icon-button class="btn-icon text-primary" *ngIf="uploadImg"
+                                    (click)="viewImg()">
+                                    <mat-icon>content_copy</mat-icon>
+                                </button>
+                                <button type="button" mat-icon-button class="btn-icon text-danger" *ngIf="uploadImg"
+                                    (click)="clearImg()">
+                                    <mat-icon>delete</mat-icon>
+                                </button>
+                            </div>
+                        </div>
                     <!-- <mat-form-field appearance="outline" class="w-100 "> -->
-                        <mat-label>{{'Labels.uploadPhoto'| translate}}</mat-label>
+                        <!-- <mat-label>{{'Labels.uploadPhoto'| translate}}</mat-label>
                         <input type="file" formControlName="uploadImage" hidden="hidden" (change)="imgUpload($event)" #img>
                         <mat-icon matSuffix *ngIf="!showAddRemImg">
                             <span class="material-symbols-outlined" (click)="img.click()">upload</span>
@@ -69,7 +86,7 @@
                             <mat-icon class="text-danger" type="button" *ngIf="showAddRemImg"
                                 (click)="clearImg()">highlight_off</mat-icon>
                             <mat-icon class="text-success" *ngIf="showAddRemImg" (click)="viewImg()">check_circle_outline</mat-icon>
-                        </span>
+                        </span> -->
                     <!-- </mat-form-field> -->
                 </div>
                 <div class="col-sm-4">
