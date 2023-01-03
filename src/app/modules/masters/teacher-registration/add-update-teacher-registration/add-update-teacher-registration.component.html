@@ -28,8 +28,8 @@
                         <mat-label>{{'Labels.teachernameMarathi'| translate}}</mat-label>
                         <input matInput formControlName="m_Name" maxlength="100"
                             (keypress)="validation.noFirstSpaceAllow($event);validation.unicodeMarathiValidation($event)">
-                        <!-- <mat-error *ngIf="f['m_Name'].hasError('required')">
-                            Teacher Name (marathi) Is Required</mat-error> -->
+                        <mat-error *ngIf="f['m_Name'].hasError('pattern')">
+                            Teacher Name (marathi) Is Required</mat-error>
                     </mat-form-field>
                 </div>
                 <div class="col-sm">
