@@ -104,14 +104,11 @@ export class DashboardComponent implements OnInit, AfterViewInit {
       chart: {
         type: "donut"
       },
-      legend: {
-        position: "bottom"
-      },
-      fill: {
-        type: "solid",
-        colors: ["#00E396", "#F9CE1D", "#D4526E", "#D7263D", "#A300D6"]
-      },
-      // colors: [],
+      // fill: {
+      //   type: "solid",
+      //   colors: ["#00E396", "#F9CE1D", "#D4526E", "#D7263D", "#A300D6"]
+      // },
+       colors: ["#00E396", "#F9CE1D", "#D4526E", "#D7263D", "#A300D6"],
       labels: [],
       responsive: [
         {
@@ -126,7 +123,19 @@ export class DashboardComponent implements OnInit, AfterViewInit {
             }
           }
         }
-      ]
+      ],
+      legend: {
+        position: 'right',
+        fontSize: '12px',
+        show: true,
+        markers: {
+          width: 12,
+          height: 12,
+          strokeWidth: 0,
+          strokeColor: '#fff',
+          fillColors: ["#00E396", "#F9CE1D", "#D4526E", "#D7263D", "#A300D6"],
+        }
+      }
     };
     this.piechartOptions1 = {
       series: [],
@@ -134,11 +143,11 @@ export class DashboardComponent implements OnInit, AfterViewInit {
         type: "donut"
       },
 
-      fill: {
-        type: "solid",
-        colors: ["#00E396", "#F9CE1D", "#D4526E", "#D7263D", "#A300D6"]
-      },
-      // colors: [],
+      // fill: {
+      //   type: "solid",
+      //   colors: ["#00E396", "#F9CE1D", "#D4526E", "#D7263D", "#A300D6"]
+      // },
+      colors: ["#00E396", "#F9CE1D", "#D4526E", "#D7263D", "#A300D6"],
       labels: [],
       responsive: [
         {
@@ -153,19 +162,30 @@ export class DashboardComponent implements OnInit, AfterViewInit {
             }
           }
         }
-      ]
+      ],
+      legend: {
+        position: 'right',
+        fontSize: '12px',
+        show: true,
+        markers: {
+          width: 12,
+          height: 12,
+          strokeWidth: 0,
+          strokeColor: '#fff',
+          fillColors: ["#00E396", "#F9CE1D", "#D4526E", "#D7263D", "#A300D6"],
+        }
+      }
     };
     this.piechartOptions2 = {
       series: [],
       chart: {
         type: "donut"
       },
-
-      fill: {
-        type: "solid",
-        colors: ["#00E396", "#F9CE1D", "#D4526E", "#D7263D", "#A300D6"]
-      },
-      // colors: [],
+      colors: ["#00E396", "#F9CE1D", "#D4526E", "#D7263D", "#A300D6"],
+      // fill: {
+      //   type: "solid",
+      //   colors: ["#00E396", "#F9CE1D", "#D4526E", "#D7263D", "#A300D6"]
+      // },
       labels: [],
       responsive: [
         {
@@ -180,7 +200,19 @@ export class DashboardComponent implements OnInit, AfterViewInit {
             }
           }
         }
-      ]
+      ],
+      legend: {
+        position: 'right',
+        fontSize: '12px',
+        show: true,
+        markers: {
+          width: 12,
+          height: 12,
+          strokeWidth: 0,
+          strokeColor: '#fff',
+          fillColors: ["#00E396", "#F9CE1D", "#D4526E", "#D7263D", "#A300D6"],
+        }
+      }
     };
   }
   getBarChartOption() {
@@ -341,8 +373,8 @@ export class DashboardComponent implements OnInit, AfterViewInit {
   }
   dashboardAPis() {
     this.getdashboardCount();
-    this.getBarChart(this.selectedObj);
-    this.getbarChartByTaluka();
+    // this.getBarChart(this.selectedObj);
+    // this.getbarChartByTaluka();
 
   }
   selectedBar(selectedbar: any) {
