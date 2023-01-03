@@ -35,7 +35,7 @@ export class AddUpdateAgencyRegistrationComponent {
       ...this.webStorageService.createdByProps(),
       "id": data ? data.id : 0,
       "agency_Name": [data ? data.agency_Name : "", [Validators.required, Validators.pattern(this.validation.fullName)]],
-      "m_Agency_Name": [data ? data.m_Agency_Name : "", Validators.required],
+      "m_Agency_Name": [data ? data.m_Agency_Name : "", [Validators.required, Validators.pattern('^[\u0900-\u0965 ]+$')]],
       "contactPerson_Name": [data ? data.contactPerson_Name : "", [Validators.required, Validators.pattern(this.validation.fullName)]],
       "agency_MobileNo": [data ? data.agency_MobileNo : "", [Validators.required, Validators.pattern(this.validation.mobile_No)]],
       "contact_No": [data ? data.contact_No : "", [Validators.required, Validators.pattern(this.validation.mobile_No)]],

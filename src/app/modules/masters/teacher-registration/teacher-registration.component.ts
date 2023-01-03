@@ -185,7 +185,7 @@ export class TeacherRegistrationComponent {
         this.pageNumber = obj.pageNumber;
         this.getTableData();
         break;
-      case 'Edit' || 'Delete':
+      case 'Edit' :
         this.addUpdateTeacher(obj);
         break;
       case 'Delete':
@@ -209,11 +209,11 @@ export class TeacherRegistrationComponent {
     dialogRef.afterClosed().subscribe((result: any) => {
       if (result == 'yes' && obj) {
         this.clearFilterData();
-        this.getTableData();
+        // this.getTableData();
         this.pageNumber = this.pageNumber;
       }
       else if (result == 'yes') {
-        this.getTableData();
+        // this.getTableData();
         this.clearFilterData();
         this.pageNumber = 1;
       }
@@ -266,14 +266,17 @@ export class TeacherRegistrationComponent {
   }
 
 
-  onFilterClick() {
-    this.pageNumber = 1;
-    this.getTableData();
-  }
+  // onFilterClick() {
+  //   this.pageNumber = 1;
+  //   this.getTableData();
+  // }
 
   clearFilterData() {
-    this.searchContent.setValue('');
-    this.getTableData();
+    if(this.searchContent.value){
+      this.searchContent.setValue('');
+      this.getTableData();
+    }
+   
   }
 
   selectGrid(label: string) {
@@ -293,7 +296,6 @@ export class TeacherRegistrationComponent {
   }
 
   openDetailsDialog(obj: any) {
-    console.log(obj);
     var data = {
       headerImage: obj.uploadImage,
       header: this.webStorageS.languageFlag == 'EN' ? obj.name : obj.m_Name,

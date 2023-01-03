@@ -76,7 +76,8 @@
                 <div class="col-sm-6">
                     <mat-form-field appearance="outline" class="w-100">
                         <mat-label>{{'Labels.school' | translate}}</mat-label>
-                        <mat-select formControlName="schoolId"  > 
+                        <!-- <mat-select formControlName="schoolId"  >  -->
+                            <mat-select> 
                             <mat-option [value]="sch.id" *ngFor="let sch of schools">{{webStorageService.languageFlag =='mr-IN' ? sch.m_SchoolName : sch.schoolName}}</mat-option>
                         </mat-select>
                     <!-- <mat-error *ngIf="fc['schoolId'].hasError('required')">{{'Labels.schoolIsRequired' | translate}}</mat-error> -->
@@ -128,7 +129,6 @@
                     <input matInput formControlName="name" (keypress)="validation.noFirstSpaceAllow($event);">
                     <!-- <mat-error *ngIf="fc['name'].hasError('required')">{{'Labels.nameIsRequired' | translate}}</mat-error> -->
                     <mat-error *ngIf="fc['name'].hasError('pattern')">{{'Labels.pleaseEnterValidPersonName' | translate}}</mat-error>
-
                 </mat-form-field>
             </div>
             <div class="col-sm-6">

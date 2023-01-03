@@ -57,24 +57,24 @@
                 <div class="col-sm">
                     <mat-form-field appearance="outline" class="w-100">
                         <mat-label>{{'Labels.emailID'| translate}}</mat-label>
-                        <input matInput formControlName="emailId" (keypress)="validation.emailRegex($event)">
+                        <input matInput formControlName="emailId" >
                         <mat-error *ngIf="f['emailId'].hasError('pattern') ">
                             invalid EmailId</mat-error>
                     </mat-form-field>
                 </div>
                 <div class="col-sm-4">
                     <div class="d-flex justify-content-between align-items-center">
-                        <div class="upload-btn-wrapper">
-                            <button class="upload-btn">{{'Labels.uploadPhoto' | translate}}</button>
-                            <input type="file" name="myfile" formControlName="uploadImage"
-                                (change)="imgUpload($event)" />
+                        <div class="upload-btn-wrapper" >
+                            <button type="button" class="upload-btn" (click)="uploadImage.click()">{{'Labels.uploadPhoto' | translate}}</button>
+                            <input type="file" name="myfile"
+                                (change)="imgUpload($event)" [disabled]="uploadImghtml" #uploadImage />
                         </div>
-                        <div class="action-btn">
-                            <button type="button" mat-icon-button class="btn-icon text-primary" *ngIf="showAddRemImg"
+                        <div class="action-btn" *ngIf="uploadImghtml">
+                            <button type="button" mat-icon-button class="btn-icon text-primary" 
                                 (click)="viewImg()">
                                 <mat-icon>content_copy</mat-icon>
                             </button>
-                            <button type="button" mat-icon-button class="btn-icon text-danger" *ngIf="showAddRemImg"
+                            <button type="button" mat-icon-button class="btn-icon text-danger" 
                                 (click)="clearImg()">
                                 <mat-icon>delete</mat-icon>
                             </button>
@@ -96,7 +96,7 @@
                 <div class="col-sm-4">
                     <mat-form-field appearance="outline" class="w-100">
                         <mat-label>{{'Labels.birthDate'| translate}}</mat-label>
-                        <input matInput [matDatepicker]="picker" readonly formControlName="birthDate">
+                        <input matInput [matDatepicker]="picker" [max]="maxDate" readonly formControlName="birthDate">
                         <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
                         <mat-datepicker #picker></mat-datepicker>
                         <!-- <mat-error *ngIf="f['birthDate'].hasError('required') ">
@@ -230,13 +230,14 @@
                     <div class="col-sm-4">
                         <mat-form-field appearance="outline" class="w-100 ">
                             <mat-label>{{'Labels.bEdPercentages'| translate}}</mat-label>
-                            <input matInput formControlName="bEdPercentages">
+                            <input matInput formControlName="bEdPercentages" maxlength="10" (keypress)="validation.noFirstSpaceAllow($event)" >
+                            <mat-error *ngIf="td['bEdPercentages'].hasError('pattern')">Please Enter Valid Percentage</mat-error> 
                         </mat-form-field>
                     </div>
                     <div class="col-sm-4">
                         <mat-form-field appearance="outline" class="w-100 ">
                             <mat-label>{{'Labels.bEdUniversity'| translate}}</mat-label>
-                            <input matInput formControlName="bEdUniversityId">
+                            <input matInput formControlName="bEdUniversityId" maxlength="50" (keypress)="validation.noFirstSpaceAllow($event)">
                         </mat-form-field>
                     </div>
                 </div>
@@ -392,7 +393,7 @@
                     <div class="col-sm-4">
                         <mat-form-field appearance="outline" class="w-100">
                             <mat-label>{{'Labels.1stAppointmentDateInService'| translate}}</mat-label>
-                            <input matInput [matDatepicker]="dateService" readonly
+                            <input matInput [matDatepicker]="dateService" readonly [max]="maxDate"
                                 formControlName="dateOfFirstAppoinmentService">
                             <mat-datepicker-toggle matIconSuffix [for]="dateService"></mat-datepicker-toggle>
                             <mat-datepicker #dateService></mat-datepicker>
@@ -419,7 +420,7 @@
                     <div class="col-sm-4">
                         <mat-form-field appearance="outline" class="w-100">
                             <mat-label> {{'Labels.retirementDate'| translate}}</mat-label>
-                            <input matInput [matDatepicker]="RetirementDate" readonly formControlName="retirementDate">
+                            <input matInput [matDatepicker]="RetirementDate" readonly  formControlName="retirementDate">
                             <mat-datepicker-toggle matIconSuffix [for]="RetirementDate"></mat-datepicker-toggle>
                             <mat-datepicker #RetirementDate></mat-datepicker>
                         </mat-form-field>

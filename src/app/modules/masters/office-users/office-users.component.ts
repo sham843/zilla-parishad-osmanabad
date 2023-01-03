@@ -199,10 +199,14 @@ export class OfficeUsersComponent {
   // }
 
   clearFilterData() {
-    this.searchContent.setValue('');
-    this.getTableData();
-    // this.getofficeReport();
+      if(this.searchContent.value !=null && this.searchContent.value != '' ){
+      this.searchContent.setValue('');
+      this.getTableData();
+    }
   }
+    
+    
+    // this.getofficeReport();
 
   selectGrid(label: string) {
     if (label == 'Table') {
@@ -256,7 +260,7 @@ export class OfficeUsersComponent {
       autoFocus: false
     });
     viewDialogRef.afterClosed().subscribe((result: any) => {
-     if (result == 'yes') {
+     if (result == 'Yes') {
       this.getTableData();
       }
     });

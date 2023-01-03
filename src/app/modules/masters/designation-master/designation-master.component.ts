@@ -81,7 +81,7 @@ getTableTranslatedData(){
     // let tableDataArray = new Array();
     // let tableDatasize!: Number; 
    
-    let str = `pageno=${this.pageNumber}&pagesize=10&lan=${this.webStorage.languageFlag}`;
+    let str = `pageno=${this.pageNumber}&pagesize=10&textSearch=${this.searchContent.value ? this.searchContent.value:''}&lan=${this.webStorage.languageFlag}`;
     let reportStr = `pageno=${this.pageNumber}&pagesize=${this.totalCount* 10}&textSearch=${this.searchContent.value ? this.searchContent.value:''}&lan=${this.webStorage.languageFlag}`;
     this.apiService.setHttp('GET', 'zp_osmanabad/register-designation/GetAllByCriteria?' + (flag == 'pdfFlag' ? reportStr : str), false, false, false, 'baseUrl');
     this.apiService.getHttp().subscribe({
@@ -137,6 +137,7 @@ getTableTranslatedData(){
      
       if(result == 'yes' && obj){     
         this.clearForm();
+        this.getTableData();
         this.pageNumber = this.pageNumber;       
       }
       else if(result == 'yes' ){
@@ -229,9 +230,12 @@ getTableTranslatedData(){
          this.downloadFileService.downLoadPdf(keyPDFHeader, ValueData, objData);
   }
 
-  clearForm(){
-    this.searchContent.reset();
-    this.getTableData();
+  clearForm() {
+    if (this.searchContent.value) {
+      this.searchContent.reset();
+      this.getTableData();
+    }
+
    
   }
 }
