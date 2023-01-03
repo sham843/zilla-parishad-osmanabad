@@ -57,8 +57,8 @@ export class DashboardComponent implements OnInit, AfterViewInit {
       schoolId: []
     })
     this.filterFormForBarGraph = this.fb.group({
-      filtertalukaId: [],
-      filtercenterId: [],
+      filtertalukaId: [0],
+      filtercenterId: [0],
       filtersubjectId: []
     })
     this.getTalukas();
@@ -97,7 +97,8 @@ export class DashboardComponent implements OnInit, AfterViewInit {
   getSubject(groupId: any) {
     this.masterService.GetAllSubjectsByGroupClassId('', groupId).subscribe((res: any) => {
       this.subjectData = res.responseData;
-      this.fBgraph['filtersubjectId'].patchValue(this.subjectData[0].id)
+      this.fBgraph['filtersubjectId'].patchValue(this.subjectData[0].id);
+      this.getbarChartByTaluka();
     })
   }
   getPieChart() {
@@ -443,9 +444,9 @@ export class DashboardComponent implements OnInit, AfterViewInit {
     
     this.getSubject(obj.groupId);
     this.getBarChart(obj);
-    setTimeout(() => {
-      this.getbarChartByTaluka();
-    }, 100);
+    // setTimeout(() => {
+    //   this.getbarChartByTaluka();
+    // }, 200);
 
   }
   getPieChartData() {

@@ -249,7 +249,8 @@
         "LightMode" : "Light Mode",
         "DarkMode" : "Dark Mode",
         "UploadSchoolPhoto" : "Upload School photo",
-        "UploadProfilePhoto" : "Upload Profile Photo"
+        "UploadProfilePhoto" : "Upload Profile Photo",
+        "UpdatedTeacherRegistration" : "Update Teacher Details"
         
 
     }
