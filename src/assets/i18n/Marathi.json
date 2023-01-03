@@ -244,7 +244,8 @@
         "GridView" : "ग्रिड दृश्य",
         "SaralvalidId":"कृपया 19 अंकी सरल आयडी प्रविष्ट करा",
         "OfficeUsersList" : "ऑफिस वापरकर्त्यांची यादी",
-        "updateOfficeUser" : "ऑफिस वापरकर्ते अपडेट करा"
+        "updateOfficeUser" : "ऑफिस वापरकर्ते अपडेट करा",
+        "profileView" : "प्रोफाइल दृश्य"
     }
 }
 
