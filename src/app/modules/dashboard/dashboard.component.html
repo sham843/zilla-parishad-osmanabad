@@ -162,7 +162,7 @@
                                 <table class="table inner-table mb-3 table-bordered">
                                     <thead>
                                         <tr>
-                                            <th *ngFor="let header of totalStudentSurveyData">
+                                            <th *ngFor="let header of totalStudentSurveyData; let i=index">
                                                 <div class="row align-items-start">
                                                     <div class="col-sm-auto" *ngIf="header.ischeckboxShow==false">
                                                         {{webStorage.languageFlag == 'EN'?
@@ -175,7 +175,7 @@
                                                                 <input class="form-check-input" type="radio"
                                                                     id="header.label" name="std" value="header.status"
                                                                     [disabled]="header.status==true"
-                                                                    (click)="checkData(header)"
+                                                                    (click)="checkData(header, 'radio')"
                                                                     [checked]="header.status">
                                                                 <label class="form-check-label" for="flexCheckDefault">
                                                                     {{webStorage.languageFlag == 'EN'?
@@ -190,7 +190,7 @@
                                                                     class="d-flex align-items-center justify-content-start">
                                                                     <div class="form-check">
                                                                         <input class="form-check-input" type="checkbox"
-                                                                            [(ngModel)]="std.status">
+                                                                            [(ngModel)]="std.status"  (click)="checkData(header, 'checkbox',i)">
                                                                         <label class="form-check-label"
                                                                             for="flexCheckDefault">
                                                                             {{webStorage.languageFlag == 'EN'?
@@ -212,7 +212,19 @@
                                     </thead>
                                     <tbody>
                                         <tr>
-                                            <td *ngFor="let item of totalStudentSurveyData">{{item?.studentCount}}</td>
+                                            <td *ngFor="let item of totalStudentSurveyData">
+                                                <div *ngIf="item.status!=true"> {{item?.assessmentCount+"/"+item?.studentCount}}</div>
+                                                <div class="row" *ngIf="item.status==true">
+                                                    <div class="col-sm"
+                                                        *ngFor="let std of item.standardDetails">
+                                                        <div class="d-flex align-items-center justify-content-start">
+                                                            <div class="form-check">
+                                                               {{std?.status==true?(std?.assessmentCount+'/'+std?.studentCount):' '}} 
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </td>
                                         </tr>
                                     </tbody>
                                 </table>
