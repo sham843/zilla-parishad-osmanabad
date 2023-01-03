@@ -257,7 +257,7 @@ body {
   font-family: "Noto Sans Devanagari", sans-serif !important;
 }
 .card-height-full{
-  max-height:81vh;
+  max-height:77vh;
   overflow-y: auto;
 }
 .card-height-mid {
@@ -310,9 +310,14 @@ body {
 }
 .inner-table thead th{
   background-color: var(--main-light-color);
+  width: 300px !important;
 }
 .inner-table thead th,
 .inner-table tbody td{
+  vertical-align: top;
+}
+.inner-table thead tr th:first-child {
+  width: 10rem !important;
   vertical-align: middle;
 }
 .inner-table .table-img{

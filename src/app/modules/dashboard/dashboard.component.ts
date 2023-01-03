@@ -403,7 +403,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
       next: (res: any) => {
         if (res.statusCode == "200") {
           this.dashboardCountData.push(res.responseData.responseData1[0]);
-          res.responseData.responseData2.unshift({ m_GroupClass : 'एकूण संख्या', groupClass:'Tatal', studentCount :this.dashboardCountData[0]?.totalStudent,groupId: 0, ischeckboxShow: false, status: false });
+          res.responseData.responseData2.unshift({ m_GroupClass : 'एकूण संख्या', groupClass:'Total', studentCount :this.dashboardCountData[0]?.totalStudent,groupId: 0, ischeckboxShow: false, status: false });
           this.totalStudentSurveyData =res.responseData.responseData2;
           this.totalStudentSurveyData.map((x:any)=>{
             x.status = true;

@@ -178,7 +178,10 @@ input:-webkit-autofill:active {
 //   }
 .mat-drawer-container{
     background-color: transparent !important;
-    overflow: hidden !important;
+    overflow: initial !important;
+}
+.mat-drawer-content {
+    overflow: unset !important;
 }
 .mat-drawer{
     width: 350px !important;

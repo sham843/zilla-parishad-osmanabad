@@ -47,7 +47,8 @@
                     </div>
 
                     <div class="d-flex justify-content-end">
-                        <button mat-flat-button type="button" class="me-2 btn-second" mat-dialog-close (click)="this.drawer.close()">Cancel</button>
+                        <button mat-flat-button type="button" class="me-2 btn-second" mat-dialog-close
+                            (click)="this.drawer.close()">Cancel</button>
                         <button mat-flat-button type="submit" class="btn-main btn">Filter</button>
                     </div>
                 </form>
@@ -162,50 +163,55 @@
                                     <thead>
                                         <tr>
                                             <th *ngFor="let header of totalStudentSurveyData">
-                                                <!-- <div class="row">
-                                                    <div class="col-sm-auto">
-                                                        asf
+                                                <div class="row align-items-start">
+                                                    <div class="col-sm-auto" *ngIf="header.ischeckboxShow==false">
+                                                        {{webStorage.languageFlag == 'EN'?
+                                                        header?.groupClass:header?.m_GroupClass }}
                                                     </div>
                                                     <div class="col-sm">
-                                                        asdf
-                                                    </div>
-                                                </div> -->
-                                                <div *ngIf="header.ischeckboxShow==false">
-                                                    {{webStorage.languageFlag == 'EN'? header?.groupClass:header?.m_GroupClass }}
-                                                </div>
-                                                <div *ngIf="header.ischeckboxShow==true">
-                                                    <div class="d-flex align-items-center justify-content-center">
-                                                        <div class="form-check">
-                                                            <input class="form-check-input" type="radio" id="header.label" name="std" value="header.status" 
-                                                                [disabled]="header.status==true" (click)="checkData(header)" [checked]="header.status"
-                                                                >
-                                                            <label class="form-check-label" for="flexCheckDefault">
-                                                                {{webStorage.languageFlag == 'EN'? header?.groupClass:header?.m_GroupClass }}
-                                                            </label>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="row" *ngIf="header.status==true">
-                                                    <div class="col-sm-4" *ngFor="let std of header.standardDetails">
-                                                        <div class="d-flex align-items-center justify-content-start">
+                                                        <div class="d-flex align-items-center justify-content-center"
+                                                            *ngIf="header.ischeckboxShow==true">
                                                             <div class="form-check">
-                                                                <input class="form-check-input" type="checkbox"
-                                                                    [(ngModel)]="std.status">
+                                                                <input class="form-check-input" type="radio"
+                                                                    id="header.label" name="std" value="header.status"
+                                                                    [disabled]="header.status==true"
+                                                                    (click)="checkData(header)"
+                                                                    [checked]="header.status">
                                                                 <label class="form-check-label" for="flexCheckDefault">
-                                                                    {{webStorage.languageFlag == 'EN'? std?.standard:std?.m_Standard }}
+                                                                    {{webStorage.languageFlag == 'EN'?
+                                                                    header?.groupClass:header?.m_GroupClass }}
                                                                 </label>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row" *ngIf="header.status==true">
+                                                            <div class="col-sm"
+                                                                *ngFor="let std of header.standardDetails">
+                                                                <div
+                                                                    class="d-flex align-items-center justify-content-start">
+                                                                    <div class="form-check">
+                                                                        <input class="form-check-input" type="checkbox"
+                                                                            [(ngModel)]="std.status">
+                                                                        <label class="form-check-label"
+                                                                            for="flexCheckDefault">
+                                                                            {{webStorage.languageFlag == 'EN'?
+                                                                            std?.standard:std?.m_Standard }}
+                                                                        </label>
+                                                                    </div>
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div *ngIf="header.status==false">
+
+
+                                                <!-- <div *ngIf="header.status==false">
                                                     &nbsp;
-                                                </div>
+                                                </div> -->
                                             </th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr >
+                                        <tr>
                                             <td *ngFor="let item of totalStudentSurveyData">{{item?.studentCount}}</td>
                                         </tr>
                                     </tbody>

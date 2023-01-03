@@ -89,7 +89,7 @@
                 <div class="col-sm-4">
                     <div class="d-flex justify-content-between align-items-center">
                         <div class="upload-btn-wrapper">
-                            <button class="upload-btn">{{'Labels.uploadPhoto' | translate}}</button>
+                            <button type="button" class="upload-btn">{{'Labels.uploadPhoto' | translate}}</button>
                             <input type="file" name="myfile" formControlName="uploadImage"
                                 (change)="imgUpload($event)" />
                         </div>
@@ -113,7 +113,7 @@
                         <div formArrayName="schoolDocument" *ngFor="let img of multipleImg.controls; let i = index;">
                             <div [formGroupName]="i">
                                 <div class="upload-btn-wrapper">
-                                    <button class="upload-btn">Multiple Image</button>
+                                    <button type="button" class="upload-btn">Multiple Image</button>
                                     <input type="file" name="myfile" formControlName="docPath"
                                         (change)="multipleImgUpload($event)" />
                                 </div>
