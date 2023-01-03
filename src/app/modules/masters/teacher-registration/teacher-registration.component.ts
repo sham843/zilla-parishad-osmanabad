@@ -272,8 +272,11 @@ export class TeacherRegistrationComponent {
   // }
 
   clearFilterData() {
-    this.searchContent.setValue('');
-    this.getTableData();
+    if(this.searchContent.value){
+      this.searchContent.setValue('');
+      this.getTableData();
+    }
+   
   }
 
   selectGrid(label: string) {
@@ -293,7 +296,6 @@ export class TeacherRegistrationComponent {
   }
 
   openDetailsDialog(obj: any) {
-    console.log(obj);
     var data = {
       headerImage: obj.uploadImage,
       header: this.webStorageS.languageFlag == 'EN' ? obj.name : obj.m_Name,

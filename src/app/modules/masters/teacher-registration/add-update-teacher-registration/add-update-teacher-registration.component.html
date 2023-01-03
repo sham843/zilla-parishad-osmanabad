@@ -65,9 +65,9 @@
                 <div class="col-sm-4">
                     <div class="d-flex justify-content-between align-items-center">
                         <div class="upload-btn-wrapper" >
-                            <button type="button" class="upload-btn" (click)="uploadImagee.click()">{{'Labels.uploadPhoto' | translate}}</button>
+                            <button type="button" class="upload-btn" (click)="uploadImage.click()">{{'Labels.uploadPhoto' | translate}}</button>
                             <input type="file" name="myfile"
-                                (change)="imgUpload($event)" [disabled]="uploadImghtml" #uploadImagee />
+                                (change)="imgUpload($event)" [disabled]="uploadImghtml" #uploadImage />
                         </div>
                         <div class="action-btn" *ngIf="uploadImghtml">
                             <button type="button" mat-icon-button class="btn-icon text-primary" 
