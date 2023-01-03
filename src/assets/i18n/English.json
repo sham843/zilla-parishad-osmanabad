@@ -148,7 +148,7 @@
         "logout": "Logout",
         "kendraRequired" : "Kendra is required",
         "contactBeo" : "Contact No.(BEO Office)",
-        "searchByNameContactNo" : "Search By Name/Contact No.",
+        "searchByNameContactNo" : "Student Name/Parent Mobile No.",
         "nameIsRequired" : "Name is required",
         "mobileIsRequired" : "Mobile number is required",
         "nameMarathi" : "Name In (Marathi)",
