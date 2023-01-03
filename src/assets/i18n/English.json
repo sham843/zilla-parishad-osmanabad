@@ -245,7 +245,9 @@
         "OfficeUsersList" : "Office Users List",
         "updateOfficeUser" : "Update Office Users",
         "profileView" : "Profile View",
-        "SameCurrentAddress" : "Same as Current Address"
+        "SameCurrentAddress" : "Same as Current Address",
+        "LightMode" : "Light Mode",
+        "DarkMode" : "Dark Mode"
         
 
     }
