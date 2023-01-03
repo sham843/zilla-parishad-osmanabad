@@ -91,8 +91,8 @@
                         <input matInput formControlName="f_MName"
                             (keypress)="validators.unicodeMarathiValidation($event)"
                             (keypress)="validators.noSpaceAllow($event)">
-                        <!-- <mat-error *ngIf="fc['f_MName'].hasError('required')">{{'Labels.enterStudentFirstName'|
-                            translate}}</mat-error> -->
+                        <mat-error *ngIf="fc['f_MName'].hasError('pattern')">{{'Labels.enterStudentFirstName'|
+                            translate}}</mat-error>
                     </mat-form-field>
                 </div>
                 <div class="col-sm-4">
@@ -100,8 +100,8 @@
                         <mat-label>{{'Labels.studentMiddelNameMarathi'| translate}}</mat-label>
                         <input matInput formControlName="m_MName" (keypress)="validators.unicodeMarathiValidation($event)"
                         (keypress)="validators.noSpaceAllow($event)">
-                        <!-- <mat-error *ngIf="fc['m_MName'].hasError('required')">{{'Labels.enterStudentMiddelName'|
-                            translate}}</mat-error> -->
+                        <mat-error *ngIf="fc['m_MName'].hasError('required')">{{'Labels.enterStudentMiddelName'|
+                            translate}}</mat-error>
                     </mat-form-field>
                 </div>
                 <div class="col-sm-4">
@@ -109,7 +109,7 @@
                         <mat-label>{{'Labels.studentLastNameMarathi'| translate}}</mat-label>
                         <input matInput formControlName="l_MName" (keypress)="validators.unicodeMarathiValidation($event)"
                         (keypress)="validators.noSpaceAllow($event)">
-                        <!-- <mat-error *ngIf="fc['l_MName'].hasError('required')">{{'Labels.enterStudentLastName'| translate}}</mat-error> -->
+                        <mat-error *ngIf="fc['l_MName'].hasError('required')">{{'Labels.enterStudentLastName'| translate}}</mat-error>
                     </mat-form-field>
                 </div>
               
