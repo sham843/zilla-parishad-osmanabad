@@ -157,8 +157,8 @@ export class DashboardStudentDetailsComponent {
 
   getAllCenter() {
     this.centerArr = [];
-    let id = 1;
-    this.masterService.getAllCenter(this.languageFlag, id).subscribe({
+    let Tid = this.filterForm.value.talukaId
+    this.masterService.getAllCenter(this.languageFlag, Tid).subscribe({
       next: (res: any) => {
         if (res.statusCode == 200) {
           this.centerArr = res.responseData;
@@ -173,7 +173,7 @@ export class DashboardStudentDetailsComponent {
 
   getAllSchoolsByCenterId() {
     this.schoolArr = [];
-    let Tid = this.filterForm.value.talukaId
+    let Tid = this.filterForm.value.talukaId;
     let Cid = this.filterForm.value.centerId;
     this.masterService.getAllSchoolByCriteria(this.languageFlag, Tid, 0, Cid).subscribe({
       next: (res: any) => {
