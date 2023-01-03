@@ -116,7 +116,7 @@
             <mat-card-header class="card-header">
                 <h6 class="d-flex align-items-center justify-content-between w-100 mb-0 fw-bold">
                     <div>सर्वेक्षण केलेल्या विद्यार्थ्यांची एकूण संख्या</div>
-                    <div>निवडलेली संख्या : <span class="fw-bold">{{selectedObj?.GroupId==1? dashboardCountData[0]?.totalStudent_1_2: selectedObj?.GroupId==2? dashboardCountData[0]?.totalStudent_3_5 :dashboardCountData[0]?.totalStudent_6_8}}</span></div>
+                    <div>निवडलेली संख्या : <span class="fw-bold">{{selectedObj?.groupId==1? dashboardCountData[0]?.totalStudent_1_2: selectedObj?.groupId==2? dashboardCountData[0]?.totalStudent_3_5 :dashboardCountData[0]?.totalStudent_6_8}}</span></div>
                 </h6>
             </mat-card-header>
 
@@ -126,7 +126,7 @@
                         <table class="table inner-table mb-3 table-bordered">
                             <thead>
                                 <tr>
-                                    <th *ngFor="let header of tableColumn">
+                                    <th *ngFor="let header of totalStudentSurveyData">
                                         <!-- <div class="row">
                                             <div class="col-sm-auto">
                                                 asf
@@ -136,7 +136,7 @@
                                             </div>
                                         </div> -->
                                         <div *ngIf="header.ischeckboxShow==false">
-                                            {{header.label}}
+                                            {{webStorage.languageFlag == 'EN'? header?.groupClass:header?.m_GroupClass }}
                                         </div>
                                         <div *ngIf="header.ischeckboxShow==true">
                                             <div class="d-flex align-items-center justify-content-center">
@@ -145,19 +145,19 @@
                                                         [disabled]="header.status==true" (click)="checkData(header)" [checked]="header.status"
                                                         >
                                                     <label class="form-check-label" for="flexCheckDefault">
-                                                        {{header.label}}
+                                                        {{webStorage.languageFlag == 'EN'? header?.groupClass:header?.m_GroupClass }}
                                                     </label>
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="row" *ngIf="header.status==true">
-                                            <div class="col-sm-4" *ngFor="let sub of header.subSTD">
+                                            <div class="col-sm-4" *ngFor="let std of header.standardDetails">
                                                 <div class="d-flex align-items-center justify-content-start">
                                                     <div class="form-check">
                                                         <input class="form-check-input" type="checkbox"
-                                                            [(ngModel)]="sub.status">
+                                                            [(ngModel)]="std.status">
                                                         <label class="form-check-label" for="flexCheckDefault">
-                                                            {{sub.label}}
+                                                            {{webStorage.languageFlag == 'EN'? std?.standard:std?.m_Standard }}
                                                         </label>
                                                     </div>
                                                 </div>
@@ -170,11 +170,8 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr *ngFor="let item of dashboardCountData">
-                                    <td>{{item?.totalStudent}}</td>
-                                    <td>{{item?.totalStudent_1_2}}</td>
-                                    <td>{{item?.totalStudent_3_5}}</td>
-                                    <td>{{item?.totalStudent_6_8}}</td>
+                                <tr >
+                                    <td *ngFor="let item of totalStudentSurveyData">{{item?.studentCount}}</td>
                                 </tr>
                             </tbody>
                         </table>
