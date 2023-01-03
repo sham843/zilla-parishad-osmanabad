@@ -89,7 +89,7 @@
                 <div class="col-sm-4">
                     <div class="d-flex justify-content-between align-items-center">
                         <div class="upload-btn-wrapper">
-                            <button type="button" class="upload-btn">{{'Labels.uploadPhoto' | translate}}</button>
+                            <button type="button" class="upload-btn">{{'Labels.UploadProfilePhoto' | translate}}</button>
                             <input type="file" name="myfile" formControlName="uploadImage"
                                 (change)="imgUpload($event)" />
                         </div>
@@ -200,11 +200,11 @@
                         <div formArrayName="schoolDocument" *ngFor="let img of multipleImg.controls; let i = index;">
                             <div [formGroupName]="i" class="d-flex">
                                 <div class="upload-btn-wrapper">
-                                    <button type="button" class="upload-btn">Multiple Image</button>
+                                    <button type="button" class="upload-btn">{{'Labels.UploadSchoolPhoto' | translate}}</button>
                                     <input type="file" name="myfile" formControlName="docPath"
                                         (change)="multipleImgUpload($event)" />
                                 </div>
-                                <div class="action-btn">
+                                <!-- <div class="action-btn">
                                     <button type="button" mat-icon-button class="btn-icon text-primary" *ngIf="uploadMultipleImg"
                                 (click)="viewImg()">
                                 <mat-icon>visibility</mat-icon>
@@ -213,7 +213,24 @@
                                         (click)="clearImg()">
                                         <mat-icon>delete</mat-icon>
                                     </button>
-                                </div>
+                                </div> -->
+
+
+                                <!-- Display Image -->
+                                <div class="my-4">
+                                    <div class="d-flex  flex-wrap gap-4">
+                                      <ng-container *ngFor="let item of imgArray; let i = index">
+                                        <div class="gallery">
+                                          <img [src]="item.docPath" height="100px" width="100px">
+                                          <button type="button" mat-icon-button class="bg-danger bg-opacity-25 text-danger" (click)="clearMultipleImg(i)">
+                                            <mat-icon>delete</mat-icon>
+                                          </button>
+                                        </div>
+                                      </ng-container>
+                                    </div>
+                                  </div>
+                                <!-- Display Image -->
+
                             </div>
                         </div>
                     </div>

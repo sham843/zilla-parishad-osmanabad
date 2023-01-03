@@ -99,7 +99,7 @@ export class FileUploadService {
         this.apiService.setHttp('post', 'zp_osmanabad/documents/upload-multiple-photos', false, formData, false, 'baseUrl');
         this.apiService.getHttp().subscribe({
           next: (res: any) => {
-            if (res.statusCode === "200") {
+            if (res.statusCode == 200) {
               this.spinner.hide();
               obj.next(res);
             }
