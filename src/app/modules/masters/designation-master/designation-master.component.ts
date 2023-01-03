@@ -137,6 +137,7 @@ getTableTranslatedData(){
      
       if(result == 'yes' && obj){     
         this.clearForm();
+        this.getTableData();
         this.pageNumber = this.pageNumber;       
       }
       else if(result == 'yes' ){

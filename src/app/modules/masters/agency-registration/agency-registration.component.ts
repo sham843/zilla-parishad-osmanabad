@@ -67,10 +67,6 @@ export class AgencyRegistrationComponent {
     this.ngxSpinner.show();
     this.pageNumber = flag == 'filter' ? 1 : this.pageNumber;
     flag == 'filter' ? this.agencyReport = [] : '';
-    if (flag == 'filter' && !this.filterForm.value.searchText) {
-      this.ngxSpinner.hide();
-      return
-    }
     let obj = this.filterForm.value;
     let str = `pageno=${this.pageNumber}&pagesize=10&&TextSearch=${obj.searchText}&lan=${this.webStroageService.languageFlag}`;
     let reportStr = `pageno=${this.pageNumber}&pagesize=${this.totalCount * 10}&TextSearch=${obj.searchText}&lan=${this.webStroageService.languageFlag}`

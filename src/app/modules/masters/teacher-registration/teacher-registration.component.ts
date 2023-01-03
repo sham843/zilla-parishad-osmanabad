@@ -209,7 +209,7 @@ export class TeacherRegistrationComponent {
     dialogRef.afterClosed().subscribe((result: any) => {
       if (result == 'yes' && obj) {
         this.clearFilterData();
-        // this.getTableData();
+        this.getTableData();
         this.pageNumber = this.pageNumber;
       }
       else if (result == 'yes') {

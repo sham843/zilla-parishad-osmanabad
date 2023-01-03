@@ -13,46 +13,46 @@ declare var $: any;
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.scss']
 })
-export class DashboardComponent implements OnInit,AfterViewInit {
+export class DashboardComponent implements OnInit, AfterViewInit {
   talukaData = new Array();
   lang !: string;
   schoolData = new Array();
   centerData = new Array();
-  subjectData= new Array();
+  subjectData = new Array();
   filterForm!: FormGroup;
   filterFormForBarGraph!: FormGroup;
   piechartOptions: any;
   piechartOptions1: any;
   piechartOptions2: any;
   barchartOptions: any;
-  barchartOptions1:any;
-  dashboardCountData=new Array();
-  tableColumn=new Array();
-  barChartData=new Array();
-  showBarChartF:boolean=false;
-  selectedObj!:object|any;
-  barChartByTalukaData=new Array();
+  barchartOptions1: any;
+  dashboardCountData = new Array();
+  tableColumn = new Array();
+  barChartData = new Array();
+  showBarChartF: boolean = false;
+  selectedObj!: object | any;
+  barChartByTalukaData = new Array();
   graphInstance: any;
-  showBarChartS:boolean=false;
-  tableDataTopPerformance=new Array();
-  displayedheaders=new Array;
-  graphSubjectData=new Array();
-  totalStudentSurveyData=new Array();
-  optionalSubjectindex!:number;
-  SharingObject:any;
-  globalTalId:any;
+  showBarChartS: boolean = false;
+  tableDataTopPerformance = new Array();
+  displayedheaders = new Array;
+  graphSubjectData = new Array();
+  totalStudentSurveyData = new Array();
+  optionalSubjectindex!: number;
+  SharingObject: any;
+  globalTalId: any;
   get f() { return this.filterForm.controls }
-  get fBgraph() { return this.filterFormForBarGraph.controls}
+  get fBgraph() { return this.filterFormForBarGraph.controls }
   constructor(public translate: TranslateService, private masterService: MasterService,
-    public webStorage: WebStorageService, private fb: FormBuilder, private apiService:ApiService,
-    private error:ErrorsService, private commonMethods:CommonMethodsService, private router:Router) {
+    public webStorage: WebStorageService, private fb: FormBuilder, private apiService: ApiService,
+    private error: ErrorsService, private commonMethods: CommonMethodsService, private router: Router) {
     this.getBarChartOption();
     this.getPieChart();
   }
-  
+
   ngOnInit() {
     this.filterForm = this.fb.group({
-      talukaId: [],
+      talukaId: [4],
       centerId: [],
       schoolId: []
     })
@@ -65,34 +65,35 @@ export class DashboardComponent implements OnInit,AfterViewInit {
     this.getdashboardCount();
     this.getTabledataByTaluka()
   }
- 
+
   ngAfterViewInit() {
     this.showSvgMap(this.commonMethods.mapRegions());
     this.clickOnSvgMap('select');
   }
   getTalukas() {
-    this.talukaData=[];
+    this.talukaData = [];
     this.masterService.getAllTaluka().subscribe((res: any) => {
-      this.talukaData.push({ "id": 0, "taluka": "All", "m_Taluka": "सर्व"}, ...res.responseData);
-      const obj=this.talukaData.find((x:any)=> x.taluka=="Osmanabad")
+      this.talukaData.push({ "id": 0, "taluka": "All", "m_Taluka": "सर्व" }, ...res.responseData);
+      const obj = this.talukaData.find((x: any) => x.taluka == "Osmanabad")
       this.f['talukaId'].patchValue(obj.id);
+      this.getCenters() ;
     })
   }
   getCenters() {
-    this.centerData=[];
-    this.masterService.getAllCenter('', (this.f['talukaId'].value|0)).subscribe((res: any) => {
-      this.centerData.push({ "id": 0, "center": "All", "m_Center": "सर्व"}, ...res.responseData);
+    this.centerData = [];
+    this.masterService.getAllCenter('', (this.f['talukaId'].value | 0)).subscribe((res: any) => {
+      this.centerData.push({ "id": 0, "center": "All", "m_Center": "सर्व" }, ...res.responseData);
       this.f['centerId'].patchValue(0);
     })
   }
   getschools() {
     this.fBgraph['filtercenterId'].patchValue(this.f['centerId'].value)
-    this.masterService.getAllSchoolsByCenterId('', (this.f['centerId'].value|0)).subscribe((res: any) => {
+    this.masterService.getAllSchoolByCriteria('',(this.f['talukaId'].value|0),0, (this.f['centerId'].value|0)).subscribe((res: any) => {
       this.schoolData = res.responseData;
     })
   }
-  getSubject(GroupId:any){
-    this.masterService.  GetAllSubjectsByGroupClassId('', GroupId).subscribe((res: any) => {
+  getSubject(GroupId: any) {
+    this.masterService.GetAllSubjectsByGroupClassId('', GroupId).subscribe((res: any) => {
       this.subjectData = res.responseData;
       this.fBgraph['filtersubjectId'].patchValue(this.subjectData[0].id)
     })
@@ -111,7 +112,7 @@ export class DashboardComponent implements OnInit,AfterViewInit {
         colors: ["#00E396", "#F9CE1D", "#D4526E", "#D7263D", "#A300D6"]
       },
       // colors: [],
-       labels: [],
+      labels: [],
       responsive: [
         {
           breakpoint: 480,
@@ -119,7 +120,7 @@ export class DashboardComponent implements OnInit,AfterViewInit {
             chart: {
               width: 200
             },
-           
+
             legend: {
               position: "bottom"
             }
@@ -132,13 +133,13 @@ export class DashboardComponent implements OnInit,AfterViewInit {
       chart: {
         type: "donut"
       },
-      
+
       fill: {
         type: "solid",
         colors: ["#00E396", "#F9CE1D", "#D4526E", "#D7263D", "#A300D6"]
       },
       // colors: [],
-       labels: [],
+      labels: [],
       responsive: [
         {
           breakpoint: 480,
@@ -146,7 +147,7 @@ export class DashboardComponent implements OnInit,AfterViewInit {
             chart: {
               width: 200
             },
-           
+
             legend: {
               position: "bottom"
             }
@@ -159,13 +160,13 @@ export class DashboardComponent implements OnInit,AfterViewInit {
       chart: {
         type: "donut"
       },
-     
+
       fill: {
         type: "solid",
         colors: ["#00E396", "#F9CE1D", "#D4526E", "#D7263D", "#A300D6"]
       },
       // colors: [],
-       labels: [],
+      labels: [],
       responsive: [
         {
           breakpoint: 480,
@@ -173,7 +174,7 @@ export class DashboardComponent implements OnInit,AfterViewInit {
             chart: {
               width: 200
             },
-           
+
             legend: {
               position: "bottom"
             }
@@ -183,21 +184,25 @@ export class DashboardComponent implements OnInit,AfterViewInit {
     };
   }
   getBarChartOption() {
+    
     this.barchartOptions = {
-      series:[],
+      series: [],
       chart: {
         type: "bar",
         height: 420,
-        columnWidth: '50%',
+        width: 300,
+        horizontal: false,
+        borderRadius: 10, 
+        columnWidth: '45%',
         stacked: true,
         stackType: "100%",
         toolbar: {
           show: false
         },
         events: {
-          dataPointSelection: (event:any, chartContext:any, config:any) => {
-          console.log(event,chartContext)
-          this.optionalSubjectindex=config.seriesIndex;
+          dataPointSelection: (event: any, chartContext: any, config: any) => {
+            console.log(event, chartContext)
+            this.optionalSubjectindex = config.seriesIndex;
           }
         }
       },
@@ -247,16 +252,26 @@ export class DashboardComponent implements OnInit,AfterViewInit {
         // opacity: 1
       },
       legend: {
-        position: "bottom",
+        position: 'right',
+        fontSize: '12px',
+        show: true,
+        markers: {
+          width: 12,
+          height: 12,
+          strokeWidth: 0,
+          strokeColor: '#fff',
+          fillColors: ['#CB4B4B', '#E76A63', '#E98754', '#EFB45B', '#65C889', '#73AFFE'],
+        }
       }
     };
 
 
     this.barchartOptions1 = {
-      series:[],
+      series: [],
       chart: {
         type: "bar",
         height: 350,
+        width: '100%',
         columnWidth: '50%',
         stacked: true,
         stackType: "100%",
@@ -264,14 +279,6 @@ export class DashboardComponent implements OnInit,AfterViewInit {
           show: false
         },
       },
-      // theme: {
-      //   monochrome: {
-      //     enabled: true,
-      //     color: '#CB4B4B',
-      //     shadeTo: 'light',
-      //     shadeIntensity: 0.65
-      //   }
-      // },
       responsive: [
         {
           breakpoint: 480,
@@ -279,7 +286,7 @@ export class DashboardComponent implements OnInit,AfterViewInit {
             legend: {
               colors: ['#CB4B4B', '#E76A63', '#E98754', '#EFB45B', '#65C889'],
               position: "bottom",
-              offsetX: -10,
+              offsetX: 0,
               offsetY: 0
             }
           }
@@ -289,16 +296,16 @@ export class DashboardComponent implements OnInit,AfterViewInit {
         labels: {
           show: true,
           style: {
-            fontSize: '14px',
+            fontSize: '12px',
             fontFamily: 'Noto Sans Devanagari, sans-serif',
             fontWeight: 600,
             cssClass: 'apexcharts-xaxis-label',
-        },
+          },
         },
         categories: [
         ]
       },
-      
+
       yaxis: {
         show: false,
         showAlways: false,
@@ -319,59 +326,66 @@ export class DashboardComponent implements OnInit,AfterViewInit {
         opacity: 1
       },
       legend: {
-        position: "bottom",
-        offsetX: 0,
-        offsetY: 50
+        position: 'bottom',
+        fontSize: '12px',
+        show: true,
+        markers: {
+          width: 12,
+          height: 12,
+          strokeWidth: 0,
+          strokeColor: '#fff',
+          fillColors: ['#CB4B4B', '#E76A63', '#E98754', '#EFB45B', '#65C889', '#73AFFE'],
+        }
       }
     };
   }
-  dashboardAPis(){
-     this.getdashboardCount();
-     this.getBarChart(this.selectedObj);
-     this.getbarChartByTaluka();
-     
+  dashboardAPis() {
+    this.getdashboardCount();
+    this.getBarChart(this.selectedObj);
+    this.getbarChartByTaluka();
+
   }
-  selectedBar(selectedbar:any){
-   const index=this.barchartOptions.xaxis.categories.findIndex((i:any)=>i==selectedbar);
-   const data= this.barChartData.find((x:any)=> x.m_SubjectName==selectedbar && x.m_OptionName==this.barchartOptions.series[0][index][this.optionalSubjectindex].name);
-   const formData=this.filterForm.value
-    this.SharingObject={
-      GroupId:this.selectedObj.GroupId,
-      TalukaId:formData.talukaId,
-      CenterId:formData.centerId,
-      SchoolId:formData.schoolId,
-      SubjectId:data.subjectId,
-      OptionGrade:data.optionGrade
+  selectedBar(selectedbar: any) {
+    const index = this.barchartOptions.xaxis.categories.findIndex((i: any) => i == selectedbar);
+    const data = this.barChartData.find((x: any) => x.m_SubjectName == selectedbar && x.m_OptionName == this.barchartOptions.series[0][index][this.optionalSubjectindex].name);
+    const formData = this.filterForm.value
+    this.SharingObject = {
+      GroupId: this.selectedObj.GroupId,
+      TalukaId: formData.talukaId,
+      CenterId: formData.centerId,
+      SchoolId: formData.schoolId,
+      SubjectId: data.subjectId,
+      OptionGrade: data.optionGrade
     }
     this.webStorage.selectedBarchartObjData.next(this.SharingObject);
     this.router.navigate(['/dashboard-student-details'])
   }
-  
-  getdashboardCount(){
-    const formData= this.filterForm.value;
-    this.dashboardCountData=[];
-    this.apiService.setHttp('GET', 'zp-osmanabad/Dashboard/GetDashboardCount?TalukaId='+(formData?.talukaId ||0)+'&CenterId='+(formData?.centerId ||0)+'&SchoolId='+(formData?.schoolId ||0), false, false, false, 'baseUrl');
+
+  getdashboardCount() {
+    const formData = this.filterForm.value;
+    this.dashboardCountData = [];
+    this.apiService.setHttp('GET', 'zp-osmanabad/Dashboard/GetDashboardCount?TalukaId=' + (formData?.talukaId || 0) + '&CenterId=' + (formData?.centerId || 0) + '&SchoolId=' + (formData?.schoolId || 0), false, false, false, 'baseUrl');
     this.apiService.getHttp().subscribe({
-      next: (res: any) => { 
+      next: (res: any) => {
         if (res.statusCode == "200") {
           this.dashboardCountData.push(res.responseData.responseData1[0]);
-          this.totalStudentSurveyData=res.responseData.responseData2;
-          this.tableColumn=[{label:'एकूण संख्या', GroupId:0,  ischeckboxShow:false, status:false},{label:'१ली ते 2वी',GroupId:1, subSTD:[{label:'१ली',subGroupId:1, status:false},{label:'2री',subGroupId:2, status:false}] , ischeckboxShow:true, status:true},{label:'3री ते ५वी',GroupId:2, subSTD:[{label:'3री',subGroupId:3, status:false},{label:'4री',subGroupId:4, status:false},{label:'5वी',subGroupId:5, status:false}] , ischeckboxShow:true, status:false},{label:'६वी ते ८वी',GroupId:3, subSTD:[{label:'६वी',subGroupId:6, status:false},{label:'7वी',subGroupId:7, status:false},{label:'८वी',subGroupId:8, status:false}], ischeckboxShow:true, status:false},];
+          this.totalStudentSurveyData = res.responseData.responseData2;
+          this.tableColumn = [{ label: 'एकूण संख्या', GroupId: 0, ischeckboxShow: false, status: false }, { label: '१ली ते 2वी', GroupId: 1, subSTD: [{ label: '१ली', subGroupId: 1, status: false }, { label: '2री', subGroupId: 2, status: false }], ischeckboxShow: true, status: true }, { label: '3री ते ५वी', GroupId: 2, subSTD: [{ label: '3री', subGroupId: 3, status: false }, { label: '4री', subGroupId: 4, status: false }, { label: '5वी', subGroupId: 5, status: false }], ischeckboxShow: true, status: false }, { label: '६वी ते ८वी', GroupId: 3, subSTD: [{ label: '६वी', subGroupId: 6, status: false }, { label: '7वी', subGroupId: 7, status: false }, { label: '८वी', subGroupId: 8, status: false }], ischeckboxShow: true, status: false },];
           this.checkData(this.tableColumn[1]);
           this.getPieChartData();
-           } else { 
-            this.dashboardCountData=[];
-          }
-       },
-      error: (error:any) => { this.error.handelError(error.message) }
+        } else {
+          this.dashboardCountData = [];
+        }
+      },
+      error: (error: any) => { this.error.handelError(error.message) }
     });
   }
-  checkData(obj:any){
-    this.tableColumn.map((x:any)=>{
-      x.status=false;
+  checkData(obj: any) {
+    this.tableColumn.map((x: any) => {
+      x.status = false;
     })
-    const index=this.tableColumn.findIndex((x:any)=> x.GroupId==obj.GroupId);
-    this.tableColumn[index].status=true;
+    const index = this.tableColumn.findIndex((x: any) => x.GroupId == obj.GroupId);
+    this.tableColumn[index].status = true;
     // this.tableColumn.map((x:any)=>{
     //   if(x.status==true){
     //     x.status= obj.GroupId == x.GroupId?true:false
@@ -382,90 +396,90 @@ export class DashboardComponent implements OnInit,AfterViewInit {
     setTimeout(() => {
       this.getbarChartByTaluka();
     }, 100);
-    
+
   }
-  getPieChartData(){
-    const serriesArray= [0,0,0];
-    const serriesArray1= [0,0,0];
-    const serriesArray2= [0,0,0];
-    serriesArray[0]= this.dashboardCountData[0].govtSchool|0;
-    serriesArray[1]= this.dashboardCountData[0].privateSchool|0;
-    serriesArray[2]= this.dashboardCountData[0].otherSchool|0;
+  getPieChartData() {
+    const serriesArray = [0, 0, 0];
+    const serriesArray1 = [0, 0, 0];
+    const serriesArray2 = [0, 0, 0];
+    serriesArray[0] = this.dashboardCountData[0].govtSchool | 0;
+    serriesArray[1] = this.dashboardCountData[0].privateSchool | 0;
+    serriesArray[2] = this.dashboardCountData[0].otherSchool | 0;
 
-    serriesArray1[0]= this.dashboardCountData[0].engMedSchool|0;
-    serriesArray1[1]= this.dashboardCountData[0].marMedSchool|0;
-    serriesArray1[2]= this.dashboardCountData[0].bothMedSchool|0;
+    serriesArray1[0] = this.dashboardCountData[0].engMedSchool | 0;
+    serriesArray1[1] = this.dashboardCountData[0].marMedSchool | 0;
+    serriesArray1[2] = this.dashboardCountData[0].bothMedSchool | 0;
 
-    serriesArray2[0]= this.dashboardCountData[0].boyStudent|0;
-    serriesArray2[1]= this.dashboardCountData[0].girlStudent|0;
-    serriesArray2[2]= this.dashboardCountData[0].otherStudent|0;
+    serriesArray2[0] = this.dashboardCountData[0].boyStudent | 0;
+    serriesArray2[1] = this.dashboardCountData[0].girlStudent | 0;
+    serriesArray2[2] = this.dashboardCountData[0].otherStudent | 0;
 
-    this.piechartOptions.colors=[];
+    this.piechartOptions.colors = [];
     this.piechartOptions.series = serriesArray;
     this.piechartOptions1.series = serriesArray1;
     this.piechartOptions2.series = serriesArray2;
-    this.piechartOptions.labels=['Goverment','Private','Other'];
-    this.piechartOptions1.labels=['English-Medium','Marathi-Medium','Both'];
-    this.piechartOptions2.labels=['Boys','Girls','Other'];
+    this.piechartOptions.labels = ['Goverment', 'Private', 'Other'];
+    this.piechartOptions1.labels = ['English-Medium', 'Marathi-Medium', 'Both'];
+    this.piechartOptions2.labels = ['Boys', 'Girls', 'Other'];
   }
 
-  getBarChart(obj:any){
-    const formData= this.filterForm.value;
-    this.showBarChartF=false;
-    this.selectedObj=obj;
-    this.barChartData=[];
-    this.apiService.setHttp('GET', 'zp-osmanabad/Dashboard/'+(obj.GroupId==1?'GetDataFor1st2ndStd':'GetDataFor3rdAboveStd')+'?TalukaId='+(formData?.talukaId ||0)+'&CenterId='+(formData?.centerId ||0)+'&SchoolId='+(formData?.schoolId ||0)+'&GroupId='+obj?.GroupId, false, false, false, 'baseUrl');
+  getBarChart(obj: any) {
+    const formData = this.filterForm.value;
+    this.showBarChartF = false;
+    this.selectedObj = obj;
+    this.barChartData = [];
+    this.apiService.setHttp('GET', 'zp-osmanabad/Dashboard/' + (obj.GroupId == 1 ? 'GetDataFor1st2ndStd' : 'GetDataFor3rdAboveStd') + '?TalukaId=' + (formData?.talukaId || 0) + '&CenterId=' + (formData?.centerId || 0) + '&SchoolId=' + (formData?.schoolId || 0) + '&GroupId=' + obj?.GroupId, false, false, false, 'baseUrl');
     this.apiService.getHttp().subscribe({
-      next: (res: any) => { 
+      next: (res: any) => {
         if (res.statusCode == "200") {
-          this.barChartData=res.responseData.responseData1;
-         const subjectSet = [...new Set(this.barChartData.map(sub => sub.m_SubjectName))];
-         this.graphSubjectData=subjectSet;
-         this.barchartOptions.series=[];
-         this.barchartOptions.xaxis.categories=[];
-          let dataArray:any[]=[];
-          subjectSet.map((x:any)=>{
-            const  filterSubject=this.barChartData.filter((y:any)=> y.m_SubjectName==x);
-            let dataObjArray:any[]=[];
-            filterSubject.map((z:any)=>{
+          this.barChartData = res.responseData.responseData1;
+          const subjectSet = [...new Set(this.barChartData.map(sub => sub.m_SubjectName))];
+          this.graphSubjectData = subjectSet;
+          this.barchartOptions.series = [];
+          this.barchartOptions.xaxis.categories = [];
+          let dataArray: any[] = [];
+          subjectSet.map((x: any) => {
+            const filterSubject = this.barChartData.filter((y: any) => y.m_SubjectName == x);
+            let dataObjArray: any[] = [];
+            filterSubject.map((z: any) => {
               const subData = {
-                name: obj.GroupId==1 ? z.optionName : z.question,
+                name: obj.GroupId == 1 ? z.optionName : z.question,
                 data: [z.totalPercental]
               }
               dataObjArray.push(subData);
             })
-             dataArray.push(dataObjArray);
-           })
-           this.barchartOptions.series.push(dataArray);
-           this.barchartOptions.xaxis.categories.push(...subjectSet);
-            this.showBarChartF=true;
-          } 
-       
-       },
-      error: (error:any) => { this.error.handelError(error.message) }
+            dataArray.push(dataObjArray);
+          })
+          this.barchartOptions.series.push(dataArray);
+          this.barchartOptions.xaxis.categories.push(...subjectSet);
+          this.showBarChartF = true;
+        }
+
+      },
+      error: (error: any) => { this.error.handelError(error.message) }
     });
   }
 
-  getbarChartByTaluka(){
-    this.showBarChartS=false;
-    const filterformData= this.filterForm.value;
-    const formDatafilterbyTaluka= this.filterFormForBarGraph.value;
-    this.barChartData=[];
-    const TalukaId= filterformData?.talukaId? filterformData?.talukaId :formDatafilterbyTaluka?.filtertalukaId;
-    const str= TalukaId?(this.selectedObj.GroupId==1?'GetDataFor1st2ndStdByCenter':'GetDataFor3rdAboveStdByCenter'):(this.selectedObj.GroupId==1?'GetDataFor1st2ndStdByTaluka':'GetDataFor3rdAboveStdByTaluka');
-    this.apiService.setHttp('GET', 'zp-osmanabad/Dashboard/'+str+'?TalukaId='+(TalukaId||0)+(TalukaId?'&CenterId='+(formDatafilterbyTaluka?.filtercenterId ||0):'')+'&GroupId='+this.selectedObj?.GroupId+ '&SubjectId='+(formDatafilterbyTaluka.filtersubjectId|0), false, false, false, 'baseUrl');
+  getbarChartByTaluka() {
+    this.showBarChartS = false;
+    const filterformData = this.filterForm.value;
+    const formDatafilterbyTaluka = this.filterFormForBarGraph.value;
+    this.barChartData = [];
+    const TalukaId = filterformData?.talukaId ? filterformData?.talukaId : formDatafilterbyTaluka?.filtertalukaId;
+    const str = TalukaId ? (this.selectedObj.GroupId == 1 ? 'GetDataFor1st2ndStdByCenter' : 'GetDataFor3rdAboveStdByCenter') : (this.selectedObj.GroupId == 1 ? 'GetDataFor1st2ndStdByTaluka' : 'GetDataFor3rdAboveStdByTaluka');
+    this.apiService.setHttp('GET', 'zp-osmanabad/Dashboard/' + str + '?TalukaId=' + (TalukaId || 0) + (TalukaId ? '&CenterId=' + (formDatafilterbyTaluka?.filtercenterId || 0) : '') + '&GroupId=' + this.selectedObj?.GroupId + '&SubjectId=' + (formDatafilterbyTaluka.filtersubjectId | 0), false, false, false, 'baseUrl');
     this.apiService.getHttp().subscribe({
-      next: (res: any) => { 
+      next: (res: any) => {
         if (res.statusCode == "200") {
           this.barChartByTalukaData = res.responseData.responseData1;
-          this.barchartOptions1.series=[];
-          this.barchartOptions1.xaxis.categories=[];
-          let talukaSet:any=[]; 
-          talukaSet = [...new Set(this.barChartByTalukaData.map(sub => TalukaId  ? sub.center : sub.taluka))];
-          const subjectSet = [...new Set(this.barChartByTalukaData.map(sub => sub.m_OptionName || sub.m_Question ))];
-          let arrayObjectData:any[]=[];
+          this.barchartOptions1.series = [];
+          this.barchartOptions1.xaxis.categories = [];
+          let talukaSet: any = [];
+          talukaSet = [...new Set(this.barChartByTalukaData.map(sub => TalukaId ? sub.center : sub.taluka))];
+          const subjectSet = [...new Set(this.barChartByTalukaData.map(sub => sub.m_OptionName || sub.m_Question))];
+          let arrayObjectData: any[] = [];
           subjectSet.map((x: any) => {
-            const filterSubject = this.barChartByTalukaData.filter((y: any) => (y.m_OptionName ||  y.m_Question) == x);
+            const filterSubject = this.barChartByTalukaData.filter((y: any) => (y.m_OptionName || y.m_Question) == x);
             const subData = {
               name: x,
               data: filterSubject.map(sub => sub.percentage)
@@ -474,39 +488,39 @@ export class DashboardComponent implements OnInit,AfterViewInit {
           })
           this.barchartOptions1.series.push(arrayObjectData)
           this.barchartOptions1.xaxis.categories.push(...talukaSet);
-          this.showBarChartS=true;
+          this.showBarChartS = true;
         }
 
       },
-      error: (error:any) => { this.error.handelError(error.message) }
+      error: (error: any) => { this.error.handelError(error.message) }
     });
     this.getTabledataByTaluka();
   }
 
-  getTabledataByTaluka(){
+  getTabledataByTaluka() {
     this.tableDataTopPerformance = [];
-    const filterformData= this.filterForm.value;
-    const formDatafilterbyTaluka= this.filterFormForBarGraph.value;
-    this.barChartData=[];
-    const TalukaId= filterformData?.talukaId? filterformData?.talukaId :formDatafilterbyTaluka?.filtertalukaId;
-    this.apiService.setHttp('GET', 'zp-osmanabad/Dashboard/GetDataForTopLowSchool'+'?TalukaId='+(TalukaId||0)+(TalukaId?'&CenterId='+(formDatafilterbyTaluka?.filtercenterId ||0):''), false, false, false, 'baseUrl');
+    const filterformData = this.filterForm.value;
+    const formDatafilterbyTaluka = this.filterFormForBarGraph.value;
+    this.barChartData = [];
+    const TalukaId = filterformData?.talukaId ? filterformData?.talukaId : formDatafilterbyTaluka?.filtertalukaId;
+    this.apiService.setHttp('GET', 'zp-osmanabad/Dashboard/GetDataForTopLowSchool' + '?TalukaId=' + (TalukaId || 0) + (TalukaId ? '&CenterId=' + (formDatafilterbyTaluka?.filtercenterId || 0) : ''), false, false, false, 'baseUrl');
     this.apiService.getHttp().subscribe({
-      next: (res: any) => { 
+      next: (res: any) => {
         if (res.statusCode == "200") {
           this.tableDataTopPerformance.push(res.responseData.responseData1);
           this.tableDataTopPerformance.push(res.responseData.responseData2);
-          
-          this.displayedheaders = ['#','Sr. No.', 'Name', 'Total Student', 'Percetage'];
+
+          this.displayedheaders = ['#', 'Sr. No.', 'Name', 'Total Student', 'Percetage'];
 
         }
-        else{
-           this.tableDataTopPerformance = [];
+        else {
+          this.tableDataTopPerformance = [];
         }
-          
-        
+
+
 
       },
-      error: (error:any) => { this.error.handelError(error.message) }
+      error: (error: any) => { this.error.handelError(error.message) }
     });
   }
 
@@ -593,13 +607,13 @@ export class DashboardComponent implements OnInit,AfterViewInit {
       responsive: true
     });
   }
-  clickOnSvgMap(flag?:string){
-    if(flag == 'select'){
+  clickOnSvgMap(flag?: string) {
+    if (flag == 'select') {
       let checkTalActiveClass = $('#mapsvg   path').hasClass("talActive");
       checkTalActiveClass ? $('#mapsvg path[id="' + this.globalTalId + '"]').removeAttr("style") : '';
       this.svgMapAddOrRemoveClass();
     }
-    
+
     $(document).on('click', '#mapsvg  path', (e: any) => {
       let getClickedId = e.currentTarget;
       let talId = $(getClickedId).attr('data-name').split(" ")[0];
@@ -610,9 +624,9 @@ export class DashboardComponent implements OnInit,AfterViewInit {
     })
   }
 
-  svgMapAddOrRemoveClass(){
+  svgMapAddOrRemoveClass() {
     let checkTalActiveClass = $('#mapsvg   path').hasClass("talActive");
-    checkTalActiveClass?  $('#mapsvg   path#' +this.globalTalId).removeClass("talActive") : '';
+    checkTalActiveClass ? $('#mapsvg   path#' + this.globalTalId).removeClass("talActive") : '';
     this.talukaData.find(() => {
       this.globalTalId = this.filterForm?.value?.talukaId;
       $('#mapsvg path[id="' + this.filterForm?.value?.talukaId + '"]').addClass('talActive');
