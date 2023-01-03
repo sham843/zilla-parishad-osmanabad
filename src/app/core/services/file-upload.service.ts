@@ -58,7 +58,7 @@ export class FileUploadService {
         obj.next('error');
         obj.error("Only " + allowedDocTypes + " file format allowed.");   
         let convertString = JSON.stringify(allowedDocTypes);
-        this.commonService.snackBar('Only Supported file Types... '+convertString, 1)
+        this.commonService.showPopup('Only Supported file Types... '+convertString, 1)
       }
     })
   }
