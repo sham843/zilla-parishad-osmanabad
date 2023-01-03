@@ -240,7 +240,8 @@
         "GridView" : "Grid View",
         "SaralvalidId":"Please enter 19 digit saral id",
         "OfficeUsersList" : "Office Users List",
-        "updateOfficeUser" : "Update Office Users"
+        "updateOfficeUser" : "Update Office Users",
+        "profileView" : "Profile View"
         
 
     }

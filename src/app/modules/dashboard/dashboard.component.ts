@@ -52,7 +52,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
 
   ngOnInit() {
     this.filterForm = this.fb.group({
-      talukaId: [],
+      talukaId: [4],
       centerId: [],
       schoolId: []
     })
@@ -76,6 +76,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
       this.talukaData.push({ "id": 0, "taluka": "All", "m_Taluka": "सर्व" }, ...res.responseData);
       const obj = this.talukaData.find((x: any) => x.taluka == "Osmanabad")
       this.f['talukaId'].patchValue(obj.id);
+      this.getCenters() ;
     })
   }
   getCenters() {
@@ -87,7 +88,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
   }
   getschools() {
     this.fBgraph['filtercenterId'].patchValue(this.f['centerId'].value)
-    this.masterService.getAllSchoolsByCenterId('', (this.f['centerId'].value | 0)).subscribe((res: any) => {
+    this.masterService.getAllSchoolByCriteria('',(this.f['talukaId'].value|0),0, (this.f['centerId'].value|0)).subscribe((res: any) => {
       this.schoolData = res.responseData;
     })
   }

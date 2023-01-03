@@ -4,13 +4,13 @@
         <mat-card-header class="card-header bg-transparent border-bottom-0">
             <div class="d-flex justify-content-between w-100">
               <div class="text-end">
-                <button mat-flat-button class="btn-main btn-icon btn-sm" (click)="action(tData, 'View')">
+                <button mat-flat-button class="btn-main btn-icon btn-sm"  matTooltip="{{'Labels.profileView' | translate}}" matTooltipPosition="right"  matTooltipClass="tooltip" (click)="action(tData, 'View')">
                   <mat-icon>
                     visibility
                   </mat-icon>
                 </button>
               </div>
-              <button mat-icon-button (click)="action(tData, 'Edit')" class="btn-second btn-icon btn-sm">
+              <button mat-icon-button (click)="action(tData, 'Edit')" class="btn-second btn-icon btn-sm" matTooltip="{{'Labels.edit' | translate}}" matTooltipPosition="below"  matTooltipClass="tooltip">
                 <mat-icon>
                   edit
                 </mat-icon>
