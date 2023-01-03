@@ -170,7 +170,7 @@
         "workingSchoolName" : "कार्यरत शाळेचे नाव",
         "clusterName" : "क्लस्टरचे नाव",
         "graduateTeacherSubject" : "पदवीधर शिक्षकाचा विषय",
-        "takingGraduatePayScale" : "पदवीधर वेतनश्रेणी घेणे",
+        "takingGraduatePayScale" : "पदवीधर वेतनश्रेणी घेत आहे का?",
         "casteCategory" : "जात श्रेणी",
         "casteCertificateDate&Number" : "जात प्रमाणपत्र तारीख आणि क्रमांक",
         "casteCertificateOffice" : "जात प्रमाणपत्र ऑफिस",
@@ -179,15 +179,15 @@
         "casteVerificationCommitteeName" : "जात पडताळणी समितीचे नाव",
         "1stAppointmentDateInService" : "सेवेतील 1ली नियुक्ती तारीख",
         "currentSchoolJoiningDate" : "सध्याच्या शाळेची प्रवेश तारीख",
-        "currentTalukaPresentDate" : "सध्याच्या तालुक्याची वर्तमान तारीख",
+        "currentTalukaPresentDate" : "सध्याच्या तालुक्यातील उपस्थिती तारीख",
         "retirementDate" : "सेवानिवृत्तीची तारीख",
         "educationalQualification" : "शैक्षणिक पात्रता",
         "12thBranch" : "12वी शाखा",
-        "degreeOptionalSubjects" : "पदवीचे पर्यायी विषय",
+        "degreeOptionalSubjects" : "पदवी वैकल्पिक विषय",
         "degreeUniversity" : "पदवीचे विद्यापीठ",
         "professionalQualification" : "व्यावसायिक पात्रता",
-        "bEdPercentages" : "बी एड ची टक्केवारी",
-        "bEdUniversity" : "बी एड युनिव्हर्सिटी",
+        "bEdPercentages" : "बी.एड.टक्केवारी",
+        "bEdUniversity" : "बी.एड.विद्यापीठ",
         "husbandWifeBothAreInService" : "पती-पत्नी दोघेही सेवेत आहेत",
         "ifYesThenNameAndOfficeName" : "होय असल्यास नाव आणि कार्यालयाचे नाव",
         "areYouDisabled" : "तुम्ही अपंग आहात का?",
@@ -248,7 +248,7 @@
         "SaralvalidId":"कृपया 19 अंकी सरल आयडी प्रविष्ट करा",
         "OfficeUsersList" : "ऑफिस वापरकर्त्यांची यादी",
         "updateOfficeUser" : "ऑफिस वापरकर्ते अपडेट करा",
-        "profileView" : "प्रोफाइल दृश्य"
+        "profileView" : "प्रोफाइल दृश्य",
+        "SameCurrentAddress" : "सध्याच्या पत्त्याप्रमाणेच"
     }
 }
-
