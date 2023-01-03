@@ -57,8 +57,8 @@ export class DashboardComponent implements OnInit, AfterViewInit {
       schoolId: []
     })
     this.filterFormForBarGraph = this.fb.group({
-      filtertalukaId: [],
-      filtercenterId: [],
+      filtertalukaId: [0],
+      filtercenterId: [0],
       filtersubjectId: []
     })
     this.getTalukas();
@@ -94,10 +94,11 @@ export class DashboardComponent implements OnInit, AfterViewInit {
       this.schoolData = res.responseData;
     })
   }
-  getSubject(GroupId: any) {
-    this.masterService.GetAllSubjectsByGroupClassId('', GroupId).subscribe((res: any) => {
+  getSubject(groupId: any) {
+    this.masterService.GetAllSubjectsByGroupClassId('', groupId).subscribe((res: any) => {
       this.subjectData = res.responseData;
-      this.fBgraph['filtersubjectId'].patchValue(this.subjectData[0].id)
+      this.fBgraph['filtersubjectId'].patchValue(this.subjectData[0].id);
+      this.getbarChartByTaluka();
     })
   }
   getPieChart() {
@@ -384,12 +385,12 @@ export class DashboardComponent implements OnInit, AfterViewInit {
     const data = this.barChartData.find((x: any) => x.m_SubjectName == selectedbar && x.m_OptionName == this.barchartOptions.series[0][index][this.optionalSubjectindex].name);
     const formData = this.filterForm.value
     this.SharingObject = {
-      GroupId: this.selectedObj.GroupId,
-      TalukaId: formData.talukaId,
-      CenterId: formData.centerId,
-      SchoolId: formData.schoolId,
-      SubjectId: data.subjectId,
-      OptionGrade: data.optionGrade
+      groupId: this.selectedObj?.groupId|0,
+      TalukaId: formData?.talukaId|0,
+      CenterId: formData?.centerId|0,
+      SchoolId: formData?.schoolId|0,
+      SubjectId: data?.subjectId|0,
+      OptionGrade: data?.optionGrade|0
     }
     this.webStorage.selectedBarchartObjData.next(this.SharingObject);
     this.router.navigate(['/dashboard-student-details'])
@@ -403,33 +404,48 @@ export class DashboardComponent implements OnInit, AfterViewInit {
       next: (res: any) => {
         if (res.statusCode == "200") {
           this.dashboardCountData.push(res.responseData.responseData1[0]);
-          this.totalStudentSurveyData = res.responseData.responseData2;
-          this.tableColumn = [{ label: 'एकूण संख्या', GroupId: 0, ischeckboxShow: false, status: false }, { label: '१ली ते 2वी', GroupId: 1, subSTD: [{ label: '१ली', subGroupId: 1, status: false }, { label: '2री', subGroupId: 2, status: false }], ischeckboxShow: true, status: true }, { label: '3री ते ५वी', GroupId: 2, subSTD: [{ label: '3री', subGroupId: 3, status: false }, { label: '4री', subGroupId: 4, status: false }, { label: '5वी', subGroupId: 5, status: false }], ischeckboxShow: true, status: false }, { label: '६वी ते ८वी', GroupId: 3, subSTD: [{ label: '६वी', subGroupId: 6, status: false }, { label: '7वी', subGroupId: 7, status: false }, { label: '८वी', subGroupId: 8, status: false }], ischeckboxShow: true, status: false },];
-          this.checkData(this.tableColumn[1]);
+          res.responseData.responseData2.unshift({ m_GroupClass : 'एकूण संख्या', groupClass:'Total', studentCount :this.dashboardCountData[0]?.totalStudent,groupId: 0, ischeckboxShow: false, status: false });
+          this.totalStudentSurveyData =res.responseData.responseData2;
+          this.totalStudentSurveyData.map((x:any)=>{
+            x.status = true;
+            x.ischeckboxShow=true})
+          this.totalStudentSurveyData[1].status = true;
+          this.totalStudentSurveyData[0].ischeckboxShow=false;
+          // this.tableColumn = [{ label: 'एकूण संख्या', groupId: 0, ischeckboxShow: false, status: false }, { label: '१ली ते 2वी', groupId: 1, subSTD: [{ label: '१ली', subgroupId: 1, status: false }, { label: '2री', subgroupId: 2, status: false }], ischeckboxShow: true, status: true }, { label: '3री ते ५वी', groupId: 2, subSTD: [{ label: '3री', subgroupId: 3, status: false }, { label: '4री', subgroupId: 4, status: false }, { label: '5वी', subgroupId: 5, status: false }], ischeckboxShow: true, status: false }, { label: '६वी ते ८वी', groupId: 3, subSTD: [{ label: '६वी', subgroupId: 6, status: false }, { label: '7वी', subgroupId: 7, status: false }, { label: '८वी', subgroupId: 8, status: false }], ischeckboxShow: true, status: false },];
+          this.checkData(this.totalStudentSurveyData[1], 'radio');
+          console.log(this.totalStudentSurveyData);
           this.getPieChartData();
         } else {
           this.dashboardCountData = [];
+          this.totalStudentSurveyData= [];
         }
       },
       error: (error: any) => { this.error.handelError(error.message) }
     });
   }
-  checkData(obj: any) {
-    this.tableColumn.map((x: any) => {
-      x.status = false;
-    })
-    const index = this.tableColumn.findIndex((x: any) => x.GroupId == obj.GroupId);
-    this.tableColumn[index].status = true;
-    // this.tableColumn.map((x:any)=>{
-    //   if(x.status==true){
-    //     x.status= obj.GroupId == x.GroupId?true:false
-    //   }
-    // })
-    this.getSubject(obj.GroupId);
+  checkData(obj: any, status:any, index?:any) {
+    if(status=='radio'){
+      this.totalStudentSurveyData.map((x: any) => {
+        x.status = false;
+      })
+      const index = this.totalStudentSurveyData.findIndex((x: any) => x.groupId == obj.groupId);
+      this.totalStudentSurveyData[index].status = true;
+      this.totalStudentSurveyData.map((x:any)=>{
+        if(x.status==true){
+          x.standardDetails.map((y:any)=>{
+            y.status=true;
+          })
+        }
+      })
+    }else{
+      console.log(index)
+    }
+    
+    this.getSubject(obj.groupId);
     this.getBarChart(obj);
-    setTimeout(() => {
-      this.getbarChartByTaluka();
-    }, 100);
+    // setTimeout(() => {
+    //   this.getbarChartByTaluka();
+    // }, 200);
 
   }
   getPieChartData() {
@@ -462,7 +478,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
     this.showBarChartF = false;
     this.selectedObj = obj;
     this.barChartData = [];
-    this.apiService.setHttp('GET', 'zp-osmanabad/Dashboard/' + (obj.GroupId == 1 ? 'GetDataFor1st2ndStd' : 'GetDataFor3rdAboveStd') + '?TalukaId=' + (formData?.talukaId || 0) + '&CenterId=' + (formData?.centerId || 0) + '&SchoolId=' + (formData?.schoolId || 0) + '&GroupId=' + obj?.GroupId, false, false, false, 'baseUrl');
+    this.apiService.setHttp('GET', 'zp-osmanabad/Dashboard/' + (obj.groupId == 1 ? 'GetDataFor1st2ndStd' : 'GetDataFor3rdAboveStd') + '?TalukaId=' + (formData?.talukaId || 0) + '&CenterId=' + (formData?.centerId || 0) + '&SchoolId=' + (formData?.schoolId || 0) + '&groupId=' + obj?.groupId, false, false, false, 'baseUrl');
     this.apiService.getHttp().subscribe({
       next: (res: any) => {
         if (res.statusCode == "200") {
@@ -477,7 +493,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
             let dataObjArray: any[] = [];
             filterSubject.map((z: any) => {
               const subData = {
-                name: obj.GroupId == 1 ? z.optionName : z.question,
+                name: obj.groupId == 1 ? z.optionName : z.question,
                 data: [z.totalPercental | z.percentage]
               }
               dataObjArray.push(subData);
@@ -500,8 +516,8 @@ export class DashboardComponent implements OnInit, AfterViewInit {
     const formDatafilterbyTaluka = this.filterFormForBarGraph.value;
     this.barChartData = [];
     const TalukaId = filterformData?.talukaId ? filterformData?.talukaId : formDatafilterbyTaluka?.filtertalukaId;
-    const str = TalukaId ? (this.selectedObj.GroupId == 1 ? 'GetDataFor1st2ndStdByCenter' : 'GetDataFor3rdAboveStdByCenter') : (this.selectedObj.GroupId == 1 ? 'GetDataFor1st2ndStdByTaluka' : 'GetDataFor3rdAboveStdByTaluka');
-    this.apiService.setHttp('GET', 'zp-osmanabad/Dashboard/' + str + '?TalukaId=' + (TalukaId || 0) + (TalukaId ? '&CenterId=' + (formDatafilterbyTaluka?.filtercenterId || 0) : '') + '&GroupId=' + this.selectedObj?.GroupId + '&SubjectId=' + (formDatafilterbyTaluka.filtersubjectId | 0), false, false, false, 'baseUrl');
+    const str = TalukaId ? (this.selectedObj.groupId == 1 ? 'GetDataFor1st2ndStdByCenter' : 'GetDataFor3rdAboveStdByCenter') : (this.selectedObj.groupId == 1 ? 'GetDataFor1st2ndStdByTaluka' : 'GetDataFor3rdAboveStdByTaluka');
+    this.apiService.setHttp('GET', 'zp-osmanabad/Dashboard/' + str + '?TalukaId=' + (TalukaId || 0) + (TalukaId ? '&CenterId=' + (formDatafilterbyTaluka?.filtercenterId || 0) : '') + '&groupId=' + this.selectedObj?.groupId + '&SubjectId=' + (formDatafilterbyTaluka.filtersubjectId | 0), false, false, false, 'baseUrl');
     this.apiService.getHttp().subscribe({
       next: (res: any) => {
         if (res.statusCode == "200") {
@@ -522,7 +538,6 @@ export class DashboardComponent implements OnInit, AfterViewInit {
           })
           this.barchartOptions1.series.push(arrayObjectData);
           this.barchartOptions1.xaxis.categories.push(...talukaSet);
-          console.log(this.barchartOptions1);
           this.showBarChartS = true;
         }
       },

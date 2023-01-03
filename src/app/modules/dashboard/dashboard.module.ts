@@ -10,6 +10,11 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgApexchartsModule } from 'ng-apexcharts';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import { MatTableModule } from '@angular/material/table'
+import {MatSidenavModule} from '@angular/material/sidenav';
+import {MatIconModule} from '@angular/material/icon';
+import {MatButtonModule} from '@angular/material/button';
+
+
 
 @NgModule({
   declarations: [
@@ -26,6 +31,9 @@ import { MatTableModule } from '@angular/material/table'
     TranslateModule,
     MatTableModule,
     MatCheckboxModule,
+    MatSidenavModule,
+    MatIconModule,
+    MatButtonModule,
     AgmCoreModule.forRoot({
       apiKey: 'AIzaSyBhkYI4LMEqVhB6ejq12wpIA6CW5theKJw',
       language: 'en',
