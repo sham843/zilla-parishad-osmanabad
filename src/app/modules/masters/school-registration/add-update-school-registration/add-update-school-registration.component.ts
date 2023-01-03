@@ -315,6 +315,26 @@ export class AddUpdateSchoolRegistrationComponent {
     this.editFlag = true;
     this.data.uploadImage ? this.schoolRegForm.value.uploadImage = this.data.uploadImage : '';
     this.uploadImg = this.data?.uploadImage
+
+    // this.data.schoolDocument.forEach((res : any)=>{
+    //   console.log("res : ", res);
+
+    //   this.schoolRegForm.patchValue({
+    //     schoolDocument : {
+    //       "id": res.id,
+    //       "schoolId": res.schoolId,
+    //       "documentId": res.documentId,
+    //       "docPath": res.docPath,
+    //       "createdBy": 0,
+    //       "createdDate": new Date(),
+    //       "modifiedBy": 0,
+    //       "modifiedDate": new Date(),
+    //       "isDeleted": true
+    //     }
+    //   })
+      
+    // })
+
   }
   //#endregiongion ---------------------------------------------- Edit Record end here --------------------------------------------//
 
