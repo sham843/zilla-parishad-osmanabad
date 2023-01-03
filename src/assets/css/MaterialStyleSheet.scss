@@ -121,6 +121,9 @@ input:-webkit-autofill:active {
 .mat-mdc-tooltip-panel-below{
     transform: translateY(2px)!important;
 }
+.mat-mdc-select-min-line{
+    color:#8c8c8c;
+}
 .mat-mdc-tooltip-panel-right .mat-mdc-tooltip::after,
 .mat-mdc-tooltip-panel-below .mat-mdc-tooltip::after{
       content: "";
