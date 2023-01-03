@@ -28,7 +28,8 @@ export class AddUpdateSchoolRegistrationComponent {
   schoolMngArr = new Array();
   schoolRegForm !: FormGroup;
   uploadImg: any;
-  uploadMultipleImg = new Array();
+  uploadMultipleImg : any;
+  imgArray =new Array();
   editFlag: boolean = false;
   img: boolean = false;
   schoolDocument!: FormArray;
@@ -75,7 +76,7 @@ export class AddUpdateSchoolRegistrationComponent {
       "lowestClass": ['', Validators.required],
       "highestClass": ['', Validators.required],
       "timesStamp": new Date(),
-      "uploadImage": [''],
+      "uploadImage": [''],   
       schoolDocument : this.fb.array([
         this.fb.group({
           "id": 0,
@@ -216,7 +217,7 @@ export class AddUpdateSchoolRegistrationComponent {
     this.img = true;
     this.fileUpload.uploadDocuments(event, 'Upload', 'jpg, jpeg, png').subscribe((res: any) => {
       if (res.statusCode == 200) {
-        this.uploadImg = res.responseData;
+        this.uploadImg = res.responseData;       
       }
       else {
         return
@@ -231,7 +232,18 @@ export class AddUpdateSchoolRegistrationComponent {
       if (res.statusCode == 200) {
         this.uploadMultipleImg = res.responseData;
         console.log("uploadMultipleImg : ", this.uploadMultipleImg);
-        
+        let data ={
+          "id": 0,
+          "schoolId": 0,
+          "documentId": 3,
+          "docPath": this.uploadMultipleImg,
+          "createdBy": 0,
+          "createdDate": new Date(),
+          "modifiedBy": 0,
+          "modifiedDate": new Date(),
+          "isDeleted": true
+        }
+        this.imgArray.push(data)        
       }
       else {
         return
@@ -264,15 +276,16 @@ export class AddUpdateSchoolRegistrationComponent {
         formValue.uploadImage = this.schoolRegForm.value.uploadImage;
       }
     }
+    formValue.schoolDocument = this.imgArray;
 
-    formValue.schoolDocument.docPath ? formValue.schoolDocument.docPath = this.uploadMultipleImg : '';
-    formValue.schoolDocument.docPath = this.schoolRegForm.value.schoolDocument.docPath;
+    // formValue.schoolDocument.docPath ? formValue.schoolDocument.docPath = this.uploadMultipleImg : '';
+    // formValue.schoolDocument.docPath = this.schoolRegForm.value.schoolDocument.docPath;
 
     let url;
     this.editFlag ? url = 'ZP-Osmanabad/School/Update' : url = 'ZP-Osmanabad/School/Add';
     console.log("FormValue : ", formValue);
     
-    return 
+    // return 
     if (!this.schoolRegForm.valid) {
       this.commonMethod.showPopup(this.webStorageS.languageFlag == 'EN' ? 'Please Enter Mandatory Fields' : 'कृपया अनिवार्य फील्ड प्रविष्ट करा', 1);
       return
@@ -297,10 +310,11 @@ export class AddUpdateSchoolRegistrationComponent {
 
   //#region ------------------------------------------------- Edit Record start here --------------------------------------------//
   onEdit() {
+    console.log("Edit Obj : ", this.data);
+    
     this.editFlag = true;
     this.data.uploadImage ? this.schoolRegForm.value.uploadImage = this.data.uploadImage : '';
     this.uploadImg = this.data?.uploadImage
-
   }
   //#endregiongion ---------------------------------------------- Edit Record end here --------------------------------------------//
 
@@ -314,7 +328,7 @@ export class AddUpdateSchoolRegistrationComponent {
       this.f['uploadImage'].setValue('');
     }
     else if(this.uploadMultipleImg){
-      this.uploadMultipleImg = [];
+      this.uploadMultipleImg = '';
       // this.schoolRegForm.value.uploadImage = '';
       // this.f['uploadImage'].setValue('');
     }
