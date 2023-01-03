@@ -441,6 +441,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
       console.log(index)
     }
     
+    
     this.getSubject(obj.groupId);
     this.getBarChart(obj);
     // setTimeout(() => {
