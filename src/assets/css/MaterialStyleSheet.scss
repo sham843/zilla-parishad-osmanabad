@@ -176,3 +176,13 @@ input:-webkit-autofill:active {
 //     transform: unset !important;
 //     transition: 100ms opacity !important;
 //   }
+.mat-drawer-container{
+    background-color: transparent !important;
+    overflow: initial !important;
+}
+.mat-drawer-content {
+    overflow: unset !important;
+}
+.mat-drawer{
+    width: 350px !important;
+}

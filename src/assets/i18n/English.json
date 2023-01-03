@@ -188,14 +188,14 @@
         "professionalQualification" : "Professional Qualification",
         "bEdPercentages" : "B.Ed. Percentages",
         "bEdUniversity" : "B.Ed. University",
-        "husbandWifeBothAreInService" : "Husband-Wife Both Are In Service",
-        "ifYesThenNameAndOfficeName" : "If Yes Then Name And Office Name",
+        "husbandWifeBothAreInService" : "Husband-Wife Both Are in Service?",
+        "ifYesThenNameAndOfficeName" : "Spouse Name and Office Name",
         "areYouDisabled" : "Are You Disabled",
-        "interDistrictTransferred" : "Inter District Transferred",
+        "interDistrictTransferred" : "Inter District Transferred?",
         "DateOfPresenceByInterDistrictTransfer" : "Date Of Presence By Inter District Transfer",
         "interDistrictTransferType" : "Inter District Transfer Type",
         "theOriginalDistrictOfInterDistrictTransfer" : "The Original District Of Inter-District Transfer",
-        "dateOfSeniority" : "Date Of Seniority",
+        "dateOfSeniority" : "Date of Seniority",
         "haveYouPassedComputerExam" : "Have You Passed Computer Exam?",
         "schoolNames&TalukaWorkEarlier" : "School Names And Taluka Work Earlier",
         "assignedClass" : "Assigned Class",
@@ -245,7 +245,12 @@
         "OfficeUsersList" : "Office Users List",
         "updateOfficeUser" : "Update Office Users",
         "profileView" : "Profile View",
-        "SameCurrentAddress" : "Same as Current Address"
+        "SameCurrentAddress" : "Same as Current Address",
+        "LightMode" : "Light Mode",
+        "DarkMode" : "Dark Mode",
+        "UploadSchoolPhoto" : "Upload School photo",
+        "UploadProfilePhoto" : "Upload Profile Photo",
+        "UpdatedTeacherRegistration" : "Update Teacher Details"
         
 
     }
