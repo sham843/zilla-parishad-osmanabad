@@ -8,6 +8,8 @@ import { NgxSpinnerModule } from 'ngx-spinner';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { CurrencyPipe, DatePipe, TitleCasePipe } from '@angular/common';
+import { MAT_DATE_LOCALE } from '@angular/material/core';
 export function httpTranslateLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http);
 }
@@ -34,7 +36,7 @@ export function httpTranslateLoaderFactory(http: HttpClient) {
     }),
   ],
   schemas:[CUSTOM_ELEMENTS_SCHEMA],
-  providers: [],
+  providers: [DatePipe, { provide: MAT_DATE_LOCALE, useValue: 'en-GB'}, CurrencyPipe, TitleCasePipe],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
