@@ -121,32 +121,58 @@ input:-webkit-autofill:active {
 .mat-mdc-tooltip-panel-below{
     transform: translateY(2px)!important;
 }
-.mat-mdc-tooltip-panel-right .mat-mdc-tooltip::after{
-    content: "";
+.mat-mdc-select-min-line{
+    color:#8c8c8c;
+}
+.mat-mdc-tooltip-panel-right .mat-mdc-tooltip::after,
+.mat-mdc-tooltip-panel-below .mat-mdc-tooltip::after{
+      content: "";
       position: absolute !important;
-      left: -7.5px !important;
-      top: 8px !important;
       width: 9px !important;
-      height: 0px !important;
-      border: 7px solid transparent !important;
-      border-right-color: #616161 !important;
+      height: 8px !important;
+      border: 8px solid transparent !important;
       background: transparent !important;
       opacity: 1 !important;
       transform: unset !important;
       transition: 100ms opacity !important;
   } 
+  .mat-mdc-tooltip-panel-right .mat-mdc-tooltip::after{
+    left: -7.5px !important;
+    top: 8px !important;
+    border-right-color: #616161 !important;
 
+  }
   .mat-mdc-tooltip-panel-below .mat-mdc-tooltip::after {
-    content: "";
-    position: absolute !important;
     left: calc(50% - 8px) !important;
     top: -8px !important;
-    width: 8px !important;
-    height: 8px !important;
-    border: 8px solid transparent !important;
     border-bottom-color: #616161 !important;
-    background: transparent !important;
-    opacity: 1 !important;
-    transform: unset !important;
-    transition: 100ms opacity !important;
   }
+// .mat-mdc-tooltip-panel-right .mat-mdc-tooltip::after{
+//     content: "";
+//       position: absolute !important;
+//       left: -7.5px !important;
+//       top: 8px !important;
+//       width: 9px !important;
+//       height: 0px !important;
+//       border: 7px solid transparent !important;
+//       border-right-color: #616161 !important;
+//       background: transparent !important;
+//       opacity: 1 !important;
+//       transform: unset !important;
+//       transition: 100ms opacity !important;
+//   } 
+
+//   .mat-mdc-tooltip-panel-below .mat-mdc-tooltip::after {
+//     content: "";
+//     position: absolute !important;
+//     left: calc(50% - 8px) !important;
+//     top: -8px !important;
+//     width: 8px !important;
+//     height: 8px !important;
+//     border: 8px solid transparent !important;
+//     border-bottom-color: #616161 !important;
+//     background: transparent !important;
+//     opacity: 1 !important;
+//     transform: unset !important;
+//     transition: 100ms opacity !important;
+//   }

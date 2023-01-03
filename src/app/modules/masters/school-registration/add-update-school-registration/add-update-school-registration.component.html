@@ -105,6 +105,32 @@
                         </div>
                     </div>
                 </div>
+
+                <!-- Multiple Image -->
+
+                <div class="col-sm-4">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div formArrayName="schoolDocument" *ngFor="let img of multipleImg.controls; let i = index;">
+                            <div [formGroupName]="i">
+                                <div class="upload-btn-wrapper">
+                                    <button class="upload-btn">Multiple Image</button>
+                                    <input type="file" name="myfile" formControlName="docPath"
+                                        (change)="multipleImgUpload($event)" />
+                                </div>
+                                <div class="action-btn">
+                                    <button type="button" mat-icon-button class="btn-icon text-danger" *ngIf="uploadMultipleImg"
+                                        (click)="clearImg()">
+                                        <mat-icon>delete</mat-icon>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Multiple Image -->
+
+
                 <div class="col-sm-6">
                    
                     <mat-form-field appearance="outline" class="w-100">

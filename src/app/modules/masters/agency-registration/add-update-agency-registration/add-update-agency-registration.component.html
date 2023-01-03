@@ -28,7 +28,7 @@
                         <mat-label>{{'Labels.agencyName(Marathi)' | translate}}</mat-label>
                         <input matInput formControlName="m_Agency_Name"  maxlength="50" (keypress)="validation.noFirstSpaceAllow($event)">
                         <!-- <mat-error *ngIf="fc['m_Agency_Name'].hasError('required')">{{'Labels.agencyNameIsRequired' | translate}}</mat-error> -->
-                        <mat-error *ngIf="fc['m_Agency_Name'].hasError('pattern')"> Please Enter Valid Agency Name</mat-error>
+                        <mat-error *ngIf="fc['m_Agency_Name'].hasError('pattern')"> {{'Labels.pleaseEnterValidAgencyName' | translate}}</mat-error>
                     </mat-form-field>
                 </div>
                 <div class="col-sm-4">

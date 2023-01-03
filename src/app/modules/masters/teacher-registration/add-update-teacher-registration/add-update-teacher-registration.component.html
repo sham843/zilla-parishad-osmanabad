@@ -157,16 +157,16 @@
                         <!-- <mat-error *ngIf="f['permentAddress'].hasError('required') ">
                             Permanent Address Is Required</mat-error> -->
                     </mat-form-field>
-                    <div>
+                    <div class="Current-Address">
                         <input type="checkbox" name="check" id="check1" [checked]="checked"
                             (change)="addSameAddress($event)" />
-                        <label for="check1">same as Current Address</label>
+                        <label for="check1" class="ms-1 mt-1">{{'Labels.SameCurrentAddress' | translate}}</label>
                     </div>
                 </div>
             </div>
 
             <div formGroupName="teacherDetails">
-                <mat-card-subtitle class="mb-2 fw-bold">Educational Qualification</mat-card-subtitle>
+                <mat-card-subtitle class="mb-2 fw-bold">{{'Labels.educationalQualification' | translate}}</mat-card-subtitle>
                 <div class="row">
                     <div class="col-sm-4">
                         <mat-form-field appearance="outline" class="w-100 ">
@@ -240,9 +240,8 @@
                     </div>
                 </div>
 
-                <mat-card-subtitle class="mb-2 fw-bold">Professional Qualification</mat-card-subtitle>
                 <div class="row">
-
+                    <mat-card-subtitle class="mb-2 fw-bold">{{'Labels.professionalQualification'| translate}}</mat-card-subtitle>
                     <div class="col-sm-4">
                         <mat-form-field appearance="outline" class="w-100 ">
                             <mat-label>{{'Labels.district'| translate}}</mat-label>
