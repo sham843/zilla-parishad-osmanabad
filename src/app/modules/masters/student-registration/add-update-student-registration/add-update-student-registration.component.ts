@@ -1,3 +1,4 @@
+import { DatePipe } from '@angular/common';
 import { Component, ElementRef, Inject, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
@@ -49,7 +50,8 @@ export class AddUpdateStudentRegistrationComponent {
 
   constructor(
     private fb: FormBuilder, private masterService: MasterService, private errors: ErrorsService,
-    private fileUpl: FileUploadService, private apiService: ApiService, private webService: WebStorageService,
+    private fileUpl: FileUploadService, private apiService: ApiService, 
+    private webService: WebStorageService, private datePipe:DatePipe,
     private commonMethods: CommonMethodsService, public validators: ValidationService, private ngxSpinner: NgxSpinnerService,
     public dialogRef: MatDialogRef<AddUpdateStudentRegistrationComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any) { }
@@ -267,7 +269,9 @@ export class AddUpdateStudentRegistrationComponent {
 
   onSubmit() {
     this.ngxSpinner.show();
+  
     let obj = this.stuRegistrationForm.value;
+    let dateWithTime = this.datePipe.transform(obj.dob, 'yyyy-MM-dd' + 'T' + 'HH:mm:ss.ms');
     let postObj = {
       ... this.webService.createdByProps(),
       "id": this.editObj ? this.editObj.id : 0,
@@ -286,7 +290,7 @@ export class AddUpdateStudentRegistrationComponent {
       "standard": obj.standard,
       "saralId": obj.saralId,
       "gender": obj.gender,
-      "dob": obj.dob,
+      "dob": dateWithTime,
       "religionId": obj.religionId,
       "castId": obj.castId,
       "aadharNo": obj.aadharNo,
@@ -316,14 +320,11 @@ export class AddUpdateStudentRegistrationComponent {
       "lan": this.languageFlag
     }
 
-    console.log(postObj);
-
     if (this.stuRegistrationForm.invalid) {
       this.ngxSpinner.hide();
       if (!this.uploadImg) { this.imgFlag = true };
       if (!this.uploadAadhaar) { this.aadhaarFlag = true };
       this.commonMethods.showPopup(this.webService.languageFlag == 'EN' ? 'Please Enter Mandatory Fields' : 'कृपया अनिवार्य फील्ड प्रविष्ट करा', 1);
-
       return
     } else {
       if (!this.uploadImg || !this.uploadAadhaar) {
