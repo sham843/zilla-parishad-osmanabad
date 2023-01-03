@@ -41,7 +41,7 @@ export class AddUpdateDesignationMasterComponent {
       "lan": [''],
       "id": [0],
       "designationType": ['',[Validators.required, Validators.pattern(this.validation.fullName)]],
-      "m_DesignationType": ['',Validators.required],
+      "m_DesignationType": ['',[Validators.required,Validators.pattern('^[\u0900-\u0965 ]+$')]],
       "designationLevelId": ['', Validators.required]
     }) 
   }
