@@ -10,7 +10,7 @@
             <mat-form-field appearance="outline" class="w-100">
                 <mat-label>तालुका निवडा</mat-label>
                 <mat-select formControlName="talukaId"
-                    (selectionChange)="f['talukaId'].value!=0?this.getCenters():''; dashboardAPis();clickOnSvgMap('select')">
+                    (selectionChange)="f['talukaId'].value!=0? getCenters():''; dashboardAPis(); clickOnSvgMap('select')">
                     <mat-option *ngFor="let taluka of talukaData" [value]="taluka.id">
                         {{webStorage.languageFlag == 'EN'?taluka.taluka:taluka.m_Taluka}}
                     </mat-option>
@@ -20,7 +20,7 @@
         <div class="col-sm-4">
             <mat-form-field appearance="outline" class="w-100">
                 <mat-label>केंद्र निवडा</mat-label>
-                <mat-select formControlName="centerId" (selectionChange)="this.getschools() ;dashboardAPis()">
+                <mat-select formControlName="centerId" (selectionChange)="getschools() ;dashboardAPis()">
                     <mat-option *ngFor="let center of centerData" [value]="center.id">
                         {{webStorage.languageFlag == 'EN'?center.center:center.m_Center}}
                     </mat-option>
@@ -179,7 +179,7 @@
                             </tbody>
                         </table>
                     </div>
-                    <div class="d-flex" *ngIf="showBarChartF">
+                    <div class="d-flex chart-container scrollbar" *ngIf="showBarChartF">
                         <div class="border-end" *ngFor="let bar of barchartOptions.series[0]; let i=index">
                             <h6 class="fw-bold text-center mb-0">{{graphSubjectData[i]}}</h6>
                             <apx-chart [series]="bar" [chart]="barchartOptions.chart" (click)="selectedBar(graphSubjectData[i])"
