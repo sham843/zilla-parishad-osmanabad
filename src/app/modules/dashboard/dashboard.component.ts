@@ -476,7 +476,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
             filterSubject.map((z: any) => {
               const subData = {
                 name: obj.GroupId == 1 ? z.optionName : z.question,
-                data: [z.totalPercental]
+                data: [z.totalPercental | z.percentage]
               }
               dataObjArray.push(subData);
             })
@@ -518,11 +518,11 @@ export class DashboardComponent implements OnInit, AfterViewInit {
             }
             arrayObjectData.push(subData);
           })
-          this.barchartOptions1.series.push(arrayObjectData)
+          this.barchartOptions1.series.push(arrayObjectData);
           this.barchartOptions1.xaxis.categories.push(...talukaSet);
+          console.log(this.barchartOptions1);
           this.showBarChartS = true;
         }
-
       },
       error: (error: any) => { this.error.handelError(error.message) }
     });
@@ -541,16 +541,11 @@ export class DashboardComponent implements OnInit, AfterViewInit {
         if (res.statusCode == "200") {
           this.tableDataTopPerformance.push(res.responseData.responseData1);
           this.tableDataTopPerformance.push(res.responseData.responseData2);
-
           this.displayedheaders = ['#', 'Sr. No.', 'Name', 'Total Student', 'Percetage'];
-
         }
         else {
           this.tableDataTopPerformance = [];
         }
-
-
-
       },
       error: (error: any) => { this.error.handelError(error.message) }
     });
