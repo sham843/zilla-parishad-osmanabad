@@ -272,8 +272,11 @@ export class TeacherRegistrationComponent {
   // }
 
   clearFilterData() {
-    this.searchContent.setValue('');
-    this.getTableData();
+    if(this.searchContent.value){
+      this.searchContent.setValue('');
+      this.getTableData();
+    }
+   
   }
 
   selectGrid(label: string) {

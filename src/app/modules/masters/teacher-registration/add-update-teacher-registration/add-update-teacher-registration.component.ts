@@ -83,7 +83,7 @@ export class AddUpdateTeacherRegistrationComponent {
     { standardId: 8, checked: false }
   ];
 
-  @ViewChild('uploadImagee') imageFile!: ElementRef;
+  @ViewChild('uploadImage') imageFile!: ElementRef;
   
   constructor(private masterService: MasterService, private commonMethod: CommonMethodsService, private errorHandler: ErrorsService,
     private fileUpload: FileUploadService, public validation: ValidationService,public webStorageS: WebStorageService,private ngxSpinner : NgxSpinnerService,
@@ -515,6 +515,8 @@ export class AddUpdateTeacherRegistrationComponent {
     this.fileUpload.uploadDocuments(event, 'Upload', 'jpg, jpeg, png').subscribe((res: any) => {
      if(res.statusCode == 200){
       this.uploadImghtml = res.responseData;   
+      console.log("uploadImghtml",this.uploadImghtml );
+     
       // this.showAddRemImg = true;
      }else{
       return;
@@ -524,15 +526,12 @@ export class AddUpdateTeacherRegistrationComponent {
 
   //#region  -------------------------------------start submit --------------------------------------------
   OnSubmit() {
-    let formValue = this.teacherRegForm.value;
-    formValue.uploadImage ? formValue.uploadImage = this.uploadImghtml : ''; 
+    let formValue = this.teacherRegForm.value;    
     if (this.editFlag == true) {
-      if (this.data.uploadImage) {
-        this.img ? formValue.uploadImage = this.uploadImghtml : formValue.uploadImage = this.data.uploadImage
-      }
-      else {
-        formValue.uploadImage = this.teacherRegForm.value.uploadImage;
-      }
+        this.img ? formValue.uploadImage = this.uploadImghtml : formValue.uploadImage = this.data.uploadImage   
+    }else{
+      formValue.uploadImage = this.uploadImghtml;
+      // formValue.uploadImage ? formValue.uploadImage = this.uploadImghtml : ''; 
     }
     if (!this.teacherRegForm.valid) {     
         this.commonMethod.showPopup(this.webStorageS.languageFlag == 'EN' ? 'Please Enter Mandatory Fields' : 'कृपया अनिवार्य फील्ड प्रविष्ट करा', 1);
@@ -567,8 +566,8 @@ export class AddUpdateTeacherRegistrationComponent {
     // console.log("editObj",obj);
     this.editFlag = true;
     this.editObj = obj;  
-    this.data.uploadImage ? this.teacherRegForm.value.uploadImage = obj.uploadImage : '';
-    this.data.uploadImage ? this.showAddRemImg = true : this.showAddRemImg = false;
+    // this.data.uploadImage ? this.teacherRegForm.value.uploadImage = obj.uploadImage : '';
+    // this.data.uploadImage ? this.showAddRemImg = true : this.showAddRemImg = false;
     this.assignClassArray = obj.assignTeacher;    
     this.uploadImghtml =  this.editObj.uploadImage;
 
