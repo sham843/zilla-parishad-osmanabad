@@ -241,10 +241,14 @@
         "DownloadPdf" : "PDF डाउनलोड करा",
         "InvalidDesignation" : "अवैध पदनाम",
         "InvalidSchoolName" : "अवैध शाळेचे नाव",
+        "InvalidstudentFirstName" : "अवैध विद्यार्थी प्रथम नाव",
+        "InvalidstudentLastName" : "अवैध विद्यार्थी आडनाव",
+        "InvalidstudentMiddleName" : "अवैध विद्यार्थी मधले नाव",
         "GridView" : "ग्रिड दृश्य",
         "SaralvalidId":"कृपया 19 अंकी सरल आयडी प्रविष्ट करा",
         "OfficeUsersList" : "ऑफिस वापरकर्त्यांची यादी",
-        "updateOfficeUser" : "ऑफिस वापरकर्ते अपडेट करा"
+        "updateOfficeUser" : "ऑफिस वापरकर्ते अपडेट करा",
+        "profileView" : "प्रोफाइल दृश्य"
     }
 }
 

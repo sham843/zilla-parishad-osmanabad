@@ -8,6 +8,8 @@ import { MatTableDataSource } from '@angular/material/table';
 import { ApiService } from 'src/app/core/services/api.service';
 import {MatIconModule} from '@angular/material/icon';
 import { WebStorageService } from 'src/app/core/services/web-storage.service';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-grid-view',
@@ -20,7 +22,9 @@ import { WebStorageService } from 'src/app/core/services/web-storage.service';
     MatButtonModule,
     MatMenuModule,
     MatPaginatorModule,
-    MatIconModule
+    MatIconModule,
+    MatTooltipModule,
+    TranslateModule,
   ]
 })
 export class GridViewComponent {

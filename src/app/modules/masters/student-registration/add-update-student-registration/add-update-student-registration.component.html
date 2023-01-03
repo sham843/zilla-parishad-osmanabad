@@ -91,7 +91,7 @@
                         <input matInput formControlName="f_MName"
                             (keypress)="validators.unicodeMarathiValidation($event)"
                             (keypress)="validators.noSpaceAllow($event)">
-                        <mat-error *ngIf="fc['f_MName'].hasError('pattern')">{{'Labels.enterStudentFirstName'|
+                        <mat-error *ngIf="fc['f_MName'].hasError('pattern')">{{'Labels.InvalidstudentFirstName'|
                             translate}}</mat-error>
                     </mat-form-field>
                 </div>
@@ -100,7 +100,7 @@
                         <mat-label>{{'Labels.studentMiddelNameMarathi'| translate}}</mat-label>
                         <input matInput formControlName="m_MName" (keypress)="validators.unicodeMarathiValidation($event)"
                         (keypress)="validators.noSpaceAllow($event)">
-                        <mat-error *ngIf="fc['m_MName'].hasError('required')">{{'Labels.enterStudentMiddelName'|
+                        <mat-error *ngIf="fc['m_MName'].hasError('pattern')">{{'Labels.InvalidstudentMiddleName'|
                             translate}}</mat-error>
                     </mat-form-field>
                 </div>
@@ -109,14 +109,14 @@
                         <mat-label>{{'Labels.studentLastNameMarathi'| translate}}</mat-label>
                         <input matInput formControlName="l_MName" (keypress)="validators.unicodeMarathiValidation($event)"
                         (keypress)="validators.noSpaceAllow($event)">
-                        <mat-error *ngIf="fc['l_MName'].hasError('required')">{{'Labels.enterStudentLastName'| translate}}</mat-error>
+                        <mat-error *ngIf="fc['l_MName'].hasError('pattern')">{{'Labels.InvalidstudentLastName'| translate}}</mat-error>
                     </mat-form-field>
                 </div>
               
                 <div class="col-sm-4">
                     <mat-form-field appearance="outline" class="w-100">
                         <mat-label>{{'Labels.birthDate'| translate}}</mat-label>
-                        <input matInput [matDatepicker]="picker" formControlName="dob" readonly
+                        <input matInput [matDatepicker]="picker" formControlName="dob" (click)="picker.open()" readonly
                         [max]="maxDate">
                         <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
                         <mat-datepicker #picker></mat-datepicker>
