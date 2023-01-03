@@ -135,8 +135,7 @@
                 <mat-form-field appearance="outline" class="w-100">
                     <mat-label>{{'Labels.nameMarathi' | translate}}</mat-label>
                     <input matInput  formControlName="m_Name" (keypress)="validation.noFirstSpaceAllow($event); validation.unicodeMarathiValidation($event)">
-                    <mat-error *ngIf="fc['m_Name'].hasError('pattern')"> {{'pleaseEnterValidOfficeUserName' | translate}}</mat-error>
-
+                    <mat-error *ngIf="fc['m_Name'].hasError('pattern')"> {{'Labels.pleaseEnterValidOfficeUserName' | translate}}</mat-error>
                 </mat-form-field>
             </div>
             <div class="col-sm-6">
