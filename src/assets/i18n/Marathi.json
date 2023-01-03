@@ -253,6 +253,7 @@
         "LightMode" : "लाइट मोड",
         "DarkMode" : "डार्क मोड",
         "UploadSchoolPhoto" : "शाळेचा फोटो अपलोड करा",
-        "UploadProfilePhoto" : "प्रोफाइल फोटो अपलोड करा"
+        "UploadProfilePhoto" : "प्रोफाइल फोटो अपलोड करा",
+        "UpdatedTeacherRegistration" : "शिक्षकाची माहिती अपडेट करा"
     }
 }
