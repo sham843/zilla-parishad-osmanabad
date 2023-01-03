@@ -148,12 +148,12 @@
         "logout": "Logout",
         "kendraRequired" : "Kendra is required",
         "contactBeo" : "Contact No.(BEO Office)",
-        "searchByNameContactNo" : "Search By Name/Contact No.",
+        "searchByNameContactNo" : "Student Name/Parent Mobile No.",
         "nameIsRequired" : "Name is required",
         "mobileIsRequired" : "Mobile number is required",
         "nameMarathi" : "Name In (Marathi)",
         "studentReg" : "Student Registraion",
-        "studentUpdate": "Update Student",
+        "studentUpdate": "Update Student Details",
         "levelRequired" : "Level is required",
         "uploadImg" : "Please Upload Image",
         "myprofile" : "My Profile",
@@ -237,10 +237,14 @@
         "DownloadPdf" : "Download PDF",
         "InvalidDesignation" : "Invalid Designation",
         "InvalidSchoolName" : "Invalid School Name",
+        "InvalidstudentFirstName" : "Invalid Student First Name",
+        "InvalidstudentLastName" : "Invalid Student Last Name",
+        "InvalidstudentMiddleName" : "Invalid Student Middle Name",
         "GridView" : "Grid View",
         "SaralvalidId":"Please enter 19 digit saral id",
         "OfficeUsersList" : "Office Users List",
-        "updateOfficeUser" : "Update Office Users"
+        "updateOfficeUser" : "Update Office Users",
+        "profileView" : "Profile View"
         
 
     }

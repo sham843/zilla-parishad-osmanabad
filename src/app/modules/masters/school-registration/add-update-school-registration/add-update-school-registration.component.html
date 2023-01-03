@@ -96,7 +96,7 @@
                         <div class="action-btn">
                             <button type="button" mat-icon-button class="btn-icon text-primary" *ngIf="uploadImg"
                                 (click)="viewImg()">
-                                <mat-icon>content_copy</mat-icon>
+                                <mat-icon>visibility</mat-icon>
                             </button>
                             <button type="button" mat-icon-button class="btn-icon text-danger" *ngIf="uploadImg"
                                 (click)="clearImg()">
@@ -105,6 +105,28 @@
                         </div>
                     </div>
                 </div>
+
+                <!-- Multiple Image -->
+
+                <!-- <div class="col-sm-4">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div class="upload-btn-wrapper">
+                            <button class="upload-btn">Multiple Image</button>
+                            <input type="file" name="myfile" formControlName="uploadImage"
+                                (change)="imgUpload($event)" />
+                        </div>
+                        <div class="action-btn">
+                            <button type="button" mat-icon-button class="btn-icon text-danger" *ngIf="uploadImg"
+                                (click)="clearImg()">
+                                <mat-icon>delete</mat-icon>
+                            </button>
+                        </div>
+                    </div>
+                </div> -->
+
+                <!-- Multiple Image -->
+
+
                 <div class="col-sm-6">
                    
                     <mat-form-field appearance="outline" class="w-100">
