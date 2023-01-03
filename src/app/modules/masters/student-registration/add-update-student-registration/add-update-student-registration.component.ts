@@ -76,16 +76,16 @@ export class AddUpdateStudentRegistrationComponent {
       fName: ['', Validators.required],
       mName: ['', Validators.required],
       lName: ['', Validators.required],
-      f_MName: ['', Validators.required],
-      m_MName: ['', Validators.required],
-      l_MName: ['', Validators.required],
+      f_MName: ['', [Validators.required, Validators.pattern('^[\u0900-\u0965 ]+$')]],
+      m_MName: ['', [Validators.required, Validators.pattern('^[\u0900-\u0965 ]+$')]],
+      l_MName: ['', [Validators.required, Validators.pattern('^[\u0900-\u0965 ]+$')]],
       standard: ['', Validators.required],
       dob: ['', Validators.required],
       gender: ['', Validators.required],
       religionId: ['', Validators.required],
       castId: ['', Validators.required],
       saralId: ['',[Validators.maxLength(19),Validators.minLength(19)]],
-      mobileNo: ['', [Validators.required, Validators.pattern(this.validators.mobile_No)]],      
+      mobileNo: ['', [Validators.required, Validators.pattern(this.validators.mobile_No)]],
       fatherFullName: ['', Validators.required],
       // m_FatherFullName: ['', Validators.required],
       motherName: ['', Validators.required],
@@ -152,8 +152,9 @@ export class AddUpdateStudentRegistrationComponent {
 
   getAllSchoolsByCenterId() {
     this.schoolArr = [];
-    let id = this.stuRegistrationForm.value.centerId;
-    this.masterService.getAllSchoolsByCenterId(this.languageFlag, id).subscribe({
+    let Tid = this.stuRegistrationForm.value.talukaId
+    let Cid = this.stuRegistrationForm.value.centerId;
+    this.masterService.getAllSchoolByCriteria(this.languageFlag, Tid, 0, Cid).subscribe({
       next: (res: any) => {
         if (res.statusCode == 200) {
           this.schoolArr = res.responseData;
@@ -322,7 +323,7 @@ export class AddUpdateStudentRegistrationComponent {
       if (!this.uploadImg) { this.imgFlag = true };
       if (!this.uploadAadhaar) { this.aadhaarFlag = true };
       this.commonMethods.showPopup(this.webService.languageFlag == 'EN' ? 'Please Enter Mandatory Fields' : 'कृपया अनिवार्य फील्ड प्रविष्ट करा', 1);
-      
+
       return
     } else {
       if (!this.uploadImg || !this.uploadAadhaar) {
@@ -414,7 +415,7 @@ export class AddUpdateStudentRegistrationComponent {
       this.stuRegistrationForm.controls['schoolId'].setValue('');
     } else if (name == 'centerId') {
       this.stuRegistrationForm.controls['schoolId'].setValue('');
-    }else if (name == 'religionId') {
+    } else if (name == 'religionId') {
       this.stuRegistrationForm.controls['castId'].setValue('');
     }
   }
