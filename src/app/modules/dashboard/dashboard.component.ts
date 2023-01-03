@@ -104,11 +104,11 @@ export class DashboardComponent implements OnInit, AfterViewInit {
       chart: {
         type: "donut"
       },
-      // fill: {
-      //   type: "solid",
-      //   colors: ["#00E396", "#F9CE1D", "#D4526E", "#D7263D", "#A300D6"]
-      // },
-       colors: ["#00E396", "#F9CE1D", "#D4526E", "#D7263D", "#A300D6"],
+      fill: {
+        type: "solid",
+        colors:['#CB4B4B', '#E76A63', '#E98754', '#EFB45B', '#65C889']
+      },
+      colors: ['#CB4B4B', '#E76A63', '#E98754', '#EFB45B', '#65C889'],
       labels: [],
       responsive: [
         {
@@ -133,7 +133,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
           height: 12,
           strokeWidth: 0,
           strokeColor: '#fff',
-          fillColors: ["#00E396", "#F9CE1D", "#D4526E", "#D7263D", "#A300D6"],
+          fillColors: ['#CB4B4B', '#E76A63', '#E98754', '#EFB45B', '#65C889'],
         }
       }
     };
@@ -143,11 +143,11 @@ export class DashboardComponent implements OnInit, AfterViewInit {
         type: "donut"
       },
 
-      // fill: {
-      //   type: "solid",
-      //   colors: ["#00E396", "#F9CE1D", "#D4526E", "#D7263D", "#A300D6"]
-      // },
-      colors: ["#00E396", "#F9CE1D", "#D4526E", "#D7263D", "#A300D6"],
+      fill: {
+        type: "solid",
+        colors:['#CB4B4B', '#E76A63', '#E98754', '#EFB45B', '#65C889']
+      },
+      colors: ['#CB4B4B', '#E76A63', '#E98754', '#EFB45B', '#65C889'],
       labels: [],
       responsive: [
         {
@@ -172,7 +172,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
           height: 12,
           strokeWidth: 0,
           strokeColor: '#fff',
-          fillColors: ["#00E396", "#F9CE1D", "#D4526E", "#D7263D", "#A300D6"],
+          fillColors: ['#CB4B4B', '#E76A63', '#E98754', '#EFB45B', '#65C889'],
         }
       }
     };
@@ -181,11 +181,11 @@ export class DashboardComponent implements OnInit, AfterViewInit {
       chart: {
         type: "donut"
       },
-      colors: ["#00E396", "#F9CE1D", "#D4526E", "#D7263D", "#A300D6"],
-      // fill: {
-      //   type: "solid",
-      //   colors: ["#00E396", "#F9CE1D", "#D4526E", "#D7263D", "#A300D6"]
-      // },
+      colors: ['#CB4B4B', '#E76A63', '#E98754', '#EFB45B', '#65C889'],
+      fill: {
+        type: "solid",
+        colors:['#CB4B4B', '#E76A63', '#E98754', '#EFB45B', '#65C889']
+      },
       labels: [],
       responsive: [
         {
@@ -210,7 +210,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
           height: 12,
           strokeWidth: 0,
           strokeColor: '#fff',
-          fillColors: ["#00E396", "#F9CE1D", "#D4526E", "#D7263D", "#A300D6"],
+          fillColors: ['#CB4B4B', '#E76A63', '#E98754', '#EFB45B', '#65C889'],
         }
       }
     };
