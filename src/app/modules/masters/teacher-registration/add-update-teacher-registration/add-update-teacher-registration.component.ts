@@ -545,7 +545,7 @@ export class AddUpdateTeacherRegistrationComponent {
       this.service.getHttp().subscribe({
         next: ((res: any) => {
           this.ngxSpinner.hide();
-          res.statusCode === 200 ? (this.commonMethod.showPopup(res.statusMessage, 0)) : this.commonMethod.checkEmptyData(res.statusMessage) == false ? this.errorHandler.handelError(res.statusCode) : this.commonMethod.showPopup(res.statusMessage, 1);       
+          res.statusCode == 200 ? (this.commonMethod.showPopup(res.statusMessage, 0)) : this.commonMethod.checkEmptyData(res.statusMessage) == false ? this.errorHandler.handelError(res.statusCode) : this.commonMethod.showPopup(res.statusMessage, 1);       
             this.dialogRef.close('yes');
          
         }),
@@ -561,7 +561,8 @@ export class AddUpdateTeacherRegistrationComponent {
   onEdit(obj: any) {
     // console.log("editObj",obj);
     this.editFlag = true;
-    this.editObj = obj;  
+    this.editObj = obj; 
+     
     // this.data.uploadImage ? this.teacherRegForm.value.uploadImage = obj.uploadImage : '';
     // this.data.uploadImage ? this.showAddRemImg = true : this.showAddRemImg = false;
     this.assignClassArray = obj.assignTeacher;    
@@ -584,10 +585,11 @@ export class AddUpdateTeacherRegistrationComponent {
     this.formData(); this.getGender();
   }
 //#endregion --------------------------------------- end edit ----------------------------------------------
-  clearImg() {
-    this.uploadImghtml = '';
-    this.teacherRegForm.value.uploadImage = '';
+  clearImg() {   
+    this.imageFile.nativeElement.value = '';
     this.f['uploadImage'].setValue('');
+    this.data.uploadImage = '';
+    this.uploadImghtml = '';
     this.showAddRemImg = false;
   }
 
