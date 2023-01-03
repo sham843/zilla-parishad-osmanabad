@@ -118,6 +118,7 @@ export class DashboardStudentDetailsComponent {
           this.ngxSpinner.hide();
           this.tableDataArray = [];
           this.totalCount = 0;
+          this.data =''
         }
         this.setTableData();
 
@@ -172,8 +173,9 @@ export class DashboardStudentDetailsComponent {
 
   getAllSchoolsByCenterId() {
     this.schoolArr = [];
-    let id = 1;
-    this.masterService.getAllSchoolsByCenterId(this.languageFlag, id).subscribe({
+    let Tid = this.filterForm.value.talukaId
+    let Cid = this.filterForm.value.centerId;
+    this.masterService.getAllSchoolByCriteria(this.languageFlag, Tid, 0, Cid).subscribe({
       next: (res: any) => {
         if (res.statusCode == 200) {
           this.schoolArr = res.responseData;

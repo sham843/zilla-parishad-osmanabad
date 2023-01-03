@@ -48,9 +48,9 @@
                             <mat-label>{{'Labels.Designation(Marathi)' | translate}}</mat-label>
                             <input matInput formControlName="m_DesignationType" maxlength="30"
                                 (keypress)="validation.noFirstSpaceAllow($event);validation.unicodeMarathiValidation($event)">
-                            <!-- <mat-error
-                                *ngIf="f['m_DesignationType'].hasError('required') || f['m_DesignationType'].hasError('touched')">
-                                {{'Labels.DesignationTypeMarathiReq' | translate}}</mat-error> -->
+                            <mat-error
+                                *ngIf="f['m_DesignationType'].hasError('pattern') ">
+                                {{'Labels.DesignationTypeMarathiReq' | translate}}</mat-error>
                         </mat-form-field>
                     </ng-container>
                 </div>
