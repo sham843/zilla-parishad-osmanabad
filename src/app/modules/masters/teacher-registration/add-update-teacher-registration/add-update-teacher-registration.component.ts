@@ -355,8 +355,6 @@ export class AddUpdateTeacherRegistrationComponent {
 
   getCluster() {
     let talukaId = this.teacherRegForm.value.teacherDetails.talukaId;
-    console.log("talukaId",talukaId);
-    
     this.masterService.getAllCenter('EN', talukaId).subscribe({
       next: ((res: any) => {
         if (res.statusCode == 200 && res.responseData.length) {
@@ -514,9 +512,7 @@ export class AddUpdateTeacherRegistrationComponent {
     this.img = true;
     this.fileUpload.uploadDocuments(event, 'Upload', 'jpg, jpeg, png').subscribe((res: any) => {
      if(res.statusCode == 200){
-      this.uploadImghtml = res.responseData;   
-      console.log("uploadImghtml",this.uploadImghtml );
-     
+      this.uploadImghtml = res.responseData;    
       // this.showAddRemImg = true;
      }else{
       return;

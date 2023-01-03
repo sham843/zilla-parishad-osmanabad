@@ -296,7 +296,6 @@ export class TeacherRegistrationComponent {
   }
 
   openDetailsDialog(obj: any) {
-    console.log(obj);
     var data = {
       headerImage: obj.uploadImage,
       header: this.webStorageS.languageFlag == 'EN' ? obj.name : obj.m_Name,
