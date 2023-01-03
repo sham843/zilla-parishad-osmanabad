@@ -411,7 +411,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
           this.totalStudentSurveyData[1].status = true;
           this.totalStudentSurveyData[0].ischeckboxShow=false;
           // this.tableColumn = [{ label: 'एकूण संख्या', groupId: 0, ischeckboxShow: false, status: false }, { label: '१ली ते 2वी', groupId: 1, subSTD: [{ label: '१ली', subgroupId: 1, status: false }, { label: '2री', subgroupId: 2, status: false }], ischeckboxShow: true, status: true }, { label: '3री ते ५वी', groupId: 2, subSTD: [{ label: '3री', subgroupId: 3, status: false }, { label: '4री', subgroupId: 4, status: false }, { label: '5वी', subgroupId: 5, status: false }], ischeckboxShow: true, status: false }, { label: '६वी ते ८वी', groupId: 3, subSTD: [{ label: '६वी', subgroupId: 6, status: false }, { label: '7वी', subgroupId: 7, status: false }, { label: '८वी', subgroupId: 8, status: false }], ischeckboxShow: true, status: false },];
-          this.checkData(this.totalStudentSurveyData[1]);
+          this.checkData(this.totalStudentSurveyData[1], 'radio');
           console.log(this.totalStudentSurveyData);
           this.getPieChartData();
         } else {
@@ -422,19 +422,24 @@ export class DashboardComponent implements OnInit, AfterViewInit {
       error: (error: any) => { this.error.handelError(error.message) }
     });
   }
-  checkData(obj: any) {
-    this.totalStudentSurveyData.map((x: any) => {
-      x.status = false;
-    })
-    const index = this.totalStudentSurveyData.findIndex((x: any) => x.groupId == obj.groupId);
-    this.totalStudentSurveyData[index].status = true;
-    this.totalStudentSurveyData.map((x:any)=>{
-      if(x.status==true){
-        x.standardDetails.map((y:any)=>{
-          y.status=true;
-        })
-      }
-    })
+  checkData(obj: any, status:any, index?:any) {
+    if(status=='radio'){
+      this.totalStudentSurveyData.map((x: any) => {
+        x.status = false;
+      })
+      const index = this.totalStudentSurveyData.findIndex((x: any) => x.groupId == obj.groupId);
+      this.totalStudentSurveyData[index].status = true;
+      this.totalStudentSurveyData.map((x:any)=>{
+        if(x.status==true){
+          x.standardDetails.map((y:any)=>{
+            y.status=true;
+          })
+        }
+      })
+    }else{
+      console.log(index)
+    }
+    
     this.getSubject(obj.groupId);
     this.getBarChart(obj);
     setTimeout(() => {
