@@ -278,7 +278,7 @@ export class AddUpdateStudentRegistrationComponent {
       "m_MName": obj.m_MName || '',
       "lName": obj.lName || '',
       "l_MName": obj.l_MName || '',
-      "stateId": obj.stateId,
+      "stateId": obj.stateId || 1,
       "districtId": obj.districtId,
       "talukaId": obj.talukaId,
       "centerId": obj.centerId,
