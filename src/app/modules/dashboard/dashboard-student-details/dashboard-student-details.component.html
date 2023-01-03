@@ -37,6 +37,26 @@
                             </mat-select>
                         </mat-form-field>
                     </div>
+                    <div class="col-sm-4">
+                        <mat-form-field appearance="outline" class="w-100 ">
+                            <mat-label>{{'Labels.standard'| translate}}</mat-label>
+                            <mat-select formControlName="standardId">
+                                <mat-option *ngFor="let stan of standardArr" [value]="stan.id">{{languageFlag == 'English'
+                                    ?stan.standard:stan.m_Standard}}</mat-option>
+                            </mat-select>
+                            <!-- <mat-error *ngIf="fc['standard'].hasError('required')"> {{'Labels.pleaseSelectStandard'| translate}} </mat-error> -->
+                        </mat-form-field>
+                    </div>
+                    <div class="col-sm-4">
+                        <mat-form-field appearance="outline" class="w-100 ">
+                            <mat-label>Subject</mat-label>
+                            <mat-select formControlName="subjectId">
+                                <mat-option *ngFor="let sub of subjectArr" [value]="sub.id">{{languageFlag == 'English'
+                                    ?sub.subject:sub.m_Subject}}</mat-option>
+                            </mat-select>
+                            <!-- <mat-error *ngIf="fc['standard'].hasError('required')"> {{'Labels.pleaseSelectStandard'| translate}} </mat-error> -->
+                        </mat-form-field>
+                    </div>
                     <div class="col-sm-auto">
                         <button mat-flat-button class="btn-main" (click)="getTableData('filter')">{{'Labels.filter'|
                           translate}}</button>

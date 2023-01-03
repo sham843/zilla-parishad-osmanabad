@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ApiService } from 'src/app/core/services/api.service';
@@ -20,13 +19,13 @@ export class DashboardStudentDetailsComponent {
   totalCount!: number;
   tableDatasize!: Number;
   languageFlag!: string;
-  editStudentId: any;
   data: any;
-  searchContent = new FormControl('');
-
+  dashboardObj:any
   talukaArr:any = []
   centerArr:any = []
   schoolArr :any= []
+  standardArr:any = [];
+  subjectArr:any = [];
 
   displayedColumns = ['docPath', 'srNo', 'fullName', 'Status'];
   marathiDisplayedColumns = ['docPath', 'srNo', 'm_FullName', 'Status'];
@@ -41,20 +40,22 @@ export class DashboardStudentDetailsComponent {
     private apiService: ApiService,
     private webService: WebStorageService,
     private errors: ErrorsService,
-    private route: ActivatedRoute,
     public validators: ValidationService,
     public translate: TranslateService,
     private commonMethods: CommonMethodsService,
     private masterService: MasterService,
   ) { }
   ngOnInit() {
-    this.route.paramMap.subscribe((params) => {
-      this.editStudentId = params.get('id');
-    })
     this.formData();
     this.languageChange();
-    this.getTaluka();
+    this.getTaluka();   
+    this.webService.selectedBarchartObjData.subscribe((x:any)=>{
+      console.log(x);
+      this.dashboardObj = x;
+    })
     this.getTableData();
+    this.getStandard();  this.getSubject();
+    
   }
 
   formData() {
@@ -62,6 +63,8 @@ export class DashboardStudentDetailsComponent {
       talukaId :[''],
        centerId:[''],
        schoolId:[''],
+       standardId:[''],
+       subjectId:['']
     })
   }
 
@@ -76,44 +79,46 @@ export class DashboardStudentDetailsComponent {
   setTableData() {
     let tableData = {
       pageNumber: this.pageNumber,
-      img: 'docPath', blink: '', badge: '', isBlock: '', pagintion: true,
+      img: 'docPath', blink: true, badge: '', isBlock: '', pagintion: false,
       displayedColumns: this.languageFlag == 'English' ? this.displayedColumns : this.marathiDisplayedColumns,
       tableData: this.tableDataArray,
-      tableSize: this.totalCount,
+      tableSize: this.totalCount ,
       tableHeaders: this.languageFlag == 'English' ? this.displayedheaders : this.marathiDisplayedheaders
-    };
+    };    
     this.apiService.tableData.next(tableData);
   }
 
 
   getTableData(flag?: any) {
-    this.ngxSpinner.show();
+    this.ngxSpinner.show();    
     this.pageNumber = flag == 'filter' ? 1 : this.pageNumber
-    // ?pageno=1&pagesize=10&textSearch=p&TalukaId=1&CenterId=1&SchoolId=1&lan=1'
-    let str = `?pageno=${this.pageNumber}&pagesize=10&textSearch=&TalukaId=${this.filterForm.value.talukaId || 0}&CenterId=${this.filterForm.value.centerId || 0}&SchoolId=${this.filterForm.value.schoolId || 0}&lan=${this.languageFlag || ''}`;
+    let TalukaId = flag == 'filter' ? this.filterForm.value.talukaId : this.dashboardObj.TalukaId ;
+    let CenterId = flag == 'filter' ? this.filterForm.value.centerId : this.dashboardObj.CenterId;
+    let SchoolId = flag == 'filter' ? this.filterForm.value.schoolId : this.dashboardObj.SchoolId;
+     // let StandardId = flag == 'filter' ? this.filterForm.value.standardId : this.dashboardObj.StandardId;
+    // let SubjectId = flag == 'filter' ? this.filterForm.value.subjectId : this.dashboardObj.SubjectId;
+    let lan = this.languageFlag == 'English' ? 'en' : 'mr-IN';
+    let GroupId = this.dashboardObj.groupId  || 1;
 
-    this.apiService.setHttp('GET', 'zp-osmanabad/Student/GetAll' + str, false, false, false, 'baseUrl');
+    let str = 'zp-osmanabad/Dashboard/GetDataFor1st2ndStdStudentList?GroupId='+GroupId+'&TalukaId='+(TalukaId || 0)+'&CenterId='+(CenterId || 0)+'&SchoolId='+(SchoolId || 0)+'&lan='+lan
+   
+    this.apiService.setHttp('GET',str, false, false, false, 'baseUrl');
     this.apiService.getHttp().subscribe({
       next: (res: any) => {
         if (res.statusCode == 200) {
           this.ngxSpinner.hide();
           this.tableDataArray = res.responseData.responseData1;
-          this.totalCount = res.responseData.responseData2.pageCount;
-          this.tableDataArray.map((res: any) => {
-            res.docPath = res.documentResponse[0]?.docPath
-          })
+          this.totalCount = res.responseData?.responseData2?.pageCount || 0;        
           let obj = this.tableDataArray[0];
           this.data = {
-            headerImage: obj.documentResponse[0].docPath,
-            header: this.webService.languageFlag == 'EN' ? obj.fullName : obj.m_FullName,
-            subheader: this.webService.languageFlag == 'EN' ? obj.gender : obj.m_Gender,
-            labelHeader: this.webService.languageFlag == 'EN' ? ['Father Name', 'Parent Mobile No.', 'Aadhar No.', 'Standard', 'School Name'] : ['वडीलांचे नावं', 'पालक मोबाईल क्र.', 'आधार क्र.', 'इयत्ता', 'शाळेचे नाव'],
-            labelKey: this.webService.languageFlag == 'EN' ? ['fatherFullName', 'parentMobileNo', 'aadharNo', 'standard', 'schoolName'] : ['m_FatherFullName', 'parentMobileNo', 'aadharNo', 'standard', 'm_SchoolName'],
+            headerImage: '',
+            header: this.webService.languageFlag == 'English' ? obj.fullName : obj.m_FullName,
+            subheader: this.webService.languageFlag == 'English' ? obj.gender : obj.m_Gender,
+            labelHeader: this.webService.languageFlag == 'English' ? ['Father Name', 'Parent Mobile No.', 'Aadhar No.', 'Standard', 'School Name'] : ['वडीलांचे नावं', 'पालक मोबाईल क्र.', 'आधार क्र.', 'इयत्ता', 'शाळेचे नाव'],
+            labelKey: this.webService.languageFlag == 'English' ? ['fatherFullName', 'parentMobileNo', 'aadharNo', 'standard', 'schoolName'] : ['m_FatherFullName', 'parentMobileNo', 'aadharNo', 'standard', 'm_SchoolName'],
             Obj: obj,
             chart: false
           }
-
-
         } else {
           this.ngxSpinner.hide();
           this.tableDataArray = [];
@@ -123,13 +128,13 @@ export class DashboardStudentDetailsComponent {
         this.setTableData();
 
       },
-      error: ((err: any) => { this.ngxSpinner.hide(); this.errors.handelError(err) })
+      error: ((err: any) => { this.ngxSpinner.hide(); this.errors.handelError(err.statusCode) })
     });
   }
 
   viewDetails(obj: any) {
     this.data = {
-      headerImage: obj.documentResponse[0].docPath,
+      headerImage: '',
       header: this.webService.languageFlag == 'EN' ? obj.fullName : obj.m_FullName,
       subheader: this.webService.languageFlag == 'EN' ? obj.gender : obj.m_Gender,
       labelHeader: this.webService.languageFlag == 'EN' ? ['Father Name', 'Parent Mobile No.', 'Aadhar No.', 'Standard', 'School Name'] : ['वडीलांचे नावं', 'पालक मोबाईल क्र.', 'आधार क्र.', 'इयत्ता', 'शाळेचे नाव'],
@@ -188,7 +193,35 @@ export class DashboardStudentDetailsComponent {
     });
   }
 
-  
+  getStandard() {
+    this.standardArr = [];
+    this.masterService.getAllStandard(this.languageFlag).subscribe({
+      next: (res: any) => {
+        if (res.statusCode == 200) {
+          this.standardArr = res.responseData;
+        } else {
+          this.commonMethods.checkEmptyData(res.statusMessage) == false ? this.errors.handelError(res.statusCode) : this.commonMethods.showPopup(res.statusMessage, 1);
+          this.standardArr = [];
+        }
+      },
+      error: ((err: any) => { this.errors.handelError(err.statusCode) })
+    });
+  }
+
+  getSubject() {
+    this.subjectArr = [];
+    this.masterService.getAllSubject(this.languageFlag).subscribe({
+      next: (res: any) => {
+        if (res.statusCode == 200) {
+          this.subjectArr = res.responseData;
+        } else {
+          this.commonMethods.checkEmptyData(res.statusMessage) == false ? this.errors.handelError(res.statusCode) : this.commonMethods.showPopup(res.statusMessage, 1);
+          this.subjectArr = [];
+        }
+      },
+      error: ((err: any) => { this.errors.handelError(err.statusCode) })
+    });
+  }
 
   clearDropdown(name: any) {
     if (name == 'talukaId') {
@@ -199,21 +232,11 @@ export class DashboardStudentDetailsComponent {
     }
   }
 
-  
-
-
-
-  childTableCompInfo(obj: any) {
+    childTableCompInfo(obj: any) {
     switch (obj.label) {
       case 'Pagination':
         this.pageNumber = obj.pageNumber;
         this.getTableData();
-        break;
-      case 'Edit':
-        // this.addUpdateAgency(obj);
-        break;
-      case 'Delete':
-        // this.deteleDialogOpen(obj);
         break;
       case 'View':
         this.viewDetails(obj);
