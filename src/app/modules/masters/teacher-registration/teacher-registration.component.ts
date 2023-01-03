@@ -83,10 +83,10 @@ export class TeacherRegistrationComponent {
   getTableData(flag?: string) {
     this.ngxSpinner.show();
     this.pageNumber = flag == 'filter' ? 1 : this.pageNumber;
-    if (flag == 'filter' && !this.searchContent.value) {
-      this.ngxSpinner.hide();
-      return
-    }
+    // if (flag == 'filter' && !this.searchContent.value) {
+    //   this.ngxSpinner.hide();
+    //   return
+    // }
     // let tableDatasize!: Number;
     let pageNo = this.cardViewFlag ? (this.cardCurrentPage + 1) : this.pageNumber;
 
