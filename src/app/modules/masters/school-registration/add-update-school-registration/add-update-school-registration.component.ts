@@ -28,6 +28,7 @@ export class AddUpdateSchoolRegistrationComponent {
   schoolMngArr = new Array();
   schoolRegForm !: FormGroup;
   uploadImg: any;
+  uploadMultipleImg = new Array();
   editFlag: boolean = false;
   img: boolean = false;
   schoolDocument!: FormArray;
@@ -79,8 +80,8 @@ export class AddUpdateSchoolRegistrationComponent {
         this.fb.group({
           "id": 0,
           "schoolId": 0,
-          "documentId": 0,
-          "docPath": "https://zposmservices.mahamining.com/Uploads/Upload/jpeg_01022023065210PM.jpeg",
+          "documentId": 3,
+          "docPath": [''],
           "createdBy": 0,
           "createdDate": new Date(),
           "modifiedBy": 0,
@@ -104,6 +105,10 @@ export class AddUpdateSchoolRegistrationComponent {
 
       ...this.webStorageS.createdByProps()
     });
+  }
+
+  get multipleImg(): FormArray {
+    return this.schoolRegForm.get('schoolDocument') as FormArray;
   }
 
 
@@ -219,6 +224,21 @@ export class AddUpdateSchoolRegistrationComponent {
     });
   }
 
+  multipleImgUpload(event: any) {
+    this.img = true;
+    this.fileUpload.uploadMultipleDocument(event, 'Upload', 'jpg, jpeg, png').subscribe((res: any) => {
+      // console.log("multiple img res : ", res);
+      if (res.statusCode == 200) {
+        this.uploadMultipleImg = res.responseData;
+        console.log("uploadMultipleImg : ", this.uploadMultipleImg);
+        
+      }
+      else {
+        return
+      }
+    });
+  }
+
   viewImg() {
     if (this.editFlag == true) {
       let viewImg = this.data.uploadImage;
@@ -228,6 +248,7 @@ export class AddUpdateSchoolRegistrationComponent {
       window.open(this.uploadImg, 'blank');
     }
   }
+
   //#endregionegion ------------------------------------------------- Upload Image end here --------------------------------------------// 
 
   //#region ------------------------------------------------- Add/Update Record start here --------------------------------------------//
@@ -244,9 +265,14 @@ export class AddUpdateSchoolRegistrationComponent {
       }
     }
 
+    formValue.schoolDocument.docPath ? formValue.schoolDocument.docPath = this.uploadMultipleImg : '';
+    formValue.schoolDocument.docPath = this.schoolRegForm.value.schoolDocument.docPath;
+
     let url;
     this.editFlag ? url = 'ZP-Osmanabad/School/Update' : url = 'ZP-Osmanabad/School/Add';
-
+    console.log("FormValue : ", formValue);
+    
+    return 
     if (!this.schoolRegForm.valid) {
       this.commonMethod.showPopup(this.webStorageS.languageFlag == 'EN' ? 'Please Enter Mandatory Fields' : 'कृपया अनिवार्य फील्ड प्रविष्ट करा', 1);
       return
@@ -280,9 +306,19 @@ export class AddUpdateSchoolRegistrationComponent {
 
   //#region ------------------------------------------------- Clear Img field start here --------------------------------------------//
   clearImg() {
-    this.uploadImg = '';
-    this.schoolRegForm.value.uploadImage = '';
-    this.f['uploadImage'].setValue('');
+    console.log("Multiple Img : ", this.uploadMultipleImg);
+    
+    if(this.uploadImg){
+      this.uploadImg = '';
+      this.schoolRegForm.value.uploadImage = '';
+      this.f['uploadImage'].setValue('');
+    }
+    else if(this.uploadMultipleImg){
+      this.uploadMultipleImg = [];
+      // this.schoolRegForm.value.uploadImage = '';
+      // this.f['uploadImage'].setValue('');
+    }
+    
   }
   //#endregionegion --------------------------------------------- Clear Img field end here --------------------------------------------//
 
