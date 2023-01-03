@@ -127,6 +127,14 @@
                             <thead>
                                 <tr>
                                     <th *ngFor="let header of tableColumn">
+                                        <!-- <div class="row">
+                                            <div class="col-sm-auto">
+                                                asf
+                                            </div>
+                                            <div class="col-sm">
+                                                asdf
+                                            </div>
+                                        </div> -->
                                         <div *ngIf="header.ischeckboxShow==false">
                                             {{header.label}}
                                         </div>
@@ -143,7 +151,7 @@
                                             </div>
                                         </div>
                                         <div class="row" *ngIf="header.status==true">
-                                            <div class="col-sm" *ngFor="let sub of header.subSTD">
+                                            <div class="col-sm-4" *ngFor="let sub of header.subSTD">
                                                 <div class="d-flex align-items-center justify-content-start">
                                                     <div class="form-check">
                                                         <input class="form-check-input" type="checkbox"

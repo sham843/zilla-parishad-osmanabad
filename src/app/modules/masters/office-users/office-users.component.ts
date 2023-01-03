@@ -49,12 +49,14 @@ export class OfficeUsersComponent {
   }
 
   getTableData(flag?: string) {
+    console.log(flag);
+    
     this.ngxSpinner.show();
     this.pageNumber = flag == 'filter' ? 1 : this.pageNumber;
-    if (flag == 'filter' && !this.searchContent.value) {
-      this.ngxSpinner.hide();
-      return
-    }
+    // if (flag == 'filter' && !this.searchContent.value) {
+    //   this.ngxSpinner.hide();
+    //   return
+    // }
     let reportStr = `?textSearch=${this.searchContent.value}&pageno=${this.pageNumber}&pagesize=${(this.totalCount * 10)}&lan=${this.webStorageService.languageFlag}`;
     let str = `?textSearch=${this.searchContent.value}&pageno=${this.pageNumber}&pagesize=10&lan=${this.webStorageService.languageFlag}`;
     this.apiService.setHttp('GET', 'zp_osmanabad/Office/GetAllOffice' + (flag == 'reportFlag' ? reportStr : str), false, false, false, 'baseUrl');
