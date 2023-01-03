@@ -52,7 +52,7 @@
             <div class="col-sm-5">
                 <app-table (recObjToChild)="childTableCompInfo($event)"></app-table>
             </div>
-            <div class="col-sm-7">
+            <div class="col-sm-7" *ngIf="data">
                 <mat-card class="plain-card h-100">
                     <mat-card-header class="card-header">
                         <div class="d-flex align-items-center justify-content-between w-100">
