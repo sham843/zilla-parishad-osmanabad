@@ -34,7 +34,7 @@ export class TeacherRegistrationComponent {
   cardViewFlag: boolean = false;
 
   displayedheadersEnglish = ['#', 'Sr. No.', 'Teacher Name', 'Mobile No.', 'Email ID', 'Village', 'Taluka', 'action'];
-  displayedheadersMarathi = ['#', 'अनुक्रमांक', 'शिक्षकाचे नाव', 'मोबाईल क्र.', 'एजन्सी ई-मेल आयडी ', 'गाव', 'तालुका', 'कृती'];
+  displayedheadersMarathi = ['#', 'अनुक्रमांक', 'शिक्षकाचे नाव', 'मोबाईल क्र.', 'ई-मेल आयडी ', 'गाव', 'तालुका', 'कृती'];
 
   @HostBinding('class') className = '';
   constructor(private dialog: MatDialog, private overlay: OverlayContainer, private apiService: ApiService, private errors: ErrorsService,
@@ -209,7 +209,7 @@ export class TeacherRegistrationComponent {
     dialogRef.afterClosed().subscribe((result: any) => {
       if (result == 'yes' && obj) {
         this.clearFilterData();
-        this.getTableData();
+        // this.getTableData();
         this.pageNumber = this.pageNumber;
       }
       else if (result == 'yes') {
@@ -275,6 +275,8 @@ export class TeacherRegistrationComponent {
     if(this.searchContent.value){
       this.searchContent.setValue('');
       this.getTableData();
+    }else{
+      this.getTableData();
     }
    
   }
@@ -287,6 +289,7 @@ export class TeacherRegistrationComponent {
       this.clearFilterData();
     } else if (label == 'Card')
       this.cardViewFlag = true;
+      
     this.clearFilterData();
   }
 

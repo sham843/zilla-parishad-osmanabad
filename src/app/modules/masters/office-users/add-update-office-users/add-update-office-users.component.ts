@@ -37,7 +37,7 @@ export class AddUpdateOfficeUsersComponent implements OnInit {
   ngOnInit() {
     this.defaultForm();
     // console.log("dataaa",this.data);
-    (!this.data) ? (this.getLevelDrop(), this.getTalukaDrop(), this.getDistrictDrop()) : '';
+    (!this.data) ? (this.getLevelDrop()) : '';
   }
 
   defaultForm() {
@@ -56,11 +56,11 @@ export class AddUpdateOfficeUsersComponent implements OnInit {
         "emailId": [this.data ? this.data.emailId : "", [Validators.required, Validators.pattern(this.validation.email)]],
         "address": [this.data ? this.data.address : "", [Validators.maxLength(500)]],
         "schoolId": [this.data ? this.data.schoolId : 0],
-        "designationId": [this.data ? this.data.designationId : 0],
+        "designationId": [this.data ? this.data.designationId : null, Validators.required],
         "designationLevelId": [this.data ? this.data.designationLevelId : null,[Validators.required]],
         "stateId": [this.data ? 0 : 0],
-        "districtId": [this.data ? this.data.districtId : 0],
-        "talukaId": [this.data ? this.data.talukaId : 0],
+        "districtId": [this.data ? this.data.districtId : null, Validators.required ],
+        "talukaId": [this.data ? this.data.talukaId : null, Validators.required ],
         "userTypeId": [this.data ? 0 : 0],
         "subUserTypeId": [this.data ? 0 : 0],
         "kendraMobileNo": [this.data ? this.data.kendraMobileNo : "", [Validators.pattern(this.validation.mobile_No)]],
@@ -93,7 +93,8 @@ export class AddUpdateOfficeUsersComponent implements OnInit {
 
   onchangeLevel(event: any) {
     console.log(event.value);
-    this.designations = [];
+    this.getDistrictDrop();
+    this.getTalukaDrop();
     this.getDesignationByLevelId();
   }
 
@@ -305,7 +306,7 @@ export class AddUpdateOfficeUsersComponent implements OnInit {
   onchangeValidation(event: any, label: string) {
     console.log("event, label", event.value, label);
 
-    if (event.value == 1 || event.value == 2 && label == 'Level') {
+    if ((event.value == 1 || event.value == 2) && label == 'Level') {
       this.fc['districtId'].setValidators(Validators.required);
       this.fc['districtId'].updateValueAndValidity();
 
@@ -355,38 +356,24 @@ export class AddUpdateOfficeUsersComponent implements OnInit {
   }
 
   clearDropDown(label: string) {
-    console.log("label : ");
-
+    console.log("label : ", label);
     if (label == 'Level') {
-      this.fc['districtId'].setValue(0);
-      this.talukas = [];
-      this.designations = [];
+      (this.officeForm.value.designationLevelId == 6 || this.officeForm.value.designationLevelId == 7)  ? this.fc['districtId'].setValue(0) : this.fc['districtId'].setValue(null);
+      (this.officeForm.value.designationLevelId == 6 || this.officeForm.value.designationLevelId == 7) ?this.fc['talukaId'].setValue(0) : this.fc['talukaId'].setValue(null);
+      (this.officeForm.value.designationLevelId == 5 || this.officeForm.value.designationLevelId == 6 || this.officeForm.value.designationLevelId == 7) ? this.fc['designationId'].setValue(0) : this.fc['designationId'].setValue(null);
       this.fc['bitName'].setValue('');
       this.fc['schoolId'].setValue(0);
-      this.fc['talukaId'].setValue(0);
+      // this.fc['talukaId'].setValue(0);
       this.fc['beoEmailId'].setValue('');
       this.fc['beoMobileNo'].setValue('');
-      // this.fc['name'].setValue('');
-      // this.fc['m_Name'].setValue('');
-      // this.fc['mobileNo'].setValue('');
-      // this.fc['emailId'].setValue('');
     }
     else if (label == 'Taluka') {
-      this.fc['designationId'].setValue(0);
       this.fc['schoolId'].setValue(0);
-      // this.fc['name'].setValue('');
-      // this.fc['m_Name'].setValue('');
-      // this.fc['mobileNo'].setValue('');
-      // this.fc['emailId'].setValue('');
       this.fc['bitName'].setValue('');
       this.fc['beoEmailId'].setValue('');
       this.fc['beoMobileNo'].setValue('');
     }
     else if (label == 'Designation') {
-      // this.fc['name'].setValue('');
-      // this.fc['m_Name'].setValue('');
-      // this.fc['mobileNo'].setValue('');
-      // this.fc['emailId'].setValue('');
       this.fc['kendraMobileNo'].setValue('');
       this.fc['kendraEmailId'].setValue('');
       this.fc['centerId'].setValue(0);
@@ -395,10 +382,6 @@ export class AddUpdateOfficeUsersComponent implements OnInit {
     }
     else if (label == 'Kendra') {
       this.fc['schoolId'].setValue(0);
-      // this.fc['name'].setValue('');
-      // this.fc['m_Name'].setValue('');
-      // this.fc['mobileNo'].setValue('');
-      // this.fc['emailId'].setValue('');
       this.fc['kendraMobileNo'].setValue('');
       this.fc['kendraEmailId'].setValue('');
       this.fc['beoEmailId'].setValue('');
