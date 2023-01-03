@@ -1,66 +1,76 @@
-
 <mat-drawer-container class="example-container" hasBackdrop="true">
-    <mat-drawer #drawer mode="over">I'm a drawer</mat-drawer>
+    <mat-drawer #drawer mode="over" position="end">
+        <mat-card class="plain-card">
+            <mat-card-header class="card-header">
+                <div class="d-flex justify-content-between align-items-center w-100">
+                    <h6 class="text-main mb-0 fw-bold">Filters</h6>
+                    <button mat-icon-button class="btn-modal-close" mat-dialog-close (click)="this.drawer.close()">
+                        <mat-icon>
+                            close
+                        </mat-icon>
+                    </button>
+                </div>
+            </mat-card-header>
+            <mat-card-content class="card-body">
+                <form [formGroup]="filterForm">
+                    <div class="mb-1">
+                        <mat-form-field appearance="outline" class="w-100">
+                            <mat-label>तालुका निवडा</mat-label>
+                            <mat-select formControlName="talukaId"
+                                (selectionChange)="f['talukaId'].value!=0? getCenters():''; dashboardAPis(); clickOnSvgMap('select')">
+                                <mat-option *ngFor="let taluka of talukaData" [value]="taluka.id">
+                                    {{webStorage.languageFlag == 'EN'?taluka.taluka:taluka.m_Taluka}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                    <div class="mb-1">
+                        <mat-form-field appearance="outline" class="w-100">
+                            <mat-label>केंद्र निवडा</mat-label>
+                            <mat-select formControlName="centerId" (selectionChange)="getschools() ;dashboardAPis()">
+                                <mat-option *ngFor="let center of centerData" [value]="center.id">
+                                    {{webStorage.languageFlag == 'EN'?center.center:center.m_Center}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                    <div class="mb-3">
+                        <mat-form-field appearance="outline" class="w-100">
+                            <mat-label>शाळा निवडा</mat-label>
+                            <mat-select formControlName="schoolId"
+                                (selectionChange)="getbarChartByTaluka();getdashboardCount();">
+                                <mat-option *ngFor="let school of schoolData" [value]="school.id">
+                                    {{webStorage.languageFlag == 'EN'?school.schoolName :school.m_SchoolName }}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+
+                    <div class="d-flex justify-content-end">
+                        <button mat-flat-button type="button" class="me-2 btn-second" mat-dialog-close (click)="this.drawer.close()">Cancel</button>
+                        <button mat-flat-button type="submit" class="btn-main btn">Filter</button>
+                    </div>
+                </form>
+            </mat-card-content>
+        </mat-card>
+
+    </mat-drawer>
     <mat-drawer-content>
-      <!-- <mat-form-field appearance="fill">
-        <mat-label>Sidenav mode</mat-label>
-        <mat-select #mode value="side">
-          <mat-option value="side">Side</mat-option>
-          <mat-option value="over">Over</mat-option>
-          <mat-option value="push">Push</mat-option>
-        </mat-select>
-      </mat-form-field>
-      <mat-form-field appearance="fill">
-        <mat-label>Has backdrop</mat-label>
-        <mat-select #hasBackdrop>
-          <mat-option>Unset</mat-option>
-          <mat-option [value]="true">True</mat-option>
-          <mat-option [value]="false">False</mat-option>
-        </mat-select>
-      </mat-form-field> -->
-      <button mat-raised-button (click)="drawer.toggle()">Toggle drawer</button>
+
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
-                <li class="breadcrumb-item" aria-current="page">{{'Labels.dashboard' | translate}}</li>
+                <li class="breadcrumb-item w-100" aria-current="page">
+                    <div class="d-flex justify-content-between align-items-center w-100">
+                        <span>{{'Labels.dashboard' | translate}}</span>
+                        <button mat-stroked-button class="btn-main btn-icon" (click)="drawer.toggle()">
+                            <mat-icon>filter_alt</mat-icon>
+                        </button>
+                    </div>
+                </li>
             </ol>
         </nav>
-      
-        <form [formGroup]="filterForm">
-            <div class="row">
 
-                <div class="col-sm-4">
-                    <mat-form-field appearance="outline" class="w-100">
-                        <mat-label>तालुका निवडा</mat-label>
-                        <mat-select formControlName="talukaId"
-                            (selectionChange)="f['talukaId'].value!=0? getCenters():''; dashboardAPis(); clickOnSvgMap('select')">
-                            <mat-option *ngFor="let taluka of talukaData" [value]="taluka.id">
-                                {{webStorage.languageFlag == 'EN'?taluka.taluka:taluka.m_Taluka}}
-                            </mat-option>
-                        </mat-select>
-                    </mat-form-field>
-                </div>
-                <div class="col-sm-4">
-                    <mat-form-field appearance="outline" class="w-100">
-                        <mat-label>केंद्र निवडा</mat-label>
-                        <mat-select formControlName="centerId" (selectionChange)="getschools() ;dashboardAPis()">
-                            <mat-option *ngFor="let center of centerData" [value]="center.id">
-                                {{webStorage.languageFlag == 'EN'?center.center:center.m_Center}}
-                            </mat-option>
-                        </mat-select>
-                    </mat-form-field>
-                </div>
-                <div class="col-sm-4">
-                    <mat-form-field appearance="outline" class="w-100">
-                        <mat-label>शाळा निवडा</mat-label>
-                        <mat-select formControlName="schoolId" (selectionChange)="getbarChartByTaluka();getdashboardCount();">
-                            <mat-option *ngFor="let school of schoolData" [value]="school.id">
-                                {{webStorage.languageFlag == 'EN'?school.schoolName :school.m_SchoolName }}
-                            </mat-option>
-                        </mat-select>
-                    </mat-form-field>
-                </div>
-            </div>
-        </form>
+
         <div class="row mb-3 g-2" id="dash-stats">
             <div class="col-sm-3">
                 <div class="card card-body bg-blue">
@@ -138,7 +148,10 @@
                     <mat-card-header class="card-header">
                         <h6 class="d-flex align-items-center justify-content-between w-100 mb-0 fw-bold">
                             <div>सर्वेक्षण केलेल्या विद्यार्थ्यांची एकूण संख्या</div>
-                            <div>निवडलेली संख्या : <span class="fw-bold">{{selectedObj?.GroupId==1? dashboardCountData[0]?.totalStudent_1_2: selectedObj?.GroupId==2? dashboardCountData[0]?.totalStudent_3_5 :dashboardCountData[0]?.totalStudent_6_8}}</span></div>
+                            <div>निवडलेली संख्या : <span class="fw-bold">{{selectedObj?.GroupId==1?
+                                    dashboardCountData[0]?.totalStudent_1_2: selectedObj?.GroupId==2?
+                                    dashboardCountData[0]?.totalStudent_3_5
+                                    :dashboardCountData[0]?.totalStudent_6_8}}</span></div>
                         </h6>
                     </mat-card-header>
 
@@ -163,9 +176,10 @@
                                                 <div *ngIf="header.ischeckboxShow==true">
                                                     <div class="d-flex align-items-center justify-content-center">
                                                         <div class="form-check">
-                                                            <input class="form-check-input" type="radio" id="header.label" name="std" value="header.status" 
-                                                                [disabled]="header.status==true" (click)="checkData(header)" [checked]="header.status"
-                                                                >
+                                                            <input class="form-check-input" type="radio"
+                                                                id="header.label" name="std" value="header.status"
+                                                                [disabled]="header.status==true"
+                                                                (click)="checkData(header)" [checked]="header.status">
                                                             <label class="form-check-label" for="flexCheckDefault">
                                                                 {{header.label}}
                                                             </label>
@@ -204,8 +218,10 @@
                             <div class="d-flex chart-container scrollbar" *ngIf="showBarChartF">
                                 <div class="border-end" *ngFor="let bar of barchartOptions.series[0]; let i=index">
                                     <h6 class="fw-bold text-center mb-0">{{graphSubjectData[i]}}</h6>
-                                    <apx-chart [series]="bar" [chart]="barchartOptions.chart" (click)="selectedBar(graphSubjectData[i])"
-                                        [dataLabels]="barchartOptions.dataLabels" [plotOptions]="barchartOptions.plotOptions"
+                                    <apx-chart [series]="bar" [chart]="barchartOptions.chart"
+                                        (click)="selectedBar(graphSubjectData[i])"
+                                        [dataLabels]="barchartOptions.dataLabels"
+                                        [plotOptions]="barchartOptions.plotOptions"
                                         [responsive]="barchartOptions.responsive" [xaxis]="barchartOptions.xaxis"
                                         [legend]="barchartOptions.legend" [fill]="barchartOptions.fill"></apx-chart>
                                 </div>
@@ -225,8 +241,8 @@
                     <mat-card-content class="card-body">
                         <div id="chart">
                             <apx-chart [series]="piechartOptions.series" [chart]="piechartOptions.chart"
-                                [theme]="piechartOptions.theme" [fill]="piechartOptions.fill" [labels]="piechartOptions.labels"
-                                [responsive]="piechartOptions.responsive"></apx-chart>
+                                [theme]="piechartOptions.theme" [fill]="piechartOptions.fill"
+                                [labels]="piechartOptions.labels" [responsive]="piechartOptions.responsive"></apx-chart>
                         </div>
                     </mat-card-content>
                 </mat-card>
@@ -239,7 +255,8 @@
                     <mat-card-content class="card-body">
                         <div id="chart">
                             <apx-chart [series]="piechartOptions1.series" [chart]="piechartOptions1.chart"
-                                [theme]="piechartOptions1.theme" [fill]="piechartOptions1.fill" [labels]="piechartOptions1.labels"
+                                [theme]="piechartOptions1.theme" [fill]="piechartOptions1.fill"
+                                [labels]="piechartOptions1.labels"
                                 [responsive]="piechartOptions1.responsive"></apx-chart>
                         </div>
                     </mat-card-content>
@@ -253,7 +270,8 @@
                     <mat-card-content class="card-body">
                         <div id="chart">
                             <apx-chart [series]="piechartOptions2.series" [chart]="piechartOptions2.chart"
-                                [theme]="piechartOptions2.theme" [fill]="piechartOptions2.fill" [labels]="piechartOptions2.labels"
+                                [theme]="piechartOptions2.theme" [fill]="piechartOptions2.fill"
+                                [labels]="piechartOptions2.labels"
                                 [responsive]="piechartOptions2.responsive"></apx-chart>
                         </div>
                     </mat-card-content>
@@ -302,7 +320,8 @@
                                         <mat-select formControlName="filtersubjectId"
                                             (selectionChange)="this.getbarChartByTaluka()">
                                             <mat-option *ngFor="let subject of subjectData" [value]="subject.id ">
-                                                {{webStorage.languageFlag == 'EN'?subject.subjectName :subject.m_SubjectName }}
+                                                {{webStorage.languageFlag == 'EN'?subject.subjectName
+                                                :subject.m_SubjectName }}
                                             </mat-option>
                                         </mat-select>
                                     </mat-form-field>
@@ -311,14 +330,14 @@
                         </form>
                     </mat-card-header>
                     <mat-card-content class="card-body">
-                        
+
                         <div class="row" *ngIf="showBarChartS">
                             <div class="col-sm-12">
                                 <apx-chart [series]="barchartOptions1.series[0]" [chart]="barchartOptions1.chart"
-                                [theme]="barchartOptions1.theme" [dataLabels]="barchartOptions1.dataLabels"
-                                [plotOptions]="barchartOptions1.plotOptions" [responsive]="barchartOptions1.responsive"
-                                [xaxis]="barchartOptions1.xaxis" [legend]="barchartOptions1.legend"
-                                [fill]="barchartOptions1.fill"></apx-chart>
+                                    [theme]="barchartOptions1.theme" [dataLabels]="barchartOptions1.dataLabels"
+                                    [plotOptions]="barchartOptions1.plotOptions"
+                                    [responsive]="barchartOptions1.responsive" [xaxis]="barchartOptions1.xaxis"
+                                    [legend]="barchartOptions1.legend" [fill]="barchartOptions1.fill"></apx-chart>
                             </div>
                         </div>
 
@@ -334,9 +353,12 @@
                                     </thead>
                                     <tbody>
                                         <tr *ngFor="let item of data; let j=index">
-                                            <td><img class="table-img" src="{{item['schoolImage'] ? item['schoolImage'] : 'assets/images/user.jpg'}}"></td>
+                                            <td><img class="table-img"
+                                                    src="{{item['schoolImage'] ? item['schoolImage'] : 'assets/images/user.jpg'}}">
+                                            </td>
                                             <td>{{item['srNo']}}</td>
-                                            <td>{{webStorage.languageFlag == 'EN' ? item['schoolName'] : item['m_SchoolName']}}
+                                            <td>{{webStorage.languageFlag == 'EN' ? item['schoolName'] :
+                                                item['m_SchoolName']}}
                                             </td>
                                             <td>{{item['totalStudent']}}</td>
                                             <td>{{item['passpercentage']}}</td>
@@ -352,7 +374,7 @@
                             </div>
                         </div>
                     </mat-card-content>
-                    
+
                 </mat-card>
 
             </div>
