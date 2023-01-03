@@ -219,7 +219,7 @@
                                                         *ngFor="let std of item.standardDetails">
                                                         <div class="d-flex align-items-center justify-content-start">
                                                             <div class="form-check">
-                                                               {{std?.status==true?(std?.assessmentCount+'/'+std?.studentCount):' '}} 
+                                                               {{(std?.assessmentCount+'/'+std?.studentCount)}} 
                                                             </div>
                                                         </div>
                                                     </div>
