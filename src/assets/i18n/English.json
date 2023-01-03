@@ -247,7 +247,9 @@
         "profileView" : "Profile View",
         "SameCurrentAddress" : "Same as Current Address",
         "LightMode" : "Light Mode",
-        "DarkMode" : "Dark Mode"
+        "DarkMode" : "Dark Mode",
+        "UploadSchoolPhoto" : "Upload School photo",
+        "UploadProfilePhoto" : "Upload Profile Photo"
         
 
     }
