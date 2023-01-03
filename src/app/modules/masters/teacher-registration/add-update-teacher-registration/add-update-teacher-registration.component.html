@@ -50,16 +50,14 @@
                             (keypress)="validation.onlyDigits($event)">
                         <!-- <mat-error *ngIf="f['mobileNo'].hasError('required') ">
                             Mobile Number Is Required</mat-error> -->
-                        <mat-error *ngIf="f['mobileNo'].hasError('pattern') ">
-                            Invalid Mobile Number</mat-error>
+                        <mat-error *ngIf="f['mobileNo'].hasError('pattern') ">{{'Labels.pleaseEnterValidMobileNumber' | translate }}</mat-error>
                     </mat-form-field>
                 </div>
                 <div class="col-sm">
                     <mat-form-field appearance="outline" class="w-100">
                         <mat-label>{{'Labels.emailID'| translate}}</mat-label>
                         <input matInput formControlName="emailId" >
-                        <mat-error *ngIf="f['emailId'].hasError('pattern') ">
-                            invalid EmailId</mat-error>
+                        <mat-error *ngIf="f['emailId'].hasError('pattern') ">{{'Labels.pleaseEnterValidEmailId' | translate }}</mat-error>
                     </mat-form-field>
                 </div>
                 <div class="col-sm-4">
