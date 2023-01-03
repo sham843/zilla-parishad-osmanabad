@@ -104,14 +104,11 @@ export class DashboardComponent implements OnInit, AfterViewInit {
       chart: {
         type: "donut"
       },
-      legend: {
-        position: "bottom"
-      },
       fill: {
         type: "solid",
-        colors: ["#00E396", "#F9CE1D", "#D4526E", "#D7263D", "#A300D6"]
+        colors:['#CB4B4B', '#E76A63', '#E98754', '#EFB45B', '#65C889']
       },
-      // colors: [],
+      colors: ['#CB4B4B', '#E76A63', '#E98754', '#EFB45B', '#65C889'],
       labels: [],
       responsive: [
         {
@@ -126,7 +123,19 @@ export class DashboardComponent implements OnInit, AfterViewInit {
             }
           }
         }
-      ]
+      ],
+      legend: {
+        position: 'right',
+        fontSize: '12px',
+        show: true,
+        markers: {
+          width: 12,
+          height: 12,
+          strokeWidth: 0,
+          strokeColor: '#fff',
+          fillColors: ['#CB4B4B', '#E76A63', '#E98754', '#EFB45B', '#65C889'],
+        }
+      }
     };
     this.piechartOptions1 = {
       series: [],
@@ -136,9 +145,9 @@ export class DashboardComponent implements OnInit, AfterViewInit {
 
       fill: {
         type: "solid",
-        colors: ["#00E396", "#F9CE1D", "#D4526E", "#D7263D", "#A300D6"]
+        colors:['#CB4B4B', '#E76A63', '#E98754', '#EFB45B', '#65C889']
       },
-      // colors: [],
+      colors: ['#CB4B4B', '#E76A63', '#E98754', '#EFB45B', '#65C889'],
       labels: [],
       responsive: [
         {
@@ -153,19 +162,30 @@ export class DashboardComponent implements OnInit, AfterViewInit {
             }
           }
         }
-      ]
+      ],
+      legend: {
+        position: 'right',
+        fontSize: '12px',
+        show: true,
+        markers: {
+          width: 12,
+          height: 12,
+          strokeWidth: 0,
+          strokeColor: '#fff',
+          fillColors: ['#CB4B4B', '#E76A63', '#E98754', '#EFB45B', '#65C889'],
+        }
+      }
     };
     this.piechartOptions2 = {
       series: [],
       chart: {
         type: "donut"
       },
-
+      colors: ['#CB4B4B', '#E76A63', '#E98754', '#EFB45B', '#65C889'],
       fill: {
         type: "solid",
-        colors: ["#00E396", "#F9CE1D", "#D4526E", "#D7263D", "#A300D6"]
+        colors:['#CB4B4B', '#E76A63', '#E98754', '#EFB45B', '#65C889']
       },
-      // colors: [],
       labels: [],
       responsive: [
         {
@@ -180,7 +200,19 @@ export class DashboardComponent implements OnInit, AfterViewInit {
             }
           }
         }
-      ]
+      ],
+      legend: {
+        position: 'right',
+        fontSize: '12px',
+        show: true,
+        markers: {
+          width: 12,
+          height: 12,
+          strokeWidth: 0,
+          strokeColor: '#fff',
+          fillColors: ['#CB4B4B', '#E76A63', '#E98754', '#EFB45B', '#65C889'],
+        }
+      }
     };
   }
   getBarChartOption() {
@@ -341,8 +373,8 @@ export class DashboardComponent implements OnInit, AfterViewInit {
   }
   dashboardAPis() {
     this.getdashboardCount();
-    this.getBarChart(this.selectedObj);
-    this.getbarChartByTaluka();
+    // this.getBarChart(this.selectedObj);
+    // this.getbarChartByTaluka();
 
   }
   selectedBar(selectedbar: any) {
@@ -444,7 +476,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
             filterSubject.map((z: any) => {
               const subData = {
                 name: obj.GroupId == 1 ? z.optionName : z.question,
-                data: [z.totalPercental]
+                data: [z.totalPercental | z.percentage]
               }
               dataObjArray.push(subData);
             })
@@ -486,11 +518,11 @@ export class DashboardComponent implements OnInit, AfterViewInit {
             }
             arrayObjectData.push(subData);
           })
-          this.barchartOptions1.series.push(arrayObjectData)
+          this.barchartOptions1.series.push(arrayObjectData);
           this.barchartOptions1.xaxis.categories.push(...talukaSet);
+          console.log(this.barchartOptions1);
           this.showBarChartS = true;
         }
-
       },
       error: (error: any) => { this.error.handelError(error.message) }
     });
@@ -509,16 +541,11 @@ export class DashboardComponent implements OnInit, AfterViewInit {
         if (res.statusCode == "200") {
           this.tableDataTopPerformance.push(res.responseData.responseData1);
           this.tableDataTopPerformance.push(res.responseData.responseData2);
-
           this.displayedheaders = ['#', 'Sr. No.', 'Name', 'Total Student', 'Percetage'];
-
         }
         else {
           this.tableDataTopPerformance = [];
         }
-
-
-
       },
       error: (error: any) => { this.error.handelError(error.message) }
     });

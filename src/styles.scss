@@ -345,3 +345,24 @@ body {
 .apexcharts-legend.apx-legend-position-right{
   width: 130px;
 }
+#mapsvg{
+  background: rgb(255, 255, 255);
+    width: 100%;
+    height: 0;
+    padding-bottom: 36rem !important;
+    padding-top: 0rem !important;
+}
+.mapsvg svg {
+  -webkit-user-select: none;
+  user-select: none;
+  max-width: none !important;
+  max-height: none !important;
+  width: 660px !important;
+  height: 394px !important;
+  position: relative;
+  transition: transform .40s;
+  transform-origin: 0% 0%;
+  -webkit-transform-origin: 0% 0%;
+  transform: rotate(28deg) !important;
+  top: -64px;
+}
