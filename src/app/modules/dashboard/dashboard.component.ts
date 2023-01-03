@@ -67,8 +67,8 @@ export class DashboardComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit() {
-    this.showSvgMap(this.commonMethods.mapRegions());
-    this.clickOnSvgMap('select');
+    // this.showSvgMap(this.commonMethods.mapRegions());
+    // this.clickOnSvgMap('select');
   }
   getTalukas() {
     this.talukaData = [];
@@ -77,6 +77,8 @@ export class DashboardComponent implements OnInit, AfterViewInit {
       const obj = this.talukaData.find((x: any) => x.taluka == "Osmanabad")
       this.f['talukaId'].patchValue(obj.id);
       this.getCenters() ;
+      this.showSvgMap(this.commonMethods.mapRegions());
+    this.clickOnSvgMap('select');
     })
   }
   getCenters() {
@@ -452,7 +454,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
     this.piechartOptions2.series = serriesArray2;
     this.piechartOptions.labels = ['Goverment', 'Private', 'Other'];
     this.piechartOptions1.labels = ['English-Medium', 'Marathi-Medium', 'Both'];
-    this.piechartOptions2.labels = ['Boys', 'Girls', 'Other'];
+    this.piechartOptions2.labels = ['Boys', 'Girls', 'Both'];
   }
 
   getBarChart(obj: any) {
