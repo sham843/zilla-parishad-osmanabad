@@ -351,6 +351,10 @@ body {
 .apexcharts-legend.apx-legend-position-right{
   width: 100px;
 }
+.talActive{
+  pointer-events: auto;
+  fill:var(--main-dark-color) !important;
+}
 #mapsvg{
   background: rgb(255, 255, 255);
     width: 100%;
