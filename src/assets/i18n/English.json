@@ -210,7 +210,7 @@
         "PleaseEnterValidNewPassword" :"Please enter valid new password",
         "ConfirmPasswordIsRequired" :"Confirm Password is required",
         "PleaseEnterValidConfirmPassword" : "Please enter valid confirm password",
-        "Passwordsmustcontains" : "Notes:",
+        "Passwordsmustcontains" : "Note:",
         "Atleast8Characterslong" :"Must be 8-10 characters long",
         "Atleast1LowercaseCharacters(a-z)" : "Must contain at least one Number (0-9)",
         "Atleast1UpercaseCharacters(A-Z)" : "Must contain at least one Upper case (A-Z) and one Lower case (a-z) character",
