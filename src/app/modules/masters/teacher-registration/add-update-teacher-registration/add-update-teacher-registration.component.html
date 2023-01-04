@@ -328,7 +328,7 @@
                     <div class="col-sm-4">
                         <mat-form-field appearance="outline" class="w-100 ">
                             <mat-label>{{'Labels.caste'| translate}}</mat-label>
-                            <mat-select formControlName="castId" (selectionChange)="castvalidation($event)">
+                            <mat-select formControlName="castId" >
                                 <mat-option *ngFor="let caste of casteArray"
                                     [value]="caste.id">{{webStorageS.getLangauge() == 'EN' ?
                                     caste.caste : caste.m_Caste}} </mat-option>
@@ -339,7 +339,7 @@
                     <div class="col-sm-4">
                         <mat-form-field appearance="outline" class="w-100 ">
                             <mat-label>{{'Labels.casteCategory'| translate}}</mat-label>
-                            <mat-select formControlName="castCategoryId">
+                            <mat-select formControlName="castCategoryId" (selectionChange)="castvalidation($event)">
                                 <mat-option *ngFor="let casteCategory of castCategoryArray"
                                     [value]="casteCategory.id">{{webStorageS.getLangauge() == 'EN' ?
                                     casteCategory.categoryName : casteCategory.m_CategoryName}} </mat-option>
@@ -405,7 +405,7 @@
                     <div class="col-sm-4">
                         <mat-form-field appearance="outline" class="w-100">
                             <mat-label>{{'Labels.currentSchoolJoiningDate'| translate}}</mat-label>
-                            <input matInput [matDatepicker]="JoiningDate" readonly
+                            <input matInput [matDatepicker]="JoiningDate" readonly [max]="maxDate"
                                 formControlName="currentSchoolJoiningDate">
                             <mat-datepicker-toggle matIconSuffix [for]="JoiningDate"></mat-datepicker-toggle>
                             <mat-datepicker #JoiningDate></mat-datepicker>
@@ -423,7 +423,7 @@
                     <div class="col-sm-4">
                         <mat-form-field appearance="outline" class="w-100">
                             <mat-label> {{'Labels.retirementDate'| translate}}</mat-label>
-                            <input matInput [matDatepicker]="RetirementDate" readonly formControlName="retirementDate">
+                            <input matInput [matDatepicker]="RetirementDate" readonly [min]="maxDate" formControlName="retirementDate">
                             <mat-datepicker-toggle matIconSuffix [for]="RetirementDate"></mat-datepicker-toggle>
                             <mat-datepicker #RetirementDate></mat-datepicker>
                         </mat-form-field>
@@ -510,9 +510,9 @@
                     <div class="col-sm-4">
                         <mat-form-field appearance="outline" class="w-100">
                             <mat-label>{{'Labels.dateOfSeniority'| translate}}</mat-label>
-                            <input matInput [matDatepicker]=" DateSeniority" readonly formControlName="dateOfSeniority">
+                            <input matInput [matDatepicker]=" DateSeniority" readonly [min]="maxDate"  formControlName="dateOfSeniority">
                             <mat-datepicker-toggle matIconSuffix [for]="DateSeniority"></mat-datepicker-toggle>
-                            <mat-datepicker #DateSeniority></mat-datepicker>
+                            <mat-datepicker  #DateSeniority></mat-datepicker>
                             <!-- <mat-error *ngIf="td['dateOfSeniority'].hasError('required')">Date Of Seniority Is Required</mat-error> -->
                         </mat-form-field>
                     </div>
