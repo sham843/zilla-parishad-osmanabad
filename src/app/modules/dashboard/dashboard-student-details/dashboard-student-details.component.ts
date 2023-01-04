@@ -111,14 +111,14 @@ export class DashboardStudentDetailsComponent {
           this.totalCount = res.responseData?.responseData2?.pageCount || 0;        
           let obj = this.tableDataArray[0];
           this.data = {
-            headerImage: '',
+            headerImage: obj.profilePhoto,
             header: this.webService.languageFlag == 'English' ? obj.fullName : obj.m_FullName,
             subheader: this.webService.languageFlag == 'English' ? obj.gender : obj.m_Gender,
             labelHeader: this.webService.languageFlag == 'English' ? ['Father Name', 'Parent Mobile No.', 'Aadhar No.', 'Standard', 'School Name'] : ['वडीलांचे नावं', 'पालक मोबाईल क्र.', 'आधार क्र.', 'इयत्ता', 'शाळेचे नाव'],
             labelKey: this.webService.languageFlag == 'English' ? ['fatherFullName', 'parentMobileNo', 'aadharNo', 'standard', 'schoolName'] : ['m_FatherFullName', 'parentMobileNo', 'aadharNo', 'standard', 'm_SchoolName'],
             Obj: obj,
             chart: false
-          }
+          }          
         } else {
           this.ngxSpinner.hide();
           this.tableDataArray = [];
@@ -134,7 +134,7 @@ export class DashboardStudentDetailsComponent {
 
   viewDetails(obj: any) {
     this.data = {
-      headerImage: '',
+      headerImage: obj.profilePhoto,
       header: this.webService.languageFlag == 'EN' ? obj.fullName : obj.m_FullName,
       subheader: this.webService.languageFlag == 'EN' ? obj.gender : obj.m_Gender,
       labelHeader: this.webService.languageFlag == 'EN' ? ['Father Name', 'Parent Mobile No.', 'Aadhar No.', 'Standard', 'School Name'] : ['वडीलांचे नावं', 'पालक मोबाईल क्र.', 'आधार क्र.', 'इयत्ता', 'शाळेचे नाव'],
