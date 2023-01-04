@@ -41,6 +41,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
   optionalSubjectindex!: number;
   SharingObject: any;
   globalTalId: any;
+  selectedSurveyData:any;
   get f() { return this.filterForm.controls }
   get fBgraph() { return this.filterFormForBarGraph.controls }
   constructor(public translate: TranslateService, private masterService: MasterService,
@@ -404,7 +405,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
       next: (res: any) => {
         if (res.statusCode == "200") {
           this.dashboardCountData.push(res.responseData.responseData1[0]);
-          res.responseData.responseData2.unshift({ m_GroupClass : 'एकूण संख्या', groupClass:'Total', studentCount :this.dashboardCountData[0]?.totalStudent,groupId: 0, ischeckboxShow: false, status: false });
+          // res.responseData.responseData2.unshift({ m_GroupClass : 'एकूण संख्या', groupClass:'Total', studentCount :this.dashboardCountData[0]?.totalStudent,groupId: 0, ischeckboxShow: false, status: false });
           this.totalStudentSurveyData =res.responseData.responseData2;
           this.totalStudentSurveyData.map((x:any)=>{
             x.status = true;
@@ -413,7 +414,6 @@ export class DashboardComponent implements OnInit, AfterViewInit {
           this.totalStudentSurveyData[0].ischeckboxShow=false;
           // this.tableColumn = [{ label: 'एकूण संख्या', groupId: 0, ischeckboxShow: false, status: false }, { label: '१ली ते 2वी', groupId: 1, subSTD: [{ label: '१ली', subgroupId: 1, status: false }, { label: '2री', subgroupId: 2, status: false }], ischeckboxShow: true, status: true }, { label: '3री ते ५वी', groupId: 2, subSTD: [{ label: '3री', subgroupId: 3, status: false }, { label: '4री', subgroupId: 4, status: false }, { label: '5वी', subgroupId: 5, status: false }], ischeckboxShow: true, status: false }, { label: '६वी ते ८वी', groupId: 3, subSTD: [{ label: '६वी', subgroupId: 6, status: false }, { label: '7वी', subgroupId: 7, status: false }, { label: '८वी', subgroupId: 8, status: false }], ischeckboxShow: true, status: false },];
           this.checkData(this.totalStudentSurveyData[1], 'radio');
-          console.log(this.totalStudentSurveyData);
           this.getPieChartData();
         } else {
           this.dashboardCountData = [];
@@ -423,7 +423,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
       error: (error: any) => { this.error.handelError(error.message) }
     });
   }
-  checkData(obj: any, status:any, index?:any) {
+  checkData(obj: any, status:any,) {
     if(status=='radio'){
       this.totalStudentSurveyData.map((x: any) => {
         x.status = false;
@@ -437,11 +437,24 @@ export class DashboardComponent implements OnInit, AfterViewInit {
           })
         }
       })
-    }else{
-      console.log(index)
     }
-    
-    
+    this.totalStudentSurveyData.forEach((x:any)=>{
+      if(x.status==true){
+        const filterData=x.standardDetails.filter((y:any)=> y.status==true);
+        if(filterData.length){
+          let studentTotal=0;
+          let assessmentTotal=0;
+          this.selectedSurveyData=[];
+          filterData.forEach((y:any)=>{
+            studentTotal += y.studentCount,
+            assessmentTotal += y.assessmentCount
+          })
+          this.selectedSurveyData=assessmentTotal+'/'+studentTotal;
+        }else{
+          this.selectedSurveyData=x.assessmentCount+'/'+x.studentCount;
+        }
+      }
+    })
     this.getSubject(obj.groupId);
     this.getBarChart(obj);
     // setTimeout(() => {
