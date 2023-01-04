@@ -20,7 +20,7 @@ export class AddUpdateAgencyRegistrationComponent {
   talukaData = new Array();
   editData: any;
   constructor(public dialogRef: MatDialogRef<AddUpdateAgencyRegistrationComponent>, private api: ApiService, public webStorageService: WebStorageService,
-    private fb: FormBuilder, private master: MasterService, public validation: ValidationService,private ngxSpinner: NgxSpinnerService,
+    private fb: FormBuilder, private master: MasterService, public validation: ValidationService, private ngxSpinner: NgxSpinnerService,
     private common: CommonMethodsService, @Inject(MAT_DIALOG_DATA) public data: any, private errors: ErrorsService) { }
 
   ngOnInit() {
@@ -45,7 +45,7 @@ export class AddUpdateAgencyRegistrationComponent {
       "agency_Address": [data ? data.agency_Address : "", [Validators.required, Validators.maxLength(500)]],
       "districtId": [{ value: 1, disabled: true }],
       "talukaId": ["", Validators.required],
-      "lan":  this.webStorageService.languageFlag,
+      "lan": this.webStorageService.languageFlag,
       "localID": 0,
       "timestamp": new Date()
     })
@@ -66,13 +66,6 @@ export class AddUpdateAgencyRegistrationComponent {
     })
   }
 
-  onCancel(clear: any) {
-    clear.resetForm();
-    this.data = '';
-    this.editData = '';
-    this.defaultForm();
-  }
-
   onSubmit(clear: any) {
     this.ngxSpinner.show();
     let obj = this.agencyRegisterForm.value;
@@ -81,7 +74,7 @@ export class AddUpdateAgencyRegistrationComponent {
       this.api.setHttp(this.data ? 'put' : 'post', 'zp-osmanabad/Agency/' + (this.data ? 'Update' : 'Add'), false, obj, false, 'baseUrl');
       this.api.getHttp().subscribe({
         next: (res: any) => {
-          res.statusCode == 200 ? (this.common.showPopup(res.statusMessage, 0), this.dialogRef.close('Yes'), this.onCancel(clear), this.ngxSpinner.hide()) : (this.common.showPopup(res.statusMessage, 1), this.ngxSpinner.hide());
+          res.statusCode == 200 ? (this.common.showPopup(res.statusMessage, 0), this.dialogRef.close('Yes'), clear.resetForm(), this.ngxSpinner.hide(), this.defaultForm()) : (this.common.showPopup(res.statusMessage, 1), this.ngxSpinner.hide());
           res.statusMessage == "Agency_MobileNo Already Exist." ? this.ngxSpinner.hide() : ''
         },
         error: ((err: any) => { this.errors.handelError(err) })
