@@ -543,7 +543,7 @@
                         (change)="addStand($event,assign.standardId)" />
                     <label for="{{assign.standardId}}" class="pb-0">{{assign.standardId}}</label>
                 </div>
-                <span *ngIf="!assignClass">Assign Class Required</span>
+                <mat-error *ngIf="!assignClass">At least Select One Class</mat-error>
             </div>
             <!-- </div> -->
         </mat-card-content>
