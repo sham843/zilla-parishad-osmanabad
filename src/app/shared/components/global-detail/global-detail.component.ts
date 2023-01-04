@@ -29,24 +29,32 @@ import { Gallery,ImageItem,GalleryModule,} from '@ngx-gallery/core';
 })
 export class GlobalDetailComponent {
   items: any=[];
-  dataArray = [
-    {
-      srcUrl: 'https://preview.ibb.co/jrsA6R/img12.jpg',
-      previewUrl: 'https://preview.ibb.co/jrsA6R/img12.jpg'
-    },
-    {
-      srcUrl: 'https://preview.ibb.co/kPE1D6/clouds.jpg',
-      previewUrl: 'https://preview.ibb.co/kPE1D6/clouds.jpg'
-    },
-    {
-      srcUrl: 'https://preview.ibb.co/mwsA6R/img7.jpg',
-      previewUrl: 'https://preview.ibb.co/mwsA6R/img7.jpg'
-    },
-    {
-      srcUrl: 'https://preview.ibb.co/kZGsLm/img8.jpg',
-      previewUrl: 'https://preview.ibb.co/kZGsLm/img8.jpg'
-    }
-  ]
+  dataArray = new Array();
+  // [
+    // {
+    //   docPath : '',
+    //   // documentId : 3,
+    //   // id : 283,
+    //   // schoolId : 1863
+    // }
+    // {
+      // docPath : '',
+      // srcUrl: 'https://preview.ibb.co/jrsA6R/img12.jpg',
+      // previewUrl: 'https://preview.ibb.co/jrsA6R/img12.jpg'
+    // },
+    // {
+    //   srcUrl: 'https://preview.ibb.co/kPE1D6/clouds.jpg',
+    //   previewUrl: 'https://preview.ibb.co/kPE1D6/clouds.jpg'
+    // },
+    // {
+    //   srcUrl: 'https://preview.ibb.co/mwsA6R/img7.jpg',
+    //   previewUrl: 'https://preview.ibb.co/mwsA6R/img7.jpg'
+    // },
+    // {
+    //   srcUrl: 'https://preview.ibb.co/kZGsLm/img8.jpg',
+    //   previewUrl: 'https://preview.ibb.co/kZGsLm/img8.jpg'
+    // }
+  // ]
 
 
   constructor( public gallery: Gallery,public dialogRef: MatDialogRef<GlobalDetailComponent>,@Inject(MAT_DIALOG_DATA) public data: any, public webStorage: WebStorageService){ 
@@ -54,12 +62,13 @@ export class GlobalDetailComponent {
    }
 
    ngOnInit() {
-    console.log(this.data);
+    console.log("Obj : ",this.data);
+
+    this.dataArray = this.data.Obj.schoolDocument;
     
     this.items = this.dataArray.map(item =>
-      new ImageItem({ src: item.srcUrl, thumb: item.previewUrl })
+      new ImageItem({ src: item.docPath, thumb: item.docPath })
     );
-    console.log(this.items);
     
     this.basicLightboxExample();
    }
