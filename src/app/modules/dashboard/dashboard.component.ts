@@ -523,7 +523,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
             filterSubject.map((z: any) => {
               const subData = {
                 name: obj.groupId == 1 ? z.optionName : z.question,
-                data: [z.totalPercental | z.percentage]
+                data: ([Math.round(z.totalPercental) | Math.round(z.percentage)])
               }
               dataObjArray.push(subData);
             })
@@ -532,6 +532,28 @@ export class DashboardComponent implements OnInit, AfterViewInit {
           this.barchartOptions.series.push(dataArray);
           this.barchartOptions.xaxis.categories.push(...subjectSet);
           this.showBarChartF = true;
+          
+          this.barchartOptions.tooltip = {
+            custom: function({ series, seriesIndex, dataPointIndex, w }: any) {
+              console.log(series);
+              console.log(w.globals);
+              
+              return (
+                '<div class="arrow_box">' +
+                "<span>" +
+                'Stage' +
+                ": " +
+                w.globals.seriesNames[seriesIndex]+ '<br>' +
+                "</span>" +
+                "<span>" +
+                'Percentage' +
+                ": " +
+                series[seriesIndex][dataPointIndex] + '%' +
+                "</span>" +
+                "</div>"
+              );
+            }
+          }
         }
 
       },
