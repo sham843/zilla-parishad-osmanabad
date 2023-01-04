@@ -316,9 +316,14 @@ body {
 .inner-table tbody td{
   vertical-align: top;
 }
-.inner-table thead tr th:first-child {
+.inner-table tbody td{
+  text-align: center;
+}
+.inner-table thead tr th:first-child,
+.inner-table tbody tr td:first-child {
   width: 10rem !important;
   vertical-align: middle;
+  text-align: left !important;
 }
 .inner-table .table-img{
   width: 40px;
