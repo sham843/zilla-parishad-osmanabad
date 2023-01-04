@@ -1,6 +1,6 @@
 import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { Router } from '@angular/router';
+//import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { ApiService } from 'src/app/core/services/api.service';
 import { CommonMethodsService } from 'src/app/core/services/common-methods.service';
@@ -50,7 +50,9 @@ export class DashboardComponent implements OnInit, AfterViewInit {
   get fBgraph() { return this.filterFormForBarGraph.controls }
   constructor(public translate: TranslateService, private masterService: MasterService,
     public webStorage: WebStorageService, private fb: FormBuilder, private apiService: ApiService,
-    private error: ErrorsService, private commonMethods: CommonMethodsService, private router: Router) {
+    private error: ErrorsService, private commonMethods: CommonMethodsService,
+    // private router: Router
+     ) {
     this.getBarChartOption();
     this.getPieChart();
 
@@ -403,7 +405,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
       OptionGrade: data?.optionGrade|0
     }
     this.webStorage.selectedBarchartObjData.next(this.SharingObject);
-    this.router.navigate(['/dashboard-student-details'])
+    //this.router.navigate(['/dashboard-student-details'])
   }
 
   getdashboardCount() {
@@ -538,11 +540,11 @@ export class DashboardComponent implements OnInit, AfterViewInit {
             custom: function({ series, seriesIndex, dataPointIndex, w }: any) {              
               return (
                 '<div class="arrow_box" style="padding:10px;">' +
-                  "<div>" + 'Stage' + " : <b> " + w.globals.seriesNames[seriesIndex]+ '</b>' + "</div>" +
+                  "<div>" + 'Level' + " : <b> " + w.globals.seriesNames[seriesIndex]+ '</b>' + "</div>" +
                   "<div>" + 'Percentage' + " : <b> " + series[seriesIndex][dataPointIndex] + '%</b>' + "</div>" +
                 "</div>"
               );
-            }
+            },
           }
         }
 
