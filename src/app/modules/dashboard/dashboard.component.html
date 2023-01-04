@@ -172,7 +172,7 @@
                                                                 <input class="form-check-input" type="radio"
                                                                     id="header.label" name="std" value="header.status"
                                                                    
-                                                                    (click)="checkData(header, 'radio'); demo=true"
+                                                                    (click)="checkData(header, 'radio'); standardShowFlag=true"
                                                                     [checked]="header.status">
                                                                 <label class="form-check-label" for="flexCheckDefault">
                                                                     {{webStorage.languageFlag == 'EN'?
@@ -180,7 +180,7 @@
                                                                 </label>
                                                             </div>
                                                         </div>
-                                                        <div class="row" *ngIf="header.status==true &&  demo">
+                                                        <div class="row" *ngIf="header.status==true &&  standardShowFlag">
                                                             <div class="col-sm"
                                                                 *ngFor="let std of header.standardDetails">
                                                                 <div
