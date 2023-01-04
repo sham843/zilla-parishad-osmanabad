@@ -79,6 +79,7 @@
         "villageIsRequired" : "Village is required",
         "schoolIsRequired" : "School is required",
         "schoolNameIsRequired" : "School name is required",
+        "schoolNameMarathiIsRequired" : "School Name(Marathi) is required",
         "schoolTypeDescriptionIsRequired" : " School type description is rsequired",
         "schoolCategoryIsRequired" : "School category is required",
         "schoolManagementIsRequired" : "School management is required",
