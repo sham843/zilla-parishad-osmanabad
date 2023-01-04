@@ -42,6 +42,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
   SharingObject: any;
   globalTalId: any;
   selectedSurveyData:any;
+  selectedLang: any;
   get f() { return this.filterForm.controls }
   get fBgraph() { return this.filterFormForBarGraph.controls }
   constructor(public translate: TranslateService, private masterService: MasterService,
@@ -49,6 +50,12 @@ export class DashboardComponent implements OnInit, AfterViewInit {
     private error: ErrorsService, private commonMethods: CommonMethodsService, private router: Router) {
     this.getBarChartOption();
     this.getPieChart();
+
+    this.webStorage.langNameOnChange.subscribe((lang) => {
+      this.selectedLang = lang;
+      this.showSvgMap(this.commonMethods.mapRegions());
+      this.clickOnSvgMap('select');
+    });
   }
 
   ngOnInit() {
@@ -660,7 +667,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
         min: 0,
         max: false
       },
-      source: "assets/distSVG/Osmanabad.svg",
+      source: this.selectedLang == 'English' ? "assets/distSVG/Osmanabad.svg" : "assets/distSVG/Osmanabad_Marathi.svg",
       title: "Osmanabad_Dist",
       responsive: true
     });
