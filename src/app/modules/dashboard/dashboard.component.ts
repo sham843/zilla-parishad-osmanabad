@@ -536,9 +536,9 @@ export class DashboardComponent implements OnInit, AfterViewInit {
           this.barchartOptions.tooltip = {
             custom: function({ series, seriesIndex, dataPointIndex, w }: any) {              
               return (
-                '<div class="arrow_box">' +
-                  "<span>" + 'Stage' + ": " + w.globals.seriesNames[seriesIndex]+ '<br>' + "</span>" +
-                  "<span>" + 'Percentage' + ": " + series[seriesIndex][dataPointIndex] + '%' + "</span>" +
+                '<div class="arrow_box" style="padding:10px;">' +
+                  "<div>" + 'Stage' + " : <b> " + w.globals.seriesNames[seriesIndex]+ '</b>' + "</div>" +
+                  "<div>" + 'Percentage' + " : <b> " + series[seriesIndex][dataPointIndex] + '%</b>' + "</div>" +
                 "</div>"
               );
             }
