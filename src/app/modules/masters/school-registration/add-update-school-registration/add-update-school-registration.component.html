@@ -13,7 +13,7 @@
         </mat-card-header>
 
         <mat-card-content class="card-body card-height-full scrollbar">
-            <div class="row gy-2">
+            <div class="row gy-2 gx-3">
                 <div class="col-sm-4">
                     <mat-form-field appearance="outline" class="w-100">
                         <mat-label>{{'Labels.district' | translate}}</mat-label>
@@ -88,18 +88,14 @@
                 <div class="col-sm-4">
                     <div class="d-flex justify-content-between align-items-center">
                         <div class="upload-btn-wrapper">
-                            <button type="button" class="upload-btn">{{'Labels.UploadProfilePhoto' |
-                                translate}}</button>
-                            <input type="file" name="myfile" formControlName="uploadImage"
-                                (change)="imgUpload($event)" />
+                            <button class="upload-btn" type="button">{{'Labels.UploadProfilePhoto' | translate}}</button>
+                            <input type="file" name="myfile"  formControlName="uploadImage" (change)="imgUpload($event)"/>
                         </div>
-                        <div class="action-btn">
-                            <button type="button" mat-icon-button class="btn-icon text-primary" *ngIf="uploadImg"
-                                (click)="viewImg()">
+                        <div class="action-btn" *ngIf="uploadImg">
+                            <button mat-icon-button class="btn-icon text-primary" type="button" *ngIf="uploadImg" (click)="viewImg()">
                                 <mat-icon>visibility</mat-icon>
                             </button>
-                            <button type="button" mat-icon-button class="btn-icon text-danger" *ngIf="uploadImg"
-                                (click)="clearImg()">
+                            <button mat-icon-button class="btn-icon text-danger" type="button" *ngIf="uploadImg" (click)="clearImg()">
                                 <mat-icon>delete</mat-icon>
                             </button>
                         </div>
