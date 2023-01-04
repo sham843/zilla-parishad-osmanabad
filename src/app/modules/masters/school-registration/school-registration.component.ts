@@ -82,8 +82,7 @@ export class SchoolRegistrationComponent {
   getTableData(flag?: string) {
     // this.tableDataArray = [];
     this.pageNumber = flag == 'filter' ? 1 : this.pageNumber;
-    let pageNo
-    this.cardViewFlag ? pageNo = (this.cardCurrentPage + 1) : (pageNo = this.pageNumber, this.cardCurrentPage = 0);
+    let pageNo = this.cardViewFlag ? (this.pageNumber) : this.pageNumber;
     let str = `?pageno=${pageNo}&pagesize=10&DistrictId=${this.districtId.value ? this.districtId.value : 0}
     &TalukaId=${this.talukaId.value ? this.talukaId.value : 0}&VillageId=${this.villageId.value ? this.villageId.value : 0}&lan=${this.webStorageS.languageFlag}`;
 
@@ -299,12 +298,12 @@ export class SchoolRegistrationComponent {
   }
 
   //#region ------------------------------------------------- Filter Form start here ------------------------------------------// 
-  filterData() {
-    if (this.districtId.value || this.talukaId.value || this.villageId.value) {
-      this.getTableData();
+  // filterData() {
+  //   if (this.districtId.value || this.talukaId.value || this.villageId.value) {
+  //     this.getTableData();
 
-    }
-  }
+  //   }
+  // }
   //#endregion ---------------------------------------------- Filter Form end here ----------------------------------------// 
 
   //#region ---------------------------------------------- Delete Record Logic start here ----------------------------------------//  
@@ -331,16 +330,16 @@ export class SchoolRegistrationComponent {
   }
   //#endregion ---------------------------------------------- Delete Record Logic end here ----------------------------------------//  
 
-  onPageChanged(event: any) {
-    this.cardCurrentPage = event.pageIndex;
-    this.selectGrid('Card');
-  }
+  // onPageChanged(event: any) {
+  //   this.cardCurrentPage = event.pageIndex;
+  //   this.selectGrid('Card');
+  // }
 
   selectGrid(label: string) {
     if (label == 'Table') {
       this.cardViewFlag = false;
       this.pageNumber = 1;
-      this.cardCurrentPage = 0;
+      // this.cardCurrentPage = 0;
       this.getTableData();
     } else if (label == 'Card')
       this.cardViewFlag = true;
