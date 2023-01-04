@@ -61,8 +61,8 @@ export class DashboardComponent implements OnInit, AfterViewInit {
 
   ngOnInit() {
     this.filterForm = this.fb.group({
-      talukaId: [4],
-      centerId: [],
+      talukaId: [0],
+      centerId: [0],
       schoolId: []
     })
     this.filterFormForBarGraph = this.fb.group({
@@ -83,11 +83,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
     this.talukaData = [];
     this.masterService.getAllTaluka().subscribe((res: any) => {
       this.talukaData.push({ "id": 0, "taluka": "All", "m_Taluka": "सर्व" }, ...res.responseData);
-      const obj = this.talukaData.find((x: any) => x.taluka == "Osmanabad")
-      this.f['talukaId'].patchValue(obj.id);
-      this.getCenters() ;
-      // this.showSvgMap(this.commonMethods.mapRegions());
-      // this.clickOnSvgMap('select');
+      // this.getCenters() ;
     })
   }
   getCenters() {
@@ -385,8 +381,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
   }
   dashboardAPis() {
     this.getdashboardCount();
-    // this.getBarChart(this.selectedObj);
-    // this.getbarChartByTaluka();
+    this.getbarChartByTaluka();
 
   }
   selectedBar(selectedbar: any) {
