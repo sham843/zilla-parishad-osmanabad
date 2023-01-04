@@ -44,6 +44,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
   selectedSurveyData:any;
   standardArray=new Array();
   selectedLang: any;
+  enbTalDropFlag:boolean=false;
   get f() { return this.filterForm.controls }
   get fBgraph() { return this.filterFormForBarGraph.controls }
   constructor(public translate: TranslateService, private masterService: MasterService,
@@ -54,8 +55,10 @@ export class DashboardComponent implements OnInit, AfterViewInit {
 
     this.webStorage.langNameOnChange.subscribe((lang) => {
       this.selectedLang = lang;
-      this.showSvgMap(this.commonMethods.mapRegions());
-      this.clickOnSvgMap('select');
+       this.showSvgMap(this.commonMethods.mapRegions());
+       setTimeout(()=>{
+        this.clickOnSvgMap('select');
+       },70)
     });
   }
 
@@ -77,13 +80,12 @@ export class DashboardComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit() {
     this.showSvgMap(this.commonMethods.mapRegions());
-    this.clickOnSvgMap('select');
+    this.clickOnSvgMap();
   }
   getTalukas() {
     this.talukaData = [];
     this.masterService.getAllTaluka().subscribe((res: any) => {
       this.talukaData.push({ "id": 0, "taluka": "All", "m_Taluka": "सर्व" }, ...res.responseData);
-      // this.getCenters() ;
     })
   }
   getCenters() {
@@ -678,6 +680,8 @@ export class DashboardComponent implements OnInit, AfterViewInit {
   }
   clickOnSvgMap(flag?: string) {
     if (flag == 'select') {
+      this.globalTalId =[];
+      //this.enbTalDropFlag ? $('#mapsvg path').addClass('disabledAll'): '';
       let checkTalActiveClass = $('#mapsvg   path').hasClass("talActive");
       checkTalActiveClass ? $('#mapsvg path[id="' + this.globalTalId + '"]').removeAttr("style") : '';
       this.svgMapAddOrRemoveClass();
@@ -689,7 +693,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
       this.filterForm.controls['talukaId'].setValue(+talId);
 
       this.svgMapAddOrRemoveClass();
-      this.dashboardAPis();
+      this.dashboardAPis(),this.getCenters()
     })
   }
 
