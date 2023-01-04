@@ -92,20 +92,20 @@ export class DashboardStudentDetailsComponent {
   getTableData(flag?: any) {
     this.ngxSpinner.show();    
     this.pageNumber = flag == 'filter' ? 1 : this.pageNumber
-    let TalukaId = flag == 'filter' ? this.filterForm.value.talukaId : this.dashboardObj.TalukaId ;
-    let CenterId = flag == 'filter' ? this.filterForm.value.centerId : this.dashboardObj.CenterId;
-    let SchoolId = flag == 'filter' ? this.filterForm.value.schoolId : this.dashboardObj.SchoolId;
-     // let StandardId = flag == 'filter' ? this.filterForm.value.standardId : this.dashboardObj.StandardId;
-    // let SubjectId = flag == 'filter' ? this.filterForm.value.subjectId : this.dashboardObj.SubjectId;
+    let TalukaId = flag == 'filter' ? this.filterForm.value?.talukaId : this.dashboardObj?.TalukaId ;
+    let CenterId = flag == 'filter' ? this.filterForm.value?.centerId : this.dashboardObj?.CenterId;
+    let SchoolId = flag == 'filter' ? this.filterForm.value?.schoolId : this.dashboardObj?.SchoolId;
+     let StandardId = flag == 'filter' ? this.filterForm.value?.standardId : this.dashboardObj?.StandardId;
+    let SubjectId = flag == 'filter' ? this.filterForm.value?.subjectId : this.dashboardObj?.SubjectId;
     let lan = this.languageFlag == 'English' ? 'en' : 'mr-IN';
-    let GroupId = this.dashboardObj.groupId  || 1;
+    let GroupId = this.dashboardObj?.groupId  || 1;
 
-    let str = 'zp-osmanabad/Dashboard/GetDataFor1st2ndStdStudentList?GroupId='+GroupId+'&TalukaId='+(TalukaId || 0)+'&CenterId='+(CenterId || 0)+'&SchoolId='+(SchoolId || 0)+'&lan='+lan
+    let str = 'zp-osmanabad/Dashboard/GetDataFor1st2ndStdStudentList?GroupId='+GroupId+'&TalukaId='+(TalukaId || 0)+'&CenterId='+(CenterId || 0)+'&SchoolId='+(SchoolId || 0)+'&SubjectId='+(SubjectId || 0)+'&OptionGrade=0&StandardId='+(StandardId || 0)+'&lan='+lan
    
     this.apiService.setHttp('GET',str, false, false, false, 'baseUrl');
     this.apiService.getHttp().subscribe({
       next: (res: any) => {
-        if (res.statusCode == 200) {
+        if (res.statusCode == 200 && res.responseData.responseData1.length) {
           this.ngxSpinner.hide();
           this.tableDataArray = res.responseData.responseData1;
           this.totalCount = res.responseData?.responseData2?.pageCount || 0;        
