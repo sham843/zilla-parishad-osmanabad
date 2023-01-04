@@ -45,6 +45,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
   standardArray=new Array();
   selectedLang: any;
   enbTalDropFlag:boolean=false;
+  standardShowFlag:boolean=false;
   get f() { return this.filterForm.controls }
   get fBgraph() { return this.filterFormForBarGraph.controls }
   constructor(public translate: TranslateService, private masterService: MasterService,
@@ -523,7 +524,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
             filterSubject.map((z: any) => {
               const subData = {
                 name: obj.groupId == 1 ? z.optionName : z.question,
-                data: [z.totalPercental | z.percentage]
+                data: ([Math.round(z.totalPercental) | Math.round(z.percentage)])
               }
               dataObjArray.push(subData);
             })
@@ -532,6 +533,17 @@ export class DashboardComponent implements OnInit, AfterViewInit {
           this.barchartOptions.series.push(dataArray);
           this.barchartOptions.xaxis.categories.push(...subjectSet);
           this.showBarChartF = true;
+          
+          this.barchartOptions.tooltip = {
+            custom: function({ series, seriesIndex, dataPointIndex, w }: any) {              
+              return (
+                '<div class="arrow_box" style="padding:10px;">' +
+                  "<div>" + 'Stage' + " : <b> " + w.globals.seriesNames[seriesIndex]+ '</b>' + "</div>" +
+                  "<div>" + 'Percentage' + " : <b> " + series[seriesIndex][dataPointIndex] + '%</b>' + "</div>" +
+                "</div>"
+              );
+            }
+          }
         }
 
       },

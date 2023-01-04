@@ -11,6 +11,7 @@
 .card-teacher,
 .card-school{
     border-radius: 10px;
+    height: 100%;
 }
 .card-students,
 .card-teacher,
@@ -19,18 +20,17 @@
 }
 .card-agency img,
 .card-users img,
-.card-designation img,
-.card-students img,
-.card-teacher img,
-.card-school img{
+.card-designation img{
     height: 70px;
     opacity:0.278 ;
 }
 .card-students img,
 .card-teacher img,
 .card-school img{
+    height: 55px;
+    opacity:0.278 ;
     position: absolute;
-    right: 10px;
+    left: 10px;
 }
 .card-agency .card-footer,
 .card-users .card-footer,
@@ -40,6 +40,15 @@
 .card-school .card-footer{
     border-bottom-left-radius: 10px;
     border-bottom-right-radius: 10px;
+}
+.card-agency h1,
+.card-users h1,
+.card-designation h1,
+.card-students h1,
+.card-teacher h1,
+.card-school h1{
+    font-weight: 700;
+    font-size: 2rem;
 }
 .card-agency h5,
 .card-users h5,
