@@ -44,6 +44,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
   selectedSurveyData:any;
   standardArray=new Array();
   selectedLang: any;
+  demo:boolean=false;
   get f() { return this.filterForm.controls }
   get fBgraph() { return this.filterFormForBarGraph.controls }
   constructor(public translate: TranslateService, private masterService: MasterService,
@@ -430,6 +431,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
     });
   }
   checkData(obj: any, status:any,) {
+    console.log(this.demo)
     if(status=='radio'){
       this.totalStudentSurveyData.map((x: any) => {
         x.status = false;
