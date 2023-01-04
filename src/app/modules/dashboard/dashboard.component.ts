@@ -118,9 +118,9 @@ export class DashboardComponent implements OnInit, AfterViewInit {
       },
       fill: {
         type: "solid",
-        colors:['#CB4B4B', '#E76A63', '#E98754', '#EFB45B', '#65C889']
+        colors: ['#E98754', '#EFB45B', '#65C889','#CB4B4B', '#E76A63' ],
       },
-      colors: ['#CB4B4B', '#E76A63', '#E98754', '#EFB45B', '#65C889'],
+      colors: ['#E98754', '#EFB45B', '#65C889','#CB4B4B', '#E76A63'],
       labels: [],
       responsive: [
         {
@@ -145,7 +145,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
           height: 12,
           strokeWidth: 0,
           strokeColor: '#fff',
-          fillColors: ['#CB4B4B', '#E76A63', '#E98754', '#EFB45B', '#65C889'],
+          fillColors: ['#E98754', '#EFB45B', '#65C889','#CB4B4B', '#E76A63'],
         }
       }
     };
@@ -157,9 +157,9 @@ export class DashboardComponent implements OnInit, AfterViewInit {
 
       fill: {
         type: "solid",
-        colors:['#CB4B4B', '#E76A63', '#E98754', '#EFB45B', '#65C889']
+        colors:['#E98754', '#EFB45B', '#65C889','#CB4B4B', '#E76A63'],
       },
-      colors: ['#CB4B4B', '#E76A63', '#E98754', '#EFB45B', '#65C889'],
+      colors:['#E98754', '#EFB45B', '#65C889','#CB4B4B', '#E76A63'],
       labels: [],
       responsive: [
         {
@@ -184,7 +184,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
           height: 12,
           strokeWidth: 0,
           strokeColor: '#fff',
-          fillColors: ['#CB4B4B', '#E76A63', '#E98754', '#EFB45B', '#65C889'],
+          fillColors: ['#E98754', '#EFB45B', '#65C889','#CB4B4B', '#E76A63'],
         }
       }
     };
@@ -193,10 +193,10 @@ export class DashboardComponent implements OnInit, AfterViewInit {
       chart: {
         type: "donut"
       },
-      colors: ['#CB4B4B', '#E76A63', '#E98754', '#EFB45B', '#65C889'],
+      colors: ['#E98754', '#EFB45B', '#65C889','#CB4B4B', '#E76A63'],
       fill: {
         type: "solid",
-        colors:['#CB4B4B', '#E76A63', '#E98754', '#EFB45B', '#65C889']
+        colors:['#E98754', '#EFB45B', '#65C889','#CB4B4B', '#E76A63'],
       },
       labels: [],
       responsive: [
@@ -222,7 +222,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
           height: 12,
           strokeWidth: 0,
           strokeColor: '#fff',
-          fillColors: ['#CB4B4B', '#E76A63', '#E98754', '#EFB45B', '#65C889'],
+          fillColors: ['#E98754', '#EFB45B', '#65C889','#CB4B4B', '#E76A63'],
         }
       }
     };
@@ -490,9 +490,9 @@ export class DashboardComponent implements OnInit, AfterViewInit {
     serriesArray2[1] = this.dashboardCountData[0].girlStudent | 0;
     serriesArray2[2] = this.dashboardCountData[0].otherStudent | 0;
 
-    this.piechartOptions.colors = ['#CB4B4B', '#E76A63', '#E98754', '#EFB45B', '#65C889'];
-    this.piechartOptions1.colors = ['#CB4B4B', '#E76A63', '#E98754', '#EFB45B', '#65C889'];
-    this.piechartOptions2.colors = ['#CB4B4B', '#E76A63', '#E98754', '#EFB45B', '#65C889'];
+    this.piechartOptions.colors = ['#E98754', '#EFB45B', '#65C889','#CB4B4B', '#E76A63'];
+    this.piechartOptions1.colors = ['#E98754', '#EFB45B', '#65C889','#CB4B4B', '#E76A63'];
+    this.piechartOptions2.colors = ['#E98754', '#EFB45B', '#65C889','#CB4B4B', '#E76A63'];
     this.piechartOptions.series = serriesArray;
     this.piechartOptions1.series = serriesArray1;
     this.piechartOptions2.series = serriesArray2;
@@ -606,11 +606,11 @@ export class DashboardComponent implements OnInit, AfterViewInit {
       width: 550,
       height: 430,
       colors: {
-        baseDefault: "#bfddff",
+        baseDefault: "#005f57",
         background: "#fff",
-        selected: "#272848",
-        hover: "#ebebeb",
-        directory: "#bfddff",
+        selected: "#005f57",
+        hover: "#005f57",
+        directory: "#005f57",
         status: {}
       },
       regions: data,
