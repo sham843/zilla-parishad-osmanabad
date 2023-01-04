@@ -57,7 +57,8 @@
                 </div>
             </div>
         </div>
-        <div class="row g-3" *ngIf="data?.multipleImage == true">
+        <div class="row g-3" *ngIf="data?.multipleImage == true && items.length > 0">
+            <mat-label>Image Gallery : </mat-label>
             <div class="col-sm-3" *ngFor="let item of items; index as i">
                 <img [lightbox]="i" [src]="item.data.src" class="gallery-img">
             </div>

@@ -28,21 +28,21 @@ export class AddUpdateSchoolRegistrationComponent {
   schoolMngArr = new Array();
   schoolRegForm !: FormGroup;
   uploadImg: any;
-  uploadMultipleImg : any;
-  imgArray =new Array();
+  uploadMultipleImg: any;
+  imgArray = new Array();
   editFlag: boolean = false;
-  img: boolean = false;
+  // img: boolean = false;
   // schoolDocument!: FormArray;
 
-  constructor(private masterService: MasterService, 
-    private errors: ErrorsService, 
-    private fb: FormBuilder, 
+  constructor(private masterService: MasterService,
+    private errors: ErrorsService,
+    private fb: FormBuilder,
     private fileUpload: FileUploadService,
-    private apiService: ApiService, 
-    private commonMethod: CommonMethodsService, 
+    private apiService: ApiService,
+    private commonMethod: CommonMethodsService,
     @Inject(MAT_DIALOG_DATA) public data: any,
-    public dialogRef: MatDialogRef<AddUpdateSchoolRegistrationComponent>, 
-    public validationService: ValidationService, 
+    public dialogRef: MatDialogRef<AddUpdateSchoolRegistrationComponent>,
+    public validationService: ValidationService,
     public webStorageS: WebStorageService,
     private ngxSpinner: NgxSpinnerService) { }
 
@@ -83,8 +83,8 @@ export class AddUpdateSchoolRegistrationComponent {
       "lowestClass": ['', Validators.required],
       "highestClass": ['', Validators.required],
       "timesStamp": new Date(),
-      "uploadImage": [''],   
-      schoolDocument : this.fb.array([
+      "uploadImage": [''],
+      schoolDocument: this.fb.array([
         this.fb.group({
           "id": 0,
           "schoolId": 0,
@@ -207,10 +207,10 @@ export class AddUpdateSchoolRegistrationComponent {
 
   //#region ------------------------------------------------- Upload Image start here --------------------------------------------// 
   imgUpload(event: any) {
-    this.img = true;
+    // this.img = true;
     this.fileUpload.uploadDocuments(event, 'Upload', 'jpg, jpeg, png').subscribe((res: any) => {
       if (res.statusCode == 200) {
-        this.uploadImg = res.responseData;       
+        this.uploadImg = res.responseData;
       }
       else {
         return
@@ -219,14 +219,14 @@ export class AddUpdateSchoolRegistrationComponent {
   }
 
   multipleImgUpload(event: any) {
-    this.img = true;
+    // this.img = true;
     this.fileUpload.uploadMultipleDocument(event, 'Upload', 'jpg, jpeg, png').subscribe((res: any) => {
       if (res.statusCode == 200) {
         this.uploadMultipleImg = res.responseData;
         // multiple image 
         let imgArr = this.uploadMultipleImg.split(',')
-        for( let i = 0; i< imgArr.length; i++ ){
-          let data ={
+        for (let i = 0; i < imgArr.length; i++) {
+          let data = {
             "id": 0,
             "schoolId": 0,
             "documentId": 3,
@@ -237,8 +237,8 @@ export class AddUpdateSchoolRegistrationComponent {
             "modifiedDate": new Date(),
             "isDeleted": true
           }
-          this.imgArray.push(data)        
-        }     
+          this.imgArray.push(data)
+        }
       }
       else {
         return
@@ -263,30 +263,28 @@ export class AddUpdateSchoolRegistrationComponent {
 
     formValue.uploadImage ? formValue.uploadImage = this.uploadImg : '';
     if (this.editFlag == true) {
-      if (this.data.uploadImage) {
-        this.data.uploadImage ? this.data.uploadImage = formValue.uploadImage : '';
-      }
-      else {
-        formValue.uploadImage = this.schoolRegForm.value.uploadImage;
-      }
+      this.data.uploadImage ? formValue.uploadImage = this.schoolRegForm.value.uploadImage : '';      
+    }
+    else {
+      formValue.uploadImage = this.schoolRegForm.value.uploadImage;
+      console.log(formValue.uploadImage);
     }
     formValue.schoolDocument = this.imgArray;
-    console.log("FormValue : ", formValue);
 
-    let url;
-    this.editFlag ? url = 'ZP-Osmanabad/School/Update' : url = 'ZP-Osmanabad/School/Add';
-    
+    let url = this.editFlag ? 'Update' : 'Add'
+    // this.editFlag ? url = 'ZP-Osmanabad/School/Update' : url = 'ZP-Osmanabad/School/Add';
+
     if (!this.schoolRegForm.valid) {
       this.commonMethod.showPopup(this.webStorageS.languageFlag == 'EN' ? 'Please Enter Mandatory Fields' : 'कृपया अनिवार्य फील्ड प्रविष्ट करा', 1);
       return
     }
     else {
       this.ngxSpinner.show();
-      this.apiService.setHttp(this.editFlag ? 'put' : 'post', url, false, formValue, false, 'baseUrl');
+      this.apiService.setHttp(this.editFlag ? 'put' : 'post', 'ZP-Osmanabad/School/' + url, false, formValue, false, 'baseUrl');
       this.apiService.getHttp().subscribe({
         next: (res: any) => {
           this.ngxSpinner.hide();
-          res.statusCode === 200 ? (this.commonMethod.showPopup(res.statusMessage, 0)) : this.commonMethod.checkEmptyData(res.statusMessage) == false ? this.errors.handelError(res.statusCode) : this.commonMethod.showPopup(res.statusMessage, 0);
+          res.statusCode == 200 ? (this.commonMethod.showPopup(res.statusMessage, 0)) : this.commonMethod.checkEmptyData(res.statusMessage) == false ? this.errors.handelError(res.statusCode) : this.commonMethod.showPopup(res.statusMessage, 0);
           this.dialogRef.close('yes');
         },
         error: ((err: any) => {
@@ -304,17 +302,17 @@ export class AddUpdateSchoolRegistrationComponent {
     this.data.uploadImage ? this.schoolRegForm.value.uploadImage = this.data.uploadImage : '';
     this.uploadImg = this.data?.uploadImage
 
-    this.data.schoolDocument.map((res : any)=>{
+    this.data.schoolDocument.map((res: any) => {
       let schoolDocumentObj = {
         "id": res.id,
-          "schoolId": res.schoolId,
-          "documentId": res.documentId,
-          "docPath": res.docPath,
-          "createdBy": 0,
-          "createdDate": new Date(),
-          "modifiedBy": 0,
-          "modifiedDate": new Date(),
-          "isDeleted": true
+        "schoolId": res.schoolId,
+        "documentId": res.documentId,
+        "docPath": res.docPath,
+        "createdBy": 0,
+        "createdDate": new Date(),
+        "modifiedBy": 0,
+        "modifiedDate": new Date(),
+        "isDeleted": true
       };
       this.imgArray.push(schoolDocumentObj);
     })
@@ -323,14 +321,14 @@ export class AddUpdateSchoolRegistrationComponent {
 
   //#region ------------------------------------------------- Clear Img field start here --------------------------------------------//
   clearImg() {
-    if(this.uploadImg){
+    if (this.uploadImg) {
       this.uploadImg = '';
       this.schoolRegForm.value.uploadImage = '';
       this.f['uploadImage'].setValue('');
     }
   }
 
-  clearMultipleImg(index: any){
+  clearMultipleImg(index: any) {
     this.imgArray.splice(index, 1);
   }
   //#endregionegion --------------------------------------------- Clear Img field end here --------------------------------------------//
