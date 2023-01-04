@@ -184,7 +184,7 @@
                                                             <div class="col-sm"
                                                                 *ngFor="let std of header.standardDetails">
                                                                 <div
-                                                                    class="d-flex align-items-center justify-content-start">
+                                                                    class="d-flex align-items-center justify-content-center">
                                                                     <div class="form-check">
                                                                         <input class="form-check-input" type="checkbox"
                                                                             [(ngModel)]="std.status"  (click)="checkData(header, 'checkbox')">
@@ -214,11 +214,7 @@
                                                 <div class="row" *ngIf="item.status==true">
                                                     <div class="col-sm"
                                                         *ngFor="let std of item.standardDetails">
-                                                        <div class="d-flex align-items-center justify-content-start">
-                                                            <div class="form-check">
-                                                               {{(std?.assessmentCount+'/'+std?.studentCount)}} 
-                                                            </div>
-                                                        </div>
+                                                        {{(std?.assessmentCount+'/'+std?.studentCount)}} 
                                                     </div>
                                                 </div>
                                             </td>
