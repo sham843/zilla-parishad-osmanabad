@@ -27,7 +27,7 @@
                     <div class="mb-1">
                         <mat-form-field appearance="outline" class="w-100">
                             <mat-label>केंद्र निवडा</mat-label>
-                            <mat-select formControlName="centerId" (selectionChange)="getschools()">
+                            <mat-select formControlName="centerId" [placeholder]="'All'" (selectionChange)="getschools()">
                                 <mat-option *ngFor="let center of centerData" [value]="center.id">
                                     {{webStorage.languageFlag == 'EN'?center.center:center.m_Center}}
                                 </mat-option>
@@ -37,7 +37,7 @@
                     <div class="mb-3">
                         <mat-form-field appearance="outline" class="w-100">
                             <mat-label>शाळा निवडा</mat-label>
-                            <mat-select formControlName="schoolId">
+                            <mat-select formControlName="schoolId" placeholder="All">
                                 <mat-option *ngFor="let school of schoolData" [value]="school.id">
                                     {{webStorage.languageFlag == 'EN'?school.schoolName :school.m_SchoolName }}
                                 </mat-option>
@@ -168,10 +168,11 @@
                                                         <div class="d-flex align-items-center justify-content-center"
                                                             *ngIf="header.ischeckboxShow==true">
                                                             <div class="form-check">
+                                                                <!-- [disabled]="header.status==true" -->
                                                                 <input class="form-check-input" type="radio"
                                                                     id="header.label" name="std" value="header.status"
-                                                                    [disabled]="header.status==true"
-                                                                    (click)="checkData(header, 'radio')"
+                                                                   
+                                                                    (click)="checkData(header, 'radio'); demo=true"
                                                                     [checked]="header.status">
                                                                 <label class="form-check-label" for="flexCheckDefault">
                                                                     {{webStorage.languageFlag == 'EN'?
@@ -179,7 +180,7 @@
                                                                 </label>
                                                             </div>
                                                         </div>
-                                                        <div class="row" *ngIf="header.status==true">
+                                                        <div class="row" *ngIf="header.status==true &&  demo">
                                                             <div class="col-sm"
                                                                 *ngFor="let std of header.standardDetails">
                                                                 <div
@@ -229,7 +230,7 @@
                                         [dataLabels]="barchartOptions.dataLabels"
                                         [plotOptions]="barchartOptions.plotOptions"
                                         [responsive]="barchartOptions.responsive" [xaxis]="barchartOptions.xaxis"
-                                        [legend]="barchartOptions.legend" [fill]="barchartOptions.fill"></apx-chart>
+                                        [legend]="barchartOptions.legend" [fill]="barchartOptions.fill" [tooltip]="barchartOptions.tooltip"></apx-chart>
                                 </div>
                             </div>
                         </div>

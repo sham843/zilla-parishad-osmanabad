@@ -32,11 +32,18 @@ export class AddUpdateSchoolRegistrationComponent {
   imgArray =new Array();
   editFlag: boolean = false;
   img: boolean = false;
-  schoolDocument!: FormArray;
+  // schoolDocument!: FormArray;
 
-  constructor(private masterService: MasterService, private errors: ErrorsService, private fb: FormBuilder, private fileUpload: FileUploadService,
-    private apiService: ApiService, private commonMethod: CommonMethodsService, @Inject(MAT_DIALOG_DATA) public data: any,
-    public dialogRef: MatDialogRef<AddUpdateSchoolRegistrationComponent>, public validationService: ValidationService, public webStorageS: WebStorageService,
+  constructor(private masterService: MasterService, 
+    private errors: ErrorsService, 
+    private fb: FormBuilder, 
+    private fileUpload: FileUploadService,
+    private apiService: ApiService, 
+    private commonMethod: CommonMethodsService, 
+    @Inject(MAT_DIALOG_DATA) public data: any,
+    public dialogRef: MatDialogRef<AddUpdateSchoolRegistrationComponent>, 
+    public validationService: ValidationService, 
+    public webStorageS: WebStorageService,
     private ngxSpinner: NgxSpinnerService) { }
 
   ngOnInit() {
@@ -60,7 +67,7 @@ export class AddUpdateSchoolRegistrationComponent {
     this.schoolRegForm = this.fb.group({
       "id": this.data ? this.data.id : 0,
       "schoolCode": "string",
-      "schoolName": [this.data ? this.data.schoolName : '', [Validators.required, Validators.pattern('^[-_.,() a-zA-Z0-9]+$')]],
+      "schoolName": [this.data ? this.data.schoolName : '', Validators.required],
       "m_SchoolName": [this.data ? this.data.m_SchoolName : '', [Validators.required, Validators.pattern('^[\u0900-\u0965 ]+$')]],
       "stateId": 0,
       "districtId": ['', Validators.required],
@@ -214,13 +221,10 @@ export class AddUpdateSchoolRegistrationComponent {
   multipleImgUpload(event: any) {
     this.img = true;
     this.fileUpload.uploadMultipleDocument(event, 'Upload', 'jpg, jpeg, png').subscribe((res: any) => {
-      // console.log("multiple img res : ", res);
       if (res.statusCode == 200) {
         this.uploadMultipleImg = res.responseData;
         // multiple image 
-       console.log("hdfhguhdfvuhb", this.uploadMultipleImg.split(','));
         let imgArr = this.uploadMultipleImg.split(',')
-        console.log("uploadMultipleImg : ", this.uploadMultipleImg);
         for( let i = 0; i< imgArr.length; i++ ){
           let data ={
             "id": 0,
@@ -240,8 +244,6 @@ export class AddUpdateSchoolRegistrationComponent {
         return
       }
     });
-    console.log("Img Array : ", this.imgArray);
-
   }
 
   viewImg() {
@@ -272,7 +274,6 @@ export class AddUpdateSchoolRegistrationComponent {
 
     let url;
     this.editFlag ? url = 'ZP-Osmanabad/School/Update' : url = 'ZP-Osmanabad/School/Add';
-    console.log("FormValue : ", formValue);
     
     if (!this.schoolRegForm.valid) {
       this.commonMethod.showPopup(this.webStorageS.languageFlag == 'EN' ? 'Please Enter Mandatory Fields' : 'कृपया अनिवार्य फील्ड प्रविष्ट करा', 1);
@@ -298,15 +299,11 @@ export class AddUpdateSchoolRegistrationComponent {
 
   //#region ------------------------------------------------- Edit Record start here --------------------------------------------//
   onEdit() {
-    console.log("Edit Obj : ", this.data);
-    
     this.editFlag = true;
     this.data.uploadImage ? this.schoolRegForm.value.uploadImage = this.data.uploadImage : '';
     this.uploadImg = this.data?.uploadImage
 
     this.data.schoolDocument.map((res : any)=>{
-      console.log("res : ", res);
-
       let schoolDocumentObj = {
         "id": res.id,
           "schoolId": res.schoolId,
