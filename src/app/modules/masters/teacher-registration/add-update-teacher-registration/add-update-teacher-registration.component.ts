@@ -143,10 +143,10 @@ export class AddUpdateTeacherRegistrationComponent {
         "castId": ['', Validators.required],
         "castCategoryId": [null],
         "castCertificateNo": [this.data ? this.data.teacherDetails?.castCertificateNo : ''],
-        "castCertificateOffice": [this.data ? this.data.teacherDetails?.castCertificateOffice : ''],
+        "castCertificateOffice": [this.data ? this.data.teacherDetails?.castCertificateOffice : '',Validators.pattern('^[ a-zA-Z0-9]+$')],
         "isCastVarificationDone": [this.data ? this.data.teacherDetails?.isCastVarificationDone : null],
         "castValidityNoDate": [this.data ? this.data.teacherDetails?.castValidityNoDate : ''],
-        "castverificationCommitteeName": [this.data ? this.data.teacherDetails?.castverificationCommitteeName : ''],
+        "castverificationCommitteeName": [this.data ? this.data.teacherDetails?.castverificationCommitteeName : '',Validators.pattern(this.validation.fullName)],
         "dateOfFirstAppoinmentService": [this.data ? this.data.teacherDetails?.dateOfFirstAppoinmentService : '', Validators.required],
         "currentSchoolJoiningDate": [this.data ? this.data.teacherDetails?.currentSchoolJoiningDate : '', Validators.required],
         "currentTalukaPresentDate": [this.data ? this.data.teacherDetails?.currentTalukaPresentDate : '', Validators.required],
@@ -157,7 +157,7 @@ export class AddUpdateTeacherRegistrationComponent {
         "degreeUniversityId": ['', Validators.required],
         "professionalQualificationId": ['', Validators.required],
         "bEdPercentages": [this.data ? this.data.teacherDetails?.bEdPercentages : '',Validators.pattern('[0-9]+(\\.[0-9]+)?[%]?')],
-        "bEdUniversityId": [this.data ? this.data.teacherDetails?.bEdUniversityId : ''],
+        "bEdUniversityId": [this.data ? this.data.teacherDetails?.bEdUniversityId : '',Validators.pattern(this.validation.fullName)],
         "husbandWife_Both_Service": [this.data ? this.data.teacherDetails?.husbandWife_Both_Service : '', Validators.required],
         "husbandWife_OfficeName": [this.data ? this.data.teacherDetails?.husbandWife_OfficeName : ''],
         "isDisabled": [this.data ? this.data.teacherDetails?.isDisabled :'', Validators.required],
@@ -175,21 +175,21 @@ export class AddUpdateTeacherRegistrationComponent {
 //#endregion --------------------------- end form object ----------------------------------
 //#region ------------------ start update validation hide show field -----------------------
   castvalidation(obj: any) {
-    if (obj.value != 7) {
-      this.td["castCategoryId"].setValidators(Validators.required);
+    if (obj.value != 1) {
+      // this.td["castCategoryId"].setValidators(Validators.required);
       this.td["castCertificateNo"].setValidators(Validators.required);
       this.td["castCertificateOffice"].setValidators(Validators.required);
       this.td["isCastVarificationDone"].setValidators(Validators.required);
       this.td["castValidityNoDate"].setValidators(Validators.required);
       this.td["castverificationCommitteeName"].setValidators(Validators.required);   
     }else{
-      this.td['castCategoryId'].clearValidators();
+      // this.td['castCategoryId'].clearValidators();
       this.td['castCertificateNo'].clearValidators();
       this.td['castCertificateOffice'].clearValidators();
       this.td['isCastVarificationDone'].clearValidators();
       this.td['castValidityNoDate'].clearValidators();
       this.td['castverificationCommitteeName'].clearValidators();
-      this.td['castCategoryId'].setValue(null);
+      // this.td['castCategoryId'].setValue(null);
       this.td['castCertificateNo'].setValue('');
       this.td['castCertificateOffice'].setValue('');
       this.td['isCastVarificationDone'].setValue(null);
@@ -197,7 +197,7 @@ export class AddUpdateTeacherRegistrationComponent {
       this.td['castverificationCommitteeName'].setValue('');    
 
     }
-    this.td['castCategoryId'].updateValueAndValidity();
+    // this.td['castCategoryId'].updateValueAndValidity();
     this.td['castCertificateNo'].updateValueAndValidity();
     this.td['castCertificateOffice'].updateValueAndValidity();
     this.td['isCastVarificationDone'].updateValueAndValidity();
@@ -285,6 +285,8 @@ export class AddUpdateTeacherRegistrationComponent {
   }
 
   getDistrict() {
+    console.log("district editFlag",this.editFlag);
+    
     this.masterService.getAllDistrict('EN').subscribe({
       next: ((res: any) => {
         if (res.statusCode == 200 && res.responseData.length) {
@@ -297,10 +299,10 @@ export class AddUpdateTeacherRegistrationComponent {
       }
     })
   }
-
+  
   getTaluka() {
     this.masterService.getAllTaluka('EN').subscribe({
-      next: ((res: any) => {
+      next: ((res: any) => { 
         if (res.statusCode == 200 && res.responseData.length) {
           this.talukaArray = res.responseData;          
           this.editFlag ? (this.teacherRegForm.controls['talukaId'].setValue(this.editObj?.talukaId), this.getVillage()) : '';
@@ -420,7 +422,7 @@ export class AddUpdateTeacherRegistrationComponent {
     this.masterService.getCastCategoryDescById('EN').subscribe({
       next: ((res: any) => {
         if (res.statusCode == 200 && res.responseData.length) {
-          this.castCategoryArray = res.responseData;
+          this.castCategoryArray = res.responseData;         
           this.editFlag ? (this.td['castCategoryId'].setValue(this.editObj.teacherDetails?.castCategoryId), this.getEducationQualification()) : this.getEducationQualification();
         }
       }), error: (error: any) => {
@@ -559,7 +561,7 @@ export class AddUpdateTeacherRegistrationComponent {
 //#endregion -------------------------------------end submit-----------------------------------------------
 //#region ---------------------------------------- start edit ----------------------------------------------
   onEdit(obj: any) {
-    // console.log("editObj",obj);
+    console.log("editObj",obj);
     this.editFlag = true;
     this.editObj = obj; 
      
@@ -604,7 +606,7 @@ export class AddUpdateTeacherRegistrationComponent {
   }
 
   clearDropdown(dropdown: string) {
-    this.editFlag = false;
+    // this.editFlag = true;
     if (dropdown == 'Taluka') {
       this.f['villageId'].setValue('');
       this.villageArray = [];
