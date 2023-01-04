@@ -264,13 +264,14 @@ export class AddUpdateSchoolRegistrationComponent {
     formValue.uploadImage ? formValue.uploadImage = this.uploadImg : '';
     if (this.editFlag == true) {
       if (this.data.uploadImage) {
-        this.img ? formValue.uploadImage = this.uploadImg : formValue.uploadImage = this.data.uploadImage
+        this.data.uploadImage ? this.data.uploadImage = formValue.uploadImage : '';
       }
       else {
         formValue.uploadImage = this.schoolRegForm.value.uploadImage;
       }
     }
     formValue.schoolDocument = this.imgArray;
+    console.log("FormValue : ", formValue);
 
     let url;
     this.editFlag ? url = 'ZP-Osmanabad/School/Update' : url = 'ZP-Osmanabad/School/Add';
@@ -315,10 +316,8 @@ export class AddUpdateSchoolRegistrationComponent {
           "modifiedDate": new Date(),
           "isDeleted": true
       };
-
       this.imgArray.push(schoolDocumentObj);
     })
-
   }
   //#endregiongion ---------------------------------------------- Edit Record end here --------------------------------------------//
 
