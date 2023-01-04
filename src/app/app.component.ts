@@ -39,10 +39,16 @@ export class AppComponent {
     this.router.events.pipe(filter(event => event instanceof NavigationEnd),  // set title dynamic
     ).subscribe(() => {
       var rt = this.getChild(this.activatedRoute);
-      let titleName = rt?.data._value?.breadcrumb[rt.data?._value?.breadcrumb?.length - 1]?.title;
-      rt.data.subscribe(() => {
-        this.titleService.setTitle(titleName)
-      })
+      console.log("breadcrun", rt?.data._value);
+      if(rt?.data._value.breadcrumb){
+        let titleName = rt?.data._value?.breadcrumb[rt.data?._value?.breadcrumb?.length - 1]?.title;
+        let m_tile =  rt?.data._value?.breadcrumb[rt.data?._value?.breadcrumb?.length - 1]?.m_title
+        console.log("titleName", titleName, m_tile);
+        rt.data.subscribe(() => {
+          this.titleService.setTitle( this.webStorage.languageFlag == 'EN' ? titleName : m_tile )
+        })
+      }
+    
     });
   }
 
