@@ -66,7 +66,7 @@ export class GlobalDetailComponent {
 
     this.dataArray = this.data.Obj.schoolDocument;
     
-    this.items = this.dataArray.map(item =>
+    this.items = this.dataArray?.map(item =>
       new ImageItem({ src: item.docPath, thumb: item.docPath })
     );
     

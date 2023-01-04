@@ -49,7 +49,6 @@ export class ChangePasswordComponent {
   onSubmit(clear : any){
     let obj = this.passwordForm.value;
     if(this.passwordForm.invalid){
-      this.common.snackBar(this.webStorage.languageFlag == 'EN' ?'Please Enter Mandatory Fields' : 'कृपया अनिवार्य फील्ड प्रविष्ट करा',1);
       return;
     }
     else{
