@@ -21,7 +21,7 @@
           <div class="text-center mb-3">
             <img src="{{tData['docPath'] || tData['uploadImage'] || 'assets/images/user.jpg'}}" alt="user"class="user-img">
           </div>
-          <div class="row" *ngFor="let columns of displayedColumns; let j=index">
+          <div class="row gx-2" *ngFor="let columns of displayedColumns; let j=index">
             <div class="col-sm-4 form-label" *ngIf=" '#' != columns && 'srNo' != columns && 'docPath' != columns && 'uploadImage' != columns && 'action' != columns">
               {{tableHeaders[j]}}
             </div>
