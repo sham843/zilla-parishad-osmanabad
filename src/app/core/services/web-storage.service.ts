@@ -50,6 +50,16 @@ export class WebStorageService {
     return data.id;
   }
 
+  getUserTypeId(){
+    let data =this.getLoggedInLocalstorageData();
+    return data.userTypeId;
+  }
+
+  getUserSubTypeId(){
+    let data =this.getLoggedInLocalstorageData();
+    return data.subUserTypeId;
+  }
+
   createdByProps(): any {
     return {
       "createdBy": this.getUserId() || 0,
