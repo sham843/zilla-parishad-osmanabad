@@ -48,7 +48,7 @@ body {
 }
 
 .bg-main-light {
-  background-color: var(--main-color);
+  background-color: var(--main-light-color);
 }
 
 .bg-main-dark {
@@ -110,12 +110,14 @@ body {
   font-size: 0.85rem !important;
   font-weight: 600;
   font-family: 'Noto Sans Devanagari', sans-serif !important;
+  vertical-align: middle !important;
 }
 
 .dashboard-table td,
 .dashboard-table .mat-mdc-cell {
   font-size: 0.85rem !important;
   font-family: 'Noto Sans Devanagari', sans-serif !important;
+  vertical-align: middle !important;
 }
 
 .dashboard-table .mat-mdc-icon-button.mat-mdc-button-base {
