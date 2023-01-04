@@ -101,14 +101,6 @@
                         </div>
                     </div>
                 </div>
-
-                <!-- Multiple Image -->
-
-
-
-                <!-- Multiple Image -->
-
-
                 <div class="col-sm-6">
 
                     <mat-form-field appearance="outline" class="w-100">
@@ -118,9 +110,9 @@
                         <!-- <mat-error *ngIf="f['schoolName'].hasError('required') || f['schoolName'].hasError('touched')">
                             {{'Labels.schoolNameIsRequired' | translate}}
                         </mat-error> -->
-                        <mat-error *ngIf="f['schoolName'].hasError('pattern') || f['schoolName'].hasError('touched')">
+                        <!-- <mat-error *ngIf="f['schoolName'].hasError('pattern')">
                             {{'Labels.InvalidSchoolName' | translate}}
-                        </mat-error>
+                        </mat-error> -->
                     </mat-form-field>
                 </div>
                 <div class="col-sm-6">
@@ -132,6 +124,10 @@
                             *ngIf="f['m_SchoolName'].hasError('required') || f['m_SchoolName'].hasError('touched')">
                             {{'Labels.schoolNameIsRequired' | translate}}
                         </mat-error> -->
+                        <mat-error
+                            *ngIf="f['m_SchoolName'].hasError('pattern')">
+                            {{'Labels.schoolNameMarathiIsRequired' | translate}}
+                        </mat-error>
                     </mat-form-field>
                 </div>
                 <div class="col-sm-6">
