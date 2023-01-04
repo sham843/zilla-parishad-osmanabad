@@ -290,7 +290,7 @@ export class AddUpdateTeacherRegistrationComponent {
   getDistrict() {
     console.log("district editFlag",this.editFlag);
     
-    this.masterService.getAllDistrict('EN').subscribe({
+    this.masterService.getAllDistrict(this.webStorageS.languageFlag).subscribe({
       next: ((res: any) => {
         if (res.statusCode == 200 && res.responseData.length) {
           this.districtArray = res.responseData;               
@@ -304,7 +304,7 @@ export class AddUpdateTeacherRegistrationComponent {
   }
   
   getTaluka() {
-    this.masterService.getAllTaluka('EN').subscribe({
+    this.masterService.getAllTaluka(this.webStorageS.languageFlag).subscribe({
       next: ((res: any) => { 
         if (res.statusCode == 200 && res.responseData.length) {
           this.talukaArray = res.responseData;          
@@ -318,7 +318,7 @@ export class AddUpdateTeacherRegistrationComponent {
 
   getVillage() {
     let talukaId = this.teacherRegForm.value.talukaId
-    this.masterService.getAllVillage('EN', talukaId).subscribe({
+    this.masterService.getAllVillage(this.webStorageS.languageFlag, talukaId).subscribe({
       next: ((res: any) => {
         if (res.statusCode == 200 && res.responseData.length) {
           this.villageArray = res.responseData;            
@@ -331,7 +331,7 @@ export class AddUpdateTeacherRegistrationComponent {
   }
 
   getAllDistrictTeacherDetails() {
-    this.masterService.getAllDistrict('EN').subscribe({
+    this.masterService.getAllDistrict(this.webStorageS.languageFlag).subscribe({
       next: ((res: any) => {
         if (res.statusCode == 200 && res.responseData.length) {
           this.districtArrayTeacherDeatails = res.responseData;
@@ -346,7 +346,7 @@ export class AddUpdateTeacherRegistrationComponent {
   }
 
   getAllTalukaTeacherDeatails() {
-    this.masterService.getAllTaluka('EN').subscribe({
+    this.masterService.getAllTaluka(this.webStorageS.languageFlag).subscribe({
       next: ((res: any) => {
         if (res.statusCode == 200 && res.responseData.length) {
           this.talukaArrayTeacherDetails = res.responseData;
@@ -360,7 +360,7 @@ export class AddUpdateTeacherRegistrationComponent {
 
   getCluster() {
     let talukaId = this.teacherRegForm.value.teacherDetails.talukaId;
-    this.masterService.getAllCenter('EN', talukaId).subscribe({
+    this.masterService.getAllCenter(this.webStorageS.languageFlag, talukaId).subscribe({
       next: ((res: any) => {
         if (res.statusCode == 200 && res.responseData.length) {
           this.clusterArray = res.responseData;      
@@ -374,7 +374,7 @@ export class AddUpdateTeacherRegistrationComponent {
   getAllSchool() {
     let talukaId = this.teacherRegForm.value.teacherDetails.talukaId;
     let clusterId = this.teacherRegForm.value.teacherDetails.clusterId;
-    this.masterService.getAllSchoolByCriteria('EN', talukaId, 0, clusterId).subscribe({
+    this.masterService.getAllSchoolByCriteria(this.webStorageS.languageFlag, talukaId, 0, clusterId).subscribe({
       next: ((res: any) => {
         if (res.statusCode == 200 && res.responseData.length) {
           this.schoolArray = res.responseData;        
@@ -386,7 +386,7 @@ export class AddUpdateTeacherRegistrationComponent {
     })
   }
   getDesignation() {
-    this.masterService.GetDesignationByLevelId('EN', 3).subscribe({
+    this.masterService.GetDesignationByLevelId(this.webStorageS.languageFlag, 3).subscribe({
       next: ((res: any) => {
         if (res.statusCode == 200 && res.responseData.length) {
           this.designationArray = res.responseData;    
@@ -398,7 +398,7 @@ export class AddUpdateTeacherRegistrationComponent {
     })
   }
   getGraduateTeacherSubject() {
-    this.masterService.getAllSubject('EN').subscribe({
+    this.masterService.getAllSubject(this.webStorageS.languageFlag).subscribe({
       next: ((res: any) => {
         if (res.statusCode == 200 && res.responseData.length) {
           this.GradateTeacherSubjectArray = res.responseData;
@@ -410,7 +410,7 @@ export class AddUpdateTeacherRegistrationComponent {
     })
   }
   getCaste() {
-    this.masterService.getAllCaste('EN', 1).subscribe({
+    this.masterService.getAllCaste(this.webStorageS.languageFlag, 1).subscribe({
       next: ((res: any) => {
         if (res.statusCode == 200 && res.responseData.length) {
           this.casteArray = res.responseData;  
@@ -422,7 +422,7 @@ export class AddUpdateTeacherRegistrationComponent {
     })
   }
   getCasteCategory() {
-    this.masterService.getCastCategoryDescById('EN').subscribe({
+    this.masterService.getCastCategoryDescById(this.webStorageS.languageFlag).subscribe({
       next: ((res: any) => {
         if (res.statusCode == 200 && res.responseData.length) {
           this.castCategoryArray = res.responseData;         
@@ -435,7 +435,7 @@ export class AddUpdateTeacherRegistrationComponent {
   }
 
   getEducationQualification() {
-    this.masterService.getEducationalQualificationById('EN').subscribe({
+    this.masterService.getEducationalQualificationById(this.webStorageS.languageFlag).subscribe({
       next: ((res: any) => {
         if (res.statusCode == 200 && res.responseData.length) {
           this.educationQualificationArray = res.responseData;
@@ -447,7 +447,7 @@ export class AddUpdateTeacherRegistrationComponent {
     })
    }
   getTwelveBranch() {
-    this.masterService.getTwelveBranchCategoryDescById('EN',).subscribe({
+    this.masterService.getTwelveBranchCategoryDescById(this.webStorageS.languageFlag,).subscribe({
       next: ((res: any) => {
         if (res.statusCode == 200 && res.responseData.length) {
           this.twelveBranchArray = res.responseData;
@@ -459,7 +459,7 @@ export class AddUpdateTeacherRegistrationComponent {
     })
   }
   getOptionalSubject() {
-    this.masterService.getOptionalSubjectCategoryDescById('EN',).subscribe({
+    this.masterService.getOptionalSubjectCategoryDescById(this.webStorageS.languageFlag,).subscribe({
       next: ((res: any) => {
         if (res.statusCode == 200 && res.responseData.length) {
           this.optionalSubjectArray = res.responseData;         
@@ -472,7 +472,7 @@ export class AddUpdateTeacherRegistrationComponent {
   }
 
   getDegreeUniversity() {
-    this.masterService.getUniversityCategoryDescById('EN',).subscribe({
+    this.masterService.getUniversityCategoryDescById(this.webStorageS.languageFlag,).subscribe({
       next: ((res: any) => {
         if (res.statusCode == 200 && res.responseData.length) {
           this.degreeUniversityArray = res.responseData;
@@ -486,7 +486,7 @@ export class AddUpdateTeacherRegistrationComponent {
   }
 
   getProfesionalQualification() {
-    this.masterService.getProfessinalQualificationById('EN',).subscribe({
+    this.masterService.getProfessinalQualificationById(this.webStorageS.languageFlag,).subscribe({
       next: ((res: any) => {
         if (res.statusCode == 200 && res.responseData.length) {
           this.profesionalQualificationArray = res.responseData;        
@@ -499,7 +499,7 @@ export class AddUpdateTeacherRegistrationComponent {
   }
 
   GetInterDistrictTransferType() {
-    this.masterService.getAllInterDistrictTransferType('EN',).subscribe({
+    this.masterService.getAllInterDistrictTransferType(this.webStorageS.languageFlag,).subscribe({
       next: ((res: any) => {
         if (res.statusCode == 200 && res.responseData.length) {
           this.interDistrictTransferTypeArray = res.responseData;
