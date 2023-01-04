@@ -90,20 +90,6 @@ export class AddUpdateSchoolRegistrationComponent {
           "isDeleted": true
         })
       ]),
-      // "schoolDocument": [
-      //   {
-      //     "id": 0,
-      //     "schoolId": 0,
-      //     "documentId": 0,
-      //     "docPath": "https://zposmservices.mahamining.com/Uploads/Upload/jpeg_01022023065210PM.jpeg",
-      //     "createdBy": 0,
-      //     "createdDate": new Date(),
-      //     "modifiedBy": 0,
-      //     "modifiedDate": new Date(),
-      //     "isDeleted": true
-      //   }
-      // ],
-
       ...this.webStorageS.createdByProps()
     });
   }
@@ -231,19 +217,24 @@ export class AddUpdateSchoolRegistrationComponent {
       // console.log("multiple img res : ", res);
       if (res.statusCode == 200) {
         this.uploadMultipleImg = res.responseData;
+        // multiple image 
+       console.log("hdfhguhdfvuhb", this.uploadMultipleImg.split(','));
+        let imgArr = this.uploadMultipleImg.split(',')
         console.log("uploadMultipleImg : ", this.uploadMultipleImg);
-        let data ={
-          "id": 0,
-          "schoolId": 0,
-          "documentId": 3,
-          "docPath": this.uploadMultipleImg,
-          "createdBy": 0,
-          "createdDate": new Date(),
-          "modifiedBy": 0,
-          "modifiedDate": new Date(),
-          "isDeleted": true
-        }
-        this.imgArray.push(data)        
+        for( let i = 0; i< imgArr.length; i++ ){
+          let data ={
+            "id": 0,
+            "schoolId": 0,
+            "documentId": 3,
+            "docPath": imgArr[i],
+            "createdBy": 0,
+            "createdDate": new Date(),
+            "modifiedBy": 0,
+            "modifiedDate": new Date(),
+            "isDeleted": true
+          }
+          this.imgArray.push(data)        
+        }     
       }
       else {
         return
@@ -262,17 +253,6 @@ export class AddUpdateSchoolRegistrationComponent {
       window.open(this.uploadImg, 'blank');
     }
   }
-
-  // viewMultipleImg() {
-  //   if (this.editFlag == true) {
-  //     let viewImg = this.data.uploadImage;
-  //     this.uploadImg ? window.open(this.uploadImg, 'blank') : window.open(viewImg, 'blank')
-  //   }
-  //   else {
-  //     window.open(this.uploadImg, 'blank');
-  //   }
-  // }
-
   //#endregionegion ------------------------------------------------- Upload Image end here --------------------------------------------// 
 
   //#region ------------------------------------------------- Add/Update Record start here --------------------------------------------//
@@ -294,7 +274,6 @@ export class AddUpdateSchoolRegistrationComponent {
     this.editFlag ? url = 'ZP-Osmanabad/School/Update' : url = 'ZP-Osmanabad/School/Add';
     console.log("FormValue : ", formValue);
     
-    // return 
     if (!this.schoolRegForm.valid) {
       this.commonMethod.showPopup(this.webStorageS.languageFlag == 'EN' ? 'Please Enter Mandatory Fields' : 'कृपया अनिवार्य फील्ड प्रविष्ट करा', 1);
       return
@@ -341,20 +320,6 @@ export class AddUpdateSchoolRegistrationComponent {
       };
 
       this.imgArray.push(schoolDocumentObj);
-
-    //   this.schoolRegForm.patchValue({
-    //     schoolDocument : {
-    //       "id": res.id,
-    //       "schoolId": res.schoolId,
-    //       "documentId": res.documentId,
-    //       "docPath": res.docPath,
-    //       "createdBy": 0,
-    //       "createdDate": new Date(),
-    //       "modifiedBy": 0,
-    //       "modifiedDate": new Date(),
-    //       "isDeleted": true
-    //     }
-    //   })
     })
 
   }
