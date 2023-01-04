@@ -103,7 +103,10 @@ export class DashboardComponent implements OnInit, AfterViewInit {
     this.masterService.GetAllSubjectsByGroupClassId('', groupId).subscribe((res: any) => {
       this.subjectData = res.responseData;
       this.fBgraph['filtersubjectId'].patchValue(this.subjectData[0].id);
-      this.getbarChartByTaluka();
+      setTimeout(()=>{
+        this.getbarChartByTaluka();
+      },100)
+      
     })
   }
   getPieChart() {
@@ -538,7 +541,6 @@ export class DashboardComponent implements OnInit, AfterViewInit {
     this.showBarChartS = false;
     const filterformData = this.filterForm.value;
     const formDatafilterbyTaluka = this.filterFormForBarGraph.value;
-    this.barChartData = [];
     const TalukaId = filterformData?.talukaId ? filterformData?.talukaId : formDatafilterbyTaluka?.filtertalukaId;
     const str = TalukaId ? (this.selectedObj.groupId == 1 ? 'GetDataFor1st2ndStdByCenter' : 'GetDataFor3rdAboveStdByCenter') : (this.selectedObj.groupId == 1 ? 'GetDataFor1st2ndStdByTaluka' : 'GetDataFor3rdAboveStdByTaluka');
     this.apiService.setHttp('GET', 'zp-osmanabad/Dashboard/' + str + '?TalukaId=' + (TalukaId || 0) + (TalukaId ? '&CenterId=' + (formDatafilterbyTaluka?.filtercenterId || 0) : '') + '&groupId=' + this.selectedObj?.groupId + '&SubjectId=' + (formDatafilterbyTaluka.filtersubjectId | 0), false, false, false, 'baseUrl');
@@ -574,7 +576,6 @@ export class DashboardComponent implements OnInit, AfterViewInit {
     this.tableDataTopPerformance = [];
     const filterformData = this.filterForm.value;
     const formDatafilterbyTaluka = this.filterFormForBarGraph.value;
-    this.barChartData = [];
     const TalukaId = filterformData?.talukaId ? filterformData?.talukaId : formDatafilterbyTaluka?.filtertalukaId;
     this.apiService.setHttp('GET', 'zp-osmanabad/Dashboard/GetDataForTopLowSchool' + '?TalukaId=' + (TalukaId || 0) + (TalukaId ? '&CenterId=' + (formDatafilterbyTaluka?.filtercenterId || 0) : ''), false, false, false, 'baseUrl');
     this.apiService.getHttp().subscribe({
