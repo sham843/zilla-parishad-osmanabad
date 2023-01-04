@@ -172,7 +172,7 @@
                                                                 <input class="form-check-input" type="radio"
                                                                     id="header.label" name="std" value="header.status"
                                                                    
-                                                                    (click)="checkData(header, 'radio'); demo=true"
+                                                                    (click)="checkData(header, 'radio'); standardShowFlag=true"
                                                                     [checked]="header.status">
                                                                 <label class="form-check-label" for="flexCheckDefault">
                                                                     {{webStorage.languageFlag == 'EN'?
@@ -180,7 +180,7 @@
                                                                 </label>
                                                             </div>
                                                         </div>
-                                                        <div class="row" *ngIf="header.status==true &&  demo">
+                                                        <div class="row" *ngIf="header.status==true &&  standardShowFlag">
                                                             <div class="col-sm"
                                                                 *ngFor="let std of header.standardDetails">
                                                                 <div
@@ -350,8 +350,8 @@
 
                         <div class="row">
                             <div class="col-sm-6 border-end" *ngFor="let data of tableDataTopPerformance; let i=index">
-                                <table class="table inner-table mb-3">
-                                    <thead>
+                                <table class="table dashboard-table mt-3">
+                                    <thead class="bg-main-light">
                                         <tr>
                                             <th *ngFor="let header of displayedheaders">
                                                 {{header}}

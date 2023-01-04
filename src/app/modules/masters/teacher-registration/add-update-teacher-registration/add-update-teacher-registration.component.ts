@@ -175,27 +175,26 @@ export class AddUpdateTeacherRegistrationComponent {
 //#endregion --------------------------- end form object ----------------------------------
 //#region ------------------ start update validation hide show field -----------------------
   castvalidation(obj: any) {
-    if (obj.value != 1) {
+    if (obj.value != 1) {  
+      this.td['castCertificateNo'].setValue('');
+      this.td['castCertificateOffice'].setValue('');
+      this.td['isCastVarificationDone'].setValue(null);
+      this.td['castValidityNoDate'].setValue('');
+      this.td['castverificationCommitteeName'].setValue(''); 
+
       // this.td["castCategoryId"].setValidators(Validators.required);
       this.td["castCertificateNo"].setValidators(Validators.required);
       this.td["castCertificateOffice"].setValidators(Validators.required);
       this.td["isCastVarificationDone"].setValidators(Validators.required);
       this.td["castValidityNoDate"].setValidators(Validators.required);
       this.td["castverificationCommitteeName"].setValidators(Validators.required);   
-    }else{
-      // this.td['castCategoryId'].clearValidators();
+    }else{ // this.td['castCategoryId'].clearValidators();
       this.td['castCertificateNo'].clearValidators();
       this.td['castCertificateOffice'].clearValidators();
       this.td['isCastVarificationDone'].clearValidators();
       this.td['castValidityNoDate'].clearValidators();
       this.td['castverificationCommitteeName'].clearValidators();
-      // this.td['castCategoryId'].setValue(null);
-      this.td['castCertificateNo'].setValue('');
-      this.td['castCertificateOffice'].setValue('');
-      this.td['isCastVarificationDone'].setValue(null);
-      this.td['castValidityNoDate'].setValue('');
-      this.td['castverificationCommitteeName'].setValue('');    
-
+      // this.td['castCategoryId'].setValue(null);   
     }
     // this.td['castCategoryId'].updateValueAndValidity();
     this.td['castCertificateNo'].updateValueAndValidity();
@@ -217,24 +216,26 @@ export class AddUpdateTeacherRegistrationComponent {
   }
 
   interDistrictTrafValidators(obj:any){   
+    console.log("validation",obj.value);
+    
     if (obj.value == true) {
+      this.td['dateOFPresenceInterDistrictTransfer'].setValue(null);
+      this.td['interDistrictTransferType'].setValue(null);
+      this.td['theOriginalDistrictInterDistrictTransfer'].setValue('');
+      
       this.td["dateOFPresenceInterDistrictTransfer"].setValidators(Validators.required); 
       this.td["interDistrictTransferType"].setValidators(Validators.required); 
       this.td["theOriginalDistrictInterDistrictTransfer"].setValidators(Validators.required);      
     }else{
       this.td['dateOFPresenceInterDistrictTransfer'].clearValidators();
       this.td['interDistrictTransferType'].clearValidators();
-      this.td['theOriginalDistrictInterDistrictTransfer'].clearValidators();
-
-      this.td['dateOFPresenceInterDistrictTransfer'].setValue(null);
-      this.td['interDistrictTransferType'].setValue(null);
-      this.td['theOriginalDistrictInterDistrictTransfer'].setValue('');
-      
+      this.td['theOriginalDistrictInterDistrictTransfer'].clearValidators();      
     }
     this.td['dateOFPresenceInterDistrictTransfer'].updateValueAndValidity();
     this.td['interDistrictTransferType'].updateValueAndValidity();
     this.td['theOriginalDistrictInterDistrictTransfer'].updateValueAndValidity();
   }
+  
 //#endregion ---------------- end update validation hide show field -------------------------
 
 //#region -------------------------start standard check box ----------------------------------

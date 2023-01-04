@@ -1,6 +1,6 @@
 import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { Router } from '@angular/router';
+//import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { ApiService } from 'src/app/core/services/api.service';
 import { CommonMethodsService } from 'src/app/core/services/common-methods.service';
@@ -44,19 +44,24 @@ export class DashboardComponent implements OnInit, AfterViewInit {
   selectedSurveyData:any;
   standardArray=new Array();
   selectedLang: any;
-  demo:boolean=false;
+  enbTalDropFlag:boolean=false;
+  standardShowFlag:boolean=false;
   get f() { return this.filterForm.controls }
   get fBgraph() { return this.filterFormForBarGraph.controls }
   constructor(public translate: TranslateService, private masterService: MasterService,
     public webStorage: WebStorageService, private fb: FormBuilder, private apiService: ApiService,
-    private error: ErrorsService, private commonMethods: CommonMethodsService, private router: Router) {
+    private error: ErrorsService, private commonMethods: CommonMethodsService,
+    // private router: Router
+     ) {
     this.getBarChartOption();
     this.getPieChart();
 
     this.webStorage.langNameOnChange.subscribe((lang) => {
       this.selectedLang = lang;
-      this.showSvgMap(this.commonMethods.mapRegions());
-      this.clickOnSvgMap('select');
+       this.showSvgMap(this.commonMethods.mapRegions());
+       setTimeout(()=>{
+        this.clickOnSvgMap('select');
+       },70)
     });
   }
 
@@ -78,13 +83,12 @@ export class DashboardComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit() {
     this.showSvgMap(this.commonMethods.mapRegions());
-    this.clickOnSvgMap('select');
+    this.clickOnSvgMap();
   }
   getTalukas() {
     this.talukaData = [];
     this.masterService.getAllTaluka().subscribe((res: any) => {
       this.talukaData.push({ "id": 0, "taluka": "All", "m_Taluka": "सर्व" }, ...res.responseData);
-      // this.getCenters() ;
     })
   }
   getCenters() {
@@ -401,7 +405,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
       OptionGrade: data?.optionGrade|0
     }
     this.webStorage.selectedBarchartObjData.next(this.SharingObject);
-    this.router.navigate(['/dashboard-student-details'])
+    //this.router.navigate(['/dashboard-student-details'])
   }
 
   getdashboardCount() {
@@ -431,7 +435,6 @@ export class DashboardComponent implements OnInit, AfterViewInit {
     });
   }
   checkData(obj: any, status:any,) {
-    console.log(this.demo)
     if(status=='radio'){
       this.totalStudentSurveyData.map((x: any) => {
         x.status = false;
@@ -537,11 +540,11 @@ export class DashboardComponent implements OnInit, AfterViewInit {
             custom: function({ series, seriesIndex, dataPointIndex, w }: any) {              
               return (
                 '<div class="arrow_box" style="padding:10px;">' +
-                  "<div>" + 'Stage' + " : <b> " + w.globals.seriesNames[seriesIndex]+ '</b>' + "</div>" +
+                  "<div>" + 'Level' + " : <b> " + w.globals.seriesNames[seriesIndex]+ '</b>' + "</div>" +
                   "<div>" + 'Percentage' + " : <b> " + series[seriesIndex][dataPointIndex] + '%</b>' + "</div>" +
                 "</div>"
               );
-            }
+            },
           }
         }
 
@@ -586,7 +589,6 @@ export class DashboardComponent implements OnInit, AfterViewInit {
   }
 
   getTabledataByTaluka() {
-    this.tableDataTopPerformance = [];
     const filterformData = this.filterForm.value;
     const formDatafilterbyTaluka = this.filterFormForBarGraph.value;
     const TalukaId = filterformData?.talukaId ? filterformData?.talukaId : formDatafilterbyTaluka?.filtertalukaId;
@@ -594,6 +596,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
     this.apiService.getHttp().subscribe({
       next: (res: any) => {
         if (res.statusCode == "200") {
+          this.tableDataTopPerformance = [];
           this.tableDataTopPerformance.push(res.responseData.responseData1);
           this.tableDataTopPerformance.push(res.responseData.responseData2);
           this.displayedheaders = ['#', 'Sr. No.', 'Name', 'Total Student', 'Percetage'];
@@ -691,6 +694,8 @@ export class DashboardComponent implements OnInit, AfterViewInit {
   }
   clickOnSvgMap(flag?: string) {
     if (flag == 'select') {
+      this.globalTalId =[];
+      //this.enbTalDropFlag ? $('#mapsvg path').addClass('disabledAll'): '';
       let checkTalActiveClass = $('#mapsvg   path').hasClass("talActive");
       checkTalActiveClass ? $('#mapsvg path[id="' + this.globalTalId + '"]').removeAttr("style") : '';
       this.svgMapAddOrRemoveClass();
@@ -702,7 +707,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
       this.filterForm.controls['talukaId'].setValue(+talId);
 
       this.svgMapAddOrRemoveClass();
-      this.dashboardAPis();
+      this.dashboardAPis(),this.getCenters()
     })
   }
 
