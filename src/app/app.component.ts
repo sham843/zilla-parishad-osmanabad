@@ -10,7 +10,7 @@ import { WebStorageService } from './core/services/web-storage.service';
 })
 export class AppComponent {
   title = 'zilla Parishad Osmanabad';
-  
+  langTypeName: any;
   classname: any;
   constructor(private router: Router,
     private titleService: Title,
@@ -23,8 +23,15 @@ export class AppComponent {
   ngOnInit() {
     this.webStorage.getTheme().subscribe((res: any) => {
       this.classname = res;
-    })
+    });
+    
+    this.webStorage.langNameOnChange.subscribe(lang => {
+      this.langTypeName = lang;
+      this.setTitle();
+    });
   }
+
+  
 
 
   checkBaseUrl() {//If base url is log in hide header and footer
@@ -45,7 +52,7 @@ export class AppComponent {
         let m_tile =  rt?.data._value?.breadcrumb[rt.data?._value?.breadcrumb?.length - 1]?.m_title
         console.log("titleName", titleName, m_tile);
         rt.data.subscribe(() => {
-          this.titleService.setTitle( this.webStorage.languageFlag == 'EN' ? titleName : m_tile )
+          this.titleService.setTitle( this.langTypeName == 'EN' ? titleName : m_tile )
         })
       }
     
