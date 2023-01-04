@@ -490,7 +490,9 @@ export class DashboardComponent implements OnInit, AfterViewInit {
     serriesArray2[1] = this.dashboardCountData[0].girlStudent | 0;
     serriesArray2[2] = this.dashboardCountData[0].otherStudent | 0;
 
-    this.piechartOptions.colors = [];
+    this.piechartOptions.colors = ['#CB4B4B', '#E76A63', '#E98754', '#EFB45B', '#65C889'];
+    this.piechartOptions1.colors = ['#CB4B4B', '#E76A63', '#E98754', '#EFB45B', '#65C889'];
+    this.piechartOptions2.colors = ['#CB4B4B', '#E76A63', '#E98754', '#EFB45B', '#65C889'];
     this.piechartOptions.series = serriesArray;
     this.piechartOptions1.series = serriesArray1;
     this.piechartOptions2.series = serriesArray2;
