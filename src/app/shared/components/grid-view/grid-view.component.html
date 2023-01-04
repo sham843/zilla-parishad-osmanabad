@@ -21,11 +21,11 @@
           <div class="text-center mb-3">
             <img src="{{tData['docPath'] || tData['uploadImage'] || 'assets/images/user.jpg'}}" alt="user"class="user-img">
           </div>
-          <div class="row gx-2" *ngFor="let columns of displayedColumns; let j=index">
-            <div class="col-sm-4 form-label" *ngIf=" '#' != columns && 'srNo' != columns && 'docPath' != columns && 'uploadImage' != columns && 'action' != columns">
+          <div class="row " *ngFor="let columns of displayedColumns; let j=index">
+            <div class="col-sm-5 form-label" *ngIf=" '#' != columns && 'srNo' != columns && 'docPath' != columns && 'uploadImage' != columns && 'action' != columns">
               {{tableHeaders[j]}}
             </div>
-            <div class=" col-sm form-data" *ngIf="'srNo' != columns && 'docPath' != columns && 'uploadImage' != columns && 'action' != columns">
+            <div class=" col-sm-7 form-data" *ngIf="'srNo' != columns && 'docPath' != columns && 'uploadImage' != columns && 'action' != columns">
               {{tData[columns]}}
             </div>
             
