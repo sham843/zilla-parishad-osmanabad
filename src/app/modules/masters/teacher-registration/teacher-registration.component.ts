@@ -88,7 +88,7 @@ export class TeacherRegistrationComponent {
     //   return
     // }
     // let tableDatasize!: Number;
-    let pageNo = this.cardViewFlag ? (this.cardCurrentPage + 1) : this.pageNumber;
+    let pageNo = this.cardViewFlag ? (this.pageNumber) : this.pageNumber;
 
     let str = `pageno=${pageNo}&pagesize=10&textSearch=${this.searchContent.value}&lan=${this.webStorageS.languageFlag}`;
     let reportStr = `pageno=${pageNo}&pagesize=${this.totalCount * 10}&textSearch=${this.searchContent.value}&lan=${this.webStorageS.languageFlag}`;
@@ -182,7 +182,7 @@ export class TeacherRegistrationComponent {
   childGridInfo(obj: any) {
     switch (obj.label) {
       case 'Pagination':
-        this.pageNumber = obj.pageNumber;
+        this.pageNumber = obj.pageNumber;          
         this.getTableData();
         break;
       case 'Edit' :
