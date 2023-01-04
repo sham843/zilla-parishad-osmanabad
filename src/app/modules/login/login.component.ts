@@ -56,6 +56,7 @@ export class LoginComponent {
         next: ((res: any) => {
           if (res.statusCode == 200) {
             let logObj = res.responseData;
+            console.log("logObj", logObj);
             localStorage.setItem('loggedInData', JSON.stringify(logObj));
             sessionStorage.setItem('loggedIn', 'true');
             this.commonMethods.snackBar(res.statusMessage, 0)
