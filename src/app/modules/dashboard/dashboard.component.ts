@@ -42,6 +42,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
   SharingObject: any;
   globalTalId: any;
   selectedSurveyData:any;
+  standardArray=new Array();
   get f() { return this.filterForm.controls }
   get fBgraph() { return this.filterFormForBarGraph.controls }
   constructor(public translate: TranslateService, private masterService: MasterService,
@@ -68,8 +69,8 @@ export class DashboardComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit() {
-    // this.showSvgMap(this.commonMethods.mapRegions());
-    // this.clickOnSvgMap('select');
+    this.showSvgMap(this.commonMethods.mapRegions());
+    this.clickOnSvgMap('select');
   }
   getTalukas() {
     this.talukaData = [];
@@ -78,8 +79,8 @@ export class DashboardComponent implements OnInit, AfterViewInit {
       const obj = this.talukaData.find((x: any) => x.taluka == "Osmanabad")
       this.f['talukaId'].patchValue(obj.id);
       this.getCenters() ;
-      this.showSvgMap(this.commonMethods.mapRegions());
-    this.clickOnSvgMap('select');
+      // this.showSvgMap(this.commonMethods.mapRegions());
+      // this.clickOnSvgMap('select');
     })
   }
   getCenters() {
@@ -435,31 +436,35 @@ export class DashboardComponent implements OnInit, AfterViewInit {
           x.standardDetails.map((y:any)=>{
             y.status=true;
           })
+          this.standardArray=x.standardDetails.filter((y:any)=> y.status==true);
         }
       })
+      
     }
-    this.totalStudentSurveyData.forEach((x:any)=>{
-      if(x.status==true){
-        const filterData=x.standardDetails.filter((y:any)=> y.status==true);
-        if(filterData.length){
-          let studentTotal=0;
-          let assessmentTotal=0;
-          this.selectedSurveyData=[];
-          filterData.forEach((y:any)=>{
-            studentTotal += y.studentCount,
-            assessmentTotal += y.assessmentCount
-          })
-          this.selectedSurveyData=assessmentTotal+'/'+studentTotal;
-        }else{
-          this.selectedSurveyData=x.assessmentCount+'/'+x.studentCount;
+    setTimeout(()=>{
+      this.totalStudentSurveyData.forEach((x:any)=>{
+        if(x.status==true){
+          this.standardArray=x.standardDetails.filter((y:any)=> y.status==true);
+          if(this.standardArray.length){
+            let studentTotal=0;
+            let assessmentTotal=0;
+            this.selectedSurveyData=[];
+            this.standardArray.forEach((y:any)=>{
+              studentTotal += y.studentCount,
+              assessmentTotal += y.assessmentCount
+            })
+            this.selectedSurveyData=assessmentTotal+'/'+studentTotal;
+          }else{
+            this.selectedSurveyData=x.assessmentCount+'/'+x.studentCount;
+            this.standardArray=x.standardDetails;
+          }
         }
-      }
-    })
+      })
+    },50)
     this.getSubject(obj.groupId);
+    setTimeout(() => {
     this.getBarChart(obj);
-    // setTimeout(() => {
-    //   this.getbarChartByTaluka();
-    // }, 200);
+    }, 50);
 
   }
   getPieChartData() {
@@ -492,7 +497,8 @@ export class DashboardComponent implements OnInit, AfterViewInit {
     this.showBarChartF = false;
     this.selectedObj = obj;
     this.barChartData = [];
-    this.apiService.setHttp('GET', 'zp-osmanabad/Dashboard/' + (obj.groupId == 1 ? 'GetDataFor1st2ndStd' : 'GetDataFor3rdAboveStd') + '?TalukaId=' + (formData?.talukaId || 0) + '&CenterId=' + (formData?.centerId || 0) + '&SchoolId=' + (formData?.schoolId || 0) + '&groupId=' + obj?.groupId, false, false, false, 'baseUrl');
+    const standardData=this.standardArray.map((x:any)=> x.standardId );
+    this.apiService.setHttp('GET', 'zp-osmanabad/Dashboard/' + (obj.groupId == 1 ? 'GetDataFor1st2ndStdForBarChart' : 'GetDataFor3rdAboveStdForBarChart') + '?TalukaId=' + (formData?.talukaId || 0) + '&CenterId=' + (formData?.centerId || 0) + '&SchoolId=' + (formData?.schoolId || 0) + '&groupId=' + obj?.groupId+'&StandardIds='+standardData.toString(), false, false, false, 'baseUrl');
     this.apiService.getHttp().subscribe({
       next: (res: any) => {
         if (res.statusCode == "200") {
