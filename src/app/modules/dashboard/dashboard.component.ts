@@ -42,6 +42,8 @@ export class DashboardComponent implements OnInit, AfterViewInit {
   SharingObject: any;
   globalTalId: any;
   selectedSurveyData:any;
+  standardArray=new Array();
+  selectedLang: any;
   get f() { return this.filterForm.controls }
   get fBgraph() { return this.filterFormForBarGraph.controls }
   constructor(public translate: TranslateService, private masterService: MasterService,
@@ -49,12 +51,18 @@ export class DashboardComponent implements OnInit, AfterViewInit {
     private error: ErrorsService, private commonMethods: CommonMethodsService, private router: Router) {
     this.getBarChartOption();
     this.getPieChart();
+
+    this.webStorage.langNameOnChange.subscribe((lang) => {
+      this.selectedLang = lang;
+      this.showSvgMap(this.commonMethods.mapRegions());
+      this.clickOnSvgMap('select');
+    });
   }
 
   ngOnInit() {
     this.filterForm = this.fb.group({
-      talukaId: [4],
-      centerId: [],
+      talukaId: [0],
+      centerId: [0],
       schoolId: []
     })
     this.filterFormForBarGraph = this.fb.group({
@@ -68,18 +76,14 @@ export class DashboardComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit() {
-    // this.showSvgMap(this.commonMethods.mapRegions());
-    // this.clickOnSvgMap('select');
+    this.showSvgMap(this.commonMethods.mapRegions());
+    this.clickOnSvgMap('select');
   }
   getTalukas() {
     this.talukaData = [];
     this.masterService.getAllTaluka().subscribe((res: any) => {
       this.talukaData.push({ "id": 0, "taluka": "All", "m_Taluka": "सर्व" }, ...res.responseData);
-      const obj = this.talukaData.find((x: any) => x.taluka == "Osmanabad")
-      this.f['talukaId'].patchValue(obj.id);
-      this.getCenters() ;
-      this.showSvgMap(this.commonMethods.mapRegions());
-    this.clickOnSvgMap('select');
+      // this.getCenters() ;
     })
   }
   getCenters() {
@@ -110,9 +114,9 @@ export class DashboardComponent implements OnInit, AfterViewInit {
       },
       fill: {
         type: "solid",
-        colors:['#CB4B4B', '#E76A63', '#E98754', '#EFB45B', '#65C889']
+        colors: ['#E98754', '#EFB45B', '#65C889','#CB4B4B', '#E76A63' ],
       },
-      colors: ['#CB4B4B', '#E76A63', '#E98754', '#EFB45B', '#65C889'],
+      colors: ['#E98754', '#EFB45B', '#65C889','#CB4B4B', '#E76A63'],
       labels: [],
       responsive: [
         {
@@ -137,7 +141,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
           height: 12,
           strokeWidth: 0,
           strokeColor: '#fff',
-          fillColors: ['#CB4B4B', '#E76A63', '#E98754', '#EFB45B', '#65C889'],
+          fillColors: ['#E98754', '#EFB45B', '#65C889','#CB4B4B', '#E76A63'],
         }
       }
     };
@@ -149,9 +153,9 @@ export class DashboardComponent implements OnInit, AfterViewInit {
 
       fill: {
         type: "solid",
-        colors:['#CB4B4B', '#E76A63', '#E98754', '#EFB45B', '#65C889']
+        colors:['#E98754', '#EFB45B', '#65C889','#CB4B4B', '#E76A63'],
       },
-      colors: ['#CB4B4B', '#E76A63', '#E98754', '#EFB45B', '#65C889'],
+      colors:['#E98754', '#EFB45B', '#65C889','#CB4B4B', '#E76A63'],
       labels: [],
       responsive: [
         {
@@ -176,7 +180,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
           height: 12,
           strokeWidth: 0,
           strokeColor: '#fff',
-          fillColors: ['#CB4B4B', '#E76A63', '#E98754', '#EFB45B', '#65C889'],
+          fillColors: ['#E98754', '#EFB45B', '#65C889','#CB4B4B', '#E76A63'],
         }
       }
     };
@@ -185,10 +189,10 @@ export class DashboardComponent implements OnInit, AfterViewInit {
       chart: {
         type: "donut"
       },
-      colors: ['#CB4B4B', '#E76A63', '#E98754', '#EFB45B', '#65C889'],
+      colors: ['#E98754', '#EFB45B', '#65C889','#CB4B4B', '#E76A63'],
       fill: {
         type: "solid",
-        colors:['#CB4B4B', '#E76A63', '#E98754', '#EFB45B', '#65C889']
+        colors:['#E98754', '#EFB45B', '#65C889','#CB4B4B', '#E76A63'],
       },
       labels: [],
       responsive: [
@@ -214,7 +218,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
           height: 12,
           strokeWidth: 0,
           strokeColor: '#fff',
-          fillColors: ['#CB4B4B', '#E76A63', '#E98754', '#EFB45B', '#65C889'],
+          fillColors: ['#E98754', '#EFB45B', '#65C889','#CB4B4B', '#E76A63'],
         }
       }
     };
@@ -377,8 +381,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
   }
   dashboardAPis() {
     this.getdashboardCount();
-    // this.getBarChart(this.selectedObj);
-    // this.getbarChartByTaluka();
+    this.getbarChartByTaluka();
 
   }
   selectedBar(selectedbar: any) {
@@ -435,31 +438,35 @@ export class DashboardComponent implements OnInit, AfterViewInit {
           x.standardDetails.map((y:any)=>{
             y.status=true;
           })
+          this.standardArray=x.standardDetails.filter((y:any)=> y.status==true);
         }
       })
+      
     }
-    this.totalStudentSurveyData.forEach((x:any)=>{
-      if(x.status==true){
-        const filterData=x.standardDetails.filter((y:any)=> y.status==true);
-        if(filterData.length){
-          let studentTotal=0;
-          let assessmentTotal=0;
-          this.selectedSurveyData=[];
-          filterData.forEach((y:any)=>{
-            studentTotal += y.studentCount,
-            assessmentTotal += y.assessmentCount
-          })
-          this.selectedSurveyData=assessmentTotal+'/'+studentTotal;
-        }else{
-          this.selectedSurveyData=x.assessmentCount+'/'+x.studentCount;
+    setTimeout(()=>{
+      this.totalStudentSurveyData.forEach((x:any)=>{
+        if(x.status==true){
+          this.standardArray=x.standardDetails.filter((y:any)=> y.status==true);
+          if(this.standardArray.length){
+            let studentTotal=0;
+            let assessmentTotal=0;
+            this.selectedSurveyData=[];
+            this.standardArray.forEach((y:any)=>{
+              studentTotal += y.studentCount,
+              assessmentTotal += y.assessmentCount
+            })
+            this.selectedSurveyData=assessmentTotal+'/'+studentTotal;
+          }else{
+            this.selectedSurveyData=x.assessmentCount+'/'+x.studentCount;
+            this.standardArray=x.standardDetails;
+          }
         }
-      }
-    })
+      })
+    },50)
     this.getSubject(obj.groupId);
+    setTimeout(() => {
     this.getBarChart(obj);
-    // setTimeout(() => {
-    //   this.getbarChartByTaluka();
-    // }, 200);
+    }, 50);
 
   }
   getPieChartData() {
@@ -478,7 +485,9 @@ export class DashboardComponent implements OnInit, AfterViewInit {
     serriesArray2[1] = this.dashboardCountData[0].girlStudent | 0;
     serriesArray2[2] = this.dashboardCountData[0].otherStudent | 0;
 
-    this.piechartOptions.colors = [];
+    this.piechartOptions.colors = ['#E98754', '#EFB45B', '#65C889','#CB4B4B', '#E76A63'];
+    this.piechartOptions1.colors = ['#E98754', '#EFB45B', '#65C889','#CB4B4B', '#E76A63'];
+    this.piechartOptions2.colors = ['#E98754', '#EFB45B', '#65C889','#CB4B4B', '#E76A63'];
     this.piechartOptions.series = serriesArray;
     this.piechartOptions1.series = serriesArray1;
     this.piechartOptions2.series = serriesArray2;
@@ -492,7 +501,8 @@ export class DashboardComponent implements OnInit, AfterViewInit {
     this.showBarChartF = false;
     this.selectedObj = obj;
     this.barChartData = [];
-    this.apiService.setHttp('GET', 'zp-osmanabad/Dashboard/' + (obj.groupId == 1 ? 'GetDataFor1st2ndStd' : 'GetDataFor3rdAboveStd') + '?TalukaId=' + (formData?.talukaId || 0) + '&CenterId=' + (formData?.centerId || 0) + '&SchoolId=' + (formData?.schoolId || 0) + '&groupId=' + obj?.groupId, false, false, false, 'baseUrl');
+    const standardData=this.standardArray.map((x:any)=> x.standardId );
+    this.apiService.setHttp('GET', 'zp-osmanabad/Dashboard/' + (obj.groupId == 1 ? 'GetDataFor1st2ndStdForBarChart' : 'GetDataFor3rdAboveStdForBarChart') + '?TalukaId=' + (formData?.talukaId || 0) + '&CenterId=' + (formData?.centerId || 0) + '&SchoolId=' + (formData?.schoolId || 0) + '&groupId=' + obj?.groupId+'&StandardIds='+standardData.toString(), false, false, false, 'baseUrl');
     this.apiService.getHttp().subscribe({
       next: (res: any) => {
         if (res.statusCode == "200") {
@@ -591,11 +601,11 @@ export class DashboardComponent implements OnInit, AfterViewInit {
       width: 550,
       height: 430,
       colors: {
-        baseDefault: "#bfddff",
+        baseDefault: "#005f57",
         background: "#fff",
-        selected: "#272848",
-        hover: "#ebebeb",
-        directory: "#bfddff",
+        selected: "#005f57",
+        hover: "#005f57",
+        directory: "#005f57",
         status: {}
       },
       regions: data,
@@ -660,7 +670,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
         min: 0,
         max: false
       },
-      source: "assets/distSVG/Osmanabad.svg",
+      source: this.selectedLang == 'English' ? "assets/distSVG/Osmanabad.svg" : "assets/distSVG/Osmanabad_Marathi.svg",
       title: "Osmanabad_Dist",
       responsive: true
     });

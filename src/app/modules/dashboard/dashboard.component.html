@@ -1,23 +1,23 @@
-<mat-drawer-container class="example-container" hasBackdrop="true">
+<mat-drawer-container class="example-container" hasBackdrop="false">
     <mat-drawer #drawer mode="over" position="end">
         <mat-card class="plain-card">
             <mat-card-header class="card-header">
                 <div class="d-flex justify-content-between align-items-center w-100">
                     <h6 class="text-main mb-0 fw-bold">Filters</h6>
-                    <button mat-icon-button class="btn-modal-close" mat-dialog-close (click)="this.drawer.close()">
+                    <!-- <button mat-icon-button class="btn-modal-close" mat-dialog-close (click)="this.drawer.close()">
                         <mat-icon>
                             close
                         </mat-icon>
-                    </button>
+                    </button> -->
                 </div>
             </mat-card-header>
             <mat-card-content class="card-body">
-                <form [formGroup]="filterForm">
+                <form [formGroup]="filterForm" (ngSubmit)="dashboardAPis();this.drawer.close()">
                     <div class="mb-1">
                         <mat-form-field appearance="outline" class="w-100">
                             <mat-label>तालुका निवडा</mat-label>
                             <mat-select formControlName="talukaId"
-                                (selectionChange)="f['talukaId'].value!=0? getCenters():''; dashboardAPis(); clickOnSvgMap('select')">
+                                (selectionChange)="f['talukaId'].value!=0? getCenters():'';  clickOnSvgMap('select')">
                                 <mat-option *ngFor="let taluka of talukaData" [value]="taluka.id">
                                     {{webStorage.languageFlag == 'EN'?taluka.taluka:taluka.m_Taluka}}
                                 </mat-option>
@@ -27,7 +27,7 @@
                     <div class="mb-1">
                         <mat-form-field appearance="outline" class="w-100">
                             <mat-label>केंद्र निवडा</mat-label>
-                            <mat-select formControlName="centerId" (selectionChange)="getschools() ;dashboardAPis()">
+                            <mat-select formControlName="centerId" (selectionChange)="getschools()">
                                 <mat-option *ngFor="let center of centerData" [value]="center.id">
                                     {{webStorage.languageFlag == 'EN'?center.center:center.m_Center}}
                                 </mat-option>
@@ -37,8 +37,7 @@
                     <div class="mb-3">
                         <mat-form-field appearance="outline" class="w-100">
                             <mat-label>शाळा निवडा</mat-label>
-                            <mat-select formControlName="schoolId"
-                                (selectionChange)="getbarChartByTaluka();getdashboardCount();">
+                            <mat-select formControlName="schoolId">
                                 <mat-option *ngFor="let school of schoolData" [value]="school.id">
                                     {{webStorage.languageFlag == 'EN'?school.schoolName :school.m_SchoolName }}
                                 </mat-option>
@@ -184,7 +183,7 @@
                                                             <div class="col-sm"
                                                                 *ngFor="let std of header.standardDetails">
                                                                 <div
-                                                                    class="d-flex align-items-center justify-content-start">
+                                                                    class="d-flex align-items-center justify-content-center">
                                                                     <div class="form-check">
                                                                         <input class="form-check-input" type="checkbox"
                                                                             [(ngModel)]="std.status"  (click)="checkData(header, 'checkbox')">
@@ -214,11 +213,7 @@
                                                 <div class="row" *ngIf="item.status==true">
                                                     <div class="col-sm"
                                                         *ngFor="let std of item.standardDetails">
-                                                        <div class="d-flex align-items-center justify-content-start">
-                                                            <div class="form-check">
-                                                               {{(std?.assessmentCount+'/'+std?.studentCount)}} 
-                                                            </div>
-                                                        </div>
+                                                        {{(std?.assessmentCount+'/'+std?.studentCount)}} 
                                                     </div>
                                                 </div>
                                             </td>
@@ -253,7 +248,7 @@
                         <div id="chart">
                             <apx-chart [series]="piechartOptions.series" [chart]="piechartOptions.chart"
                                 [theme]="piechartOptions.theme" [fill]="piechartOptions.fill"
-                                [labels]="piechartOptions.labels" [responsive]="piechartOptions.responsive"></apx-chart>
+                                [labels]="piechartOptions.labels" [responsive]="piechartOptions.responsive" [colors]="piechartOptions.colors"></apx-chart>
                         </div>
                     </mat-card-content>
                 </mat-card>
@@ -268,7 +263,7 @@
                             <apx-chart [series]="piechartOptions1.series" [chart]="piechartOptions1.chart"
                                 [theme]="piechartOptions1.theme" [fill]="piechartOptions1.fill"
                                 [labels]="piechartOptions1.labels"
-                                [responsive]="piechartOptions1.responsive"></apx-chart>
+                                [responsive]="piechartOptions1.responsive" [colors]="piechartOptions1.colors"></apx-chart>
                         </div>
                     </mat-card-content>
                 </mat-card>
@@ -283,7 +278,7 @@
                             <apx-chart [series]="piechartOptions2.series" [chart]="piechartOptions2.chart"
                                 [theme]="piechartOptions2.theme" [fill]="piechartOptions2.fill"
                                 [labels]="piechartOptions2.labels"
-                                [responsive]="piechartOptions2.responsive"></apx-chart>
+                                [responsive]="piechartOptions2.responsive" [colors]="piechartOptions2.colors"></apx-chart>
                         </div>
                     </mat-card-content>
                 </mat-card>

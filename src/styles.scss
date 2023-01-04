@@ -316,9 +316,14 @@ body {
 .inner-table tbody td{
   vertical-align: top;
 }
-.inner-table thead tr th:first-child {
+.inner-table tbody td{
+  text-align: center;
+}
+.inner-table thead tr th:first-child,
+.inner-table tbody tr td:first-child {
   width: 10rem !important;
   vertical-align: middle;
+  text-align: left !important;
 }
 .inner-table .table-img{
   width: 40px;
@@ -343,10 +348,6 @@ body {
   margin-top: 0px !important;
 }
 
-.talActive{
-  pointer-events: auto;
-  fill: rgb(39, 40, 72)!important;
-}
 .apexcharts-legend.apx-legend-position-right{
   width: 100px;
 }
@@ -375,4 +376,9 @@ body {
 .swal2-icon.swal2-warning {
   border-color: #bd6111!important;
   color: #bd6111!important;
+}
+.mat-drawer.mat-drawer-end{
+  max-height: 44vh;
+    right: 0px;
+    top: 37px;
 }
