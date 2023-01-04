@@ -46,6 +46,7 @@ export class AddUpdateTeacherRegistrationComponent {
   img: boolean = false;
   checked:boolean=false
   maxDate = new Date();
+  assignClass: boolean = true;
   casteVerification = [
     { id: 1, name: 'yes', isCastVarificationDone: true,_name :'होय' },
     { id: 2, name: 'no', isCastVarificationDone: false ,_name :'नाही'}
@@ -93,6 +94,7 @@ export class AddUpdateTeacherRegistrationComponent {
   ngOnInit() {
     this.formData();
     (!this.data) ? this.getGender() : this.onEdit(this.data);
+
   }
   //#region --------------------------get form Controls ---------------------------------
   get f() {
@@ -532,31 +534,39 @@ export class AddUpdateTeacherRegistrationComponent {
       formValue.uploadImage = this.uploadImghtml;
       // formValue.uploadImage ? formValue.uploadImage = this.uploadImghtml : ''; 
     }
-    if (!this.teacherRegForm.valid) {     
+    if (this.teacherRegForm.invalid) {  
+      this.assignClass =false;   
         this.commonMethod.showPopup(this.webStorageS.languageFlag == 'EN' ? 'Please Enter Mandatory Fields' : 'कृपया अनिवार्य फील्ड प्रविष्ट करा', 1);
-        return
-      
+        return      
     }
     else {
-      formValue.assignTeacher = this.assignClassArray;
-      let postObj = this.teacherRegForm.value;   
-      console.log("postValue",postObj);
-      
-      this.ngxSpinner.show();
-      let url = this.editFlag ? 'Update' : 'Add'
-      this.service.setHttp(this.editFlag ? 'put' : 'post','zp_osmanabad/Teacher/'+ url, false, postObj, false, 'baseUrl');
-      this.service.getHttp().subscribe({
-        next: ((res: any) => {
-          this.ngxSpinner.hide();
-          res.statusCode == 200 ? (this.commonMethod.showPopup(res.statusMessage, 0)) : this.commonMethod.checkEmptyData(res.statusMessage) == false ? this.errorHandler.handelError(res.statusCode) : this.commonMethod.showPopup(res.statusMessage, 1);       
-            this.dialogRef.close('yes');
+      if(this.assignClassArray.length){
+        this.assignClass =true;
+        formValue.assignTeacher = this.assignClassArray;
+        let postObj = this.teacherRegForm.value;
+        this.ngxSpinner.show();
+        let url = this.editFlag ? 'Update' : 'Add'
+        this.service.setHttp(this.editFlag ? 'put' : 'post','zp_osmanabad/Teacher/'+ url, false, postObj, false, 'baseUrl');
+        this.service.getHttp().subscribe({
+          next: ((res: any) => {
+            this.ngxSpinner.hide();
+            res.statusCode == 200 ? (this.commonMethod.showPopup(res.statusMessage, 0)) : this.commonMethod.checkEmptyData(res.statusMessage) == false ? this.errorHandler.handelError(res.statusCode) : this.commonMethod.showPopup(res.statusMessage, 1);       
+              this.dialogRef.close('yes');           
+          }),
+          error: (error: any) => {
+            this.ngxSpinner.hide();
+            this.commonMethod.checkEmptyData(error.statusMessage) == false ? this.errorHandler.handelError(error.statusCode) : this.commonMethod.showPopup(error.statusMessage, 1);
+          }
+        })
+      }else{  
+        this.commonMethod.showPopup(this.webStorageS.languageFlag == 'EN' ? 'Please Enter Mandatory Fields' : 'कृपया अनिवार्य फील्ड प्रविष्ट करा', 1);       
+        this.assignClass =false;
+      }
+     
          
-        }),
-        error: (error: any) => {
-          this.ngxSpinner.hide();
-          this.commonMethod.checkEmptyData(error.statusMessage) == false ? this.errorHandler.handelError(error.statusCode) : this.commonMethod.showPopup(error.statusMessage, 1);
-        }
-      })
+     
+      
+  
     }
   }
 //#endregion -------------------------------------end submit-----------------------------------------------
@@ -564,6 +574,7 @@ export class AddUpdateTeacherRegistrationComponent {
   onEdit(obj: any) {
     console.log("editObj",obj);
     this.editFlag = true;
+    this.assignClass =true;
     this.editObj = obj; 
      
     // this.data.uploadImage ? this.teacherRegForm.value.uploadImage = obj.uploadImage : '';

@@ -510,7 +510,7 @@
                     <div class="col-sm-4">
                         <mat-form-field appearance="outline" class="w-100">
                             <mat-label>{{'Labels.dateOfSeniority'| translate}}</mat-label>
-                            <input matInput [matDatepicker]=" DateSeniority" readonly [min]="maxDate"  formControlName="dateOfSeniority">
+                            <input matInput [matDatepicker]=" DateSeniority" readonly [min]="maxDate" formControlName="dateOfSeniority">
                             <mat-datepicker-toggle matIconSuffix [for]="DateSeniority"></mat-datepicker-toggle>
                             <mat-datepicker  #DateSeniority></mat-datepicker>
                             <!-- <mat-error *ngIf="td['dateOfSeniority'].hasError('required')">Date Of Seniority Is Required</mat-error> -->
@@ -543,6 +543,7 @@
                         (change)="addStand($event,assign.standardId)" />
                     <label for="{{assign.standardId}}" class="pb-0">{{assign.standardId}}</label>
                 </div>
+                <span *ngIf="!assignClass">Assign Class Required</span>
             </div>
             <!-- </div> -->
         </mat-card-content>
