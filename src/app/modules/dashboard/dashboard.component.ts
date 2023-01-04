@@ -587,7 +587,6 @@ export class DashboardComponent implements OnInit, AfterViewInit {
   }
 
   getTabledataByTaluka() {
-    this.tableDataTopPerformance = [];
     const filterformData = this.filterForm.value;
     const formDatafilterbyTaluka = this.filterFormForBarGraph.value;
     const TalukaId = filterformData?.talukaId ? filterformData?.talukaId : formDatafilterbyTaluka?.filtertalukaId;
@@ -595,6 +594,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
     this.apiService.getHttp().subscribe({
       next: (res: any) => {
         if (res.statusCode == "200") {
+          this.tableDataTopPerformance = [];
           this.tableDataTopPerformance.push(res.responseData.responseData1);
           this.tableDataTopPerformance.push(res.responseData.responseData2);
           this.displayedheaders = ['#', 'Sr. No.', 'Name', 'Total Student', 'Percetage'];
