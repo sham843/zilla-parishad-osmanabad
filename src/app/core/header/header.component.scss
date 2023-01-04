@@ -3,18 +3,6 @@
     border-radius: 50%;
     cursor: pointer;
 }
-.search .input-group .input-group-text,
-.search .input-group .form-control
-{
-    border: none;
-    font-size: 0.85rem;
-    background-color: transparent;
-    box-shadow: none;
-}
-.search .input-group{
-    border: 1px solid #eee;
-    border-radius: 30px;
-}
 .navbar button.btn{
     width: 34px;
     height: 34px;
@@ -34,9 +22,11 @@
     margin-right: 10px;
     filter: invert(41%) sepia(55%) saturate(2104%) hue- (206deg) brightness(104%) contrast(106%);
 }
-// .navbar button:hover img{
-//     filter: invert(100%) sepia(0%) saturate(0%) hue-rotate(290deg) brightness(109%) contrast(102%);
-// }
+.navbar .name{
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: var(--main-color);
+}
 .navbar button.btn,
 .navbar button.btn:focus,
 .navbar button.btn:active
