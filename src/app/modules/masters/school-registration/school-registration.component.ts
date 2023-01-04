@@ -33,7 +33,7 @@ export class SchoolRegistrationComponent {
   cardViewFlag: boolean = false;
   imgPath: any;
   totalCount: number = 0;
-  cardCurrentPage: number = 0;
+  // cardCurrentPage: number = 0;
   langTypeName: any;
   displayedColumns = new Array();
   tableDatasize!: Number;
@@ -215,7 +215,6 @@ export class SchoolRegistrationComponent {
         break;
     }
   }
-
   //#region ------------------------------------------- Open Dialog Box Function start here ----------------------------------------// 
   addUpdateSchool(obj?: any) {
     const dialogRef = this.dialog.open(AddUpdateSchoolRegistrationComponent, {
@@ -260,7 +259,6 @@ export class SchoolRegistrationComponent {
   }
 
   openDetailsDialog(obj:any){
-    console.log(obj.studentCount);
     var data = {
       headerImage: obj.uploadImage,
       header: this.webStorageS.languageFlag == 'EN' ? obj.schoolName : obj.m_SchoolName,
@@ -272,7 +270,6 @@ export class SchoolRegistrationComponent {
     }
     const viewDialogRef = this.dialog.open(GlobalDetailComponent, {
       width: '900px',
-      
       data: data,
       disableClose: true,
       autoFocus: false
@@ -296,15 +293,6 @@ export class SchoolRegistrationComponent {
       this.pageNumber = 1;
     }
   }
-
-  //#region ------------------------------------------------- Filter Form start here ------------------------------------------// 
-  // filterData() {
-  //   if (this.districtId.value || this.talukaId.value || this.villageId.value) {
-  //     this.getTableData();
-
-  //   }
-  // }
-  //#endregion ---------------------------------------------- Filter Form end here ----------------------------------------// 
 
   //#region ---------------------------------------------- Delete Record Logic start here ----------------------------------------//  
   onClickDelete() {
@@ -330,16 +318,10 @@ export class SchoolRegistrationComponent {
   }
   //#endregion ---------------------------------------------- Delete Record Logic end here ----------------------------------------//  
 
-  // onPageChanged(event: any) {
-  //   this.cardCurrentPage = event.pageIndex;
-  //   this.selectGrid('Card');
-  // }
-
   selectGrid(label: string) {
     if (label == 'Table') {
       this.cardViewFlag = false;
       this.pageNumber = 1;
-      // this.cardCurrentPage = 0;
       this.getTableData();
     } else if (label == 'Card')
       this.cardViewFlag = true;
@@ -353,5 +335,4 @@ export class SchoolRegistrationComponent {
     }
   }
 
-  
  }
