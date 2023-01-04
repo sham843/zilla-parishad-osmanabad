@@ -184,6 +184,7 @@
         "educationalQualification" : "Educational Qualification",
         "12thBranch" : "12th Branch",
         "degreeOptionalSubjects" : "Degree Optional Subject",
+        "Subject":"Subject :",
         "degreeUniversity" : "Degree University",
         "professionalQualification" : "Professional Qualification",
         "bEdPercentages" : "B.Ed. Percentages",
