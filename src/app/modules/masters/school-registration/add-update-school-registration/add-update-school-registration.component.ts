@@ -249,6 +249,8 @@ export class AddUpdateSchoolRegistrationComponent {
         return
       }
     });
+    console.log("Img Array : ", this.imgArray);
+
   }
 
   viewImg() {
@@ -260,6 +262,16 @@ export class AddUpdateSchoolRegistrationComponent {
       window.open(this.uploadImg, 'blank');
     }
   }
+
+  // viewMultipleImg() {
+  //   if (this.editFlag == true) {
+  //     let viewImg = this.data.uploadImage;
+  //     this.uploadImg ? window.open(this.uploadImg, 'blank') : window.open(viewImg, 'blank')
+  //   }
+  //   else {
+  //     window.open(this.uploadImg, 'blank');
+  //   }
+  // }
 
   //#endregionegion ------------------------------------------------- Upload Image end here --------------------------------------------// 
 
@@ -277,9 +289,6 @@ export class AddUpdateSchoolRegistrationComponent {
       }
     }
     formValue.schoolDocument = this.imgArray;
-
-    // formValue.schoolDocument.docPath ? formValue.schoolDocument.docPath = this.uploadMultipleImg : '';
-    // formValue.schoolDocument.docPath = this.schoolRegForm.value.schoolDocument.docPath;
 
     let url;
     this.editFlag ? url = 'ZP-Osmanabad/School/Update' : url = 'ZP-Osmanabad/School/Add';
@@ -316,8 +325,22 @@ export class AddUpdateSchoolRegistrationComponent {
     this.data.uploadImage ? this.schoolRegForm.value.uploadImage = this.data.uploadImage : '';
     this.uploadImg = this.data?.uploadImage
 
-    // this.data.schoolDocument.forEach((res : any)=>{
-    //   console.log("res : ", res);
+    this.data.schoolDocument.map((res : any)=>{
+      console.log("res : ", res);
+
+      let schoolDocumentObj = {
+        "id": res.id,
+          "schoolId": res.schoolId,
+          "documentId": res.documentId,
+          "docPath": res.docPath,
+          "createdBy": 0,
+          "createdDate": new Date(),
+          "modifiedBy": 0,
+          "modifiedDate": new Date(),
+          "isDeleted": true
+      };
+
+      this.imgArray.push(schoolDocumentObj);
 
     //   this.schoolRegForm.patchValue({
     //     schoolDocument : {
@@ -332,27 +355,22 @@ export class AddUpdateSchoolRegistrationComponent {
     //       "isDeleted": true
     //     }
     //   })
-      
-    // })
+    })
 
   }
   //#endregiongion ---------------------------------------------- Edit Record end here --------------------------------------------//
 
   //#region ------------------------------------------------- Clear Img field start here --------------------------------------------//
   clearImg() {
-    console.log("Multiple Img : ", this.uploadMultipleImg);
-    
     if(this.uploadImg){
       this.uploadImg = '';
       this.schoolRegForm.value.uploadImage = '';
       this.f['uploadImage'].setValue('');
     }
-    else if(this.uploadMultipleImg){
-      this.uploadMultipleImg = '';
-      // this.schoolRegForm.value.uploadImage = '';
-      // this.f['uploadImage'].setValue('');
-    }
-    
+  }
+
+  clearMultipleImg(index: any){
+    this.imgArray.splice(index, 1);
   }
   //#endregionegion --------------------------------------------- Clear Img field end here --------------------------------------------//
 

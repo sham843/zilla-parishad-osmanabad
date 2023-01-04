@@ -41,6 +41,9 @@ export class DashboardComponent implements OnInit, AfterViewInit {
   optionalSubjectindex!: number;
   SharingObject: any;
   globalTalId: any;
+  selectedSurveyData:any;
+  standardArray=new Array();
+  selectedLang: any;
   get f() { return this.filterForm.controls }
   get fBgraph() { return this.filterFormForBarGraph.controls }
   constructor(public translate: TranslateService, private masterService: MasterService,
@@ -48,6 +51,12 @@ export class DashboardComponent implements OnInit, AfterViewInit {
     private error: ErrorsService, private commonMethods: CommonMethodsService, private router: Router) {
     this.getBarChartOption();
     this.getPieChart();
+
+    this.webStorage.langNameOnChange.subscribe((lang) => {
+      this.selectedLang = lang;
+      this.showSvgMap(this.commonMethods.mapRegions());
+      this.clickOnSvgMap('select');
+    });
   }
 
   ngOnInit() {
@@ -67,8 +76,8 @@ export class DashboardComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit() {
-    // this.showSvgMap(this.commonMethods.mapRegions());
-    // this.clickOnSvgMap('select');
+    this.showSvgMap(this.commonMethods.mapRegions());
+    this.clickOnSvgMap('select');
   }
   getTalukas() {
     this.talukaData = [];
@@ -77,8 +86,8 @@ export class DashboardComponent implements OnInit, AfterViewInit {
       const obj = this.talukaData.find((x: any) => x.taluka == "Osmanabad")
       this.f['talukaId'].patchValue(obj.id);
       this.getCenters() ;
-      this.showSvgMap(this.commonMethods.mapRegions());
-    this.clickOnSvgMap('select');
+      // this.showSvgMap(this.commonMethods.mapRegions());
+      // this.clickOnSvgMap('select');
     })
   }
   getCenters() {
@@ -109,9 +118,9 @@ export class DashboardComponent implements OnInit, AfterViewInit {
       },
       fill: {
         type: "solid",
-        colors:['#CB4B4B', '#E76A63', '#E98754', '#EFB45B', '#65C889']
+        colors: ['#E98754', '#EFB45B', '#65C889','#CB4B4B', '#E76A63' ],
       },
-      colors: ['#CB4B4B', '#E76A63', '#E98754', '#EFB45B', '#65C889'],
+      colors: ['#E98754', '#EFB45B', '#65C889','#CB4B4B', '#E76A63'],
       labels: [],
       responsive: [
         {
@@ -136,7 +145,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
           height: 12,
           strokeWidth: 0,
           strokeColor: '#fff',
-          fillColors: ['#CB4B4B', '#E76A63', '#E98754', '#EFB45B', '#65C889'],
+          fillColors: ['#E98754', '#EFB45B', '#65C889','#CB4B4B', '#E76A63'],
         }
       }
     };
@@ -148,9 +157,9 @@ export class DashboardComponent implements OnInit, AfterViewInit {
 
       fill: {
         type: "solid",
-        colors:['#CB4B4B', '#E76A63', '#E98754', '#EFB45B', '#65C889']
+        colors:['#E98754', '#EFB45B', '#65C889','#CB4B4B', '#E76A63'],
       },
-      colors: ['#CB4B4B', '#E76A63', '#E98754', '#EFB45B', '#65C889'],
+      colors:['#E98754', '#EFB45B', '#65C889','#CB4B4B', '#E76A63'],
       labels: [],
       responsive: [
         {
@@ -175,7 +184,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
           height: 12,
           strokeWidth: 0,
           strokeColor: '#fff',
-          fillColors: ['#CB4B4B', '#E76A63', '#E98754', '#EFB45B', '#65C889'],
+          fillColors: ['#E98754', '#EFB45B', '#65C889','#CB4B4B', '#E76A63'],
         }
       }
     };
@@ -184,10 +193,10 @@ export class DashboardComponent implements OnInit, AfterViewInit {
       chart: {
         type: "donut"
       },
-      colors: ['#CB4B4B', '#E76A63', '#E98754', '#EFB45B', '#65C889'],
+      colors: ['#E98754', '#EFB45B', '#65C889','#CB4B4B', '#E76A63'],
       fill: {
         type: "solid",
-        colors:['#CB4B4B', '#E76A63', '#E98754', '#EFB45B', '#65C889']
+        colors:['#E98754', '#EFB45B', '#65C889','#CB4B4B', '#E76A63'],
       },
       labels: [],
       responsive: [
@@ -213,7 +222,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
           height: 12,
           strokeWidth: 0,
           strokeColor: '#fff',
-          fillColors: ['#CB4B4B', '#E76A63', '#E98754', '#EFB45B', '#65C889'],
+          fillColors: ['#E98754', '#EFB45B', '#65C889','#CB4B4B', '#E76A63'],
         }
       }
     };
@@ -404,7 +413,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
       next: (res: any) => {
         if (res.statusCode == "200") {
           this.dashboardCountData.push(res.responseData.responseData1[0]);
-          res.responseData.responseData2.unshift({ m_GroupClass : 'एकूण संख्या', groupClass:'Total', studentCount :this.dashboardCountData[0]?.totalStudent,groupId: 0, ischeckboxShow: false, status: false });
+          // res.responseData.responseData2.unshift({ m_GroupClass : 'एकूण संख्या', groupClass:'Total', studentCount :this.dashboardCountData[0]?.totalStudent,groupId: 0, ischeckboxShow: false, status: false });
           this.totalStudentSurveyData =res.responseData.responseData2;
           this.totalStudentSurveyData.map((x:any)=>{
             x.status = true;
@@ -413,7 +422,6 @@ export class DashboardComponent implements OnInit, AfterViewInit {
           this.totalStudentSurveyData[0].ischeckboxShow=false;
           // this.tableColumn = [{ label: 'एकूण संख्या', groupId: 0, ischeckboxShow: false, status: false }, { label: '१ली ते 2वी', groupId: 1, subSTD: [{ label: '१ली', subgroupId: 1, status: false }, { label: '2री', subgroupId: 2, status: false }], ischeckboxShow: true, status: true }, { label: '3री ते ५वी', groupId: 2, subSTD: [{ label: '3री', subgroupId: 3, status: false }, { label: '4री', subgroupId: 4, status: false }, { label: '5वी', subgroupId: 5, status: false }], ischeckboxShow: true, status: false }, { label: '६वी ते ८वी', groupId: 3, subSTD: [{ label: '६वी', subgroupId: 6, status: false }, { label: '7वी', subgroupId: 7, status: false }, { label: '८वी', subgroupId: 8, status: false }], ischeckboxShow: true, status: false },];
           this.checkData(this.totalStudentSurveyData[1], 'radio');
-          console.log(this.totalStudentSurveyData);
           this.getPieChartData();
         } else {
           this.dashboardCountData = [];
@@ -423,7 +431,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
       error: (error: any) => { this.error.handelError(error.message) }
     });
   }
-  checkData(obj: any, status:any, index?:any) {
+  checkData(obj: any, status:any,) {
     if(status=='radio'){
       this.totalStudentSurveyData.map((x: any) => {
         x.status = false;
@@ -435,18 +443,35 @@ export class DashboardComponent implements OnInit, AfterViewInit {
           x.standardDetails.map((y:any)=>{
             y.status=true;
           })
+          this.standardArray=x.standardDetails.filter((y:any)=> y.status==true);
         }
       })
-    }else{
-      console.log(index)
+      
     }
-    
-    
+    setTimeout(()=>{
+      this.totalStudentSurveyData.forEach((x:any)=>{
+        if(x.status==true){
+          this.standardArray=x.standardDetails.filter((y:any)=> y.status==true);
+          if(this.standardArray.length){
+            let studentTotal=0;
+            let assessmentTotal=0;
+            this.selectedSurveyData=[];
+            this.standardArray.forEach((y:any)=>{
+              studentTotal += y.studentCount,
+              assessmentTotal += y.assessmentCount
+            })
+            this.selectedSurveyData=assessmentTotal+'/'+studentTotal;
+          }else{
+            this.selectedSurveyData=x.assessmentCount+'/'+x.studentCount;
+            this.standardArray=x.standardDetails;
+          }
+        }
+      })
+    },50)
     this.getSubject(obj.groupId);
+    setTimeout(() => {
     this.getBarChart(obj);
-    // setTimeout(() => {
-    //   this.getbarChartByTaluka();
-    // }, 200);
+    }, 50);
 
   }
   getPieChartData() {
@@ -465,7 +490,9 @@ export class DashboardComponent implements OnInit, AfterViewInit {
     serriesArray2[1] = this.dashboardCountData[0].girlStudent | 0;
     serriesArray2[2] = this.dashboardCountData[0].otherStudent | 0;
 
-    this.piechartOptions.colors = [];
+    this.piechartOptions.colors = ['#E98754', '#EFB45B', '#65C889','#CB4B4B', '#E76A63'];
+    this.piechartOptions1.colors = ['#E98754', '#EFB45B', '#65C889','#CB4B4B', '#E76A63'];
+    this.piechartOptions2.colors = ['#E98754', '#EFB45B', '#65C889','#CB4B4B', '#E76A63'];
     this.piechartOptions.series = serriesArray;
     this.piechartOptions1.series = serriesArray1;
     this.piechartOptions2.series = serriesArray2;
@@ -479,7 +506,8 @@ export class DashboardComponent implements OnInit, AfterViewInit {
     this.showBarChartF = false;
     this.selectedObj = obj;
     this.barChartData = [];
-    this.apiService.setHttp('GET', 'zp-osmanabad/Dashboard/' + (obj.groupId == 1 ? 'GetDataFor1st2ndStd' : 'GetDataFor3rdAboveStd') + '?TalukaId=' + (formData?.talukaId || 0) + '&CenterId=' + (formData?.centerId || 0) + '&SchoolId=' + (formData?.schoolId || 0) + '&groupId=' + obj?.groupId, false, false, false, 'baseUrl');
+    const standardData=this.standardArray.map((x:any)=> x.standardId );
+    this.apiService.setHttp('GET', 'zp-osmanabad/Dashboard/' + (obj.groupId == 1 ? 'GetDataFor1st2ndStdForBarChart' : 'GetDataFor3rdAboveStdForBarChart') + '?TalukaId=' + (formData?.talukaId || 0) + '&CenterId=' + (formData?.centerId || 0) + '&SchoolId=' + (formData?.schoolId || 0) + '&groupId=' + obj?.groupId+'&StandardIds='+standardData.toString(), false, false, false, 'baseUrl');
     this.apiService.getHttp().subscribe({
       next: (res: any) => {
         if (res.statusCode == "200") {
@@ -578,11 +606,11 @@ export class DashboardComponent implements OnInit, AfterViewInit {
       width: 550,
       height: 430,
       colors: {
-        baseDefault: "#bfddff",
+        baseDefault: "#005f57",
         background: "#fff",
-        selected: "#272848",
-        hover: "#ebebeb",
-        directory: "#bfddff",
+        selected: "#005f57",
+        hover: "#005f57",
+        directory: "#005f57",
         status: {}
       },
       regions: data,
@@ -647,7 +675,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
         min: 0,
         max: false
       },
-      source: "assets/distSVG/Osmanabad.svg",
+      source: this.selectedLang == 'English' ? "assets/distSVG/Osmanabad.svg" : "assets/distSVG/Osmanabad_Marathi.svg",
       title: "Osmanabad_Dist",
       responsive: true
     });

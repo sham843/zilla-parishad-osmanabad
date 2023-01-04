@@ -12,8 +12,8 @@
             </div>
         </mat-card-header>
 
-        <mat-card-content class="card-body">
-            <div class="row gy-2">
+        <mat-card-content class="card-body card-height-full scrollbar">
+            <div class="row gy-2 gx-3">
                 <div class="col-sm-4">
                     <mat-form-field appearance="outline" class="w-100">
                         <mat-label>{{'Labels.district' | translate}}</mat-label>
@@ -46,8 +46,7 @@
                 <div class="col-sm-4">
                     <mat-form-field appearance="outline" class="w-100 ">
                         <mat-label>{{'Labels.kendra' | translate}}</mat-label>
-                        <mat-select formControlName="centerId"
-                           >
+                        <mat-select formControlName="centerId">
                             <mat-option *ngFor="let center of centerArr" [value]="center.id">
                                 {{webStorageS.getLangauge() == 'EN' ?
                                 center.center : center.m_Center}}
@@ -89,17 +88,14 @@
                 <div class="col-sm-4">
                     <div class="d-flex justify-content-between align-items-center">
                         <div class="upload-btn-wrapper">
-                            <button type="button" class="upload-btn">{{'Labels.uploadPhoto' | translate}}</button>
-                            <input type="file" name="myfile" formControlName="uploadImage"
-                                (change)="imgUpload($event)" />
+                            <button class="upload-btn" type="button">{{'Labels.UploadProfilePhoto' | translate}}</button>
+                            <input type="file" name="myfile"  formControlName="uploadImage" (change)="imgUpload($event)"/>
                         </div>
-                        <div class="action-btn">
-                            <button type="button" mat-icon-button class="btn-icon text-primary" *ngIf="uploadImg"
-                                (click)="viewImg()">
+                        <div class="action-btn" *ngIf="uploadImg">
+                            <button mat-icon-button class="btn-icon text-primary" type="button" *ngIf="uploadImg" (click)="viewImg()">
                                 <mat-icon>visibility</mat-icon>
                             </button>
-                            <button type="button" mat-icon-button class="btn-icon text-danger" *ngIf="uploadImg"
-                                (click)="clearImg()">
+                            <button mat-icon-button class="btn-icon text-danger" type="button" *ngIf="uploadImg" (click)="clearImg()">
                                 <mat-icon>delete</mat-icon>
                             </button>
                         </div>
@@ -108,13 +104,13 @@
 
                 <!-- Multiple Image -->
 
-               
+
 
                 <!-- Multiple Image -->
 
 
                 <div class="col-sm-6">
-                   
+
                     <mat-form-field appearance="outline" class="w-100">
                         <mat-label>{{'Labels.school' | translate}}</mat-label>
                         <textarea matInput formControlName="schoolName" maxlength="50"
@@ -171,11 +167,13 @@
                 <div class="col-sm-6">
                     <mat-form-field appearance="outline" class="w-100">
                         <mat-label>{{'Labels.LowestClass' | translate}}</mat-label>
-                        <mat-select formControlName="lowestClass" (selectionChange)="clearDropdown('LowestClass'); getHighestGroupClass();">
-                        <mat-option *ngFor="let lowestGroup of lowestGroupclassArr" [value]="lowestGroup.lowestClass">
-                            {{lowestGroup.value}}
-                        </mat-option>
-                    </mat-select>
+                        <mat-select formControlName="lowestClass"
+                            (selectionChange)="clearDropdown('LowestClass'); getHighestGroupClass();">
+                            <mat-option *ngFor="let lowestGroup of lowestGroupclassArr"
+                                [value]="lowestGroup.lowestClass">
+                                {{lowestGroup.value}}
+                            </mat-option>
+                        </mat-select>
                         <!-- <mat-error *ngIf="f['lowestClass'].hasError('required') || f['lowestClass'].hasError('touched')">
                             {{'Labels.groupClassIsRequired' | translate}}
                         </mat-error> -->
@@ -186,48 +184,57 @@
                     <mat-form-field appearance="outline" class="w-100">
                         <mat-label>{{'Labels.HighestClass' | translate}}</mat-label>
                         <mat-select formControlName="highestClass">
-                        <mat-option *ngFor="let highestGroup of highestGroupclassArr" [value]="highestGroup.lowestClass">
-                            {{highestGroup.value}}
-                        </mat-option>
-                    </mat-select>
+                            <mat-option *ngFor="let highestGroup of highestGroupclassArr"
+                                [value]="highestGroup.lowestClass">
+                                {{highestGroup.value}}
+                            </mat-option>
+                        </mat-select>
                         <!-- <mat-error *ngIf="f['highestClass'].hasError('required') || f['highestClass'].hasError('touched')">
                             {{'Labels.groupClassIsRequired' | translate}}
                         </mat-error> -->
                     </mat-form-field>
                 </div>
-                 <div class="col-sm-4">
-                    <div class="d-flex justify-content-between align-items-center">
+                <div class="col-sm-12">
+                    <div class="d-flex justify-content-between align-items-center mb-4">
                         <div formArrayName="schoolDocument" *ngFor="let img of multipleImg.controls; let i = index;">
                             <div [formGroupName]="i" class="d-flex">
                                 <div class="upload-btn-wrapper">
-                                    <button type="button" class="upload-btn">Multiple Image</button>
-                                    <input type="file" name="myfile" formControlName="docPath"
+                                    <button type="button" class="upload-btn">{{'Labels.UploadSchoolPhoto' |
+                                        translate}}</button>
+                                    <input type="file" name="myfile" formControlName="docPath" multiple
                                         (change)="multipleImgUpload($event)" />
-                                </div>
-                                <div class="action-btn">
-                                    <button type="button" mat-icon-button class="btn-icon text-primary" *ngIf="uploadMultipleImg"
-                                (click)="viewImg()">
-                                <mat-icon>visibility</mat-icon>
-                            </button>
-                                    <button type="button" mat-icon-button class="btn-icon text-danger" *ngIf="uploadMultipleImg"
-                                        (click)="clearImg()">
-                                        <mat-icon>delete</mat-icon>
-                                    </button>
                                 </div>
                             </div>
                         </div>
                     </div>
+                    <!-- Display Image -->
+                    <div class="d-flex flex-wrap gap-4">
+                        <ng-container *ngFor="let item of imgArray; let i = index">
+                            <div class="gallery position-relative">
+                                <img [src]="item.docPath" height="130px" width="130px" class="border">
+                                <span
+                                    class="position-absolute" style="top:-17px;right:-17px;">
+                                    <button type="button" mat-icon-button class="bg-danger bg-opacity-25 text-danger"
+                                        (click)="clearMultipleImg(i)">
+                                        <mat-icon>delete</mat-icon>
+                                    </button>
+                                </span>
+
+                            </div>
+                        </ng-container>
+                    </div>
+                    <!-- Display Image -->
                 </div>
-            
+
             </div>
         </mat-card-content>
         <mat-card-footer class="card-footer">
-            <mat-card-actions align="end">
+            <div class="d-flex justify-content-end align-items-center">
                 <button mat-dialog-close mat-flat-button class="btn-second me-2" type="button">{{'Labels.cancel' |
                     translate}}</button>
                 <button mat-flat-button class="btn-main">{{editFlag ?( 'Labels.update' | translate) :('Labels.submit' |
                     translate)}}</button>
-            </mat-card-actions>
+            </div>
         </mat-card-footer>
     </mat-card>
 </form>

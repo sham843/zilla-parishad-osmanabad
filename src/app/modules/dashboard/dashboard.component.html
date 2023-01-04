@@ -1,14 +1,14 @@
-<mat-drawer-container class="example-container" hasBackdrop="true">
+<mat-drawer-container class="example-container" hasBackdrop="false">
     <mat-drawer #drawer mode="over" position="end">
         <mat-card class="plain-card">
             <mat-card-header class="card-header">
                 <div class="d-flex justify-content-between align-items-center w-100">
                     <h6 class="text-main mb-0 fw-bold">Filters</h6>
-                    <button mat-icon-button class="btn-modal-close" mat-dialog-close (click)="this.drawer.close()">
+                    <!-- <button mat-icon-button class="btn-modal-close" mat-dialog-close (click)="this.drawer.close()">
                         <mat-icon>
                             close
                         </mat-icon>
-                    </button>
+                    </button> -->
                 </div>
             </mat-card-header>
             <mat-card-content class="card-body">
@@ -149,10 +149,7 @@
                     <mat-card-header class="card-header">
                         <h6 class="d-flex align-items-center justify-content-between w-100 mb-0 fw-bold">
                             <div>सर्वेक्षण केलेल्या विद्यार्थ्यांची एकूण संख्या</div>
-                            <div>निवडलेली संख्या : <span class="fw-bold">{{selectedObj?.GroupId==1?
-                                    dashboardCountData[0]?.totalStudent_1_2: selectedObj?.GroupId==2?
-                                    dashboardCountData[0]?.totalStudent_3_5
-                                    :dashboardCountData[0]?.totalStudent_6_8}}</span></div>
+                            <div>निवडलेली संख्या : <span class="fw-bold">{{this.selectedSurveyData}}</span></div>
                         </h6>
                     </mat-card-header>
 
@@ -162,7 +159,7 @@
                                 <table class="table inner-table mb-3 table-bordered">
                                     <thead>
                                         <tr>
-                                            <th *ngFor="let header of totalStudentSurveyData; let i=index">
+                                            <th *ngFor="let header of totalStudentSurveyData">
                                                 <div class="row align-items-start">
                                                     <div class="col-sm-auto" *ngIf="header.ischeckboxShow==false">
                                                         {{webStorage.languageFlag == 'EN'?
@@ -187,10 +184,10 @@
                                                             <div class="col-sm"
                                                                 *ngFor="let std of header.standardDetails">
                                                                 <div
-                                                                    class="d-flex align-items-center justify-content-start">
+                                                                    class="d-flex align-items-center justify-content-center">
                                                                     <div class="form-check">
                                                                         <input class="form-check-input" type="checkbox"
-                                                                            [(ngModel)]="std.status"  (click)="checkData(header, 'checkbox',i)">
+                                                                            [(ngModel)]="std.status"  (click)="checkData(header, 'checkbox')">
                                                                         <label class="form-check-label"
                                                                             for="flexCheckDefault">
                                                                             {{webStorage.languageFlag == 'EN'?
@@ -217,11 +214,7 @@
                                                 <div class="row" *ngIf="item.status==true">
                                                     <div class="col-sm"
                                                         *ngFor="let std of item.standardDetails">
-                                                        <div class="d-flex align-items-center justify-content-start">
-                                                            <div class="form-check">
-                                                               {{(std?.assessmentCount+'/'+std?.studentCount)}} 
-                                                            </div>
-                                                        </div>
+                                                        {{(std?.assessmentCount+'/'+std?.studentCount)}} 
                                                     </div>
                                                 </div>
                                             </td>
@@ -256,7 +249,7 @@
                         <div id="chart">
                             <apx-chart [series]="piechartOptions.series" [chart]="piechartOptions.chart"
                                 [theme]="piechartOptions.theme" [fill]="piechartOptions.fill"
-                                [labels]="piechartOptions.labels" [responsive]="piechartOptions.responsive"></apx-chart>
+                                [labels]="piechartOptions.labels" [responsive]="piechartOptions.responsive" [colors]="piechartOptions.colors"></apx-chart>
                         </div>
                     </mat-card-content>
                 </mat-card>
@@ -271,7 +264,7 @@
                             <apx-chart [series]="piechartOptions1.series" [chart]="piechartOptions1.chart"
                                 [theme]="piechartOptions1.theme" [fill]="piechartOptions1.fill"
                                 [labels]="piechartOptions1.labels"
-                                [responsive]="piechartOptions1.responsive"></apx-chart>
+                                [responsive]="piechartOptions1.responsive" [colors]="piechartOptions1.colors"></apx-chart>
                         </div>
                     </mat-card-content>
                 </mat-card>
@@ -286,7 +279,7 @@
                             <apx-chart [series]="piechartOptions2.series" [chart]="piechartOptions2.chart"
                                 [theme]="piechartOptions2.theme" [fill]="piechartOptions2.fill"
                                 [labels]="piechartOptions2.labels"
-                                [responsive]="piechartOptions2.responsive"></apx-chart>
+                                [responsive]="piechartOptions2.responsive" [colors]="piechartOptions2.colors"></apx-chart>
                         </div>
                     </mat-card-content>
                 </mat-card>
