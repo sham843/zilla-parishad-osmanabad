@@ -558,7 +558,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
     })
     this.barchartOptions.series.push(dataArray);
     this.barchartOptions.xaxis.categories.push(...(this.selectedLang == 'English' ? subjectSet: subjectSet_m));
-    this.barchartOptions.xaxis.parameters= this.selectedLang == 'English' ?['Level','Percentage']:['स्तर','टक्केवारी']
+    this.barchartOptions.xaxis.parameters= this.selectedLang == 'English' ?['Level','student(%)']:['स्तर','विद्यार्थी (%)']
     this.showBarChartF = true;
     
     this.barchartOptions.tooltip = {
@@ -611,7 +611,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
     })
     this.barchartOptions1.series.push(arrayObjectData);
     this.barchartOptions1.xaxis.categories.push(...(this.selectedLang == 'English' ?talukaSet:talukaSet_m));
-    this.barchartOptions1.xaxis.parameters= this.selectedLang == 'English' ?['Level','Percentage']:['स्तर','टक्केवारी']
+    this.barchartOptions1.xaxis.parameters= this.selectedLang == 'English' ?['Level','student(%)']:['स्तर','विद्यार्थी (%)']
     this.showBarChartS = true;
     
     this.barchartOptions1.tooltip = {
