@@ -19,7 +19,7 @@
                     <button type="button" class="btn bg-light text-primary" (click)="uploadImage.click()">
                         <i class='bx bx-plus'></i>
                     </button>
-                    <button type="button" class="border border-0 btn bg-light text-danger" (click)="removeImg()">
+                    <button *ngIf="showButton" type="button" class="border border-0 btn bg-light text-danger" (click)="removeImg()">
                         <i class='bx bx-trash'></i>
                     </button>
                 </div>
