@@ -96,13 +96,13 @@
                 <div class="col-sm-4">
                     <mat-form-field appearance="outline" class="w-100">
                         <mat-label>{{'Labels.birthDate'| translate}}</mat-label>
-                        <input matInput [matDatepicker]="picker" [max]="maxDate" (Click)="CalculateAge()"  readonly formControlName="birthDate">
+                        <input matInput [matDatepicker]="picker" [max]="maxDate" (click)="picker.open()" (dateChange)="CalculateAge()" readonly formControlName="birthDate">
                         <mat-datepicker-toggle matIconSuffix [for]="picker" ></mat-datepicker-toggle>
                         <mat-datepicker #picker ></mat-datepicker>
                         <!-- <mat-error *ngIf="f['birthDate'].hasError('required') ">
-                            Birth Date Is Required</mat-error> -->
+                            Birth Date Is Required</mat-error> -->                          
                     </mat-form-field>
-                    <h3>{{age}}</h3>
+                    <span>{{age}}</span> 
                 </div>
             </div>
             <mat-card-subtitle class="mb-2 fw-bold">{{'Labels.AddressDetails'| translate}}</mat-card-subtitle>
@@ -397,7 +397,7 @@
                     <div class="col-sm-4">
                         <mat-form-field appearance="outline" class="w-100">
                             <mat-label>{{'Labels.1stAppointmentDateInService'| translate}}</mat-label>
-                            <input matInput [matDatepicker]="dateService" readonly [max]="maxDate"
+                            <input matInput [matDatepicker]="dateService" readonly [max]="maxDate" (click)="picker.open()"
                                 formControlName="dateOfFirstAppoinmentService">
                             <mat-datepicker-toggle matIconSuffix [for]="dateService"></mat-datepicker-toggle>
                             <mat-datepicker #dateService></mat-datepicker>
@@ -406,7 +406,7 @@
                     <div class="col-sm-4">
                         <mat-form-field appearance="outline" class="w-100">
                             <mat-label>{{'Labels.currentSchoolJoiningDate'| translate}}</mat-label>
-                            <input matInput [matDatepicker]="JoiningDate" readonly [max]="maxDate"
+                            <input matInput [matDatepicker]="JoiningDate" readonly [max]="maxDate" (click)="picker.open()"
                                 formControlName="currentSchoolJoiningDate">
                             <mat-datepicker-toggle matIconSuffix [for]="JoiningDate"></mat-datepicker-toggle>
                             <mat-datepicker #JoiningDate></mat-datepicker>
@@ -415,7 +415,7 @@
                     <div class="col-sm-4">
                         <mat-form-field appearance="outline" class="w-100">
                             <mat-label>{{'Labels.currentTalukaPresentDate'| translate}}</mat-label>
-                            <input matInput [matDatepicker]="TalukaPresentDate" readonly
+                            <input matInput [matDatepicker]="TalukaPresentDate" readonly (click)="picker.open()"
                                 formControlName="currentTalukaPresentDate">
                             <mat-datepicker-toggle matIconSuffix [for]="TalukaPresentDate"></mat-datepicker-toggle>
                             <mat-datepicker #TalukaPresentDate></mat-datepicker>
@@ -424,7 +424,7 @@
                     <div class="col-sm-4">
                         <mat-form-field appearance="outline" class="w-100">
                             <mat-label> {{'Labels.retirementDate'| translate}}</mat-label>
-                            <input matInput [matDatepicker]="RetirementDate" readonly [min]="maxDate" formControlName="retirementDate">
+                            <input matInput [matDatepicker]="RetirementDate" readonly [min]="maxDate" (click)="picker.open()" formControlName="retirementDate">
                             <mat-datepicker-toggle matIconSuffix [for]="RetirementDate"></mat-datepicker-toggle>
                             <mat-datepicker #RetirementDate></mat-datepicker>
                         </mat-form-field>
@@ -481,7 +481,7 @@
                         <div class="col-sm-4">
                             <mat-form-field appearance="outline" class="w-100">
                                 <mat-label> {{'Labels.DateOfPresenceByInterDistrictTransfer'| translate}}</mat-label>
-                                <input matInput [matDatepicker]=" DistrictTransfer" readonly
+                                <input matInput [matDatepicker]=" DistrictTransfer" readonly (click)="picker.open()"
                                     formControlName="dateOFPresenceInterDistrictTransfer">
                                 <mat-datepicker-toggle matIconSuffix [for]="DistrictTransfer"></mat-datepicker-toggle>
                                 <mat-datepicker #DistrictTransfer></mat-datepicker>
@@ -511,7 +511,7 @@
                     <div class="col-sm-4">
                         <mat-form-field appearance="outline" class="w-100">
                             <mat-label>{{'Labels.dateOfSeniority'| translate}}</mat-label>
-                            <input matInput [matDatepicker]=" DateSeniority" readonly [min]="seniorityDate" formControlName="dateOfSeniority">
+                            <input matInput [matDatepicker]=" DateSeniority" readonly [min]="seniorityDate" (click)="picker.open()" formControlName="dateOfSeniority">
                             <mat-datepicker-toggle matIconSuffix [for]="DateSeniority"></mat-datepicker-toggle>
                             <mat-datepicker  #DateSeniority></mat-datepicker>
                             <!-- <mat-error *ngIf="td['dateOfSeniority'].hasError('required')">Date Of Seniority Is Required</mat-error> -->
