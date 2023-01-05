@@ -62,7 +62,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
        this.showSvgMap(this.commonMethods.mapRegions());
        this.getPieChartData();
        this.constructBarChart();
-       this.constructBarChartByTaluka();
+       this.getbarChartByTaluka();
        setTimeout(()=>{
         this.clickOnSvgMap('select');
        },70)
@@ -421,15 +421,11 @@ export class DashboardComponent implements OnInit, AfterViewInit {
       next: (res: any) => {
         if (res.statusCode == "200") {
           this.dashboardCountData.push(res.responseData.responseData1[0]);
-          // res.responseData.responseData2.unshift({ m_GroupClass : 'एकूण संख्या', groupClass:'Total', studentCount :this.dashboardCountData[0]?.totalStudent,groupId: 0, ischeckboxShow: false, status: false });
           this.totalStudentSurveyData =res.responseData.responseData2;
-          this.totalStudentSurveyData.map((x:any)=>{
-            x.status = true;
-            x.ischeckboxShow=true})
+          this.totalStudentSurveyData.map((x:any)=>{ x.status = true; x.ischeckboxShow=true})
           this.totalStudentSurveyData[1].status = true;
           this.totalStudentSurveyData[0].ischeckboxShow=false;
-          // this.tableColumn = [{ label: 'एकूण संख्या', groupId: 0, ischeckboxShow: false, status: false }, { label: '१ली ते 2वी', groupId: 1, subSTD: [{ label: '१ली', subgroupId: 1, status: false }, { label: '2री', subgroupId: 2, status: false }], ischeckboxShow: true, status: true }, { label: '3री ते ५वी', groupId: 2, subSTD: [{ label: '3री', subgroupId: 3, status: false }, { label: '4री', subgroupId: 4, status: false }, { label: '5वी', subgroupId: 5, status: false }], ischeckboxShow: true, status: false }, { label: '६वी ते ८वी', groupId: 3, subSTD: [{ label: '६वी', subgroupId: 6, status: false }, { label: '7वी', subgroupId: 7, status: false }, { label: '८वी', subgroupId: 8, status: false }], ischeckboxShow: true, status: false },];
-          this.checkData(this.totalStudentSurveyData[1], 'radio');
+         this.checkData(this.totalStudentSurveyData[1], 'radio');
           this.getPieChartData();
         } else {
           this.dashboardCountData = [];
