@@ -369,7 +369,7 @@
                                                 item['m_SchoolName']}}
                                             </td>
                                             <td>{{item['totalStudent']}}</td>
-                                            <td>{{item['passpercentage']}}</td>
+                                            <td [ngClass]="{'bg-danger': (item['passpercentage'] < 10), 'bg-warning': (item['passpercentage'] < 20), 'bg-success': (item['passpercentage'] >20) }">{{item['passpercentage']}}</td>
                                         </tr>
                                     </tbody>
                                 </table>
