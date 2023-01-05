@@ -273,7 +273,9 @@
         "genderwiseSchools":"Gender wise Schools",
         "talukawiseAssessment":"Taluka wise assessment",
         "selectSubject":"Select Subject",
-        "dataNotFound":"Data not available"
+        "dataNotFound":"Data not available",
+        "View" : "View"
+        
 
     }
 }

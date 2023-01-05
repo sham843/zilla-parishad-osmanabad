@@ -275,7 +275,8 @@
         "genderwiseSchools":"लिंगनिहाय शाळा",
         "talukawiseAssessment":"तालुका निहाय मूल्यांकन",
         "selectSubject":"विषय निवडा",
-        "dataNotFound":"डेटा उपलब्ध नाही"
+        "dataNotFound":"डेटा उपलब्ध नाही",
+        "View" : "दृश्य"
         
     }
 }
