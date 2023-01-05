@@ -30,19 +30,19 @@ export class AddUpdateDesignationMasterComponent {
     @Inject(MAT_DIALOG_DATA) public data: any) { }
 
   ngOnInit() {
-    this.formData();
+    this.formData(this.data);
     !this.data ? this.getDesiganationLevel() : this.onClickEdit(this.data);
   }
 
   get f() { return this.designationForm.controls }
   //#region -------------------------------------- Desiganation-Master Formdata --------------------------//
-  formData() {
+  formData(data?:any) {
     this.designationForm = this.fb.group({
       "lan": [''],
       "id": [0],
       "designationType": ['',[Validators.required, Validators.pattern(this.validation.fullName)]],
       "m_DesignationType": ['',[Validators.required,Validators.pattern('^[\u0900-\u0965 ]+$')]],
-      "designationLevelId": ['', Validators.required]
+      "designationLevelId": [data ? { value: data.designationLevelId, disabled: true } :'', Validators.required]
     }) 
   }
   //#endregion  ---------------------------- End Desiganation-Master Formdata ------------------------------- //

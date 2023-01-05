@@ -14,9 +14,9 @@ export class CustomMatPaginatorIntl extends MatPaginatorIntl{
     this.webStorage.langNameOnChange.subscribe(lang => {
       super.nextPageLabel = lang == 'English' ? 'Next Page' : 'पुढील पान';
       super.previousPageLabel = lang == 'English' ? 'Previous Page' : 'मागील पान';
-      super.lastPageLabel = lang == 'English' ? 'Last Page' : 'शेवटच पान';
+      super.lastPageLabel = lang == 'English' ? 'Last Page' : 'शेवटचे पान';
       super.firstPageLabel = lang == 'English' ? 'First Page' : 'पहिले पान';
-      this.ofKeyValue = lang == 'English' ? 'of' : 'च्या';
+      this.ofKeyValue = lang == 'English' ? 'of' : 'मधील';
       super.getRangeLabel = this.RangeLabel;
     });
   }
