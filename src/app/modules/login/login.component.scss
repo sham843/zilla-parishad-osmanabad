@@ -5,7 +5,7 @@
 .login-wrapper .login-left{
     background: transparent linear-gradient(180deg, #039286 0%, #014642 100%) 0% 0% no-repeat;
     height: 100%;
-    width: 30%;
+    width: auto;
 }
 .login-wrapper .login-right{
     height: 100%;
@@ -49,4 +49,7 @@ input::-ms-reveal { display: none; }
 .Login {
     color: #039286 !important;
     font-weight: 600;
+}
+#e3o4pNZjVav1{
+    height: 100vh;
 }
