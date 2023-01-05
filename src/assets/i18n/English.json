@@ -109,6 +109,7 @@
         "studentList" :"Student List",
         "master" :"Masters",
         "delete" : "Delete",
+        "taleview":"Table View",
         "galleryimage":"Image Gallery",
         "doYouWantToDeleteSchoolRecord" : "Do You Want To Delete School Record?",
         "doYouWantToDeleteDesignationRecord" : "Do You Want To Delete Designation Record?",
