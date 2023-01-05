@@ -49,6 +49,7 @@ export class ChangePasswordComponent {
   onSubmit(clear : any){
     let obj = this.passwordForm.value;
     if(this.passwordForm.invalid){
+      this.common.snackBar('Please Enter Valid Data in Mandatory Fields',1)
       return;
     }
     else{

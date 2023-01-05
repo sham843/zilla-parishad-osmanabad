@@ -283,11 +283,10 @@ CalculateAge(){
 let birthDate = this.teacherRegForm.value.birthDate
 console.log("birthDate",birthDate);
     if(birthDate){
-       var timeDiff = Math.abs(Date.now() - birthDate);
-       //Used Math.floor instead of Math.ceil
-       //so 26 years and 140 days would be considered as 26, not 27.
+       var timeDiff = Math.abs(Date.now() - birthDate);     
        this.age = Math.floor((timeDiff / (1000 * 3600 * 24))/365);
    }
+   this.f['age'].setValue(this.age);
    console.log("age",this.age);
    
 }
@@ -583,10 +582,6 @@ console.log("birthDate",birthDate);
         this.assignClass =false;
       }
      
-         
-     
-      
-  
     }
   }
 //#endregion -------------------------------------end submit-----------------------------------------------
@@ -601,6 +596,7 @@ console.log("birthDate",birthDate);
     // this.data.uploadImage ? this.showAddRemImg = true : this.showAddRemImg = false;
     this.assignClassArray = obj.assignTeacher;    
     this.uploadImghtml =  this.editObj.uploadImage;
+    this.age = obj.age;
 
     //---------------------------start patch assign class check-box---------------------------//
     for (let i = 0; i < this.newAsssignClassArray.length; i++) {
@@ -616,7 +612,8 @@ console.log("birthDate",birthDate);
       this.checked = true;
     }
      //---------------------------end patch current and perment address check-box---------------------------//
-    this.formData(); this.getGender();
+
+  this.formData(); this.getGender();
   }
 //#endregion --------------------------------------- end edit ----------------------------------------------
   clearImg() {   
