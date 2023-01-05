@@ -764,6 +764,7 @@ console.log("birthDate",birthDate);
   }
 //#endregion --------------------------------------- end edit ----------------------------------------------
   clearImg() {   
+    this.uploadImghtml = '';
     this.imageFile.nativeElement.value = '';
     this.f['uploadImage'].setValue('');
     this.data.uploadImage = '';
