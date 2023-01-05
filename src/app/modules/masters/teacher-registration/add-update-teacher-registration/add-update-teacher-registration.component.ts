@@ -46,6 +46,10 @@ export class AddUpdateTeacherRegistrationComponent {
   img: boolean = false;
   checked:boolean=false
   maxDate = new Date();
+  seniorityDate =new Date();
+  age!:number;
+  
+  assignClass: boolean = true;
   casteVerification = [
     { id: 1, name: 'yes', isCastVarificationDone: true,_name :'होय' },
     { id: 2, name: 'no', isCastVarificationDone: false ,_name :'नाही'}
@@ -93,6 +97,11 @@ export class AddUpdateTeacherRegistrationComponent {
   ngOnInit() {
     this.formData();
     (!this.data) ? this.getGender() : this.onEdit(this.data);
+   
+
+    // add a day
+    this.seniorityDate.setDate(this.seniorityDate.getDate() + 1);
+
   }
   //#region --------------------------get form Controls ---------------------------------
   get f() {
@@ -270,6 +279,18 @@ export class AddUpdateTeacherRegistrationComponent {
     }   
   }
 //#endregion --------------------------end permant address check box ----------------------------------
+CalculateAge(){
+let birthDate = this.teacherRegForm.value.birthDate
+console.log("birthDate",birthDate);
+    if(birthDate){
+       var timeDiff = Math.abs(Date.now() - birthDate);     
+       this.age = Math.floor((timeDiff / (1000 * 3600 * 24))/365);
+   }
+   this.f['age'].setValue(this.age);
+   console.log("age",this.age);
+   
+}
+
 
 //#region ------------------------------ start drop-down ---------------------------------------------
   getGender() {
@@ -288,7 +309,7 @@ export class AddUpdateTeacherRegistrationComponent {
   getDistrict() {
     console.log("district editFlag",this.editFlag);
     
-    this.masterService.getAllDistrict('EN').subscribe({
+    this.masterService.getAllDistrict(this.webStorageS.languageFlag).subscribe({
       next: ((res: any) => {
         if (res.statusCode == 200 && res.responseData.length) {
           this.districtArray = res.responseData;               
@@ -302,7 +323,7 @@ export class AddUpdateTeacherRegistrationComponent {
   }
   
   getTaluka() {
-    this.masterService.getAllTaluka('EN').subscribe({
+    this.masterService.getAllTaluka(this.webStorageS.languageFlag).subscribe({
       next: ((res: any) => { 
         if (res.statusCode == 200 && res.responseData.length) {
           this.talukaArray = res.responseData;          
@@ -316,7 +337,7 @@ export class AddUpdateTeacherRegistrationComponent {
 
   getVillage() {
     let talukaId = this.teacherRegForm.value.talukaId
-    this.masterService.getAllVillage('EN', talukaId).subscribe({
+    this.masterService.getAllVillage(this.webStorageS.languageFlag, talukaId).subscribe({
       next: ((res: any) => {
         if (res.statusCode == 200 && res.responseData.length) {
           this.villageArray = res.responseData;            
@@ -329,7 +350,7 @@ export class AddUpdateTeacherRegistrationComponent {
   }
 
   getAllDistrictTeacherDetails() {
-    this.masterService.getAllDistrict('EN').subscribe({
+    this.masterService.getAllDistrict(this.webStorageS.languageFlag).subscribe({
       next: ((res: any) => {
         if (res.statusCode == 200 && res.responseData.length) {
           this.districtArrayTeacherDeatails = res.responseData;
@@ -344,7 +365,7 @@ export class AddUpdateTeacherRegistrationComponent {
   }
 
   getAllTalukaTeacherDeatails() {
-    this.masterService.getAllTaluka('EN').subscribe({
+    this.masterService.getAllTaluka(this.webStorageS.languageFlag).subscribe({
       next: ((res: any) => {
         if (res.statusCode == 200 && res.responseData.length) {
           this.talukaArrayTeacherDetails = res.responseData;
@@ -358,7 +379,7 @@ export class AddUpdateTeacherRegistrationComponent {
 
   getCluster() {
     let talukaId = this.teacherRegForm.value.teacherDetails.talukaId;
-    this.masterService.getAllCenter('EN', talukaId).subscribe({
+    this.masterService.getAllCenter(this.webStorageS.languageFlag, talukaId).subscribe({
       next: ((res: any) => {
         if (res.statusCode == 200 && res.responseData.length) {
           this.clusterArray = res.responseData;      
@@ -372,7 +393,7 @@ export class AddUpdateTeacherRegistrationComponent {
   getAllSchool() {
     let talukaId = this.teacherRegForm.value.teacherDetails.talukaId;
     let clusterId = this.teacherRegForm.value.teacherDetails.clusterId;
-    this.masterService.getAllSchoolByCriteria('EN', talukaId, 0, clusterId).subscribe({
+    this.masterService.getAllSchoolByCriteria(this.webStorageS.languageFlag, talukaId, 0, clusterId).subscribe({
       next: ((res: any) => {
         if (res.statusCode == 200 && res.responseData.length) {
           this.schoolArray = res.responseData;        
@@ -384,7 +405,7 @@ export class AddUpdateTeacherRegistrationComponent {
     })
   }
   getDesignation() {
-    this.masterService.GetDesignationByLevelId('EN', 3).subscribe({
+    this.masterService.GetDesignationByLevelId(this.webStorageS.languageFlag, 3).subscribe({
       next: ((res: any) => {
         if (res.statusCode == 200 && res.responseData.length) {
           this.designationArray = res.responseData;    
@@ -396,7 +417,7 @@ export class AddUpdateTeacherRegistrationComponent {
     })
   }
   getGraduateTeacherSubject() {
-    this.masterService.getAllSubject('EN').subscribe({
+    this.masterService.getAllSubject(this.webStorageS.languageFlag).subscribe({
       next: ((res: any) => {
         if (res.statusCode == 200 && res.responseData.length) {
           this.GradateTeacherSubjectArray = res.responseData;
@@ -408,7 +429,7 @@ export class AddUpdateTeacherRegistrationComponent {
     })
   }
   getCaste() {
-    this.masterService.getAllCaste('EN', 1).subscribe({
+    this.masterService.getAllCaste(this.webStorageS.languageFlag, 1).subscribe({
       next: ((res: any) => {
         if (res.statusCode == 200 && res.responseData.length) {
           this.casteArray = res.responseData;  
@@ -420,7 +441,7 @@ export class AddUpdateTeacherRegistrationComponent {
     })
   }
   getCasteCategory() {
-    this.masterService.getCastCategoryDescById('EN').subscribe({
+    this.masterService.getCastCategoryDescById(this.webStorageS.languageFlag).subscribe({
       next: ((res: any) => {
         if (res.statusCode == 200 && res.responseData.length) {
           this.castCategoryArray = res.responseData;         
@@ -433,7 +454,7 @@ export class AddUpdateTeacherRegistrationComponent {
   }
 
   getEducationQualification() {
-    this.masterService.getEducationalQualificationById('EN').subscribe({
+    this.masterService.getEducationalQualificationById(this.webStorageS.languageFlag).subscribe({
       next: ((res: any) => {
         if (res.statusCode == 200 && res.responseData.length) {
           this.educationQualificationArray = res.responseData;
@@ -445,7 +466,7 @@ export class AddUpdateTeacherRegistrationComponent {
     })
    }
   getTwelveBranch() {
-    this.masterService.getTwelveBranchCategoryDescById('EN',).subscribe({
+    this.masterService.getTwelveBranchCategoryDescById(this.webStorageS.languageFlag,).subscribe({
       next: ((res: any) => {
         if (res.statusCode == 200 && res.responseData.length) {
           this.twelveBranchArray = res.responseData;
@@ -457,7 +478,7 @@ export class AddUpdateTeacherRegistrationComponent {
     })
   }
   getOptionalSubject() {
-    this.masterService.getOptionalSubjectCategoryDescById('EN',).subscribe({
+    this.masterService.getOptionalSubjectCategoryDescById(this.webStorageS.languageFlag,).subscribe({
       next: ((res: any) => {
         if (res.statusCode == 200 && res.responseData.length) {
           this.optionalSubjectArray = res.responseData;         
@@ -470,7 +491,7 @@ export class AddUpdateTeacherRegistrationComponent {
   }
 
   getDegreeUniversity() {
-    this.masterService.getUniversityCategoryDescById('EN',).subscribe({
+    this.masterService.getUniversityCategoryDescById(this.webStorageS.languageFlag,).subscribe({
       next: ((res: any) => {
         if (res.statusCode == 200 && res.responseData.length) {
           this.degreeUniversityArray = res.responseData;
@@ -484,7 +505,7 @@ export class AddUpdateTeacherRegistrationComponent {
   }
 
   getProfesionalQualification() {
-    this.masterService.getProfessinalQualificationById('EN',).subscribe({
+    this.masterService.getProfessinalQualificationById(this.webStorageS.languageFlag,).subscribe({
       next: ((res: any) => {
         if (res.statusCode == 200 && res.responseData.length) {
           this.profesionalQualificationArray = res.responseData;        
@@ -497,7 +518,7 @@ export class AddUpdateTeacherRegistrationComponent {
   }
 
   GetInterDistrictTransferType() {
-    this.masterService.getAllInterDistrictTransferType('EN',).subscribe({
+    this.masterService.getAllInterDistrictTransferType(this.webStorageS.languageFlag,).subscribe({
       next: ((res: any) => {
         if (res.statusCode == 200 && res.responseData.length) {
           this.interDistrictTransferTypeArray = res.responseData;
@@ -532,31 +553,35 @@ export class AddUpdateTeacherRegistrationComponent {
       formValue.uploadImage = this.uploadImghtml;
       // formValue.uploadImage ? formValue.uploadImage = this.uploadImghtml : ''; 
     }
-    if (!this.teacherRegForm.valid) {     
+    if (this.teacherRegForm.invalid) {  
+      this.assignClass =false;   
         this.commonMethod.showPopup(this.webStorageS.languageFlag == 'EN' ? 'Please Enter Mandatory Fields' : 'कृपया अनिवार्य फील्ड प्रविष्ट करा', 1);
-        return
-      
+        return      
     }
     else {
-      formValue.assignTeacher = this.assignClassArray;
-      let postObj = this.teacherRegForm.value;   
-      console.log("postValue",postObj);
-      
-      this.ngxSpinner.show();
-      let url = this.editFlag ? 'Update' : 'Add'
-      this.service.setHttp(this.editFlag ? 'put' : 'post','zp_osmanabad/Teacher/'+ url, false, postObj, false, 'baseUrl');
-      this.service.getHttp().subscribe({
-        next: ((res: any) => {
-          this.ngxSpinner.hide();
-          res.statusCode == 200 ? (this.commonMethod.showPopup(res.statusMessage, 0)) : this.commonMethod.checkEmptyData(res.statusMessage) == false ? this.errorHandler.handelError(res.statusCode) : this.commonMethod.showPopup(res.statusMessage, 1);       
-            this.dialogRef.close('yes');
-         
-        }),
-        error: (error: any) => {
-          this.ngxSpinner.hide();
-          this.commonMethod.checkEmptyData(error.statusMessage) == false ? this.errorHandler.handelError(error.statusCode) : this.commonMethod.showPopup(error.statusMessage, 1);
-        }
-      })
+      if(this.assignClassArray.length){
+        this.assignClass =true;
+        formValue.assignTeacher = this.assignClassArray;
+        let postObj = this.teacherRegForm.value;
+        this.ngxSpinner.show();
+        let url = this.editFlag ? 'Update' : 'Add'
+        this.service.setHttp(this.editFlag ? 'put' : 'post','zp_osmanabad/Teacher/'+ url, false, postObj, false, 'baseUrl');
+        this.service.getHttp().subscribe({
+          next: ((res: any) => {
+            this.ngxSpinner.hide();
+            res.statusCode == 200 ? (this.commonMethod.showPopup(res.statusMessage, 0)) : this.commonMethod.checkEmptyData(res.statusMessage) == false ? this.errorHandler.handelError(res.statusCode) : this.commonMethod.showPopup(res.statusMessage, 1);       
+              this.dialogRef.close('yes');           
+          }),
+          error: (error: any) => {
+            this.ngxSpinner.hide();
+            this.commonMethod.checkEmptyData(error.statusMessage) == false ? this.errorHandler.handelError(error.statusCode) : this.commonMethod.showPopup(error.statusMessage, 1);
+          }
+        })
+      }else{  
+        this.commonMethod.showPopup(this.webStorageS.languageFlag == 'EN' ? 'Please Enter Mandatory Fields' : 'कृपया अनिवार्य फील्ड प्रविष्ट करा', 1);       
+        this.assignClass =false;
+      }
+     
     }
   }
 //#endregion -------------------------------------end submit-----------------------------------------------
@@ -564,12 +589,14 @@ export class AddUpdateTeacherRegistrationComponent {
   onEdit(obj: any) {
     console.log("editObj",obj);
     this.editFlag = true;
+    this.assignClass =true;
     this.editObj = obj; 
      
     // this.data.uploadImage ? this.teacherRegForm.value.uploadImage = obj.uploadImage : '';
     // this.data.uploadImage ? this.showAddRemImg = true : this.showAddRemImg = false;
     this.assignClassArray = obj.assignTeacher;    
     this.uploadImghtml =  this.editObj.uploadImage;
+    this.age = obj.age;
 
     //---------------------------start patch assign class check-box---------------------------//
     for (let i = 0; i < this.newAsssignClassArray.length; i++) {
@@ -585,7 +612,8 @@ export class AddUpdateTeacherRegistrationComponent {
       this.checked = true;
     }
      //---------------------------end patch current and perment address check-box---------------------------//
-    this.formData(); this.getGender();
+
+  this.formData(); this.getGender();
   }
 //#endregion --------------------------------------- end edit ----------------------------------------------
   clearImg() {   

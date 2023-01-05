@@ -41,9 +41,14 @@ export class SchoolRegistrationComponent {
   displayedheadersEnglish = ['#', 'Sr. No.', 'School Name', 'Village', 'Taluka', 'District', 'Action'];
   displayedheadersMarathi = ['#', 'अनुक्रमांक', 'शाळेचे नाव', 'गाव', 'तालुका', 'जिल्हा', 'कृती'];
 
-  constructor(private dialog: MatDialog, private apiService: ApiService, private errors: ErrorsService,
-    private masterService: MasterService, private commonMethodS: CommonMethodsService, public webStorageS: WebStorageService,
-    private downloadFileService: DownloadPdfExcelService,private ngxSpinner: NgxSpinnerService,
+  constructor(private dialog: MatDialog, 
+    private apiService: ApiService, 
+    private errors: ErrorsService,
+    private masterService: MasterService, 
+    private commonMethodS: CommonMethodsService, 
+    public webStorageS: WebStorageService,
+    private downloadFileService: DownloadPdfExcelService,
+    private ngxSpinner: NgxSpinnerService,
     ) { }
 
   ngOnInit() {
@@ -81,6 +86,7 @@ export class SchoolRegistrationComponent {
 
   getTableData(flag?: string) {
     // this.tableDataArray = [];
+    this.ngxSpinner.show();
     this.pageNumber = flag == 'filter' ? 1 : this.pageNumber;
     let pageNo = this.cardViewFlag ? (this.pageNumber) : this.pageNumber;
     let str = `?pageno=${pageNo}&pagesize=10&DistrictId=${this.districtId.value ? this.districtId.value : 0}
@@ -94,6 +100,7 @@ export class SchoolRegistrationComponent {
 
       next: (res: any) => {
         if (res.statusCode == 200) {
+          this.ngxSpinner.hide();
           flag != 'pdfFlag' ? this.tableDataArray = res.responseData.responseData1 : this.tableDataArray = this.tableDataArray;
           this.totalCount = res.responseData.responseData2.pageCount;
           this.tableDatasize = res.responseData.responseData2.pageCount;
@@ -221,7 +228,7 @@ export class SchoolRegistrationComponent {
       width: '820px',
       data: obj,
       disableClose: true,
-      autoFocus: false
+      // autoFocus: false
     });
     dialogRef.afterClosed().subscribe((result: any) => {
       if (result == 'yes' && obj) {
@@ -262,6 +269,7 @@ export class SchoolRegistrationComponent {
     var data = {
       headerImage: obj.uploadImage,
       header: this.webStorageS.languageFlag == 'EN' ? obj.schoolName : obj.m_SchoolName,
+      subheader : this.webStorageS.languageFlag == 'EN' ? obj.village : obj.m_Village,
       labelHeader: this.webStorageS.languageFlag == 'EN' ? ['Kendra Name', 'Taluka','District','Lowest Class', 'HighestClass', 'Total Students'] : ['केंद्राचे नाव', 'तालुका', 'जिल्हा', 'सर्वात खालचा वर्ग', 'सर्वोच्च वर्ग', 'एकूण विद्यार्थी'],
       labelKey: this.webStorageS.languageFlag == 'EN' ? ['center','taluka', 'district','lowestClass','highestClass','studentCount'] : ['m_Center', 'm_Taluka','m_District', 'lowestClass', 'highestClass','studentCount'],
       Obj: obj,

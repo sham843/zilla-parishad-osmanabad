@@ -163,7 +163,9 @@ export class AddUpdateOfficeUsersComponent implements OnInit {
     console.log("all data submitted:", this.officeForm.value);
     if(this.officeForm.valid) {
       this.ngxSpinner.show();
-      this.apiService.setHttp(this.data ? 'PUT' : 'POST', this.data ? 'zp_osmanabad/Office/UpdateOffice' : 'zp_osmanabad/Office/AddOffice', false, this.officeForm.value, false, 'baseUrl');
+      let submitUrl = this.data ? 'UpdateOffice' : 'AddOffice'
+      // this.apiService.setHttp(this.data ? 'PUT' : 'POST', this.data ? 'zp_osmanabad/Office/UpdateOffice' : 'zp_osmanabad/Office/AddOffice', false, this.officeForm.value, false, 'baseUrl');
+      this.apiService.setHttp(this.data ? 'PUT' : 'POST', 'zp_osmanabad/Office/'+submitUrl, false, this.officeForm.value, false, 'baseUrl');
       this.apiService.getHttp().subscribe({
         next: (res: any) => {
           res.statusCode == "200" ? ( this.commonService.showPopup(res.statusMessage, 0)) : this.commonService.checkEmptyData(res.statusMessage) == false ? this.error.handelError(res.statusCode) : this.commonService.showPopup(res.statusMessage, 1);

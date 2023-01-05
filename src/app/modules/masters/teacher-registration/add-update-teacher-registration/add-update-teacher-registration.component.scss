@@ -23,6 +23,7 @@
 .teacherForm>input[type=checkbox] {
     height: 0px;
     width: 0px;
+    display: none;
 }
 .teacherForm>input[type=checkbox]:checked+label,
 .teacherForm>input[type=checkbox]:checked+span {

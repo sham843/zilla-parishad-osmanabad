@@ -28,21 +28,21 @@ export class AddUpdateSchoolRegistrationComponent {
   schoolMngArr = new Array();
   schoolRegForm !: FormGroup;
   uploadImg: any;
-  uploadMultipleImg : any;
-  imgArray =new Array();
+  uploadMultipleImg: any;
+  imgArray = new Array();
   editFlag: boolean = false;
   img: boolean = false;
   // schoolDocument!: FormArray;
 
-  constructor(private masterService: MasterService, 
-    private errors: ErrorsService, 
-    private fb: FormBuilder, 
+  constructor(private masterService: MasterService,
+    private errors: ErrorsService,
+    private fb: FormBuilder,
     private fileUpload: FileUploadService,
-    private apiService: ApiService, 
-    private commonMethod: CommonMethodsService, 
+    private apiService: ApiService,
+    private commonMethod: CommonMethodsService,
     @Inject(MAT_DIALOG_DATA) public data: any,
-    public dialogRef: MatDialogRef<AddUpdateSchoolRegistrationComponent>, 
-    public validationService: ValidationService, 
+    public dialogRef: MatDialogRef<AddUpdateSchoolRegistrationComponent>,
+    public validationService: ValidationService,
     public webStorageS: WebStorageService,
     private ngxSpinner: NgxSpinnerService) { }
 
@@ -83,8 +83,8 @@ export class AddUpdateSchoolRegistrationComponent {
       "lowestClass": ['', Validators.required],
       "highestClass": ['', Validators.required],
       "timesStamp": new Date(),
-      "uploadImage": [''],   
-      schoolDocument : this.fb.array([
+      "uploadImage": [''],
+      schoolDocument: this.fb.array([
         this.fb.group({
           "id": 0,
           "schoolId": 0,
@@ -110,7 +110,7 @@ export class AddUpdateSchoolRegistrationComponent {
   getDistrict() {
     this.masterService.getAllDistrict(this.webStorageS.languageFlag).subscribe({
       next: (res: any) => {
-        res.statusCode == 200 ? (this.districtArr = res.responseData, this.schoolRegForm.controls['districtId'].setValue(1)) : this.districtArr = [];
+        res.statusCode == 200 ? (this.districtArr = res.responseData, this.schoolRegForm.controls['districtId'].setValue(1)) : (this.commonMethod.checkEmptyData(res.statusMessage) == false ? this.errors.handelError(res.statusCode) : this.commonMethod.showPopup(res.statusMessage, 1), this.districtArr = []);
         this.getTaluka();
         this.editFlag ? (this.f['districtId'].setValue(this.data.districtId), this.getTaluka()) : '';
       },
@@ -121,7 +121,7 @@ export class AddUpdateSchoolRegistrationComponent {
   getTaluka() {
     this.masterService.getAllTaluka(this.webStorageS.languageFlag).subscribe({
       next: (res: any) => {
-        res.statusCode == 200 ? this.talukaArr = res.responseData : this.talukaArr = [];
+        res.statusCode == 200 ? this.talukaArr = res.responseData : (this.commonMethod.checkEmptyData(res.statusMessage) == false ? this.errors.handelError(res.statusCode) : this.commonMethod.showPopup(res.statusMessage, 1), this.talukaArr = []);
         this.editFlag ? (this.f['talukaId'].setValue(this.data.talukaId), this.getCenter()) : '';
       },
       error: ((err: any) => { this.errors.handelError(err) })
@@ -131,7 +131,7 @@ export class AddUpdateSchoolRegistrationComponent {
   getCenter() {
     this.masterService.getAllCenter(this.webStorageS.languageFlag, this.schoolRegForm.value.talukaId).subscribe({
       next: (res: any) => {
-        res.statusCode == 200 ? this.centerArr = res.responseData : this.centerArr = [];
+        res.statusCode == 200 ? this.centerArr = res.responseData : (this.commonMethod.checkEmptyData(res.statusMessage) == false ? this.errors.handelError(res.statusCode) : this.commonMethod.showPopup(res.statusMessage, 1), this.centerArr = []);
         this.editFlag ? (this.f['centerId'].setValue(this.data.centerId), this.getVillage()) : '';
       },
       error: ((err: any) => { this.errors.handelError(err) })
@@ -139,10 +139,9 @@ export class AddUpdateSchoolRegistrationComponent {
   }
 
   getVillage() {
-    // debugger
     this.masterService.getAllVillage(this.webStorageS.languageFlag, this.schoolRegForm.value.talukaId).subscribe({
       next: (res: any) => {
-        res.statusCode == 200 ? this.villageArr = res.responseData : this.villageArr = [];
+        res.statusCode == 200 ? this.villageArr = res.responseData : (this.commonMethod.checkEmptyData(res.statusMessage) == false ? this.errors.handelError(res.statusCode) : this.commonMethod.showPopup(res.statusMessage, 1), this.villageArr = []);
         this.editFlag ? (this.f['villageId'].setValue(this.data.villageId), this.getSchoolType()) : '';
       },
       error: ((err: any) => { this.errors.handelError(err) })
@@ -152,7 +151,7 @@ export class AddUpdateSchoolRegistrationComponent {
   getSchoolType() {
     this.masterService.getAllSchoolType(this.webStorageS.languageFlag).subscribe({
       next: (res: any) => {
-        res.statusCode == 200 ? this.schoolTypeArr = res.responseData : this.schoolTypeArr = [];
+        res.statusCode == 200 ? this.schoolTypeArr = res.responseData : (this.commonMethod.checkEmptyData(res.statusMessage) == false ? this.errors.handelError(res.statusCode) : this.commonMethod.showPopup(res.statusMessage, 1), this.schoolTypeArr = []);
         this.editFlag ? (this.f['s_TypeId'].setValue(this.data.s_TypeId), this.getCategoryDes()) : '';
       },
       error: ((err: any) => { this.errors.handelError(err) })
@@ -162,7 +161,7 @@ export class AddUpdateSchoolRegistrationComponent {
   getCategoryDes() {
     this.masterService.GetSchoolCategoryDescById(this.webStorageS.languageFlag).subscribe({
       next: (res: any) => {
-        res.statusCode == 200 ? this.categoryArr = res.responseData : this.categoryArr = [];
+        res.statusCode == 200 ? this.categoryArr = res.responseData : (this.commonMethod.checkEmptyData(res.statusMessage) == false ? this.errors.handelError(res.statusCode) : this.commonMethod.showPopup(res.statusMessage, 1),this.categoryArr = []);
         this.editFlag ? (this.f['s_CategoryId'].setValue(this.data.s_CategoryId), this.getSchoolMngDesc()) : '';
       },
       error: ((err: any) => { this.errors.handelError(err) })
@@ -172,7 +171,7 @@ export class AddUpdateSchoolRegistrationComponent {
   getSchoolMngDesc() {
     this.masterService.GetSchoolMngDescById(this.webStorageS.languageFlag).subscribe({
       next: (res: any) => {
-        res.statusCode == 200 ? this.schoolMngArr = res.responseData : this.schoolMngArr = [];
+        res.statusCode == 200 ? this.schoolMngArr = res.responseData : (this.commonMethod.checkEmptyData(res.statusMessage) == false ? this.errors.handelError(res.statusCode) : this.commonMethod.showPopup(res.statusMessage, 1), this.schoolMngArr = []);
         this.editFlag ? (this.f['s_ManagementId'].setValue(this.data.s_ManagementId), this.getLowestGroupClass()) : '';
       },
       error: ((err: any) => { this.errors.handelError(err) })
@@ -207,10 +206,11 @@ export class AddUpdateSchoolRegistrationComponent {
 
   //#region ------------------------------------------------- Upload Image start here --------------------------------------------// 
   imgUpload(event: any) {
-    this.img = true;
+    // this.img = true;
     this.fileUpload.uploadDocuments(event, 'Upload', 'jpg, jpeg, png').subscribe((res: any) => {
       if (res.statusCode == 200) {
-        this.uploadImg = res.responseData;       
+        this.uploadImg = res.responseData;
+        this.commonMethod.showPopup(res.statusMessage, 0);
       }
       else {
         return
@@ -219,14 +219,15 @@ export class AddUpdateSchoolRegistrationComponent {
   }
 
   multipleImgUpload(event: any) {
-    this.img = true;
+    // this.img = true;
     this.fileUpload.uploadMultipleDocument(event, 'Upload', 'jpg, jpeg, png').subscribe((res: any) => {
       if (res.statusCode == 200) {
         this.uploadMultipleImg = res.responseData;
+        this.commonMethod.showPopup(res.statusMessage, 0);
         // multiple image 
         let imgArr = this.uploadMultipleImg.split(',')
-        for( let i = 0; i< imgArr.length; i++ ){
-          let data ={
+        for (let i = 0; i < imgArr.length; i++) {
+          let data = {
             "id": 0,
             "schoolId": 0,
             "documentId": 3,
@@ -237,8 +238,8 @@ export class AddUpdateSchoolRegistrationComponent {
             "modifiedDate": new Date(),
             "isDeleted": true
           }
-          this.imgArray.push(data)        
-        }     
+          this.imgArray.push(data)
+        }
       }
       else {
         return
@@ -272,20 +273,19 @@ export class AddUpdateSchoolRegistrationComponent {
     }
     formValue.schoolDocument = this.imgArray;
 
-    let url;
-    this.editFlag ? url = 'ZP-Osmanabad/School/Update' : url = 'ZP-Osmanabad/School/Add';
-    
+    let url = this.editFlag ? 'Update' : 'Add'
+
     if (!this.schoolRegForm.valid) {
       this.commonMethod.showPopup(this.webStorageS.languageFlag == 'EN' ? 'Please Enter Mandatory Fields' : 'कृपया अनिवार्य फील्ड प्रविष्ट करा', 1);
       return
     }
     else {
       this.ngxSpinner.show();
-      this.apiService.setHttp(this.editFlag ? 'put' : 'post', url, false, formValue, false, 'baseUrl');
+      this.apiService.setHttp(this.editFlag ? 'put' : 'post', 'ZP-Osmanabad/School/' + url, false, formValue, false, 'baseUrl');
       this.apiService.getHttp().subscribe({
         next: (res: any) => {
           this.ngxSpinner.hide();
-          res.statusCode === 200 ? (this.commonMethod.showPopup(res.statusMessage, 0)) : this.commonMethod.checkEmptyData(res.statusMessage) == false ? this.errors.handelError(res.statusCode) : this.commonMethod.showPopup(res.statusMessage, 0);
+          res.statusCode == 200 ? (this.commonMethod.showPopup(res.statusMessage, 0)) : this.commonMethod.checkEmptyData(res.statusMessage) == false ? this.errors.handelError(res.statusCode) : this.commonMethod.showPopup(res.statusMessage, 0);
           this.dialogRef.close('yes');
         },
         error: ((err: any) => {
@@ -303,35 +303,33 @@ export class AddUpdateSchoolRegistrationComponent {
     this.data.uploadImage ? this.schoolRegForm.value.uploadImage = this.data.uploadImage : '';
     this.uploadImg = this.data?.uploadImage
 
-    this.data.schoolDocument.map((res : any)=>{
+    this.data.schoolDocument.map((res: any) => {
       let schoolDocumentObj = {
         "id": res.id,
-          "schoolId": res.schoolId,
-          "documentId": res.documentId,
-          "docPath": res.docPath,
-          "createdBy": 0,
-          "createdDate": new Date(),
-          "modifiedBy": 0,
-          "modifiedDate": new Date(),
-          "isDeleted": true
+        "schoolId": res.schoolId,
+        "documentId": res.documentId,
+        "docPath": res.docPath,
+        "createdBy": 0,
+        "createdDate": new Date(),
+        "modifiedBy": 0,
+        "modifiedDate": new Date(),
+        "isDeleted": true
       };
-
       this.imgArray.push(schoolDocumentObj);
     })
-
   }
   //#endregiongion ---------------------------------------------- Edit Record end here --------------------------------------------//
 
   //#region ------------------------------------------------- Clear Img field start here --------------------------------------------//
   clearImg() {
-    if(this.uploadImg){
+    if (this.uploadImg) {
       this.uploadImg = '';
       this.schoolRegForm.value.uploadImage = '';
       this.f['uploadImage'].setValue('');
     }
   }
 
-  clearMultipleImg(index: any){
+  clearMultipleImg(index: any) {
     this.imgArray.splice(index, 1);
   }
   //#endregionegion --------------------------------------------- Clear Img field end here --------------------------------------------//

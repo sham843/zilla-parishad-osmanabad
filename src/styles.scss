@@ -86,7 +86,11 @@ body {
   line-height: 38px !important;
   padding: 3px !important;
 }
-
+.btn-modal-close:focus,
+.btn-modal-close:active {
+  background-color: #fff !important;
+  --mat-mdc-button-persistent-ripple-color:#fff !important;
+}
 .btn-second {
   font-size: 0.85rem !important;
   color: #A8A8A8 !important;

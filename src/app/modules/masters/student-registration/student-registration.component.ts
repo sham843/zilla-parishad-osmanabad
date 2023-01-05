@@ -74,7 +74,6 @@ export class StudentRegistrationComponent {
     this.ngxSpinner.show();
     this.pageNumber = flag == 'filter' ? 1 : this.pageNumber;    
     let pageNo = this.pageNumber;
-    // this.cardViewFlag ? pageNo = (this.cardCurrentPage + 1) : (pageNo = this.pageNumber, this.cardCurrentPage = 0);
     let str = `?pageno=${pageNo}&pagesize=10&textSearch=${this.searchContent.value || ''}&lan=${this.languageFlag || ''}`;
     let reportStr = '?pageno=1&pagesize=' + (this.totalCount * 10) + '&textSearch=' + this.searchContent.value + '&lan=' + this.languageFlag;
     this.apiService.setHttp('GET', 'zp-osmanabad/Student/GetAll' + (flag == 'reportFlag' ? reportStr : str), false, false, false, 'baseUrl');
@@ -83,12 +82,12 @@ export class StudentRegistrationComponent {
         if (res.statusCode == 200) {
           this.ngxSpinner.hide();
           flag != 'reportFlag' ? this.tableDataArray = res.responseData.responseData1 : this.tableDataArray = this.tableDataArray;
+          flag != 'reportFlag' ?  this.tableDatasize = res.responseData.responseData2.pageCount : this.tableDatasize = this.tableDatasize;
           this.tableDataArray.map((res: any) => {
           let  index = res.documentResponse.findIndex((ele:any)=> ele.documentId == 1);
             res.docPath = res.documentResponse[index]?.docPath
           })
           this.totalCount = res.responseData.responseData2.pageCount;
-          this.tableDatasize = res.responseData.responseData2.pageCount;
           this.studentData = []
           let data: [] = flag == 'reportFlag' ? res.responseData.responseData1 : [];
           data.find((ele: any, i: any) => {
@@ -121,7 +120,6 @@ export class StudentRegistrationComponent {
           } else {
             flag == 'reportFlag' ? this.commonMethods.showPopup("No Data Found", 1) :'';
           }
-
         } else {          
           this.ngxSpinner.hide();
           flag == 'reportFlag' ? this.commonMethods.showPopup("No Data Found", 1) :'';
@@ -138,7 +136,6 @@ export class StudentRegistrationComponent {
           tableHeaders: this.languageFlag == 'English' ? this.displayedheaders : this.marathiDisplayedheaders
         };
         this.apiService.tableData.next(tableData);
-
       },
       error: ((err: any) => { this.ngxSpinner.hide(); this.errors.handelError(err.statusCode) })
     });
@@ -164,10 +161,8 @@ export class StudentRegistrationComponent {
   }
 
   addUpdateStudent(obj?: any) {
-    console.log(obj);
     const dialogRef = this.dialog.open(AddUpdateStudentRegistrationComponent, {
       width: '900px',
-      // 
       data: obj,
       disableClose: true,
       autoFocus: false
@@ -184,15 +179,11 @@ export class StudentRegistrationComponent {
     });
   }
 
-
   childGridCompInfo(obj: any) {
     switch (obj.label) {
       case 'Pagination':
         this.pageNumber = obj.pageNumber;
-        console.log(this.pageNumber);
-        
         this.getTableData();
-        // this.selectGrid('Card');
         break;
       case 'Edit':
         this.addUpdateStudent(JSON.stringify(obj));
@@ -218,7 +209,6 @@ export class StudentRegistrationComponent {
     } else if (label == 'Card') {
       this.cardViewFlag = true;
       this.pageNumber = 1;
-      // this.cardCurrentPage = this.cardCurrentPage;
     }
     this.getTableData();
   }
@@ -229,7 +219,6 @@ export class StudentRegistrationComponent {
   }
 
   openDetailsDialog(obj:any){
-      console.log(obj);
       let  index = obj.documentResponse.findIndex((ele:any)=> ele.documentId == 1);
       var data = {
         headerImage: obj.documentResponse[index]?.docPath,
@@ -242,7 +231,6 @@ export class StudentRegistrationComponent {
       }
       const viewDialogRef = this.dialog.open(GlobalDetailComponent, {
         width: '900px',
-        // 
         data: data,
         disableClose: true,
         autoFocus: false
@@ -250,13 +238,9 @@ export class StudentRegistrationComponent {
       viewDialogRef.afterClosed().subscribe((result: any) => {
        if (result == 'yes') {
         this.getTableData();
-        }
-        
+        }        
       });
-      
-  }
-
- 
+  } 
   //#region -------------------------------------------------- Delete Logic Start Here ------------------------------------------------------
 
   deteleDialogOpen(obj: any) {
@@ -297,28 +281,13 @@ export class StudentRegistrationComponent {
           this.commonMethods.showPopup(res.statusMessage, 1);
         }
       },
-      error: ((err: any) => { this.errors.handelError(err) })
+      error: ((err: any) => { this.errors.handelError(err.statusCode) })
     });
   }
   //#endregion -------------------------------------------------- Delete Logic End Here ------------------------------------------------------
 
   downloadPdf() {
-    this.getTableData('reportFlag')
-    // if (this.studentData.length > 0) {
-    //   let keyPDFHeader = ['SrNo', "ID", "Full Name", "Gender", "Contact No.", "Standard", "School Name", "Caste", "Taluka", "Center"];
-    //   let ValueData =
-    //     this.studentData.reduce(
-    //       (acc: any, obj: any) => [...acc, Object.values(obj).map((value) => value)], []
-    //     );// Value Name
-    //   console.log("ValueData", ValueData);
-    //   let objData: any = {
-    //     'topHedingName': 'Student Report',
-    //     'createdDate': 'Created on:' + new Date()
-    //   }
-    //   this.downloadPdfservice.downLoadPdf(keyPDFHeader, ValueData, objData);
-    // } else {
-    //   this.commonMethods.snackBar("No Data Found", 1);
-    // }
+    this.getTableData('reportFlag');    
   }
 
 }
