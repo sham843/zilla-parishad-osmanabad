@@ -110,7 +110,7 @@ export class AddUpdateSchoolRegistrationComponent {
   getDistrict() {
     this.masterService.getAllDistrict(this.webStorageS.languageFlag).subscribe({
       next: (res: any) => {
-        res.statusCode == 200 ? (this.districtArr = res.responseData, this.schoolRegForm.controls['districtId'].setValue(1)) : this.districtArr = [];
+        res.statusCode == 200 ? (this.districtArr = res.responseData, this.schoolRegForm.controls['districtId'].setValue(1)) : (this.commonMethod.checkEmptyData(res.statusMessage) == false ? this.errors.handelError(res.statusCode) : this.commonMethod.showPopup(res.statusMessage, 1), this.districtArr = []);
         this.getTaluka();
         this.editFlag ? (this.f['districtId'].setValue(this.data.districtId), this.getTaluka()) : '';
       },
@@ -121,7 +121,7 @@ export class AddUpdateSchoolRegistrationComponent {
   getTaluka() {
     this.masterService.getAllTaluka(this.webStorageS.languageFlag).subscribe({
       next: (res: any) => {
-        res.statusCode == 200 ? this.talukaArr = res.responseData : this.talukaArr = [];
+        res.statusCode == 200 ? this.talukaArr = res.responseData : (this.commonMethod.checkEmptyData(res.statusMessage) == false ? this.errors.handelError(res.statusCode) : this.commonMethod.showPopup(res.statusMessage, 1), this.talukaArr = []);
         this.editFlag ? (this.f['talukaId'].setValue(this.data.talukaId), this.getCenter()) : '';
       },
       error: ((err: any) => { this.errors.handelError(err) })
@@ -131,7 +131,7 @@ export class AddUpdateSchoolRegistrationComponent {
   getCenter() {
     this.masterService.getAllCenter(this.webStorageS.languageFlag, this.schoolRegForm.value.talukaId).subscribe({
       next: (res: any) => {
-        res.statusCode == 200 ? this.centerArr = res.responseData : this.centerArr = [];
+        res.statusCode == 200 ? this.centerArr = res.responseData : (this.commonMethod.checkEmptyData(res.statusMessage) == false ? this.errors.handelError(res.statusCode) : this.commonMethod.showPopup(res.statusMessage, 1), this.centerArr = []);
         this.editFlag ? (this.f['centerId'].setValue(this.data.centerId), this.getVillage()) : '';
       },
       error: ((err: any) => { this.errors.handelError(err) })
@@ -139,10 +139,9 @@ export class AddUpdateSchoolRegistrationComponent {
   }
 
   getVillage() {
-    // debugger
     this.masterService.getAllVillage(this.webStorageS.languageFlag, this.schoolRegForm.value.talukaId).subscribe({
       next: (res: any) => {
-        res.statusCode == 200 ? this.villageArr = res.responseData : this.villageArr = [];
+        res.statusCode == 200 ? this.villageArr = res.responseData : (this.commonMethod.checkEmptyData(res.statusMessage) == false ? this.errors.handelError(res.statusCode) : this.commonMethod.showPopup(res.statusMessage, 1), this.villageArr = []);
         this.editFlag ? (this.f['villageId'].setValue(this.data.villageId), this.getSchoolType()) : '';
       },
       error: ((err: any) => { this.errors.handelError(err) })
@@ -152,7 +151,7 @@ export class AddUpdateSchoolRegistrationComponent {
   getSchoolType() {
     this.masterService.getAllSchoolType(this.webStorageS.languageFlag).subscribe({
       next: (res: any) => {
-        res.statusCode == 200 ? this.schoolTypeArr = res.responseData : this.schoolTypeArr = [];
+        res.statusCode == 200 ? this.schoolTypeArr = res.responseData : (this.commonMethod.checkEmptyData(res.statusMessage) == false ? this.errors.handelError(res.statusCode) : this.commonMethod.showPopup(res.statusMessage, 1), this.schoolTypeArr = []);
         this.editFlag ? (this.f['s_TypeId'].setValue(this.data.s_TypeId), this.getCategoryDes()) : '';
       },
       error: ((err: any) => { this.errors.handelError(err) })
@@ -162,7 +161,7 @@ export class AddUpdateSchoolRegistrationComponent {
   getCategoryDes() {
     this.masterService.GetSchoolCategoryDescById(this.webStorageS.languageFlag).subscribe({
       next: (res: any) => {
-        res.statusCode == 200 ? this.categoryArr = res.responseData : this.categoryArr = [];
+        res.statusCode == 200 ? this.categoryArr = res.responseData : (this.commonMethod.checkEmptyData(res.statusMessage) == false ? this.errors.handelError(res.statusCode) : this.commonMethod.showPopup(res.statusMessage, 1),this.categoryArr = []);
         this.editFlag ? (this.f['s_CategoryId'].setValue(this.data.s_CategoryId), this.getSchoolMngDesc()) : '';
       },
       error: ((err: any) => { this.errors.handelError(err) })
@@ -172,7 +171,7 @@ export class AddUpdateSchoolRegistrationComponent {
   getSchoolMngDesc() {
     this.masterService.GetSchoolMngDescById(this.webStorageS.languageFlag).subscribe({
       next: (res: any) => {
-        res.statusCode == 200 ? this.schoolMngArr = res.responseData : this.schoolMngArr = [];
+        res.statusCode == 200 ? this.schoolMngArr = res.responseData : (this.commonMethod.checkEmptyData(res.statusMessage) == false ? this.errors.handelError(res.statusCode) : this.commonMethod.showPopup(res.statusMessage, 1), this.schoolMngArr = []);
         this.editFlag ? (this.f['s_ManagementId'].setValue(this.data.s_ManagementId), this.getLowestGroupClass()) : '';
       },
       error: ((err: any) => { this.errors.handelError(err) })
