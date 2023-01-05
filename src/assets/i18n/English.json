@@ -95,7 +95,7 @@
         "gender": "Gender",
         "religion" : "Religion",
         "caste" : "Caste",
-        "physicallyDisabled" :"Are You Handicapped",
+        "physicallyDisabled" :"Are You Handicapped?",
         "saralId" : "Saral ID",
         "aadhaarNo" :"Aadhaar No.",
         "aadhaarPhoto" : "Upload Aadhaar Photo",
