@@ -38,20 +38,16 @@ export class AddUpdateStudentRegistrationComponent {
   languageFlag!: string
   imageArray = new Array();
   maxDate = new Date();
-
   imgFlag: boolean = false;
   aadhaarFlag: boolean = false;
-
-
 
   @ViewChild('uploadImage') imageFile!: ElementRef;
   @ViewChild('uploadAadhar') aadharFile!: ElementRef;
 
-
   constructor(
     private fb: FormBuilder, private masterService: MasterService, private errors: ErrorsService,
-    private fileUpl: FileUploadService, private apiService: ApiService, 
-    private webService: WebStorageService, private datePipe:DatePipe,
+    private fileUpl: FileUploadService, private apiService: ApiService,
+    private webService: WebStorageService, private datePipe: DatePipe,
     private commonMethods: CommonMethodsService, public validators: ValidationService, private ngxSpinner: NgxSpinnerService,
     public dialogRef: MatDialogRef<AddUpdateStudentRegistrationComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any) { }
@@ -62,10 +58,10 @@ export class AddUpdateStudentRegistrationComponent {
     this.data ? (this.editObj = JSON.parse(this.data), this.patchValue()) : this.allDropdownMethods();
   }
 
-  searchMobileNo(event:any){
+  searchMobileNo(event: any) {
     console.log(event);
     let mobileNo = this.stuRegistrationForm.value.mobileNo;
-    if(this.stuRegistrationForm.controls['mobileNo'].valid){
+    if (this.stuRegistrationForm.controls['mobileNo'].valid) {
       this.apiService.setHttp('get', 'zp-osmanabad/Student/GetGaurdianByMobileNo?MobileNo=' + mobileNo + '&lan=EN', false, false, false, 'baseUrl');
       this.apiService.getHttp().subscribe({
         next: (res: any) => {
@@ -77,17 +73,14 @@ export class AddUpdateStudentRegistrationComponent {
               this.fc['fatherFullName'].setValue(res.responseData?.m_FatherFullName);
               this.fc['motherName'].setValue(res.responseData?.m_MotherName)
             }
-            // this.commonMethods.snackBar(res.statusMessage, 0);
           } else {
             this.fc['fatherFullName'].setValue('');
             this.fc['motherName'].setValue('');
-            // this.commonMethods.checkEmptyData(res.statusMessage) == false ? this.errors.handelError(res.statusCode) : this.commonMethods.showPopup(res.statusMessage, 1);
           }
         },
         error: ((err: any) => { this.ngxSpinner.hide(); this.errors.handelError(err) })
       });
     }
-    
   }
 
   allDropdownMethods() {
@@ -114,14 +107,13 @@ export class AddUpdateStudentRegistrationComponent {
       gender: ['', Validators.required],
       religionId: ['', Validators.required],
       castId: ['', Validators.required],
-      saralId: ['',[Validators.maxLength(19),Validators.minLength(19)]],
+      saralId: ['', [Validators.maxLength(19), Validators.minLength(19)]],
       mobileNo: ['', [Validators.required, Validators.pattern(this.validators.mobile_No)]],
       fatherFullName: ['', Validators.required],
       // m_FatherFullName: ['', Validators.required],
       motherName: ['', Validators.required],
       // m_MotherName: ['', Validators.required],
       aadharNo: ['', [Validators.required, Validators.pattern(this.validators.aadhar_card)]],
-      // emailID:[''],
       physicallyDisabled: ['', Validators.required]
     })
   }
@@ -297,7 +289,6 @@ export class AddUpdateStudentRegistrationComponent {
 
   onSubmit() {
     this.ngxSpinner.show();
-  
     let obj = this.stuRegistrationForm.value;
     let dateWithTime = this.datePipe.transform(obj.dob, 'yyyy-MM-dd' + 'T' + 'HH:mm:ss.ms');
     let postObj = {
@@ -399,8 +390,6 @@ export class AddUpdateStudentRegistrationComponent {
           "docPath": name == 'img' ? this.uploadImg : this.uploadAadhaar
         }
         this.imageArray.push(obj);
-        console.log(this.imageArray);
-
       } else {
         name == 'img' ? (this.uploadImg = '', this.imageFile.nativeElement.value = '') : (this.uploadAadhaar = '', this.aadharFile.nativeElement.value = '');
       }
@@ -427,8 +416,6 @@ export class AddUpdateStudentRegistrationComponent {
       let index = this.imageArray.findIndex(res => res.documentId == 1);
       this.imageArray.splice(index, 1);
     }
-    console.log(this.imageArray);
-
   }
 
   //#region ------------------------------------------- Image Logic Start Here -----------------------------------------------------------------
