@@ -47,6 +47,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
   enbTalDropFlag:boolean=false;
   standardShowFlag:boolean=false;
   selectedTalukaId:any;
+  resetFlag:boolean=false;
   get f() { return this.filterForm.controls }
   get fBgraph() { return this.filterFormForBarGraph.controls }
   constructor(public translate: TranslateService, private masterService: MasterService,
@@ -54,19 +55,6 @@ export class DashboardComponent implements OnInit, AfterViewInit {
     private error: ErrorsService, private commonMethods: CommonMethodsService,
     // private router: Router
      ) {
-    this.getBarChartOption();
-    this.getPieChart();
-
-    this.webStorage.langNameOnChange.subscribe((lang) => {
-      this.selectedLang = lang;
-       this.showSvgMap(this.commonMethods.mapRegions());
-       this.getPieChartData();
-       this.constructBarChart();
-       this.getbarChartByTaluka();
-       setTimeout(()=>{
-        this.clickOnSvgMap('select');
-       },70)
-    });
   }
 
   ngOnInit() {
@@ -80,6 +68,18 @@ export class DashboardComponent implements OnInit, AfterViewInit {
       filtercenterId: [0],
       filtersubjectId: []
     })
+    this.getBarChartOption();
+    this.getPieChart();
+    this.webStorage.langNameOnChange.subscribe((lang) => {
+      this.selectedLang = lang;
+       this.showSvgMap(this.commonMethods.mapRegions());
+       this.getPieChartData();
+       this.constructBarChart();
+       this.selectedObj?this.getbarChartByTaluka():'';
+       setTimeout(()=>{
+        this.clickOnSvgMap('select');
+       },70)
+    });
     this.getTalukas();
     this.getdashboardCount();
     this.getTabledataByTaluka()
@@ -568,7 +568,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
     const filterformData = this.filterForm.value;
     const formDatafilterbyTaluka = this.filterFormForBarGraph.value;
     this.selectedTalukaId = filterformData?.talukaId ? filterformData?.talukaId : formDatafilterbyTaluka?.filtertalukaId;
-    const str = this.selectedTalukaId ? (this.selectedObj.groupId == 1 ? 'GetDataFor1st2ndStdByCenter' : 'GetDataFor3rdAboveStdByCenter') : (this.selectedObj.groupId == 1 ? 'GetDataFor1st2ndStdByTaluka' : 'GetDataFor3rdAboveStdByTaluka');
+    const str = this.selectedTalukaId ? (this.selectedObj.groupId == 1 ? 'GetDataFor1st2ndStdByCenter' : 'GetDataFor3rdAboveStdByCenter') : (this.selectedObj?.groupId == 1 ? 'GetDataFor1st2ndStdByTaluka' : 'GetDataFor3rdAboveStdByTaluka');
     this.apiService.setHttp('GET', 'zp-osmanabad/Dashboard/' + str + '?TalukaId=' + (this.selectedTalukaId || 0) + (this.selectedTalukaId ? '&CenterId=' + (formDatafilterbyTaluka?.filtercenterId || 0) : '') + '&groupId=' + this.selectedObj?.groupId + '&SubjectId=' + (formDatafilterbyTaluka.filtersubjectId | 0), false, false, false, 'baseUrl');
     this.apiService.getHttp().subscribe({
       next: (res: any) => {
