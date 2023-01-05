@@ -217,7 +217,7 @@ getTableTranslatedData(){
       }
       this.resultDownloadArr.push(obj);
     });
-    let keyPDFHeader = ['srNo', 'designationName', 'designationLevel'];
+    let keyPDFHeader = ['Sr.No.', 'Designation', 'Designation Level'];
         let ValueData =
           this.resultDownloadArr.reduce(
             (acc: any, obj: any) => [...acc, Object.values(obj).map((value) => value)], []

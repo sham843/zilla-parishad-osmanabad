@@ -143,10 +143,12 @@
                             <input type="file" name="myfile" [disabled]="uploadImg" (change)="fileUpload($event,'img')" #uploadImage/>
                         </div>
                         <div class="action-btn" *ngIf="uploadImg">
-                            <button mat-icon-button class="btn-icon text-primary" type="button" (click)="viewImages('photo')">
+                            <button mat-icon-button class="btn-icon text-primary" type="button" (click)="viewImages('photo')"
+                            matTooltip="{{'Labels.View' | translate}}" matTooltipPosition="below" matTooltipClass="tooltip">
                                 <mat-icon>visibility</mat-icon>
                             </button>
-                            <button mat-icon-button class="btn-icon text-danger" type="button" (click)="deleteImage('photo')">
+                            <button mat-icon-button class="btn-icon text-danger" type="button" (click)="deleteImage('photo')"
+                            matTooltip="{{'Labels.delete' | translate}}" matTooltipPosition="below" matTooltipClass="tooltip">
                                 <mat-icon>delete</mat-icon>
                             </button>
                         </div>
@@ -219,10 +221,12 @@
                             <input type="file" name="myfile" [disabled]="uploadAadhaar" (change)="fileUpload($event,'aadhar')" #uploadAadhar/>
                         </div>
                         <div class="action-btn" *ngIf="uploadAadhaar">
-                            <button mat-icon-button class="btn-icon text-primary" type="button" (click)="viewImages('aadharPhoto')">
+                            <button mat-icon-button class="btn-icon text-primary" type="button" (click)="viewImages('aadharPhoto')" 
+                                matTooltip="{{'Labels.View' | translate}}" matTooltipPosition="below" matTooltipClass="tooltip">
                                 <mat-icon>visibility</mat-icon>
                             </button>
-                            <button mat-icon-button class="btn-icon text-danger" type="button" (click)="deleteImage('aadharPhoto')">
+                            <button mat-icon-button class="btn-icon text-danger" type="button" (click)="deleteImage('aadharPhoto')"
+                                matTooltip="{{'Labels.delete' | translate}}" matTooltipPosition="below" matTooltipClass="tooltip">
                                 <mat-icon>delete</mat-icon>
                             </button>
                         </div>
