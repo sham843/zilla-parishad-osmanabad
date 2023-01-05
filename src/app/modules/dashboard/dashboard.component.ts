@@ -707,7 +707,6 @@ export class DashboardComponent implements OnInit, AfterViewInit {
   }
   clickOnSvgMap(flag?: string) {
     if (flag == 'select') {
-      this.globalTalId =[];
       //this.enbTalDropFlag ? $('#mapsvg path').addClass('disabledAll'): '';
       let checkTalActiveClass = $('#mapsvg   path').hasClass("talActive");
       checkTalActiveClass ? $('#mapsvg path[id="' + this.globalTalId + '"]').removeAttr("style") : '';
