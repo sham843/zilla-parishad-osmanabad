@@ -34,7 +34,7 @@
 
                                     </div>
                                     <div class="col-sm-12">
-                                        <span class="data-label" *ngIf="data?.checkbox == 'Subject'">{{'Labels.Subject'| translate}}</span>
+                                        <span class="data-label" *ngIf="data?.checkbox == 'Subject' || data?.checkbox == 'विषय'">{{'Labels.Subject'| translate}}</span>
                                         <div class="data-text d-flex flex-wrap">
                                             <div *ngFor="let assign of data?.Obj?.assignSubject" class="lang-badge">
                                                 {{ webStorage.languageFlag == 'EN' ? assign.subjectName :

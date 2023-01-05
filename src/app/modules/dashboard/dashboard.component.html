@@ -4,7 +4,7 @@
             <mat-card-header class="card-header">
                 <div class="d-flex justify-content-between align-items-center w-100">
                     <h6 class="text-main mb-0 fw-bold">{{'Labels.filterclick' | translate}}</h6>
-                    <button mat-icon-button class="btn-modal-close" mat-dialog-close (click)="this.drawer.close(); f['talukaId'].value!=0? dashboardAPis():''; clickOnSvgMap('select')">
+                    <button mat-icon-button class="btn-modal-close" mat-dialog-close (click)="this.drawer.close(); resetFlag? dashboardAPis():'';resetFlag=false">
                         <mat-icon>
                             close
                         </mat-icon>
@@ -12,12 +12,12 @@
                 </div>
             </mat-card-header>
             <mat-card-content class="card-body">
-                <form [formGroup]="filterForm" (ngSubmit)="dashboardAPis();this.drawer.close()">
+                <form [formGroup]="filterForm" (ngSubmit)="dashboardAPis();this.drawer.close(); clickOnSvgMap('select')">
                     <div class="mb-1">
                         <mat-form-field appearance="outline" class="w-100">
                             <mat-label>{{'Labels.selectTaluka' | translate}}</mat-label>
                             <mat-select formControlName="talukaId"
-                                (selectionChange)="f['talukaId'].value!=0? getCenters():'';  clickOnSvgMap('select')">
+                                (selectionChange)="f['talukaId'].value!=0? getCenters():''">
                                 <mat-option *ngFor="let taluka of talukaData" [value]="taluka.id">
                                     {{webStorage.languageFlag == 'EN'?taluka.taluka:taluka.m_Taluka}}
                                 </mat-option>
@@ -47,7 +47,7 @@
 
                     <div class="d-flex justify-content-end">
                         <button mat-flat-button type="button" class="me-2 btn-second" mat-dialog-close
-                            (click)="filterForm.reset(); f['talukaId'].patchValue(0); clickOnSvgMap('select')">{{'Labels.reset' | translate}}</button>
+                            (click)="filterForm.reset(); f['talukaId'].patchValue(0); clickOnSvgMap('select');resetFlag=true">{{'Labels.reset' | translate}}</button>
                         <button mat-flat-button type="submit" class="btn-main btn">{{'Labels.filterclick' | translate}}</button>
                     </div>
                 </form>
@@ -343,7 +343,7 @@
                             <div class="col-sm-12">
                                 <apx-chart [series]="barchartOptions1.series[0]" [chart]="barchartOptions1.chart"
                                     [theme]="barchartOptions1.theme" [dataLabels]="barchartOptions1.dataLabels"
-                                    [plotOptions]="barchartOptions1.plotOptions"
+                                    [plotOptions]="barchartOptions1.plotOptions"  [tooltip]="barchartOptions1.tooltip"
                                     [responsive]="barchartOptions1.responsive" [xaxis]="barchartOptions1.xaxis"
                                     [legend]="barchartOptions1.legend" [fill]="barchartOptions1.fill"></apx-chart>
                             </div>

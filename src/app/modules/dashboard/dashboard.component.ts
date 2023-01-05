@@ -47,6 +47,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
   enbTalDropFlag:boolean=false;
   standardShowFlag:boolean=false;
   selectedTalukaId:any;
+  resetFlag:boolean=false;
   get f() { return this.filterForm.controls }
   get fBgraph() { return this.filterFormForBarGraph.controls }
   constructor(public translate: TranslateService, private masterService: MasterService,
@@ -54,19 +55,6 @@ export class DashboardComponent implements OnInit, AfterViewInit {
     private error: ErrorsService, private commonMethods: CommonMethodsService,
     // private router: Router
      ) {
-    this.getBarChartOption();
-    this.getPieChart();
-
-    this.webStorage.langNameOnChange.subscribe((lang) => {
-      this.selectedLang = lang;
-       this.showSvgMap(this.commonMethods.mapRegions());
-       this.getPieChartData();
-       this.constructBarChart();
-       this.getbarChartByTaluka();
-       setTimeout(()=>{
-        this.clickOnSvgMap('select');
-       },70)
-    });
   }
 
   ngOnInit() {
@@ -80,6 +68,18 @@ export class DashboardComponent implements OnInit, AfterViewInit {
       filtercenterId: [0],
       filtersubjectId: []
     })
+    this.getBarChartOption();
+    this.getPieChart();
+    this.webStorage.langNameOnChange.subscribe((lang) => {
+      this.selectedLang = lang;
+       this.showSvgMap(this.commonMethods.mapRegions());
+       this.getPieChartData();
+       this.constructBarChart();
+       this.selectedObj?this.getbarChartByTaluka():'';
+       setTimeout(()=>{
+        this.clickOnSvgMap('select');
+       },70)
+    });
     this.getTalukas();
     this.getdashboardCount();
     this.getTabledataByTaluka()
@@ -282,7 +282,8 @@ export class DashboardComponent implements OnInit, AfterViewInit {
           show: false,
         },
         categories: [
-        ]
+        ],
+        parameters:[]
       },
       yaxis: {
         show: false,
@@ -355,7 +356,8 @@ export class DashboardComponent implements OnInit, AfterViewInit {
           },
         },
         categories: [
-        ]
+        ],
+        parameters:[]
       },
 
       yaxis: {
@@ -422,10 +424,13 @@ export class DashboardComponent implements OnInit, AfterViewInit {
         if (res.statusCode == "200") {
           this.dashboardCountData.push(res.responseData.responseData1[0]);
           this.totalStudentSurveyData =res.responseData.responseData2;
-          this.totalStudentSurveyData.map((x:any)=>{ x.status = true; x.ischeckboxShow=true})
+          this.totalStudentSurveyData.map((x:any)=>{
+            x.status = true;
+            x.ischeckboxShow=true})
           this.totalStudentSurveyData[1].status = true;
           this.totalStudentSurveyData[0].ischeckboxShow=false;
-         this.checkData(this.totalStudentSurveyData[1], 'radio');
+          // this.tableColumn = [{ label: 'एकूण संख्या', groupId: 0, ischeckboxShow: false, status: false }, { label: '१ली ते 2वी', groupId: 1, subSTD: [{ label: '१ली', subgroupId: 1, status: false }, { label: '2री', subgroupId: 2, status: false }], ischeckboxShow: true, status: true }, { label: '3री ते ५वी', groupId: 2, subSTD: [{ label: '3री', subgroupId: 3, status: false }, { label: '4री', subgroupId: 4, status: false }, { label: '5वी', subgroupId: 5, status: false }], ischeckboxShow: true, status: false }, { label: '६वी ते ८वी', groupId: 3, subSTD: [{ label: '६वी', subgroupId: 6, status: false }, { label: '7वी', subgroupId: 7, status: false }, { label: '८वी', subgroupId: 8, status: false }], ischeckboxShow: true, status: false },];
+          this.checkData(this.totalStudentSurveyData[1], 'radio');
           this.getPieChartData();
         } else {
           this.dashboardCountData = [];
@@ -543,14 +548,15 @@ export class DashboardComponent implements OnInit, AfterViewInit {
     })
     this.barchartOptions.series.push(dataArray);
     this.barchartOptions.xaxis.categories.push(...(this.selectedLang == 'English' ? subjectSet: subjectSet_m));
+    this.barchartOptions.xaxis.parameters= this.selectedLang == 'English' ?['Level','Percentage']:['स्तर','टक्केवारी']
     this.showBarChartF = true;
     
     this.barchartOptions.tooltip = {
       custom: function({ series, seriesIndex, dataPointIndex, w }: any) {              
         return (
           '<div class="arrow_box" style="padding:10px;">' +
-            "<div>" + 'Level' + " : <b> " + w.globals.seriesNames[seriesIndex]+ '</b>' + "</div>" +
-            "<div>" + 'Percentage' + " : <b> " + series[seriesIndex][dataPointIndex] + '%</b>' + "</div>" +
+            "<div>" + w.config.xaxis.parameters[0]+ " : <b> " + w.globals.seriesNames[seriesIndex]+ '</b>' + "</div>" +
+            "<div>" + w.config.xaxis.parameters[1] + " : <b> " + series[seriesIndex][dataPointIndex] + '%</b>' + "</div>" +
           "</div>"
         );
       },
@@ -562,7 +568,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
     const filterformData = this.filterForm.value;
     const formDatafilterbyTaluka = this.filterFormForBarGraph.value;
     this.selectedTalukaId = filterformData?.talukaId ? filterformData?.talukaId : formDatafilterbyTaluka?.filtertalukaId;
-    const str = this.selectedTalukaId ? (this.selectedObj.groupId == 1 ? 'GetDataFor1st2ndStdByCenter' : 'GetDataFor3rdAboveStdByCenter') : (this.selectedObj.groupId == 1 ? 'GetDataFor1st2ndStdByTaluka' : 'GetDataFor3rdAboveStdByTaluka');
+    const str = this.selectedTalukaId ? (this.selectedObj.groupId == 1 ? 'GetDataFor1st2ndStdByCenter' : 'GetDataFor3rdAboveStdByCenter') : (this.selectedObj?.groupId == 1 ? 'GetDataFor1st2ndStdByTaluka' : 'GetDataFor3rdAboveStdByTaluka');
     this.apiService.setHttp('GET', 'zp-osmanabad/Dashboard/' + str + '?TalukaId=' + (this.selectedTalukaId || 0) + (this.selectedTalukaId ? '&CenterId=' + (formDatafilterbyTaluka?.filtercenterId || 0) : '') + '&groupId=' + this.selectedObj?.groupId + '&SubjectId=' + (formDatafilterbyTaluka.filtersubjectId | 0), false, false, false, 'baseUrl');
     this.apiService.getHttp().subscribe({
       next: (res: any) => {
@@ -595,7 +601,19 @@ export class DashboardComponent implements OnInit, AfterViewInit {
     })
     this.barchartOptions1.series.push(arrayObjectData);
     this.barchartOptions1.xaxis.categories.push(...(this.selectedLang == 'English' ?talukaSet:talukaSet_m));
+    this.barchartOptions1.xaxis.parameters= this.selectedLang == 'English' ?['Level','Percentage']:['स्तर','टक्केवारी']
     this.showBarChartS = true;
+    
+    this.barchartOptions1.tooltip = {
+      custom: function({ series, seriesIndex, dataPointIndex, w }: any) {              
+        return (
+          '<div class="arrow_box" style="padding:10px;">' +
+            "<div>" + w.config.xaxis.parameters[0]+ " : <b> " + w.globals.seriesNames[seriesIndex]+ '</b>' + "</div>" +
+            "<div>" + w.config.xaxis.parameters[1] + " : <b> " + series[seriesIndex][dataPointIndex] + '%</b>' + "</div>" +
+          "</div>"
+        );
+      },
+    }
   };
   getTabledataByTaluka() {
     const filterformData = this.filterForm.value;
