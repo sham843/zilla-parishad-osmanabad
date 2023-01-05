@@ -1,6 +1,6 @@
 import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-//import { Router } from '@angular/router';
+// import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { ApiService } from 'src/app/core/services/api.service';
 import { CommonMethodsService } from 'src/app/core/services/common-methods.service';
@@ -405,7 +405,8 @@ export class DashboardComponent implements OnInit, AfterViewInit {
       OptionGrade: data?.optionGrade|0
     }
     this.webStorage.selectedBarchartObjData.next(this.SharingObject);
-    //this.router.navigate(['/dashboard-student-details'])
+    localStorage.setItem('selectedBarchartObjData',JSON.stringify(this.SharingObject))
+    // this.router.navigate(['/dashboard-student-details'])
   }
 
   getdashboardCount() {
