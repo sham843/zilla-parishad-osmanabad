@@ -266,13 +266,9 @@ export class AddUpdateSchoolRegistrationComponent {
     formValue.uploadImage ? formValue.uploadImage = this.uploadImg : '';
     if (this.editFlag == true) {
       if (this.data.uploadImage) {
-        console.log("If Block");
-        
         this.img ? formValue.uploadImage = this.uploadImg : formValue.uploadImage = this.data.uploadImage
       }
       else {
-        console.log("Else Block");
-
         formValue.uploadImage = this.schoolRegForm.value.uploadImage;
       }
     }
@@ -307,8 +303,6 @@ export class AddUpdateSchoolRegistrationComponent {
     this.editFlag = true;
     this.data.uploadImage ? this.schoolRegForm.value.uploadImage = this.data.uploadImage : '';
     this.uploadImg = this.data?.uploadImage
-    console.log("on Edit Profile Img : ", this.schoolRegForm.value.uploadImage);
-    
 
     this.data.schoolDocument.map((res: any) => {
       let schoolDocumentObj = {
