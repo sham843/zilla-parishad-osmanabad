@@ -92,10 +92,12 @@
                             <input type="file" name="myfile"  formControlName="uploadImage" (change)="imgUpload($event)"/>
                         </div>
                         <div class="action-btn" *ngIf="uploadImg">
-                            <button mat-icon-button class="btn-icon text-primary" type="button" *ngIf="uploadImg" (click)="viewImg()">
+                            <button mat-icon-button class="btn-icon text-primary" type="button" *ngIf="uploadImg" (click)="viewImg()"
+                            matTooltip="{{'Labels.View' | translate}}" matTooltipPosition="below" matTooltipClass="tooltip">
                                 <mat-icon>visibility</mat-icon>
                             </button>
-                            <button mat-icon-button class="btn-icon text-danger" type="button" *ngIf="uploadImg" (click)="clearImg()">
+                            <button mat-icon-button class="btn-icon text-danger" type="button" *ngIf="uploadImg" (click)="clearImg()"
+                            matTooltip="{{'Labels.delete' | translate}}" matTooltipPosition="below" matTooltipClass="tooltip">
                                 <mat-icon>delete</mat-icon>
                             </button>
                         </div>
@@ -211,7 +213,7 @@
                                 <span
                                     class="position-absolute" style="top:-17px;right:-17px;">
                                     <button type="button" mat-icon-button class="bg-danger bg-opacity-25 text-danger"
-                                        (click)="clearMultipleImg(i)">
+                                        (click)="clearMultipleImg(i)" matTooltip="{{'Labels.delete' | translate}}" matTooltipPosition="below" matTooltipClass="tooltip">
                                         <mat-icon>delete</mat-icon>
                                     </button>
                                 </span>
