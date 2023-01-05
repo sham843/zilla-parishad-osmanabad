@@ -13,7 +13,7 @@
                         <mat-icon>brightness_medium</mat-icon>
                     </button>
                     <div class="dropdown-menu dropdown-menu-end">
-                        <button class="dropdown-item" (click)="changeTheme('light')">
+                        <button class="dropdown-item active" (click)="changeTheme('light')">
                             <div class="d-flex align-items-center">
                                 <mat-icon>light_mode</mat-icon>
                                 <span>{{'Labels.LightMode' | translate}}</span>
@@ -33,7 +33,7 @@
                         <img [src]="webStorage.languageFlag == 'EN' ? 'assets/images/english.svg' : 'assets/images/marathi.svg'">
                     </button>
                     <div class="dropdown-menu dropdown-menu-end">
-                        <button class="dropdown-item" (click)="translateLanguage('English')">
+                        <button class="dropdown-item active" (click)="translateLanguage('English')">
                             <div class="d-flex align-items-start">
                                 <img src="assets/images/english.svg">
                                 <span>English</span>
