@@ -57,7 +57,7 @@
       </div>
     </div>
   </mat-card-header>
-  <form [formGroup]="filterForm">
+  <form [formGroup]="filterForm" (ngSubmit)="getTableData('filter')">
     <mat-card-header class="card-header mb-0 pb-0 border-bottom-0">
       <div class="row gx-2 w-100">
         <div class="col-sm-3">
@@ -67,7 +67,7 @@
           </mat-form-field>
         </div>
         <div class="col-sm-auto">
-          <button type="button" mat-flat-button class="btn-main" (click)="getTableData('filter')">{{'Labels.filter' |
+          <button type="button" mat-flat-button type="submit" class="btn-main">{{'Labels.filter' |
             translate}}</button>
           <button type="button" mat-flat-button class="btn-second ms-2" (click)="onClear()">{{'Labels.clear' |
             translate}}</button>
