@@ -17,7 +17,7 @@ export class AppComponent {
     private activatedRoute: ActivatedRoute,
     private webStorage: WebStorageService) {
     this.checkBaseUrl();
-    this.setTitle();
+    // this.setTitle();
   }
 
   ngOnInit() {
@@ -47,14 +47,14 @@ export class AppComponent {
     ).subscribe(() => {
       var rt = this.getChild(this.activatedRoute);
       console.log("breadcrun", rt?.data._value);
-      if(rt?.data._value.breadcrumb){
+      // if(rt?.data._value.breadcrumb){
         let titleName = rt?.data._value?.breadcrumb[rt.data?._value?.breadcrumb?.length - 1]?.title;
         let m_tile =  rt?.data._value?.breadcrumb[rt.data?._value?.breadcrumb?.length - 1]?.m_title
         console.log("titleName", titleName, m_tile);
         rt.data.subscribe(() => {
-          this.titleService.setTitle( this.langTypeName == 'EN' ? titleName : m_tile )
+          this.titleService.setTitle( this.langTypeName == 'English' ? titleName : m_tile )
         })
-      }
+      // }
     
     });
   }
