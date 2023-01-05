@@ -270,7 +270,7 @@
             <mat-card-actions align="end" class="me-3 mb-2">
                 <button mat-stroked-button class="btn-second me-2" type="button" mat-dialog-close>{{'Labels.cancel'|
                     translate}}</button>
-                <button mat-stroked-button class="btn-main" (click)="onSubmit()">{{editObj ? ('Labels.update'|
+                <button type="submit" mat-stroked-button class="btn-main" (click)="onSubmit()">{{editObj ? ('Labels.update'|
                     translate):('Labels.submit'| translate)}}</button>
             </mat-card-actions>
         </mat-card-footer>
