@@ -38,8 +38,8 @@ export class SchoolRegistrationComponent {
   displayedColumns = new Array();
   tableDatasize!: Number;
   tableData: any;
-  displayedheadersEnglish = ['#', 'Sr. No.', 'School Name', 'Village', 'Taluka', 'District', 'Action'];
-  displayedheadersMarathi = ['#', 'अनुक्रमांक', 'शाळेचे नाव', 'गाव', 'तालुका', 'जिल्हा', 'कृती'];
+  displayedheadersEnglish = ['#', 'Sr. No.', 'School Name', 'District', 'Taluka', 'Village', 'Action'];
+  displayedheadersMarathi = ['#', 'अनुक्रमांक', 'शाळेचे नाव', 'जिल्हा', 'तालुका', 'गाव',  'कृती'];
 
   constructor(private dialog: MatDialog, 
     private apiService: ApiService, 
@@ -72,7 +72,7 @@ export class SchoolRegistrationComponent {
     this.webStorageS.langNameOnChange.subscribe(lang => {
       // this.getDistrict();
       this.langTypeName = lang;
-      this.displayedColumns = ['uploadImage', 'srNo', this.langTypeName == 'English' ? 'schoolName' : 'm_SchoolName', this.langTypeName == 'English' ? 'village' : 'm_Village', this.langTypeName == 'English' ? 'taluka' : 'm_Taluka', this.langTypeName == 'English' ? 'district' : 'm_District', 'action'];
+      this.displayedColumns = ['uploadImage', 'srNo', this.langTypeName == 'English' ? 'schoolName' : 'm_SchoolName', this.langTypeName == 'English' ? 'district' : 'm_District', this.langTypeName == 'English' ? 'taluka' : 'm_Taluka', this.langTypeName == 'English' ? 'village' : 'm_Village', 'action'];
       this.tableData = {
         pageNumber: this.pageNumber,
         img: 'uploadImage', blink: '', badge: '', isBlock: '', pagintion: true,
