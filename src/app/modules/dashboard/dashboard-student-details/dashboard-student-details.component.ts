@@ -46,10 +46,11 @@ export class DashboardStudentDetailsComponent {
     private masterService: MasterService,
   ) { }
   ngOnInit() {
-    this.webService.selectedBarchartObjData.subscribe((x: any) => {
-      console.log(x);
-      this.dashboardObj = x;
-    })
+    this.dashboardObj = JSON.parse(localStorage.getItem('selectedBarchartObjData') || '');
+    // this.webService.selectedBarchartObjData.subscribe((x: any) => {
+    //   console.log(x);
+    //   this.dashboardObj = x;
+    // })
     this.formData();
     this.languageChange();
     this.getTaluka();    
