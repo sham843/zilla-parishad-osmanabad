@@ -278,7 +278,6 @@ export class AddUpdateStudentRegistrationComponent {
       physicallyDisabled: this.editObj?.isHandicaped ? 1 : 2
     });
     this.imageArray = this.editObj?.documentResponse;
-    console.log(this.imageArray);
     let aadharObj = this.editObj?.documentResponse?.find((res: any) => res.documentId == 2);
     let imageObj = this.editObj?.documentResponse?.find((res: any) => res.documentId == 1);
     this.uploadAadhaar = aadharObj?.docPath;
@@ -385,7 +384,7 @@ export class AddUpdateStudentRegistrationComponent {
         this.commonMethods.showPopup(res.statusMessage, 0);
         let obj = {
           "id": 0,
-          "studentId": this.editFlag ? this.editObj.id : 0,
+          "studentId": this.editObj ? this.editObj.id : 0,
           "documentId": name == 'img' ? 1 : 2,
           "docPath": name == 'img' ? this.uploadImg : this.uploadAadhaar
         }
