@@ -3,19 +3,19 @@
         <mat-card class="plain-card">
             <mat-card-header class="card-header">
                 <div class="d-flex justify-content-between align-items-center w-100">
-                    <h6 class="text-main mb-0 fw-bold">Filters</h6>
-                    <!-- <button mat-icon-button class="btn-modal-close" mat-dialog-close (click)="this.drawer.close()">
+                    <h6 class="text-main mb-0 fw-bold">{{'Labels.filterclick' | translate}}</h6>
+                    <button mat-icon-button class="btn-modal-close" mat-dialog-close (click)="this.drawer.close()">
                         <mat-icon>
                             close
                         </mat-icon>
-                    </button> -->
+                    </button>
                 </div>
             </mat-card-header>
             <mat-card-content class="card-body">
                 <form [formGroup]="filterForm" (ngSubmit)="dashboardAPis();this.drawer.close()">
                     <div class="mb-1">
                         <mat-form-field appearance="outline" class="w-100">
-                            <mat-label>तालुका निवडा</mat-label>
+                            <mat-label>{{'Labels.selectTaluka' | translate}}</mat-label>
                             <mat-select formControlName="talukaId"
                                 (selectionChange)="f['talukaId'].value!=0? getCenters():'';  clickOnSvgMap('select')">
                                 <mat-option *ngFor="let taluka of talukaData" [value]="taluka.id">
@@ -26,7 +26,7 @@
                     </div>
                     <div class="mb-1">
                         <mat-form-field appearance="outline" class="w-100">
-                            <mat-label>केंद्र निवडा</mat-label>
+                            <mat-label>{{'Labels.selectCenter' | translate}}</mat-label>
                             <mat-select formControlName="centerId" [placeholder]="'All'" (selectionChange)="getschools()">
                                 <mat-option *ngFor="let center of centerData" [value]="center.id">
                                     {{webStorage.languageFlag == 'EN'?center.center:center.m_Center}}
@@ -36,7 +36,7 @@
                     </div>
                     <div class="mb-3">
                         <mat-form-field appearance="outline" class="w-100">
-                            <mat-label>शाळा निवडा</mat-label>
+                            <mat-label>{{'Labels.selectSchool' | translate}}</mat-label>
                             <mat-select formControlName="schoolId" placeholder="All">
                                 <mat-option *ngFor="let school of schoolData" [value]="school.id">
                                     {{webStorage.languageFlag == 'EN'?school.schoolName :school.m_SchoolName }}
@@ -47,8 +47,8 @@
 
                     <div class="d-flex justify-content-end">
                         <button mat-flat-button type="button" class="me-2 btn-second" mat-dialog-close
-                            (click)="this.drawer.close()">Cancel</button>
-                        <button mat-flat-button type="submit" class="btn-main btn">Filter</button>
+                            (click)="filterForm.reset(); f['talukaId'].patchValue(0)">{{'Labels.reset' | translate}}</button>
+                        <button mat-flat-button type="submit" class="btn-main btn">{{'Labels.filterclick' | translate}}</button>
                     </div>
                 </form>
             </mat-card-content>
@@ -77,7 +77,7 @@
                     <div class="d-flex justify-content-between align-items-center">
                         <div class="position-relative">
                             <img src="assets/images/statistical-icons/School-white.svg" class="bg-image">
-                            <p>School</p>
+                            <p>{{'Labels.SchoolName' | translate}}</p>
                             <h3>{{dashboardCountData[0]?.schoolCount}}</h3>
                         </div>
                         <div class="right-img">
@@ -91,7 +91,7 @@
                     <div class="d-flex justify-content-between align-items-center">
                         <div class="position-relative">
                             <img src="assets/images/statistical-icons/Teacher-white.svg" class="bg-image">
-                            <p>Teachers</p>
+                            <p>{{'Labels.teachers' | translate}}</p>
                             <h3>{{dashboardCountData[0]?.teacherCount}}</h3>
                         </div>
                         <div class="right-img">
@@ -105,7 +105,7 @@
                     <div class="d-flex justify-content-between align-items-center">
                         <div class="position-relative">
                             <img src="assets/images/statistical-icons/Student-white.svg" class="bg-image">
-                            <p>Students</p>
+                            <p>{{'Labels.students' | translate}}</p>
                             <h3>{{dashboardCountData[0]?.studentCount}}</h3>
                         </div>
                         <div class="right-img">
@@ -119,7 +119,7 @@
                     <div class="d-flex justify-content-between align-items-center">
                         <div class="position-relative">
                             <img src="assets/images/statistical-icons/ZP-Officer-white.svg" class="bg-image">
-                            <p>ZP Officers</p>
+                            <p>{{'Labels.zpOfficer' | translate}}</p>
                             <h3>{{dashboardCountData[0]?.zpOfficerCount}}</h3>
                         </div>
                         <div class="right-img">
@@ -134,12 +134,10 @@
             <div class="col-sm-4">
                 <mat-card class="plain-card h-100">
                     <mat-card-header class="card-header">
-                        <h6 class="mb-0 fw-bold">नकाशा</h6>
+                        <h6 class="mb-0 fw-bold">{{'Labels.map' | translate}}</h6>
                     </mat-card-header>
                     <mat-card-content class="card-body">
-                        <div id="mapsvg">
-                            <!-- <img src="assets/distSVG/Osmanabad.svg" style="height: 200px;" class=""> -->
-                        </div>
+                        <div id="mapsvg"></div>
                     </mat-card-content>
                 </mat-card>
             </div>
@@ -147,8 +145,8 @@
                 <mat-card class="plain-card h-100">
                     <mat-card-header class="card-header">
                         <h6 class="d-flex align-items-center justify-content-between w-100 mb-0 fw-bold">
-                            <div>सर्वेक्षण केलेल्या विद्यार्थ्यांची एकूण संख्या</div>
-                            <div>निवडलेली संख्या : <span class="fw-bold">{{this.selectedSurveyData}}</span></div>
+                            <div>{{'Labels.surveyStudent' | translate}}</div>
+                            <div>{{'Labels.selectedCount' | translate}} : <span class="fw-bold">{{this.selectedSurveyData}}</span></div>
                         </h6>
                     </mat-card-header>
 
@@ -243,7 +241,7 @@
             <div class="col-sm-4">
                 <mat-card class="plain-card h-100">
                     <mat-card-header class="card-header">
-                        <h6 class="mb-0 fw-bold">Management wise Schools</h6>
+                        <h6 class="mb-0 fw-bold">{{'Labels.managementwiseSchools' | translate}}</h6>
                     </mat-card-header>
                     <mat-card-content class="card-body">
                         <div id="chart">
@@ -257,7 +255,7 @@
             <div class="col-sm-4">
                 <mat-card class="plain-card h-100">
                     <mat-card-header class="card-header">
-                        <h6 class="mb-0 fw-bold">Medium wise Schools</h6>
+                        <h6 class="mb-0 fw-bold">{{'Labels.mediunwiseSchools' | translate}}</h6>
                     </mat-card-header>
                     <mat-card-content class="card-body">
                         <div id="chart">
@@ -272,7 +270,7 @@
             <div class="col-sm-4">
                 <mat-card class="plain-card h-100">
                     <mat-card-header class="card-header">
-                        <h6 class="mb-0 fw-bold">Gender wise Schools</h6>
+                        <h6 class="mb-0 fw-bold">{{'Labels.genderwiseSchools' | translate}}</h6>
                     </mat-card-header>
                     <mat-card-content class="card-body">
                         <div id="chart">
@@ -292,7 +290,7 @@
                 <mat-card class="plain-card">
                     <mat-card-header class="card-header">
                         <div class="d-flex align-items-center flex-wrap justify-content-between w-100">
-                            <h6 class="mb-0 fw-bold">तालुका निहाय मूल्यांकन</h6>
+                            <h6 class="mb-0 fw-bold">{{'Labels.talukawiseAssessment' | translate}}</h6>
                         </div>
                     </mat-card-header>
                     <mat-card-header class="card-header pb-0 border-bottom-0">
@@ -300,7 +298,7 @@
                             <div class="row w-100">
                                 <div class="col-sm-3" *ngIf="!f['talukaId'].value">
                                     <mat-form-field appearance="outline" class="w-100">
-                                        <mat-label>तालुका निवडा</mat-label>
+                                        <mat-label>{{'Labels.selectTaluka' | translate}}</mat-label>
                                         <mat-select formControlName="filtertalukaId"
                                             (selectionChange)="this.getbarChartByTaluka()">
                                             <mat-option *ngFor="let taluka of talukaData" [value]="taluka.id">
@@ -312,7 +310,7 @@
                                 <div class="col-sm-3"
                                     *ngIf="f['talukaId'].value || (f['talukaId'].value && !fBgraph['filtertalukaId'].value)">
                                     <mat-form-field appearance="outline" class="w-100">
-                                        <mat-label>केंद्र निवडा</mat-label>
+                                        <mat-label>{{'Labels.selectCenter' | translate}}</mat-label>
                                         <mat-select formControlName="filtercenterId"
                                             (selectionChange)="this.getbarChartByTaluka()">
                                             <mat-option *ngFor="let center of centerData" [value]="center.id">
@@ -323,7 +321,7 @@
                                 </div>
                                 <div class="col-sm-3">
                                     <mat-form-field appearance="outline" class="w-100">
-                                        <mat-label>Subject</mat-label>
+                                        <mat-label>{{'Labels.selectSubject' | translate}}</mat-label>
                                         <mat-select formControlName="filtersubjectId"
                                             (selectionChange)="this.getbarChartByTaluka()">
                                             <mat-option *ngFor="let subject of subjectData" [value]="subject.id ">
@@ -354,7 +352,7 @@
                                     <thead class="bg-main-light">
                                         <tr>
                                             <th *ngFor="let header of displayedheaders">
-                                                {{header}}
+                                                {{webStorage.languageFlag == 'EN'?header.label :header.m_label }}
                                             </th>
                                         </tr>
                                     </thead>
@@ -363,7 +361,7 @@
                                             <td><img class="table-img"
                                                     src="{{item['schoolImage'] ? item['schoolImage'] : 'assets/images/user.jpg'}}">
                                             </td>
-                                            <td>{{item['srNo']}}</td>
+                                            <!-- <td>{{item['srNo']}}</td> -->
                                             <td>{{webStorage.languageFlag == 'EN' ? item['schoolName'] :
                                                 item['m_SchoolName']}}
                                             </td>
@@ -375,7 +373,7 @@
 
                                 <div *ngIf="  data?.length ==0">
                                     <div class="alert alert-danger text-center py-2 ">
-                                        Data not available
+                                        {{'Labels.dataNotFound' | translate}}
                                     </div>
                                 </div>
                             </div>

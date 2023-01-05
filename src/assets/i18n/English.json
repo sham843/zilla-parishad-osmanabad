@@ -252,8 +252,24 @@
         "DarkMode" : "Dark Mode",
         "UploadSchoolPhoto" : "Upload School photo",
         "UploadProfilePhoto" : "Upload Profile Photo",
-        "UpdatedTeacherRegistration" : "Update Teacher Details"
-        
+        "UpdatedTeacherRegistration" : "Update Teacher Details",
+        "selectTaluka":"Select Taluka",
+        "selectCenter":"Select Center",
+        "selectSchool":"Select School",
+        "filterclick":"Filter",
+        "reset":"Reset",
+        "teachers":"Teachers",
+        "students":"Students",
+        "zpOfficer":"ZP Officers",
+        "map":"Map",
+        "surveyStudent":"Total number of students surveyed",
+        "selectedCount":"Selected Count",
+        "managementwiseSchools":"Management wise Schools",
+        "mediunwiseSchools":"Medium wise Schools",
+        "genderwiseSchools":"Gender wise Schools",
+        "talukawiseAssessment":"Taluka wise assessment",
+        "selectSubject":"Select Subject",
+        "dataNotFound":"Data not available"
 
     }
 }

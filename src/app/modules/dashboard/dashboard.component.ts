@@ -46,6 +46,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
   selectedLang: any;
   enbTalDropFlag:boolean=false;
   standardShowFlag:boolean=false;
+  selectedTalukaId:any;
   get f() { return this.filterForm.controls }
   get fBgraph() { return this.filterFormForBarGraph.controls }
   constructor(public translate: TranslateService, private masterService: MasterService,
@@ -59,6 +60,9 @@ export class DashboardComponent implements OnInit, AfterViewInit {
     this.webStorage.langNameOnChange.subscribe((lang) => {
       this.selectedLang = lang;
        this.showSvgMap(this.commonMethods.mapRegions());
+       this.getPieChartData();
+       this.constructBarChart();
+       this.constructBarChartByTaluka();
        setTimeout(()=>{
         this.clickOnSvgMap('select');
        },70)
@@ -481,17 +485,17 @@ export class DashboardComponent implements OnInit, AfterViewInit {
     const serriesArray = [0, 0, 0];
     const serriesArray1 = [0, 0, 0];
     const serriesArray2 = [0, 0, 0];
-    serriesArray[0] = this.dashboardCountData[0].govtSchool | 0;
-    serriesArray[1] = this.dashboardCountData[0].privateSchool | 0;
-    serriesArray[2] = this.dashboardCountData[0].otherSchool | 0;
+    serriesArray[0] = this.dashboardCountData[0]?.govtSchool | 0;
+    serriesArray[1] = this.dashboardCountData[0]?.privateSchool | 0;
+    serriesArray[2] = this.dashboardCountData[0]?.otherSchool | 0;
 
-    serriesArray1[0] = this.dashboardCountData[0].engMedSchool | 0;
-    serriesArray1[1] = this.dashboardCountData[0].marMedSchool | 0;
-    serriesArray1[2] = this.dashboardCountData[0].bothMedSchool | 0;
+    serriesArray1[0] = this.dashboardCountData[0]?.engMedSchool | 0;
+    serriesArray1[1] = this.dashboardCountData[0]?.marMedSchool | 0;
+    serriesArray1[2] = this.dashboardCountData[0]?.bothMedSchool | 0;
 
-    serriesArray2[0] = this.dashboardCountData[0].boyStudent | 0;
-    serriesArray2[1] = this.dashboardCountData[0].girlStudent | 0;
-    serriesArray2[2] = this.dashboardCountData[0].otherStudent | 0;
+    serriesArray2[0] = this.dashboardCountData[0]?.boyStudent | 0;
+    serriesArray2[1] = this.dashboardCountData[0]?.girlStudent | 0;
+    serriesArray2[2] = this.dashboardCountData[0]?.otherStudent | 0;
 
     this.piechartOptions.colors = ['#E98754', '#EFB45B', '#65C889','#CB4B4B', '#E76A63'];
     this.piechartOptions1.colors = ['#E98754', '#EFB45B', '#65C889','#CB4B4B', '#E76A63'];
@@ -499,9 +503,9 @@ export class DashboardComponent implements OnInit, AfterViewInit {
     this.piechartOptions.series = serriesArray;
     this.piechartOptions1.series = serriesArray1;
     this.piechartOptions2.series = serriesArray2;
-    this.piechartOptions.labels = ['Goverment', 'Private', 'Other'];
-    this.piechartOptions1.labels = ['English-Medium', 'Marathi-Medium', 'Both'];
-    this.piechartOptions2.labels = ['Boys', 'Girls', 'Both'];
+    this.piechartOptions.labels = this.selectedLang == 'English' ? ['Goverment', 'Private', 'Other']:['सरकारी', 'खाजगी', 'इतर'] ;
+    this.piechartOptions1.labels = this.selectedLang == 'English' ? ['English-Medium', 'Marathi-Medium', 'Both']:['इंग्रजी-माध्यम', 'मराठी-माध्यम', 'दोन्ही'];
+    this.piechartOptions2.labels = this.selectedLang == 'English' ? ['Boys', 'Girls', 'Both']:['मुले', 'मुली', 'दोन्ही'];
   }
 
   getBarChart(obj: any) {
@@ -515,79 +519,87 @@ export class DashboardComponent implements OnInit, AfterViewInit {
       next: (res: any) => {
         if (res.statusCode == "200") {
           this.barChartData = res.responseData.responseData1;
-          const subjectSet = [...new Set(this.barChartData.map(sub => sub.m_SubjectName))];
-          this.graphSubjectData = subjectSet;
-          this.barchartOptions.series = [];
-          this.barchartOptions.xaxis.categories = [];
-          let dataArray: any[] = [];
-          subjectSet.map((x: any) => {
-            const filterSubject = this.barChartData.filter((y: any) => y.m_SubjectName == x);
-            let dataObjArray: any[] = [];
-            filterSubject.map((z: any) => {
-              const subData = {
-                name: obj.groupId == 1 ? z.optionName : z.question,
-                data: ([Math.round(z.totalPercental) | Math.round(z.percentage)])
-              }
-              dataObjArray.push(subData);
-            })
-            dataArray.push(dataObjArray);
-          })
-          this.barchartOptions.series.push(dataArray);
-          this.barchartOptions.xaxis.categories.push(...subjectSet);
-          this.showBarChartF = true;
-          
-          this.barchartOptions.tooltip = {
-            custom: function({ series, seriesIndex, dataPointIndex, w }: any) {              
-              return (
-                '<div class="arrow_box" style="padding:10px;">' +
-                  "<div>" + 'Level' + " : <b> " + w.globals.seriesNames[seriesIndex]+ '</b>' + "</div>" +
-                  "<div>" + 'Percentage' + " : <b> " + series[seriesIndex][dataPointIndex] + '%</b>' + "</div>" +
-                "</div>"
-              );
-            },
-          }
+          this.constructBarChart();
         }
-
       },
       error: (error: any) => { this.error.handelError(error.message) }
     });
+  }
+  constructBarChart(){
+    const subjectSet = [...new Set(this.barChartData.map(sub => sub.subjectName))];
+    const subjectSet_m = [...new Set(this.barChartData.map(sub => sub.m_SubjectName))];
+    this.graphSubjectData = this.selectedLang == 'English' ? subjectSet: subjectSet_m;
+    this.barchartOptions.series = [];
+    this.barchartOptions.xaxis.categories = [];
+    let dataArray: any[] = [];
+    subjectSet.map((x: any) => {
+      const filterSubject = this.barChartData.filter((y: any) => y.subjectName == x);
+      let dataObjArray: any[] = [];
+      filterSubject.map((z: any) => {
+        const subData = {
+          name: this.selectedLang == 'English' ?(this.selectedObj.groupId == 1 ? z.optionName : z.question):(this.selectedObj.groupId == 1 ? z.m_OptionName : z.m_Question),
+          data: ([Math.round(z.totalPercental) | Math.round(z.percentage)])
+        }
+        dataObjArray.push(subData);
+      })
+      dataArray.push(dataObjArray);
+    })
+    this.barchartOptions.series.push(dataArray);
+    this.barchartOptions.xaxis.categories.push(...(this.selectedLang == 'English' ? subjectSet: subjectSet_m));
+    this.showBarChartF = true;
+    
+    this.barchartOptions.tooltip = {
+      custom: function({ series, seriesIndex, dataPointIndex, w }: any) {              
+        return (
+          '<div class="arrow_box" style="padding:10px;">' +
+            "<div>" + 'Level' + " : <b> " + w.globals.seriesNames[seriesIndex]+ '</b>' + "</div>" +
+            "<div>" + 'Percentage' + " : <b> " + series[seriesIndex][dataPointIndex] + '%</b>' + "</div>" +
+          "</div>"
+        );
+      },
+    }
   }
 
   getbarChartByTaluka() {
     this.showBarChartS = false;
     const filterformData = this.filterForm.value;
     const formDatafilterbyTaluka = this.filterFormForBarGraph.value;
-    const TalukaId = filterformData?.talukaId ? filterformData?.talukaId : formDatafilterbyTaluka?.filtertalukaId;
-    const str = TalukaId ? (this.selectedObj.groupId == 1 ? 'GetDataFor1st2ndStdByCenter' : 'GetDataFor3rdAboveStdByCenter') : (this.selectedObj.groupId == 1 ? 'GetDataFor1st2ndStdByTaluka' : 'GetDataFor3rdAboveStdByTaluka');
-    this.apiService.setHttp('GET', 'zp-osmanabad/Dashboard/' + str + '?TalukaId=' + (TalukaId || 0) + (TalukaId ? '&CenterId=' + (formDatafilterbyTaluka?.filtercenterId || 0) : '') + '&groupId=' + this.selectedObj?.groupId + '&SubjectId=' + (formDatafilterbyTaluka.filtersubjectId | 0), false, false, false, 'baseUrl');
+    this.selectedTalukaId = filterformData?.talukaId ? filterformData?.talukaId : formDatafilterbyTaluka?.filtertalukaId;
+    const str = this.selectedTalukaId ? (this.selectedObj.groupId == 1 ? 'GetDataFor1st2ndStdByCenter' : 'GetDataFor3rdAboveStdByCenter') : (this.selectedObj.groupId == 1 ? 'GetDataFor1st2ndStdByTaluka' : 'GetDataFor3rdAboveStdByTaluka');
+    this.apiService.setHttp('GET', 'zp-osmanabad/Dashboard/' + str + '?TalukaId=' + (this.selectedTalukaId || 0) + (this.selectedTalukaId ? '&CenterId=' + (formDatafilterbyTaluka?.filtercenterId || 0) : '') + '&groupId=' + this.selectedObj?.groupId + '&SubjectId=' + (formDatafilterbyTaluka.filtersubjectId | 0), false, false, false, 'baseUrl');
     this.apiService.getHttp().subscribe({
       next: (res: any) => {
         if (res.statusCode == "200") {
           this.barChartByTalukaData = res.responseData.responseData1;
-          this.barchartOptions1.series = [];
-          this.barchartOptions1.xaxis.categories = [];
-          let talukaSet: any = [];
-          talukaSet = [...new Set(this.barChartByTalukaData.map(sub => TalukaId ? sub.center : sub.taluka))];
-          const subjectSet = [...new Set(this.barChartByTalukaData.map(sub => sub.m_OptionName || sub.m_Question))];
-          let arrayObjectData: any[] = [];
-          subjectSet.map((x: any) => {
-            const filterSubject = this.barChartByTalukaData.filter((y: any) => (y.m_OptionName || y.m_Question) == x);
-            const subData = {
-              name: x,
-              data: filterSubject.map(sub => sub.percentage)
-            }
-            arrayObjectData.push(subData);
-          })
-          this.barchartOptions1.series.push(arrayObjectData);
-          this.barchartOptions1.xaxis.categories.push(...talukaSet);
-          this.showBarChartS = true;
+        this.constructBarChartByTaluka();
         }
       },
       error: (error: any) => { this.error.handelError(error.message) }
     });
     this.getTabledataByTaluka();
   }
-
+  constructBarChartByTaluka(){
+    this.barchartOptions1.series = [];
+    this.barchartOptions1.xaxis.categories = [];
+    let talukaSet: any = [];
+    let talukaSet_m: any = [];
+    talukaSet = [...new Set(this.barChartByTalukaData.map(sub => this.selectedTalukaId ? sub.center : sub.taluka))];
+    talukaSet_m = [...new Set(this.barChartByTalukaData.map(sub => this.selectedTalukaId ? sub.m_Center : sub.m_Taluka))];
+    const subjectSet = [...new Set(this.barChartByTalukaData.map(sub => sub.optionName || sub.question))];
+    const subjectSet_m = [...new Set(this.barChartByTalukaData.map(sub => sub.m_OptionName || sub.m_Question))];
+    let arrayObjectData: any[] = [];
+    subjectSet.map((x: any, index:any) => {
+      const filterSubject = this.barChartByTalukaData.filter((y: any) => (y.optionName || y.question) == x);
+      const subData = {
+        name: this.selectedLang == 'English'? x:subjectSet_m[index],
+        data: filterSubject.map(sub => sub.percentage)
+      }
+      arrayObjectData.push(subData);
+    })
+    this.barchartOptions1.series.push(arrayObjectData);
+    this.barchartOptions1.xaxis.categories.push(...(this.selectedLang == 'English' ?talukaSet:talukaSet_m));
+    this.showBarChartS = true;
+  };
   getTabledataByTaluka() {
     const filterformData = this.filterForm.value;
     const formDatafilterbyTaluka = this.filterFormForBarGraph.value;
@@ -599,7 +611,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
           this.tableDataTopPerformance = [];
           this.tableDataTopPerformance.push(res.responseData.responseData1);
           this.tableDataTopPerformance.push(res.responseData.responseData2);
-          this.displayedheaders = ['#', 'Sr. No.', 'Name', 'Total Student', 'Percetage'];
+          this.displayedheaders = [{label:'#', m_label:'#'}, {label:'School Name', m_label:'शाळेचे नाव'}, {label:'Total Student', m_label:'एकूण विद्यार्थी'}, {label:'Percetage', m_label:'टक्केवारी'}];
         }
         else {
           this.tableDataTopPerformance = [];

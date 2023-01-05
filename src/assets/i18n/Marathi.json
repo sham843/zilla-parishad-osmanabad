@@ -254,6 +254,24 @@
         "DarkMode" : "डार्क मोड",
         "UploadSchoolPhoto" : "शाळेचा फोटो अपलोड करा",
         "UploadProfilePhoto" : "प्रोफाइल फोटो अपलोड करा",
-        "UpdatedTeacherRegistration" : "शिक्षकाची माहिती अपडेट करा"
+        "UpdatedTeacherRegistration" : "शिक्षकाची माहिती अपडेट करा",
+        "selectTaluka":"तालुका निवडा",
+        "selectCenter":"केंद्र निवडा",
+        "selectSchool":"शाळा निवडा",
+        "filterclick":"शोधा",
+        "reset":"रीसेट",
+        "teachers":"शिक्षक",
+        "students":"विद्यार्थी",
+        "zpOfficer":"झेडपी अधिकारी",
+        "map":"नकाशा",
+        "surveyStudent":"सर्वेक्षण केलेल्या विद्यार्थ्यांची एकूण संख्या",
+        "selectedCount":"निवडलेली संख्या",
+        "managementwiseSchools":"व्यवस्थापनानुसार शाळा",
+        "mediunwiseSchools":"माध्यम निहाय शाळा",
+        "genderwiseSchools":"लिंगनिहाय शाळा",
+        "talukawiseAssessment":"तालुका निहाय मूल्यांकन",
+        "selectSubject":"विषय निवडा",
+        "dataNotFound":"डेटा उपलब्ध नाही"
+        
     }
 }
