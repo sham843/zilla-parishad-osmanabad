@@ -46,6 +46,9 @@ export class AddUpdateTeacherRegistrationComponent {
   img: boolean = false;
   checked:boolean=false
   maxDate = new Date();
+  seniorityDate =new Date();
+  age!:number;
+  
   assignClass: boolean = true;
   casteVerification = [
     { id: 1, name: 'yes', isCastVarificationDone: true,_name :'होय' },
@@ -94,6 +97,10 @@ export class AddUpdateTeacherRegistrationComponent {
   ngOnInit() {
     this.formData();
     (!this.data) ? this.getGender() : this.onEdit(this.data);
+   
+
+    // add a day
+    this.seniorityDate.setDate(this.seniorityDate.getDate() + 1);
 
   }
   //#region --------------------------get form Controls ---------------------------------
@@ -272,6 +279,18 @@ export class AddUpdateTeacherRegistrationComponent {
     }   
   }
 //#endregion --------------------------end permant address check box ----------------------------------
+CalculateAge(){
+let birthDate = this.teacherRegForm.value.birthDate
+console.log("birthDate",birthDate);
+    if(birthDate){
+       var timeDiff = Math.abs(Date.now() - birthDate);     
+       this.age = Math.floor((timeDiff / (1000 * 3600 * 24))/365);
+   }
+   this.f['age'].setValue(this.age);
+   console.log("age",this.age);
+   
+}
+
 
 //#region ------------------------------ start drop-down ---------------------------------------------
   getGender() {
@@ -563,10 +582,6 @@ export class AddUpdateTeacherRegistrationComponent {
         this.assignClass =false;
       }
      
-         
-     
-      
-  
     }
   }
 //#endregion -------------------------------------end submit-----------------------------------------------
@@ -581,6 +596,7 @@ export class AddUpdateTeacherRegistrationComponent {
     // this.data.uploadImage ? this.showAddRemImg = true : this.showAddRemImg = false;
     this.assignClassArray = obj.assignTeacher;    
     this.uploadImghtml =  this.editObj.uploadImage;
+    this.age = obj.age;
 
     //---------------------------start patch assign class check-box---------------------------//
     for (let i = 0; i < this.newAsssignClassArray.length; i++) {
@@ -596,7 +612,8 @@ export class AddUpdateTeacherRegistrationComponent {
       this.checked = true;
     }
      //---------------------------end patch current and perment address check-box---------------------------//
-    this.formData(); this.getGender();
+
+  this.formData(); this.getGender();
   }
 //#endregion --------------------------------------- end edit ----------------------------------------------
   clearImg() {   

@@ -41,9 +41,14 @@ export class SchoolRegistrationComponent {
   displayedheadersEnglish = ['#', 'Sr. No.', 'School Name', 'Village', 'Taluka', 'District', 'Action'];
   displayedheadersMarathi = ['#', 'अनुक्रमांक', 'शाळेचे नाव', 'गाव', 'तालुका', 'जिल्हा', 'कृती'];
 
-  constructor(private dialog: MatDialog, private apiService: ApiService, private errors: ErrorsService,
-    private masterService: MasterService, private commonMethodS: CommonMethodsService, public webStorageS: WebStorageService,
-    private downloadFileService: DownloadPdfExcelService,private ngxSpinner: NgxSpinnerService,
+  constructor(private dialog: MatDialog, 
+    private apiService: ApiService, 
+    private errors: ErrorsService,
+    private masterService: MasterService, 
+    private commonMethodS: CommonMethodsService, 
+    public webStorageS: WebStorageService,
+    private downloadFileService: DownloadPdfExcelService,
+    private ngxSpinner: NgxSpinnerService,
     ) { }
 
   ngOnInit() {
@@ -81,6 +86,7 @@ export class SchoolRegistrationComponent {
 
   getTableData(flag?: string) {
     // this.tableDataArray = [];
+    this.ngxSpinner.show();
     this.pageNumber = flag == 'filter' ? 1 : this.pageNumber;
     let pageNo = this.cardViewFlag ? (this.pageNumber) : this.pageNumber;
     let str = `?pageno=${pageNo}&pagesize=10&DistrictId=${this.districtId.value ? this.districtId.value : 0}
@@ -94,6 +100,7 @@ export class SchoolRegistrationComponent {
 
       next: (res: any) => {
         if (res.statusCode == 200) {
+          this.ngxSpinner.hide();
           flag != 'pdfFlag' ? this.tableDataArray = res.responseData.responseData1 : this.tableDataArray = this.tableDataArray;
           this.totalCount = res.responseData.responseData2.pageCount;
           this.tableDatasize = res.responseData.responseData2.pageCount;

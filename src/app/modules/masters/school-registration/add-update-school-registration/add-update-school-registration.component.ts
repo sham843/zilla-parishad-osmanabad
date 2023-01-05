@@ -31,7 +31,7 @@ export class AddUpdateSchoolRegistrationComponent {
   uploadMultipleImg: any;
   imgArray = new Array();
   editFlag: boolean = false;
-  // img: boolean = false;
+  img: boolean = false;
   // schoolDocument!: FormArray;
 
   constructor(private masterService: MasterService,
@@ -211,6 +211,7 @@ export class AddUpdateSchoolRegistrationComponent {
     this.fileUpload.uploadDocuments(event, 'Upload', 'jpg, jpeg, png').subscribe((res: any) => {
       if (res.statusCode == 200) {
         this.uploadImg = res.responseData;
+        this.commonMethod.showPopup(res.statusMessage, 0);
       }
       else {
         return
@@ -223,6 +224,7 @@ export class AddUpdateSchoolRegistrationComponent {
     this.fileUpload.uploadMultipleDocument(event, 'Upload', 'jpg, jpeg, png').subscribe((res: any) => {
       if (res.statusCode == 200) {
         this.uploadMultipleImg = res.responseData;
+        this.commonMethod.showPopup(res.statusMessage, 0);
         // multiple image 
         let imgArr = this.uploadMultipleImg.split(',')
         for (let i = 0; i < imgArr.length; i++) {
@@ -263,16 +265,16 @@ export class AddUpdateSchoolRegistrationComponent {
 
     formValue.uploadImage ? formValue.uploadImage = this.uploadImg : '';
     if (this.editFlag == true) {
-      this.data.uploadImage ? formValue.uploadImage = this.schoolRegForm.value.uploadImage : '';      
-    }
-    else {
-      formValue.uploadImage = this.schoolRegForm.value.uploadImage;
-      console.log(formValue.uploadImage);
+      if (this.data.uploadImage) {
+        this.img ? formValue.uploadImage = this.uploadImg : formValue.uploadImage = this.data.uploadImage
+      }
+      else {
+        formValue.uploadImage = this.schoolRegForm.value.uploadImage;
+      }
     }
     formValue.schoolDocument = this.imgArray;
 
     let url = this.editFlag ? 'Update' : 'Add'
-    // this.editFlag ? url = 'ZP-Osmanabad/School/Update' : url = 'ZP-Osmanabad/School/Add';
 
     if (!this.schoolRegForm.valid) {
       this.commonMethod.showPopup(this.webStorageS.languageFlag == 'EN' ? 'Please Enter Mandatory Fields' : 'कृपया अनिवार्य फील्ड प्रविष्ट करा', 1);
