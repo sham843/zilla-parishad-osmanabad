@@ -58,7 +58,7 @@
         "DesignationType":"पदनाम प्रकार",
         "DesignationTypeReq":"पदनाम प्रकार आवश्यक आहे",
         "AddDesignation(Marathi)":"पदनाम जोडा (मराठी)",
-        "DesignationTypeMarathiReq":"पदनाम प्रकार मराठी आवश्यक आहे",
+        "DesignationTypeMarathiReq":"कृपया वैध पदनाम प्रविष्ट करा (मराठी)",
         "schoolRegistration" : "शाळेची नोंदणी",
         "registerSchool" : "शाळेची नोंदणी",
         "updateSchool" : "शाळेची नोंद अपडेट करा",
