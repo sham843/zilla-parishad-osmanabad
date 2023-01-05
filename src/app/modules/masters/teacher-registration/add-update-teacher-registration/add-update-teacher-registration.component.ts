@@ -46,6 +46,9 @@ export class AddUpdateTeacherRegistrationComponent {
   img: boolean = false;
   checked:boolean=false
   maxDate = new Date();
+  seniorityDate =new Date();
+  age!:number;
+  
   assignClass: boolean = true;
   casteVerification = [
     { id: 1, name: 'yes', isCastVarificationDone: true,_name :'होय' },
@@ -94,6 +97,10 @@ export class AddUpdateTeacherRegistrationComponent {
   ngOnInit() {
     this.formData();
     (!this.data) ? this.getGender() : this.onEdit(this.data);
+   
+
+    // add a day
+    this.seniorityDate.setDate(this.seniorityDate.getDate() + 1);
 
   }
   //#region --------------------------get form Controls ---------------------------------
@@ -272,6 +279,19 @@ export class AddUpdateTeacherRegistrationComponent {
     }   
   }
 //#endregion --------------------------end permant address check box ----------------------------------
+CalculateAge(){
+let birthDate = this.teacherRegForm.value.birthDate
+console.log("birthDate",birthDate);
+    if(birthDate){
+       var timeDiff = Math.abs(Date.now() - birthDate);
+       //Used Math.floor instead of Math.ceil
+       //so 26 years and 140 days would be considered as 26, not 27.
+       this.age = Math.floor((timeDiff / (1000 * 3600 * 24))/365);
+   }
+   console.log("age",this.age);
+   
+}
+
 
 //#region ------------------------------ start drop-down ---------------------------------------------
   getGender() {

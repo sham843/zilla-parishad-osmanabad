@@ -96,12 +96,13 @@
                 <div class="col-sm-4">
                     <mat-form-field appearance="outline" class="w-100">
                         <mat-label>{{'Labels.birthDate'| translate}}</mat-label>
-                        <input matInput [matDatepicker]="picker" [max]="maxDate" readonly formControlName="birthDate">
-                        <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
-                        <mat-datepicker #picker></mat-datepicker>
+                        <input matInput [matDatepicker]="picker" [max]="maxDate" (Click)="CalculateAge()"  readonly formControlName="birthDate">
+                        <mat-datepicker-toggle matIconSuffix [for]="picker" ></mat-datepicker-toggle>
+                        <mat-datepicker #picker ></mat-datepicker>
                         <!-- <mat-error *ngIf="f['birthDate'].hasError('required') ">
                             Birth Date Is Required</mat-error> -->
                     </mat-form-field>
+                    <h3>{{age}}</h3>
                 </div>
             </div>
             <mat-card-subtitle class="mb-2 fw-bold">{{'Labels.AddressDetails'| translate}}</mat-card-subtitle>
@@ -510,7 +511,7 @@
                     <div class="col-sm-4">
                         <mat-form-field appearance="outline" class="w-100">
                             <mat-label>{{'Labels.dateOfSeniority'| translate}}</mat-label>
-                            <input matInput [matDatepicker]=" DateSeniority" readonly [min]="maxDate" formControlName="dateOfSeniority">
+                            <input matInput [matDatepicker]=" DateSeniority" readonly [min]="seniorityDate" formControlName="dateOfSeniority">
                             <mat-datepicker-toggle matIconSuffix [for]="DateSeniority"></mat-datepicker-toggle>
                             <mat-datepicker  #DateSeniority></mat-datepicker>
                             <!-- <mat-error *ngIf="td['dateOfSeniority'].hasError('required')">Date Of Seniority Is Required</mat-error> -->
