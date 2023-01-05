@@ -43,6 +43,7 @@ export class MyProfileComponent {
   userType: any;
   editObj: any
   designationData = new Array();
+  showButton : boolean = false;
   @ViewChild('uploadImage') imageFile!: ElementRef;
 
   constructor(private api: ApiService, private error: ErrorsService, private fileUpl: FileUploadService, private masterService: MasterService,
@@ -114,7 +115,7 @@ export class MyProfileComponent {
       "name": [data ? data?.name : ''],
       "mobileNo": [data ? data?.mobileNo : '', [Validators.required, Validators.pattern(this.validation.mobile_No)]],
       "emailId": [data ? data?.emailId : '', [Validators.required, Validators.pattern(this.validation.email)]],
-      "profilePhoto": [data ? this.uploadImg = data?.profilePhoto : this.uploadImg],
+      "profilePhoto": [data ?  data?.profilePhoto : this.uploadImg],
       "designationLevelId": [data ? data?.designationLevelId : '']
     })
   }
@@ -126,6 +127,7 @@ export class MyProfileComponent {
       if (res.statusCode == 200) {
         this.uploadImg = res.responseData;
         this.fc['profilePhoto'].setValue(this.uploadImg);
+        this.showButton = true;
         this.commonMethods.snackBar(res.statusMessage, 0);
       } else {
         this.uploadImg = "assets/images/user.jpg"
@@ -135,6 +137,7 @@ export class MyProfileComponent {
 
   removeImg() {
     this.imageFile.nativeElement.value = '';
+    this.showButton = false;
     this.uploadImg = "assets/images/user.jpg"
     this.fc['profilePhoto'].setValue(this.uploadImg);
   }
