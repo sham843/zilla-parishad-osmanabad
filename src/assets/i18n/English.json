@@ -240,7 +240,7 @@
         "Persondetails" : "Contact Person Details",
         "Designation(Marathi)" :"Designation (Marathi)",
         "DownloadPdf" : "Download PDF",
-        "InvalidDesignation" : "Invalid Designation",
+        "InvalidDesignation" : "Please enter valid designation",
         "InvalidSchoolName" : "Invalid School Name",
         "InvalidstudentFirstName" : "Invalid Student First Name",
         "InvalidstudentLastName" : "Invalid Student Last Name",
