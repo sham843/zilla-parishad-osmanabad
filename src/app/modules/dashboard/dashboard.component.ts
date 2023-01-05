@@ -58,6 +58,37 @@ export class DashboardComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit() {
+    this.initialApiCall('initial');
+    this.webStorage.langNameOnChange.subscribe((lang) => {
+      this.selectedLang = lang;
+      this.initialApiCall('languageChange');
+    });
+  }
+
+  initialApiCall(val: any){
+    if(val == 'initial'){
+      this.createFilterForm();
+      this.getBarChartOption();
+      this.getPieChart();
+      this.getTalukas();
+      this.getdashboardCount();
+    }else if(val == 'mapClick'){
+      this.getCenters();
+      this.getdashboardCount();
+    }else if(val == 'languageChange'){
+      this.showSvgMap(this.commonMethods.mapRegions());
+      this.getPieChartData();
+      this.constructBarChart();
+      this.selectedObj ? this.getbarChartByTaluka() : '';
+      setTimeout(()=>{
+      this.clickOnSvgMap('select');
+      },70)
+    }else if(val == 'form'){
+      this.getdashboardCount();
+    }
+  }
+
+  createFilterForm(){
     this.filterForm = this.fb.group({
       talukaId: [0],
       centerId: [0],
@@ -68,26 +99,10 @@ export class DashboardComponent implements OnInit, AfterViewInit {
       filtercenterId: [0],
       filtersubjectId: []
     })
-    this.getBarChartOption();
-    this.getPieChart();
-    this.webStorage.langNameOnChange.subscribe((lang) => {
-      this.selectedLang = lang;
-       this.showSvgMap(this.commonMethods.mapRegions());
-       this.getPieChartData();
-       this.constructBarChart();
-       this.selectedObj?this.getbarChartByTaluka():'';
-       setTimeout(()=>{
-        this.clickOnSvgMap('select');
-       },70)
-    });
-    this.getTalukas();
-    this.getdashboardCount();
-    this.getTabledataByTaluka()
   }
 
   ngAfterViewInit() {
     this.showSvgMap(this.commonMethods.mapRegions());
-    this.clickOnSvgMap();
   }
   getTalukas() {
     this.talukaData = [];
@@ -393,11 +408,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
       }
     };
   }
-  dashboardAPis() {
-    this.getdashboardCount();
-    this.getbarChartByTaluka();
-
-  }
+  
   selectedBar(selectedbar: any) {
     const index = this.barchartOptions.xaxis.categories.findIndex((i: any) => i == selectedbar);
     const data = this.barChartData.find((x: any) => x.m_SubjectName == selectedbar && x.m_OptionName == this.barchartOptions.series[0][index][this.optionalSubjectindex].name);
@@ -429,7 +440,6 @@ export class DashboardComponent implements OnInit, AfterViewInit {
             x.ischeckboxShow=true})
           this.totalStudentSurveyData[1].status = true;
           this.totalStudentSurveyData[0].ischeckboxShow=false;
-          // this.tableColumn = [{ label: 'एकूण संख्या', groupId: 0, ischeckboxShow: false, status: false }, { label: '१ली ते 2वी', groupId: 1, subSTD: [{ label: '१ली', subgroupId: 1, status: false }, { label: '2री', subgroupId: 2, status: false }], ischeckboxShow: true, status: true }, { label: '3री ते ५वी', groupId: 2, subSTD: [{ label: '3री', subgroupId: 3, status: false }, { label: '4री', subgroupId: 4, status: false }, { label: '5वी', subgroupId: 5, status: false }], ischeckboxShow: true, status: false }, { label: '६वी ते ८वी', groupId: 3, subSTD: [{ label: '६वी', subgroupId: 6, status: false }, { label: '7वी', subgroupId: 7, status: false }, { label: '८वी', subgroupId: 8, status: false }], ischeckboxShow: true, status: false },];
           this.checkData(this.totalStudentSurveyData[1], 'radio');
           this.getPieChartData();
         } else {
@@ -720,6 +730,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
     });
   }
   clickOnSvgMap(flag?: string) {
+    
     if (flag == 'select') {
       //this.enbTalDropFlag ? $('#mapsvg path').addClass('disabledAll'): '';
       let checkTalActiveClass = $('#mapsvg   path').hasClass("talActive");
@@ -733,7 +744,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
       this.filterForm.controls['talukaId'].setValue(+talId);
 
       this.svgMapAddOrRemoveClass();
-      this.dashboardAPis(),this.getCenters()
+      this.initialApiCall('mapClick');
     })
   }
 
