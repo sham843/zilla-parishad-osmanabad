@@ -1,4 +1,14 @@
-small {
-    font-family: 0.85rem;
+footer {
+    font-size: 0.85rem;
     color: #515151;
+    position: relative;
+    bottom: -18px;
+    left: 0;
+    right: 0;
+    // width: calc(100% - 60px);
+    background: #fff;
+    box-shadow: 0 0 9px rgb(0 0 0 / 20%);
+    z-index: 1;
+    text-align: center;
+    padding-block: 7px;
 }
