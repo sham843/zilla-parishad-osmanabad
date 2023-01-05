@@ -76,68 +76,7 @@
     </ng-container>
 
     <ng-container *ngIf="cardViewFlag">
-      <app-grid-view (gridToChild)="childGridCompInfo($event)"></app-grid-view>
-      <!-- <app-card-grid-view (recObjToChild)="childGridCompInfo($event)"></app-card-grid-view> -->
-      <!-- <div class="row">
-        <div class="col-sm-4 mb-3" *ngFor="let data of tableDataArray">
-          <mat-card>
-            <mat-card-header class="d-flex justify-content-end">
-              <button mat-flat-button [matMenuTriggerFor]="menu">
-                <span class="material-symbols-outlined">
-                  more_horiz
-                </span>
-              </button>
-              <mat-menu #menu="matMenu">
-                <button mat-menu-item (click)="addUpdateAgency(data)">Edit
-                  <span class="material-symbols-outlined">
-                    create
-                  </span>
-                </button>
-              </mat-menu>
-            </mat-card-header>
-            <mat-card-content>
-              <div class="text-center mb-3">
-                <img [src]=" data.documentResponse[0]?.docPath || 'assets/images/user.jpg'" alt="" height="60px">
-                <p>{{ languageFlag == 'EN' ? data.fullName : data.m_FullName}}</p>
-              </div>
-              <div class="row">
-                <div class="col-sm  form-label">
-                  {{'Labels.school'| translate}}
-                </div>
-                <div class=" col-sm  form-deta">
-                  {{languageFlag == 'EN' ? data.schoolName: data.m_SchoolName}}
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-sm form-label">
-                  {{'Labels.contactNo.'| translate}}
-                </div>
-                <div class="col-sm form-deta">
-                  {{data.parentMobileNo}}
-                </div>
-              </div>
-              <div class="row">
-                <div class=" col-sm form-label">
-                  {{'Labels.gender'| translate}}
-                </div>
-                <div class="col-sm form-deta">
-                  {{ languageFlag == 'EN' ? data.gender:data.m_Gender}}
-                </div>
-              </div>
-              <div class="text-center mb-3">
-                <button mat-flat-button class="btn-main" (click)="openDetailsDialog(data)">Read More</button>
-              </div>
-
-            </mat-card-content>
-          </mat-card>
-
-        </div>
-      </div>
-      <ng-container *ngIf="tableDatasize > 10">
-        <mat-paginator [length]="totalCount" [pageIndex]="cardCurrentPage" [pageSize]="10" [pageSizeOptions]="[10]"
-          [showFirstLastButtons]="true" (page)="onPageChanged($event)">
-        </mat-paginator>
-      </ng-container> -->
+      <app-grid-view (gridToChild)="childGridCompInfo($event)"></app-grid-view>    
     </ng-container> 
 
   </mat-card-content>
