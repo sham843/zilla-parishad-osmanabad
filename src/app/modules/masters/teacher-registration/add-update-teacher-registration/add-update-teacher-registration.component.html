@@ -72,10 +72,12 @@
                                 #uploadImage />
                         </div>
                         <div class="action-btn" *ngIf="uploadImghtml">
-                            <button type="button" mat-icon-button class="btn-icon text-primary" (click)="viewImg()">
+                            <button type="button" mat-icon-button class="btn-icon text-primary" (click)="viewImg()"
+                            matTooltip="{{'Labels.View' | translate}}" matTooltipPosition="below" matTooltipClass="tooltip">
                                 <mat-icon>visibility</mat-icon>
                             </button>
-                            <button type="button" mat-icon-button class="btn-icon text-danger" (click)="clearImg()">
+                            <button type="button" mat-icon-button class="btn-icon text-danger" (click)="clearImg()"
+                            matTooltip="{{'Labels.delete' | translate}}" matTooltipPosition="below" matTooltipClass="tooltip">
                                 <mat-icon>delete</mat-icon>
                             </button>
                         </div>
