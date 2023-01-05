@@ -10,16 +10,16 @@
                 </button> -->
                 <div class="dropdown">
                     <button class="btn" data-bs-toggle="dropdown" aria-expanded="false">
-                        <mat-icon>brightness_medium</mat-icon>
+                        <mat-icon>{{webStorage.selectedTheme == 'light' ? 'light_mode' : 'nights_stay'}}</mat-icon>
                     </button>
                     <div class="dropdown-menu dropdown-menu-end">
-                        <button class="dropdown-item active" (click)="changeTheme('light')">
+                        <button [class]="webStorage.selectedTheme == 'light' ? 'dropdown-item active' : 'dropdown-item'" (click)="changeTheme('light')">
                             <div class="d-flex align-items-center">
                                 <mat-icon>light_mode</mat-icon>
                                 <span>{{'Labels.LightMode' | translate}}</span>
                             </div>
                         </button>
-                        <button class="dropdown-item" (click)="changeTheme('dark')">
+                        <button [class]="webStorage.selectedTheme != 'light' ? 'dropdown-item active' : 'dropdown-item'" (click)="changeTheme('dark')">
                             <div class="d-flex align-items-center">
                                 <mat-icon>nights_stay</mat-icon>
                                 <span>{{'Labels.DarkMode' | translate}}</span>
