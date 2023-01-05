@@ -33,13 +33,13 @@
                         <img [src]="webStorage.languageFlag == 'EN' ? 'assets/images/english.svg' : 'assets/images/marathi.svg'">
                     </button>
                     <div class="dropdown-menu dropdown-menu-end">
-                        <button class="dropdown-item active" (click)="translateLanguage('English')">
+                        <button [class]="webStorage.languageFlag == 'EN' ? 'dropdown-item active' : 'dropdown-item'" (click)="translateLanguage('English')">
                             <div class="d-flex align-items-start">
                                 <img src="assets/images/english.svg">
                                 <span>English</span>
                             </div>
                         </button>
-                        <button class="dropdown-item" (click)="translateLanguage('Marathi')">
+                        <button [class]="webStorage.languageFlag != 'EN' ? 'dropdown-item active' : 'dropdown-item'" (click)="translateLanguage('Marathi')">
                             <div class="d-flex align-items-start">
                                 <img src="assets/images/marathi.svg">
                                 <span>मराठी</span>
