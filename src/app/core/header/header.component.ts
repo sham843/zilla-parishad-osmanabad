@@ -23,12 +23,13 @@ export class HeaderComponent {
     public webStorage: WebStorageService,
     private router: Router, 
     public translate: TranslateService) { }
-  ngOnInit(): void {
+  ngOnInit(): void {    
     this.translateLanguage(sessionStorage.getItem('language') ? sessionStorage.getItem('language') : 'English');
     this.UserData = this.webStorage.getLoggedInLocalstorageData();    
   }
   
   changeTheme(darkMode: any) {
+    sessionStorage.setItem('theme', darkMode);
     let darkClassName: any
     this.className = darkMode == 'light' ? darkClassName = 'lightMode' : darkClassName = 'darkMode';
     this.webStorage.setTheme(darkClassName);

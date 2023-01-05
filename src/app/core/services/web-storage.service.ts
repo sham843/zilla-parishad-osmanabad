@@ -11,6 +11,7 @@ export class WebStorageService {
   langNameOnChange = this.language.asObservable();
   private theme=new BehaviorSubject('');
   numFormat: any;
+  selectedTheme = 'light';
 
   constructor() { }
 
@@ -19,6 +20,7 @@ export class WebStorageService {
   }
   setTheme(className:any){
     this.theme.next(className);
+    this.selectedTheme = className == 'lightMode' ? 'light' : 'dark';
   }
 
   setLanguage(lang:any){
