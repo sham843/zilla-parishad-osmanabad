@@ -56,7 +56,8 @@
       <div class="col-sm-3">
         <mat-form-field appearance="outline" class="w-100">
           <mat-label>{{'Labels.searchByNameContactNo'| translate}}</mat-label>
-          <input matInput [formControl]="searchContent" (keypress)="validators.noFirstSpaceAllow($event)">
+          <input matInput [formControl]="searchContent" (keypress)="validators.noFirstSpaceAllow($event)"
+          (keyup.enter)="getTableData()">
 
         </mat-form-field>
       </div>
