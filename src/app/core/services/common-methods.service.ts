@@ -41,7 +41,7 @@ export class CommonMethodsService {
       text: msg,
       icon: popupClassArr[status],
       // showCancelButton: true,
-      confirmButtonText: this.webStorageService.languageFlag == 'EN'?  'ok' : 'ओके',
+      confirmButtonText: this.webStorageService.languageFlag == 'EN'?  'Ok' : 'ठीक',
       // position: 'top-end',
     })
   
