@@ -43,3 +43,6 @@ a{
 .PasswordEyeView{
     font-size: 21px !important;
 }
+
+
+input::-ms-reveal { display: none; }
