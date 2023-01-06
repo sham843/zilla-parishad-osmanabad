@@ -314,7 +314,15 @@ export class DashboardStudentDetailsComponent {
     xaxis: {
       categories: categories
     },
-    };
+    yaxis: {
+      // tickAmount: 5,
+      labels: {
+        formatter: function(val:any) {
+          return val.toFixed(0);
+        }
+      }
+    }
+  };
 
   }
 }
