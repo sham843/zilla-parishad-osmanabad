@@ -1,3 +1,4 @@
+import { DatePipe } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
@@ -34,6 +35,7 @@ export class AgencyRegistrationComponent {
   constructor(private dialog: MatDialog, private apiService: ApiService, private ngxSpinner: NgxSpinnerService,
     private webStroageService: WebStorageService, private downloadPdfservice: DownloadPdfExcelService,
     private errors: ErrorsService, private common: CommonMethodsService, public validation: ValidationService,
+    public datepipe : DatePipe
   ) { }
 
   ngOnInit() {
@@ -105,7 +107,7 @@ export class AgencyRegistrationComponent {
 
       let objData: any = {
         'topHedingName': 'Agency Report',
-        'createdDate': 'Created on:' + new Date()
+        'createdDate':'Created on:'+this.datepipe.transform(new Date(), 'yyyy-MM-dd, h:mm a')
       }
       this.downloadPdfservice.downLoadPdf(keyPDFHeader, ValueData, objData);
     }
