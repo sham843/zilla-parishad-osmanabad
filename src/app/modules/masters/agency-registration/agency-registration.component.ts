@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormControl } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ApiService } from 'src/app/core/services/api.service';
@@ -19,7 +19,6 @@ import { AddUpdateAgencyRegistrationComponent } from './add-update-agency-regist
 })
 export class AgencyRegistrationComponent {
   pageNumber: number = 1;
-  filterForm!: FormGroup;
   agencyReport = new Array();
   displayedColumns = new Array();
   tableData: any;
@@ -60,8 +59,9 @@ export class AgencyRegistrationComponent {
   getTableData(flag?: string) {
     this.ngxSpinner.show();
     this.pageNumber = flag == 'filter' ? 1 : this.pageNumber;
+    let pageNo = this.pageNumber;
     flag == 'filter' ? this.agencyReport = [] : '';
-    let str = `pageno=${this.pageNumber}&pagesize=10&&TextSearch=${this.searchText.value}&lan=${this.webStroageService.languageFlag}`;
+    let str = `pageno=${pageNo || ''}&pagesize=10&&TextSearch=${this.searchText.value || ''}&lan=${this.webStroageService.languageFlag || ''}`;
     let reportStr = `pageno=${this.pageNumber}&pagesize=${this.totalCount * 10}&TextSearch=${this.searchText.value}&lan=${this.webStroageService.languageFlag}`
     this.apiService.setHttp('GET', 'zp-osmanabad/Agency/GetAll?' + (flag == 'pdfFlag' ? reportStr : str), false, false, false, 'baseUrl');
     this.apiService.getHttp().subscribe({
