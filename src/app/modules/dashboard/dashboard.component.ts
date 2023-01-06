@@ -558,7 +558,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
     })
     this.barchartOptions.series.push(dataArray);
     this.barchartOptions.xaxis.categories.push(...(this.selectedLang == 'English' ? subjectSet: subjectSet_m));
-    this.barchartOptions.xaxis.parameters= this.selectedLang == 'English' ?['Level','student(%)']:['स्तर','विद्यार्थी (%)']
+    this.barchartOptions.xaxis.parameters= this.selectedLang == 'English' ?['Level','Student(%)']:['स्तर','विद्यार्थी (%)']
     this.showBarChartF = true;
     
     this.barchartOptions.tooltip = {
@@ -611,11 +611,13 @@ export class DashboardComponent implements OnInit, AfterViewInit {
     })
     this.barchartOptions1.series.push(arrayObjectData);
     this.barchartOptions1.xaxis.categories.push(...(this.selectedLang == 'English' ?talukaSet:talukaSet_m));
-    this.barchartOptions1.xaxis.parameters= this.selectedLang == 'English' ?['Level','student(%)']:['स्तर','विद्यार्थी (%)']
+    this.barchartOptions1.xaxis.parameters= this.selectedLang == 'English' ?['Level','Student(%)']:['स्तर','विद्यार्थी (%)']
     this.showBarChartS = true;
     
     this.barchartOptions1.tooltip = {
-      custom: function({ series, seriesIndex, dataPointIndex, w }: any) {              
+      custom: function({ series, seriesIndex, dataPointIndex, w }: any) { 
+        console.log(w.config);
+                     
         return (
           '<div class="arrow_box" style="padding:10px;">' +
             "<div>" + w.config.xaxis.parameters[0]+ " : <b> " + w.globals.seriesNames[seriesIndex]+ '</b>' + "</div>" +
