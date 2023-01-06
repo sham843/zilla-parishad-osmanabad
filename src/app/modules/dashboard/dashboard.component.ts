@@ -35,6 +35,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
   graphInstance: any;
   showBarChartS: boolean = false;
   tableDataTopPerformance = new Array();
+  tableHeadingArray = ['Top Performing Schools', 'Low Performing Schools'];
   displayedheaders = new Array;
   graphSubjectData = new Array();
   totalStudentSurveyData = new Array();
@@ -353,7 +354,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
           options: {
             legend: {
               colors: ['#CB4B4B', '#E76A63', '#E98754', '#EFB45B', '#65C889'],
-              position: "bottom",
+              position: "top",
               offsetX: 0,
               offsetY: 0
             }
@@ -395,8 +396,8 @@ export class DashboardComponent implements OnInit, AfterViewInit {
         opacity: 1
       },
       legend: {
-        position: 'bottom',
-        fontSize: '12px',
+        position: 'top',
+        fontSize: '14px',
         show: true,
         markers: {
           width: 12,
@@ -404,7 +405,11 @@ export class DashboardComponent implements OnInit, AfterViewInit {
           strokeWidth: 0,
           strokeColor: '#fff',
           fillColors: ['#CB4B4B', '#E76A63', '#E98754', '#EFB45B', '#65C889', '#73AFFE'],
-        }
+        },
+        itemMargin: {
+          horizontal: 25,
+          vertical: 0
+      },
       }
     };
   }
