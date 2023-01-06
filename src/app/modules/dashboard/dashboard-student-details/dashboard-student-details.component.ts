@@ -316,10 +316,11 @@ export class DashboardStudentDetailsComponent {
       const arrayBySubject=this.grapbhDetailsArray.filter((x:any)=> (this.languageFlag=='English'? x.subjectName: x.m_SubjectName)==this.subjectControl?.value);
       const SubSubjectArray= [...new Set(arrayBySubject.map((sub: any) => this.languageFlag=='English'? sub.optionName:sub.m_OptionName))];
       let ArryOfSeries:any=[];
+      
       ExamType.map((x:any)=>{
         const obj={
           name: x,
-          data: (arrayBySubject.filter((y:any)=>this.languageFlag=='English'? y.examType:y.m_ExamType==x)).map((z:any)=> z.actualGrade)
+          data: (arrayBySubject.filter((y:any)=>(this.languageFlag=='English'? y.examType:y.m_ExamType)==x)).map((z:any)=> z.actualGrade)
         }
         ArryOfSeries.push(obj)
       })
