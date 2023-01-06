@@ -32,7 +32,7 @@
         "pleaseEnterValidOfficeUserName" : "व्यक्तीचे नाव आवश्यक आहे",
         "agencyMobileNumberIsRequired" : "एजन्सीचा मोबाईल नंबर आवश्यक आहे",
         "pleaseEnterValidAgencyName" : "कृपया वैध एजन्सी नाव प्रविष्ट करा",
-        "pleaseEnterValidPersonName" : "कृपया वैध व्यक्तीचे नाव प्रविष्ट करा",
+        "pleaseEnterValidPersonName" : "कृपया वैध नाव प्रविष्ट करा",
         "agencyEmailIdIsRequired" : "एजन्सीचा ई-मेल आयडी आवश्यक आहे",
         "pleaseEnterValidMobileNumber" : "कृपया वैध मोबाईल क्रमांक प्रविष्ट करा",
         "pleaseEnterValidEmailId" : "कृपया वैध ई-मेल आयडी प्रविष्ट करा",
@@ -279,7 +279,9 @@
         "talukawiseAssessment":"तालुका निहाय मूल्यांकन",
         "selectSubject":"विषय निवडा",
         "dataNotFound":"डेटा उपलब्ध नाही",
-        "View" : "दृश्य"
+        "View" : "दृश्य",
+        "ContactNoKendra" : "संपर्क क्रमांक (केंद्र)",
+         "EmailIDkendra" : "ई-मेल आयडी (केंद्र)"
         
     }
 }

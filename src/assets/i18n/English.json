@@ -277,7 +277,9 @@
         "talukawiseAssessment":"Taluka wise assessment",
         "selectSubject":"Select Subject",
         "dataNotFound":"Data not available",
-        "View" : "View"
+        "View" : "View",
+        "ContactNoKendra" : "Contact No.(Kendra)",
+        "EmailIDkendra" : "Email ID (kendra)"
         
 
     }
