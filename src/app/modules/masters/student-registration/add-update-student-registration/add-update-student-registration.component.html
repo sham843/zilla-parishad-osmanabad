@@ -68,21 +68,23 @@
                     <mat-form-field appearance="outline" class="w-100">
                         <mat-label>{{'Labels.studentFirstName'| translate}}</mat-label>
                         <input matInput formControlName="fName" (keypress)="validators.onlyAlphabets($event)">
-                        <!-- <mat-error *ngIf="fc['fName'].hasError('required')">{{'Labels.enterStudentFirstName'| translate}}</mat-error> -->
+                        <mat-error *ngIf="fc['fName'].hasError('pattern')">{{'Labels.InvalidstudentFirstName'|
+                            translate}}</mat-error>
                     </mat-form-field>
                 </div>
                 <div class="col-sm-4">
                     <mat-form-field appearance="outline" class="w-100">
                         <mat-label>{{'Labels.studentMiddelName'| translate}}</mat-label>
                         <input matInput formControlName="mName" (keypress)="validators.onlyAlphabets($event)">
-                        <!-- <mat-error *ngIf="fc['mName'].hasError('required')">{{'Labels.enterStudentMiddelName'|  translate}}</mat-error> -->
+                        <mat-error *ngIf="fc['mName'].hasError('pattern')">{{'Labels.InvalidstudentMiddleName'|
+                            translate}}</mat-error>
                     </mat-form-field>
                 </div>
                 <div class="col-sm-4">
                     <mat-form-field appearance="outline" class="w-100">
                         <mat-label>{{'Labels.studentLastName'| translate}}</mat-label>
                         <input matInput formControlName="lName" (keypress)="validators.onlyAlphabets($event)">
-                        <!-- <mat-error *ngIf="fc['lName'].hasError('required')">{{'Labels.enterStudentLastName'| translate}}</mat-error> -->
+                        <mat-error *ngIf="fc['lName'].hasError('pattern')">{{'Labels.InvalidstudentLastName'| translate}}</mat-error>
                     </mat-form-field>
                 </div>
                 <div class="col-sm-4">
