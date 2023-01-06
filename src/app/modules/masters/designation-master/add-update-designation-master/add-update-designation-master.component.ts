@@ -40,8 +40,8 @@ export class AddUpdateDesignationMasterComponent {
     this.designationForm = this.fb.group({
       "lan": [''],
       "id": [0],
-      "designationType": ['',[Validators.required, Validators.pattern(this.validation.fullName)]],
-      "m_DesignationType": ['',[Validators.required,Validators.pattern('^[\u0900-\u0965 ]+$')]],
+      "designationType": ['',[Validators.required, Validators.pattern(this.validation.alphaNumericOnly)]],
+      "m_DesignationType": ['',Validators.required],
       "designationLevelId": [data ? { value: data.designationLevelId, disabled: true } :'', Validators.required]
     }) 
   }
