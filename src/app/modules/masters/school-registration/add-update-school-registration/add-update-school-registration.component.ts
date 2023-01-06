@@ -212,16 +212,17 @@ export class AddUpdateSchoolRegistrationComponent {
   //#region ------------------------------------------------- Upload Image start here --------------------------------------------// 
   imgUpload(event: any) {
     this.img = true;
-    this.fileUpload.uploadDocuments(event, 'Upload', 'jpg, jpeg, png').subscribe((res: any) => {
-      if (res.statusCode == 200) {
-        this.uploadImg = res.responseData;
-        console.log("img method", this.uploadImg);
-        
-        this.commonMethod.showPopup(res.statusMessage, 0);
-      }
-      else {
-        return
-      }
+    this.fileUpload.uploadDocuments(event, 'Upload', 'jpg, jpeg, png').subscribe({
+      next : (res : any)=>{
+        if (res.statusCode == 200) {
+          this.uploadImg = res.responseData;
+          this.commonMethod.showPopup(res.statusMessage, 0);
+        }
+        else {
+          return
+        }
+      },
+      error: ((err: any) => {  err.statusCode ? this.errors.handelError(err.statusCode):this.commonMethod.showPopup(err, 1) })
     });
   }
 
@@ -277,16 +278,13 @@ export class AddUpdateSchoolRegistrationComponent {
       // else {
       //   formValue.uploadImage = this.schoolRegForm.value.uploadImage;
       // }
-      console.log("if block submit img : ", formValue.uploadImage);
-      
     }
     else{
       formValue.uploadImage = this.uploadImg;
-      console.log("else block submit img : ", formValue.uploadImage);
     }
     formValue.schoolDocument = this.imgArray;
 
-    console.log("Submit obj : ", formValue);
+    // console.log("Submit obj : ", formValue);
     
     let url = this.editObj ? 'Update' : 'Add'
 
@@ -314,7 +312,7 @@ export class AddUpdateSchoolRegistrationComponent {
 
   //#region ------------------------------------------------- Edit Record start here --------------------------------------------//
   onEdit() {
-    console.log("Edit obj : ", this.data);
+    // console.log("Edit obj : ", this.data);
     
     this.editFlag = true;
     // this.data.uploadImage ? this.schoolRegForm.value.uploadImage = this.data.uploadImage : '';
@@ -356,12 +354,9 @@ export class AddUpdateSchoolRegistrationComponent {
   clearDropdown(dropdown: string) {
     this.editFlag = false;
     if (dropdown == 'Taluka') {
-      console.log("hi");
-      
       this.f['centerId'].setValue(0);
       this.f['villageId'].setValue(0);
       // this.villageArr = [];
-      console.log("bye");
     }
     else if (dropdown == 'LowestClass') {
       this.f['highestClass'].setValue('');
