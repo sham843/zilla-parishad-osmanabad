@@ -48,7 +48,7 @@ export class DashboardStudentDetailsComponent {
     private commonMethods: CommonMethodsService,
     private masterService: MasterService,
   ) { 
-    this.getLineChart();
+   
   }
   ngOnInit() {
     this.dashboardObj = JSON.parse(localStorage.getItem('selectedBarchartObjData') || '');
@@ -70,36 +70,11 @@ export class DashboardStudentDetailsComponent {
     })
 
   }
-  getLineChart(){
-    this.lineChartOptions = {
-      series: [],
-      chart: {
-      height: 350,
-      type: 'area'
-    },
-    dataLabels: {
-      enabled: false
-    },
-    stroke: {
-      curve: 'smooth'
-    },
-    xaxis: {
-      categories: []
-    },
-    // tooltip: {
-    //   x: {
-    //     format: 'dd/MM/yy HH:mm'
-    //   },
-    // },
-    };
-
-  }
-
   languageChange() {
     this.webService.langNameOnChange.subscribe(lang => {
       this.languageFlag = lang;
       this.getTableData();
-      //this.getSubjectData();
+      this.getSubjectData();
     });
 
   }
@@ -298,11 +273,6 @@ export class DashboardStudentDetailsComponent {
       },
       error: ((err: any) => { this.ngxSpinner.hide(); this.errors.handelError(err.statusCode) })
     });
-
-    // https://zposmservices.mahamining.com/zp-osmanabad/Dashboard/GetDataFor1st2ndStdStudentChart?GroupId=1&StudentId=1
-//     console.log(tableData)
-//     const subjectSet = [...new Set(tableData.map((sub:any )=> sub.optionName || sub.question))];
-// console.log(subjectSet)
   }
   getSubjectData() {
     this.subjectArray = [];
@@ -316,7 +286,6 @@ export class DashboardStudentDetailsComponent {
       const arrayBySubject=this.grapbhDetailsArray.filter((x:any)=> (this.languageFlag=='English'? x.subjectName: x.m_SubjectName)==this.subjectControl?.value);
       const SubSubjectArray= [...new Set(arrayBySubject.map((sub: any) => this.languageFlag=='English'? sub.optionName:sub.m_OptionName))];
       let ArryOfSeries:any=[];
-      
       ExamType.map((x:any)=>{
         const obj={
           name: x,
@@ -324,11 +293,25 @@ export class DashboardStudentDetailsComponent {
         }
         ArryOfSeries.push(obj)
       })
-    //this.lineChartOptions.series.legnth==0?this.lineChartOptions.series=[]:'';
-    this.lineChartOptions.xaxis.categories=[];
-    this.lineChartOptions.series=ArryOfSeries;
-    this.lineChartOptions.xaxis.categories=SubSubjectArray;
-    this.showLineChart=true;
-    console.log(this.lineChartOptions);
+      this.getLineChart(ArryOfSeries,SubSubjectArray);
+  }
+  getLineChart(series:any, categories:any){
+    this.lineChartOptions = {
+      series: series,
+      chart: {
+      height: 350,
+      type: 'area'
+    },
+    dataLabels: {
+      enabled: false
+    },
+    stroke: {
+      curve: 'smooth'
+    },
+    xaxis: {
+      categories: categories
+    },
+    };
+
   }
 }
