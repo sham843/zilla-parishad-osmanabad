@@ -44,8 +44,9 @@ export class AddUpdateTeacherRegistrationComponent {
   talukaArrayTeacherDetails = new Array();
   img: boolean = false;
   checked:boolean=false
-  maxDate = new Date();
+  maxDate =  new Date();
   seniorityDate =new Date();
+  schoolDate = new Date();
   age!:number;
   
   assignClass: boolean = false;
@@ -241,13 +242,16 @@ export class AddUpdateTeacherRegistrationComponent {
     this.td['theOriginalDistrictInterDistrictTransfer'].updateValueAndValidity();
   }
   
+  currentSchoolDate(event:any){
+    console.log("event",event);
+    
+    // let firstAppointmentDate = this.teacherRegForm.value.teacherDetails.dateOfFirstAppoinmentService
+    // this.schoolDate.setDate(firstAppointmentDate);
+  }
 //#endregion ---------------- end update validation hide show field -------------------------
 
 //#region -------------------------start standard check box ----------------------------------
   addStand(stand: any, value: number) {
-    // console.log(stand);
-    
-    // this.assignclass = true;
     let data =
     {
       "id": 0,
@@ -628,17 +632,14 @@ console.log("birthDate",birthDate);
         this.img ? formValue.uploadImage = this.uploadImghtml : formValue.uploadImage = this.data.uploadImage   
     }else{
       formValue.uploadImage = this.uploadImghtml;
-      // formValue.uploadImage ? formValue.uploadImage = this.uploadImghtml : ''; 
     }
-    if (this.teacherRegForm.invalid) {  
-
-      // this.assignClassArray.length ==  0 ? this.assignClass = true: this.assignClassArray.length >  0 ?  this.assignClass = false: ''
+    if (this.teacherRegForm.invalid) {      
         this.commonMethod.showPopup(this.webStorageS.languageFlag == 'EN' ? 'Please Enter Mandatory Fields' : 'कृपया अनिवार्य फील्ड प्रविष्ट करा', 1);
         return      
     }
     else {
       if(this.assignClassArray.length > 0){
-        // this.assignClass = false;
+    
         formValue.assignTeacher = this.assignClassArray;
         let postObj = this.teacherRegForm.value;
         this.ngxSpinner.show();
