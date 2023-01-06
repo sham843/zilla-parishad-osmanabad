@@ -14,11 +14,18 @@ export class ValidationService {
   aadhar_card = ('^[2-9][0-9]{11}$');
   valPassword = '^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*_=+-]).{8,10}$';
   alphaNumericOnly = '^([ a-zA-Z])[ a-zA-Z0-9]+$';   //Valid - Manager 1, Manager / Invalid - 9865232     
+  alphanumericMarathi = '^[\u0900-\u096F ]+$';
 
   alphabetsWithSpaces(event: any) {
     const maskSeperator = new RegExp('^([a-zA-Z ])', 'g');
     return maskSeperator.test(event.key);
   }
+  
+  unicodeMarathiAlphanumberic(event: any) {
+    const maskSeperator = new RegExp('[^\u0900-\u096F ]+', 'm');
+    return !maskSeperator.test(event.key);
+  }
+
   noSpacesAtStart(event: any) {
     const maskSeperator = new RegExp('^[ ]+|[ ]+$', 'm');
     return !maskSeperator.test(event.key);
