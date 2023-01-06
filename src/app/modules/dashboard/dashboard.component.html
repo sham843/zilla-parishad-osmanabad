@@ -369,7 +369,7 @@
                                                 item['m_SchoolName']}}
                                             </td>
                                             <td>{{item['totalStudent']}}</td>
-                                            <td [ngClass]="{'bg-danger': (item['passpercentage'] < 10), 'bg-warning': (item['passpercentage'] < 20), 'bg-success': (item['passpercentage'] >20) }">{{item['passpercentage']}}</td>
+                                            <td [class]="item['passpercentage'] <= 50 ? 'table-cell bg-red' : (item['passpercentage'] > 50 && item['passpercentage'] <= 60) ? 'table-cell bg-orange' : (item['passpercentage'] > 60 && item['passpercentage'] <= 80) ? 'table-cell bg-dark-orange' :'table-cell bg-green'">{{item['passpercentage']}}</td>
                                         </tr>
                                     </tbody>
                                 </table>
