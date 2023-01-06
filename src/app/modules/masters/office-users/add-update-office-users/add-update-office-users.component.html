@@ -94,9 +94,9 @@
                     <mat-error *ngIf="fc['beoMobileNo'].hasError('pattern')">{{'Labels.pleaseEnterValidMobileNumber' | translate}}</mat-error>
                     </mat-form-field>
                 </div>
-                <div class="col-sm-4">
+                <div class="col-sm-6">
                     <mat-form-field appearance="outline" class="w-100">
-                        <mat-label>Email ID(BEO Office)</mat-label>
+                        <mat-label>{{'Labels.EmailIDofficer' | translate}}</mat-label>
                         <input matInput formControlName="beoEmailId">
                     <!-- <mat-error *ngIf="fc['beoEmailId'].hasError('required')">{{'Labels.emailIdIsRequired' | translate}}</mat-error> -->
                     <mat-error *ngIf="fc['beoEmailId'].hasError('pattern')">{{'Labels.pleaseEnterValidEmailId' | translate}}</mat-error>
@@ -107,7 +107,7 @@
             <ng-container *ngIf="officeForm.value.designationLevelId == 2 && officeForm.value.designationId == 20" >
                 <div class="col-sm-6">
                     <mat-form-field appearance="outline" class="w-100">
-                        <mat-label>Contact No.(Kendra)</mat-label>
+                        <mat-label>{{'Labels.ContactNoKendra' | translate}}</mat-label>
                         <input matInput  formControlName="kendraMobileNo" (keypress)="validation.onlyDigits($event)" maxlength="10">
                     <!-- <mat-error *ngIf="fc['kendraMobileNo'].hasError('required')">{{'Labels.mobileIsRequired' | translate}}</mat-error> -->
                     <mat-error *ngIf="fc['kendraMobileNo'].hasError('pattern')">{{'Labels.pleaseEnterValidMobileNumber' | translate}}</mat-error>
@@ -115,7 +115,7 @@
                 </div>
                 <div class="col-sm-6">
                     <mat-form-field appearance="outline" class="w-100">
-                        <mat-label>Email ID(kendra)</mat-label>
+                        <mat-label>{{'Labels.EmailIDkendra' | translate}}</mat-label>
                         <input matInput  formControlName="kendraEmailId">
                         <!-- <mat-error *ngIf="fc['kendraEmailId'].hasError('required')">{{'Labels.emailIdIsRequired' | translate}}</mat-error> -->
                         <mat-error *ngIf="fc['kendraEmailId'].hasError('pattern')">{{'Labels.pleaseEnterValidEmailId' | translate}}</mat-error>
