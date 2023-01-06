@@ -410,3 +410,49 @@ body {
   height: 76vh;
   overflow-y: auto;
 }
+.status{
+  height: 24px;
+  width: 24px;
+  line-height: 24px;
+  border-radius: 50%;
+  border: solid 5px;
+}
+.status.green{
+  background: #65C889;
+  border-color:#BBE6D2 ;
+}
+.status.orange{
+  background: #EFB45B;
+  border-color:#F7DBB1 ;
+}
+.status.dark-orange{
+  background: #E98754;
+  border-color:#F4C3A9 ;
+}
+.status.light-red{
+  background: #E76A63;
+  border-color:#F2ABA8 ;
+}
+.status.red{
+  background: #CB4B4B;
+}
+
+.table-cell{
+  color: #fff !important;
+  text-align: center;
+}
+.table-cell.bg-green{
+  background: #65C889;
+}
+.table-cell.bg-orange{
+  background: #EFB45B;
+}
+.table-cell.bg-dark-orange{
+  background: #E98754;
+}
+.table-cell.bg-light-red{
+  background: #E76A63;
+}
+.table-cell.bg-red{
+  background: #CB4B4B;
+}

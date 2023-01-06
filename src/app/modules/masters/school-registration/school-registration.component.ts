@@ -266,12 +266,14 @@ export class SchoolRegistrationComponent {
   }
 
   openDetailsDialog(obj:any){
+    console.log("details : ", obj);
+    
     var data = {
       headerImage: obj.uploadImage,
       header: this.webStorageS.languageFlag == 'EN' ? obj.schoolName : obj.m_SchoolName,
       subheader : this.webStorageS.languageFlag == 'EN' ? obj.village : obj.m_Village,
-      labelHeader: this.webStorageS.languageFlag == 'EN' ? ['Kendra Name', 'Taluka','District','Lowest Class', 'HighestClass', 'Total Students'] : ['केंद्राचे नाव', 'तालुका', 'जिल्हा', 'सर्वात खालचा वर्ग', 'सर्वोच्च वर्ग', 'एकूण विद्यार्थी'],
-      labelKey: this.webStorageS.languageFlag == 'EN' ? ['center','taluka', 'district','lowestClass','highestClass','studentCount'] : ['m_Center', 'm_Taluka','m_District', 'lowestClass', 'highestClass','studentCount'],
+      labelHeader: this.webStorageS.languageFlag == 'EN' ? ['District', 'Taluka', 'Kendra Name', 'Village', 'Lowest Class', 'HighestClass', 'Total Students'] : ['जिल्हा', 'तालुका', 'केंद्राचे नाव', 'गाव', 'सुरुवातीचा वर्ग ', 'शेवटचा वर्ग', 'एकूण विद्यार्थी'],
+      labelKey: this.webStorageS.languageFlag == 'EN' ? ['district', 'taluka', 'center', 'village', 'lowestClass','highestClass','studentCount'] : ['m_District', 'm_Taluka', 'm_Center', 'm_Village', 'lowestClass', 'highestClass','studentCount'],
       Obj: obj,
       chart: false,
       multipleImage: true
