@@ -254,9 +254,9 @@ body {
   padding: 7px 20px;
   cursor: pointer;
 }
-.apexcharts-yaxis-texts-g,
-.apexcharts-grid-borders,
-.apexcharts-grid{
+.no-axis .apexcharts-yaxis-texts-g,
+.no-axis .apexcharts-grid-borders,
+.no-axis .apexcharts-grid{
   display: none !important;
 }
 .apexcharts-legend-text{

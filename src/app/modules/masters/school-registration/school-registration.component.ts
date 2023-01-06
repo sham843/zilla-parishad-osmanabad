@@ -271,7 +271,7 @@ export class SchoolRegistrationComponent {
     var data = {
       headerImage: obj.uploadImage,
       header: this.webStorageS.languageFlag == 'EN' ? obj.schoolName : obj.m_SchoolName,
-      subheader : this.webStorageS.languageFlag == 'EN' ? obj.village : obj.m_Village,
+      subheader : this.webStorageS.languageFlag == 'EN' ? obj.schoolType : obj.m_SchoolType,
       labelHeader: this.webStorageS.languageFlag == 'EN' ? ['District', 'Taluka', 'Kendra Name', 'Village', 'Lowest Class', 'HighestClass', 'Total Students'] : ['जिल्हा', 'तालुका', 'केंद्राचे नाव', 'गाव', 'सुरुवातीचा वर्ग ', 'शेवटचा वर्ग', 'एकूण विद्यार्थी'],
       labelKey: this.webStorageS.languageFlag == 'EN' ? ['district', 'taluka', 'center', 'village', 'lowestClass','highestClass','studentCount'] : ['m_District', 'm_Taluka', 'm_Center', 'm_Village', 'lowestClass', 'highestClass','studentCount'],
       Obj: obj,
