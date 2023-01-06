@@ -376,6 +376,8 @@ export class AddUpdateStudentRegistrationComponent {
     let type = name == 'img' ? 'jpg, jpeg, png' : 'jpg, jpeg, png, pdf';
     this.fileUpl.uploadDocuments(event, 'Upload', type).subscribe({
       next: (res: any) => {
+        console.log(res);
+        
         if (res.statusCode == 200) {
           if(this.imageFile.nativeElement.value == this.aadharFile.nativeElement.value){
             let msg =  this.languageFlag == 'EN' ?  name == 'img' ? 'Upload different profile photo':'Upload different aadhar card' : name == 'img' ? 'भिन्न प्रोफाइल फोटो अपलोड करा':'वेगवेगळे आधार कार्ड अपलोड करा';          
@@ -395,11 +397,11 @@ export class AddUpdateStudentRegistrationComponent {
             "docPath": name == 'img' ? this.uploadImg : this.uploadAadhaar
           }
           this.imageArray.push(obj);
-        } else {
+        } else {         
           name == 'img' ? (this.uploadImg = '', this.imageFile.nativeElement.value = '') : (this.uploadAadhaar = '', this.aadharFile.nativeElement.value = '');
         }
       },
-      error: ((err: any) => { this.errors.handelError(err.statusCode) })
+      error: ((err: any) => {  err.statusCode ? this.errors.handelError(err.statusCode):this.commonMethods.showPopup(err, 1) })
     });
   }
 

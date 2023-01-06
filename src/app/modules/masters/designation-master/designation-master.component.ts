@@ -1,3 +1,4 @@
+import { DatePipe } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
@@ -29,7 +30,7 @@ export class DesignationMasterComponent {
 
   constructor(private dialog: MatDialog, private apiService: ApiService, private errors: ErrorsService,
     private commonMethod: CommonMethodsService, public webStorage : WebStorageService,
-    private errorHandler: ErrorsService ,private downloadFileService : DownloadPdfExcelService) { }
+    private errorHandler: ErrorsService ,private downloadFileService : DownloadPdfExcelService, public datepipe : DatePipe) { }
 
   ngOnInit() {
     this.getTableData(); 
@@ -225,7 +226,7 @@ getTableTranslatedData(){
           console.log("ValueData", ValueData);          
           let objData:any = {
             'topHedingName': 'Designation Data',
-            'createdDate':'Created on:'+new Date()
+            'createdDate':'Created on:'+this.datepipe.transform(new Date(), 'yyyy-MM-dd, h:mm a')
           }
          this.downloadFileService.downLoadPdf(keyPDFHeader, ValueData, objData);
   }

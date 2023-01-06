@@ -11,6 +11,7 @@ import { WebStorageService } from 'src/app/core/services/web-storage.service';
 import { DownloadPdfExcelService } from 'src/app/core/services/download-pdf-excel.service';
 import { GlobalDetailComponent } from 'src/app/shared/components/global-detail/global-detail.component';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-school-registration',
@@ -49,6 +50,7 @@ export class SchoolRegistrationComponent {
     public webStorageS: WebStorageService,
     private downloadFileService: DownloadPdfExcelService,
     private ngxSpinner: NgxSpinnerService,
+    public datepipe : DatePipe
     ) { }
 
   ngOnInit() {
@@ -143,7 +145,7 @@ export class SchoolRegistrationComponent {
         );
       let objData: any = {
         'topHedingName': 'School Registration Data',
-        'createdDate': 'Created on:' + new Date()
+        'createdDate':'Created on:'+this.datepipe.transform(new Date(), 'yyyy-MM-dd, h:mm a')
       }
       ValueData.length > 0 ? this.downloadFileService.downLoadPdf(keyPDFHeader, ValueData, objData):''
     }

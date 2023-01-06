@@ -1,3 +1,4 @@
+import { DatePipe } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
@@ -39,7 +40,8 @@ export class StudentRegistrationComponent {
     private webService: WebStorageService,
     private downloadPdfservice: DownloadPdfExcelService,
     private ngxSpinner: NgxSpinnerService,
-    public validators: ValidationService
+    public validators: ValidationService,
+    public datepipe : DatePipe
   ) { }
 
   ngOnInit() {
@@ -114,7 +116,7 @@ export class StudentRegistrationComponent {
             console.log("ValueData", ValueData);
             let objData: any = {
               'topHedingName': 'Student Report',
-              'createdDate': 'Created on:' + new Date()
+              'createdDate':'Created on:'+this.datepipe.transform(new Date(), 'yyyy-MM-dd, h:mm a')
             }
             this.downloadPdfservice.downLoadPdf(keyPDFHeader, ValueData, objData);
           } else {

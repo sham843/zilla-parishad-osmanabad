@@ -1,3 +1,4 @@
+import { DatePipe } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
@@ -32,7 +33,7 @@ export class OfficeUsersComponent {
   displayedheadersMarathi = ['अनुक्रमांक', 'ऑफिस युजर नाव', 'पदनाम', 'मोबाईल क्र.', 'ई-मेल आयडी', 'कृती'];
   constructor(private apiService: ApiService, private errors: ErrorsService, private dialog: MatDialog, private commonService: CommonMethodsService,
     private webStorageService: WebStorageService, private downloadFileService: DownloadPdfExcelService, public validation  :ValidationService,
-    private ngxSpinner: NgxSpinnerService,) { }
+    private ngxSpinner: NgxSpinnerService, public datepipe : DatePipe) { }
 
   ngOnInit() {
     this.getTableData();
@@ -89,7 +90,7 @@ export class OfficeUsersComponent {
               );       
               let objData:any = {
                 'topHedingName': 'Office Data',
-                'createdDate':'Created on:'+new Date()
+                'createdDate':'Created on:'+this.datepipe.transform(new Date(), 'yyyy-MM-dd, h:mm a')
               }
             this.downloadFileService.downLoadPdf(keyPDFHeader, ValueData, objData);
           }
