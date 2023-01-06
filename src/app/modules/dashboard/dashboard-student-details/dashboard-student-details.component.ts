@@ -323,7 +323,6 @@ export class DashboardStudentDetailsComponent {
         }
         ArryOfSeries.push(obj)
       })
-      debugger
     //this.lineChartOptions.series.legnth==0?this.lineChartOptions.series=[]:'';
     this.lineChartOptions.xaxis.categories=[];
     this.lineChartOptions.series=ArryOfSeries;
