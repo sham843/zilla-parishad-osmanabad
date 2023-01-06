@@ -155,10 +155,13 @@
                             </button>
                         </div>
                     </div>
+                    
+                        <p style="font-size: 11px;" class="mb-0 pb-0">{{'Labels.NoteImageFormat' | translate}}</p>
+                       
                     <ng-container *ngIf="imgFlag && !uploadImg">
                         <span style="font-size: 11px;" class="text-danger">{{'Labels.uploadPhoto'| translate}}</span>
-                    </ng-container> 
-                    <span style="font-size: 11px;">Note: only accept jpg jpeg png formate</span>
+                    </ng-container>
+                   
                 </div>
                 <div class="col-sm-4">
                     <mat-form-field appearance="outline" class="w-100 ">
@@ -233,10 +236,13 @@
                             </button>
                         </div>
                     </div>
+                   
+                        <p style="font-size: 11px;" class="mb-0 pb-0">{{'Labels.NoteImagePdfFormat' | translate}}</p>
+                    
                     <ng-container *ngIf="aadhaarFlag && !uploadAadhaar">
                         <span style="font-size: 11px;" class="text-danger">{{'Labels.aadhaarPhoto'| translate}}</span>
                     </ng-container> 
-                    <span style="font-size: 11px;">Note: only accept jpg jpeg png pdf formate</span>
+                   
                 </div>
             </div>
             
