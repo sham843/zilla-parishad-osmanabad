@@ -279,7 +279,9 @@
         "talukawiseAssessment":"तालुका निहाय मूल्यांकन",
         "selectSubject":"विषय निवडा",
         "dataNotFound":"डेटा उपलब्ध नाही",
-        "View" : "दृश्य"
+        "View" : "दृश्य",
+        "ContactNoKendra" : "संपर्क क्रमांक (केंद्र)",
+         "EmailIDkendra" : "ई-मेल आयडी (केंद्र)"
         
     }
 }
