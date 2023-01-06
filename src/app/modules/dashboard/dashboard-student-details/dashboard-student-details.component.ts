@@ -27,10 +27,10 @@ export class DashboardStudentDetailsComponent {
   standardArr: any = [];
   subjectArr: any = [];
 
-  displayedColumns = ['docPath', 'srNo', 'fullName', 'Status'];
-  marathiDisplayedColumns = ['docPath', 'srNo', 'm_FullName', 'Status'];
+  displayedColumns = ['docPath', 'srNo', 'fullName', 'actualGrade'];
+  marathiDisplayedColumns = ['docPath', 'srNo', 'm_FullName', 'actualGrade'];
   displayedheaders = ['#', 'Sr. No.', 'Name', 'Status'];
-  marathiDisplayedheaders = ['#', 'अनुक्रमांक', 'नाव', 'Status'];
+  marathiDisplayedheaders = ['#', 'अनुक्रमांक', 'नाव', 'स्तर'];
 
   filterForm!: FormGroup
 
@@ -81,7 +81,7 @@ export class DashboardStudentDetailsComponent {
   setTableData() {
     let tableData = {
       pageNumber: this.pageNumber,
-      img: 'docPath', blink: true, badge: '', isBlock: '', pagintion: false,
+      img: 'docPath', blink: true, badge: '', isBlock: '', pagintion: false, status: 'actualGrade',
       displayedColumns: this.languageFlag == 'English' ? this.displayedColumns : this.marathiDisplayedColumns,
       tableData: this.tableDataArray,
       tableSize: this.totalCount,

@@ -8,7 +8,7 @@
                 <td mat-cell *matCellDef="let element let i=index" (click)="action(element, 'View')">
                     <ng-container  *ngIf="'srNo' ==columns">{{((pageNumber + 1) * 10 + i + 1)-20 | numberTranformPipe}}</ng-container>
                     <ng-container
-                        *ngIf="'srNo' !=columns && tableInfo?.img != columns && tableInfo?.blink != columns && tableInfo?.badge !=  columns && tableInfo?.checkBox != columns">{{element[columns] | dash}}
+                        *ngIf="'srNo' !=columns && tableInfo?.img != columns && tableInfo?.blink != columns && tableInfo?.badge !=  columns && tableInfo?.checkBox != columns && tableInfo?.status != columns">{{element[columns] | dash}}
                     </ng-container>
                     <ng-container  *ngIf="tableInfo?.img == columns"><img class="table-img" routerLink="[../details]" src="{{element[columns] ? element[columns] : 'assets/images/user.jpg'}}"></ng-container>
                     <ng-container *ngIf="tableInfo?.blink == columns">{{element[columns] }}</ng-container>
@@ -19,6 +19,9 @@
                     <ng-container *ngIf="tableInfo?.isBlock == columns">
                         <mat-slide-toggle (change)="action(element, 'Block')">
                         </mat-slide-toggle>
+                    </ng-container>
+                    <ng-container *ngIf="tableInfo?.status == columns">
+                        <div [class]="element[columns] == 5 ? 'status green' : element[columns] == 4 ? 'status orange' : element[columns] == 3 ? 'status dark-orange' : element[columns] == 2 ? 'status light-red' : 'status red' "></div>
                     </ng-container>
                 </td>
             </ng-container>
