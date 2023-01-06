@@ -12,6 +12,7 @@ import { GlobalDialogComponent } from 'src/app/shared/components/global-dialog/g
 import { AddUpdateTeacherRegistrationComponent } from './add-update-teacher-registration/add-update-teacher-registration.component';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ValidationService } from 'src/app/core/services/validation.service';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-teacher-registration',
@@ -39,7 +40,7 @@ export class TeacherRegistrationComponent {
   @HostBinding('class') className = '';
   constructor(private dialog: MatDialog, private overlay: OverlayContainer, private apiService: ApiService, private errors: ErrorsService,
     public webStorageS: WebStorageService, private downloadFileService: DownloadPdfExcelService, private commonMethodS: CommonMethodsService,
-    private ngxSpinner: NgxSpinnerService, public validation : ValidationService) {
+    private ngxSpinner: NgxSpinnerService, public validation : ValidationService, public datepipe : DatePipe) {
   }
 
   ngOnInit(): void {
@@ -154,7 +155,7 @@ export class TeacherRegistrationComponent {
 
       let objData: any = {
         'topHedingName': 'Teacher Registration Data',
-        'createdDate': 'Created on:' + new Date()
+        'createdDate':'Created on:'+this.datepipe.transform(new Date(), 'yyyy-MM-dd, h:mm a')
       }
       this.downloadFileService.downLoadPdf(keyPDFHeader, ValueData, objData);
     }
