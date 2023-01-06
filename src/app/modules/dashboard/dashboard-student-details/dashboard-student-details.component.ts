@@ -300,7 +300,10 @@ export class DashboardStudentDetailsComponent {
       series: series,
       chart: {
       height: 350,
-      type: 'area'
+      type: 'area',
+      toolbar: {
+        show: false
+      }
     },
     dataLabels: {
       enabled: false
