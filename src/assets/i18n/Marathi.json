@@ -48,7 +48,7 @@
         "pleaseSelectCaste" : "कृपया जाती निवडा",
         "pleaseSelectPhysicallyDisabled" : "कृपया दिव्यांग/अपंग निवडा",  
         "addressIsRequired" : "पत्ता आवश्यक आहे",
-        "maximummLength500Characters": "कमाल लांबी 500 वर्णांपेक्षा कमी असावी",
+        "maximummLength500Characters": "कमाल लांबी 200 वर्णांपेक्षा कमी असावी",
         "EmailIDofficer" : "ई-मेल आयडी (BEO ऑफिस)",
         "clear":"रद्द करा",
         "HeaderEnglish":"इंग्रजी",
