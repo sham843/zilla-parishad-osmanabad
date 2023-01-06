@@ -6,7 +6,7 @@
 </nav>
 
 <mat-card class="plain-card h-100">
-    <mat-card-header class="card-header pb-0">
+    <mat-card-header class="card-header pb-0 border-bottom-0">
         <form [formGroup]="filterForm" class="w-100">
             <div class="row gx-2 justify-content-end">
                 <div class="col-sm-2">
@@ -71,7 +71,9 @@
     <mat-card-content class="card-body pt-0">
         <div class="row">
             <div class="col-sm-5">
-                <app-table (recObjToChild)="childTableCompInfo($event)"></app-table>
+                <div class="table-height scrollbar">
+                    <app-table (recObjToChild)="childTableCompInfo($event)"></app-table>
+                </div>
             </div>
             <div class="col-sm-7" *ngIf="data">
                 <mat-card class="plain-card h-100">
