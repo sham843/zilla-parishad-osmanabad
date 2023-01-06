@@ -13,9 +13,7 @@ export class ValidationService {
   age = ('[0-9]{2,}|[5-9]{1}$');
   aadhar_card = ('^[2-9][0-9]{11}$');
   valPassword = '^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*_=+-]).{8,10}$';
-  alphaNumericOnly = '^[a-zA-Z0-9]*$';
-
-
+  alphaNumericOnly = '^([ a-zA-Z])[ a-zA-Z0-9]+$';   //Valid - Manager 1, Manager / Invalid - 9865232     
 
   alphabetsWithSpaces(event: any) {
     const maskSeperator = new RegExp('^([a-zA-Z ])', 'g');
