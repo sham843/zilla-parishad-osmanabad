@@ -8,19 +8,24 @@ export class ValidationService {
   constructor() { }
   name = ('^[a-zA-Z]+$');
   fullName = ('^[a-zA-Z][a-zA-Z ]*$');
-  email = ('^[a-zA-Z0-9._%+-]+@([a-z0-9.]+[.])+[a-z]{2,5}$');
+  email = ('^[a-zA-Z0-9._]+@([a-z0-9.]+[.])+[a-z]{2,5}$');
   mobile_No = ('[6-9]\\d{9}');
   age = ('[0-9]{2,}|[5-9]{1}$');
   aadhar_card = ('^[2-9][0-9]{11}$');
   valPassword = '^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*_=+-]).{8,10}$';
-  alphaNumericOnly = '^[a-zA-Z0-9]*$';
-
-
+  alphaNumericOnly = '^([ a-zA-Z])[ a-zA-Z0-9]+$';   //Valid - Manager 1, Manager / Invalid - 9865232     
+  alphanumericMarathi = '^[\u0900-\u096F ]+$';
 
   alphabetsWithSpaces(event: any) {
     const maskSeperator = new RegExp('^([a-zA-Z ])', 'g');
     return maskSeperator.test(event.key);
   }
+  
+  unicodeMarathiAlphanumberic(event: any) {
+    const maskSeperator = new RegExp('[^\u0900-\u096F ]+', 'm');
+    return !maskSeperator.test(event.key);
+  }
+
   noSpacesAtStart(event: any) {
     const maskSeperator = new RegExp('^[ ]+|[ ]+$', 'm');
     return !maskSeperator.test(event.key);
@@ -77,7 +82,7 @@ export class ValidationService {
     if (event.target.selectionStart === 0 && (event.keyCode == 46)) return false;  // starting .Dot not accept
     if (event.target.selectionStart === 0 && (event.keyCode == 64)) return false;  // starting @ not accept
     let key = parseInt(event.key); if (event.target.selectionStart === 0 && (!isNaN(key))) return false; // starting Number not accept
-    const maskSeperator = new RegExp('^([a-zA-Z0-9 .@])', 'g'); // only Accept A-Z & 0-9 & .@
+    const maskSeperator = new RegExp('^([a-zA-Z0-9 _.@])', 'g'); // only Accept A-Z & 0-9 & .@
     return maskSeperator.test(event.key);
   }
 }

@@ -47,7 +47,7 @@
             </mat-form-field> -->
                 <mat-form-field appearance="outline" class="w-100">
                     <mat-label> {{'Labels.Designation' | translate}}</mat-label>
-                    <input matInput [formControl]="searchContent">
+                    <input matInput [formControl]="searchContent" (keyup.enter)="getTableData()">
                 </mat-form-field>
             </div>
             <div class="col-sm-auto">
