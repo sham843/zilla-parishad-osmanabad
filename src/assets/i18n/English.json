@@ -45,7 +45,7 @@
         "pleaseSelectPhysicallyDisabled" : "Please select physically disabled",
         "pagerightaccess":"Page Right Access",
         "addressIsRequired" :"Address is required",
-        "maximummLength500Characters" : "Maximumm length should be less than 500 characters",
+        "maximummLength500Characters" : "Maximumm length should be less than 200 characters",
         "clear":"Clear",
         "HeaderEnglish":"English",
         "HeaderMarathi":"Marathi",

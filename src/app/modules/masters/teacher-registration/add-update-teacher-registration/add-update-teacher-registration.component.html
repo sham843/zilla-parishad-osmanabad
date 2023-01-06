@@ -244,7 +244,7 @@
                         <mat-form-field appearance="outline" class="w-100 ">
                             <mat-label>{{'Labels.bEdUniversity'| translate}}</mat-label>
                             <input matInput formControlName="bEdUniversityId" maxlength="50"
-                                (keypress)="validation.noFirstSpaceAllow($event)">
+                                (keypress)="validation.noFirstSpaceAllow($event);validation.alphabetsWithSpaces($event)">
                         </mat-form-field>
                     </div>
                 </div>
@@ -364,7 +364,7 @@
                                 <mat-label>{{'Labels.casteCertificateOffice'| translate}}</mat-label>
                                 <input matInput formControlName="castCertificateOffice"
                                     (keypress)="validation.noFirstSpaceAllow($event)">
-                                <!-- <mat-error *ngIf="td['castCertificateOffice'].hasError('required')">Cast Certificate Office Is Required</mat-error>  -->
+                                <mat-error *ngIf="td['castCertificateOffice'].hasError('pattern')">Cast Certificate Office Is Invalid</mat-error> 
                             </mat-form-field>
                         </div>
                         <div class="col-sm-4">
@@ -391,7 +391,7 @@
                             <mat-form-field appearance="outline" class="w-100 ">
                                 <mat-label>{{'Labels.casteVerificationCommitteeName'| translate}}</mat-label>
                                 <input matInput formControlName="castverificationCommitteeName" maxlength="100"
-                                    (keypress)="validation.noFirstSpaceAllow($event)">
+                                    (keypress)="validation.noFirstSpaceAllow($event);">
                                 <!-- <mat-error *ngIf="td['castverificationCommitteeName'].hasError('required')">Caste Verification Committee Name Is Required</mat-error> -->
                             </mat-form-field>
                         </div>
@@ -546,7 +546,7 @@
                         (change)="addStand($event,assign.standardId)" />
                     <label for="{{assign.standardId}}" class="pb-0">{{assign.standardId}}</label>
                 </div>
-                <div *ngIf="this.assignClassArray.length == 0">
+                <div *ngIf="this.assignClassArray.length == 0 && isSubmitted">
                     <mat-error>At least Select One Class</mat-error>
                 </div>
             </div>

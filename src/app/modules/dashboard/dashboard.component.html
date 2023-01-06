@@ -291,55 +291,57 @@
         <div class="row">
             <div class="col-sm-12">
                 <mat-card class="plain-card">
-                    <mat-card-header class="card-header">
-                        <div class="d-flex align-items-center flex-wrap justify-content-between w-100">
-                            <h6 class="mb-0 fw-bold">{{'Labels.talukawiseAssessment' | translate}}</h6>
-                        </div>
-                    </mat-card-header>
                     <mat-card-header class="card-header pb-0 border-bottom-0">
-                        <form [formGroup]="filterFormForBarGraph" class="w-100">
-                            <div class="row w-100">
-                                <div class="col-sm-3" *ngIf="!f['talukaId'].value">
-                                    <mat-form-field appearance="outline" class="w-100">
-                                        <mat-label>{{'Labels.selectTaluka' | translate}}</mat-label>
-                                        <mat-select formControlName="filtertalukaId"
-                                            (selectionChange)="this.getbarChartByTaluka()">
-                                            <mat-option *ngFor="let taluka of talukaData" [value]="taluka.id">
-                                                {{webStorage.languageFlag == 'EN'?taluka.taluka:taluka.m_Taluka}}
-                                            </mat-option>
-                                        </mat-select>
-                                    </mat-form-field>
-                                </div>
-                                <div class="col-sm-3"
-                                    *ngIf="f['talukaId'].value || (f['talukaId'].value && !fBgraph['filtertalukaId'].value)">
-                                    <mat-form-field appearance="outline" class="w-100">
-                                        <mat-label>{{'Labels.selectCenter' | translate}}</mat-label>
-                                        <mat-select formControlName="filtercenterId"
-                                            (selectionChange)="this.getbarChartByTaluka()">
-                                            <mat-option *ngFor="let center of centerData" [value]="center.id">
-                                                {{webStorage.languageFlag == 'EN'?center.center:center.m_Center}}
-                                            </mat-option>
-                                        </mat-select>
-                                    </mat-form-field>
-                                </div>
-                                <div class="col-sm-3">
-                                    <mat-form-field appearance="outline" class="w-100">
-                                        <mat-label>{{'Labels.selectSubject' | translate}}</mat-label>
-                                        <mat-select formControlName="filtersubjectId"
-                                            (selectionChange)="this.getbarChartByTaluka()">
-                                            <mat-option *ngFor="let subject of subjectData" [value]="subject.id ">
-                                                {{webStorage.languageFlag == 'EN'?subject.subjectName
-                                                :subject.m_SubjectName }}
-                                            </mat-option>
-                                        </mat-select>
-                                    </mat-form-field>
-                                </div>
+                        <div class="row align-items-center justify-content-between w-100">
+                            <div class="col-sm-3">
+                                <h6 class="mb-0 fw-bold">{{'Labels.talukawiseAssessment' | translate}}</h6>
                             </div>
-                        </form>
+                            <div class="col-sm-6">
+                                <form [formGroup]="filterFormForBarGraph" class="w-100">
+                                    <div class="row w-100 gx-2">
+                                        <div class="col-sm" *ngIf="!f['talukaId'].value">
+                                            <mat-form-field appearance="outline" class="w-100">
+                                                <mat-label>{{'Labels.selectTaluka' | translate}}</mat-label>
+                                                <mat-select formControlName="filtertalukaId"
+                                                    (selectionChange)="this.getbarChartByTaluka()">
+                                                    <mat-option *ngFor="let taluka of talukaData" [value]="taluka.id">
+                                                        {{webStorage.languageFlag == 'EN'?taluka.taluka:taluka.m_Taluka}}
+                                                    </mat-option>
+                                                </mat-select>
+                                            </mat-form-field>
+                                        </div>
+                                        <div class="col-sm"
+                                            *ngIf="f['talukaId'].value || (f['talukaId'].value && !fBgraph['filtertalukaId'].value)">
+                                            <mat-form-field appearance="outline" class="w-100">
+                                                <mat-label>{{'Labels.selectCenter' | translate}}</mat-label>
+                                                <mat-select formControlName="filtercenterId"
+                                                    (selectionChange)="this.getbarChartByTaluka()">
+                                                    <mat-option *ngFor="let center of centerData" [value]="center.id">
+                                                        {{webStorage.languageFlag == 'EN'?center.center:center.m_Center}}
+                                                    </mat-option>
+                                                </mat-select>
+                                            </mat-form-field>
+                                        </div>
+                                        <div class="col-sm">
+                                            <mat-form-field appearance="outline" class="w-100">
+                                                <mat-label>{{'Labels.selectSubject' | translate}}</mat-label>
+                                                <mat-select formControlName="filtersubjectId"
+                                                    (selectionChange)="this.getbarChartByTaluka()">
+                                                    <mat-option *ngFor="let subject of subjectData" [value]="subject.id ">
+                                                        {{webStorage.languageFlag == 'EN'?subject.subjectName
+                                                        :subject.m_SubjectName }}
+                                                    </mat-option>
+                                                </mat-select>
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
                     </mat-card-header>
                     <mat-card-content class="card-body">
 
-                        <div class="row" *ngIf="showBarChartS">
+                        <div class="row mb-3" *ngIf="showBarChartS">
                             <div class="col-sm-12 no-axis">
                                 <apx-chart [series]="barchartOptions1.series[0]" [chart]="barchartOptions1.chart"
                                     [theme]="barchartOptions1.theme" [dataLabels]="barchartOptions1.dataLabels"
@@ -351,6 +353,7 @@
 
                         <div class="row">
                             <div class="col-sm-6 border-end" *ngFor="let data of tableDataTopPerformance; let i=index">
+                                <h6 class="fw-bold text-main">{{tableHeadingArray[i]}}</h6>
                                 <table class="table dashboard-table mt-3">
                                     <thead class="bg-main-light">
                                         <tr>
