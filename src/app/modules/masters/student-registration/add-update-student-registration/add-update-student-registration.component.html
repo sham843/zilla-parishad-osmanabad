@@ -9,7 +9,7 @@
             </button>
         </div>
     </mat-card-header>
-    <form [formGroup]="stuRegistrationForm" (submit)="onSubmit()">
+    <form [formGroup]="stuRegistrationForm" (ngSubmit)="onSubmit()">
         <mat-card-content class="card-body card-height-mid scrollbar">
             <mat-card-subtitle class="mb-2 fw-bold">{{'Labels.studentDetails'| translate}}</mat-card-subtitle>
             <div class="row">
@@ -276,7 +276,7 @@
             <mat-card-actions align="end" class="me-3 mb-2">
                 <button mat-stroked-button class="btn-second me-2" type="button" mat-dialog-close>{{'Labels.cancel'|
                     translate}}</button>
-                <button type="submit" mat-stroked-button class="btn-main">{{editObj ? ('Labels.update'|
+                <button mat-stroked-button class="btn-main" type="submit">{{editObj ? ('Labels.update'|
                     translate):('Labels.submit'| translate)}}</button>
             </mat-card-actions>
         </mat-card-footer>
