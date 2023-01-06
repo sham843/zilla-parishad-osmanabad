@@ -788,7 +788,9 @@
                                 </div>
                                 <div class="d-flex align-items-center justify-content-between">
                                     <button mat-flat-button class="btn-main" type="submit">Submit</button>
+                                   <ng-container *ngIf="adminLoginForm.value.userName">
                                     <a routerLink="../forgot-password" class="text-main">Forgot Password?</a>
+                                   </ng-container>
                                 </div>
                             </div>
                         </div>
