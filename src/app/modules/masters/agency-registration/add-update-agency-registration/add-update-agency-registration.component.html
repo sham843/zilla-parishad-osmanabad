@@ -43,7 +43,7 @@
                 <div class="col-sm-4">
                     <mat-form-field appearance="outline" class="w-100">
                         <mat-label>{{'Labels.agencyEmailID' | translate}}</mat-label>
-                        <input matInput formControlName="agency_EmailId"  maxlength="50" (keypress)="validation.noFirstSpaceAllow($event)">
+                        <input matInput formControlName="agency_EmailId"  maxlength="50" (keypress)="validation.emailRegex($event)">
                         <!-- <mat-error *ngIf="fc['agency_EmailId'].hasError('required')">{{'Labels.agencyEmailIdIsRequired' | translate}}</mat-error> -->
                         <mat-error *ngIf="fc['agency_EmailId'].hasError('pattern')">{{'Labels.pleaseEnterValidEmailId' | translate}}</mat-error>
                     </mat-form-field>
@@ -97,7 +97,7 @@
                 <div class="col-sm-4">
                     <mat-form-field appearance="outline" class="w-100">
                         <mat-label>{{'Labels.emailID' | translate}}</mat-label>
-                        <input matInput formControlName="emailId"  maxlength="50" (keypress)="validation.noFirstSpaceAllow($event)">
+                        <input matInput formControlName="emailId"  maxlength="50" (keypress)="validation.emailRegex($event)">
                         <!-- <mat-error *ngIf="fc['emailId'].hasError('required')">{{'Labels.emailIdIsRequired' | translate}}</mat-error> -->
                         <mat-error *ngIf="fc['emailId'].hasError('pattern')">{{'Labels.pleaseEnterValidEmailId' | translate}}</mat-error>
                     </mat-form-field>
