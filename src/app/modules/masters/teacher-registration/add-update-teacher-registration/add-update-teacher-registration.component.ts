@@ -49,6 +49,7 @@ export class AddUpdateTeacherRegistrationComponent {
   schoolDate = new Date();
   TalukaDate =new Date()
   age!:number;
+  isSubmitted: boolean= false;
   
   assignClass: boolean = false;
   casteVerification = [
@@ -149,7 +150,7 @@ export class AddUpdateTeacherRegistrationComponent {
         "isGraduate_PayScale": [this.data ? this.data.teacherDetails?.isGraduate_PayScale:'', Validators.required],
         "castId": ['', Validators.required],
         "castCategoryId": [null,Validators.required],
-        "castCertificateNo": [this.data ? this.data.teacherDetails?.castCertificateNo : ''],
+        "castCertificateNo": [this.data ? this.data.teacherDetails?.castCertificateNo : '',],
         "castCertificateOffice": [this.data ? this.data.teacherDetails?.castCertificateOffice : '',Validators.pattern('^[ a-zA-Z0-9]+$')],
         "isCastVarificationDone": [this.data ? this.data.teacherDetails?.isCastVarificationDone : null],
         "castValidityNoDate": [this.data ? this.data.teacherDetails?.castValidityNoDate : ''],
@@ -244,17 +245,12 @@ export class AddUpdateTeacherRegistrationComponent {
   }
   
   currentSchoolDate(event:any,flag:string){   
-    console.log("date",new Date);
-
     if(flag=='schoolDate'){
-      // let appointmentdate =  event.value
-      this.schoolDate = event.value
-      console.log("schoolDate",this.schoolDate);
-      // this.seniorityDate = appointmentdate +1
-      
+      this.schoolDate = event.value      
+      this.seniorityDate.setDate(this.schoolDate.getDate() + 1);      
     }else if(flag=='TalukaDate'){
       this.TalukaDate = event.value
-      console.log("TalukaDate",this.TalukaDate);
+      // console.log("TalukaDate",this.TalukaDate);
     }
     // this.schoolDate = event.value
     // console.log("appointment",event.value);   
@@ -314,7 +310,7 @@ console.log("birthDate",birthDate);
 //#region ------------------------------ start drop-down ---------------------------------------------
   getGender() {
     this.genderArray=[];
-    this.masterService.getAllGender('EN').subscribe({
+    this.masterService.getAllGender('').subscribe({
       next: ((res: any) => {
         if (res.statusCode == 200 && res.responseData.length) {
           this.genderArray = res.responseData;       
@@ -637,6 +633,7 @@ console.log("birthDate",birthDate);
 
   //#region  -------------------------------------start submit --------------------------------------------
   OnSubmit() {
+    this.isSubmitted = true;
     
     let formValue = this.teacherRegForm.value;    
     console.log(formValue, this.assignClassArray);
