@@ -47,6 +47,8 @@
         "addressIsRequired" :"Address is required",
         "maximummLength500Characters" : "Maximumm length should be less than 500 characters",
         "clear":"Clear",
+        "HeaderEnglish":"English",
+        "HeaderMarathi":"मराठी",
         "AddDesignation":"Add Designation",
         "SelectDesignation": "Select Designation",
         "UpdateDesignation":"Update Designation",
