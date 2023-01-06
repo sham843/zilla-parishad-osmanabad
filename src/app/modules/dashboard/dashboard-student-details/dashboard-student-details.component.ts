@@ -52,10 +52,6 @@ export class DashboardStudentDetailsComponent {
   }
   ngOnInit() {
     this.dashboardObj = JSON.parse(localStorage.getItem('selectedBarchartObjData') || '');
-    this.webService.langNameOnChange.subscribe((x: any) => {
-      this.lang = x;
-      this.getSubjectData();
-    })
     this.formData();
     this.languageChange();
     this.getTaluka();
@@ -103,6 +99,7 @@ export class DashboardStudentDetailsComponent {
     this.webService.langNameOnChange.subscribe(lang => {
       this.languageFlag = lang;
       this.getTableData();
+      //this.getSubjectData();
     });
 
   }
@@ -309,25 +306,26 @@ export class DashboardStudentDetailsComponent {
   }
   getSubjectData() {
     this.subjectArray = [];
-    this.subjectArray = [...new Set(this.grapbhDetailsArray.map((sub: any) => this.lang=='English'? sub.subjectName:sub.m_SubjectName))];
+    this.subjectArray = [...new Set(this.grapbhDetailsArray.map((sub: any) => this.languageFlag=='English'? sub.subjectName:sub.m_SubjectName))];
     this.subjectControl.patchValue(this.subjectArray[0]);
      this.constuctLineChart();
   }
   constuctLineChart(){
-    this.showLineChart=false
-      const ExamType = [...new Set(this.grapbhDetailsArray.map((sub: any) => this.lang=='English'? sub.examType:sub.m_ExamType))];
-      const arrayBySubject=this.grapbhDetailsArray.filter((x:any)=> (this.lang=='English'? x.subjectName: x.m_SubjectName)==this.subjectControl?.value);
-      const SubSubjectArray= [...new Set(arrayBySubject.map((sub: any) => this.lang=='English'? sub.optionName:sub.m_OptionName))];
+    this.showLineChart=false;
+      const ExamType = [...new Set(this.grapbhDetailsArray.map((sub: any) => this.languageFlag=='English'? sub.examType:sub.m_ExamType))];
+      const arrayBySubject=this.grapbhDetailsArray.filter((x:any)=> (this.languageFlag=='English'? x.subjectName: x.m_SubjectName)==this.subjectControl?.value);
+      const SubSubjectArray= [...new Set(arrayBySubject.map((sub: any) => this.languageFlag=='English'? sub.optionName:sub.m_OptionName))];
       let ArryOfSeries:any=[];
       ExamType.map((x:any)=>{
         const obj={
           name: x,
-          data: (arrayBySubject.filter((y:any)=>this.lang=='English'? y.examType:y.m_ExamType==x)).map((z:any)=> z.actualGrade)
+          data: (arrayBySubject.filter((y:any)=>this.languageFlag=='English'? y.examType:y.m_ExamType==x)).map((z:any)=> z.actualGrade)
         }
         ArryOfSeries.push(obj)
       })
-    // this.lineChartOptions.series=[];
-    // this.lineChartOptions.xaxis.categories=[];
+      debugger
+    //this.lineChartOptions.series.legnth==0?this.lineChartOptions.series=[]:'';
+    this.lineChartOptions.xaxis.categories=[];
     this.lineChartOptions.series=ArryOfSeries;
     this.lineChartOptions.xaxis.categories=SubSubjectArray;
     this.showLineChart=true;
