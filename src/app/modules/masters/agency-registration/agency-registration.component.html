@@ -57,24 +57,22 @@
       </div>
     </div>
   </mat-card-header>
-  <form [formGroup]="filterForm" (ngSubmit)="getTableData('filter')">
     <mat-card-header class="card-header mb-0 pb-0 border-bottom-0">
       <div class="row gx-2 w-100">
         <div class="col-sm-3">
           <mat-form-field appearance="outline" class="w-100">
             <mat-label>{{'Labels.searchbyNameContactEmail' | translate}}</mat-label>
-            <input matInput formControlName="searchText" (keypress)="validation.noFirstSpaceAllow($event)">
+            <input matInput [formControl]="searchText" (keypress)="validation.noFirstSpaceAllow($event)" (keyup.enter)="getTableData()">
           </mat-form-field>
         </div>
         <div class="col-sm-auto">
-          <button type="button" mat-flat-button type="submit" class="btn-main">{{'Labels.filter' |
+          <button type="button" mat-flat-button (click)="getTableData('filter')"  class="btn-main">{{'Labels.filter' |
             translate}}</button>
           <button type="button" mat-flat-button class="btn-second ms-2" (click)="onClear()">{{'Labels.clear' |
             translate}}</button>
         </div>
       </div>
     </mat-card-header>
-  </form>
   <mat-card-content class="card-body pt-0">
     <ng-container *ngIf="!cardViewFlag">
       <app-table (recObjToChild)="childCompInfo($event)"></app-table>
