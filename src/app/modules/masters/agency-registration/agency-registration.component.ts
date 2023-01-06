@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormControl } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ApiService } from 'src/app/core/services/api.service';
@@ -19,13 +19,13 @@ import { AddUpdateAgencyRegistrationComponent } from './add-update-agency-regist
 })
 export class AgencyRegistrationComponent {
   pageNumber: number = 1;
-  filterForm!: FormGroup;
   agencyReport = new Array();
   displayedColumns = new Array();
   tableData: any;
   totalCount: number = 0;
   tableDataArray = new Array();
   tableDatasize!: Number;
+  searchText = new FormControl('');
   cardViewFlag: boolean = false;
   displayedheadersEnglish = ['Sr. No.', 'Agency Name', 'Agency Mobile No.', 'Agency Email ID', 'Action'];
   displayedheadersMarathi = ['अनुक्रमांक', 'एजन्सी नाव', 'मोबाईल क्र.', 'ई-मेल आयडी', 'कृती'];
@@ -33,19 +33,12 @@ export class AgencyRegistrationComponent {
 
   constructor(private dialog: MatDialog, private apiService: ApiService, private ngxSpinner: NgxSpinnerService,
     private webStroageService: WebStorageService, private downloadPdfservice: DownloadPdfExcelService,
-    private errors: ErrorsService, private fb: FormBuilder, private common: CommonMethodsService, public validation: ValidationService,
+    private errors: ErrorsService, private common: CommonMethodsService, public validation: ValidationService,
   ) { }
 
   ngOnInit() {
-    this.filterData();
     this.getTableData();
     this.getTableDataMarathi();
-  }
-
-  filterData() {
-    this.filterForm = this.fb.group({
-      searchText: '',
-    })
   }
 
   getTableDataMarathi() {
@@ -66,10 +59,10 @@ export class AgencyRegistrationComponent {
   getTableData(flag?: string) {
     this.ngxSpinner.show();
     this.pageNumber = flag == 'filter' ? 1 : this.pageNumber;
+    let pageNo = this.pageNumber;
     flag == 'filter' ? this.agencyReport = [] : '';
-    let obj = this.filterForm.value;
-    let str = `pageno=${this.pageNumber}&pagesize=10&&TextSearch=${obj.searchText}&lan=${this.webStroageService.languageFlag}`;
-    let reportStr = `pageno=${this.pageNumber}&pagesize=${this.totalCount * 10}&TextSearch=${obj.searchText}&lan=${this.webStroageService.languageFlag}`
+    let str = `pageno=${pageNo || ''}&pagesize=10&&TextSearch=${this.searchText.value || ''}&lan=${this.webStroageService.languageFlag || ''}`;
+    let reportStr = `pageno=${this.pageNumber}&pagesize=${this.totalCount * 10}&TextSearch=${this.searchText.value}&lan=${this.webStroageService.languageFlag}`
     this.apiService.setHttp('GET', 'zp-osmanabad/Agency/GetAll?' + (flag == 'pdfFlag' ? reportStr : str), false, false, false, 'baseUrl');
     this.apiService.getHttp().subscribe({
       next: (res: any) => {
@@ -127,10 +120,8 @@ export class AgencyRegistrationComponent {
   }
 
   onClear() {
-    if (this.filterForm.value.searchText != null && this.filterForm.value.searchText != '') {
-      this.filterForm.reset();
-      this.filterData();
-      this.pageNumber = 1;
+    if (this.searchText.value != null && this.searchText.value != '') {
+    this.searchText.setValue('');
       this.getTableData();
     }
   }
