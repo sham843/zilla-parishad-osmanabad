@@ -23,6 +23,8 @@
         "update" : "Update",
         "setting":"Settings",
         "SchoolPhotos":"School Photos",
+        "NoteImageFormat":"Note: only accept jpg jpeg png format",
+        "NoteImagePdfFormat":"Note: only accept jpg jpeg png pdf format",
         "agencyNameIsRequired" : "Agency name is required",
         "contactPersonNameIsRequired" : "Contact person name is required",
         "agencyMobileNumberIsRequired" : "Agency mobile number is required",
