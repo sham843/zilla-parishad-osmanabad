@@ -621,13 +621,17 @@ console.log("birthDate",birthDate);
   //#endregion ----------------------------------end drop-down ------------------------------------------
   imgUpload(event: any) {
     this.img = true;
-    this.fileUpload.uploadDocuments(event, 'Upload', 'jpg, jpeg, png').subscribe((res: any) => {
-     if(res.statusCode == 200){
-      this.uploadImghtml = res.responseData;    
-      // this.showAddRemImg = true;
-     }else{
-      return;
-     }
+    this.fileUpload.uploadDocuments(event, 'Upload', 'jpg, jpeg, png').subscribe({
+    next : (res : any)=>{
+      if(res.statusCode == 200){
+        this.uploadImghtml = res.responseData;    
+        // this.showAddRemImg = true;
+       }else{
+        return;
+       }
+    },
+    error: ((err: any) => {  err.statusCode ? this.errorHandler.handelError(err.statusCode):this.commonMethod.showPopup(err, 1) })
+
     });
   }
 
