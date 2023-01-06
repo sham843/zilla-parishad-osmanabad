@@ -67,7 +67,7 @@
                 <div class="col-sm-4">
                     <mat-form-field appearance="outline" class="w-100">
                         <mat-label>{{'Labels.studentFirstName'| translate}}</mat-label>
-                        <input matInput formControlName="fName" (keypress)="validators.onlyAlphabets($event)">
+                        <input matInput formControlName="fName" maxlength="20" (keypress)="validators.onlyAlphabets($event)">
                         <mat-error *ngIf="fc['fName'].hasError('pattern')">{{'Labels.InvalidstudentFirstName'|
                             translate}}</mat-error>
                     </mat-form-field>
@@ -75,7 +75,7 @@
                 <div class="col-sm-4">
                     <mat-form-field appearance="outline" class="w-100">
                         <mat-label>{{'Labels.studentMiddelName'| translate}}</mat-label>
-                        <input matInput formControlName="mName" (keypress)="validators.onlyAlphabets($event)">
+                        <input matInput formControlName="mName" maxlength="20" (keypress)="validators.onlyAlphabets($event)">
                         <mat-error *ngIf="fc['mName'].hasError('pattern')">{{'Labels.InvalidstudentMiddleName'|
                             translate}}</mat-error>
                     </mat-form-field>
@@ -83,14 +83,14 @@
                 <div class="col-sm-4">
                     <mat-form-field appearance="outline" class="w-100">
                         <mat-label>{{'Labels.studentLastName'| translate}}</mat-label>
-                        <input matInput formControlName="lName" (keypress)="validators.onlyAlphabets($event)">
+                        <input matInput formControlName="lName" maxlength="20" (keypress)="validators.onlyAlphabets($event)">
                         <mat-error *ngIf="fc['lName'].hasError('pattern')">{{'Labels.InvalidstudentLastName'| translate}}</mat-error>
                     </mat-form-field>
                 </div>
                 <div class="col-sm-4">
                     <mat-form-field appearance="outline" class="w-100">
                         <mat-label>{{'Labels.studentFirstNameMarathi'| translate}}</mat-label>
-                        <input matInput formControlName="f_MName"
+                        <input matInput formControlName="f_MName" maxlength="20"
                             (keypress)="validators.unicodeMarathiValidation($event)"
                             (keypress)="validators.noSpaceAllow($event)">
                         <mat-error *ngIf="fc['f_MName'].hasError('pattern')">{{'Labels.InvalidstudentFirstName'|
@@ -100,7 +100,7 @@
                 <div class="col-sm-4">
                     <mat-form-field appearance="outline" class="w-100">
                         <mat-label>{{'Labels.studentMiddelNameMarathi'| translate}}</mat-label>
-                        <input matInput formControlName="m_MName" (keypress)="validators.unicodeMarathiValidation($event)"
+                        <input matInput formControlName="m_MName" maxlength="20" (keypress)="validators.unicodeMarathiValidation($event)"
                         (keypress)="validators.noSpaceAllow($event)">
                         <mat-error *ngIf="fc['m_MName'].hasError('pattern')">{{'Labels.InvalidstudentMiddleName'|
                             translate}}</mat-error>
@@ -109,7 +109,7 @@
                 <div class="col-sm-4">
                     <mat-form-field appearance="outline" class="w-100">
                         <mat-label>{{'Labels.studentLastNameMarathi'| translate}}</mat-label>
-                        <input matInput formControlName="l_MName" (keypress)="validators.unicodeMarathiValidation($event)"
+                        <input matInput formControlName="l_MName" maxlength="20" (keypress)="validators.unicodeMarathiValidation($event)"
                         (keypress)="validators.noSpaceAllow($event)">
                         <mat-error *ngIf="fc['l_MName'].hasError('pattern')">{{'Labels.InvalidstudentLastName'| translate}}</mat-error>
                     </mat-form-field>
@@ -158,7 +158,7 @@
                     <ng-container *ngIf="imgFlag && !uploadImg">
                         <span style="font-size: 11px;" class="text-danger">{{'Labels.uploadPhoto'| translate}}</span>
                     </ng-container> 
-
+                    <span style="font-size: 11px;">Note: only accept jpg jpeg png formate</span>
                 </div>
                 <div class="col-sm-4">
                     <mat-form-field appearance="outline" class="w-100 ">
@@ -236,6 +236,7 @@
                     <ng-container *ngIf="aadhaarFlag && !uploadAadhaar">
                         <span style="font-size: 11px;" class="text-danger">{{'Labels.aadhaarPhoto'| translate}}</span>
                     </ng-container> 
+                    <span style="font-size: 11px;">Note: only accept jpg jpeg png pdf formate</span>
                 </div>
             </div>
             
@@ -257,7 +258,7 @@
                 <div class="col-sm-4">
                     <mat-form-field appearance="outline" class="w-100">
                         <mat-label>{{'Labels.fatherName'| translate}}</mat-label>
-                        <input matInput formControlName="fatherFullName" (keypress)="validators.noFirstSpaceAllow($event);validators.alphabetsWithSpaces($event)" maxlength="50">
+                        <input matInput formControlName="fatherFullName" maxlength="50" (keypress)="validators.noFirstSpaceAllow($event);validators.alphabetsWithSpaces($event)" maxlength="50">
                         <!-- <mat-error *ngIf="fc['fatherFullName'].hasError('required')">{{'Labels.enterFatherName'|
                             translate}}</mat-error> -->
                     </mat-form-field>
