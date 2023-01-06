@@ -53,7 +53,7 @@ export class DashboardStudentDetailsComponent {
     // })
     this.formData();
     this.languageChange();
-    this.getTaluka();    
+    this.getTaluka();
     // this.dashboardObj ? this.getTableData():'';
     this.getStandard(); this.getSubject();
 
@@ -67,6 +67,7 @@ export class DashboardStudentDetailsComponent {
       standardId: [''],
       subjectId: ['']
     })
+
   }
 
   languageChange() {
@@ -114,9 +115,9 @@ export class DashboardStudentDetailsComponent {
           let obj = this.tableDataArray[0];
           this.data = {
             headerImage: obj.profilePhoto,
-            header: this.webService.languageFlag == 'mr-IN' ?  obj.m_FullName :obj.fullName,
+            header: this.webService.languageFlag == 'mr-IN' ? obj.m_FullName : obj.fullName,
             subheader: this.webService.languageFlag == 'mr-IN' ? obj.m_Gender : obj.gender,
-            labelHeader: this.webService.languageFlag == 'mr-IN' ?  ['वडीलांचे नावं', 'पालक मोबाईल क्र.', 'आधार क्र.', 'इयत्ता', 'शाळेचे नाव'] : ['Father Name', 'Parent Mobile No.', 'Aadhar No.', 'Standard', 'School Name'] ,
+            labelHeader: this.webService.languageFlag == 'mr-IN' ? ['वडीलांचे नावं', 'पालक मोबाईल क्र.', 'आधार क्र.', 'इयत्ता', 'शाळेचे नाव'] : ['Father Name', 'Parent Mobile No.', 'Aadhar No.', 'Standard', 'School Name'],
             labelKey: this.webService.languageFlag == 'mr-IN' ? ['m_FatherFullName', 'parentMobileNo', 'aadharNo', 'standard', 'm_SchoolName'] : ['fatherFullName', 'parentMobileNo', 'aadharNo', 'standard', 'schoolName'],
             Obj: obj,
             chart: false
@@ -152,7 +153,9 @@ export class DashboardStudentDetailsComponent {
     this.masterService.getAllTaluka(this.languageFlag).subscribe({
       next: (res: any) => {
         if (res.statusCode == 200) {
-          this.talukaArr = res.responseData;
+          this.talukaArr.push({ "id": 0, "taluka": "All", "m_Taluka": "सर्व" }, ...res.responseData);
+          this.dashboardObj ? (this.filterForm.controls['talukaId'].setValue(this.dashboardObj?.TalukaId), this.getAllCenter()) : ''
+          // this.talukaArr = res.responseData;
         } else {
           this.commonMethods.checkEmptyData(res.statusMessage) == false ? this.errors.handelError(res.statusCode) : this.commonMethods.showPopup(res.statusMessage, 1);
           this.talukaArr = [];
@@ -168,7 +171,8 @@ export class DashboardStudentDetailsComponent {
     this.masterService.getAllCenter(this.languageFlag, Tid).subscribe({
       next: (res: any) => {
         if (res.statusCode == 200) {
-          this.centerArr = res.responseData;
+          this.centerArr.push({ "id": 0, "center": "All", "m_Center": "सर्व" }, ...res.responseData);
+          this.dashboardObj ? (this.filterForm.controls['centerId'].setValue(this.dashboardObj?.CenterId), this.getAllSchoolsByCenterId()) : ''
         } else {
           this.commonMethods.checkEmptyData(res.statusMessage) == false ? this.errors.handelError(res.statusCode) : this.commonMethods.showPopup(res.statusMessage, 1);
           this.centerArr = [];
@@ -185,7 +189,8 @@ export class DashboardStudentDetailsComponent {
     this.masterService.getAllSchoolByCriteria(this.languageFlag, Tid, 0, Cid).subscribe({
       next: (res: any) => {
         if (res.statusCode == 200) {
-          this.schoolArr = res.responseData;
+          this.schoolArr.push({ "id": 0, "schoolName": "All", "m_SchoolName": "सर्व" }, ...res.responseData);
+          this.dashboardObj ? this.filterForm.controls['schoolId'].setValue(this.dashboardObj?.SchoolId) : '';
         } else {
           // this.commonMethods.checkEmptyData(res.statusMessage) == false ? this.errors.handelError(res.statusCode) : this.commonMethods.showPopup(res.statusMessage, 1);
           this.schoolArr = [];
@@ -200,7 +205,7 @@ export class DashboardStudentDetailsComponent {
     this.masterService.getAllStandard(this.languageFlag).subscribe({
       next: (res: any) => {
         if (res.statusCode == 200) {
-          this.standardArr = res.responseData;
+          this.standardArr.push({ "id": 0, "standard": "All", "m_Standard": "सर्व" }, ...res.responseData);
         } else {
           this.commonMethods.checkEmptyData(res.statusMessage) == false ? this.errors.handelError(res.statusCode) : this.commonMethods.showPopup(res.statusMessage, 1);
           this.standardArr = [];
@@ -215,7 +220,7 @@ export class DashboardStudentDetailsComponent {
     this.masterService.getAllSubject(this.languageFlag).subscribe({
       next: (res: any) => {
         if (res.statusCode == 200) {
-          this.subjectArr = res.responseData;
+          this.subjectArr.push({ "id": 0, "subject": "All", "m_Subject": "सर्व" }, ...res.responseData);
         } else {
           this.commonMethods.checkEmptyData(res.statusMessage) == false ? this.errors.handelError(res.statusCode) : this.commonMethods.showPopup(res.statusMessage, 1);
           this.subjectArr = [];

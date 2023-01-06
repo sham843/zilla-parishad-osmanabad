@@ -72,10 +72,12 @@
                                 #uploadImage />
                         </div>
                         <div class="action-btn" *ngIf="uploadImghtml">
-                            <button type="button" mat-icon-button class="btn-icon text-primary" (click)="viewImg()">
+                            <button type="button" mat-icon-button class="btn-icon text-primary" (click)="viewImg()"
+                            matTooltip="{{'Labels.View' | translate}}" matTooltipPosition="below" matTooltipClass="tooltip">
                                 <mat-icon>visibility</mat-icon>
                             </button>
-                            <button type="button" mat-icon-button class="btn-icon text-danger" (click)="clearImg()">
+                            <button type="button" mat-icon-button class="btn-icon text-danger" (click)="clearImg()"
+                            matTooltip="{{'Labels.delete' | translate}}" matTooltipPosition="below" matTooltipClass="tooltip">
                                 <mat-icon>delete</mat-icon>
                             </button>
                         </div>
@@ -274,7 +276,7 @@
                     <div class="col-sm-4">
                         <mat-form-field appearance="outline" class="w-100 ">
                             <mat-label>{{'Labels.clusterName'| translate}}</mat-label>
-                            <mat-select formControlName="clusterId" (selectionChange)="getAllSchool()">
+                            <mat-select formControlName="clusterId" (selectionChange)="getAllSchool();clearDropdown('cluster')">
                                 <mat-option *ngFor="let cluster of clusterArray"
                                     [value]="cluster.id">{{webStorageS.getLangauge() == 'EN' ?
                                     cluster.center : cluster.m_Center}}</mat-option>
@@ -544,7 +546,9 @@
                         (change)="addStand($event,assign.standardId)" />
                     <label for="{{assign.standardId}}" class="pb-0">{{assign.standardId}}</label>
                 </div>
-                <mat-error *ngIf="!assignClass">At least Select One Class</mat-error>
+                <div *ngIf="this.assignClassArray.length == 0">
+                    <mat-error>At least Select One Class</mat-error>
+                </div>
             </div>
             <!-- </div> -->
         </mat-card-content>
@@ -552,7 +556,7 @@
             <div class="d-flex w-100 align-items-center justify-content-end">
                 <button mat-flat-button mat-dialog-close class="btn-second me-2">{{'Labels.cancel' |
                     translate}}</button>
-                <button mat-flat-button class="btn-main">{{editObj ?( 'Labels.update' | translate) :('Labels.submit' |
+                <button mat-flat-button class="btn-main" type="submit">{{editObj ?( 'Labels.update' | translate) :('Labels.submit' |
                     translate)}}</button>
             </div>
         </mat-card-footer>

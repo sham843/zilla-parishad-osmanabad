@@ -5,16 +5,19 @@
 .login-wrapper .login-left{
     background: transparent linear-gradient(180deg, #039286 0%, #014642 100%) 0% 0% no-repeat;
     height: 100%;
-    width: 30%;
+    width: auto;
 }
 .login-wrapper .login-right{
     height: 100%;
-    width: 70%;
+    width: 100%;
+    background-image: url('https://img.freepik.com/free-photo/blue-abstract-gradient-wave-wallpaper_53876-108364.jpg?w=1060&t=st=1672926101~exp=1672926701~hmac=4aaeb6e760640496244c70faefbef63dbd42df6815228709890b8390f185c6a4');
+    // background-image: url('../../../assets/images/login-bg.png');
+    background-size: cover;
 }
 .logo img{
     width: 300px;
     margin: 0 auto;
-    margin-right: 15px;
+    margin-bottom: 2rem;
 }
 a{
     font-size: 0.85rem;
@@ -46,7 +49,22 @@ a{
 
 input::-ms-reveal { display: none; }
 
-.Login {
-    color: #039286 !important;
-    font-weight: 600;
+#enNLM3bjHim1{
+    height: 100vh;
+}
+#login-box{
+    height: calc(90vh - 44px);
+    align-items: center;
+}
+#login{
+    padding:2rem 3rem 3rem 3rem;
+    // border: 1px solid #bbb;
+    border-radius: 30px;
+    background-color: rgba(255, 255, 255, 0.37);
+    // background: rgba( 255, 255, 255, 0.25 );
+box-shadow: 0 8px 32px 0 rgba( 31, 38, 135, 0.37 );
+backdrop-filter: blur( 6.5px );
+-webkit-backdrop-filter: blur( 6.5px );
+border-radius: 10px;
+border: 1px solid rgba( 255, 255, 255, 0.18 );
 }

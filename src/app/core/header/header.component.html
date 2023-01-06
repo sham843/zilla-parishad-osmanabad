@@ -36,13 +36,13 @@
                         <button [class]="webStorage.languageFlag == 'EN' ? 'dropdown-item active' : 'dropdown-item'" (click)="translateLanguage('English')">
                             <div class="d-flex align-items-start">
                                 <img src="assets/images/english.svg">
-                                <span>English</span>
+                                <span>{{'Labels.HeaderEnglish'| translate}}</span>
                             </div>
                         </button>
                         <button [class]="webStorage.languageFlag != 'EN' ? 'dropdown-item active' : 'dropdown-item'" (click)="translateLanguage('Marathi')">
                             <div class="d-flex align-items-start">
                                 <img src="assets/images/marathi.svg">
-                                <span>मराठी</span>
+                                <span>{{'Labels.HeaderMarathi'| translate}}</span>
                             </div>
                         </button>
                     </div>

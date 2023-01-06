@@ -34,7 +34,7 @@
 
                                     </div>
                                     <div class="col-sm-12">
-                                        <span class="data-label" *ngIf="data?.checkbox == 'Subject'">{{'Labels.Subject'| translate}}</span>
+                                        <span class="data-label" *ngIf="data?.checkbox == 'Subject' || data?.checkbox == 'विषय'">{{'Labels.Subject'| translate}}</span>
                                         <div class="data-text d-flex flex-wrap">
                                             <div *ngFor="let assign of data?.Obj?.assignSubject" class="lang-badge">
                                                 {{ webStorage.languageFlag == 'EN' ? assign.subjectName :
@@ -58,7 +58,7 @@
             </div>
         </div>
         <div class="row g-3" *ngIf="data?.multipleImage == true && items.length > 0">
-            <mat-label>{{'Labels.galleryimage'| translate}} : </mat-label>
+            <mat-label>{{'Labels.SchoolPhotos'| translate}} : </mat-label>
             <div class="col-sm-3" *ngFor="let item of items; index as i">
                 <img [lightbox]="i" [src]="item.data.src" class="gallery-img">
             </div>

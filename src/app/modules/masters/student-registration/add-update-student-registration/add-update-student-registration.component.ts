@@ -96,9 +96,9 @@ export class AddUpdateStudentRegistrationComponent {
       talukaId: ['', Validators.required],
       centerId: ['', Validators.required],
       schoolId: ['', Validators.required],
-      fName: ['', Validators.required],
-      mName: ['', Validators.required],
-      lName: ['', Validators.required],
+      fName: ['', [Validators.required, Validators.pattern(this.validators.name)]],
+      mName: ['', [Validators.required, Validators.pattern(this.validators.name)]],
+      lName: ['', [Validators.required, Validators.pattern(this.validators.name)]],
       f_MName: ['', [Validators.required, Validators.pattern('^[\u0900-\u0965 ]+$')]],
       m_MName: ['', [Validators.required, Validators.pattern('^[\u0900-\u0965 ]+$')]],
       l_MName: ['', [Validators.required, Validators.pattern('^[\u0900-\u0965 ]+$')]],
@@ -364,7 +364,7 @@ export class AddUpdateStudentRegistrationComponent {
             this.commonMethods.checkEmptyData(res.statusMessage) == false ? this.errors.handelError(res.statusCode) : this.commonMethods.showPopup(res.statusMessage, 1);
           }
         },
-        error: ((err: any) => { this.ngxSpinner.hide(); this.errors.handelError(err) })
+        error: ((err: any) => { this.ngxSpinner.hide(); this.errors.handelError(err.statusCode) })
       });
     }
   }
@@ -374,24 +374,27 @@ export class AddUpdateStudentRegistrationComponent {
   //#region ------------------------------------------- Image Logic Start Here -----------------------------------------------------------------
   fileUpload(event: any, name: string) {
     let type = name == 'img' ? 'jpg, jpeg, png' : 'jpg, jpeg, png, pdf';
-    this.fileUpl.uploadDocuments(event, 'Upload', type).subscribe((res: any) => {
-      if (res.statusCode == 200) {
-        if (name == 'img') {
-          this.uploadImg = res.responseData;
+    this.fileUpl.uploadDocuments(event, 'Upload', type).subscribe({
+      next: (res: any) => {
+        if (res.statusCode == 200) {
+          if (name == 'img') {
+            this.uploadImg = res.responseData;
+          } else {
+            this.uploadAadhaar = res.responseData;
+          }
+          this.commonMethods.showPopup(res.statusMessage, 0);
+          let obj = {
+            "id": 0,
+            "studentId": this.editObj ? this.editObj.id : 0,
+            "documentId": name == 'img' ? 1 : 2,
+            "docPath": name == 'img' ? this.uploadImg : this.uploadAadhaar
+          }
+          this.imageArray.push(obj);
         } else {
-          this.uploadAadhaar = res.responseData;
+          name == 'img' ? (this.uploadImg = '', this.imageFile.nativeElement.value = '') : (this.uploadAadhaar = '', this.aadharFile.nativeElement.value = '');
         }
-        this.commonMethods.showPopup(res.statusMessage, 0);
-        let obj = {
-          "id": 0,
-          "studentId": this.editObj ? this.editObj.id : 0,
-          "documentId": name == 'img' ? 1 : 2,
-          "docPath": name == 'img' ? this.uploadImg : this.uploadAadhaar
-        }
-        this.imageArray.push(obj);
-      } else {
-        name == 'img' ? (this.uploadImg = '', this.imageFile.nativeElement.value = '') : (this.uploadAadhaar = '', this.aadharFile.nativeElement.value = '');
-      }
+      },
+      error: ((err: any) => { this.errors.handelError(err.statusCode) })
     });
   }
 

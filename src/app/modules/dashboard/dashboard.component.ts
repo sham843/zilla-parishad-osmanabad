@@ -1,6 +1,6 @@
 import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-// import { Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { ApiService } from 'src/app/core/services/api.service';
 import { CommonMethodsService } from 'src/app/core/services/common-methods.service';
@@ -47,29 +47,48 @@ export class DashboardComponent implements OnInit, AfterViewInit {
   enbTalDropFlag:boolean=false;
   standardShowFlag:boolean=false;
   selectedTalukaId:any;
+  resetFlag:boolean=false;
   get f() { return this.filterForm.controls }
   get fBgraph() { return this.filterFormForBarGraph.controls }
   constructor(public translate: TranslateService, private masterService: MasterService,
     public webStorage: WebStorageService, private fb: FormBuilder, private apiService: ApiService,
     private error: ErrorsService, private commonMethods: CommonMethodsService,
-    // private router: Router
+    private router: Router
      ) {
-    this.getBarChartOption();
-    this.getPieChart();
-
-    this.webStorage.langNameOnChange.subscribe((lang) => {
-      this.selectedLang = lang;
-       this.showSvgMap(this.commonMethods.mapRegions());
-       this.getPieChartData();
-       this.constructBarChart();
-       this.getbarChartByTaluka();
-       setTimeout(()=>{
-        this.clickOnSvgMap('select');
-       },70)
-    });
   }
 
   ngOnInit() {
+    this.initialApiCall('initial');
+    this.webStorage.langNameOnChange.subscribe((lang) => {
+      this.selectedLang = lang;
+      this.initialApiCall('languageChange');
+    });
+  }
+
+  initialApiCall(val: any){
+    if(val == 'initial'){
+      this.createFilterForm();
+      this.getBarChartOption();
+      this.getPieChart();
+      this.getTalukas();
+      this.getdashboardCount();
+    }else if(val == 'mapClick'){
+      this.getCenters();
+      this.getdashboardCount();
+    }else if(val == 'languageChange'){
+      this.showSvgMap(this.commonMethods.mapRegions());
+      this.getPieChartData();
+      this.constructBarChart();
+      this.selectedObj ? this.getbarChartByTaluka() : '';
+      setTimeout(()=>{
+      this.clickOnSvgMap('select');
+      },70)
+    }else if(val == 'form'){
+      this.getdashboardCount();
+    }
+  }
+
+  createFilterForm(){
     this.filterForm = this.fb.group({
       talukaId: [0],
       centerId: [0],
@@ -80,14 +99,10 @@ export class DashboardComponent implements OnInit, AfterViewInit {
       filtercenterId: [0],
       filtersubjectId: []
     })
-    this.getTalukas();
-    this.getdashboardCount();
-    this.getTabledataByTaluka()
   }
 
   ngAfterViewInit() {
     this.showSvgMap(this.commonMethods.mapRegions());
-    this.clickOnSvgMap();
   }
   getTalukas() {
     this.talukaData = [];
@@ -282,7 +297,8 @@ export class DashboardComponent implements OnInit, AfterViewInit {
           show: false,
         },
         categories: [
-        ]
+        ],
+        parameters:[]
       },
       yaxis: {
         show: false,
@@ -355,7 +371,8 @@ export class DashboardComponent implements OnInit, AfterViewInit {
           },
         },
         categories: [
-        ]
+        ],
+        parameters:[]
       },
 
       yaxis: {
@@ -391,11 +408,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
       }
     };
   }
-  dashboardAPis() {
-    this.getdashboardCount();
-    this.getbarChartByTaluka();
-
-  }
+  
   selectedBar(selectedbar: any) {
     const index = this.barchartOptions.xaxis.categories.findIndex((i: any) => i == selectedbar);
     const data = this.barChartData.find((x: any) => x.m_SubjectName == selectedbar && x.m_OptionName == this.barchartOptions.series[0][index][this.optionalSubjectindex].name);
@@ -410,7 +423,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
     }
     this.webStorage.selectedBarchartObjData.next(this.SharingObject);
     localStorage.setItem('selectedBarchartObjData',JSON.stringify(this.SharingObject))
-    // this.router.navigate(['/dashboard-student-details'])
+    this.router.navigate(['/dashboard-student-details'])
   }
 
   getdashboardCount() {
@@ -422,10 +435,12 @@ export class DashboardComponent implements OnInit, AfterViewInit {
         if (res.statusCode == "200") {
           this.dashboardCountData.push(res.responseData.responseData1[0]);
           this.totalStudentSurveyData =res.responseData.responseData2;
-          this.totalStudentSurveyData.map((x:any)=>{ x.status = true; x.ischeckboxShow=true})
+          this.totalStudentSurveyData.map((x:any)=>{
+            x.status = true;
+            x.ischeckboxShow=true})
           this.totalStudentSurveyData[1].status = true;
           this.totalStudentSurveyData[0].ischeckboxShow=false;
-         this.checkData(this.totalStudentSurveyData[1], 'radio');
+          this.checkData(this.totalStudentSurveyData[1], 'radio');
           this.getPieChartData();
         } else {
           this.dashboardCountData = [];
@@ -543,14 +558,15 @@ export class DashboardComponent implements OnInit, AfterViewInit {
     })
     this.barchartOptions.series.push(dataArray);
     this.barchartOptions.xaxis.categories.push(...(this.selectedLang == 'English' ? subjectSet: subjectSet_m));
+    this.barchartOptions.xaxis.parameters= this.selectedLang == 'English' ?['Level','Student(%)']:['स्तर','विद्यार्थी (%)']
     this.showBarChartF = true;
     
     this.barchartOptions.tooltip = {
       custom: function({ series, seriesIndex, dataPointIndex, w }: any) {              
         return (
           '<div class="arrow_box" style="padding:10px;">' +
-            "<div>" + 'Level' + " : <b> " + w.globals.seriesNames[seriesIndex]+ '</b>' + "</div>" +
-            "<div>" + 'Percentage' + " : <b> " + series[seriesIndex][dataPointIndex] + '%</b>' + "</div>" +
+            "<div>" + w.config.xaxis.parameters[0]+ " : <b> " + w.globals.seriesNames[seriesIndex]+ '</b>' + "</div>" +
+            "<div>" + w.config.xaxis.parameters[1] + " : <b> " + series[seriesIndex][dataPointIndex] + '%</b>' + "</div>" +
           "</div>"
         );
       },
@@ -562,7 +578,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
     const filterformData = this.filterForm.value;
     const formDatafilterbyTaluka = this.filterFormForBarGraph.value;
     this.selectedTalukaId = filterformData?.talukaId ? filterformData?.talukaId : formDatafilterbyTaluka?.filtertalukaId;
-    const str = this.selectedTalukaId ? (this.selectedObj.groupId == 1 ? 'GetDataFor1st2ndStdByCenter' : 'GetDataFor3rdAboveStdByCenter') : (this.selectedObj.groupId == 1 ? 'GetDataFor1st2ndStdByTaluka' : 'GetDataFor3rdAboveStdByTaluka');
+    const str = this.selectedTalukaId ? (this.selectedObj.groupId == 1 ? 'GetDataFor1st2ndStdByCenter' : 'GetDataFor3rdAboveStdByCenter') : (this.selectedObj?.groupId == 1 ? 'GetDataFor1st2ndStdByTaluka' : 'GetDataFor3rdAboveStdByTaluka');
     this.apiService.setHttp('GET', 'zp-osmanabad/Dashboard/' + str + '?TalukaId=' + (this.selectedTalukaId || 0) + (this.selectedTalukaId ? '&CenterId=' + (formDatafilterbyTaluka?.filtercenterId || 0) : '') + '&groupId=' + this.selectedObj?.groupId + '&SubjectId=' + (formDatafilterbyTaluka.filtersubjectId | 0), false, false, false, 'baseUrl');
     this.apiService.getHttp().subscribe({
       next: (res: any) => {
@@ -595,7 +611,21 @@ export class DashboardComponent implements OnInit, AfterViewInit {
     })
     this.barchartOptions1.series.push(arrayObjectData);
     this.barchartOptions1.xaxis.categories.push(...(this.selectedLang == 'English' ?talukaSet:talukaSet_m));
+    this.barchartOptions1.xaxis.parameters= this.selectedLang == 'English' ?['Level','Student(%)']:['स्तर','विद्यार्थी (%)']
     this.showBarChartS = true;
+    
+    this.barchartOptions1.tooltip = {
+      custom: function({ series, seriesIndex, dataPointIndex, w }: any) { 
+        console.log(w.config);
+                     
+        return (
+          '<div class="arrow_box" style="padding:10px;">' +
+            "<div>" + w.config.xaxis.parameters[0]+ " : <b> " + w.globals.seriesNames[seriesIndex]+ '</b>' + "</div>" +
+            "<div>" + w.config.xaxis.parameters[1] + " : <b> " + series[seriesIndex][dataPointIndex] + '%</b>' + "</div>" +
+          "</div>"
+        );
+      },
+    }
   };
   getTabledataByTaluka() {
     const filterformData = this.filterForm.value;
@@ -702,6 +732,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
     });
   }
   clickOnSvgMap(flag?: string) {
+    
     if (flag == 'select') {
       //this.enbTalDropFlag ? $('#mapsvg path').addClass('disabledAll'): '';
       let checkTalActiveClass = $('#mapsvg   path').hasClass("talActive");
@@ -715,7 +746,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
       this.filterForm.controls['talukaId'].setValue(+talId);
 
       this.svgMapAddOrRemoveClass();
-      this.dashboardAPis(),this.getCenters()
+      this.initialApiCall('mapClick');
     })
   }
 

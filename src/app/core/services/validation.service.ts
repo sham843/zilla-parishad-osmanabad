@@ -13,6 +13,8 @@ export class ValidationService {
   age = ('[0-9]{2,}|[5-9]{1}$');
   aadhar_card = ('^[2-9][0-9]{11}$');
   valPassword = '^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*_=+-]).{8,10}$';
+  alphaNumericOnly = '^[a-zA-Z0-9]*$';
+
 
 
   alphabetsWithSpaces(event: any) {

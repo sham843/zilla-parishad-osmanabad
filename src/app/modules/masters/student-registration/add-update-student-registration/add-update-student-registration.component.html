@@ -9,7 +9,7 @@
             </button>
         </div>
     </mat-card-header>
-    <form [formGroup]="stuRegistrationForm">
+    <form [formGroup]="stuRegistrationForm" (ngSubmit)="onSubmit()">
         <mat-card-content class="card-body card-height-mid scrollbar">
             <mat-card-subtitle class="mb-2 fw-bold">{{'Labels.studentDetails'| translate}}</mat-card-subtitle>
             <div class="row">
@@ -68,21 +68,23 @@
                     <mat-form-field appearance="outline" class="w-100">
                         <mat-label>{{'Labels.studentFirstName'| translate}}</mat-label>
                         <input matInput formControlName="fName" (keypress)="validators.onlyAlphabets($event)">
-                        <!-- <mat-error *ngIf="fc['fName'].hasError('required')">{{'Labels.enterStudentFirstName'| translate}}</mat-error> -->
+                        <mat-error *ngIf="fc['fName'].hasError('pattern')">{{'Labels.InvalidstudentFirstName'|
+                            translate}}</mat-error>
                     </mat-form-field>
                 </div>
                 <div class="col-sm-4">
                     <mat-form-field appearance="outline" class="w-100">
                         <mat-label>{{'Labels.studentMiddelName'| translate}}</mat-label>
                         <input matInput formControlName="mName" (keypress)="validators.onlyAlphabets($event)">
-                        <!-- <mat-error *ngIf="fc['mName'].hasError('required')">{{'Labels.enterStudentMiddelName'|  translate}}</mat-error> -->
+                        <mat-error *ngIf="fc['mName'].hasError('pattern')">{{'Labels.InvalidstudentMiddleName'|
+                            translate}}</mat-error>
                     </mat-form-field>
                 </div>
                 <div class="col-sm-4">
                     <mat-form-field appearance="outline" class="w-100">
                         <mat-label>{{'Labels.studentLastName'| translate}}</mat-label>
                         <input matInput formControlName="lName" (keypress)="validators.onlyAlphabets($event)">
-                        <!-- <mat-error *ngIf="fc['lName'].hasError('required')">{{'Labels.enterStudentLastName'| translate}}</mat-error> -->
+                        <mat-error *ngIf="fc['lName'].hasError('pattern')">{{'Labels.InvalidstudentLastName'| translate}}</mat-error>
                     </mat-form-field>
                 </div>
                 <div class="col-sm-4">
@@ -140,13 +142,15 @@
                     <div class="d-flex justify-content-between align-items-center">
                         <div class="upload-btn-wrapper">
                             <button class="upload-btn" type="button" (click)="uploadImage.click()">{{'Labels.uploadPhoto' | translate}}</button>
-                            <input type="file" name="myfile" [disabled]="uploadImg" (change)="fileUpload($event,'img')" #uploadImage/>
+                            <input type="file" name="myfile" [disabled]="uploadImg" accept="image/png, image/jpg, image/jpeg" (change)="fileUpload($event,'img')" #uploadImage/>
                         </div>
                         <div class="action-btn" *ngIf="uploadImg">
-                            <button mat-icon-button class="btn-icon text-primary" type="button" (click)="viewImages('photo')">
+                            <button mat-icon-button class="btn-icon text-primary" type="button" (click)="viewImages('photo')"
+                            matTooltip="{{'Labels.View' | translate}}" matTooltipPosition="below" matTooltipClass="tooltip">
                                 <mat-icon>visibility</mat-icon>
                             </button>
-                            <button mat-icon-button class="btn-icon text-danger" type="button" (click)="deleteImage('photo')">
+                            <button mat-icon-button class="btn-icon text-danger" type="button" (click)="deleteImage('photo')"
+                            matTooltip="{{'Labels.delete' | translate}}" matTooltipPosition="below" matTooltipClass="tooltip">
                                 <mat-icon>delete</mat-icon>
                             </button>
                         </div>
@@ -219,10 +223,12 @@
                             <input type="file" name="myfile" [disabled]="uploadAadhaar" (change)="fileUpload($event,'aadhar')" #uploadAadhar/>
                         </div>
                         <div class="action-btn" *ngIf="uploadAadhaar">
-                            <button mat-icon-button class="btn-icon text-primary" type="button" (click)="viewImages('aadharPhoto')">
+                            <button mat-icon-button class="btn-icon text-primary" type="button" (click)="viewImages('aadharPhoto')" 
+                                matTooltip="{{'Labels.View' | translate}}" matTooltipPosition="below" matTooltipClass="tooltip">
                                 <mat-icon>visibility</mat-icon>
                             </button>
-                            <button mat-icon-button class="btn-icon text-danger" type="button" (click)="deleteImage('aadharPhoto')">
+                            <button mat-icon-button class="btn-icon text-danger" type="button" (click)="deleteImage('aadharPhoto')"
+                                matTooltip="{{'Labels.delete' | translate}}" matTooltipPosition="below" matTooltipClass="tooltip">
                                 <mat-icon>delete</mat-icon>
                             </button>
                         </div>
@@ -270,7 +276,7 @@
             <mat-card-actions align="end" class="me-3 mb-2">
                 <button mat-stroked-button class="btn-second me-2" type="button" mat-dialog-close>{{'Labels.cancel'|
                     translate}}</button>
-                <button type="submit" mat-stroked-button class="btn-main" (click)="onSubmit()">{{editObj ? ('Labels.update'|
+                <button mat-stroked-button class="btn-main" type="submit">{{editObj ? ('Labels.update'|
                     translate):('Labels.submit'| translate)}}</button>
             </mat-card-actions>
         </mat-card-footer>
