@@ -47,6 +47,7 @@ export class AddUpdateTeacherRegistrationComponent {
   maxDate =  new Date();
   seniorityDate =new Date();
   schoolDate = new Date();
+  TalukaDate =new Date()
   age!:number;
   
   assignClass: boolean = false;
@@ -98,7 +99,7 @@ export class AddUpdateTeacherRegistrationComponent {
     this.formData();  
     (!this.data) ? this.getGender() :(this.editObj = this.data,this.onEdit()) ;
     // add a day
-    this.seniorityDate.setDate(this.seniorityDate.getDate() + 1);
+    
   }
   //#region --------------------------get form Controls ---------------------------------
   get f() {
@@ -242,11 +243,24 @@ export class AddUpdateTeacherRegistrationComponent {
     this.td['theOriginalDistrictInterDistrictTransfer'].updateValueAndValidity();
   }
   
-  currentSchoolDate(event:any){
-    console.log("event",event);
+  currentSchoolDate(event:any,flag:string){   
+    console.log("date",new Date);
+
+    if(flag=='schoolDate'){
+      // let appointmentdate =  event.value
+      this.schoolDate = event.value
+      console.log("schoolDate",this.schoolDate);
+      // this.seniorityDate = appointmentdate +1
+      
+    }else if(flag=='TalukaDate'){
+      this.TalukaDate = event.value
+      console.log("TalukaDate",this.TalukaDate);
+    }
+    // this.schoolDate = event.value
+    // console.log("appointment",event.value);   
+    // this.schoolDate.setDate(date);
+    // console.log("School",this.schoolDate);
     
-    // let firstAppointmentDate = this.teacherRegForm.value.teacherDetails.dateOfFirstAppoinmentService
-    // this.schoolDate.setDate(firstAppointmentDate);
   }
 //#endregion ---------------- end update validation hide show field -------------------------
 
