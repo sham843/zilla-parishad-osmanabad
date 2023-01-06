@@ -303,8 +303,8 @@ export class TeacherRegistrationComponent {
       headerImage: obj.uploadImage,
       header: this.webStorageS.languageFlag == 'EN' ? obj.name : obj.m_Name,
       subheader: this.webStorageS.languageFlag == 'EN' ? obj.gender : obj.m_Gender,
-      labelHeader: this.webStorageS.languageFlag == 'EN' ? ['Mobile No.', 'Email ID', 'Village', 'Taluka', 'Subject'] : ['मोबाईल क्र.', 'ई-मेल आयडी ', 'गाव', 'तालुका', 'विषय'],
-      labelKey: this.webStorageS.languageFlag == 'EN' ? ['mobileNo', 'emailId', 'village', 'taluka', 'assignSubject'] : ['mobileNo', 'emailId', 'village', 'taluka', 'assignSubject'],
+      labelHeader: this.webStorageS.languageFlag == 'EN' ? ['Mobile No.', 'Email ID', 'Village', 'Taluka'] : ['मोबाईल क्र.', 'ई-मेल आयडी ', 'गाव', 'तालुका'],
+      labelKey: this.webStorageS.languageFlag == 'EN' ? ['mobileNo', 'emailId', 'village', 'taluka'] : ['mobileNo', 'emailId', 'village', 'taluka'],
       Obj: obj,
       chart: false,
       checkbox:this.webStorageS.languageFlag == 'EN' ? 'Subject' : 'विषय'

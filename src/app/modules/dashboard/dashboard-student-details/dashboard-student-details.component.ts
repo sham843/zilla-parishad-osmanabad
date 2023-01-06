@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ApiService } from 'src/app/core/services/api.service';
@@ -26,14 +26,17 @@ export class DashboardStudentDetailsComponent {
   schoolArr: any = []
   standardArr: any = [];
   subjectArr: any = [];
-
-  displayedColumns = ['docPath', 'srNo', 'fullName', 'Status'];
-  marathiDisplayedColumns = ['docPath', 'srNo', 'm_FullName', 'Status'];
+  lineChartOptions:any;
+  grapbhDetailsArray=new Array();
+  displayedColumns = ['docPath', 'srNo', 'fullName', 'actualGrade'];
+  marathiDisplayedColumns = ['docPath', 'srNo', 'm_FullName', 'actualGrade'];
   displayedheaders = ['#', 'Sr. No.', 'Name', 'Status'];
-  marathiDisplayedheaders = ['#', 'अनुक्रमांक', 'नाव', 'Status'];
-
+  marathiDisplayedheaders = ['#', 'अनुक्रमांक', 'नाव', 'स्तर'];
   filterForm!: FormGroup
-
+  subjectArray=new Array();
+  subjectControl = new FormControl('');
+  lang!:string;
+  showLineChart:boolean=false;
   constructor(
     private fb: FormBuilder,
     private ngxSpinner: NgxSpinnerService,
@@ -44,19 +47,17 @@ export class DashboardStudentDetailsComponent {
     public translate: TranslateService,
     private commonMethods: CommonMethodsService,
     private masterService: MasterService,
-  ) { }
+  ) { 
+   
+  }
   ngOnInit() {
     this.dashboardObj = JSON.parse(localStorage.getItem('selectedBarchartObjData') || '');
-    // this.webService.selectedBarchartObjData.subscribe((x: any) => {
-    //   console.log(x);
-    //   this.dashboardObj = x;
-    // })
     this.formData();
     this.languageChange();
     this.getTaluka();
     // this.dashboardObj ? this.getTableData():'';
     this.getStandard(); this.getSubject();
-
+    
   }
 
   formData() {
@@ -69,11 +70,11 @@ export class DashboardStudentDetailsComponent {
     })
 
   }
-
   languageChange() {
     this.webService.langNameOnChange.subscribe(lang => {
       this.languageFlag = lang;
       this.getTableData();
+      this.getSubjectData();
     });
 
   }
@@ -81,7 +82,7 @@ export class DashboardStudentDetailsComponent {
   setTableData() {
     let tableData = {
       pageNumber: this.pageNumber,
-      img: 'docPath', blink: true, badge: '', isBlock: '', pagintion: false,
+      img: 'docPath', blink: true, badge: '', isBlock: '', pagintion: false, status: 'actualGrade',
       displayedColumns: this.languageFlag == 'English' ? this.displayedColumns : this.marathiDisplayedColumns,
       tableData: this.tableDataArray,
       tableSize: this.totalCount,
@@ -113,6 +114,7 @@ export class DashboardStudentDetailsComponent {
           this.tableDataArray = res.responseData.responseData1;
           this.totalCount = res.responseData?.responseData2?.pageCount || 0;
           let obj = this.tableDataArray[0];
+          this.getLineChartDetails(obj);
           this.data = {
             headerImage: obj.profilePhoto,
             header: this.webService.languageFlag == 'mr-IN' ? obj.m_FullName : obj.fullName,
@@ -254,5 +256,65 @@ export class DashboardStudentDetailsComponent {
   clearForm() {
     this.filterForm.reset();
     this.getTableData();
+  }
+
+  getLineChartDetails(obj:any){
+    let str= this.dashboardObj?.groupId==1? 'GetDataFor1st2ndStdStudentChart':'GetDataFor3rdAboveStdStudentChart';
+    this.apiService.setHttp('GET', 'zp-osmanabad/Dashboard/' + str+ '?GroupId='+this.dashboardObj?.groupId+'&StudentId='+obj?.studentId, false, false, false, 'baseUrl');
+    this.apiService.getHttp().subscribe({
+      next: (res: any) => {
+        if (res.statusCode == 200 && res.responseData.responseData1.length) {
+         this.grapbhDetailsArray=res.responseData.responseData1 ;
+         this.getSubjectData();
+        } else {
+          this.grapbhDetailsArray=[];
+          this.subjectArray=[];
+        }
+      },
+      error: ((err: any) => { this.ngxSpinner.hide(); this.errors.handelError(err.statusCode) })
+    });
+  }
+  getSubjectData() {
+    this.subjectArray = [];
+    this.subjectArray = [...new Set(this.grapbhDetailsArray.map((sub: any) => this.languageFlag=='English'? sub.subjectName:sub.m_SubjectName))];
+    this.subjectControl.patchValue(this.subjectArray[0]);
+     this.constuctLineChart();
+  }
+  constuctLineChart(){
+    this.showLineChart=false;
+      const ExamType = [...new Set(this.grapbhDetailsArray.map((sub: any) => this.languageFlag=='English'? sub.examType:sub.m_ExamType))];
+      const arrayBySubject=this.grapbhDetailsArray.filter((x:any)=> (this.languageFlag=='English'? x.subjectName: x.m_SubjectName)==this.subjectControl?.value);
+      const SubSubjectArray= [...new Set(arrayBySubject.map((sub: any) => this.languageFlag=='English'? sub.optionName:sub.m_OptionName))];
+      let ArryOfSeries:any=[];
+      ExamType.map((x:any)=>{
+        const obj={
+          name: x,
+          data: (arrayBySubject.filter((y:any)=>(this.languageFlag=='English'? y.examType:y.m_ExamType)==x)).map((z:any)=> z.actualGrade)
+        }
+        ArryOfSeries.push(obj)
+      })
+      this.getLineChart(ArryOfSeries,SubSubjectArray);
+  }
+  getLineChart(series:any, categories:any){
+    this.lineChartOptions = {
+      series: series,
+      chart: {
+      height: 350,
+      type: 'area',
+      toolbar: {
+        show: false
+      }
+    },
+    dataLabels: {
+      enabled: false
+    },
+    stroke: {
+      curve: 'smooth'
+    },
+    xaxis: {
+      categories: categories
+    },
+    };
+
   }
 }

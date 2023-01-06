@@ -98,7 +98,7 @@
                 <div class="col-sm-4">
                     <mat-form-field appearance="outline" class="w-100">
                         <mat-label>{{'Labels.birthDate'| translate}}</mat-label>
-                        <input matInput [matDatepicker]="picker" [max]="maxDate" (click)="picker.open()" (dateChange)="CalculateAge()" readonly formControlName="birthDate">
+                        <input matInput [matDatepicker]="picker" [max]="maxDate" (click)="picker.open()" readonly (dateChange)="CalculateAge()"  formControlName="birthDate">
                         <mat-datepicker-toggle matIconSuffix [for]="picker" ></mat-datepicker-toggle>
                         <mat-datepicker #picker ></mat-datepicker>
                         <!-- <mat-error *ngIf="f['birthDate'].hasError('required') ">
@@ -399,7 +399,7 @@
                     <div class="col-sm-4">
                         <mat-form-field appearance="outline" class="w-100">
                             <mat-label>{{'Labels.1stAppointmentDateInService'| translate}}</mat-label>
-                            <input matInput [matDatepicker]="dateService" readonly [max]="maxDate" (click)="picker.open()"
+                            <input matInput [matDatepicker]="dateService" (click)="dateService.open()" readonly (dateChange)="currentSchoolDate($event,'schoolDate')"
                                 formControlName="dateOfFirstAppoinmentService">
                             <mat-datepicker-toggle matIconSuffix [for]="dateService"></mat-datepicker-toggle>
                             <mat-datepicker #dateService></mat-datepicker>
@@ -408,7 +408,7 @@
                     <div class="col-sm-4">
                         <mat-form-field appearance="outline" class="w-100">
                             <mat-label>{{'Labels.currentSchoolJoiningDate'| translate}}</mat-label>
-                            <input matInput [matDatepicker]="JoiningDate" readonly [max]="maxDate" (click)="picker.open()"
+                            <input matInput [matDatepicker]="JoiningDate"  [max]="schoolDate" readonly (dateChange)="currentSchoolDate($event,'TalukaDate')" (click)="JoiningDate.open()"
                                 formControlName="currentSchoolJoiningDate">
                             <mat-datepicker-toggle matIconSuffix [for]="JoiningDate"></mat-datepicker-toggle>
                             <mat-datepicker #JoiningDate></mat-datepicker>
@@ -417,7 +417,7 @@
                     <div class="col-sm-4">
                         <mat-form-field appearance="outline" class="w-100">
                             <mat-label>{{'Labels.currentTalukaPresentDate'| translate}}</mat-label>
-                            <input matInput [matDatepicker]="TalukaPresentDate" readonly (click)="picker.open()"
+                            <input matInput [matDatepicker]="TalukaPresentDate"  [max]="TalukaDate" readonly (click)="TalukaPresentDate.open()"
                                 formControlName="currentTalukaPresentDate">
                             <mat-datepicker-toggle matIconSuffix [for]="TalukaPresentDate"></mat-datepicker-toggle>
                             <mat-datepicker #TalukaPresentDate></mat-datepicker>
@@ -426,7 +426,7 @@
                     <div class="col-sm-4">
                         <mat-form-field appearance="outline" class="w-100">
                             <mat-label> {{'Labels.retirementDate'| translate}}</mat-label>
-                            <input matInput [matDatepicker]="RetirementDate" readonly [min]="maxDate" (click)="picker.open()" formControlName="retirementDate">
+                            <input matInput [matDatepicker]="RetirementDate"  [min]="maxDate" readonly (click)="RetirementDate.open()" formControlName="retirementDate">
                             <mat-datepicker-toggle matIconSuffix [for]="RetirementDate"></mat-datepicker-toggle>
                             <mat-datepicker #RetirementDate></mat-datepicker>
                         </mat-form-field>
@@ -483,7 +483,7 @@
                         <div class="col-sm-4">
                             <mat-form-field appearance="outline" class="w-100">
                                 <mat-label> {{'Labels.DateOfPresenceByInterDistrictTransfer'| translate}}</mat-label>
-                                <input matInput [matDatepicker]=" DistrictTransfer" readonly (click)="picker.open()"
+                                <input matInput [matDatepicker]=" DistrictTransfer" (click)="DistrictTransfer.open()" readonly
                                     formControlName="dateOFPresenceInterDistrictTransfer">
                                 <mat-datepicker-toggle matIconSuffix [for]="DistrictTransfer"></mat-datepicker-toggle>
                                 <mat-datepicker #DistrictTransfer></mat-datepicker>
@@ -513,7 +513,7 @@
                     <div class="col-sm-4">
                         <mat-form-field appearance="outline" class="w-100">
                             <mat-label>{{'Labels.dateOfSeniority'| translate}}</mat-label>
-                            <input matInput [matDatepicker]=" DateSeniority" readonly [min]="seniorityDate" (click)="picker.open()" formControlName="dateOfSeniority">
+                            <input matInput [matDatepicker]=" DateSeniority" [min]="seniorityDate" (click)="DateSeniority.open()" readonly formControlName="dateOfSeniority">
                             <mat-datepicker-toggle matIconSuffix [for]="DateSeniority"></mat-datepicker-toggle>
                             <mat-datepicker  #DateSeniority></mat-datepicker>
                             <!-- <mat-error *ngIf="td['dateOfSeniority'].hasError('required')">Date Of Seniority Is Required</mat-error> -->
