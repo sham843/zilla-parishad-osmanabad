@@ -47,11 +47,11 @@
       <div class="col-sm-3">
         <mat-form-field appearance="outline" class="w-100">
           <mat-label>{{'Labels.searchByName' | translate}}</mat-label>
-          <input matInput [formControl]="searchContent" (keypress)="validation.noFirstSpaceAllow($event)">
+          <input matInput [formControl]="searchContent" (keyup.enter)="getTableData()" (keypress)="validation.noFirstSpaceAllow($event)">
         </mat-form-field>
       </div>
        <div class="col-sm-auto">
-        <button mat-flat-button class="btn-main" (click)="getTableData('filter')">{{'Labels.filter' | translate}}</button>
+        <button mat-flat-button class="btn-main"  (click)="getTableData('filter')">{{'Labels.filter' | translate}}</button>
         <button mat-flat-button class="btn-second ms-2" (click)="clearFilterData()">{{'Labels.clear' |
           translate}}</button>
       </div>
