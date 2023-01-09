@@ -37,7 +37,7 @@ export class DashboardStudentDetailsComponent {
   subjectControl = new FormControl('');
   lang!: string;
   showLineChart: boolean = false;
-  groupIDObj: any
+  groupIDObj: any;
   constructor(
     private fb: FormBuilder,
     private ngxSpinner: NgxSpinnerService,
@@ -265,12 +265,13 @@ export class DashboardStudentDetailsComponent {
     this.dashboardObj = '';
     this.getTaluka();
     this.getTableData();
-
-
   }
 
   getLineChartDetails(obj: any) {
-    console.log(obj)
+    // let groupId = this.groupIDObj?.groupId || this.dashboardObj?.groupId || 1
+    // let localStorogeObj = JSON.parse(localStorage.getItem('selectedBarchartObjData') || '');
+    // localStorogeObj.groupId = groupId;
+    // localStorage.setItem('selectedBarchartObjData', JSON.stringify(localStorogeObj))
     this.webService.selectedLineChartObj.next(obj);
 
 
