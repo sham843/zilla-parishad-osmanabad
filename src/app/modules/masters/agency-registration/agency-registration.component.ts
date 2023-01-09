@@ -221,7 +221,7 @@ export class AgencyRegistrationComponent {
       headerImage: "assets/images/user.png",
       header: this.webStroageService.languageFlag == 'EN' ? obj.agency_Name : obj.m_Agency_Name,
       subheader: this.webStroageService.languageFlag == 'EN' ? obj.gender : obj.m_Gender,
-      labelHeader: this.webStroageService.languageFlag == 'EN' ? ['Mobile Number', 'Email Id', 'Taluka', 'District'] : ['मोबाईल क्र.', 'ई-मेल आयडी', 'तालुका', 'जिल्हा'],
+      labelHeader: this.webStroageService.languageFlag == 'EN' ? ['Mobile Number', 'Email ID', 'Taluka', 'District'] : ['मोबाईल क्र.', 'ई-मेल आयडी', 'तालुका', 'जिल्हा'],
       labelKey: this.webStroageService.languageFlag == 'EN' ? ['agency_MobileNo', 'agency_EmailId', 'taluka', 'district'] : ['agency_MobileNo', 'agency_EmailId', 'm_Taluka', 'm_District'],
       Obj: obj,
       chart: false
