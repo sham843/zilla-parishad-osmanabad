@@ -89,6 +89,7 @@
         "schoolTypeDescriptionIsRequired" : "शाळेचा प्रकार आवश्यक आहे",
         "schoolCategoryIsRequired" : "शाळा श्रेणी आवश्यक आहे",
         "schoolManagementIsRequired" : "शाळा व्यवस्थापन आवश्यक आहे",
+        "enterValidSchoolName":"कृपया वैध शाळेचे नाव प्रविष्ट करा",
         "groupClassIsRequired" : "गट वर्ग आवश्यक आहे",
         "searchbyNameContactEmail" : "एजन्सी नाव/मोबाईल क्र.",
         "studentFirstName" : "विद्यार्थीचे प्रथम नाव",
