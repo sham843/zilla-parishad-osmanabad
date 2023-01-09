@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ApiService } from 'src/app/core/services/api.service';
 import { CommonMethodsService } from 'src/app/core/services/common-methods.service';
@@ -26,6 +26,7 @@ export class ForgotPasswordComponent {
   timeLeft: number = 60;
   interval: any;
   otpStatus: boolean = false;
+  isSubmitForgotPassword: boolean = false;
   obj = {
     "createdBy": 0,
     "modifiedBy": 0,
@@ -59,8 +60,8 @@ export class ForgotPasswordComponent {
     });
 
     this.passwordForm = this.fb.group({
-      newPassword: ['', [Validators.required, Validators.pattern(this.validation.valPassword)]],
-      confirmPassword: ['', [Validators.required, Validators.pattern(this.validation.valPassword)]]
+      newPassword: ['', [Validators.required, this.ValidatePassword()]],
+      confirmPassword: ['', [Validators.required, this.ValidatePassword()]]
     })
 
   }
@@ -104,13 +105,17 @@ export class ForgotPasswordComponent {
 
   pauseTimer() {
     clearInterval(this.interval);
-    this.fcMobile['mobileNo'].setValue('');
     this.otpForm.reset();
   }
 
   setFlag(flag?: any) {
     this.sendOtpFlag || flag == 'resend' ? (this.mobileField = false, this.otpField = true, this.otpStatus = true) : '';
     this.verifyOtpflag ? (this.mobileField = false, this.otpField = false, this.passwordField = true) : '';
+  }
+
+  goBack() {
+    this.mobileField = true; this.otpField = false; this.pauseTimer();
+    this.fcMobile['mobileNo'].setValue('');
   }
 
   verifyOtp() {
@@ -123,7 +128,7 @@ export class ForgotPasswordComponent {
       this.apiService.setHttp('post', 'api/OtpTran/VerifyOTP', false, this.obj, false, 'baseUrl');
       this.apiService.getHttp().subscribe({
         next: (res: any) => {
-          res.statusCode == 200 ? (this.common.snackBar(res.statusMessage, 0), this.setFlag(), clearInterval(this.interval), this.pauseTimer()) : (this.common.snackBar(res.statusMessage, 1), this.otpForm.reset());
+          res.statusCode == 200 ? (this.common.snackBar(res.statusMessage, 0), this.setFlag(), clearInterval(this.interval), this.pauseTimer(), this.isSubmitForgotPassword = true) : (this.common.snackBar(res.statusMessage, 1), this.otpForm.reset());
         },
         error: ((err: any) => { this.errors.handelError(err) })
       })
@@ -148,6 +153,25 @@ export class ForgotPasswordComponent {
     else {
       this.passwordForm.invalid ? this.common.snackBar('Please Enter New Password & Confirm Password', 1) : this.common.snackBar('New Password & Confirm Password Did Not Match', 1)
     }
+  }
+
+  ValidatePassword(): ValidatorFn {
+    return (control: AbstractControl): ValidationErrors | null => {
+      if (!control.value)
+        return { required: true };
+      else if (!RegExp('[A-Z]{1,}').test(control.value))
+        return { capsLetterMissing: true };
+      else if (!RegExp('[a-z]{1,}').test(control.value))
+        return { smallLetterMissing: true };
+      else if (!RegExp('[0-9]{1,}').test(control.value))
+        return { numberMissing: true };
+      else if (!RegExp('[~!@#$%^&*()_-]{1,}').test(control.value))
+        return { specialCharacterMissing: true };
+      else if (control.value.length < 8)
+        return { lengthInvalid: true };
+      else
+        return null;
+    };
   }
 }
 
