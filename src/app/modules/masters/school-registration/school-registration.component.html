@@ -47,7 +47,7 @@
             <div class="col-sm-2">
                 <mat-form-field appearance="outline" class="w-100">
                     <mat-label> {{'Labels.district' | translate}}</mat-label>
-                    <mat-select [formControl]="districtId" (selectionChange)="getTaluka();">
+                    <mat-select [formControl]="districtId" (selectionChange)="getTaluka();" [disabled]="districtId.value == 1">
                         <mat-option *ngFor="let district of districtArr" [value]="district.id">
                             {{webStorageS.languageFlag =='mr-IN' ? district.m_District: district.district}}
                             <!-- {{webStorageS.getLangauge() == 'EN' ?

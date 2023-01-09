@@ -192,7 +192,7 @@ export class AddUpdateStudentRegistrationComponent {
 
   getStandard() {
     this.standardArr = [];
-    this.masterService.getAllStandard(this.languageFlag).subscribe({
+    this.masterService.getAllStandard(0,this.languageFlag).subscribe({
       next: (res: any) => {
         if (res.statusCode == 200) {
           this.standardArr = res.responseData;
