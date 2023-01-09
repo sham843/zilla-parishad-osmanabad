@@ -70,7 +70,7 @@ export class AddUpdateSchoolRegistrationComponent {
     this.schoolRegForm = this.fb.group({
       "id": this.data ? this.data.id : 0,
       "schoolCode": "string",
-      "schoolName": [this.data ? this.data.schoolName : '', Validators.required],
+      "schoolName": [this.data ? this.data.schoolName : '', [Validators.required, Validators.pattern('^[,() a-zA-Z0-9]+$')]],
       "m_SchoolName": [this.data ? this.data.m_SchoolName : '', [Validators.required, Validators.pattern('^[\u0900-\u0965 ]+$')]],
       "stateId": 0,
       "districtId": ['', Validators.required],

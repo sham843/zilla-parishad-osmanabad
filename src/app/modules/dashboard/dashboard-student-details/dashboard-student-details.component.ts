@@ -26,6 +26,7 @@ export class DashboardStudentDetailsComponent {
   schoolArr: any = []
   standardArr: any = [];
   subjectArr: any = [];
+  groupByClassArray: any = [];
   lineChartOptions: any;
   grapbhDetailsArray = new Array();
   displayedColumns = ['docPath', 'srNo', 'fullName', 'actualGrade'];
@@ -37,7 +38,7 @@ export class DashboardStudentDetailsComponent {
   subjectControl = new FormControl('');
   lang!: string;
   showLineChart: boolean = false;
-  groupIDObj: any;
+  groupID: any;
   constructor(
     private fb: FormBuilder,
     private ngxSpinner: NgxSpinnerService,
@@ -56,17 +57,17 @@ export class DashboardStudentDetailsComponent {
     this.formData();
     this.languageChange();
     this.getTaluka();
-    this.getStandard();
-    this.getSubject();
+    this. getGroupIdByTalukaCenterSchool();
   }
 
   formData() {
     this.filterForm = this.fb.group({
-      talukaId: [''],
-      centerId: [''],
-      schoolId: [''],
-      standardId: [''],
-      subjectId: ['']
+      talukaId: [0],
+      centerId: [0],
+      schoolId: [0],
+      groupByClass:[0],
+      standardId: [0],
+      subjectId: [0]
     })
 
   }
@@ -101,7 +102,7 @@ export class DashboardStudentDetailsComponent {
     let StandardId = flag == 'filter' ? this.filterForm.value?.standardId : this.dashboardObj?.StandardId;
     let SubjectId = flag == 'filter' ? this.filterForm.value?.subjectId : this.dashboardObj?.SubjectId;
     let lan = this.webService.languageFlag;
-    let GroupId = this.groupIDObj ? this.groupIDObj?.groupId : this.dashboardObj ? this.dashboardObj?.groupId : 1;
+    let GroupId = this.groupID ? this.groupID : this.dashboardObj ? this.dashboardObj?.groupId : 1;
 
     let studentApi = GroupId == 1 ? 'GetDataFor1st2ndStdStudentList' : 'GetDataFor3rdAboveStdStudentList'
     let str = 'zp-osmanabad/Dashboard/' + studentApi + '?GroupId=' + GroupId + '&TalukaId=' + (TalukaId || 0) + '&CenterId=' + (CenterId || 0) + '&SchoolId=' + (SchoolId || 0) + '&SubjectId=' + (SubjectId || 0) + '&OptionGrade=0&StandardId=' + (StandardId || 0) + '&lan=' + lan
@@ -170,7 +171,7 @@ export class DashboardStudentDetailsComponent {
 
   getAllCenter() {
     this.centerArr = [];
-    let Tid = this.filterForm.value.talukaId
+    let Tid = this.filterForm.value.talukaId;
     if(Tid !=0){
       this.masterService.getAllCenter(this.languageFlag, Tid).subscribe({
         next: (res: any) => {
@@ -192,7 +193,9 @@ export class DashboardStudentDetailsComponent {
     this.schoolArr = [];
     let Tid = this.filterForm.value.talukaId;
     let Cid = this.filterForm.value.centerId;
-    if(Tid != 0 && Cid !=0){
+    console.log(this.filterForm.value.talukaId,this.filterForm.value.centerId);
+    
+    if(Cid !=0){
       this.masterService.getAllSchoolByCriteria(this.languageFlag, Tid, 0, Cid).subscribe({
         next: (res: any) => {
           if (res.statusCode == 200) {
@@ -209,14 +212,34 @@ export class DashboardStudentDetailsComponent {
     }
   }
 
+  getGroupIdByTalukaCenterSchool(){   
+    this.groupByClassArray = [];
+      let formData = this.filterForm.value;
+      this.apiService.setHttp('GET', 'zp-osmanabad/Dashboard/GetDashboardCount?TalukaId=' + (formData?.talukaId || 0) + '&CenterId=' + (formData?.centerId || 0) + '&SchoolId=' + (formData?.schoolId || 0), false, false, false, 'baseUrl');
+      this.apiService.getHttp().subscribe({
+        next: (res: any) => {
+          if (res.statusCode == 200) {
+           this.groupByClassArray = res.responseData.responseData2;
+           this.dashboardObj ? (this.filterForm.controls['groupByClass'].setValue(this.dashboardObj?.groupId),this.getStandard(),this.getSubject()) : '';
+          } else {
+            this.groupByClassArray = [];
+          }
+        },
+        error: (err: any) => { this.errors.handelError(err.statusCode);}
+      });
+   
+  }
+
   getStandard() {
+    this.groupID = this.filterForm.value.groupByClass;
     this.standardArr = [];
-    this.masterService.getAllStandard(this.languageFlag).subscribe({
+    let groupId = this.groupID ? this.groupID : this.dashboardObj.groupId;
+    this.masterService.getAllStandard(groupId,this.languageFlag).subscribe({
       next: (res: any) => {
         if (res.statusCode == 200) {
           this.standardArr.push({ "id": 0, "standard": "All", "m_Standard": "सर्व" }, ...res.responseData);
           this.filterForm.controls['standardId'].setValue(0);
-          // this.dashboardObj ? this.filterForm.controls['standardId'].setValue(this.dashboardObj?.StandardId) : '';
+          this.dashboardObj ? this.filterForm.controls['standardId'].setValue(this.dashboardObj?.standardArray[0] ) : '';
         } else {
           this.commonMethods.checkEmptyData(res.statusMessage) == false ? this.errors.handelError(res.statusCode) : this.commonMethods.showPopup(res.statusMessage, 1);
           this.standardArr = [];
@@ -226,16 +249,14 @@ export class DashboardStudentDetailsComponent {
     });
   }
 
-  getGroupId() {
-    this.groupIDObj = this.standardArr.find((res: any) => res.id == this.filterForm.value.standardId);
-  }
 
   getSubject() {
     this.subjectArr = [];
-    this.masterService.getAllSubject(this.languageFlag).subscribe({
+    let groupId = this.groupID ? this.groupID : this.dashboardObj.groupId;
+    this.masterService.GetAllSubjectsByGroupClassId(this.languageFlag,groupId).subscribe({
       next: (res: any) => {
         if (res.statusCode == 200) {
-          this.subjectArr.push({ "id": 0, "subject": "All", "m_Subject": "सर्व" }, ...res.responseData);
+          this.subjectArr.push({ "id": 0, "subjectName": "All", "m_SubjectName": "सर्व" }, ...res.responseData);
           this.filterForm.controls['subjectId'].setValue(0);
           this.dashboardObj ? this.filterForm.controls['subjectId'].setValue(this.dashboardObj?.SubjectId) : '';
         } else {
@@ -268,16 +289,17 @@ export class DashboardStudentDetailsComponent {
   clearForm() {
     this.filterForm.reset();
     this.dashboardObj = '';
+    this.schoolArr=[];
+    this.standardArr = [];
+    this.subjectArr = [];
     this.getTaluka();
-    this.getStandard();
-    this.getSubject()
     this.getTableData();
   }
 
   getLineChartDetails(obj: any) {
     const objData = {
       objData: obj,
-      groupId: this.groupIDObj?.groupId | 0
+      groupId: this.groupID | 0
     }
     this.webService.selectedLineChartObj.next(JSON.stringify(objData));
 

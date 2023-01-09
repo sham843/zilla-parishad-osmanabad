@@ -112,9 +112,9 @@
                         <!-- <mat-error *ngIf="f['schoolName'].hasError('required') || f['schoolName'].hasError('touched')">
                             {{'Labels.schoolNameIsRequired' | translate}}
                         </mat-error> -->
-                        <!-- <mat-error *ngIf="f['schoolName'].hasError('pattern')">
-                            {{'Labels.InvalidSchoolName' | translate}}
-                        </mat-error> -->
+                        <mat-error *ngIf="f['schoolName'].hasError('pattern')">
+                            {{'Labels.enterValidSchoolName' | translate}}
+                        </mat-error>
                     </mat-form-field>
                 </div>
                 <div class="col-sm-6">
@@ -210,9 +210,8 @@
                         <ng-container *ngFor="let item of imgArray; let i = index">
                             <div class="gallery position-relative">
                                 <img [src]="item.docPath" height="130px" width="130px" class="border">
-                                <span
-                                    class="position-absolute" style="top:-17px;right:-17px;">
-                                    <button type="button" mat-icon-button class="bg-danger bg-opacity-25 text-danger"
+                                <span class="position-absolute" style="top:-17px;right:-17px;">
+                                    <button type="button" mat-icon-button class="bg-danger bg-opacity-25 text-danger material-icons"
                                         (click)="clearMultipleImg(i)" matTooltip="{{'Labels.delete' | translate}}" matTooltipPosition="right" matTooltipClass="tooltip">
                                         <mat-icon>delete</mat-icon>
                                     </button>
