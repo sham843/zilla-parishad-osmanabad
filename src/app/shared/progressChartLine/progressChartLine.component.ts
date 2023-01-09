@@ -81,6 +81,7 @@ export class progressChartLineComponent implements OnInit {
   constuctLineChart(){
       const ExamType = [...new Set(this.grapbhDetailsArray.map((sub: any) => this.languageFlag=='English'? sub.examType:sub.m_ExamType))];
       const arrayBySubject=this.grapbhDetailsArray.filter((x:any)=> (this.languageFlag=='English'? x.subjectName: x.m_SubjectName)==this.subjectControl?.value);
+      const higherGrade=arrayBySubject[0]?.maxGrade;
       const SubSubjectArray= [...new Set(arrayBySubject.map((sub: any) => this.groupId==1?(this.languageFlag=='English'? sub.optionName:sub.m_OptionName):(this.languageFlag=='English'? sub.question:sub.m_Question)))];
       let ArryOfSeries:any=[];
       ExamType.map((x:any)=>{
@@ -90,9 +91,9 @@ export class progressChartLineComponent implements OnInit {
         }
         ArryOfSeries.push(obj)
       })
-      this.getLineChart(ArryOfSeries,SubSubjectArray);
+      this.getLineChart(ArryOfSeries,SubSubjectArray,higherGrade);
   }
-  getLineChart(series:any, categories:any){
+  getLineChart(series:any, categories:any, higherGrade:any){
     this.lineChartOptions = {
       series: series,
       chart: {
@@ -112,7 +113,8 @@ export class progressChartLineComponent implements OnInit {
       categories: categories
     },
     yaxis: {
-      // tickAmount: 4,
+      min: 0,
+      max: higherGrade,
       labels: {
         formatter: function(val:any) {
           return val.toFixed(0);
