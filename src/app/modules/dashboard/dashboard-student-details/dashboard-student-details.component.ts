@@ -268,7 +268,8 @@ export class DashboardStudentDetailsComponent {
     });
   }
 
-  clearDropdown(name: any) {
+  clearDropdown(name?: any) {
+    this.dashboardObj='';
     if (name == 'talukaId') {
       this.filterForm.controls['centerId'].setValue('');
       this.filterForm.controls['schoolId'].setValue('');

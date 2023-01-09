@@ -41,7 +41,7 @@
                 <div class="col-sm-2">
                     <mat-form-field appearance="outline" class="w-100 ">
                         <mat-label>Group of Class</mat-label>
-                        <mat-select formControlName="groupByClass" (selectionChange)="getStandard();getSubject()">
+                        <mat-select formControlName="groupByClass" (selectionChange)="clearDropdown();getStandard();getSubject()">
                             <mat-option *ngFor="let group of groupByClassArray" [value]="group.groupId">{{languageFlag == 'English'
                                 ?group.groupClass:group.m_GroupClass}}</mat-option>
                         </mat-select>
