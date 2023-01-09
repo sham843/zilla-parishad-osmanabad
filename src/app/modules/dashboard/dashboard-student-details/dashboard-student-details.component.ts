@@ -58,7 +58,6 @@ export class DashboardStudentDetailsComponent {
     this.getTaluka();
     this.getStandard();
     this.getSubject();
-
   }
 
   formData() {
@@ -261,19 +260,18 @@ export class DashboardStudentDetailsComponent {
   }
 
   clearForm() {
+    this.filterForm.reset();
     this.dashboardObj = '';
     this.getTaluka();
+    this.getStandard();
+    this.getSubject()
     this.getTableData();
   }
 
   getLineChartDetails(obj: any) {
-    // let groupId = this.groupIDObj?.groupId || this.dashboardObj?.groupId || 1
-    // let localStorogeObj = JSON.parse(localStorage.getItem('selectedBarchartObjData') || '');
-    // localStorogeObj.groupId = groupId;
-    // localStorage.setItem('selectedBarchartObjData', JSON.stringify(localStorogeObj))
-    const objData={
-      objData:obj,
-      groupId:this.groupIDObj?.groupId|0
+    const objData = {
+      objData: obj,
+      groupId: this.groupIDObj?.groupId | 0
     }
     this.webService.selectedLineChartObj.next(JSON.stringify(objData));
 
