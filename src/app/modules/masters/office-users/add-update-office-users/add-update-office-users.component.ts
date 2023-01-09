@@ -198,6 +198,10 @@ export class AddUpdateOfficeUsersComponent implements OnInit {
 
       this.fc['designationId'].setValidators(Validators.required);
       this.fc['designationId'].updateValueAndValidity();
+
+      // clear
+      this.fc['bitName'].clearValidators();
+      this.fc['bitName'].updateValueAndValidity();
     }
    else if (event.value == 5 && label == 'Level') {
       this.fc['districtId'].setValidators(Validators.required);
@@ -211,21 +215,43 @@ export class AddUpdateOfficeUsersComponent implements OnInit {
 
       this.fc['bitName'].setValidators([Validators.required, Validators.pattern(this.validation.fullName)]);
       this.fc['bitName'].updateValueAndValidity();
+
+
+      // clear
+      this.fc['address'].clearValidators();
+      this.fc['address'].updateValueAndValidity();
     }
     else if (event.value == 6 || event.value == 7 && label == 'Level') {
       this.fc['address'].setValidators([Validators.required, Validators.maxLength(500)]);
       this.fc['address'].updateValueAndValidity();
+
+      this.fc['bitName'].clearValidators();
+      this.fc['bitName'].updateValueAndValidity();
     }
     else if (event.value == 17 && label == 'Designation') {
       this.fc['beoMobileNo'].setValidators([Validators.required, Validators.pattern(this.validation.mobile_No)]);
       this.fc['beoMobileNo'].updateValueAndValidity();
       this.fc['beoEmailId'].setValidators([Validators.required, Validators.pattern(this.validation.email)]);
       this.fc['beoEmailId'].updateValueAndValidity();
+
+      this.fc['bitName'].clearValidators();
+      this.fc['bitName'].updateValueAndValidity();
     }
     else if (event.value == 20 && label == 'Designation') {
       console.log("enter in kendrapramukh");
       this.fc['centerId'].setValidators([Validators.required]);
       this.fc['centerId'].updateValueAndValidity();
+
+      this.fc['bitName'].clearValidators();
+      this.fc['bitName'].updateValueAndValidity();
+      // (this.officeForm.value.designationId == 20  && this.officeForm.value.designationLevelId == 2) ? this.fc['centerId'].setValue(null) : this.fc['centerId'].setValue(0);
+
+
+      // clear
+      this.fc['beoMobileNo'].clearValidators();
+      this.fc['beoMobileNo'].updateValueAndValidity();
+      this.fc['beoEmailId'].clearValidators();
+      this.fc['beoEmailId'].updateValueAndValidity();
 
       // this.fc['kendraMobileNo'].setValidators([Validators.required, Validators.pattern(this.validation.mobile_No)]);
       // this.fc['kendraMobileNo'].updateValueAndValidity();
@@ -233,9 +259,21 @@ export class AddUpdateOfficeUsersComponent implements OnInit {
       // this.fc['kendraEmailId'].setValidators([Validators.required, Validators.pattern(this.validation.email)]);
       // this.fc['kendraEmailId'].updateValueAndValidity();
     }
-    // else if(){
+    else if (event.value != 5 && label == 'Level') {
+      this.fc['bitName'].clearValidators();
+      this.fc['bitName'].updateValueAndValidity();
+    }
+    else if (event.value != 20 && label == 'Designation') {
+      // clear
+      this.fc['beoMobileNo'].clearValidators();
+      this.fc['beoMobileNo'].updateValueAndValidity();
+      this.fc['beoEmailId'].clearValidators();
+      this.fc['beoEmailId'].updateValueAndValidity();
+      this.fc['address'].clearValidators();
+      this.fc['address'].updateValueAndValidity();
 
-    // }
+    }
+    
   }
 
   onchangeV(event: any, label: string){
