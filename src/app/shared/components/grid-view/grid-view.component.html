@@ -19,7 +19,7 @@
         </mat-card-header>
         <mat-card-content class="card-body form-container">
           <div class="text-center mb-3">
-            <img src="{{tData['docPath'] || tData['uploadImage'] || 'assets/images/user.jpg'}}" alt="user"class="user-img">
+            <img src="{{tData['docPath'] || tData['uploadImage'] || 'assets/images/user.png'}}" alt="user"class="user-img">
           </div>
           <div class="row " *ngFor="let columns of displayedColumns; let j=index">
             <div class="col-sm-5 form-label" *ngIf=" '#' != columns && 'srNo' != columns && 'docPath' != columns && 'uploadImage' != columns && 'action' != columns">

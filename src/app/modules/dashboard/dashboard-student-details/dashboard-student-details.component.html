@@ -41,7 +41,7 @@
                 <div class="col-sm-2">
                     <mat-form-field appearance="outline" class="w-100 ">
                         <mat-label>{{'Labels.standard'| translate}}</mat-label>
-                        <mat-select formControlName="standardId">
+                        <mat-select formControlName="standardId" (selectionChange)="getGroupId()">
                             <mat-option *ngFor="let stan of standardArr" [value]="stan.id">{{languageFlag == 'English'
                                 ?stan.standard:stan.m_Standard}}</mat-option>
                         </mat-select>
@@ -110,8 +110,8 @@
                                         </div>
                                     </div>
                                 </div>
-
-                                <mat-card class="plain-card border">
+                                <progressChartLine></progressChartLine>
+                                <!-- <mat-card class="plain-card border">
                                     <mat-card-header class="card-header pb-0 border-bottom-0">
                                         <div class="d-flex justify-content-end w-100">
                                             <mat-form-field appearance="outline" class="w-25">
@@ -119,7 +119,7 @@
                                                 <mat-select  [formControl]="subjectControl" (selectionChange)="constuctLineChart()">
                                                     <mat-option *ngFor="let sub of subjectArray" [value]="sub">{{sub}}</mat-option>
                                                 </mat-select>
-                                                <!-- <mat-error *ngIf="fc['standard'].hasError('required')"> {{'Labels.pleaseSelectStandard'| translate}} </mat-error> -->
+                                                <mat-error *ngIf="fc['standard'].hasError('required')"> {{'Labels.pleaseSelectStandard'| translate}} </mat-error>
                                             </mat-form-field>
                                         </div>
                                     </mat-card-header>
@@ -136,7 +136,7 @@
                                               [yaxis]="lineChartOptions.yaxis"
                                             ></apx-chart>
                                     </mat-card-content>
-                                </mat-card>
+                                </mat-card> -->
                             </div>
                         </div>
                     </mat-card-content>

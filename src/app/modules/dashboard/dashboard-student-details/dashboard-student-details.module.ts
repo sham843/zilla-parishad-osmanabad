@@ -14,6 +14,7 @@ import { TableComponent } from 'src/app/shared/components/table/table.component'
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import {MatButtonModule} from '@angular/material/button';
+import { progressChartLineComponent } from 'src/app/shared/progressChartLine/progressChartLine.component';
 
 @NgModule({
   declarations: [
@@ -34,6 +35,7 @@ import {MatButtonModule} from '@angular/material/button';
     MatFormFieldModule,
     MatInputModule ,
     MatButtonModule,
+    progressChartLineComponent,
     AgmCoreModule.forRoot({
       apiKey: 'AIzaSyBhkYI4LMEqVhB6ejq12wpIA6CW5theKJw',
       language: 'en',

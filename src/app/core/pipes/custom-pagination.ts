@@ -35,8 +35,10 @@ export class CustomMatPaginatorIntl extends MatPaginatorIntl{
       startIndex < length
         ? Math.min(startIndex + pageSize, length)
         : startIndex + pageSize;
-  
-    return `${this.webStorage.numberTransformFunction(length)} ${this.ofKeyValue} ${this.webStorage.numberTransformFunction(startIndex + 1)} - ${this.webStorage.numberTransformFunction(endIndex)}`;
+   let mar = `${this.webStorage.numberTransformFunction(length)} ${this.ofKeyValue} ${this.webStorage.numberTransformFunction(startIndex + 1)} - ${this.webStorage.numberTransformFunction(endIndex)}`;
+   let eng = `${this.webStorage.numberTransformFunction(startIndex + 1)} - ${this.webStorage.numberTransformFunction(endIndex)} ${this.ofKeyValue} ${this.webStorage.numberTransformFunction(length)}`
+    // return `${this.webStorage.numberTransformFunction(length)} ${this.ofKeyValue} ${this.webStorage.numberTransformFunction(startIndex + 1)} - ${this.webStorage.numberTransformFunction(endIndex)}`;
+    return  this.webStorage.languageFlag=='EN'  ? eng : mar  ;
   };
 
 }

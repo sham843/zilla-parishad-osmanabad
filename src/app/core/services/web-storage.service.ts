@@ -8,6 +8,7 @@ export class WebStorageService {
   languageFlag =  'EN';
   language = new BehaviorSubject('');
   selectedBarchartObjData = new BehaviorSubject('');
+  selectedLineChartObj= new BehaviorSubject('');
   langNameOnChange = this.language.asObservable();
   private theme=new BehaviorSubject('');
   numFormat: any;
