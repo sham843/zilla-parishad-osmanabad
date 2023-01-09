@@ -64,7 +64,7 @@ export class AgencyRegistrationComponent {
     let pageNo = this.pageNumber;
     flag == 'filter' ? this.agencyReport = [] : '';
     let str = `pageno=${pageNo || ''}&pagesize=10&&TextSearch=${this.searchText.value || ''}&lan=${this.webStroageService.languageFlag || ''}`;
-    let reportStr = `pageno=${this.pageNumber}&pagesize=${this.totalCount * 10}&TextSearch=${this.searchText.value}&lan=${this.webStroageService.languageFlag}`
+    let reportStr = `pageno=${1}&pagesize=${this.totalCount * 10}&TextSearch=${this.searchText.value}&lan=${this.webStroageService.languageFlag}`
     this.apiService.setHttp('GET', 'zp-osmanabad/Agency/GetAll?' + (flag == 'pdfFlag' ? reportStr : str), false, false, false, 'baseUrl');
     this.apiService.getHttp().subscribe({
       next: (res: any) => {
