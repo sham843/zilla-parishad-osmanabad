@@ -105,7 +105,7 @@ export class DashboardStudentDetailsComponent {
     let GroupId = this.groupID ? this.groupID : this.dashboardObj ? this.dashboardObj?.groupId : 1;
 
     let studentApi = GroupId == 1 ? 'GetDataFor1st2ndStdStudentList' : 'GetDataFor3rdAboveStdStudentList'
-    let str = 'zp-osmanabad/Dashboard/' + studentApi + '?GroupId=' + GroupId + '&TalukaId=' + (TalukaId || 0) + '&CenterId=' + (CenterId || 0) + '&SchoolId=' + (SchoolId || 0) + '&SubjectId=' + (SubjectId || 0) + '&OptionGrade='+this.dashboardObj?.OptionGrade || 0+'&StandardId=' + (StandardId || 0) + '&lan=' + lan
+    let str = 'zp-osmanabad/Dashboard/' + studentApi + '?GroupId=' + GroupId + '&TalukaId=' + (TalukaId || 0) + '&CenterId=' + (CenterId || 0) + '&SchoolId=' + (SchoolId || 0) + '&SubjectId=' + (SubjectId || 0) + '&OptionGrade='+(this.dashboardObj ?this.dashboardObj.OptionGrade : 0)+'&StandardId=' + (StandardId || 0) + '&lan=' + lan
 
     this.apiService.setHttp('GET', str, false, false, false, 'baseUrl');
     this.apiService.getHttp().subscribe({
