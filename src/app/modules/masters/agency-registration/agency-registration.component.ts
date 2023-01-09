@@ -99,7 +99,7 @@ export class AgencyRegistrationComponent {
       this.agencyReport.push(obj);
     });
     if (this.agencyReport.length) {
-      let keyPDFHeader = ['SrNo', "Agency Name", "Agency Mobile No.", "Agency Email ID"];
+      let keyPDFHeader = ['Sr.No.', "Agency Name", "Agency Mobile No.", "Agency Email ID"];
       let ValueData =
         this.agencyReport.reduce(
           (acc: any, obj: any) => [...acc, Object.values(obj).map((value) => value)], []
