@@ -26,17 +26,17 @@ export class DashboardStudentDetailsComponent {
   schoolArr: any = []
   standardArr: any = [];
   subjectArr: any = [];
-  lineChartOptions:any;
-  grapbhDetailsArray=new Array();
+  lineChartOptions: any;
+  grapbhDetailsArray = new Array();
   displayedColumns = ['docPath', 'srNo', 'fullName', 'actualGrade'];
   marathiDisplayedColumns = ['docPath', 'srNo', 'm_FullName', 'actualGrade'];
   displayedheaders = ['#', 'Sr. No.', 'Name', 'Status'];
   marathiDisplayedheaders = ['#', 'अनुक्रमांक', 'नाव', 'स्तर'];
   filterForm!: FormGroup
-  subjectArray=new Array();
+  subjectArray = new Array();
   subjectControl = new FormControl('');
-  lang!:string;
-  showLineChart:boolean=false;
+  lang!: string;
+  showLineChart: boolean = false;
   constructor(
     private fb: FormBuilder,
     private ngxSpinner: NgxSpinnerService,
@@ -47,8 +47,8 @@ export class DashboardStudentDetailsComponent {
     public translate: TranslateService,
     private commonMethods: CommonMethodsService,
     private masterService: MasterService,
-  ) { 
-   
+  ) {
+
   }
   ngOnInit() {
     this.dashboardObj = JSON.parse(localStorage.getItem('selectedBarchartObjData') || '');
@@ -57,7 +57,7 @@ export class DashboardStudentDetailsComponent {
     this.getTaluka();
     // this.dashboardObj ? this.getTableData():'';
     this.getStandard(); this.getSubject();
-    
+
   }
 
   formData() {
@@ -101,7 +101,7 @@ export class DashboardStudentDetailsComponent {
     let StandardId = flag == 'filter' ? this.filterForm.value?.standardId : this.dashboardObj?.StandardId;
     let SubjectId = flag == 'filter' ? this.filterForm.value?.subjectId : this.dashboardObj?.SubjectId;
     let lan = this.webService.languageFlag;
-    let GroupId = this.dashboardObj?.groupId || 1;
+    let GroupId = this.dashboardObj ? this.dashboardObj?.groupId : 1;
 
     let studentApi = GroupId == 1 ? 'GetDataFor1st2ndStdStudentList' : 'GetDataFor3rdAboveStdStudentList'
     let str = 'zp-osmanabad/Dashboard/' + studentApi + '?GroupId=' + GroupId + '&TalukaId=' + (TalukaId || 0) + '&CenterId=' + (CenterId || 0) + '&SchoolId=' + (SchoolId || 0) + '&SubjectId=' + (SubjectId || 0) + '&OptionGrade=0&StandardId=' + (StandardId || 0) + '&lan=' + lan
@@ -145,8 +145,9 @@ export class DashboardStudentDetailsComponent {
       labelHeader: this.webService.languageFlag == 'EN' ? ['Father Name', 'Parent Mobile No.', 'Aadhar No.', 'Standard', 'School Name'] : ['वडीलांचे नावं', 'पालक मोबाईल क्र.', 'आधार क्र.', 'इयत्ता', 'शाळेचे नाव'],
       labelKey: this.webService.languageFlag == 'EN' ? ['fatherFullName', 'parentMobileNo', 'aadharNo', 'standard', 'schoolName'] : ['m_FatherFullName', 'parentMobileNo', 'aadharNo', 'standard', 'm_SchoolName'],
       Obj: obj,
-      chart: false
+      chart: true
     }
+    this.getLineChartDetails(obj);
   }
 
 
@@ -156,7 +157,8 @@ export class DashboardStudentDetailsComponent {
       next: (res: any) => {
         if (res.statusCode == 200) {
           this.talukaArr.push({ "id": 0, "taluka": "All", "m_Taluka": "सर्व" }, ...res.responseData);
-          this.dashboardObj ? (this.filterForm.controls['talukaId'].setValue(this.dashboardObj?.TalukaId), this.getAllCenter()) : ''
+          this.filterForm.controls['talukaId'].setValue(0)
+          this.dashboardObj ? (this.filterForm.controls['talukaId'].setValue(this.dashboardObj?.TalukaId), this.getAllCenter()) : this.getAllCenter();
           // this.talukaArr = res.responseData;
         } else {
           this.commonMethods.checkEmptyData(res.statusMessage) == false ? this.errors.handelError(res.statusCode) : this.commonMethods.showPopup(res.statusMessage, 1);
@@ -174,7 +176,8 @@ export class DashboardStudentDetailsComponent {
       next: (res: any) => {
         if (res.statusCode == 200) {
           this.centerArr.push({ "id": 0, "center": "All", "m_Center": "सर्व" }, ...res.responseData);
-          this.dashboardObj ? (this.filterForm.controls['centerId'].setValue(this.dashboardObj?.CenterId), this.getAllSchoolsByCenterId()) : ''
+          this.filterForm.controls['centerId'].setValue(0)
+          this.dashboardObj ? (this.filterForm.controls['centerId'].setValue(this.dashboardObj?.CenterId), this.getAllSchoolsByCenterId()) : this.getAllSchoolsByCenterId()
         } else {
           this.commonMethods.checkEmptyData(res.statusMessage) == false ? this.errors.handelError(res.statusCode) : this.commonMethods.showPopup(res.statusMessage, 1);
           this.centerArr = [];
@@ -192,7 +195,8 @@ export class DashboardStudentDetailsComponent {
       next: (res: any) => {
         if (res.statusCode == 200) {
           this.schoolArr.push({ "id": 0, "schoolName": "All", "m_SchoolName": "सर्व" }, ...res.responseData);
-          this.dashboardObj ? this.filterForm.controls['schoolId'].setValue(this.dashboardObj?.SchoolId) : '';
+          this.filterForm.controls['schoolId'].setValue(0)
+          this.dashboardObj ? this.filterForm.controls['schoolId'].setValue(this.dashboardObj?.SchoolId) : this.getStandard(), this.getSubject();
         } else {
           // this.commonMethods.checkEmptyData(res.statusMessage) == false ? this.errors.handelError(res.statusCode) : this.commonMethods.showPopup(res.statusMessage, 1);
           this.schoolArr = [];
@@ -208,6 +212,7 @@ export class DashboardStudentDetailsComponent {
       next: (res: any) => {
         if (res.statusCode == 200) {
           this.standardArr.push({ "id": 0, "standard": "All", "m_Standard": "सर्व" }, ...res.responseData);
+          this.filterForm.controls['standardId'].setValue(0)
         } else {
           this.commonMethods.checkEmptyData(res.statusMessage) == false ? this.errors.handelError(res.statusCode) : this.commonMethods.showPopup(res.statusMessage, 1);
           this.standardArr = [];
@@ -223,6 +228,7 @@ export class DashboardStudentDetailsComponent {
       next: (res: any) => {
         if (res.statusCode == 200) {
           this.subjectArr.push({ "id": 0, "subject": "All", "m_Subject": "सर्व" }, ...res.responseData);
+          this.filterForm.controls['subjectId'].setValue(0)
         } else {
           this.commonMethods.checkEmptyData(res.statusMessage) == false ? this.errors.handelError(res.statusCode) : this.commonMethods.showPopup(res.statusMessage, 1);
           this.subjectArr = [];
@@ -254,75 +260,81 @@ export class DashboardStudentDetailsComponent {
   }
 
   clearForm() {
-    this.filterForm.reset();
+    // this.filterForm.reset();
+    this.dashboardObj = '';
+    this.getTaluka();
     this.getTableData();
   }
 
-  getLineChartDetails(obj:any){
-    let str= this.dashboardObj?.groupId==1? 'GetDataFor1st2ndStdStudentChart':'GetDataFor3rdAboveStdStudentChart';
-    this.apiService.setHttp('GET', 'zp-osmanabad/Dashboard/' + str+ '?GroupId='+this.dashboardObj?.groupId+'&StudentId='+obj?.studentId, false, false, false, 'baseUrl');
+  getLineChartDetails(obj: any) {
+    console.log(obj);
+    let GroupId = this.dashboardObj ? this.dashboardObj?.groupId : 1;
+    let str = GroupId == 1 ? 'GetDataFor1st2ndStdStudentChart' : 'GetDataFor3rdAboveStdStudentChart';
+    this.apiService.setHttp('GET', 'zp-osmanabad/Dashboard/' + str + '?GroupId=' + GroupId + '&StudentId=' + obj?.studentId, false, false, false, 'baseUrl');
     this.apiService.getHttp().subscribe({
       next: (res: any) => {
         if (res.statusCode == 200 && res.responseData.responseData1.length) {
-         this.grapbhDetailsArray=res.responseData.responseData1 ;
-         this.getSubjectData();
+          this.grapbhDetailsArray = res.responseData.responseData1;
+          this.getSubjectData();
         } else {
-          this.grapbhDetailsArray=[];
-          this.subjectArray=[];
+          this.grapbhDetailsArray = [];
+          this.subjectArray = [];
         }
       },
       error: ((err: any) => { this.ngxSpinner.hide(); this.errors.handelError(err.statusCode) })
     });
   }
   getSubjectData() {
+    console.log(this.languageFlag);
+    
     this.subjectArray = [];
-    this.subjectArray = [...new Set(this.grapbhDetailsArray.map((sub: any) => this.languageFlag=='English'? sub.subjectName:sub.m_SubjectName))];
+    this.subjectArray = [...new Set(this.grapbhDetailsArray.map((sub: any) => this.languageFlag == 'English' ? sub.subjectName : sub.m_SubjectName))];
     this.subjectControl.patchValue(this.subjectArray[0]);
-     this.constuctLineChart();
+    this.constuctLineChart();
   }
-  constuctLineChart(){
-    this.showLineChart=false;
-      const ExamType = [...new Set(this.grapbhDetailsArray.map((sub: any) => this.languageFlag=='English'? sub.examType:sub.m_ExamType))];
-      const arrayBySubject=this.grapbhDetailsArray.filter((x:any)=> (this.languageFlag=='English'? x.subjectName: x.m_SubjectName)==this.subjectControl?.value);
-      const SubSubjectArray= [...new Set(arrayBySubject.map((sub: any) => this.languageFlag=='English'? sub.optionName:sub.m_OptionName))];
-      let ArryOfSeries:any=[];
-      ExamType.map((x:any)=>{
-        const obj={
-          name: x,
-          data: (arrayBySubject.filter((y:any)=>(this.languageFlag=='English'? y.examType:y.m_ExamType)==x)).map((z:any)=> z.actualGrade)
-        }
-        ArryOfSeries.push(obj)
-      })
-      this.getLineChart(ArryOfSeries,SubSubjectArray);
+  constuctLineChart() {
+    this.showLineChart = false;
+    const ExamType = [...new Set(this.grapbhDetailsArray.map((sub: any) => this.languageFlag == 'English' ? sub.examType : sub.m_ExamType))];
+    const arrayBySubject = this.grapbhDetailsArray.filter((x: any) => (this.languageFlag == 'English' ? x.subjectName : x.m_SubjectName) == this.subjectControl?.value);
+    const SubSubjectArray = [...new Set(arrayBySubject.map((sub: any) => this.languageFlag == 'English' ? sub.optionName : sub.m_OptionName))];
+    let ArryOfSeries: any = [];
+    ExamType.map((x: any) => {
+      const obj = {
+        name: x,
+        data: (arrayBySubject.filter((y: any) => (this.languageFlag == 'English' ? y.examType : y.m_ExamType) == x)).map((z: any) => z.actualGrade)
+      }
+      ArryOfSeries.push(obj)
+    })
+    this.getLineChart(ArryOfSeries, SubSubjectArray);
   }
-  getLineChart(series:any, categories:any){
+  getLineChart(series: any, categories: any) {
     this.lineChartOptions = {
       series: series,
       chart: {
-      height: 350,
-      type: 'area',
-      toolbar: {
-        show: false
-      }
-    },
-    dataLabels: {
-      enabled: false
-    },
-    stroke: {
-      curve: 'smooth'
-    },
-    xaxis: {
-      categories: categories
-    },
-    yaxis: {
-      // tickAmount: 5,
-      labels: {
-        formatter: function(val:any) {
-          return val.toFixed(0);
+        height: 350,
+        type: 'area',
+        toolbar: {
+          show: false
+        }
+      },
+      dataLabels: {
+        enabled: false
+      },
+      stroke: {
+        curve: 'smooth'
+      },
+      xaxis: {
+        categories: categories
+      },
+      yaxis: {
+        // tickAmount: 5,
+        labels: {
+          formatter: function (val: any) {
+            return val.toFixed(0);
+          }
         }
       }
-    }
-  };
+    };
 
   }
 }
