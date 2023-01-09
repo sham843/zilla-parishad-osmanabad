@@ -21,8 +21,8 @@ import { DatePipe } from '@angular/common';
 export class SchoolRegistrationComponent {
   pageNumber: number = 1;
   tableDataArray = new Array();
-  searchContent = new FormControl('');
-  districtId = new FormControl('');
+  // searchContent = new FormControl('');
+  districtId = new FormControl(null);
   talukaId = new FormControl('');
   villageId = new FormControl();
   resultDownloadArr = new Array();
@@ -155,10 +155,12 @@ export class SchoolRegistrationComponent {
 
   //#region ---------------------------------------------- School Registration Dropdown start here ----------------------------------------// 
   getDistrict() {
-    this.masterService.getAllDistrict().subscribe({
+    this.masterService.getAllDistrict(this.webStorageS.languageFlag).subscribe({
       next: (res: any) => {
         if (res.statusCode == 200) {
           this.districtArr = res.responseData;
+          this.districtId.setValue(this.districtArr[0].id); 
+          this.getTaluka();
         }
       },
       error: ((err: any) => { this.commonMethodS.checkEmptyData(err.statusText) == false ? this.errors.handelError(err.statusCode) : this.commonMethodS.showPopup(err.statusText, 1); })
