@@ -1,0 +1,26 @@
+<mat-card class="plain-card border">
+    <mat-card-header class="card-header pb-0 border-bottom-0">
+        <div class="d-flex justify-content-end w-100">
+            <mat-form-field appearance="outline" class="w-25">
+                <mat-label>Subject</mat-label>
+                <mat-select  [formControl]="subjectControl" (selectionChange)="constuctLineChart()">
+                    <mat-option *ngFor="let sub of subjectArray" [value]="sub">{{sub}}</mat-option>
+                </mat-select>
+                <!-- <mat-error *ngIf="fc['standard'].hasError('required')"> {{'Labels.pleaseSelectStandard'| translate}} </mat-error> -->
+            </mat-form-field>
+        </div>
+    </mat-card-header>
+   
+    <mat-card-content class="card-body pt-0">
+            <apx-chart
+              [series]="lineChartOptions.series"
+              [chart]="lineChartOptions.chart"
+              [xaxis]="lineChartOptions.xaxis"
+              [dataLabels]="lineChartOptions.dataLabels"
+              [grid]="lineChartOptions.grid"
+              [stroke]="lineChartOptions.stroke"
+              [title]="lineChartOptions.title"
+              [yaxis]="lineChartOptions.yaxis"
+            ></apx-chart>
+    </mat-card-content>
+</mat-card>
