@@ -41,7 +41,7 @@
                 <div class="col-sm-2">
                     <mat-form-field appearance="outline" class="w-100 ">
                         <mat-label>{{'Labels.standard'| translate}}</mat-label>
-                        <mat-select formControlName="standardId">
+                        <mat-select formControlName="standardId" (selectionChange)="getGroupId()">
                             <mat-option *ngFor="let stan of standardArr" [value]="stan.id">{{languageFlag == 'English'
                                 ?stan.standard:stan.m_Standard}}</mat-option>
                         </mat-select>
