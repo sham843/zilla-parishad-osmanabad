@@ -101,7 +101,7 @@ export class DashboardStudentDetailsComponent {
     let StandardId = flag == 'filter' ? this.filterForm.value?.standardId : this.dashboardObj?.StandardId;
     let SubjectId = flag == 'filter' ? this.filterForm.value?.subjectId : this.dashboardObj?.SubjectId;
     let lan = this.webService.languageFlag;
-    let GroupId = flag == 'filter' ? this.groupIDObj.groupId : this.dashboardObj ? this.dashboardObj?.groupId : 1;
+    let GroupId = this.groupIDObj ? this.groupIDObj?.groupId : this.dashboardObj ? this.dashboardObj?.groupId : 1;
 
     let studentApi = GroupId == 1 ? 'GetDataFor1st2ndStdStudentList' : 'GetDataFor3rdAboveStdStudentList'
     let str = 'zp-osmanabad/Dashboard/' + studentApi + '?GroupId=' + GroupId + '&TalukaId=' + (TalukaId || 0) + '&CenterId=' + (CenterId || 0) + '&SchoolId=' + (SchoolId || 0) + '&SubjectId=' + (SubjectId || 0) + '&OptionGrade=0&StandardId=' + (StandardId || 0) + '&lan=' + lan
@@ -171,38 +171,42 @@ export class DashboardStudentDetailsComponent {
   getAllCenter() {
     this.centerArr = [];
     let Tid = this.filterForm.value.talukaId
-    this.masterService.getAllCenter(this.languageFlag, Tid).subscribe({
-      next: (res: any) => {
-        if (res.statusCode == 200) {
-          this.centerArr.push({ "id": 0, "center": "All", "m_Center": "सर्व" }, ...res.responseData);
-          this.filterForm.controls['centerId'].setValue(0);
-          this.dashboardObj ? (this.filterForm.controls['centerId'].setValue(this.dashboardObj?.CenterId), this.getAllSchoolsByCenterId()) : this.getAllSchoolsByCenterId();
-        } else {
-          this.commonMethods.checkEmptyData(res.statusMessage) == false ? this.errors.handelError(res.statusCode) : this.commonMethods.showPopup(res.statusMessage, 1);
-          this.centerArr = [];
-        }
-      },
-      error: ((err: any) => { this.errors.handelError(err.statusCode) })
-    });
+    if(Tid !=0){
+      this.masterService.getAllCenter(this.languageFlag, Tid).subscribe({
+        next: (res: any) => {
+          if (res.statusCode == 200) {
+            this.centerArr.push({ "id": 0, "center": "All", "m_Center": "सर्व" }, ...res.responseData);
+            this.filterForm.controls['centerId'].setValue(0);
+            this.dashboardObj ? (this.filterForm.controls['centerId'].setValue(this.dashboardObj?.CenterId), this.getAllSchoolsByCenterId()) : this.getAllSchoolsByCenterId();
+          } else {
+            this.commonMethods.checkEmptyData(res.statusMessage) == false ? this.errors.handelError(res.statusCode) : this.commonMethods.showPopup(res.statusMessage, 1);
+            this.centerArr = [];
+          }
+        },
+        error: ((err: any) => { this.errors.handelError(err.statusCode) })
+      });
+    }
   }
 
   getAllSchoolsByCenterId() {
     this.schoolArr = [];
     let Tid = this.filterForm.value.talukaId;
     let Cid = this.filterForm.value.centerId;
-    this.masterService.getAllSchoolByCriteria(this.languageFlag, Tid, 0, Cid).subscribe({
-      next: (res: any) => {
-        if (res.statusCode == 200) {
-          this.schoolArr.push({ "id": 0, "schoolName": "All", "m_SchoolName": "सर्व" }, ...res.responseData);
-          this.filterForm.controls['schoolId'].setValue(0);
-          this.dashboardObj ? this.filterForm.controls['schoolId'].setValue(this.dashboardObj?.SchoolId) : '';
-        } else {
-          // this.commonMethods.checkEmptyData(res.statusMessage) == false ? this.errors.handelError(res.statusCode) : this.commonMethods.showPopup(res.statusMessage, 1);
-          this.schoolArr = [];
-        }
-      },
-      error: ((err: any) => { this.errors.handelError(err.statusCode) })
-    });
+    if(Tid != 0 && Cid !=0){
+      this.masterService.getAllSchoolByCriteria(this.languageFlag, Tid, 0, Cid).subscribe({
+        next: (res: any) => {
+          if (res.statusCode == 200) {
+            this.schoolArr.push({ "id": 0, "schoolName": "All", "m_SchoolName": "सर्व" }, ...res.responseData);
+            this.filterForm.controls['schoolId'].setValue(0);
+            this.dashboardObj ? this.filterForm.controls['schoolId'].setValue(this.dashboardObj?.SchoolId) : '';
+          } else {
+            // this.commonMethods.checkEmptyData(res.statusMessage) == false ? this.errors.handelError(res.statusCode) : this.commonMethods.showPopup(res.statusMessage, 1);
+            this.schoolArr = [];
+          }
+        },
+        error: ((err: any) => { this.errors.handelError(err.statusCode) })
+      });
+    }
   }
 
   getStandard() {
@@ -212,6 +216,7 @@ export class DashboardStudentDetailsComponent {
         if (res.statusCode == 200) {
           this.standardArr.push({ "id": 0, "standard": "All", "m_Standard": "सर्व" }, ...res.responseData);
           this.filterForm.controls['standardId'].setValue(0);
+          // this.dashboardObj ? this.filterForm.controls['standardId'].setValue(this.dashboardObj?.StandardId) : '';
         } else {
           this.commonMethods.checkEmptyData(res.statusMessage) == false ? this.errors.handelError(res.statusCode) : this.commonMethods.showPopup(res.statusMessage, 1);
           this.standardArr = [];
@@ -232,6 +237,7 @@ export class DashboardStudentDetailsComponent {
         if (res.statusCode == 200) {
           this.subjectArr.push({ "id": 0, "subject": "All", "m_Subject": "सर्व" }, ...res.responseData);
           this.filterForm.controls['subjectId'].setValue(0);
+          this.dashboardObj ? this.filterForm.controls['subjectId'].setValue(this.dashboardObj?.SubjectId) : '';
         } else {
           this.commonMethods.checkEmptyData(res.statusMessage) == false ? this.errors.handelError(res.statusCode) : this.commonMethods.showPopup(res.statusMessage, 1);
           this.subjectArr = [];
