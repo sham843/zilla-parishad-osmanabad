@@ -37,7 +37,7 @@ export class DashboardStudentDetailsComponent {
   subjectControl = new FormControl('');
   lang!: string;
   showLineChart: boolean = false;
-  groupIDObj: any
+  groupIDObj: any;
   constructor(
     private fb: FormBuilder,
     private ngxSpinner: NgxSpinnerService,
@@ -58,7 +58,6 @@ export class DashboardStudentDetailsComponent {
     this.getTaluka();
     this.getStandard();
     this.getSubject();
-
   }
 
   formData() {
@@ -103,7 +102,6 @@ export class DashboardStudentDetailsComponent {
     let SubjectId = flag == 'filter' ? this.filterForm.value?.subjectId : this.dashboardObj?.SubjectId;
     let lan = this.webService.languageFlag;
     let GroupId = flag == 'filter' ? this.groupIDObj.groupId : this.dashboardObj ? this.dashboardObj?.groupId : 1;
-    console.log(GroupId);
 
     let studentApi = GroupId == 1 ? 'GetDataFor1st2ndStdStudentList' : 'GetDataFor3rdAboveStdStudentList'
     let str = 'zp-osmanabad/Dashboard/' + studentApi + '?GroupId=' + GroupId + '&TalukaId=' + (TalukaId || 0) + '&CenterId=' + (CenterId || 0) + '&SchoolId=' + (SchoolId || 0) + '&SubjectId=' + (SubjectId || 0) + '&OptionGrade=0&StandardId=' + (StandardId || 0) + '&lan=' + lan
@@ -262,16 +260,20 @@ export class DashboardStudentDetailsComponent {
   }
 
   clearForm() {
+    this.filterForm.reset();
     this.dashboardObj = '';
     this.getTaluka();
+    this.getStandard();
+    this.getSubject()
     this.getTableData();
-
-
   }
 
   getLineChartDetails(obj: any) {
-    console.log(obj)
-    this.webService.selectedLineChartObj.next(obj);
+    const objData = {
+      objData: obj,
+      groupId: this.groupIDObj?.groupId | 0
+    }
+    this.webService.selectedLineChartObj.next(JSON.stringify(objData));
 
 
     //   let str= this.dashboardObj?.groupId==1? 'GetDataFor1st2ndStdStudentChart':'GetDataFor3rdAboveStdStudentChart';

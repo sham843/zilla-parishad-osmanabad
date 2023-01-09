@@ -32,6 +32,7 @@ export class progressChartLineComponent implements OnInit {
   dashboardObj:any;
   selectedStudentObj:any;
   languageFlag!:string;
+  groupId!:number;
   constructor(private apiService:ApiService, private webStorage:WebStorageService,
     private ngxSpinner:NgxSpinnerService, private errors:ErrorsService) { }
 
@@ -42,9 +43,11 @@ export class progressChartLineComponent implements OnInit {
     });
     this.dashboardObj=JSON.parse(localStorage.getItem('selectedBarchartObjData')||'')
     this.webStorage.selectedLineChartObj.subscribe((res:any)=>{
-      this.selectedStudentObj=res;
-      this.getLineChartDetails()
+      this.selectedStudentObj=JSON.parse(res);
+      this.groupId=this.selectedStudentObj.groupId==0? this.dashboardObj.groupId:this.selectedStudentObj.groupId;
+      this.getLineChartDetails();
     })
+    
     // this.webStorage.selectedBarchartObjData.subscribe((res:any)=>{
     //   this.dashboardObj=res;
     // })
@@ -54,8 +57,8 @@ export class progressChartLineComponent implements OnInit {
   }
   getLineChartDetails(){
     
-    let str= this.dashboardObj?.groupId==1? 'GetDataFor1st2ndStdStudentChart':'GetDataFor3rdAboveStdStudentChart';
-    this.apiService.setHttp('GET', 'zp-osmanabad/Dashboard/' + str+ '?GroupId='+this.dashboardObj?.groupId+'&StudentId='+this.selectedStudentObj?.studentId, false, false, false, 'baseUrl');
+    let str=  this.groupId==1? 'GetDataFor1st2ndStdStudentChart':'GetDataFor3rdAboveStdStudentChart';
+    this.apiService.setHttp('GET', 'zp-osmanabad/Dashboard/' + str+ '?GroupId='+ this.groupId+'&StudentId='+this.selectedStudentObj?.objData?.studentId, false, false, false, 'baseUrl');
     this.apiService.getHttp().subscribe({
       next: (res: any) => {
         if (res.statusCode == 200 && res.responseData.responseData1.length) {
@@ -117,7 +120,6 @@ export class progressChartLineComponent implements OnInit {
       }
     }
   };
-  console.log(this.lineChartOptions)
 
   }
 
