@@ -8,11 +8,13 @@
     width: auto;
 }
 .login-wrapper .login-right{
-    height: 100%;
+    height: auto;
     width: 100%;
     background-image: url('https://img.freepik.com/free-photo/blue-abstract-gradient-wave-wallpaper_53876-108364.jpg?w=1060&t=st=1672926101~exp=1672926701~hmac=4aaeb6e760640496244c70faefbef63dbd42df6815228709890b8390f185c6a4');
-    // background-image: url('../../../assets/images/login-bg.png');
     background-size: cover;
+    background-repeat: no-repeat;
+    background-position: 75% 50%;
+
 }
 .logo img{
     width: 300px;
@@ -39,6 +41,9 @@ a{
     .login-wrapper .login-right{
         height: 100%;
         width: 100%;
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center right -5.6rem;
     }
 }
 
