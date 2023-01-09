@@ -63,6 +63,9 @@
                 <img [lightbox]="i" [src]="item.data.src" class="gallery-img">
             </div>
         </div>
+        <div *ngIf="data?.chart">
+            <progressChartLine></progressChartLine>
+        </div>
     </mat-card-content>
 
 </mat-card>

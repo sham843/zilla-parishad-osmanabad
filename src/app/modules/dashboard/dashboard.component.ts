@@ -416,15 +416,17 @@ export class DashboardComponent implements OnInit, AfterViewInit {
   
   selectedBar(selectedbar: any) {
     const index = this.barchartOptions.xaxis.categories.findIndex((i: any) => i == selectedbar);
-    const data = this.barChartData.find((x: any) => x.m_SubjectName == selectedbar && x.m_OptionName == this.barchartOptions.series[0][index][this.optionalSubjectindex].name);
-    const formData = this.filterForm.value
+    const data = this.barChartData.find((x: any) =>(this.selectedLang == 'English'? x.subjectName:x.m_SubjectName) == selectedbar && (this.selectedLang == 'English'? x.optionName:x.m_OptionName) == this.barchartOptions.series[0][index][this.optionalSubjectindex].name);
+    const formData = this.filterForm.value;
+    const standardArray=((this.totalStudentSurveyData.find((x:any)=>x.status==true).standardDetails.filter((xx:any)=>xx.status==true)).map((y:any)=> y.standardId))
     this.SharingObject = {
       groupId: this.selectedObj?.groupId|0,
       TalukaId: formData?.talukaId|0,
       CenterId: formData?.centerId|0,
       SchoolId: formData?.schoolId|0,
       SubjectId: data?.subjectId|0,
-      OptionGrade: data?.optionGrade|0
+      OptionGrade: data?.optionGrade|0,
+      standardArray:standardArray
     }
     this.webStorage.selectedBarchartObjData.next(this.SharingObject);
     localStorage.setItem('selectedBarchartObjData',JSON.stringify(this.SharingObject))

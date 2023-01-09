@@ -54,7 +54,7 @@ export class AddUpdateOfficeUsersComponent implements OnInit {
         "m_Name": [this.data ? this.data.m_OfficeName : "", [Validators.required,Validators.pattern('^[\u0900-\u0965 ]+$')]],
         "mobileNo": [this.data ? this.data.mobileNo : "", [Validators.required, Validators.pattern(this.validation.mobile_No)]],
         "emailId": [this.data ? this.data.emailId : "", [Validators.required, Validators.pattern(this.validation.email)]],
-        "address": [this.data ? this.data.address : "", [Validators.maxLength(500)]],
+        "address": [this.data ? this.data.address : "",],
         "schoolId": [this.data ? this.data.schoolId : 0],
         "designationId": [this.data ? this.data.designationId : null, Validators.required],
         "designationLevelId": [this.data ? this.data.designationLevelId : null,[Validators.required]],
@@ -148,15 +148,18 @@ export class AddUpdateOfficeUsersComponent implements OnInit {
 
   getCenterDrop() {
     // console.log(this.officeForm.value.designationId);
-    this.masterService.getAllCenter(this.webStorageService.languageFlag, this.officeForm.value.talukaId).subscribe({
-      next: (resp: any) => {
-        resp.statusCode == "200" ? (this.centers = resp.responseData) : this.centers = [];
-        this.data ? (this.fc['centerId'].setValue(this.data.centerId)) : 0;
-      },
-      error: (error: any) => {
-        console.log("error is :", error);
-      }
-    })
+    if(this.officeForm.value.designationLevelId == 2 && this.officeForm.value.designationId == 20){
+      this.masterService.getAllCenter(this.webStorageService.languageFlag, this.officeForm.value.talukaId).subscribe({
+        next: (resp: any) => {
+          resp.statusCode == "200" ? (this.centers = resp.responseData) : this.centers = [];
+          this.data ? (this.fc['centerId'].setValue(this.data.centerId)) : 0;
+        },
+        error: (error: any) => {
+          console.log("error is :", error);
+        }
+      })
+    }
+
   }
 
   submitOfficeData() {
@@ -183,6 +186,7 @@ export class AddUpdateOfficeUsersComponent implements OnInit {
     }
   }
 
+  // validShilpa
   onchangeValidation(event: any, label: string) {
     console.log("event, label", event.value, label);
     if ((event.value == 1 || event.value == 2) && label == 'Level') {
@@ -234,6 +238,139 @@ export class AddUpdateOfficeUsersComponent implements OnInit {
     // }
   }
 
+  onchangeV(event: any, label: string){
+    console.log(this.officeForm.value.designationId);
+
+    // for admin and pratham
+    // (this.officeForm.value.designationLevelId == 6 || this.officeForm.value.designationLevelId == 7)  ? this.fc['districtId'].setValue(0) : this.fc['districtId'].setValue(null);
+    // (this.officeForm.value.designationLevelId == 6 || this.officeForm.value.designationLevelId == 7) ?this.fc['talukaId'].setValue(0) : this.fc['talukaId'].setValue(null);
+    // (this.officeForm.value.designationLevelId == 5 || this.officeForm.value.designationLevelId == 6 || this.officeForm.value.designationLevelId == 7) ? this.fc['designationId'].setValue(0) : this.fc['designationId'].setValue(null);
+    
+    if(label == 'Level' && (event.value == 7 || event.value == 6)){
+      this.fc['address'].setValidators([Validators.required, Validators.maxLength(500)]);
+      this.fc['address'].updateValueAndValidity();
+
+      this.fc['districtId'].clearValidators();
+      this.fc['districtId'].updateValueAndValidity();
+
+      this.fc['talukaId'].clearValidators();
+      this.fc['talukaId'].updateValueAndValidity();
+      this.fc['designationId'].clearValidators();
+      this.fc['designationId'].updateValueAndValidity();
+
+      // this.fc['districtId'].setValue(0);
+      // this.fc['talukaId'].setValue(0);
+      // this.fc['designationId'].setValue(0);
+    (this.officeForm.value.designationLevelId == 6 || this.officeForm.value.designationLevelId == 7)  ? this.fc['districtId'].setValue(0) : this.fc['districtId'].setValue(null);
+    (this.officeForm.value.designationLevelId == 6 || this.officeForm.value.designationLevelId == 7) ?this.fc['talukaId'].setValue(0) : this.fc['talukaId'].setValue(null);
+    (this.officeForm.value.designationLevelId == 6 || this.officeForm.value.designationLevelId == 7) ?this.fc['centerId'].setValue(0) : this.fc['centerId'].setValue(null);
+    (this.officeForm.value.designationLevelId == 6 || this.officeForm.value.designationLevelId == 7) ?this.fc['designationId'].setValue(0) : this.fc['designationId'].setValue(null);
+
+      // this.fc['centerId'].setValue(0);
+    }
+    // for district level 
+    if ((event.value == 1 || event.value == 2) && label == 'Level') {
+      this.fc['districtId'].setValidators(Validators.required);
+      this.fc['districtId'].updateValueAndValidity();
+
+      this.fc['talukaId'].setValidators(Validators.required);
+      this.fc['talukaId'].updateValueAndValidity();
+
+      this.fc['designationId'].setValidators(Validators.required);
+      this.fc['designationId'].updateValueAndValidity();
+    }
+// for Extension level
+   else if(event.value == 5  && label == 'Level'){
+      this.fc['bitName'].setValidators([Validators.required, Validators.pattern(this.validation.fullName)]);
+      this.fc['bitName'].updateValueAndValidity();
+      this.fc['designationId'].clearValidators();
+      this.fc['designationId'].updateValueAndValidity();
+      this.fc['designationId'].setValue(0)
+    }
+
+    // designation BEO 
+
+    else if(label == 'Designation' && event.value == 17 ){
+      console.log("enter in BEO",this.officeForm.value.designationId);
+      this.fc['beoMobileNo'].setValidators([Validators.required, Validators.pattern(this.validation.mobile_No)]);
+      this.fc['beoMobileNo'].updateValueAndValidity();
+      this.fc['beoEmailId'].setValidators([Validators.required, Validators.pattern(this.validation.email)]);
+      this.fc['beoEmailId'].updateValueAndValidity();
+    }
+    else if(label == 'Designation' && event.value != 17){
+      this.fc['beoMobileNo'].clearValidators();
+      this.fc['beoMobileNo'].updateValueAndValidity();
+      this.fc['beoEmailId'].clearValidators();
+      this.fc['beoEmailId'].updateValueAndValidity();
+    }
+
+    else if(label == 'Designation' && event.value == 20 ){
+      this.fc['centerId'].setValidators([Validators.required]);
+      this.fc['centerId'].updateValueAndValidity();
+    }
+  }
+
+  clearDrop(label: string){
+    if (label == 'Level') {
+      this.fc['name'].setValue('');
+      this.fc['m_Name'].setValue('');
+      this.fc['mobileNo'].setValue('');
+      this.fc['emailId'].setValue('');
+      this.fc['address'].setValue('');
+      this.fc['designationId'].setValue('');
+      this.fc['districtId'].setValue('');
+      this.fc['talukaId'].setValue('');
+      // this.fc['kendraMobileNo'].setValue('');
+      // this.fc['kendraEmailId'].setValue('');
+      // this.fc['beoEmailId'].setValue('');
+      // this.fc['beoMobileNo'].setValue('');
+      // this.fc['centerId'].setValue('');
+      // this.fc['bitName'].setValue('');
+    }
+
+    if (label == 'Taluka') {
+      this.fc['name'].setValue('');
+      this.fc['m_Name'].setValue('');
+      this.fc['mobileNo'].setValue('');
+      this.fc['emailId'].setValue('');
+      this.fc['address'].setValue('');
+      // this.fc['designationId'].setValue('');
+      // this.fc['kendraMobileNo'].setValue('');
+      // this.fc['kendraEmailId'].setValue('');
+      // this.fc['beoEmailId'].setValue('');
+      // this.fc['beoMobileNo'].setValue('');
+      // this.fc['centerId'].setValue('');
+      // this.fc['bitName'].setValue('');
+    }
+    if (label == 'Designation') {
+      this.fc['name'].setValue('');
+      this.fc['m_Name'].setValue('');
+      this.fc['mobileNo'].setValue('');
+      this.fc['emailId'].setValue('');
+      this.fc['address'].setValue('');
+      // this.fc['kendraMobileNo'].setValue('');
+      // this.fc['kendraEmailId'].setValue('');
+      // this.fc['beoEmailId'].setValue('');
+      // this.fc['beoMobileNo'].setValue('');
+      // this.fc['centerId'].setValue('');
+      // this.fc['bitName'].setValue('');
+    }
+    if (label == 'Kendra') {
+      this.fc['name'].setValue('');
+      this.fc['m_Name'].setValue('');
+      this.fc['mobileNo'].setValue('');
+      this.fc['emailId'].setValue('');
+      this.fc['address'].setValue('');
+      // this.fc['kendraMobileNo'].setValue('');
+      // this.fc['kendraEmailId'].setValue('');
+      // this.fc['beoEmailId'].setValue('');
+      // this.fc['beoMobileNo'].setValue('');
+      // this.fc['bitName'].setValue('');
+    }
+
+  }
+
+  // clearShilpa
   clearDropDown(label: string) {
     console.log("label : ", label);
     if (label == 'Level') {

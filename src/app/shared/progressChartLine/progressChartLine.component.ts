@@ -81,7 +81,7 @@ export class progressChartLineComponent implements OnInit {
   constuctLineChart(){
       const ExamType = [...new Set(this.grapbhDetailsArray.map((sub: any) => this.languageFlag=='English'? sub.examType:sub.m_ExamType))];
       const arrayBySubject=this.grapbhDetailsArray.filter((x:any)=> (this.languageFlag=='English'? x.subjectName: x.m_SubjectName)==this.subjectControl?.value);
-      const SubSubjectArray= [...new Set(arrayBySubject.map((sub: any) => this.languageFlag=='English'? sub.optionName:sub.m_OptionName))];
+      const SubSubjectArray= [...new Set(arrayBySubject.map((sub: any) => this.groupId==1?(this.languageFlag=='English'? sub.optionName:sub.m_OptionName):(this.languageFlag=='English'? sub.question:sub.m_Question)))];
       let ArryOfSeries:any=[];
       ExamType.map((x:any)=>{
         const obj={
@@ -112,7 +112,7 @@ export class progressChartLineComponent implements OnInit {
       categories: categories
     },
     yaxis: {
-      // tickAmount: 5,
+      // tickAmount: 4,
       labels: {
         formatter: function(val:any) {
           return val.toFixed(0);
@@ -120,7 +120,6 @@ export class progressChartLineComponent implements OnInit {
       }
     }
   };
-
   }
 
 }
