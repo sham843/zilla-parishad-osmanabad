@@ -247,7 +247,7 @@ export class OfficeUsersComponent {
   openDetailsDialog(obj:any){
     console.log(obj);
     var data = {
-      headerImage: "assets/images/user.jpg",
+      headerImage: "assets/images/user.png",
       header: this.webStorageService.languageFlag == 'EN' ? obj.officeName : obj.m_OfficeName,
       subheader: this.webStorageService.languageFlag == 'EN' ? obj.designation : obj.m_Designation,
       labelHeader: this.webStorageService.languageFlag == 'EN' ? ['Mobile Number', 'Email Id','DesignationLevel','Taluka','District'] : ['मोबाईल क्र.', 'ई-मेल आयडी','पदनाम स्तर','तालुका','जिल्हा'],

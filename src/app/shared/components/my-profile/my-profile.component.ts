@@ -38,7 +38,7 @@ import { MatSelectModule } from '@angular/material/select';
 })
 export class MyProfileComponent {
   userProfile !: FormGroup;
-  uploadImg: string = "assets/images/user.jpg";
+  uploadImg: string = "assets/images/user.png";
   imgFlag: boolean = false;
   userType: any;
   editObj: any
@@ -130,7 +130,7 @@ export class MyProfileComponent {
         this.showButton = true;
         this.commonMethods.snackBar(res.statusMessage, 0);
       } else {
-        this.uploadImg = "assets/images/user.jpg"
+        this.uploadImg = "assets/images/user.png"
       }
     });
   }
@@ -138,7 +138,7 @@ export class MyProfileComponent {
   removeImg() {
     this.imageFile.nativeElement.value = '';
     this.showButton = false;
-    this.uploadImg = "assets/images/user.jpg"
+    this.uploadImg = "assets/images/user.png"
     this.fc['profilePhoto'].setValue(this.uploadImg);
   }
 

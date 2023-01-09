@@ -218,7 +218,7 @@ export class AgencyRegistrationComponent {
 
   openDetailsDialog(obj: any) {
     var data = {
-      headerImage: "assets/images/user.jpg",
+      headerImage: "assets/images/user.png",
       header: this.webStroageService.languageFlag == 'EN' ? obj.agency_Name : obj.m_Agency_Name,
       subheader: this.webStroageService.languageFlag == 'EN' ? obj.gender : obj.m_Gender,
       labelHeader: this.webStroageService.languageFlag == 'EN' ? ['Mobile Number', 'Email Id', 'Taluka', 'District'] : ['मोबाईल क्र.', 'ई-मेल आयडी', 'तालुका', 'जिल्हा'],
