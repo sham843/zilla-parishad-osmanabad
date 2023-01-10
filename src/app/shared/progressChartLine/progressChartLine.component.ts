@@ -43,9 +43,9 @@ export class progressChartLineComponent implements OnInit {
     });
     this.dashboardObj=JSON.parse(localStorage.getItem('selectedBarchartObjData')||'')
     this.webStorage.selectedLineChartObj.subscribe((res:any)=>{
-      this.selectedStudentObj=JSON.parse(res);
+      this.selectedStudentObj=res;
       this.groupId=this.selectedStudentObj.groupId==0? this.dashboardObj.groupId:this.selectedStudentObj.groupId;
-      this.getLineChartDetails();
+      this.groupId?this.getLineChartDetails():'';
     })
     
     // this.webStorage.selectedBarchartObjData.subscribe((res:any)=>{
@@ -75,7 +75,7 @@ export class progressChartLineComponent implements OnInit {
   getSubjectData() {
     this.subjectArray = [];
     this.subjectArray = [...new Set(this.grapbhDetailsArray.map((sub: any) => this.languageFlag=='English'? sub.subjectName:sub.m_SubjectName))];
-    this.subjectControl.patchValue(this.subjectArray[0]);
+    this.subjectControl.patchValue((this.selectedStudentObj?.selectedSubject !=(this.languageFlag=='English'?'All':"सर्व"  ))?this.selectedStudentObj?.selectedSubject:this.subjectArray[0]);
      this.constuctLineChart();
   }
   constuctLineChart(){
