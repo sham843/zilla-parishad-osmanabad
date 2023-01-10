@@ -1,4 +1,4 @@
-import { OnInit, Component, Output, EventEmitter, ViewChild, OnDestroy } from '@angular/core';
+import { OnInit, Component, Output, EventEmitter, ViewChild } from '@angular/core';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { ApiService } from 'src/app/core/services/api.service';
@@ -38,7 +38,7 @@ import { Subscription } from 'rxjs';
     ],
 
 })
-export class TableComponent implements OnInit, OnDestroy {
+export class TableComponent implements OnInit {
   @Output() recObjToChild = new EventEmitter<any>();
   @ViewChild(MatPaginator) paginator: MatPaginator | any;
   @ViewChild(MatSort) sort!: MatSort;
@@ -86,9 +86,11 @@ export class TableComponent implements OnInit, OnDestroy {
     this.recObjToChild.emit(obj);
   }
 
-  ngOnDestroy(){
-    this.tableSub.unsubscribe();
-    this.tableInfo = [];
-  }
+  // ngOnDestroy(){
+  //   this.tableSub.unsubscribe();
+  //   this.tableInfo = [];
+  //   this.tableInfo = null;
+  // }
 
 }
+  

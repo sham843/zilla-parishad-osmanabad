@@ -50,9 +50,6 @@ export class AddUpdateSchoolRegistrationComponent {
   ngOnInit() {
     this.formFeild();
     this.getDistrict();
-    // this.getSchoolType();
-    // this.getCategoryDes();
-    // this.getSchoolMngDesc();
     this.getLowestGroupClass();
 
     if (this.data) {
@@ -70,8 +67,8 @@ export class AddUpdateSchoolRegistrationComponent {
     this.schoolRegForm = this.fb.group({
       "id": this.data ? this.data.id : 0,
       "schoolCode": "string",
-      "schoolName": [this.data ? this.data.schoolName : '', [Validators.required, Validators.pattern('^[,() a-zA-Z0-9]+$')]],
-      "m_SchoolName": [this.data ? this.data.m_SchoolName : '', [Validators.required, Validators.pattern('^[,()\u0900-\u096F ]+$')]],
+      "schoolName": [this.data ? this.data.schoolName : '', [Validators.required, Validators.pattern('^[.,() a-zA-Z0-9]+$')]],
+      "m_SchoolName": [this.data ? this.data.m_SchoolName : '', [Validators.required, Validators.pattern('^[.,()\u0900-\u096F ]+$')]],
       "stateId": 0,
       "districtId": ['', Validators.required],
       "talukaId": ['', Validators.required],
@@ -227,7 +224,6 @@ export class AddUpdateSchoolRegistrationComponent {
   }
 
   multipleImgUpload(event: any) {
-    // this.img = true;
     this.fileUpload.uploadMultipleDocument(event, 'Upload', 'jpg, jpeg, png').subscribe((res: any) => {
       if (res.statusCode == 200) {
         this.uploadMultipleImg = res.responseData;
@@ -272,12 +268,7 @@ export class AddUpdateSchoolRegistrationComponent {
 
     formValue.uploadImage ? formValue.uploadImage = this.uploadImg : '';
     if (this.editFlag == true) {
-      // if (this.data.uploadImage) {
         this.img ? formValue.uploadImage = this.uploadImg : formValue.uploadImage = this.data.uploadImage
-      // }
-      // else {
-      //   formValue.uploadImage = this.schoolRegForm.value.uploadImage;
-      // }
     }
     else{
       formValue.uploadImage = this.uploadImg;
@@ -337,12 +328,10 @@ export class AddUpdateSchoolRegistrationComponent {
 
   //#region ------------------------------------------------- Clear Img field start here --------------------------------------------//
   clearImg() {
-    // if (this.uploadImg) {
       this.uploadImg = '';
       this.schoolRegForm.value.uploadImage = '';
       this.f['uploadImage'].setValue('');
       this.editObj.uploadImage = '';
-    // }
   }
 
   clearMultipleImg(index: any) {
@@ -356,7 +345,6 @@ export class AddUpdateSchoolRegistrationComponent {
     if (dropdown == 'Taluka') {
       this.f['centerId'].setValue('');
       this.f['villageId'].setValue('');
-      // this.villageArr = [];
     }
     else if (dropdown == 'LowestClass') {
       this.f['highestClass'].setValue('');

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
 import { NgxSpinnerService } from 'ngx-spinner';
@@ -13,7 +13,7 @@ import { WebStorageService } from 'src/app/core/services/web-storage.service';
   templateUrl: './dashboard-student-details.component.html',
   styleUrls: ['./dashboard-student-details.component.scss']
 })
-export class DashboardStudentDetailsComponent {
+export class DashboardStudentDetailsComponent implements OnInit {
   pageNumber: number = 1;
   tableDataArray = new Array();
   totalCount!: number;
