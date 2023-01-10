@@ -1,4 +1,4 @@
-import { OnInit, Component, Output, EventEmitter, ViewChild } from '@angular/core';
+import { OnInit, Component, Output, EventEmitter, ViewChild, OnDestroy } from '@angular/core';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { ApiService } from 'src/app/core/services/api.service';
@@ -15,6 +15,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import { TranslateModule } from '@ngx-translate/core';
 import { WebStorageService } from 'src/app/core/services/web-storage.service';
+import { Subscription } from 'rxjs';
 @Component({
   selector: 'app-table',
   templateUrl: './table.component.html',
@@ -37,7 +38,7 @@ import { WebStorageService } from 'src/app/core/services/web-storage.service';
     ],
 
 })
-export class TableComponent implements OnInit {
+export class TableComponent implements OnInit, OnDestroy {
   @Output() recObjToChild = new EventEmitter<any>();
   @ViewChild(MatPaginator) paginator: MatPaginator | any;
   @ViewChild(MatSort) sort!: MatSort;
@@ -50,13 +51,14 @@ export class TableComponent implements OnInit {
   tableInfo: any;
   tableHeaders = new Array();
   highlightedRow!: number;
+  tableSub!: Subscription;
   constructor(private apiService: ApiService,
               public webStorageService: WebStorageService) { }
 
 
   ngOnInit() {
     this.tableInfo = [];
-    this.apiService.tableData.subscribe((res: any) => {
+   this.tableSub =  this.apiService.tableData.subscribe((res: any) => {
       this.tableInfo = res;
       if (this.tableInfo) {
         this.highlightedRow = this.tableInfo.highlightedRow;
@@ -83,4 +85,10 @@ export class TableComponent implements OnInit {
     this.pageIndex = obj.pageNumber;
     this.recObjToChild.emit(obj);
   }
+
+  ngOnDestroy(){
+    this.tableSub.unsubscribe();
+    this.tableInfo = [];
+  }
+
 }
