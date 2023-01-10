@@ -38,12 +38,14 @@ export class LoginComponent {
     })
   }
 
+
+
   get fc() { return this.adminLoginForm.controls }
 
-  // checklogin(event: any,clear:any) {
-  //   this.loginUser = event.tab.textLabel;;
-  //   clear.resetForm();    
-  // }
+  clearSpace(){
+    let replaceName=this.adminLoginForm.value.userName.replace(/\s/g, "");
+    this.adminLoginForm.controls['userName'].setValue(replaceName);
+   }
 
 
 
