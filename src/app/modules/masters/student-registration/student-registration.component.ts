@@ -1,12 +1,13 @@
 import { DatePipe } from '@angular/common';
 import { Component } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ApiService } from 'src/app/core/services/api.service';
 import { CommonMethodsService } from 'src/app/core/services/common-methods.service';
 import { DownloadPdfExcelService } from 'src/app/core/services/download-pdf-excel.service';
 import { ErrorsService } from 'src/app/core/services/errors.service';
+import { MasterService } from 'src/app/core/services/master.service';
 import { ValidationService } from 'src/app/core/services/validation.service';
 import { WebStorageService } from 'src/app/core/services/web-storage.service';
 import { GlobalDetailComponent } from 'src/app/shared/components/global-detail/global-detail.component';
@@ -19,6 +20,7 @@ import { AddUpdateStudentRegistrationComponent } from './add-update-student-regi
   styleUrls: ['./student-registration.component.scss']
 })
 export class StudentRegistrationComponent {
+  filterForm!: FormGroup
   pageNumber: number = 1;
   searchContent = new FormControl('');
   tableDataArray = new Array();
@@ -28,6 +30,11 @@ export class StudentRegistrationComponent {
   studentData = new Array();
   languageFlag!: string;
   tableDatasize!: Number;
+  talukaArr: any = []
+  centerArr: any = []
+  schoolArr: any = []
+
+
   displayedColumns = ['docPath', 'srNo', 'fullName', 'standard', 'parentMobileNo', 'gender', 'action'];
   marathiDisplayedColumns = ['docPath', 'srNo', 'm_FullName', 'm_Standard', 'parentMobileNo', 'm_Gender', 'action'];
   displayedheaders = ['#', 'Sr. No.', ' Student Name', 'Standard', 'Parent Mobile No.', 'Gender', 'action'];
@@ -41,13 +48,27 @@ export class StudentRegistrationComponent {
     private downloadPdfservice: DownloadPdfExcelService,
     private ngxSpinner: NgxSpinnerService,
     public validators: ValidationService,
-    public datepipe : DatePipe
+    private masterService: MasterService,
+    public datepipe: DatePipe,
+    private fb: FormBuilder
   ) { }
 
   ngOnInit() {
     this.languageFlag = this.webService.languageFlag;
+    this.filterFormData();
+    this.getTaluka();
     this.languageChange();
     this.getTableData();
+    
+  }
+
+  filterFormData() {
+    this.filterForm = this.fb.group({
+      talukaId: [''],
+      centerId: [''],
+      schoolId: [''],
+      textSearch: ['']
+    })
   }
 
   //#region ----------------------------------------------------- Language Change Logic Start here -----------------------------------------------
@@ -72,21 +93,20 @@ export class StudentRegistrationComponent {
   //#region ----------------------------------------------------- Get Table Data Logic Start here -----------------------------------------------
 
   getTableData(flag?: string) {
-
     this.ngxSpinner.show();
-    this.pageNumber = flag == 'filter' ? 1 : this.pageNumber;    
+    this.pageNumber = flag == 'filter' ? 1 : this.pageNumber;
     let pageNo = this.pageNumber;
-    let str = `?pageno=${pageNo}&pagesize=10&textSearch=${this.searchContent.value || ''}&lan=${this.languageFlag || ''}`;
-    let reportStr = '?pageno=1&pagesize=' + (this.totalCount * 10) + '&textSearch=' + this.searchContent.value + '&lan=' + this.languageFlag;
+    let str = `?pageno=${pageNo}&pagesize=10&textSearch=${this.filterForm.value.textSearch || ''}&TalukaId=${this.filterForm.value.talukaId || 0}&CenterId=${this.filterForm.value.centerId || 0}&SchoolId=${this.filterForm.value.schoolId || 0}&lan=${this.languageFlag || ''}`;
+    let reportStr =   `?pageno=1&pagesize=${this.totalCount * 10}&textSearch=${this.filterForm.value.textSearch || ''}&TalukaId=${this.filterForm.value.talukaId || 0}&CenterId=${this.filterForm.value.centerId || 0}&SchoolId=${this.filterForm.value.schoolId || 0}&lan=${this.languageFlag || ''}`;
     this.apiService.setHttp('GET', 'zp-osmanabad/Student/GetAll' + (flag == 'reportFlag' ? reportStr : str), false, false, false, 'baseUrl');
     this.apiService.getHttp().subscribe({
       next: (res: any) => {
         if (res.statusCode == 200) {
           this.ngxSpinner.hide();
           flag != 'reportFlag' ? this.tableDataArray = res.responseData.responseData1 : this.tableDataArray = this.tableDataArray;
-          flag != 'reportFlag' ?  this.tableDatasize = res.responseData.responseData2.pageCount : this.tableDatasize = this.tableDatasize;
+          flag != 'reportFlag' ? this.tableDatasize = res.responseData.responseData2.pageCount : this.tableDatasize = this.tableDatasize;
           this.tableDataArray.map((res: any) => {
-          let  index = res.documentResponse.findIndex((ele:any)=> ele.documentId == 1);
+            let index = res.documentResponse.findIndex((ele: any) => ele.documentId == 1);
             res.docPath = res.documentResponse[index]?.docPath
           })
           this.totalCount = res.responseData.responseData2.pageCount;
@@ -116,15 +136,15 @@ export class StudentRegistrationComponent {
             console.log("ValueData", ValueData);
             let objData: any = {
               'topHedingName': 'Student Report',
-              'createdDate':'Created on:'+this.datepipe.transform(new Date(), 'yyyy-MM-dd, h:mm a')
+              'createdDate': 'Created on:' + this.datepipe.transform(new Date(), 'yyyy-MM-dd, h:mm a')
             }
             this.downloadPdfservice.downLoadPdf(keyPDFHeader, ValueData, objData);
           } else {
-            flag == 'reportFlag' ? this.commonMethods.showPopup("No Data Found", 1) :'';
+            flag == 'reportFlag' ? this.commonMethods.showPopup("No Data Found", 1) : '';
           }
-        } else {          
+        } else {
           this.ngxSpinner.hide();
-          flag == 'reportFlag' ? this.commonMethods.showPopup("No Data Found", 1) :'';
+          flag == 'reportFlag' ? this.commonMethods.showPopup("No Data Found", 1) : '';
           this.tableDataArray = [];
           this.tableDatasize = 0;
         }
@@ -156,7 +176,7 @@ export class StudentRegistrationComponent {
       case 'Delete':
         this.deteleDialogOpen(obj);
         break;
-        case 'View':
+      case 'View':
         this.openDetailsDialog(obj);
         break;
     }
@@ -170,7 +190,7 @@ export class StudentRegistrationComponent {
       autoFocus: false
     });
     dialogRef.afterClosed().subscribe((result: any) => {
-      obj = obj ?  JSON.parse(obj) :''
+      obj = obj ? JSON.parse(obj) : ''
       if (result == 'yes' && obj) {
         this.pageNumber = obj.pageNumber;
         this.getTableData();
@@ -195,7 +215,7 @@ export class StudentRegistrationComponent {
         break;
       case 'View':
         this.openDetailsDialog(obj);
-      break;
+        break;
     }
   }
 
@@ -216,33 +236,36 @@ export class StudentRegistrationComponent {
   }
 
   clearForm() {
-    this.searchContent.setValue('');
+    this.filterForm.reset();
+    this.centerArr=[];
+    this.schoolArr =[];
+    this.getTaluka();
     this.getTableData();
   }
 
-  openDetailsDialog(obj:any){
-      let  index = obj.documentResponse.findIndex((ele:any)=> ele.documentId == 1);
-      var data = {
-        headerImage: obj.documentResponse[index]?.docPath,
-        header: this.webService.languageFlag == 'EN' ? obj.fullName : obj.m_FullName,
-        subheader: this.webService.languageFlag == 'EN' ? obj.gender : obj.m_Gender,
-        labelHeader: this.webService.languageFlag == 'EN' ? ['Father Name', 'Mother Name', 'Parent Mobile No.','Aadhar No.','Standard','School Name'] : ['वडीलांचे नावं', 'आईचे नावं', 'पालक मोबाईल क्र.','आधार क्र.','इयत्ता','शाळेचे नाव'],
-        labelKey: this.webService.languageFlag == 'EN' ? ['fatherFullName', 'motherName', 'parentMobileNo', 'aadharNo','standard','schoolName'] : ['m_FatherFullName', 'm_MotherName', 'parentMobileNo','aadharNo','standard','m_SchoolName'],
-        Obj: obj,
-        chart: true
-      }
-      const viewDialogRef = this.dialog.open(GlobalDetailComponent, {
-        width: '900px',
-        data: data,
-        disableClose: true,
-        autoFocus: false
-      });
-      viewDialogRef.afterClosed().subscribe((result: any) => {
-       if (result == 'yes') {
+  openDetailsDialog(obj: any) {
+    let index = obj.documentResponse.findIndex((ele: any) => ele.documentId == 1);
+    var data = {
+      headerImage: obj.documentResponse[index]?.docPath,
+      header: this.webService.languageFlag == 'EN' ? obj.fullName : obj.m_FullName,
+      subheader: this.webService.languageFlag == 'EN' ? obj.gender : obj.m_Gender,
+      labelHeader: this.webService.languageFlag == 'EN' ? ['Father Name', 'Mother Name', 'Parent Mobile No.', 'Aadhar No.', 'Standard', 'School Name'] : ['वडीलांचे नावं', 'आईचे नावं', 'पालक मोबाईल क्र.', 'आधार क्र.', 'इयत्ता', 'शाळेचे नाव'],
+      labelKey: this.webService.languageFlag == 'EN' ? ['fatherFullName', 'motherName', 'parentMobileNo', 'aadharNo', 'standard', 'schoolName'] : ['m_FatherFullName', 'm_MotherName', 'parentMobileNo', 'aadharNo', 'standard', 'm_SchoolName'],
+      Obj: obj,
+      chart: true
+    }
+    const viewDialogRef = this.dialog.open(GlobalDetailComponent, {
+      width: '900px',
+      data: data,
+      disableClose: true,
+      autoFocus: false
+    });
+    viewDialogRef.afterClosed().subscribe((result: any) => {
+      if (result == 'yes') {
         this.getTableData();
-        }        
-      });
-  } 
+      }
+    });
+  }
   //#region -------------------------------------------------- Delete Logic Start Here ------------------------------------------------------
 
   deteleDialogOpen(obj: any) {
@@ -289,7 +312,75 @@ export class StudentRegistrationComponent {
   //#endregion -------------------------------------------------- Delete Logic End Here ------------------------------------------------------
 
   downloadPdf() {
-    this.getTableData('reportFlag');    
+    this.getTableData('reportFlag');
+  }
+
+  getTaluka() {
+    this.talukaArr = [];
+    this.masterService.getAllTaluka(this.languageFlag).subscribe({
+      next: (res: any) => {
+        if (res.statusCode == 200) {
+          this.talukaArr.push({ "id": 0, "taluka": "All", "m_Taluka": "सर्व" }, ...res.responseData);
+          this.filterForm.controls['talukaId'].setValue(0);         
+          // this.talukaArr = res.responseData;
+        } else {
+          this.commonMethods.checkEmptyData(res.statusMessage) == false ? this.errors.handelError(res.statusCode) : this.commonMethods.showPopup(res.statusMessage, 1);
+          this.talukaArr = [];
+        }
+      },
+      error: ((err: any) => { this.errors.handelError(err.statusCode) })
+    });
+  }
+
+  getAllCenter() {
+    this.centerArr = [];
+    let Tid = this.filterForm.value.talukaId;
+    if (Tid != 0) {
+      this.masterService.getAllCenter(this.languageFlag, Tid).subscribe({
+        next: (res: any) => {
+          if (res.statusCode == 200) {
+            this.centerArr.push({ "id": 0, "center": "All", "m_Center": "सर्व" }, ...res.responseData);
+            this.filterForm.controls['centerId'].setValue(0);           
+          } else {
+            this.commonMethods.checkEmptyData(res.statusMessage) == false ? this.errors.handelError(res.statusCode) : this.commonMethods.showPopup(res.statusMessage, 1);
+            this.centerArr = [];
+          }
+        },
+        error: ((err: any) => { this.errors.handelError(err.statusCode) })
+      });
+    }
+  }
+
+  getAllSchoolsByCenterId() {
+    this.schoolArr = [];
+    let Tid = this.filterForm.value.talukaId;
+    let Cid = this.filterForm.value.centerId;
+    console.log(this.filterForm.value.talukaId, this.filterForm.value.centerId);
+
+    if (Cid != 0) {
+      this.masterService.getAllSchoolByCriteria(this.languageFlag, Tid, 0, Cid).subscribe({
+        next: (res: any) => {
+          if (res.statusCode == 200) {
+            this.schoolArr.push({ "id": 0, "schoolName": "All", "m_SchoolName": "सर्व" }, ...res.responseData);
+            this.filterForm.controls['schoolId'].setValue(0);
+            
+          } else {
+            // this.commonMethods.checkEmptyData(res.statusMessage) == false ? this.errors.handelError(res.statusCode) : this.commonMethods.showPopup(res.statusMessage, 1);
+            this.schoolArr = [];
+          }
+        },
+        error: ((err: any) => { this.errors.handelError(err.statusCode) })
+      });
+    }
+  }
+
+  clearDropdown(name?: any) {
+    if (name == 'talukaId') {
+      this.filterForm.controls['centerId'].setValue('');
+      this.filterForm.controls['schoolId'].setValue('');
+    } else if (name == 'centerId') {
+      this.filterForm.controls['schoolId'].setValue('');
+    }
   }
 
 }
