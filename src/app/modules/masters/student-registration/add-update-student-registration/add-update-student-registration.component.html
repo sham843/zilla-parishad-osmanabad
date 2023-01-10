@@ -264,7 +264,7 @@
                 <div class="col-sm-4">
                     <mat-form-field appearance="outline" class="w-100">
                         <mat-label>{{'Labels.fatherName'| translate}}</mat-label>
-                        <input matInput formControlName="fatherFullName" maxlength="50" (keypress)="validators.noFirstSpaceAllow($event);validators.alphabetsWithSpaces($event)" maxlength="50">
+                        <input matInput formControlName="fatherFullName" maxlength="50" [class.disable]="readOnlyFlag" (keypress)="validators.noFirstSpaceAllow($event);validators.alphabetsWithSpaces($event)" maxlength="50">
                         <!-- <mat-error *ngIf="fc['fatherFullName'].hasError('required')">{{'Labels.enterFatherName'|
                             translate}}</mat-error> -->
                     </mat-form-field>
@@ -272,7 +272,7 @@
                 <div class="col-sm-4">
                     <mat-form-field appearance="outline" class="w-100">
                         <mat-label>{{'Labels.motherName'| translate}}</mat-label>
-                        <input matInput formControlName="motherName" maxlength="50" (keypress)="validators.noFirstSpaceAllow($event);validators.alphabetsWithSpaces($event)">
+                        <input matInput formControlName="motherName" maxlength="50" [class.disable]="readOnlyFlag" (keypress)="validators.noFirstSpaceAllow($event);validators.alphabetsWithSpaces($event)">
                         <!-- <mat-error *ngIf="fc['motherName'].hasError('required')">{{'Labels.enterMotherName'| translate}}
                         </mat-error> -->
                     </mat-form-field>

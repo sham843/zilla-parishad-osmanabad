@@ -40,6 +40,7 @@ export class AddUpdateStudentRegistrationComponent {
   maxDate = new Date();
   imgFlag: boolean = false;
   aadhaarFlag: boolean = false;
+  readOnlyFlag: boolean = false;
 
   @ViewChild('uploadImage') imageFile!: ElementRef;
   @ViewChild('uploadAadhar') aadharFile!: ElementRef;
@@ -66,6 +67,7 @@ export class AddUpdateStudentRegistrationComponent {
       this.apiService.getHttp().subscribe({
         next: (res: any) => {
           if (res.statusCode == 200) {
+            this.readOnlyFlag = true;
             if (this.languageFlag == 'EN') {
               this.fc['fatherFullName'].setValue(res.responseData?.fatherFullName);
               this.fc['motherName'].setValue(res.responseData?.motherName);
@@ -74,6 +76,7 @@ export class AddUpdateStudentRegistrationComponent {
               this.fc['motherName'].setValue(res.responseData?.m_MotherName)
             }
           } else {
+            this.readOnlyFlag = false;
             this.fc['fatherFullName'].setValue('');
             this.fc['motherName'].setValue('');
           }
@@ -192,7 +195,7 @@ export class AddUpdateStudentRegistrationComponent {
 
   getStandard() {
     this.standardArr = [];
-    this.masterService.getAllStandard(0,this.languageFlag).subscribe({
+    this.masterService.getAllStandard(0, this.languageFlag).subscribe({
       next: (res: any) => {
         if (res.statusCode == 200) {
           this.standardArr = res.responseData;
@@ -377,14 +380,14 @@ export class AddUpdateStudentRegistrationComponent {
     this.fileUpl.uploadDocuments(event, 'Upload', type).subscribe({
       next: (res: any) => {
         console.log(res);
-        
+
         if (res.statusCode == 200) {
-          if(this.imageFile.nativeElement.value == this.aadharFile.nativeElement.value){
-            let msg =  this.languageFlag == 'EN' ?  name == 'img' ? 'Upload different profile photo':'Upload different aadhar card' : name == 'img' ? 'भिन्न प्रोफाइल फोटो अपलोड करा':'वेगवेगळे आधार कार्ड अपलोड करा';          
+          if (this.imageFile.nativeElement.value == this.aadharFile.nativeElement.value) {
+            let msg = this.languageFlag == 'EN' ? name == 'img' ? 'Upload different profile photo' : 'Upload different aadhar card' : name == 'img' ? 'भिन्न प्रोफाइल फोटो अपलोड करा' : 'वेगवेगळे आधार कार्ड अपलोड करा';
             this.commonMethods.showPopup(msg, 1);
             return
           }
-          if (name == 'img') {   
+          if (name == 'img') {
             this.uploadImg = res.responseData;
           } else {
             this.uploadAadhaar = res.responseData;
@@ -397,11 +400,11 @@ export class AddUpdateStudentRegistrationComponent {
             "docPath": name == 'img' ? this.uploadImg : this.uploadAadhaar
           }
           this.imageArray.push(obj);
-        } else {         
+        } else {
           name == 'img' ? (this.uploadImg = '', this.imageFile.nativeElement.value = '') : (this.uploadAadhaar = '', this.aadharFile.nativeElement.value = '');
         }
       },
-      error: ((err: any) => {  err.statusCode ? this.errors.handelError(err.statusCode):this.commonMethods.showPopup(err, 1) })
+      error: ((err: any) => { err.statusCode ? this.errors.handelError(err.statusCode) : this.commonMethods.showPopup(err, 1) })
     });
   }
 
