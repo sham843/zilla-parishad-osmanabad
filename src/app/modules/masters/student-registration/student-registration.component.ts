@@ -375,6 +375,7 @@ export class StudentRegistrationComponent {
   }
 
   clearDropdown(name?: any) {
+    this.filterForm.controls['textSearch'].setValue('');
     if (name == 'talukaId') {
       this.filterForm.controls['centerId'].setValue('');
       this.filterForm.controls['schoolId'].setValue('');
