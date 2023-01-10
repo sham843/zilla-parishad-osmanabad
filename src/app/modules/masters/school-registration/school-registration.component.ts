@@ -138,7 +138,7 @@ export class SchoolRegistrationComponent {
     });
     // download pdf call
     if (this.resultDownloadArr.length > 0) {
-      let keyPDFHeader = ['SrNo', "Name", "District", "Taluka", "Village"];
+      let keyPDFHeader = ["Sr.No.", "School Name", "District", "Taluka", "Village"];
       let ValueData =
         this.resultDownloadArr.reduce(
           (acc: any, obj: any) => [...acc, Object.values(obj).map((value) => value)], []
@@ -152,7 +152,7 @@ export class SchoolRegistrationComponent {
    }
   //#endregion ---------------------------------------------- PDF Download end here ----------------------------------------// 
 
-
+ 
   //#region ---------------------------------------------- School Registration Dropdown start here ----------------------------------------// 
   getDistrict() {
     this.masterService.getAllDistrict(this.webStorageS.languageFlag).subscribe({
@@ -270,8 +270,6 @@ export class SchoolRegistrationComponent {
   }
 
   openDetailsDialog(obj:any){
-    console.log("details : ", obj);
-    
     var data = {
       headerImage: obj.uploadImage,
       header: this.webStorageS.languageFlag == 'EN' ? obj.schoolName : obj.m_SchoolName,
