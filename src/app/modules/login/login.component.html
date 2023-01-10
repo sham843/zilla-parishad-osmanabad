@@ -765,7 +765,8 @@
                                     <mat-form-field appearance="outline" class="w-100">
                                         <mat-label>User Name</mat-label>
                                         <input matInput formControlName="userName"
-                                            (keypress)="validators.noSpaceAllow($event)">
+                                            (keypress)="validators.noSpaceAllow($event)"
+                                            (blur)="clearSpace()">
                                         <mat-error *ngIf="fc['userName'].hasError('required')">User name is
                                             required</mat-error>
                                     </mat-form-field>
@@ -788,9 +789,9 @@
                                 </div>
                                 <div class="d-flex align-items-center justify-content-between">
                                     <button mat-flat-button class="btn-main" type="submit">Submit</button>
-                                   <ng-container *ngIf="adminLoginForm.value.userName">
-                                    <a routerLink="../forgot-password" class="text-main">Forgot Password?</a>
-                                   </ng-container>
+                                   
+                                    <a [class.disable]="!adminLoginForm.value.userName" routerLink="../forgot-password" class="text-main">Forgot Password?</a>
+                                  
                                 </div>
                             </div>
                         </div>
