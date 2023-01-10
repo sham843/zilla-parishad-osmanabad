@@ -226,6 +226,7 @@ export class DashboardStudentDetailsComponent {
         next: (res: any) => {
           if (res.statusCode == 200) {
            this.groupByClassArray = res.responseData.responseData2;
+           this.groupByClassArray.splice(0,1);
            this.dashboardObj ? (this.filterForm.controls['groupByClass'].setValue(this.dashboardObj?.groupId),this.getStandard(),this.getSubject()) : '';
           } else {
             this.groupByClassArray = [];
