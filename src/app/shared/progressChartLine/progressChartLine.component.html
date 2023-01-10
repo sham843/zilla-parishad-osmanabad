@@ -12,6 +12,12 @@
     </mat-card-header>
    
     <mat-card-content class="card-body pt-0">
+        <div class="row">
+            <mat-radio-group aria-label="Select an option" [formControl]="inspectionBy" (change)="getLineChartDetails()">
+                <mat-radio-button value="0">Teacher</mat-radio-button>
+                <mat-radio-button value="1">Officer</mat-radio-button>
+            </mat-radio-group> 
+        </div>
             <apx-chart
               [series]="lineChartOptions.series"
               [chart]="lineChartOptions.chart"

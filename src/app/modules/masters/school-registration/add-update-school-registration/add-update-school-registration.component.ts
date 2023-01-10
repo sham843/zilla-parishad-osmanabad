@@ -50,9 +50,6 @@ export class AddUpdateSchoolRegistrationComponent {
   ngOnInit() {
     this.formFeild();
     this.getDistrict();
-    // this.getSchoolType();
-    // this.getCategoryDes();
-    // this.getSchoolMngDesc();
     this.getLowestGroupClass();
 
     if (this.data) {
@@ -227,7 +224,6 @@ export class AddUpdateSchoolRegistrationComponent {
   }
 
   multipleImgUpload(event: any) {
-    // this.img = true;
     this.fileUpload.uploadMultipleDocument(event, 'Upload', 'jpg, jpeg, png').subscribe((res: any) => {
       if (res.statusCode == 200) {
         this.uploadMultipleImg = res.responseData;
@@ -272,12 +268,7 @@ export class AddUpdateSchoolRegistrationComponent {
 
     formValue.uploadImage ? formValue.uploadImage = this.uploadImg : '';
     if (this.editFlag == true) {
-      // if (this.data.uploadImage) {
         this.img ? formValue.uploadImage = this.uploadImg : formValue.uploadImage = this.data.uploadImage
-      // }
-      // else {
-      //   formValue.uploadImage = this.schoolRegForm.value.uploadImage;
-      // }
     }
     else{
       formValue.uploadImage = this.uploadImg;
@@ -337,12 +328,10 @@ export class AddUpdateSchoolRegistrationComponent {
 
   //#region ------------------------------------------------- Clear Img field start here --------------------------------------------//
   clearImg() {
-    // if (this.uploadImg) {
       this.uploadImg = '';
       this.schoolRegForm.value.uploadImage = '';
       this.f['uploadImage'].setValue('');
       this.editObj.uploadImage = '';
-    // }
   }
 
   clearMultipleImg(index: any) {
@@ -356,7 +345,6 @@ export class AddUpdateSchoolRegistrationComponent {
     if (dropdown == 'Taluka') {
       this.f['centerId'].setValue('');
       this.f['villageId'].setValue('');
-      // this.villageArr = [];
     }
     else if (dropdown == 'LowestClass') {
       this.f['highestClass'].setValue('');

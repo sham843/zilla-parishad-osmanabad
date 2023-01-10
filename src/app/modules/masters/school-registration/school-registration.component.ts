@@ -34,7 +34,6 @@ export class SchoolRegistrationComponent implements OnInit {
   cardViewFlag: boolean = false;
   imgPath: any;
   totalCount: number = 0;
-  // cardCurrentPage: number = 0;
   langTypeName: any;
   displayedColumns = new Array();
   tableDatasize!: Number;
@@ -193,7 +192,7 @@ export class SchoolRegistrationComponent implements OnInit {
         this.pageNumber = obj.pageNumber;
         this.getTableData();
         break;
-      case 'Edit' || 'Delete':
+      case 'Edit':
         this.addUpdateSchool(obj);
         break;
       case 'Delete':
@@ -211,7 +210,7 @@ export class SchoolRegistrationComponent implements OnInit {
         this.pageNumber = obj.pageNumber;
         this.getTableData();
         break;
-      case 'Edit' || 'Delete':
+      case 'Edit':
         this.addUpdateSchool(obj);
         break;
       case 'Delete':
