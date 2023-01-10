@@ -28,5 +28,25 @@
               [title]="lineChartOptions.title"
               [yaxis]="lineChartOptions.yaxis"
             ></apx-chart>
+            {{inspectionBy.value=='0'?'Teacher':'Officer'}}
+            <div class="table-responsive scrollbar">
+                <table class="table dashboard-table mt-3">
+                    <tbody>
+                        <tr *ngFor="let item of tableArray; let j=index">
+                            <td>{{j+1}}</td>
+                            <td>{{webStorage.languageFlag == 'EN' ? item['name'] :
+                                item['m_Name']}}
+                            </td>
+                            <td class="text-end">{{item['assessmentDate']}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div *ngIf="tableArray?.length ==0">
+                <div class="alert alert-danger text-center py-2 ">
+                    {{'Labels.dataNotFound' | translate}}
+                </div>
+            </div>
     </mat-card-content>
 </mat-card>

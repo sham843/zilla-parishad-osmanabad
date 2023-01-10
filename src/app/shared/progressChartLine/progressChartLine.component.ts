@@ -10,6 +10,7 @@ import { WebStorageService } from 'src/app/core/services/web-storage.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ErrorsService } from 'src/app/core/services/errors.service';
 import {MatRadioModule} from '@angular/material/radio';
+import { TranslateModule} from '@ngx-translate/core';
 @Component({
   selector: 'progressChartLine',
   templateUrl: './progressChartLine.component.html',
@@ -22,7 +23,8 @@ import {MatRadioModule} from '@angular/material/radio';
     MatCardModule,
     ReactiveFormsModule,
     FormsModule,
-    MatRadioModule
+    MatRadioModule,
+    TranslateModule,
     ],
 
 })
@@ -36,7 +38,8 @@ export class progressChartLineComponent implements OnInit {
   selectedStudentObj:any;
   languageFlag!:string;
   groupId!:number;
-  constructor(private apiService:ApiService, private webStorage:WebStorageService,
+  tableArray=new Array();
+  constructor(private apiService:ApiService, public webStorage:WebStorageService,
     private ngxSpinner:NgxSpinnerService, private errors:ErrorsService) { }
 
   ngOnInit() {
@@ -60,18 +63,18 @@ export class progressChartLineComponent implements OnInit {
    
   }
   getLineChartDetails(){
-    console.log(this.inspectionBy.value);
     let str=  this.groupId==1? 'GetDataFor1st2ndStdStudentChart':'GetDataFor3rdAboveStdStudentChart';
     this.apiService.setHttp('GET', 'zp-osmanabad/Dashboard/' + str+ '?GroupId='+ this.groupId+'&StudentId='+this.selectedStudentObj?.objData?.studentId+'&IsInspection='+(Number(this.inspectionBy.value)||0), false, false, false, 'baseUrl');
     this.apiService.getHttp().subscribe({
       next: (res: any) => {
         if (res.statusCode == 200 && res.responseData.responseData1.length) {
          this.grapbhDetailsArray=res.responseData.responseData1 ;
-         console.log(this.grapbhDetailsArray)
+          this.tableArray=res.responseData.responseData2 ;
          this.getSubjectData();
         } else {
           this.grapbhDetailsArray=[];
           this.subjectArray=[];
+          this.tableArray=[];
         }
       },
       error: ((err: any) => { this.ngxSpinner.hide(); this.errors.handelError(err.statusCode) })
@@ -127,7 +130,6 @@ export class progressChartLineComponent implements OnInit {
       }
     }
   };
-  console.log(this.lineChartOptions)
   }
 
 }
