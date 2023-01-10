@@ -477,8 +477,6 @@ body {
   }
 }
 
-
-
 .table-cell{
   color: #fff !important;
   text-align: center;
@@ -497,4 +495,19 @@ body {
 }
 .table-cell.bg-red{
   background: #CB4B4B;
+}
+
+/*-------------Media-Query----------------*/
+
+@media only screen and (max-width: 478px){
+  .plain-card .card-body {
+    text-align: -webkit-center;
+}
+.mapsvg svg {
+  width: 409px !important;
+  height: 276px !important;
+  transform: rotate(35deg) !important;
+  top: -38px;
+  left: 63px;
+}
 }
