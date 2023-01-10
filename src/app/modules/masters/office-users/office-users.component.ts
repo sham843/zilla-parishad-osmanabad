@@ -107,8 +107,6 @@ export class OfficeUsersComponent implements OnInit {
   }
 
   languageChange() {
-    this.webStorageService.langNameOnChange.subscribe(lang => {
-      this.langTypeName = lang;
       this.displayedColumns = ['srNo', this.langTypeName == 'English' ? 'officeName' : 'm_OfficeName', this.langTypeName == 'English' ? 'designation' : 'm_Designation', 'mobileNo', 'emailId', 'action'];
       this.tableData = {
         pageNumber: this.pageNumber,
@@ -118,7 +116,6 @@ export class OfficeUsersComponent implements OnInit {
         tableHeaders: this.langTypeName == 'English' ? this.displayedheadersEnglish : this.displayedheadersMarathi
       };
       this.apiService.tableData.next(this.tableData);
-    })
   }
 
   addUpdateOffice(obj?: any) {

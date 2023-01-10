@@ -71,9 +71,6 @@ export class SchoolRegistrationComponent implements OnInit {
   //#region ------------------------------------------- School Registration Table Data start here ----------------------------------------// 
 
   languageChange() {
-    this.webStorageS.langNameOnChange.subscribe(lang => {
-      // this.getDistrict();
-      this.langTypeName = lang;
       this.displayedColumns = ['uploadImage', 'srNo', this.langTypeName == 'English' ? 'schoolName' : 'm_SchoolName', this.langTypeName == 'English' ? 'district' : 'm_District', this.langTypeName == 'English' ? 'taluka' : 'm_Taluka', this.langTypeName == 'English' ? 'village' : 'm_Village', 'action'];
       this.tableData = {
         pageNumber: this.pageNumber,
@@ -83,7 +80,6 @@ export class SchoolRegistrationComponent implements OnInit {
         tableHeaders: this.langTypeName == 'English' ? this.displayedheadersEnglish : this.displayedheadersMarathi
       };
       this.apiService.tableData.next(this.tableData);
-    });
   }
 
   getTableData(flag?: string) {

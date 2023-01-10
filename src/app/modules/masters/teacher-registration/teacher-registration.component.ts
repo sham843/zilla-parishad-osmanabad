@@ -1,5 +1,5 @@
 import { OverlayContainer } from '@angular/cdk/overlay';
-import { Component, HostBinding, OnDestroy, OnInit } from '@angular/core';
+import { Component, HostBinding, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { ApiService } from 'src/app/core/services/api.service';
@@ -20,7 +20,7 @@ import { Subscription } from 'rxjs';
   templateUrl: './teacher-registration.component.html',
   styleUrls: ['./teacher-registration.component.scss']
 })
-export class TeacherRegistrationComponent implements OnInit, OnDestroy {
+export class TeacherRegistrationComponent implements OnInit {
   pageNumber: number = 1;
   searchContent = new FormControl('');
   tableDataArray = new Array();
@@ -325,11 +325,5 @@ export class TeacherRegistrationComponent implements OnInit, OnDestroy {
 
     });
 
-  }
-
-  ngOnDestroy(){
-    // this.langChnge.unsubscribe();
-    // this.tableData = [];
-    // this.tableData = null;
   }
 }

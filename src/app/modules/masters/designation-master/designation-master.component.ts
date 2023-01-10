@@ -1,5 +1,5 @@
 import { DatePipe } from '@angular/common';
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { Subscription } from 'rxjs';
@@ -16,7 +16,7 @@ import { AddUpdateDesignationMasterComponent } from './add-update-designation-ma
   templateUrl: './designation-master.component.html',
   styleUrls: ['./designation-master.component.scss']
 })
-export class DesignationMasterComponent implements OnInit, OnDestroy {
+export class DesignationMasterComponent implements OnInit {
   pageNumber: number = 1;
   searchContent = new FormControl('');  
   DesiganationTypeArray:any;
@@ -239,9 +239,4 @@ getTableTranslatedData(){
     }
   }
 
-  ngOnDestroy(){
-    // this.langChnge.unsubscribe();
-    // this.tableData = [];
-    // this.tableData = null;
-  }
 }
