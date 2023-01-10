@@ -162,7 +162,7 @@
         "searchByNameContactNo" : "Student Name/Parent Mobile No.",
         "nameIsRequired" : "Name is required",
         "mobileIsRequired" : "Mobile number is required",
-        "nameMarathi" : "Name In (Marathi)",
+        "nameMarathi" : "Name(Marathi)",
         "studentReg" : "Student Registraion",
         "studentUpdate": "Update Student Details",
         "levelRequired" : "Level is required",

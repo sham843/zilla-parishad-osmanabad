@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { Subscription } from 'rxjs';
 import { ApiService } from 'src/app/core/services/api.service';
 import { CommonMethodsService } from 'src/app/core/services/common-methods.service';
 import { ErrorsService } from 'src/app/core/services/errors.service';
@@ -13,7 +14,7 @@ import { WebStorageService } from 'src/app/core/services/web-storage.service';
   templateUrl: './dashboard-student-details.component.html',
   styleUrls: ['./dashboard-student-details.component.scss']
 })
-export class DashboardStudentDetailsComponent implements OnInit {
+export class DashboardStudentDetailsComponent implements OnInit, OnDestroy {
   pageNumber: number = 1;
   tableDataArray = new Array();
   totalCount!: number;
@@ -40,6 +41,7 @@ export class DashboardStudentDetailsComponent implements OnInit {
   showLineChart: boolean = false;
   groupID: any;
   objData:any
+  langChangeSub! : Subscription;
   constructor(
     private fb: FormBuilder,
     private ngxSpinner: NgxSpinnerService,
@@ -58,7 +60,10 @@ export class DashboardStudentDetailsComponent implements OnInit {
     this.formData();
     this.getTaluka();
     this.getGroupIdByTalukaCenterSchool();
+    this.langChangeSub = this.webService.langNameOnChange.subscribe(lang => {
+      this.languageFlag = lang;
     this.languageChange();
+    });
   }
 
   formData() {
@@ -72,19 +77,17 @@ export class DashboardStudentDetailsComponent implements OnInit {
     })
 
   }
+
   languageChange() {
-    this.webService.langNameOnChange.subscribe(lang => {
-      this.languageFlag = lang;
       setTimeout(()=>{
         this.getTableData();
       },100)
-     
       //this.getSubjectData();
-    });
-
   }
 
   setTableData() {
+    console.log("set table data ");
+    
     let tableData = {
       pageNumber: this.pageNumber,
       img: 'docPath', blink: true, badge: '', isBlock: '', pagintion: false, status: 'actualGrade',
@@ -138,7 +141,6 @@ export class DashboardStudentDetailsComponent implements OnInit {
           this.data = ''
         }
         this.setTableData();
-
       },
       error: ((err: any) => { this.ngxSpinner.hide(); this.errors.handelError(err.statusCode) })
     });
@@ -380,4 +382,8 @@ export class DashboardStudentDetailsComponent implements OnInit {
   // };
 
   // }
+
+  ngOnDestroy(){
+    this.langChangeSub.unsubscribe();
+  }
 }
