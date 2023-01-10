@@ -150,7 +150,7 @@
                     <div class="col-sm-6">
                         <mat-form-field appearance="outline" class="w-100">
                             <mat-label>{{'Labels.address' | translate}}</mat-label>
-                            <input matInput formControlName="address" (keypress)="validation.noFirstSpaceAllow($event)">
+                            <input matInput formControlName="address" (keypress)="validation.noFirstSpaceAllow($event)" maxlength="100">
                           <!-- <mat-error *ngIf="fc['address'].hasError('required')">{{'Labels.addressIsRequired' | translate}}</mat-error> -->
 
                         </mat-form-field>
