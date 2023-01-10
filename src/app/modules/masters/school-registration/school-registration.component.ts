@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { ApiService } from 'src/app/core/services/api.service';
@@ -18,7 +18,7 @@ import { DatePipe } from '@angular/common';
   templateUrl: './school-registration.component.html',
   styleUrls: ['./school-registration.component.scss']
 })
-export class SchoolRegistrationComponent {
+export class SchoolRegistrationComponent implements OnInit {
   pageNumber: number = 1;
   tableDataArray = new Array();
   // searchContent = new FormControl('');
@@ -70,9 +70,6 @@ export class SchoolRegistrationComponent {
   //#region ------------------------------------------- School Registration Table Data start here ----------------------------------------// 
 
   languageChange() {
-    this.webStorageS.langNameOnChange.subscribe(lang => {
-      // this.getDistrict();
-      this.langTypeName = lang;
       this.displayedColumns = ['uploadImage', 'srNo', this.langTypeName == 'English' ? 'schoolName' : 'm_SchoolName', this.langTypeName == 'English' ? 'district' : 'm_District', this.langTypeName == 'English' ? 'taluka' : 'm_Taluka', this.langTypeName == 'English' ? 'village' : 'm_Village', 'action'];
       this.tableData = {
         pageNumber: this.pageNumber,
@@ -82,7 +79,6 @@ export class SchoolRegistrationComponent {
         tableHeaders: this.langTypeName == 'English' ? this.displayedheadersEnglish : this.displayedheadersMarathi
       };
       this.apiService.tableData.next(this.tableData);
-    });
   }
 
   getTableData(flag?: string) {

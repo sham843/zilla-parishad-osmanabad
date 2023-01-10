@@ -1,5 +1,5 @@
 import { DatePipe } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { NgxSpinnerService } from 'ngx-spinner';
@@ -18,7 +18,7 @@ import { AddUpdateOfficeUsersComponent } from './add-update-office-users/add-upd
   templateUrl: './office-users.component.html',
   styleUrls: ['./office-users.component.scss']
 })
-export class OfficeUsersComponent {
+export class OfficeUsersComponent implements OnInit {
   cardViewFlag: boolean = false;
   pageNumber: number = 1;
   resultDownloadArr = new Array();
@@ -107,8 +107,6 @@ export class OfficeUsersComponent {
   }
 
   languageChange() {
-    this.webStorageService.langNameOnChange.subscribe(lang => {
-      this.langTypeName = lang;
       this.displayedColumns = ['srNo', this.langTypeName == 'English' ? 'officeName' : 'm_OfficeName', this.langTypeName == 'English' ? 'designation' : 'm_Designation', 'mobileNo', 'emailId', 'action'];
       this.tableData = {
         pageNumber: this.pageNumber,
@@ -118,7 +116,6 @@ export class OfficeUsersComponent {
         tableHeaders: this.langTypeName == 'English' ? this.displayedheadersEnglish : this.displayedheadersMarathi
       };
       this.apiService.tableData.next(this.tableData);
-    })
   }
 
   addUpdateOffice(obj?: any) {

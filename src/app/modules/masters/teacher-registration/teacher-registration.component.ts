@@ -1,5 +1,5 @@
 import { OverlayContainer } from '@angular/cdk/overlay';
-import { Component, HostBinding } from '@angular/core';
+import { Component, HostBinding, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { ApiService } from 'src/app/core/services/api.service';
@@ -13,13 +13,14 @@ import { AddUpdateTeacherRegistrationComponent } from './add-update-teacher-regi
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ValidationService } from 'src/app/core/services/validation.service';
 import { DatePipe } from '@angular/common';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-teacher-registration',
   templateUrl: './teacher-registration.component.html',
   styleUrls: ['./teacher-registration.component.scss']
 })
-export class TeacherRegistrationComponent {
+export class TeacherRegistrationComponent implements OnInit {
   pageNumber: number = 1;
   searchContent = new FormControl('');
   tableDataArray = new Array();
@@ -33,7 +34,7 @@ export class TeacherRegistrationComponent {
   displayedColumns = new Array();
   toggleControl = new FormControl(false);
   cardViewFlag: boolean = false;
-
+  langChnge!: Subscription;
   displayedheadersEnglish = ['#', 'Sr. No.', 'Teacher Name', 'Mobile No.', 'Email ID', 'Village', 'Taluka', 'action'];
   displayedheadersMarathi = ['#', 'अनुक्रमांक', 'शिक्षकाचे नाव', 'मोबाईल क्र.', 'ई-मेल आयडी ', 'गाव', 'तालुका', 'कृती'];
 
@@ -45,7 +46,7 @@ export class TeacherRegistrationComponent {
 
   ngOnInit(): void {
     this.getTableData();
-    this.webStorageS.langNameOnChange.subscribe(lang => {
+    this.langChnge = this.webStorageS.langNameOnChange.subscribe(lang => {
       this.langTypeName = lang;
       this.languageChange();
     });
@@ -62,8 +63,8 @@ export class TeacherRegistrationComponent {
   }
 
   languageChange() {
-    this.webStorageS.langNameOnChange.subscribe(lang => {
-      this.langTypeName = lang;
+    // this.webStorageS.langNameOnChange.subscribe(lang => {
+    //   this.langTypeName = lang;
       this.displayedColumns = ['uploadImage', 'srNo', this.langTypeName == 'English' ? 'name' : 'm_Name', 'mobileNo', 'emailId', this.langTypeName == 'English' ? 'village' : 'm_Village', this.langTypeName == 'English' ? 'taluka' : 'm_Taluka', 'action'];
       this.tableData = {
         pageNumber: this.pageNumber,
@@ -73,7 +74,7 @@ export class TeacherRegistrationComponent {
         tableHeaders: this.langTypeName == 'English' ? this.displayedheadersEnglish : this.displayedheadersMarathi
       };
       this.apiService.tableData.next(this.tableData);
-    });
+    // });
   }
 
   onPagintion(pageNo: number) {

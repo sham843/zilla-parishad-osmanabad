@@ -21,6 +21,7 @@ export class AddUpdateDesignationMasterComponent {
   desiganationTypeData = new Array();
   editFlag: boolean = false;
   editData: any;
+  formDisabled:boolean=true;
   obj = { id: 0, designationType: 'Other' ,m_DesignationType :'इतर'};
    
   constructor(private masterService: MasterService, private fb: FormBuilder, private service: ApiService,
@@ -42,7 +43,7 @@ export class AddUpdateDesignationMasterComponent {
       "id": [0],
       "designationType": ['',[Validators.required, Validators.pattern(this.validation.alphaNumericOnly)]],
       "m_DesignationType": ['',[Validators.required, Validators.pattern('^[-\u0900-\u096F ]+$')]],
-      "designationLevelId": [data ? { value: data.designationLevelId, disabled: true } :'', Validators.required]
+      "designationLevelId": [data ? { value: data.designationLevelId, disabled: this.formDisabled } :'', Validators.required]
     }) 
   }
   //#endregion  ---------------------------- End Desiganation-Master Formdata ------------------------------- //
@@ -100,12 +101,21 @@ export class AddUpdateDesignationMasterComponent {
   //#region ------------------------------------- Desiganation-Master Submit ---------------------------------// 
   OnSubmit() {
     if(this.designationForm.valid){
+      this.formDisabled = !this.formDisabled;
+      this.formDisabled ? 'disable' : 'enable';
+    if(this.editFlag) {
+        const disableValue = this.formDisabled ? 'disable' : 'enable';
+        Object.keys(this.designationForm.controls).forEach((designationLevelId) => {         
+            this.designationForm.controls[designationLevelId][disableValue]();
+        });
+      }
       let getFormVal = this.designationForm.value;
       let getDesignationLevelId: any = this.commonMethod.getkeyValueByArrayOfObj(this.DesiganationLevelData, 'designationLevel', getFormVal?.designationLevelId);
       this.designationForm.value.designationLevelId = getDesignationLevelId?.id;
-      let formValue = this.designationForm.value;
-      let  data = this.webStorage.createdByProps();
-   
+     
+      let formValue = this.designationForm.value;    
+      let  data = this.webStorage.createdByProps();    
+      
       let postObj = {
         "createdBy":  data.createdBy ,
         "modifiedBy": data.modifiedBy,
@@ -148,7 +158,9 @@ export class AddUpdateDesignationMasterComponent {
   //#region  ------------------------------------- Desiganation-Master Edit ---------------------------------//
   onClickEdit(obj: any) {
     this.editFlag = true;
-    this.editData = obj;    
+    this.editData = obj; 
+    console.log("editdata",obj);
+       
     this.designationForm.patchValue({
       id: obj.id,
       designationType:obj.designationName,

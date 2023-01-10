@@ -1,5 +1,5 @@
 import { DatePipe } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { NgxSpinnerService } from 'ngx-spinner';
@@ -18,7 +18,7 @@ import { AddUpdateAgencyRegistrationComponent } from './add-update-agency-regist
   templateUrl: './agency-registration.component.html',
   styleUrls: ['./agency-registration.component.scss']
 })
-export class AgencyRegistrationComponent {
+export class AgencyRegistrationComponent implements OnInit {
   pageNumber: number = 1;
   agencyReport = new Array();
   displayedColumns = new Array();
@@ -40,12 +40,13 @@ export class AgencyRegistrationComponent {
 
   ngOnInit() {
     this.getTableData();
-    this.getTableDataMarathi();
+    this.webStroageService.langNameOnChange.subscribe(lang => {
+      this.langTypeName = lang;
+      this.getTableDataMarathi();
+    })
   }
 
   getTableDataMarathi() {
-    this.webStroageService.langNameOnChange.subscribe(lang => {
-      this.langTypeName = lang;
       this.displayedColumns = ['srNo', this.langTypeName == 'English' ? 'agency_Name' : 'm_Agency_Name', 'agency_MobileNo', 'agency_EmailId', 'action'];
       this.tableData = {
         pageNumber: this.pageNumber,
@@ -55,7 +56,6 @@ export class AgencyRegistrationComponent {
         tableHeaders: this.langTypeName == 'English' ? this.displayedheadersEnglish : this.displayedheadersMarathi,
       };
       this.apiService.tableData.next(this.tableData);
-    });
   }
 
   getTableData(flag?: string) {

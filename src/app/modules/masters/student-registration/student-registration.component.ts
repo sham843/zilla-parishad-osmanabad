@@ -57,7 +57,10 @@ export class StudentRegistrationComponent {
     this.languageFlag = this.webService.languageFlag;
     this.filterFormData();
     this.getTaluka();
-    this.languageChange();
+    this.webService.langNameOnChange.subscribe(lang => {
+      this.languageFlag = lang;
+      this.languageChange();
+    });
     this.getTableData();
     
   }
@@ -74,8 +77,6 @@ export class StudentRegistrationComponent {
   //#region ----------------------------------------------------- Language Change Logic Start here -----------------------------------------------
 
   languageChange() {
-    this.webService.langNameOnChange.subscribe(lang => {
-      this.languageFlag = lang;
       let tableData = {
         pageNumber: this.pageNumber,
         img: 'docPath', blink: '', badge: '', isBlock: '', pagintion: true,
@@ -85,7 +86,6 @@ export class StudentRegistrationComponent {
         tableHeaders: this.languageFlag == 'English' ? this.displayedheaders : this.marathiDisplayedheaders
       };
       this.apiService.tableData.next(tableData);
-    });
   }
 
   //#endregion ----------------------------------------------------- Language Change Logic End here -----------------------------------------------

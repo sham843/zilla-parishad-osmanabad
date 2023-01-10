@@ -1,7 +1,8 @@
 import { DatePipe } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
+import { Subscription } from 'rxjs';
 import { ApiService } from 'src/app/core/services/api.service';
 import { CommonMethodsService } from 'src/app/core/services/common-methods.service';
 import { DownloadPdfExcelService } from 'src/app/core/services/download-pdf-excel.service';
@@ -15,7 +16,7 @@ import { AddUpdateDesignationMasterComponent } from './add-update-designation-ma
   templateUrl: './designation-master.component.html',
   styleUrls: ['./designation-master.component.scss']
 })
-export class DesignationMasterComponent {
+export class DesignationMasterComponent implements OnInit {
   pageNumber: number = 1;
   searchContent = new FormControl('');  
   DesiganationTypeArray:any;
@@ -27,6 +28,7 @@ export class DesignationMasterComponent {
   displayedheadersMarathi = ['अनुक्रमांक', 'पदनाम', 'पदनाम स्तर','कृती',];
   langTypeName: any;
   totalCount: number = 0;
+  langChnge!: Subscription;
 
   constructor(private dialog: MatDialog, private apiService: ApiService, private errors: ErrorsService,
     private commonMethod: CommonMethodsService, public webStorage : WebStorageService,
@@ -34,8 +36,7 @@ export class DesignationMasterComponent {
 
   ngOnInit() {
     this.getTableData(); 
-        
-    this.webStorage.langNameOnChange.subscribe(lang => {
+    this.langChnge = this.webStorage.langNameOnChange.subscribe(lang => {
       this.langTypeName = lang;
       this.getTableTranslatedData();
     });
@@ -236,7 +237,6 @@ getTableTranslatedData(){
       this.searchContent.reset();
       this.getTableData();
     }
-
-   
   }
+
 }
