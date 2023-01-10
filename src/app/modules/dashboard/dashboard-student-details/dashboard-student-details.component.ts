@@ -39,6 +39,7 @@ export class DashboardStudentDetailsComponent {
   lang!: string;
   showLineChart: boolean = false;
   groupID: any;
+  objData:any
   constructor(
     private fb: FormBuilder,
     private ngxSpinner: NgxSpinnerService,
@@ -55,9 +56,9 @@ export class DashboardStudentDetailsComponent {
   ngOnInit() {
     this.dashboardObj = JSON.parse(localStorage.getItem('selectedBarchartObjData') || '');
     this.formData();
-    this.languageChange();
     this.getTaluka();
-    this. getGroupIdByTalukaCenterSchool();
+    this.getGroupIdByTalukaCenterSchool();
+    this.languageChange();
   }
 
   formData() {
@@ -74,7 +75,10 @@ export class DashboardStudentDetailsComponent {
   languageChange() {
     this.webService.langNameOnChange.subscribe(lang => {
       this.languageFlag = lang;
-      this.getTableData();
+      setTimeout(()=>{
+        this.getTableData();
+      },100)
+     
       //this.getSubjectData();
     });
 
@@ -115,8 +119,9 @@ export class DashboardStudentDetailsComponent {
           this.tableDataArray = res.responseData.responseData1;
           this.totalCount = res.responseData?.responseData2?.pageCount || 0;
           let obj = this.tableDataArray[0];
-          obj.subjectId = flag == 'filter' ? this.filterForm.value.subjectId : this.dashboardObj?.SubjectId
+          obj.subjectId = flag == 'filter' ? this.filterForm.value.subjectId : this.dashboardObj?.SubjectId;
           this.getLineChartDetails(obj);
+         
           this.data = {
             headerImage: obj.profilePhoto,
             header: this.webService.languageFlag == 'mr-IN' ? obj.m_FullName : obj.fullName,
@@ -300,23 +305,13 @@ export class DashboardStudentDetailsComponent {
   }
 
   getLineChartDetails(obj: any) {
-  console.log( this.subjectArr);
-  
-    let subject = this.subjectArr.filter((res:any) => {
-      console.log(res);
-      
-      if(res.id == obj.subjectId){
-        return res
-      }
-    });
-    console.log(subject,obj);
-    
-    const objData = {
+    let subject = this.subjectArr.find((res:any) => res.id == obj.subjectId);
+    this.objData = {
       objData: obj,
       groupId: this.groupID | 0 ,
-      //  subject : subject.subjectName 
+      selectedSubject : this.languageFlag=='English'?subject?.subjectName :subject?.m_SubjectName
     }
-    this.webService.selectedLineChartObj.next(JSON.stringify(objData));
+    this.webService.selectedLineChartObj.next(this.objData);
 
 
     //   let str= this.dashboardObj?.groupId==1? 'GetDataFor1st2ndStdStudentChart':'GetDataFor3rdAboveStdStudentChart';

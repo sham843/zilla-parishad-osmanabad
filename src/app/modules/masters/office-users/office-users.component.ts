@@ -71,7 +71,7 @@ export class OfficeUsersComponent {
           this.tableDatasize = res.responseData.responseData2.pageCount;
           this.totalCount = res.responseData.responseData2.pageCount;
           this.resultDownloadArr = [];
-          let data: [] = flag == 'reportFlag' ? res.responseData.responseData1 : [];
+          let data: [] = (flag == 'reportFlag') ? res.responseData.responseData1 : [];
           data.find((ele: any, i: any) => {
             let obj = {
               "Sr.No": i+1,
