@@ -354,8 +354,8 @@ export class AddUpdateSchoolRegistrationComponent {
   clearDropdown(dropdown: string) {
     this.editFlag = false;
     if (dropdown == 'Taluka') {
-      this.f['centerId'].setValue(0);
-      this.f['villageId'].setValue(0);
+      this.f['centerId'].setValue('');
+      this.f['villageId'].setValue('');
       // this.villageArr = [];
     }
     else if (dropdown == 'LowestClass') {
