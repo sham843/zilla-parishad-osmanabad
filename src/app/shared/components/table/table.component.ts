@@ -89,6 +89,8 @@ export class TableComponent implements OnInit, OnDestroy {
   ngOnDestroy(){
     this.tableSub.unsubscribe();
     this.tableInfo = [];
+    this.tableInfo = null;
   }
 
 }
+  

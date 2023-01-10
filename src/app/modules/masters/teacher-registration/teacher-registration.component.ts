@@ -1,5 +1,5 @@
 import { OverlayContainer } from '@angular/cdk/overlay';
-import { Component, HostBinding } from '@angular/core';
+import { Component, HostBinding, OnDestroy, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { ApiService } from 'src/app/core/services/api.service';
@@ -19,7 +19,7 @@ import { DatePipe } from '@angular/common';
   templateUrl: './teacher-registration.component.html',
   styleUrls: ['./teacher-registration.component.scss']
 })
-export class TeacherRegistrationComponent {
+export class TeacherRegistrationComponent implements OnInit, OnDestroy {
   pageNumber: number = 1;
   searchContent = new FormControl('');
   tableDataArray = new Array();
@@ -324,5 +324,10 @@ export class TeacherRegistrationComponent {
 
     });
 
+  }
+
+  ngOnDestroy(){
+    this.tableData = [];
+    this.tableData = null;
   }
 }

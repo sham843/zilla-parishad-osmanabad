@@ -1,5 +1,5 @@
 import { DatePipe } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { NgxSpinnerService } from 'ngx-spinner';
@@ -18,7 +18,7 @@ import { AddUpdateAgencyRegistrationComponent } from './add-update-agency-regist
   templateUrl: './agency-registration.component.html',
   styleUrls: ['./agency-registration.component.scss']
 })
-export class AgencyRegistrationComponent {
+export class AgencyRegistrationComponent implements OnInit {
   pageNumber: number = 1;
   agencyReport = new Array();
   displayedColumns = new Array();

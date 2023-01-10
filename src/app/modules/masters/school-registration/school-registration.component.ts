@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { ApiService } from 'src/app/core/services/api.service';
@@ -18,7 +18,7 @@ import { DatePipe } from '@angular/common';
   templateUrl: './school-registration.component.html',
   styleUrls: ['./school-registration.component.scss']
 })
-export class SchoolRegistrationComponent {
+export class SchoolRegistrationComponent implements OnInit {
   pageNumber: number = 1;
   tableDataArray = new Array();
   // searchContent = new FormControl('');

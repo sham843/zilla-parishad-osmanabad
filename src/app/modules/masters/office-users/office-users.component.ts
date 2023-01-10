@@ -1,5 +1,5 @@
 import { DatePipe } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { NgxSpinnerService } from 'ngx-spinner';
@@ -18,7 +18,7 @@ import { AddUpdateOfficeUsersComponent } from './add-update-office-users/add-upd
   templateUrl: './office-users.component.html',
   styleUrls: ['./office-users.component.scss']
 })
-export class OfficeUsersComponent {
+export class OfficeUsersComponent implements OnInit {
   cardViewFlag: boolean = false;
   pageNumber: number = 1;
   resultDownloadArr = new Array();

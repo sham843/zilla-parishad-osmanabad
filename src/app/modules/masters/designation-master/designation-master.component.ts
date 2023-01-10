@@ -1,5 +1,5 @@
 import { DatePipe } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { ApiService } from 'src/app/core/services/api.service';
@@ -15,7 +15,7 @@ import { AddUpdateDesignationMasterComponent } from './add-update-designation-ma
   templateUrl: './designation-master.component.html',
   styleUrls: ['./designation-master.component.scss']
 })
-export class DesignationMasterComponent {
+export class DesignationMasterComponent implements OnInit, OnDestroy {
   pageNumber: number = 1;
   searchContent = new FormControl('');  
   DesiganationTypeArray:any;
@@ -34,7 +34,6 @@ export class DesignationMasterComponent {
 
   ngOnInit() {
     this.getTableData(); 
-        
     this.webStorage.langNameOnChange.subscribe(lang => {
       this.langTypeName = lang;
       this.getTableTranslatedData();
@@ -236,7 +235,10 @@ getTableTranslatedData(){
       this.searchContent.reset();
       this.getTableData();
     }
+  }
 
-   
+  ngOnDestroy(){
+    this.tableData = [];
+    this.tableData = null;
   }
 }
