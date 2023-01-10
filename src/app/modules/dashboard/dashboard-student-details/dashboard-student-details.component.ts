@@ -115,6 +115,7 @@ export class DashboardStudentDetailsComponent {
           this.tableDataArray = res.responseData.responseData1;
           this.totalCount = res.responseData?.responseData2?.pageCount || 0;
           let obj = this.tableDataArray[0];
+          obj.subjectId = flag == 'filter' ? this.filterForm.value.subjectId : this.dashboardObj?.SubjectId
           this.getLineChartDetails(obj);
           this.data = {
             headerImage: obj.profilePhoto,
@@ -298,9 +299,21 @@ export class DashboardStudentDetailsComponent {
   }
 
   getLineChartDetails(obj: any) {
+  console.log( this.subjectArr);
+  
+    let subject = this.subjectArr.filter((res:any) => {
+      console.log(res);
+      
+      if(res.id == obj.subjectId){
+        return res
+      }
+    });
+    console.log(subject,obj);
+    
     const objData = {
       objData: obj,
-      groupId: this.groupID | 0
+      groupId: this.groupID | 0 ,
+      //  subject : subject.subjectName 
     }
     this.webService.selectedLineChartObj.next(JSON.stringify(objData));
 
