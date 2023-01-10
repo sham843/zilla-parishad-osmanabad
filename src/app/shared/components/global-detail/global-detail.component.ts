@@ -33,7 +33,7 @@ import { progressChartLineComponent } from '../../progressChartLine/progressChar
 export class GlobalDetailComponent {
   items: any = [];
   dataArray = new Array();
-
+  objData:any;
 
   constructor(private webService: WebStorageService,
     public gallery: Gallery, public dialogRef: MatDialogRef<GlobalDetailComponent>, @Inject(MAT_DIALOG_DATA) public data: any, public webStorage: WebStorageService) {
@@ -60,13 +60,17 @@ export class GlobalDetailComponent {
   }
 
   getLineChartDetails(obj: any) {
-    console.log(obj);
     let groupId = obj.Obj.standardId <= 2 ? 1 : obj.Obj.standardId <= 5 ? 2 : 3;
     obj.studentId = obj.Obj.id
-    const objData = {
+    this.objData = {
       objData: obj,
       groupId: groupId || 1,
+      selectedSubject:this.webStorage.languageFlag == 'EN'?'All' :'सर्व'
     }
-    this.webService.selectedLineChartObj.next(JSON.stringify(objData));
+    this.webService.selectedLineChartObj.next(this.objData);
+    this.webService.selectedLineChartObj.subscribe((res:any)=>{
+      console.log(res)
+    })
+
   }
 }

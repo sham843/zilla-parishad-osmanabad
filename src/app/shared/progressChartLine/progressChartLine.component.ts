@@ -9,6 +9,7 @@ import { ApiService } from 'src/app/core/services/api.service';
 import { WebStorageService } from 'src/app/core/services/web-storage.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ErrorsService } from 'src/app/core/services/errors.service';
+import {MatRadioModule} from '@angular/material/radio';
 @Component({
   selector: 'progressChartLine',
   templateUrl: './progressChartLine.component.html',
@@ -20,13 +21,15 @@ import { ErrorsService } from 'src/app/core/services/errors.service';
     MatSelectModule,
     MatCardModule,
     ReactiveFormsModule,
-    FormsModule
+    FormsModule,
+    MatRadioModule
     ],
 
 })
 export class progressChartLineComponent implements OnInit {
   lineChartOptions:any;
   subjectControl=new FormControl(' ');
+  inspectionBy=new FormControl(' ');
   subjectArray=new Array();
   grapbhDetailsArray=new Array();
   dashboardObj:any;
@@ -45,6 +48,7 @@ export class progressChartLineComponent implements OnInit {
     this.webStorage.selectedLineChartObj.subscribe((res:any)=>{
       this.selectedStudentObj=res;
       this.groupId=this.selectedStudentObj.groupId==0? this.dashboardObj.groupId:this.selectedStudentObj.groupId;
+      this.inspectionBy.patchValue('0')
       this.groupId?this.getLineChartDetails():'';
     })
     
@@ -56,13 +60,14 @@ export class progressChartLineComponent implements OnInit {
    
   }
   getLineChartDetails(){
-    
+    console.log(this.inspectionBy.value);
     let str=  this.groupId==1? 'GetDataFor1st2ndStdStudentChart':'GetDataFor3rdAboveStdStudentChart';
-    this.apiService.setHttp('GET', 'zp-osmanabad/Dashboard/' + str+ '?GroupId='+ this.groupId+'&StudentId='+this.selectedStudentObj?.objData?.studentId, false, false, false, 'baseUrl');
+    this.apiService.setHttp('GET', 'zp-osmanabad/Dashboard/' + str+ '?GroupId='+ this.groupId+'&StudentId='+this.selectedStudentObj?.objData?.studentId+'&IsInspection='+(Number(this.inspectionBy.value)||0), false, false, false, 'baseUrl');
     this.apiService.getHttp().subscribe({
       next: (res: any) => {
         if (res.statusCode == 200 && res.responseData.responseData1.length) {
          this.grapbhDetailsArray=res.responseData.responseData1 ;
+         console.log(this.grapbhDetailsArray)
          this.getSubjectData();
         } else {
           this.grapbhDetailsArray=[];
@@ -122,6 +127,7 @@ export class progressChartLineComponent implements OnInit {
       }
     }
   };
+  console.log(this.lineChartOptions)
   }
 
 }
