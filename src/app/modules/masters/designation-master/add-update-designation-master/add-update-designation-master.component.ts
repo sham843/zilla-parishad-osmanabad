@@ -48,17 +48,7 @@ export class AddUpdateDesignationMasterComponent {
   }
   //#endregion  ---------------------------- End Desiganation-Master Formdata ------------------------------- //
 
-  changeValidators(obj:any){
-  if(obj.value == 'Other'){
-    this.f["designationType"].setValidators(Validators.required);
-    this.f["m_DesignationType"].setValidators(Validators.required);
-  }else{
-    this.f["designationType"].clearValidators();
-    this.f["m_DesignationType"].clearValidators();
-  }
-   this.f["designationType"].updateValueAndValidity();
-   this.f["m_DesignationType"].updateValueAndValidity();
-  }
+
   //#region ----------------------------------Desiganation-Master Dropdown ------------------------------- //
   getDesiganationLevel() {
     let lan = '';
@@ -158,8 +148,7 @@ export class AddUpdateDesignationMasterComponent {
   //#region  ------------------------------------- Desiganation-Master Edit ---------------------------------//
   onClickEdit(obj: any) {
     this.editFlag = true;
-    this.editData = obj; 
-    console.log("editdata",obj);
+    this.editData = obj;    
        
     this.designationForm.patchValue({
       id: obj.id,
