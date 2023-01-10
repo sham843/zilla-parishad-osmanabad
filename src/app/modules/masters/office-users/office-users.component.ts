@@ -58,7 +58,7 @@ export class OfficeUsersComponent {
     //   this.ngxSpinner.hide();
     //   return
     // }
-    let reportStr = `?textSearch=${this.searchContent.value}&pageno=${this.pageNumber}&pagesize=${(this.totalCount * 10)}&lan=${this.webStorageService.languageFlag}`;
+    let reportStr = `?textSearch=${this.searchContent.value}&pageno=${1}&pagesize=${(this.totalCount * 10)}&lan=${this.webStorageService.languageFlag}`;
     let str = `?textSearch=${this.searchContent.value}&pageno=${this.pageNumber}&pagesize=10&lan=${this.webStorageService.languageFlag}`;
     this.apiService.setHttp('GET', 'zp_osmanabad/Office/GetAllOffice' + (flag == 'reportFlag' ? reportStr : str), false, false, false, 'baseUrl');
     this.apiService.getHttp().subscribe({
@@ -83,7 +83,7 @@ export class OfficeUsersComponent {
             this.resultDownloadArr.push(obj);
           });
           if (this.resultDownloadArr.length > 0) {
-            let keyPDFHeader = ['SrNo', "Name", "Designation", "MobileNo","EmailID"];
+            let keyPDFHeader = ['Sr. No.', "Office User Name", "Designation", "Mobile No.","Email ID"];
             let ValueData =
               this.resultDownloadArr.reduce(
                 (acc: any, obj: any) => [...acc, Object.values(obj).map((value) => value)], []
