@@ -416,7 +416,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
   
   selectedBar(selectedbar: any) {
     const index = this.barchartOptions.xaxis.categories.findIndex((i: any) => i == selectedbar);
-    const data = this.barChartData.find((x: any) =>(this.selectedLang == 'English'? x.subjectName:x.m_SubjectName) == selectedbar && (this.selectedObj?.groupId==1? (this.selectedLang == 'English'? x.optionName:x.m_OptionName):(this.selectedLang == 'English'? x.question:x.m_Question)) == this.barchartOptions.series[0][index][this.optionalSubjectindex].name);
+    const data = this.barChartData.find((x: any) =>(this.selectedLang == 'English'? x.subjectName:x.m_SubjectName) == selectedbar && (this.selectedObj?.groupId==1? (this.selectedLang == 'English'? x.optionName:x.m_OptionName):(this.selectedLang == 'English'? x.question:x.m_Question)) == this.barchartOptions.series[0][index][this.optionalSubjectindex]?.name);
     const formData = this.filterForm.value;
     const standardArray=((this.totalStudentSurveyData.find((x:any)=>x.status==true).standardDetails.filter((xx:any)=>xx.status==true)).map((y:any)=> y.standardId))
     this.SharingObject = {
