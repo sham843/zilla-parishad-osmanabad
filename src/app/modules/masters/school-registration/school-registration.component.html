@@ -50,8 +50,6 @@
                     <mat-select [formControl]="districtId" (selectionChange)="getTaluka();" [disabled]="districtId.value == 1">
                         <mat-option *ngFor="let district of districtArr" [value]="district.id">
                             {{webStorageS.languageFlag =='mr-IN' ? district.m_District: district.district}}
-                            <!-- {{webStorageS.getLangauge() == 'EN' ?
-                            district.district : district.m_District}} -->
                         </mat-option>
                     </mat-select>
                 </mat-form-field>
