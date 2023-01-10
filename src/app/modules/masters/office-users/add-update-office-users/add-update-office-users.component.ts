@@ -50,7 +50,7 @@ export class AddUpdateOfficeUsersComponent implements OnInit {
         // "isDeleted": [true],
         ...this.webStorageService.createdByProps(),
         "id": [this.data ? this.data.id : 0],
-        "name": [this.data ? this.data.officeName : "", [Validators.required, Validators.pattern(this.validation.fullName)]],
+        "name": [this.data ? this.data.officeName : "", [Validators.required, Validators.pattern('^([ a-zA-Z])[ a-zA-Z]+$')]],
         "m_Name": [this.data ? this.data.m_OfficeName : "", [Validators.required,Validators.pattern('^[\u0900-\u0965 ]+$')]],
         "mobileNo": [this.data ? this.data.mobileNo : "", [Validators.required, Validators.pattern(this.validation.mobile_No)]],
         "emailId": [this.data ? this.data.emailId : "", [Validators.required, Validators.pattern(this.validation.email)]],
