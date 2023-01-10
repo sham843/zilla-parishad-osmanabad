@@ -29,10 +29,10 @@ export class DashboardStudentDetailsComponent {
   groupByClassArray: any = [];
   lineChartOptions: any;
   grapbhDetailsArray = new Array();
-  displayedColumns = ['docPath', 'srNo', 'fullName', 'actualGrade'];
-  marathiDisplayedColumns = ['docPath', 'srNo', 'm_FullName', 'actualGrade'];
-  displayedheaders = ['#', 'Sr. No.', 'Name', 'Status'];
-  marathiDisplayedheaders = ['#', 'अनुक्रमांक', 'नाव', 'स्तर'];
+  displayedColumns = ['docPath', 'srNo', 'fullName','subjectName', 'actualGrade'];
+  marathiDisplayedColumns = ['docPath', 'srNo', 'm_FullName','m_SubjectName', 'actualGrade'];
+  displayedheaders = ['#', 'Sr. No.', 'Name','Subject', 'Status'];
+  marathiDisplayedheaders = ['#', 'अनुक्रमांक', 'नाव','विषय', 'स्तर',];
   filterForm!: FormGroup
   subjectArray = new Array();
   subjectControl = new FormControl('');
