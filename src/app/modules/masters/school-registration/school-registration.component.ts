@@ -155,7 +155,7 @@ export class SchoolRegistrationComponent {
  
   //#region ---------------------------------------------- School Registration Dropdown start here ----------------------------------------// 
   getDistrict() {
-    this.masterService.getAllDistrict(this.webStorageS.languageFlag).subscribe({
+    this.masterService.getAllDistrict('').subscribe({
       next: (res: any) => {
         if (res.statusCode == 200) {
           this.districtArr = res.responseData;
@@ -296,7 +296,7 @@ export class SchoolRegistrationComponent {
 
   onClear() {
     if (this.districtId.value || this.talukaId.value || this.villageId.value) {
-      this.districtId.reset();
+      // this.districtId.reset();
       this.talukaId.reset();
       this.villageId.reset();
       this.talukaArr = [];
