@@ -3,3 +3,8 @@
         position: absolute;
         right: 0;
 }
+
+.disable{
+    pointer-events: none;
+    opacity: 0.6;
+}
