@@ -142,7 +142,7 @@
                     <div class="d-flex justify-content-between align-items-center">
                         <div class="upload-btn-wrapper">
                             <button class="upload-btn" type="button" matTooltip="{{uploadImg.split('/').pop()}}" matTooltipPosition="below" matTooltipClass="tooltip" (click)="uploadImage.click()">{{'Labels.uploadPhoto' | translate}}</button>
-                            <input type="file" name="myfile" [disabled]="uploadImg" accept="image/png, image/jpg, image/jpeg" (change)="fileUpload($event,'img')" #uploadImage/>
+                            <input type="file" name="myfile" [disabled]="uploadImg" accept=".png, .jpg, .jpeg" (change)="fileUpload($event,'img')" #uploadImage/>
                         </div>
                         <div class="action-btn" *ngIf="uploadImg">
                             <button mat-icon-button class="btn-icon text-primary" type="button" (click)="viewImages('photo')"
@@ -223,7 +223,7 @@
                     <div class="d-flex justify-content-between align-items-center">
                         <div class="upload-btn-wrapper">
                             <button class="upload-btn" type="button" matTooltip="{{uploadAadhaar.split('/').pop()}}" matTooltipPosition="below" matTooltipClass="tooltip" (click)="uploadAadhar.click()">{{'Labels.aadhaarPhoto' | translate}}</button>
-                            <input type="file" name="myfile" [disabled]="uploadAadhaar" (change)="fileUpload($event,'aadhar')" #uploadAadhar/>
+                            <input type="file" name="myfile" [disabled]="uploadAadhaar" accept=".png, .jpg, .jpeg,.pdf" (change)="fileUpload($event,'aadhar')" #uploadAadhar/>
                         </div>
                         <div class="action-btn" *ngIf="uploadAadhaar">
                             <button mat-icon-button class="btn-icon text-primary" type="button" (click)="viewImages('aadharPhoto')" 
