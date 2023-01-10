@@ -141,7 +141,7 @@
                 <div class="col-sm-4 ">
                     <div class="d-flex justify-content-between align-items-center">
                         <div class="upload-btn-wrapper">
-                            <button class="upload-btn" type="button" (click)="uploadImage.click()">{{'Labels.uploadPhoto' | translate}}</button>
+                            <button class="upload-btn" type="button" matTooltip="{{uploadImg.split('/').pop()}}" matTooltipPosition="below" matTooltipClass="tooltip" (click)="uploadImage.click()">{{'Labels.uploadPhoto' | translate}}</button>
                             <input type="file" name="myfile" [disabled]="uploadImg" accept="image/png, image/jpg, image/jpeg" (change)="fileUpload($event,'img')" #uploadImage/>
                         </div>
                         <div class="action-btn" *ngIf="uploadImg">
@@ -222,7 +222,7 @@
                 <div class="col-sm-4">
                     <div class="d-flex justify-content-between align-items-center">
                         <div class="upload-btn-wrapper">
-                            <button class="upload-btn" type="button"  (click)="uploadAadhar.click()">{{'Labels.aadhaarPhoto' | translate}}</button>
+                            <button class="upload-btn" type="button" matTooltip="{{uploadAadhaar.split('/').pop()}}" matTooltipPosition="below" matTooltipClass="tooltip" (click)="uploadAadhar.click()">{{'Labels.aadhaarPhoto' | translate}}</button>
                             <input type="file" name="myfile" [disabled]="uploadAadhaar" (change)="fileUpload($event,'aadhar')" #uploadAadhar/>
                         </div>
                         <div class="action-btn" *ngIf="uploadAadhaar">
@@ -264,7 +264,7 @@
                 <div class="col-sm-4">
                     <mat-form-field appearance="outline" class="w-100">
                         <mat-label>{{'Labels.fatherName'| translate}}</mat-label>
-                        <input matInput formControlName="fatherFullName" maxlength="50" [class.disable]="readOnlyFlag" (keypress)="validators.noFirstSpaceAllow($event);validators.alphabetsWithSpaces($event)" maxlength="50">
+                        <input matInput formControlName="fatherFullName" maxlength="50" [readonly]="readOnlyFlag" (keypress)="validators.noFirstSpaceAllow($event);validators.alphabetsWithSpaces($event)" maxlength="50">
                         <!-- <mat-error *ngIf="fc['fatherFullName'].hasError('required')">{{'Labels.enterFatherName'|
                             translate}}</mat-error> -->
                     </mat-form-field>
@@ -272,7 +272,7 @@
                 <div class="col-sm-4">
                     <mat-form-field appearance="outline" class="w-100">
                         <mat-label>{{'Labels.motherName'| translate}}</mat-label>
-                        <input matInput formControlName="motherName" maxlength="50" [class.disable]="readOnlyFlag" (keypress)="validators.noFirstSpaceAllow($event);validators.alphabetsWithSpaces($event)">
+                        <input matInput formControlName="motherName" maxlength="50" [readonly]="readOnlyFlag" (keypress)="validators.noFirstSpaceAllow($event);validators.alphabetsWithSpaces($event)">
                         <!-- <mat-error *ngIf="fc['motherName'].hasError('required')">{{'Labels.enterMotherName'| translate}}
                         </mat-error> -->
                     </mat-form-field>
