@@ -38,6 +38,7 @@ export class progressChartLineComponent implements OnInit {
   selectedStudentObj:any;
   languageFlag!:string;
   groupId!:number;
+  displayedheaders:any=[{'label':"Sr. No.","m_label":"अनुक्रमांक"}, {'label':"Name","m_label":"नाव"},{'label':"Assessment Date","m_label":"मूल्यांकन तारीख"} ]
   tableArray=new Array();
   constructor(private apiService:ApiService, public webStorage:WebStorageService,
     private ngxSpinner:NgxSpinnerService, private errors:ErrorsService) { }
