@@ -18,7 +18,7 @@
                         <mat-select formControlName="designationLevelId"
                             (selectionChange)="clearForm('designationLevelId')">
                             <mat-option *ngFor="let designation of DesiganationLevelData"
-                                [value]="designation.designationLevel">{{webStorage.getLangauge() == 'EN' ?
+                                [value]="designation.id">{{webStorage.getLangauge() == 'EN' ?
                                 designation.designationLevel : designation.m_DesignationLevel}}</mat-option>                           
                         </mat-select>
                         <!-- <mat-error

@@ -31,19 +31,19 @@ export class AddUpdateDesignationMasterComponent {
     @Inject(MAT_DIALOG_DATA) public data: any) { }
 
   ngOnInit() {
-    this.formData(this.data);
+    this.formData();
     !this.data ? this.getDesiganationLevel() : this.onClickEdit(this.data);
   }
 
   get f() { return this.designationForm.controls }
   //#region -------------------------------------- Desiganation-Master Formdata --------------------------//
-  formData(data?:any) {
+  formData() {
     this.designationForm = this.fb.group({
       "lan": [''],
       "id": [0],
       "designationType": ['',[Validators.required, Validators.pattern(this.validation.alphaNumericOnly)]],
       "m_DesignationType": ['',[Validators.required, Validators.pattern('^[-\u0900-\u096F ]+$')]],
-      "designationLevelId": [data ? { value: data.designationLevelId, disabled: this.formDisabled } :'', Validators.required]
+      "designationLevelId": [this.editData ? { value: this.editData.designationLevelId, disabled: this.formDisabled } :'', Validators.required]
     }) 
   }
   //#endregion  ---------------------------- End Desiganation-Master Formdata ------------------------------- //
@@ -55,8 +55,8 @@ export class AddUpdateDesignationMasterComponent {
     this.masterService.GetAllDesignationLevel(lan).subscribe({
       next: ((res: any) => {
         if (res.statusCode == '200' && res.responseData.length) {
-          this.DesiganationLevelData = res.responseData;
-          this.editFlag ? (this.designationForm.controls['designationLevelId'].setValue(this.editData.designationLevel)) : '';
+          this.DesiganationLevelData = res.responseData; 
+          this.editFlag ? (this.designationForm.controls['designationLevelId'].setValue(this.editData.designationLevelId)) : '';
         }
       }), error: (error: any) => {
         this.commonMethod.checkEmptyData(error.statusText) == false ? this.errorHandler.handelError(error.statusCode) : this.commonMethod.showPopup(error.statusText, 1);
@@ -99,9 +99,9 @@ export class AddUpdateDesignationMasterComponent {
             this.designationForm.controls[designationLevelId][disableValue]();
         });
       }
-      let getFormVal = this.designationForm.value;
-      let getDesignationLevelId: any = this.commonMethod.getkeyValueByArrayOfObj(this.DesiganationLevelData, 'designationLevel', getFormVal?.designationLevelId);
-      this.designationForm.value.designationLevelId = getDesignationLevelId?.id;
+      // let getFormVal = this.designationForm.value;
+      // let getDesignationLevelId: any = this.commonMethod.getkeyValueByArrayOfObj(this.DesiganationLevelData, 'designationLevel', getFormVal?.designationLevelId);
+      // this.designationForm.value.designationLevelId = getDesignationLevelId?.id;
      
       let formValue = this.designationForm.value;    
       let  data = this.webStorage.createdByProps();    
@@ -147,13 +147,12 @@ export class AddUpdateDesignationMasterComponent {
   onClickEdit(obj: any) {
     this.editFlag = true;
     this.editData = obj;    
-       
     this.designationForm.patchValue({
       id: obj.id,
       designationType:obj.designationName,
       m_DesignationType:obj.m_DesignationType
     });
-    this.getDesiganationLevel();
+    this.formData; this.getDesiganationLevel();
   }
   //#endregion -------------------------------------End Desiganation-Master Edit ---------------------------------//
   //#region  ------------------------------------- Desiganation-Master Clear ---------------------------------//
