@@ -49,6 +49,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
   standardShowFlag:boolean=false;
   selectedTalukaId:any;
   resetFlag:boolean=false;
+  selectedbar!:string;
   get f() { return this.filterForm.controls }
   get fBgraph() { return this.filterFormForBarGraph.controls }
   constructor(public translate: TranslateService, private masterService: MasterService,
@@ -271,6 +272,22 @@ export class DashboardComponent implements OnInit, AfterViewInit {
           dataPointSelection: (event: any, chartContext: any, config: any) => {
             console.log(event, chartContext)
             this.optionalSubjectindex = config.seriesIndex;
+            const index = this.barchartOptions.xaxis.categories.findIndex((i: any) => i == this.selectedbar);
+            const data = this.barChartData.find((x: any) => (this.selectedLang == 'English' ? x.subjectName : x.m_SubjectName) == this.selectedbar && (this.selectedObj?.groupId == 1 ? (this.selectedLang == 'English' ? x.optionName : x.m_OptionName) : (this.selectedLang == 'English' ? x.question : x.m_Question)) == this.barchartOptions.series[0][index][this.optionalSubjectindex]?.name);
+            const formData = this.filterForm.value;
+            const standardArray = ((this.totalStudentSurveyData.find((x: any) => x.status == true).standardDetails.filter((xx: any) => xx.status == true)).map((y: any) => y.standardId))
+            this.SharingObject = {
+              groupId: this.selectedObj?.groupId | 0,
+              TalukaId: formData?.talukaId | 0,
+              CenterId: formData?.centerId | 0,
+              SchoolId: formData?.schoolId | 0,
+              SubjectId: data?.subjectId | 0,
+              OptionGrade: data?.optionGrade | 0,
+              standardArray: standardArray
+            }
+            this.webStorage.selectedBarchartObjData.next(this.SharingObject);
+            localStorage.setItem('selectedBarchartObjData', JSON.stringify(this.SharingObject))
+            this.router.navigate(['/dashboard-student-details'])
           }
         }
       },
@@ -415,22 +432,8 @@ export class DashboardComponent implements OnInit, AfterViewInit {
   }
   
   selectedBar(selectedbar: any) {
-    const index = this.barchartOptions.xaxis.categories.findIndex((i: any) => i == selectedbar);
-    const data = this.barChartData.find((x: any) =>(this.selectedLang == 'English'? x.subjectName:x.m_SubjectName) == selectedbar && (this.selectedObj?.groupId==1? (this.selectedLang == 'English'? x.optionName:x.m_OptionName):(this.selectedLang == 'English'? x.question:x.m_Question)) == this.barchartOptions.series[0][index][this.optionalSubjectindex]?.name);
-    const formData = this.filterForm.value;
-    const standardArray=((this.totalStudentSurveyData.find((x:any)=>x.status==true).standardDetails.filter((xx:any)=>xx.status==true)).map((y:any)=> y.standardId))
-    this.SharingObject = {
-      groupId: this.selectedObj?.groupId|0,
-      TalukaId: formData?.talukaId|0,
-      CenterId: formData?.centerId|0,
-      SchoolId: formData?.schoolId|0,
-      SubjectId: data?.subjectId|0,
-      OptionGrade: data?.optionGrade|0,
-      standardArray:standardArray
-    }
-    this.webStorage.selectedBarchartObjData.next(this.SharingObject);
-    localStorage.setItem('selectedBarchartObjData',JSON.stringify(this.SharingObject))
-    this.router.navigate(['/dashboard-student-details'])
+    this.selectedbar=selectedbar;
+    
   }
 
   getdashboardCount() {
