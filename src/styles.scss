@@ -460,7 +460,11 @@ body {
 }
 
 .table-height {
-  height: 110vh;
+  max-height: 177vh;
+  overflow-y: auto;
+}
+.table-height-sm {
+  max-height: 62vh;
   overflow-y: auto;
 }
 
