@@ -106,9 +106,11 @@
                     </mat-form-field>  
                 </div>
                 <div class="col-sm-4">
-                    <div class="age-show">
-                        <span>{{age}}</span>
-                    </div>
+                    <ng-container *ngIf="teacherRegForm.value.birthDate">
+                        <div class="age-show" *ngIf="teacherRegForm.value.age > 0">
+                            <span >{{age}}</span>
+                        </div>
+                    </ng-container>                    
                 </div>
             </div>
             <mat-card-subtitle class="mb-2 fw-bold">{{'Labels.AddressDetails'| translate}}</mat-card-subtitle>

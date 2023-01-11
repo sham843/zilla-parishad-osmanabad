@@ -659,6 +659,8 @@ export class AddUpdateTeacherRegistrationComponent {
   //#endregion -------------------------------------end submit-----------------------------------------------
   //#region ---------------------------------------- start edit ----------------------------------------------
   onEdit() {
+    console.log("editObj",this.editObj);
+    
     this.editFlag = true;
     this.assignClassArray = this.editObj.assignTeacher;
     this.uploadImghtml = this.editObj.uploadImage;
