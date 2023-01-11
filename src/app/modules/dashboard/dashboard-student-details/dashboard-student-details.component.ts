@@ -86,10 +86,9 @@ export class DashboardStudentDetailsComponent implements OnInit, OnDestroy {
   }
 
   setTableData() {
-    console.log("set table data ");
-    
     let tableData = {
       pageNumber: this.pageNumber,
+      highlightedRow : 0,
       img: 'docPath', blink: true, badge: '', isBlock: '', pagintion: false, status: 'actualGrade',
       displayedColumns: this.languageFlag == 'English' ? this.displayedColumns : this.marathiDisplayedColumns,
       tableData: this.tableDataArray,
