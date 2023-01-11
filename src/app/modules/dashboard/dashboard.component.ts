@@ -97,7 +97,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
     this.filterForm = this.fb.group({
       talukaId: [0],
       centerId: [0],
-      schoolId: []
+      schoolId: [0]
     })
     this.filterFormForBarGraph = this.fb.group({
       filtertalukaId: [0],
@@ -111,6 +111,13 @@ export class DashboardComponent implements OnInit, AfterViewInit {
   }
   getTalukas() {
     this.talukaData = [];
+    this.centerData = [];
+    this.schoolData=[];
+    this.filterForm.patchValue({
+      talukaId: 0,
+      centerId: 0,
+      schoolId: 0
+    })
     this.masterService.getAllTaluka().subscribe((res: any) => {
       this.talukaData.push({ "id": 0, "taluka": "All", "m_Taluka": "सर्व" }, ...res.responseData);
       this.getCenters();
@@ -118,6 +125,11 @@ export class DashboardComponent implements OnInit, AfterViewInit {
   }
   getCenters() {
     this.centerData = [];
+    this.schoolData=[];
+    this.filterForm.patchValue({
+      centerId: 0,
+      schoolId: 0
+    })
     this.selectedTaluka=this.talukaData.find((x:any)=> x.id==this.f['talukaId'].value);
     if(this.f['talukaId'].value>0){
       this.masterService.getAllCenter('', (this.f['talukaId'].value | 0)).subscribe((res: any) => {
@@ -134,7 +146,8 @@ export class DashboardComponent implements OnInit, AfterViewInit {
     if(this.f['centerId'].value>0){
     this.fBgraph['filtercenterId'].patchValue(this.f['centerId'].value)
     this.masterService.getAllSchoolByCriteria('',(this.f['talukaId'].value|0),0, (this.f['centerId'].value|0)).subscribe((res: any) => {
-      this.schoolData = res.responseData;
+      this.schoolData.push({ "id": 0, "schoolName": "All", "m_SchoolName": "सर्व" },...res.responseData);
+      this.selectedSchool();
     })
   }
   }
