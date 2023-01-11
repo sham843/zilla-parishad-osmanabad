@@ -50,6 +50,9 @@ export class DashboardComponent implements OnInit, AfterViewInit {
   selectedTalukaId:any;
   resetFlag:boolean=false;
   selectedbar!:string;
+  selectedTaluka:any;
+  selectedCenter:any;
+  selectedschool:any;
   get f() { return this.filterForm.controls }
   get fBgraph() { return this.filterFormForBarGraph.controls }
   constructor(public translate: TranslateService, private masterService: MasterService,
@@ -110,20 +113,33 @@ export class DashboardComponent implements OnInit, AfterViewInit {
     this.talukaData = [];
     this.masterService.getAllTaluka().subscribe((res: any) => {
       this.talukaData.push({ "id": 0, "taluka": "All", "m_Taluka": "सर्व" }, ...res.responseData);
+      this.getCenters();
     })
   }
   getCenters() {
     this.centerData = [];
-    this.masterService.getAllCenter('', (this.f['talukaId'].value | 0)).subscribe((res: any) => {
-      this.centerData.push({ "id": 0, "center": "All", "m_Center": "सर्व" }, ...res.responseData);
-      this.f['centerId'].patchValue(0);
-    })
+    this.selectedTaluka=this.talukaData.find((x:any)=> x.id==this.f['talukaId'].value);
+    if(this.f['talukaId'].value>0){
+      this.masterService.getAllCenter('', (this.f['talukaId'].value | 0)).subscribe((res: any) => {
+        this.centerData.push({ "id": 0, "center": "All", "m_Center": "सर्व" }, ...res.responseData);
+        this.f['centerId'].patchValue(0);
+        this.getschools();
+      })
+    }
+    
   }
   getschools() {
+    this.schoolData=[];
+    this.selectedCenter=this.centerData.find((x:any)=> x.id==this.f['centerId'].value);
+    if(this.f['centerId'].value>0){
     this.fBgraph['filtercenterId'].patchValue(this.f['centerId'].value)
     this.masterService.getAllSchoolByCriteria('',(this.f['talukaId'].value|0),0, (this.f['centerId'].value|0)).subscribe((res: any) => {
       this.schoolData = res.responseData;
     })
+  }
+  }
+  selectedSchool(){
+    this.selectedschool=this.schoolData.find((x:any)=> x.id==this.f['schoolId'].value);
   }
   getSubject(groupId: any) {
     this.masterService.GetAllSubjectsByGroupClassId('', groupId).subscribe((res: any) => {
