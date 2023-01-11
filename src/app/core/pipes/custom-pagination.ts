@@ -12,12 +12,13 @@ export class CustomMatPaginatorIntl extends MatPaginatorIntl{
   constructor(private webStorage: WebStorageService){
     super();
     this.webStorage.langNameOnChange.subscribe(lang => {
-      super.nextPageLabel = lang == 'English' ? 'Next Page' : 'पुढील पान';
-      super.previousPageLabel = lang == 'English' ? 'Previous Page' : 'मागील पान';
-      super.lastPageLabel = lang == 'English' ? 'Last Page' : 'शेवटचे पान';
-      super.firstPageLabel = lang == 'English' ? 'First Page' : 'पहिले पान';
+      this.nextPageLabel = lang == 'English' ? 'Next Page' : 'पुढील पान';
+      this.previousPageLabel = lang == 'English' ? 'Previous Page' : 'मागील पान';
+      this.lastPageLabel = lang == 'English' ? 'Last Page' : 'शेवटचे पान';
+      this.firstPageLabel = lang == 'English' ? 'First Page' : 'पहिले पान';
       this.ofKeyValue = lang == 'English' ? 'of' : 'मधील';
-      super.getRangeLabel = this.RangeLabel;
+      this.getRangeLabel = this.RangeLabel;
+      this.changes.next();
     });
   }
 
