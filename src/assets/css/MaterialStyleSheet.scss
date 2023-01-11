@@ -9,6 +9,7 @@
 }
 
 mat-label,
+.mat-mdc-radio-button .mdc-form-field,
 .mdc-tab__text-label,
 input.mat-input-element,
 button.mat-menu-item,
@@ -156,4 +157,8 @@ input:-webkit-autofill:active {
 }
 .mat-drawer{
     width: 350px !important;
+}
+.mat-mdc-radio-button .mdc-radio .mdc-radio__native-control:enabled+.mdc-radio__background .mdc-radio__inner-circle,
+.mat-mdc-radio-button .mdc-radio .mdc-radio__native-control:enabled:checked+.mdc-radio__background .mdc-radio__outer-circle{
+    border-color: var(--main-color) !important;
 }
