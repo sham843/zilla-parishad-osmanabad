@@ -58,6 +58,7 @@
                 <mat-form-field appearance="outline" class="w-100">
                     <mat-label>{{'Labels.taluka' | translate}}</mat-label>
                     <mat-select [formControl]="talukaId" (selectionChange)="clearDropdown('Taluka');getVillage();">
+                        <mat-option [value]="0">{{'Labels.AllTaluka' | translate}}</mat-option>
                         <mat-option *ngFor="let taluka of talukaArr" [value]="taluka.id">
                             {{webStorageS.getLangauge() == 'EN' ?
                             taluka.taluka : taluka.m_Taluka}}
@@ -69,6 +70,7 @@
                 <mat-form-field appearance="outline" class="w-100">
                     <mat-label>{{'Labels.village' | translate}}</mat-label>
                     <mat-select [formControl]="villageId">
+                        <mat-option [value]="0">{{'Labels.AllVillage' | translate}}</mat-option>
                         <mat-option *ngFor="let village of villageArr" [value]="village.id">
                             {{webStorageS.getLangauge() == 'EN' ?
                             village.village : village.m_Village}}

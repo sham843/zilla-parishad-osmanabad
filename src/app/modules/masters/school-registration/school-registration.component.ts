@@ -23,8 +23,8 @@ export class SchoolRegistrationComponent implements OnInit {
   tableDataArray = new Array();
   // searchContent = new FormControl('');
   districtId = new FormControl(null);
-  talukaId = new FormControl('');
-  villageId = new FormControl();
+  talukaId = new FormControl(0);
+  villageId = new FormControl(0);
   resultDownloadArr = new Array();
 
   districtArr = new Array();
