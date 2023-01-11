@@ -65,7 +65,7 @@
             <ol class="breadcrumb">
                 <li class="breadcrumb-item w-100" aria-current="page">
                     <div class="d-flex justify-content-between align-items-center w-100">
-                        <span>{{'Labels.dashboard' | translate}}</span>
+                        <span>{{'Labels.dashboard' | translate}} </span>
                         <button mat-stroked-button class="btn-main btn-icon" (click)="drawer.toggle()">
                             <mat-icon>filter_alt</mat-icon>
                         </button>
@@ -235,7 +235,7 @@
                                 <div class="border-end" *ngFor="let bar of barchartOptions.series[0]; let i=index">
                                     <h6 class="fw-bold text-center mb-0">{{graphSubjectData[i]}}</h6>
                                     <apx-chart [series]="bar" [chart]="barchartOptions.chart"
-                                        (click)="selectedBar(graphSubjectData[i])"
+                                        (mouseover)="selectedBar(graphSubjectData[i])"
                                         [dataLabels]="barchartOptions.dataLabels"
                                         [plotOptions]="barchartOptions.plotOptions"
                                         [responsive]="barchartOptions.responsive" [xaxis]="barchartOptions.xaxis"
