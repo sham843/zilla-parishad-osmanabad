@@ -30,6 +30,16 @@ export class AppComponent {
       console.log(this.langTypeName);
       this.setTitle();
     });
+
+    // code for logout from all login tab
+    window.addEventListener('storage', (event) => {
+      if (event.storageArea == localStorage) {
+        let loggedInData = localStorage.getItem('loggedInData');
+        if(loggedInData == undefined) {
+            this.router.navigate(['/home']);
+        }
+      }
+    }, false);
   }
 
   
