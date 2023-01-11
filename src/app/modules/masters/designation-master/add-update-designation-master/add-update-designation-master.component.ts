@@ -124,18 +124,16 @@ export class AddUpdateDesignationMasterComponent {
       let url;
       this.editFlag ? url = 'zp_osmanabad/register-designation/UpdateRecord' : url = 'zp_osmanabad/register-designation/AddDesignation'
       this.service.setHttp(this.editFlag ? 'put' : 'post', url, false, postObj, false, 'baseUrl');
-      this.service.getHttp().subscribe({
-        next: ((res: any) => {
+      this.service.getHttp().subscribe({     
+        next: (res: any) => {
           this.ngxSpinner.hide();
-          res.statusCode === "200" ? (this.commonMethod.showPopup(res.statusMessage, 0)) : this.commonMethod.checkEmptyData(res.statusMessage) == false ? this.errorHandler.handelError(res.statusCode) : this.commonMethod.showPopup(res.statusMessage, 1);
-     
-            this.dialogRef.close('yes');
-        
-        }),
-        error: (error: any) => {
-          this.ngxSpinner.hide();
-          this.commonMethod.checkEmptyData(error.statusMessage) == false ? this.errorHandler.handelError(error.statusCode) : this.commonMethod.showPopup(error.statusMessage, 1);
-        }
+          res.statusCode == 200 ? ( this.commonMethod.showPopup(res.statusMessage, 0)) : this.commonMethod.checkEmptyData(res.statusMessage) == false ? this.errorHandler.handelError(res.statusCode) : this.commonMethod.showPopup(res.statusMessage, 1);
+          res.statusCode == 200 ?  this.dialogRef.close('yes') :  this.ngxSpinner.hide();
+        },
+        error: ((error: any) => {
+          this.errorHandler.handelError(error.status);
+          this.commonMethod.checkEmptyData(error.status) == false ? this.errorHandler.handelError(error.status) : this.commonMethod.showPopup(error.status, 1);
+        })
       })
     }else{
       this.commonMethod.showPopup(this.webStorage.languageFlag == 'EN' ? 'Please Enter Mandatory Fields' : 'कृपया अनिवार्य फील्ड प्रविष्ट करा', 1);

@@ -289,8 +289,8 @@ export class AddUpdateSchoolRegistrationComponent {
       this.apiService.getHttp().subscribe({
         next: (res: any) => {
           this.ngxSpinner.hide();
-          res.statusCode == 200 ? (this.commonMethod.showPopup(res.statusMessage, 0)) : this.commonMethod.checkEmptyData(res.statusMessage) == false ? this.errors.handelError(res.statusCode) : this.commonMethod.showPopup(res.statusMessage, 0);
-          this.dialogRef.close('yes');
+          res.statusCode == 200 ? (this.commonMethod.showPopup(res.statusMessage, 0)) : this.commonMethod.checkEmptyData(res.statusMessage) == false ? this.errors.handelError(res.statusCode) : this.commonMethod.showPopup(res.statusMessage, 1);
+          res.statusCode == 200 ? this.dialogRef.close('yes') : this.ngxSpinner.hide();
         },
         error: ((err: any) => {
           this.ngxSpinner.hide();
