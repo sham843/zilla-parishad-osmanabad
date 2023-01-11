@@ -68,9 +68,5 @@ export class GlobalDetailComponent {
       selectedSubject:this.webStorage.languageFlag == 'EN'?'All' :'सर्व'
     }
     this.webService.selectedLineChartObj.next(this.objData);
-    this.webService.selectedLineChartObj.subscribe((res:any)=>{
-      console.log(res)
-    })
-
   }
 }
