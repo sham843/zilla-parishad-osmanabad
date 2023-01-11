@@ -58,33 +58,7 @@ export class AddUpdateStudentRegistrationComponent {
     this.formData();
     this.data ? (this.editObj = JSON.parse(this.data), this.patchValue()) : this.allDropdownMethods();
   }
-
-  searchMobileNo() {
-    let mobileNo = this.stuRegistrationForm.value.mobileNo;
-    if (this.stuRegistrationForm.controls['mobileNo'].valid) {
-      this.apiService.setHttp('get', 'zp-osmanabad/Student/GetGaurdianByMobileNo?MobileNo=' + mobileNo + '&lan=EN', false, false, false, 'baseUrl');
-      this.apiService.getHttp().subscribe({
-        next: (res: any) => {
-          if (res.statusCode == 200) {
-            this.readOnlyFlag = true;
-            if (this.languageFlag == 'EN') {
-              this.fc['fatherFullName'].setValue(res.responseData?.fatherFullName);
-              this.fc['motherName'].setValue(res.responseData?.motherName);
-            } else {
-              this.fc['fatherFullName'].setValue(res.responseData?.m_FatherFullName);
-              this.fc['motherName'].setValue(res.responseData?.m_MotherName)
-            }
-          } else {
-            this.readOnlyFlag = false;
-            this.fc['fatherFullName'].setValue('');
-            this.fc['motherName'].setValue('');
-          }
-        },
-        error: ((err: any) => { this.ngxSpinner.hide(); this.errors.handelError(err) })
-      });
-    }
-  }
-
+  
   allDropdownMethods() {
     this.getDistrict(),
     this.getGender(),
@@ -431,9 +405,8 @@ export class AddUpdateStudentRegistrationComponent {
       this.imageArray.splice(index, 1);
     }
   }
-
-  //#region ------------------------------------------- Image Logic Start Here -----------------------------------------------------------------
-
+  //#region ------------------------------------------- Image Logic End Here -----------------------------------------------------------------
+ 
   clearDropdown(name: any) {
     this.editFlag = false;
     if (name == 'talukaId') {
@@ -450,5 +423,32 @@ export class AddUpdateStudentRegistrationComponent {
       this.stuRegistrationForm.controls['castId'].setValue('');
     }
   }
+
+  searchMobileNo() {
+    let mobileNo = this.stuRegistrationForm.value.mobileNo;
+    if (this.stuRegistrationForm.controls['mobileNo'].valid) {
+      this.apiService.setHttp('get', 'zp-osmanabad/Student/GetGaurdianByMobileNo?MobileNo=' + mobileNo + '&lan=EN', false, false, false, 'baseUrl');
+      this.apiService.getHttp().subscribe({
+        next: (res: any) => {
+          if (res.statusCode == 200) {
+            this.readOnlyFlag = true;
+            if (this.languageFlag == 'EN') {
+              this.fc['fatherFullName'].setValue(res.responseData?.fatherFullName);
+              this.fc['motherName'].setValue(res.responseData?.motherName);
+            } else {
+              this.fc['fatherFullName'].setValue(res.responseData?.m_FatherFullName);
+              this.fc['motherName'].setValue(res.responseData?.m_MotherName)
+            }
+          } else {
+            this.readOnlyFlag = false;
+            this.fc['fatherFullName'].setValue('');
+            this.fc['motherName'].setValue('');
+          }
+        },
+        error: ((err: any) => {this.errors.handelError(err.statusCode) })
+      });
+    }
+  }
+
 
 }
