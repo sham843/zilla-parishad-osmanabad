@@ -62,10 +62,10 @@ export class SchoolRegistrationComponent implements OnInit {
     });
   }
 
-  onPagintion(pageNo: number) {
-    this.pageNumber = pageNo;
-    this.getTableData();
-  }
+  // onPagintion(pageNo: number) {
+  //   this.pageNumber = pageNo;
+  //   this.getTableData();
+  // }
 
   //#region ------------------------------------------- School Registration Table Data start here ----------------------------------------// 
 
@@ -163,7 +163,7 @@ export class SchoolRegistrationComponent implements OnInit {
   }
 
   getTaluka() {
-    this.masterService.getAllTaluka().subscribe({
+    this.masterService.getAllTaluka(this.webStorageS.languageFlag).subscribe({
       next: (res: any) => {
         if (res.statusCode == 200) {
           this.talukaArr = res.responseData;
@@ -232,10 +232,12 @@ export class SchoolRegistrationComponent implements OnInit {
     dialogRef.afterClosed().subscribe((result: any) => {
       if (result == 'yes' && obj) {
         this.onClear();
+        this.getDistrict();
         this.getTableData();
         this.pageNumber = this.pageNumber;
       }
       else if (result == 'yes') {
+        this.getDistrict();
         this.getTableData();
         this.onClear();
         this.pageNumber = 1;
