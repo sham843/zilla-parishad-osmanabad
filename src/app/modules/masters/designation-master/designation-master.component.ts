@@ -2,7 +2,6 @@ import { DatePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
-import { Subscription } from 'rxjs';
 import { ApiService } from 'src/app/core/services/api.service';
 import { CommonMethodsService } from 'src/app/core/services/common-methods.service';
 import { DownloadPdfExcelService } from 'src/app/core/services/download-pdf-excel.service';
@@ -28,15 +27,13 @@ export class DesignationMasterComponent implements OnInit {
   displayedheadersMarathi = ['अनुक्रमांक', 'पदनाम', 'पदनाम स्तर','कृती',];
   langTypeName: any;
   totalCount: number = 0;
-  langChnge!: Subscription;
-
   constructor(private dialog: MatDialog, private apiService: ApiService, private errors: ErrorsService,
     private commonMethod: CommonMethodsService, public webStorage : WebStorageService,
     private errorHandler: ErrorsService ,private downloadFileService : DownloadPdfExcelService, public datepipe : DatePipe) { }
 
   ngOnInit() {
     this.getTableData(); 
-    this.langChnge = this.webStorage.langNameOnChange.subscribe(lang => {
+    this.webStorage.langNameOnChange.subscribe(lang => {
       this.langTypeName = lang;
       this.getTableTranslatedData();
     });
@@ -141,7 +138,7 @@ getTableTranslatedData(){
       if(result == 'yes' && obj){     
         this.clearForm();
         this.getTableData();
-        this.pageNumber = this.pageNumber;       
+        this.pageNumber = this.pageNumber;
       }
       else if(result == 'yes' ){
         this.getTableData();
