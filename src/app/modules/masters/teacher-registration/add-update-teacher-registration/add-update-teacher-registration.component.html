@@ -96,21 +96,25 @@
                     <!-- </mat-form-field> -->
                 </div>
                 <div class="col-sm-4">
-                    <mat-form-field appearance="outline" class="w-100">
-                        <mat-label>{{'Labels.birthDate'| translate}}</mat-label>
-                        <input matInput [matDatepicker]="picker" [max]="maxDate" (click)="picker.open()" readonly (dateChange)="CalculateAge()"  formControlName="birthDate">
-                        <mat-datepicker-toggle matIconSuffix [for]="picker" ></mat-datepicker-toggle>
-                        <mat-datepicker #picker ></mat-datepicker>
-                        <!-- <mat-error *ngIf="f['birthDate'].hasError('required') ">
-                            Birth Date Is Required</mat-error> -->                          
-                    </mat-form-field>  
-                </div>
-                <div class="col-sm-4">
-                    <ng-container *ngIf="teacherRegForm.value.birthDate">
-                        <div class="age-show" *ngIf="teacherRegForm.value.age > 0">
-                            <span >{{age}} Year</span>
+                    <div class="row g-2">
+                        <div class="col-sm-8">
+                            <mat-form-field appearance="outline" class="w-100">
+                                <mat-label>{{'Labels.birthDate'| translate}}</mat-label>
+                                <input matInput [matDatepicker]="picker" [max]="maxDate" (click)="picker.open()" readonly (dateChange)="CalculateAge()"  formControlName="birthDate">
+                                <mat-datepicker-toggle matIconSuffix [for]="picker" ></mat-datepicker-toggle>
+                                <mat-datepicker #picker ></mat-datepicker>
+                                <!-- <mat-error *ngIf="f['birthDate'].hasError('required') ">
+                                    Birth Date Is Required</mat-error> -->                          
+                            </mat-form-field>  
                         </div>
-                    </ng-container>                    
+                        <div class="col-sm-4">
+                            <ng-container *ngIf="teacherRegForm.value.birthDate">
+                                <div class="age-show" *ngIf="teacherRegForm.value.age > 0">
+                                    <span class="me-1">{{age}}</span><span>Year</span>
+                                </div>
+                            </ng-container>     
+                        </div>
+                    </div>
                 </div>
             </div>
             <mat-card-subtitle class="mb-2 fw-bold">{{'Labels.AddressDetails'| translate}}</mat-card-subtitle>
