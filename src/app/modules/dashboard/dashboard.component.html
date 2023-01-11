@@ -19,7 +19,7 @@
                         <mat-form-field appearance="outline" class="w-100">
                             <mat-label>{{'Labels.selectTaluka' | translate}}</mat-label>
                             <mat-select formControlName="talukaId"
-                                (selectionChange)="f['talukaId'].value!=0? getCenters():''">
+                                (selectionChange)="getCenters()">
                                 <mat-option *ngFor="let taluka of talukaData" [value]="taluka.id">
                                     {{webStorage.languageFlag == 'EN'?taluka.taluka:taluka.m_Taluka}}
                                 </mat-option>
@@ -40,7 +40,7 @@
                     <div class="mb-3">
                         <mat-form-field appearance="outline" class="w-100">
                             <mat-label>{{'Labels.selectSchool' | translate}}</mat-label>
-                            <mat-select formControlName="schoolId" placeholder="All">
+                            <mat-select formControlName="schoolId" placeholder="All"  (selectionChange)="selectedSchool()">
                                 <mat-option *ngFor="let school of schoolData" [value]="school.id">
                                     {{webStorage.languageFlag == 'EN'?school.schoolName :school.m_SchoolName }}
                                 </mat-option>
@@ -65,7 +65,8 @@
             <ol class="breadcrumb">
                 <li class="breadcrumb-item w-100" aria-current="page">
                     <div class="d-flex justify-content-between align-items-center w-100">
-                        <span>{{'Labels.dashboard' | translate}} </span>
+                        <!-- {{'Labels.dashboard' | translate}}  -->
+                        <span>{{ (webStorage.languageFlag == 'EN'?'Osmanabad':'उस्मानाबाद') + (f['talukaId'].value? (' > '+(webStorage.languageFlag == 'EN'?selectedTaluka?.taluka:selectedTaluka?.m_Taluka)):'') + (f['centerId'].value? (' > '+(webStorage.languageFlag == 'EN'?selectedCenter?.center:selectedCenter?.m_Center)):'') + (f['schoolId'].value? (' > '+(webStorage.languageFlag == 'EN'?selectedschool?.schoolName:selectedschool?.m_SchoolName)):'')}}</span>
                         <button mat-stroked-button class="btn-main btn-icon" (click)="drawer.toggle()">
                             <mat-icon>filter_alt</mat-icon>
                         </button>
@@ -73,7 +74,7 @@
                 </li>
             </ol>
         </nav>
-
+        
 
         <div class="row mb-3 g-2" id="dash-stats">
             <div class="col-sm-3">
