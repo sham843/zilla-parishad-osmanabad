@@ -31,7 +31,6 @@
                                         <span class="data-label" *ngIf="data?.checkbox != head">{{head}} :</span>
                                         <div class="data-text" *ngIf="data?.checkbox != head">{{
                                             data?.Obj[data?.labelKey[j]] || '-'}}</div>
-
                                     </div>
                                     <div class="col-sm-12">
                                         <span class="data-label" *ngIf="data?.checkbox == 'Subject' || data?.checkbox == 'विषय'">{{'Labels.Subject'| translate}}</span>
@@ -41,9 +40,7 @@
                                                 assign.m_SubjectName || '-'}}
                                             </div>
                                         </div>
-
                                     </div>
-
                                 </div>
                             </div>
 
@@ -67,5 +64,4 @@
             <progressChartLine></progressChartLine>
         </div>
     </mat-card-content>
-
 </mat-card>

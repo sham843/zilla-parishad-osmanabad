@@ -291,6 +291,7 @@ export class DashboardStudentDetailsComponent implements OnInit, OnDestroy {
     switch (obj.label) {
       case 'View':
         this.viewDetails(obj);
+        obj.subjectId = this.filterForm.value.subjectId ? this.filterForm.value.subjectId: this.dashboardObj?.SubjectId;
         this.getLineChartDetails(obj);
         break;
     }
