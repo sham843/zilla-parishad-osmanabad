@@ -28,9 +28,17 @@
               [title]="lineChartOptions.title"
               [yaxis]="lineChartOptions.yaxis"
             ></apx-chart>
-            {{inspectionBy.value=='0'?'Teacher':'Officer'}}
-            <div class="table-responsive scrollbar">
+            <h6 class="text-main fw-bold mt-3 mb-0">{{inspectionBy.value=='0'?(webStorage.languageFlag == 'EN'?'Assessment by Teacher':'शिक्षकाने घेतलेले मूल्यांकन '):(webStorage.languageFlag == 'EN'?'Assessment by Officer':'अधिकाऱ्याने घेतलेले मूल्यांकन')}}</h6>
+            <div class="table-responsive scrollbar table-height-sm">
                 <table class="table dashboard-table mt-3">
+                    <thead class="bg-main-light">
+                        <tr>
+                            <th *ngFor="let header of displayedheaders" [class]="header.label=='Assessment Date'?'text-end':''">
+                                {{webStorage.languageFlag == 'EN'?header.label :header.m_label }}
+                            </th>
+                        </tr>
+                        <!-- {'label':"Assessment Date","m_label":"मूल्यांकन तारीख"} -->
+                    </thead>
                     <tbody>
                         <tr *ngFor="let item of tableArray; let j=index">
                             <td>{{j+1}}</td>
