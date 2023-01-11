@@ -59,8 +59,7 @@ export class AddUpdateStudentRegistrationComponent {
     this.data ? (this.editObj = JSON.parse(this.data), this.patchValue()) : this.allDropdownMethods();
   }
 
-  searchMobileNo(event: any) {
-    console.log(event);
+  searchMobileNo() {
     let mobileNo = this.stuRegistrationForm.value.mobileNo;
     if (this.stuRegistrationForm.controls['mobileNo'].valid) {
       this.apiService.setHttp('get', 'zp-osmanabad/Student/GetGaurdianByMobileNo?MobileNo=' + mobileNo + '&lan=EN', false, false, false, 'baseUrl');
@@ -88,9 +87,9 @@ export class AddUpdateStudentRegistrationComponent {
 
   allDropdownMethods() {
     this.getDistrict(),
-      this.getGender(),
-      this.getReligion(),
-      this.getStandard()
+    this.getGender(),
+    this.getReligion(),
+    this.getStandard()
   }
 
   formData() {

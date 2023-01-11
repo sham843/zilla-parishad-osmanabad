@@ -254,7 +254,7 @@
                         <mat-label>{{'Labels.parentMobileNo'| translate}}</mat-label>
                         <input matInput formControlName="mobileNo" maxlength="10" minlength="10"
                             (keypress)="validators.onlyDigits($event)"
-                            (keyup)="searchMobileNo($event)">
+                            (keyup)="searchMobileNo()">
                         <!-- <mat-error *ngIf="fc['mobileNo'].hasError('required')">{{'Labels.enterParentMobileNo'|
                             translate}}</mat-error> -->
                         <mat-error *ngIf="fc['mobileNo'].hasError('pattern')">{{'Labels.enterValidParentMobileNo'|
