@@ -97,7 +97,7 @@
                 </div>
                 <div class="col-sm-4">
                     <div class="row g-2">
-                        <div class="col-sm-8">
+                        <div class="col-8 col-sm-8">
                             <mat-form-field appearance="outline" class="w-100">
                                 <mat-label>{{'Labels.birthDate'| translate}}</mat-label>
                                 <input matInput [matDatepicker]="picker" [max]="maxDate" (click)="picker.open()" readonly (dateChange)="CalculateAge()"  formControlName="birthDate">
@@ -107,7 +107,7 @@
                                     Birth Date Is Required</mat-error> -->                          
                             </mat-form-field>  
                         </div>
-                        <div class="col-sm-4">
+                        <div class="col-4 col-sm-4">
                             <ng-container *ngIf="teacherRegForm.value.birthDate">
                                 <div class="age-show" *ngIf="teacherRegForm.value.age > 0">
                                     <span class="me-1">{{age}}</span><span>Year</span>
