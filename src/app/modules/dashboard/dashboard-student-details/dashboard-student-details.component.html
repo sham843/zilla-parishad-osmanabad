@@ -107,7 +107,7 @@
 
                                             <div class="data-container">
                                                 <div class="row mb-3 gy-3">
-                                                    <div *ngFor="let head of data?.labelHeader; let j=index" [class]="(data?.labelKey[j]==('schoolName'||'m_SchoolName'))? 'col-sm-8': 'col-sm-4'">
+                                                    <div *ngFor="let head of data?.labelHeader; let j=index" [class]="(data?.labelKey[j]==(languageFlag == 'English'?'schoolName':'m_SchoolName'))? 'col-sm-8': 'col-sm-4'">
                                                         <span class="data-label">{{head}} :</span>
                                                         <div class="data-text">{{ data?.Obj[data?.labelKey[j]] || '-'}}
                                                         </div>
