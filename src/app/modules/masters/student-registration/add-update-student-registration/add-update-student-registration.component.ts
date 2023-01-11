@@ -374,19 +374,19 @@ export class AddUpdateStudentRegistrationComponent {
   //#endregion   ----------------------------------------------- Submit logic End here ------------------------------------------------
 
   //#region ------------------------------------------- Image Logic Start Here -----------------------------------------------------------------
-  fileUpload(event: any, name: string) {
-    let type = name == 'img' ? 'jpg, jpeg, png' : 'jpg, jpeg, png, pdf';
+  fileUpload(event: any, photoName: string) {
+    let type = photoName == 'img' ? 'jpg, jpeg, png' : 'jpg, jpeg, png, pdf';
     this.fileUpl.uploadDocuments(event, 'Upload', type).subscribe({
       next: (res: any) => {
         console.log(res);
 
         if (res.statusCode == 200) {
           if (this.imageFile.nativeElement.value == this.aadharFile.nativeElement.value) {
-            let msg = this.languageFlag == 'EN' ? name == 'img' ? 'Upload different profile photo' : 'Upload different aadhar card' : name == 'img' ? 'भिन्न प्रोफाइल फोटो अपलोड करा' : 'वेगवेगळे आधार कार्ड अपलोड करा';
+            let msg = this.languageFlag == 'EN' ? photoName == 'img' ? 'Upload different profile photo' : 'Upload different aadhar card' : photoName == 'img' ? 'भिन्न प्रोफाइल फोटो अपलोड करा' : 'वेगवेगळे आधार कार्ड अपलोड करा';
             this.commonMethods.showPopup(msg, 1);
             return
           }
-          if (name == 'img') {
+          if (photoName == 'img') {
             this.uploadImg = res.responseData;
           } else {
             this.uploadAadhaar = res.responseData;
@@ -395,33 +395,33 @@ export class AddUpdateStudentRegistrationComponent {
           let obj = {
             "id": 0,
             "studentId": this.editObj ? this.editObj.id : 0,
-            "documentId": name == 'img' ? 1 : 2,
-            "docPath": name == 'img' ? this.uploadImg : this.uploadAadhaar
+            "documentId": photoName == 'img' ? 1 : 2,
+            "docPath": photoName == 'img' ? this.uploadImg : this.uploadAadhaar
           }
           this.imageArray.push(obj);
         } else {
-          name == 'img' ? (this.uploadImg = '', this.imageFile.nativeElement.value = '') : (this.uploadAadhaar = '', this.aadharFile.nativeElement.value = '');
+          photoName == 'img' ? (this.uploadImg = '', this.imageFile.nativeElement.value = '') : (this.uploadAadhaar = '', this.aadharFile.nativeElement.value = '');
         }
       },
       error: ((err: any) => { err.statusCode ? this.errors.handelError(err.statusCode) : this.commonMethods.showPopup(err, 1) })
     });
   }
 
-  viewImages(name: string) {
-    if (name == 'aadharPhoto') {
+  viewImages(photoName: string) {
+    if (photoName == 'aadharPhoto') {
       window.open(this.uploadAadhaar, 'blank');
-    } else if (name == 'photo') {
+    } else if (photoName == 'photo') {
       window.open(this.uploadImg, 'blank')
     }
   }
 
-  deleteImage(name: string) {
-    if (name == 'aadharPhoto') {
+  deleteImage(photoName: string) {
+    if (photoName == 'aadharPhoto') {
       this.uploadAadhaar = '';
       this.aadharFile.nativeElement.value = '';
       let index = this.imageArray.findIndex(res => res.documentId == 2);
       this.imageArray.splice(index, 1);
-    } else if (name == 'photo') {
+    } else if (photoName == 'photo') {
       this.uploadImg = '';
       this.imageFile.nativeElement.value = '';
       let index = this.imageArray.findIndex(res => res.documentId == 1);

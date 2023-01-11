@@ -116,7 +116,8 @@ getTableTranslatedData(){
         this.getTableData();
         break;
       case 'Edit':        
-        this.addUpdateAgency(obj);       
+        this.addUpdateAgency(obj);
+
         break;
       // case 'Block':
       //   this.globalDialogOpen();
@@ -143,6 +144,7 @@ getTableTranslatedData(){
         this.pageNumber = this.pageNumber;       
       }
       else if(result == 'yes' ){
+        this.getTableData();
         this.clearForm();
         this.pageNumber = 1 ;   
       }    
