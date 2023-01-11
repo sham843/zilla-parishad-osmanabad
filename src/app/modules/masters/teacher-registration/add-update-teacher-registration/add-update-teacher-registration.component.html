@@ -103,8 +103,12 @@
                         <mat-datepicker #picker ></mat-datepicker>
                         <!-- <mat-error *ngIf="f['birthDate'].hasError('required') ">
                             Birth Date Is Required</mat-error> -->                          
-                    </mat-form-field>
-                    <span>{{age}}</span> 
+                    </mat-form-field>  
+                </div>
+                <div class="col-sm-4">
+                    <div class="age-show">
+                        <span>{{age}}</span>
+                    </div>
                 </div>
             </div>
             <mat-card-subtitle class="mb-2 fw-bold">{{'Labels.AddressDetails'| translate}}</mat-card-subtitle>
