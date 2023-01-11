@@ -288,7 +288,8 @@ body {
   overflow-y: auto;
 }
 
-.scrollbar {
+.scrollbar,
+.mat-mdc-select-panel {
   -webkit-overflow-scrolling: touch;
   -ms-overflow-style: -ms-autohiding-scrollbar;
   overscroll-behavior: contain;
@@ -300,11 +301,16 @@ body {
 .scrollbar:hover::-webkit-scrollbar,
 .scrollbar:hover::-webkit-scrollbar-thumb,
 .scrollbar:hover:focus::-webkit-scrollbar,
-.scrollbar:hover:focus::-webkit-scrollbar-thumb {
+.scrollbar:hover:focus::-webkit-scrollbar-thumb,
+.mat-mdc-select-panel:hover::-webkit-scrollbar,
+.mat-mdc-select-panel:hover::-webkit-scrollbar-thumb,
+.mat-mdc-select-panel:hover:focus::-webkit-scrollbar,
+.mat-mdc-select-panel:hover:focus::-webkit-scrollbar-thumb {
   visibility: visible;
 }
 
-.scrollbar::-webkit-scrollbar {
+.scrollbar::-webkit-scrollbar,
+.mat-mdc-select-panel::-webkit-scrollbar {
   -webkit-appearance: none;
   background-color: transparent;
   height: 0.375rem;
@@ -313,7 +319,9 @@ body {
 }
 
 .scrollbar::-webkit-scrollbar-button,
-.scrollbar::-webkit-scrollbar-corner {
+.scrollbar::-webkit-scrollbar-corner,
+.mat-mdc-select-panel::-webkit-scrollbar-button,
+.mat-mdc-select-panel::-webkit-scrollbar-corner {
   display: none;
 }
 
@@ -325,11 +333,16 @@ body {
 .scrollbar:hover::-webkit-scrollbar,
 .scrollbar:hover::-webkit-scrollbar-thumb,
 .scrollbar:hover:focus::-webkit-scrollbar,
-.scrollbar:hover:focus::-webkit-scrollbar-thumb {
+.scrollbar:hover:focus::-webkit-scrollbar-thumb,
+.mat-mdc-select-panel:hover::-webkit-scrollbar,
+.mat-mdc-select-panel:hover::-webkit-scrollbar-thumb,
+.mat-mdc-select-panel:hover:focus::-webkit-scrollbar,
+.mat-mdc-select-panel:hover:focus::-webkit-scrollbar-thumb {
   visibility: visible;
 }
 
-.scrollbar::-webkit-scrollbar-thumb {
+.scrollbar::-webkit-scrollbar-thumb,
+.mat-mdc-select-panel::-webkit-scrollbar-thumb{
   background-color: hsla(214, 7%, 62%, .4);
   border-radius: 3px;
   visibility: hidden;
