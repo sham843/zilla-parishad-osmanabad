@@ -159,15 +159,15 @@ export class AddUpdateTeacherRegistrationComponent {
         "currentSchoolJoiningDate": [this.data ? this.data.teacherDetails?.currentSchoolJoiningDate : null], //, Validators.required
         "currentTalukaPresentDate": [this.data ? this.data.teacherDetails?.currentTalukaPresentDate : null], //, Validators.required
         "retirementDate": [this.data ? this.data.teacherDetails?.retirementDate : null],  //, Validators.required
-        "educationalQualificationId": [''],  //, Validators.required
+        "educationalQualificationId": 0,  //, Validators.required
         "branchId12th": 0, //, Validators.required
         "degreeOptionalSubjectsId":0, //, Validators.required
         "degreeUniversityId": 0, //, Validators.required
         "professionalQualificationId": 0,  //, Validators.required
         "bEdPercentages": [this.data ? this.data.teacherDetails?.bEdPercentages : '', Validators.pattern('[0-9]{1,2}((\.)[0-9]{2})?%?')],
         "bEdUniversityId": [this.data ? this.data.teacherDetails?.bEdUniversityId : '', Validators.pattern(this.validation.fullName)],
-        "husbandWife_Both_Service": [this.data ? this.data.teacherDetails?.husbandWife_Both_Service : ''], //, Validators.required
-        "husbandWife_OfficeName": [this.data ? this.data.teacherDetails?.husbandWife_OfficeName :null],
+        "husbandWife_Both_Service": [this.data ? this.data.teacherDetails?.husbandWife_Both_Service : null], //, Validators.required
+        "husbandWife_OfficeName": [this.data ? this.data.teacherDetails?.husbandWife_OfficeName :''],
         "isDisabled": [this.data ? this.data.teacherDetails?.isDisabled : null], //, Validators.required
         "interDistrictTransferred": [this.data ? this.data.teacherDetails?.interDistrictTransferred : null],  //, Validators.required
         "dateOFPresenceInterDistrictTransfer": [this.data ? this.data.teacherDetails?.dateOFPresenceInterDistrictTransfer : null],

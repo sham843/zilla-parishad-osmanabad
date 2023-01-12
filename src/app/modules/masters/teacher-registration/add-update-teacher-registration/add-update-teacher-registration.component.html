@@ -319,7 +319,7 @@
                             <mat-label>{{'Labels.Designation'| translate}}</mat-label>
                             <mat-select formControlName="designationId">
                                 <mat-option *ngFor="let designation of teacherRoleArray"
-                                    [value]="designation.roleIdF">{{webStorageS.getLangauge() == 'EN' ?
+                                    [value]="designation.roleId">{{webStorageS.getLangauge() == 'EN' ?
                                     designation.roleType : designation.m_RoleType}}</mat-option>
                             </mat-select>
                             <!-- <mat-error *ngIf="td['designationId'].hasError('required')">Designation Is Required</mat-error>                        -->
