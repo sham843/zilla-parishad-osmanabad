@@ -194,7 +194,6 @@ export class MasterService {
     });
   }
 
-
   GetDesignationByLevelId(langFlag: string, desigLevelId: number) {
     return new Observable((obj) => {
       this.apiService.setHttp('GET', 'zp-osmanabad/master/GetDesignationByLevelId?DesignationLevelId='+desigLevelId+'&flag_lang= '+langFlag, false, false, false, 'baseUrl');
@@ -347,9 +346,37 @@ export class MasterService {
     });
   }
 
-
+  
    
+  GetDesignationLevel(langFlag: string) {
+    return new Observable((obj) => {
+      this.apiService.setHttp('GET', 'zp-osmanabad/master/GetDesignationLevel?flag_lang='+ langFlag, false, false, false, 'baseUrl');
+      this.apiService.getHttp().subscribe({
+        next: (res: any) => {
+          if (res.statusCode == "200") {
+            // console.log("res", res);
+            obj.next(res)
+          } else { obj.error(res); }
+        },
+        error: (e: any) => { obj.error(e) }
+      });
+    });
+  }
 
+  GetAllAgencyRegistration(langFlag: string) {
+    return new Observable((obj) => {
+      this.apiService.setHttp('GET', 'zp-osmanabad/master/GetAllAgencyRegistration?flag_lang='+ langFlag, false, false, false, 'baseUrl');
+      this.apiService.getHttp().subscribe({
+        next: (res: any) => {
+          if (res.statusCode == "200") {
+            // console.log("res", res);
+            obj.next(res)
+          } else { obj.error(res); }
+        },
+        error: (e: any) => { obj.error(e) }
+      });
+    });
+  }
 
 
 

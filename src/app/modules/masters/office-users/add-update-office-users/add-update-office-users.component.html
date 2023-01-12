@@ -13,6 +13,7 @@
     <form [formGroup]="officeForm" (ngSubmit)="submitOfficeData()">
     <mat-card-content class="card-body mb-0">
         <div class="row gy-2">
+            <!-- designationlevel dropdown -->
             <div class="col-sm-6">
                 <mat-form-field appearance="outline" class="w-100 ">
                     <mat-label>{{'Labels.level' | translate}}</mat-label>
@@ -22,9 +23,20 @@
                     <!-- <mat-error *ngIf="fc['designationLevelId'].hasError('required')">{{'Labels.levelRequired' | translate}}</mat-error> -->
                 </mat-form-field>
             </div>
+            <!-- designationlevel dropdown -->
 
-            <ng-container *ngIf=" officeForm.value.designationLevelId != 6 && officeForm.value.designationLevelId != 7">
-                <div class="col-sm-6">
+            <!-- agency Dropdown  -->
+                <div class="col-sm-6" *ngIf="officeForm.value.designationLevelId == 7">
+                    <mat-form-field appearance="outline" class="w-100 ">
+                        <mat-label>{{'Labels.agencyName' | translate}}</mat-label>
+                        <mat-select  formControlName="agencyId" (selectionChange)="clearDropDown('agency')">
+                            <mat-option [value]="agency.id" *ngFor="let agency of others">{{webStorageService.languageFlag =='mr-IN' ? agency.m_Agency_Name:  agency.agency_Name}}</mat-option>
+                        </mat-select>
+                    <!-- <mat-error *ngIf="fc['districtId'].hasError('required')">{{'Labels.districtIsRequired' | translate}}</mat-error> -->
+                    </mat-form-field>
+                </div>
+            <!-- agency Drop End -->
+                <div class="col-sm-6" *ngIf=" officeForm.value.designationLevelId != 6 && officeForm.value.designationLevelId != 7">
                     <mat-form-field appearance="outline" class="w-100 ">
                         <mat-label>{{'Labels.district' | translate}}</mat-label>
                         <mat-select  formControlName="districtId" (selectionChange)="getTalukaDrop()">
@@ -33,10 +45,8 @@
                     <!-- <mat-error *ngIf="fc['districtId'].hasError('required')">{{'Labels.districtIsRequired' | translate}}</mat-error> -->
                     </mat-form-field>
                 </div>
-            </ng-container>
             
-            <ng-container *ngIf=" officeForm.value.designationLevelId != 6 && officeForm.value.designationLevelId != 7">
-                <div class="col-sm-6">
+                <div class="col-sm-6" *ngIf=" officeForm.value.designationLevelId != 6 && officeForm.value.designationLevelId != 7">
                     <mat-form-field appearance="outline" class="w-100">
                         <mat-label>{{'Labels.taluka' | translate}}</mat-label>
                         <mat-select  formControlName="talukaId" (selectionChange)="clearDropDown('Taluka')">
@@ -45,7 +55,6 @@
                     <!-- <mat-error *ngIf="fc['talukaId'].hasError('required')">{{'Labels.talukaIsRequired' | translate}}</mat-error> -->
                     </mat-form-field>
                 </div>
-            </ng-container>
 
             <div class="col-sm-6">
                 <mat-form-field appearance="outline" class="w-100 " *ngIf="officeForm.value.designationLevelId != 5 && officeForm.value.designationLevelId != 6 && officeForm.value.designationLevelId != 7">
@@ -63,7 +72,7 @@
                 </mat-form-field>
             </div>
 
-            <div class="col-sm-6" *ngIf="officeForm.value.designationId == 20 &&  officeForm.value.designationLevelId == 2">
+            <div class="col-sm-6" *ngIf="officeForm.value.designationId == 20 &&  officeForm.value.designationLevelId == 3">
                 <mat-form-field appearance="outline" class="w-100">
                     <mat-label>{{'Labels.kendra' | translate}}</mat-label>
                     <mat-select  formControlName="centerId"  (selectionChange)="getAllSchoolsByCenterId(); clearDropDown('Kendra')">
@@ -72,7 +81,7 @@
                     <!-- <mat-error *ngIf="fc['centerId'].hasError('required')">{{'Labels.kendraRequired' | translate}}</mat-error> -->
                 </mat-form-field>
             </div>
-            <ng-container *ngIf="officeForm.value.designationLevelId == 2 && officeForm.value.designationId == 20" > 
+            <ng-container *ngIf="officeForm.value.designationLevelId == 3 && officeForm.value.designationId == 20" > 
                 <div class="col-sm-6">
                     <mat-form-field appearance="outline" class="w-100">
                         <mat-label>{{'Labels.school' | translate}}</mat-label>
@@ -85,7 +94,7 @@
                 </div>
             </ng-container>
 
-            <ng-container *ngIf="officeForm.value.designationLevelId == 2 && officeForm.value.designationId == 17" >
+            <ng-container *ngIf="officeForm.value.designationLevelId == 3 && officeForm.value.designationId == 27" >
                 <div class="col-sm-6">
                     <mat-form-field appearance="outline" class="w-100">
                         <mat-label>{{'Labels.contactBeo' | translate}}</mat-label>
@@ -104,7 +113,7 @@
                 </div>
             </ng-container>
 
-            <ng-container *ngIf="officeForm.value.designationLevelId == 2 && officeForm.value.designationId == 20" >
+            <ng-container *ngIf="officeForm.value.designationLevelId == 3 && officeForm.value.designationId == 20" >
                 <div class="col-sm-6">
                     <mat-form-field appearance="outline" class="w-100">
                         <mat-label>{{'Labels.ContactNoKendra' | translate}}</mat-label>

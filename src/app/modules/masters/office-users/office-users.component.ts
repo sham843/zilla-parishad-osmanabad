@@ -254,7 +254,6 @@ export class OfficeUsersComponent implements OnInit {
     }
     const viewDialogRef = this.dialog.open(GlobalDetailComponent, {
       width: '900px',
-      
       data: data,
       disableClose: true,
       autoFocus: false
