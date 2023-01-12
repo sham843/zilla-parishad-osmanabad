@@ -19,6 +19,7 @@ import { TableComponent } from 'src/app/shared/components/table/table.component'
 import { PageStatisticsComponent } from 'src/app/shared/components/page-statistics/page-statistics.component';
 import { GlobalDialogComponent } from 'src/app/shared/components/global-dialog/global-dialog.component';
 import { FormatTimerPipe } from 'src/app/core/pipes/format-timer.pipe';
+import { AutofocusDirective } from 'src/app/core/directives/autofocus.directive';
 
 
 @NgModule({
@@ -44,7 +45,8 @@ import { FormatTimerPipe } from 'src/app/core/pipes/format-timer.pipe';
     TableComponent,
     PageStatisticsComponent,
     GlobalDialogComponent,
-    FormatTimerPipe
+    FormatTimerPipe,
+    AutofocusDirective
   ]
 })
 export class ForgotPasswordModule { }

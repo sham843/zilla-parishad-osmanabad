@@ -43,6 +43,10 @@ export class PageStatisticsComponent implements OnInit {
 
   ngOnInit(): void {
     this.getStatisticsDetails();
+    this.apiService.staticData.subscribe((res: any) => {
+      console.log(res);
+      this.getStatisticsDetails();
+    });
   }
 
   getStatisticsDetails(){
@@ -50,7 +54,8 @@ export class PageStatisticsComponent implements OnInit {
     this.apiService.getHttp().subscribe({
       next: (res: any) => {
         if (res.statusCode == 200) {
-          this.statisticsArray.push(res?.responseData);          
+          this.statisticsArray = [];
+          this.statisticsArray.push(res?.responseData);      
         }
       },
       error: ((err: any) => { this.ngxSpinner.hide(); this.errors.handelError(err) })

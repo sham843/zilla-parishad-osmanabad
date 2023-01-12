@@ -8,6 +8,7 @@ export class ApiService {
   // DataForGrid = new BehaviorSubject<any>([]); //all table set and set data using BehaviorSubject
   tableData = new Subject<any>(); //all table set and set data using BehaviorSubject
   userObj = new Array();
+  staticData = new Subject<any>(); //
 
   private httpObj: any = {
     type: '',
@@ -16,7 +17,7 @@ export class ApiService {
   };
 
   disableCloseFlag: boolean = true;
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient){}
 
   getBaseurl(url: string) {
     switch (url) {     

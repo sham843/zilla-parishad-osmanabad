@@ -67,7 +67,6 @@ export class TableComponent implements OnInit {
         this.tableHeaders = this.tableInfo.tableHeaders
         this.pageNumber = this.tableInfo.pageNumber;
         this.tableInfo.tableData ? this.tableRecords = new MatTableDataSource(this.tableInfo.tableData) : this.tableRecords = [];
-
         this.paginator?._pageIndex != 0 && this.pageIndex != this.pageNumber ? this.paginator?.firstPage() : '';
         this.tableRecords.sort = this.sort;
       }
@@ -85,12 +84,5 @@ export class TableComponent implements OnInit {
     this.pageIndex = obj.pageNumber;
     this.recObjToChild.emit(obj);
   }
-
-  // ngOnDestroy(){
-  //   this.tableSub.unsubscribe();
-  //   this.tableInfo = [];
-  //   this.tableInfo = null;
-  // }
-
 }
   
