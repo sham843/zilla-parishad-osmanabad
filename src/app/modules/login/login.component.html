@@ -764,7 +764,7 @@
                                 <div class="mb-2 text-center mt-4">
                                     <mat-form-field appearance="outline" class="w-100">
                                         <mat-label>User Name</mat-label>
-                                        <input matInput formControlName="userName"
+                                        <input matInput formControlName="userName" maxlength="50"
                                             (keypress)="validators.noSpaceAllow($event)"
                                             (blur)="clearSpace()">
                                         <mat-error *ngIf="fc['userName'].hasError('required')">User name is
@@ -775,7 +775,7 @@
                                     <mat-form-field appearance="outline" class="w-100">
                                         <mat-label>Password</mat-label>
                                         <input matInput [type]="hide ? 'password' : 'text'" formControlName="password"
-                                            (keypress)="validators.noSpaceAllow($event)">
+                                            (keypress)="validators.noSpaceAllow($event)" maxlength="50">
                                         <button mat-icon-button matSuffix (click)="hide = !hide" type="button"
                                             [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
                                             <mat-icon class="PasswordEyeView">{{hide ? 'visibility_off' :
