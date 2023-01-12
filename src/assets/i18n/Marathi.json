@@ -153,8 +153,8 @@
         "profile": "प्रोफाइल",
         "changePwd": "पासवर्ड बदला",
         "logout": "लॉग आऊट ",
-        "NoteImageFormat":"टीप: फक्त jpg jpeg png फॉर्मेट स्वीकारा",
-        "NoteImagePdfFormat":"टीप: फक्त jpg jpeg png pdf फॉर्मेट स्वीकारा",
+        "NoteImageFormat":"टीप: फक्त jpg, jpeg, png फॉर्मेट स्वीकारा",
+        "NoteImagePdfFormat":"टीप: फक्त jpg, jpeg, png, pdf फॉर्मेट स्वीकारा",
         "kendraRequired" : "केंद्र आवश्यक आहे",
         "searchByNameContactNo" : "विद्यार्थ्याचे नाव/पालक मोबाईल क्र.",
         "nameIsRequired" : "नाव आवश्यक आहे",
@@ -286,7 +286,9 @@
         "ContactNoKendra" : "संपर्क क्रमांक (केंद्र)",
         "EmailIDkendra" : "ई-मेल आयडी (केंद्र)",
         "AllTaluka":"सर्व तालुका",
-        "AllVillage":"सर्व गाव"
+        "AllVillage":"सर्व गाव",
+        "pleaseEntervalidPercentage" : "कृपया वैध टक्केवारी प्रविष्ट करा",
+        "schoolNameMarathiIsRequired" : "कृपया शाळेचे वैध नाव (मराठी) टाका"
         
     }
 }

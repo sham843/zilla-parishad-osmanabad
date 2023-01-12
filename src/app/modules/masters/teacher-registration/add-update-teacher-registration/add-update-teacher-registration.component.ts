@@ -146,35 +146,35 @@ export class AddUpdateTeacherRegistrationComponent {
         "schoolId": ['', Validators.required],
         "clusterId": ['', Validators.required],
         "designationId": ['', Validators.required],
-         "graduate_SubjectId": [''],  //, Validators.required
-        "isGraduate_PayScale": [this.data ? this.data.teacherDetails?.isGraduate_PayScale : ''],   //, Validators.required
-        "castId": [''], //, Validators.required
+         "graduate_SubjectId": 0,  //, Validators.required
+        "isGraduate_PayScale": [this.data ? this.data.teacherDetails?.isGraduate_PayScale :null],   //, Validators.required
+        "castId": 0 , //, Validators.required
         "castCategoryId": [null], //, Validators.required
         "castCertificateNo": [this.data ? this.data.teacherDetails?.castCertificateNo : '',],
         "castCertificateOffice": [this.data ? this.data.teacherDetails?.castCertificateOffice : '', Validators.pattern('^[ a-zA-Z0-9]+$')],
         "isCastVarificationDone": [this.data ? this.data.teacherDetails?.isCastVarificationDone : null],
         "castValidityNoDate": [this.data ? this.data.teacherDetails?.castValidityNoDate : ''],
         "castverificationCommitteeName": [this.data ? this.data.teacherDetails?.castverificationCommitteeName : '', Validators.pattern(this.validation.fullName)],
-        "dateOfFirstAppoinmentService": [this.data ? this.data.teacherDetails?.dateOfFirstAppoinmentService : ''],  //, Validators.required
-        "currentSchoolJoiningDate": [this.data ? this.data.teacherDetails?.currentSchoolJoiningDate : ''], //, Validators.required
-        "currentTalukaPresentDate": [this.data ? this.data.teacherDetails?.currentTalukaPresentDate : ''], //, Validators.required
-        "retirementDate": [this.data ? this.data.teacherDetails?.retirementDate : ''],  //, Validators.required
+        "dateOfFirstAppoinmentService": [this.data ? this.data.teacherDetails?.dateOfFirstAppoinmentService : null],  //, Validators.required
+        "currentSchoolJoiningDate": [this.data ? this.data.teacherDetails?.currentSchoolJoiningDate : null], //, Validators.required
+        "currentTalukaPresentDate": [this.data ? this.data.teacherDetails?.currentTalukaPresentDate : null], //, Validators.required
+        "retirementDate": [this.data ? this.data.teacherDetails?.retirementDate : null],  //, Validators.required
         "educationalQualificationId": [''],  //, Validators.required
-        "branchId12th": [''], //, Validators.required
-        "degreeOptionalSubjectsId": [''], //, Validators.required
-        "degreeUniversityId": [''], //, Validators.required
-        "professionalQualificationId": [''],  //, Validators.required
+        "branchId12th": 0, //, Validators.required
+        "degreeOptionalSubjectsId":0, //, Validators.required
+        "degreeUniversityId": 0, //, Validators.required
+        "professionalQualificationId": 0,  //, Validators.required
         "bEdPercentages": [this.data ? this.data.teacherDetails?.bEdPercentages : '', Validators.pattern('[0-9]{1,2}((\.)[0-9]{2})?%?')],
         "bEdUniversityId": [this.data ? this.data.teacherDetails?.bEdUniversityId : '', Validators.pattern(this.validation.fullName)],
         "husbandWife_Both_Service": [this.data ? this.data.teacherDetails?.husbandWife_Both_Service : ''], //, Validators.required
-        "husbandWife_OfficeName": [this.data ? this.data.teacherDetails?.husbandWife_OfficeName : ''],
-        "isDisabled": [this.data ? this.data.teacherDetails?.isDisabled : ''], //, Validators.required
-        "interDistrictTransferred": [this.data ? this.data.teacherDetails?.interDistrictTransferred : ''],  //, Validators.required
+        "husbandWife_OfficeName": [this.data ? this.data.teacherDetails?.husbandWife_OfficeName :null],
+        "isDisabled": [this.data ? this.data.teacherDetails?.isDisabled : null], //, Validators.required
+        "interDistrictTransferred": [this.data ? this.data.teacherDetails?.interDistrictTransferred : null],  //, Validators.required
         "dateOFPresenceInterDistrictTransfer": [this.data ? this.data.teacherDetails?.dateOFPresenceInterDistrictTransfer : null],
         "interDistrictTransferType": [null],
         "theOriginalDistrictInterDistrictTransfer": [this.data ? this.data.teacherDetails?.theOriginalDistrictInterDistrictTransfer : ''],
-        "dateOfSeniority": [this.data ? this.data.teacherDetails?.dateOfSeniority : ''],  //, Validators.required
-        "haveYouPassedComputerExam": [this.data ? this.data.teacherDetails?.haveYouPassedComputerExam : ''],  //, Validators.required
+        "dateOfSeniority": [this.data ? this.data.teacherDetails?.dateOfSeniority : null],  //, Validators.required
+        "haveYouPassedComputerExam": [this.data ? this.data.teacherDetails?.haveYouPassedComputerExam : null],  //, Validators.required
         "namesAndTalukasAllSchoolsWorkedEarlier": [this.data ? this.data.teacherDetails?.namesAndTalukasAllSchoolsWorkedEarlier : ''] //, Validators.required
       }),
       "assignTeacher": []
@@ -614,6 +614,7 @@ export class AddUpdateTeacherRegistrationComponent {
           this.uploadImghtml = res.responseData;
           this.teacherRegForm.value.uploadImage = this.uploadImghtml;
           // this.showAddRemImg = true;
+          this.commonMethod.showPopup(res.statusMessage, 0);
         } else {
           return;
         }
@@ -630,6 +631,8 @@ export class AddUpdateTeacherRegistrationComponent {
     //   this.img ? formValue.uploadImage = this.uploadImghtml : formValue.uploadImage = this.data.uploadImage
     // } else {
       formValue.uploadImage = this.uploadImghtml;
+      console.log("formValue",formValue);
+      
     // }
     if (this.teacherRegForm.invalid) {
       this.commonMethod.showPopup(this.webStorageS.languageFlag == 'EN' ? 'Please Enter Mandatory Fields' : 'कृपया अनिवार्य फील्ड प्रविष्ट करा', 1);
@@ -646,8 +649,8 @@ export class AddUpdateTeacherRegistrationComponent {
           next: ((res: any) => {
             this.ngxSpinner.hide();
            this.service.staticData.next('getRefreshStaticdata');
-            res.statusCode == 200 ? (this.commonMethod.showPopup(res.statusMessage, 0)) : this.commonMethod.checkEmptyData(res.statusMessage) == false ? this.errorHandler.handelError(res.statusCode) : this.commonMethod.showPopup(res.statusMessage, 1);
-            this.dialogRef.close('yes');
+             res.statusCode == 200 ? ( this.commonMethod.showPopup(res.statusMessage, 0)) : this.commonMethod.checkEmptyData(res.statusMessage) == false ? this.errorHandler.handelError(res.statusCode) : this.commonMethod.showPopup(res.statusMessage, 1);
+            res.statusCode == 200 ?  this.dialogRef.close('yes') :  this.ngxSpinner.hide();
           }),
           error: (error: any) => {
             this.ngxSpinner.hide();
