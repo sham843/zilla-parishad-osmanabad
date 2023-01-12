@@ -316,7 +316,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
             }
             this.webStorage.selectedBarchartObjData.next(this.SharingObject);
             localStorage.setItem('selectedBarchartObjData', JSON.stringify(this.SharingObject))
-            this.router.navigate(['/dashboard-student-details'])
+            this.router.navigate(['/dashboard-student-details']);
           }
         }
       },
@@ -377,7 +377,12 @@ export class DashboardComponent implements OnInit, AfterViewInit {
           strokeColor: '#fff',
           fillColors: ['#CB4B4B', '#E76A63', '#E98754', '#EFB45B', '#65C889', '#73AFFE'],
         }
-      }
+      },
+      dataLabels: {
+        formatter: function(val:any, ) {
+          return val.toFixed(2)
+        }
+      },
     };
 
 
@@ -583,13 +588,15 @@ export class DashboardComponent implements OnInit, AfterViewInit {
     this.barchartOptions.series = [];
     this.barchartOptions.xaxis.categories = [];
     let dataArray: any[] = [];
-    subjectSet.map((x: any) => {
+    subjectSet.map((x: any, index:any) => {
       const filterSubject = this.barChartData.filter((y: any) => y.subjectName == x);
       let dataObjArray: any[] = [];
       filterSubject.map((z: any) => {
         const subData = {
           name: this.selectedLang == 'English' ?(this.selectedObj.groupId == 1 ? z.optionName : z.question):(this.selectedObj.groupId == 1 ? z.m_OptionName : z.m_Question),
-          data: ([Math.round(z.totalPercental) | Math.round(z.percentage)])
+          data: ([z.totalPercental |z.percentage]),
+          dataValue:(z.totalStudent),
+          subject:(this.selectedLang == 'English' ?subjectSet[index]: subjectSet_m[index]),
         }
         dataObjArray.push(subData);
       })
@@ -597,15 +604,17 @@ export class DashboardComponent implements OnInit, AfterViewInit {
     })
     this.barchartOptions.series.push(dataArray);
     this.barchartOptions.xaxis.categories.push(...(this.selectedLang == 'English' ? subjectSet: subjectSet_m));
-    this.barchartOptions.xaxis.parameters= this.selectedLang == 'English' ?['Level','Student(%)']:['स्तर','विद्यार्थी (%)']
+    this.barchartOptions.xaxis.parameters= this.selectedLang == 'English' ?['Level','Total Student','Student(%)',]:['स्तर','एकूण विद्यार्थी', 'विद्यार्थी (%)']
     this.showBarChartF = true;
+    console.log(this.barchartOptions)
     
     this.barchartOptions.tooltip = {
-      custom: function({ series, seriesIndex, dataPointIndex, w }: any) {              
+      custom: function({ series, seriesIndex, dataPointIndex, w }: any) {   
         return (
           '<div class="arrow_box" style="padding:10px;">' +
-            "<div>" + w.config.xaxis.parameters[0]+ " : <b> " + w.globals.seriesNames[seriesIndex]+ '</b>' + "</div>" +
-            "<div>" + w.config.xaxis.parameters[1] + " : <b> " + series[seriesIndex][dataPointIndex] + '%</b>' + "</div>" +
+            "<div>" + w.globals.initialSeries[seriesIndex].subject+ " : <b> " + w.globals.seriesNames[seriesIndex]+ '</b>' + "</div>" +
+            "<div>" + w.config.xaxis.parameters[1] + " : <b> " + w.globals.initialSeries[seriesIndex].dataValue + '</b>' + "</div>" +
+            "<div>" + w.config.xaxis.parameters[2] + " : <b> " + series[seriesIndex][dataPointIndex] + '%</b>' + "</div>" +
           "</div>"
         );
       },

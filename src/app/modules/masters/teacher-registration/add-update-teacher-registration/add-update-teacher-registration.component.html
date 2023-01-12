@@ -58,7 +58,7 @@
                 <div class="col-sm">
                     <mat-form-field appearance="outline" class="w-100">
                         <mat-label>{{'Labels.emailID'| translate}}</mat-label>
-                        <input matInput formControlName="emailId">
+                        <input matInput formControlName="emailId" (keypress)="validation.emailRegex($event)">
                         <mat-error *ngIf="f['emailId'].hasError('pattern') ">{{'Labels.pleaseEnterValidEmailId' |
                             translate }}</mat-error>
                     </mat-form-field>
@@ -69,7 +69,7 @@
                             <button type="button" class="upload-btn"
                                 (click)="uploadImage.click()">{{'Labels.uploadPhoto' | translate}}</button>
                             <input type="file" name="myfile" (change)="imgUpload($event)" [disabled]="uploadImghtml"
-                                #uploadImage />
+                                #uploadImage  accept=".png, .jpg, .jpeg"/>
                         </div>
                         <div class="action-btn" *ngIf="uploadImghtml">
                             <button type="button" mat-icon-button class="btn-icon text-primary" (click)="viewImg()"
@@ -252,15 +252,16 @@
                             <mat-label>{{'Labels.bEdPercentages'| translate}}</mat-label>
                             <input matInput formControlName="bEdPercentages" maxlength="10"
                                 (keypress)="validation.noFirstSpaceAllow($event)">
-                            <mat-error *ngIf="td['bEdPercentages'].hasError('pattern')">Please Enter Valid
-                                Percentage</mat-error>
+                            <mat-error *ngIf="td['bEdPercentages'].hasError('pattern')">
+                                {{'Labels.pleaseEntervalidPercentage' | translate}}
+                            </mat-error>
                         </mat-form-field>
                     </div>
                     <div class="col-sm-4">
                         <mat-form-field appearance="outline" class="w-100 ">
                             <mat-label>{{'Labels.bEdUniversity'| translate}}</mat-label>
-                            <input matInput formControlName="bEdUniversityId" maxlength="50"
-                                (keypress)="validation.noFirstSpaceAllow($event);validation.alphabetsWithSpaces($event)">
+                            <input matInput formControlName="bEdUniversityId" maxlength="150"
+                                (keypress)="validation.noFirstSpaceAllow($event);">
                         </mat-form-field>
                     </div>
                 </ng-container>
@@ -318,7 +319,7 @@
                             <mat-label>{{'Labels.Designation'| translate}}</mat-label>
                             <mat-select formControlName="designationId">
                                 <mat-option *ngFor="let designation of teacherRoleArray"
-                                    [value]="designation.id">{{webStorageS.getLangauge() == 'EN' ?
+                                    [value]="designation.roleId">{{webStorageS.getLangauge() == 'EN' ?
                                     designation.roleType : designation.m_RoleType}}</mat-option>
                             </mat-select>
                             <!-- <mat-error *ngIf="td['designationId'].hasError('required')">Designation Is Required</mat-error>                        -->
@@ -382,7 +383,7 @@
                                 <mat-label>{{'Labels.casteCertificateOffice'| translate}}</mat-label>
                                 <input matInput formControlName="castCertificateOffice"
                                     (keypress)="validation.noFirstSpaceAllow($event)">
-                                <mat-error *ngIf="td['castCertificateOffice'].hasError('pattern')">Cast Certificate Office Is Invalid</mat-error> 
+                                <!-- <mat-error *ngIf="td['castCertificateOffice'].hasError('pattern')">Cast Certificate Office Is Invalid</mat-error>  -->
                             </mat-form-field>
                         </div>
                         <div class="col-sm-4">
@@ -445,9 +446,12 @@
                         <mat-form-field appearance="outline" class="w-100">
                             <mat-label> {{'Labels.retirementDate'| translate}}</mat-label>
                             <input matInput [matDatepicker]="RetirementDate"  [min]="maxDate" readonly (click)="RetirementDate.open()" formControlName="retirementDate">
-                            <mat-datepicker-toggle matIconSuffix [for]="RetirementDate"></mat-datepicker-toggle>
-                            <mat-datepicker #RetirementDate></mat-datepicker>
+                            <mat-datepicker-toggle matIconSuffix [for]="RetirementDate"></mat-datepicker-toggle>                           
+                            <mat-datepicker #RetirementDate></mat-datepicker>                              
                         </mat-form-field>
+                        <ng-container *ngIf="teacherRegForm.value.teacherDetails.RetirementDate < maxDate">
+                            <mat-error >Date Is Expired</mat-error>                           
+                       </ng-container>
                     </div>
 
                     <div class="col-sm-4">
@@ -517,6 +521,7 @@
                                         interDistricttrasferType.m_InterDistrictTransferType}}</mat-option>
                                 </mat-select>
                                 <!-- <mat-error *ngIf="td['interDistrictTransferType'].hasError('required')">Inter District Transfer Type Is Required</mat-error>                            -->
+
                             </mat-form-field>
                         </div>
                         <div class="col-sm-4">
@@ -525,6 +530,7 @@
                                     translate}}</mat-label>
                                 <input matInput formControlName="theOriginalDistrictInterDistrictTransfer">
                                 <!-- <mat-error *ngIf="td['theOriginalDistrictInterDistrictTransfer'].hasError('required')">The Original District Inter District Transfer Is Required</mat-error> -->
+                                <mat-error *ngIf="td['theOriginalDistrictInterDistrictTransfer'].hasError('pattern')">Inter District Transfer Type Is Invalid</mat-error> 
                             </mat-form-field>
                         </div>
                     </ng-container>
@@ -552,7 +558,7 @@
                     <div class="col-sm-4">
                         <mat-form-field appearance="outline" class="w-100 ">
                             <mat-label>{{'Labels.schoolNames&TalukaWorkEarlier'| translate}}</mat-label>
-                            <input matInput formControlName="namesAndTalukasAllSchoolsWorkedEarlier">
+                            <input matInput formControlName="namesAndTalukasAllSchoolsWorkedEarlier" maxlength="30">
                             <!-- <mat-error *ngIf="td['haveYouPassedComputerExam'].hasError('required')">Names And Talukas All Schools Worked Earlier Is Required</mat-error> -->
                         </mat-form-field>
                     </div>
