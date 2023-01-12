@@ -359,7 +359,7 @@ export class AddUpdateStudentRegistrationComponent {
 
         if (res.statusCode == 200) {
           if (this.imageFile.nativeElement.value == this.aadharFile.nativeElement.value) {
-            let msg = this.languageFlag == 'EN' ? photoName == 'img' ? 'Upload different profile photo' : 'Upload different aadhar card' : photoName == 'img' ? 'भिन्न प्रोफाइल फोटो अपलोड करा' : 'वेगवेगळे आधार कार्ड अपलोड करा';
+            let msg = this.languageFlag == 'EN' ? photoName == 'img' ? 'Upload different profile photo' : 'Upload different Aadhaar card' : photoName == 'img' ? 'भिन्न प्रोफाइल फोटो अपलोड करा' : 'वेगवेगळे आधार कार्ड अपलोड करा';
             this.commonMethods.showPopup(msg, 1);
             return
           }
