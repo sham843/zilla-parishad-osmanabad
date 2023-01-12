@@ -53,28 +53,28 @@ export class AddUpdateTeacherRegistrationComponent {
 
   assignClass: boolean = false;
   casteVerification = [
-    { id: 1, name: 'yes', isCastVarificationDone: true, _name: 'होय' },
-    { id: 2, name: 'no', isCastVarificationDone: false, _name: 'नाही' }
+    { id: 1, name: 'Yes', isCastVarificationDone: true, _name: 'होय' },
+    { id: 2, name: 'No', isCastVarificationDone: false, _name: 'नाही' }
   ];
   husbandWifeBothServiceArray = [
-    { id: 1, name: 'yes', husbandWife_Both_Service: true, _name: 'होय' },
-    { id: 2, name: 'no', husbandWife_Both_Service: false, _name: 'नाही' }
+    { id: 1, name: 'Yes', husbandWife_Both_Service: true, _name: 'होय' },
+    { id: 2, name: 'No', husbandWife_Both_Service: false, _name: 'नाही' }
   ];
   AreyouDisabled = [
-    { id: 1, name: 'yes', isDisabled: true, _name: 'होय' },
-    { id: 2, name: 'no', isDisabled: false, _name: 'नाही' }
+    { id: 1, name: 'Yes', isDisabled: true, _name: 'होय' },
+    { id: 2, name: 'No', isDisabled: false, _name: 'नाही' }
   ];
   interDistrictTransferredArray = [
-    { id: 1, name: 'yes', interDistrictTransferred: true, _name: 'होय' },
-    { id: 2, name: 'no', interDistrictTransferred: false, _name: 'नाही' }
+    { id: 1, name: 'Yes', interDistrictTransferred: true, _name: 'होय' },
+    { id: 2, name: 'No', interDistrictTransferred: false, _name: 'नाही' }
   ];
   haveYouPassedComputerExamArray = [
-    { id: 1, name: 'yes', haveYouPassedComputerExam: true, _name: 'होय' },
-    { id: 2, name: 'no', haveYouPassedComputerExam: false, _name: 'नाही' }
+    { id: 1, name: 'Yes', haveYouPassedComputerExam: true, _name: 'होय' },
+    { id: 2, name: 'No', haveYouPassedComputerExam: false, _name: 'नाही' }
   ];
   isGraduatePayScaleArray = [
-    { id: 1, name: 'yes', isGraduate_PayScale: true, _name: 'होय' },
-    { id: 2, name: 'no', isGraduate_PayScale: false, _name: 'नाही' }
+    { id: 1, name: 'Yes', isGraduate_PayScale: true, _name: 'होय' },
+    { id: 2, name: 'No', isGraduate_PayScale: false, _name: 'नाही' }
   ];
 
 
@@ -151,10 +151,10 @@ export class AddUpdateTeacherRegistrationComponent {
         "castId": 0 , //, Validators.required
         "castCategoryId": [null], //, Validators.required
         "castCertificateNo": [this.data ? this.data.teacherDetails?.castCertificateNo : '',],
-        "castCertificateOffice": [this.data ? this.data.teacherDetails?.castCertificateOffice : '', Validators.pattern('^[ a-zA-Z0-9]+$')],
+        "castCertificateOffice": [this.data ? this.data.teacherDetails?.castCertificateOffice : ''],
         "isCastVarificationDone": [this.data ? this.data.teacherDetails?.isCastVarificationDone : null],
         "castValidityNoDate": [this.data ? this.data.teacherDetails?.castValidityNoDate : ''],
-        "castverificationCommitteeName": [this.data ? this.data.teacherDetails?.castverificationCommitteeName : '', Validators.pattern(this.validation.fullName)],
+        "castverificationCommitteeName": [this.data ? this.data.teacherDetails?.castverificationCommitteeName : ''],
         "dateOfFirstAppoinmentService": [this.data ? this.data.teacherDetails?.dateOfFirstAppoinmentService : null],  //, Validators.required
         "currentSchoolJoiningDate": [this.data ? this.data.teacherDetails?.currentSchoolJoiningDate : null], //, Validators.required
         "currentTalukaPresentDate": [this.data ? this.data.teacherDetails?.currentTalukaPresentDate : null], //, Validators.required
@@ -165,14 +165,14 @@ export class AddUpdateTeacherRegistrationComponent {
         "degreeUniversityId": 0, //, Validators.required
         "professionalQualificationId": 0,  //, Validators.required
         "bEdPercentages": [this.data ? this.data.teacherDetails?.bEdPercentages : '', Validators.pattern('[0-9]{1,2}((\.)[0-9]{2})?%?')],
-        "bEdUniversityId": [this.data ? this.data.teacherDetails?.bEdUniversityId : '', Validators.pattern(this.validation.fullName)],
+        "bEdUniversityId": [this.data ? this.data.teacherDetails?.bEdUniversityId : ''],
         "husbandWife_Both_Service": [this.data ? this.data.teacherDetails?.husbandWife_Both_Service : null], //, Validators.required
         "husbandWife_OfficeName": [this.data ? this.data.teacherDetails?.husbandWife_OfficeName :''],
         "isDisabled": [this.data ? this.data.teacherDetails?.isDisabled : null], //, Validators.required
         "interDistrictTransferred": [this.data ? this.data.teacherDetails?.interDistrictTransferred : null],  //, Validators.required
         "dateOFPresenceInterDistrictTransfer": [this.data ? this.data.teacherDetails?.dateOFPresenceInterDistrictTransfer : null],
         "interDistrictTransferType": [null],
-        "theOriginalDistrictInterDistrictTransfer": [this.data ? this.data.teacherDetails?.theOriginalDistrictInterDistrictTransfer : ''],
+        "theOriginalDistrictInterDistrictTransfer": [this.data ? this.data.teacherDetails?.theOriginalDistrictInterDistrictTransfer : '', Validators.pattern('^[ a-zA-Z]+$')],
         "dateOfSeniority": [this.data ? this.data.teacherDetails?.dateOfSeniority : null],  //, Validators.required
         "haveYouPassedComputerExam": [this.data ? this.data.teacherDetails?.haveYouPassedComputerExam : null],  //, Validators.required
         "namesAndTalukasAllSchoolsWorkedEarlier": [this.data ? this.data.teacherDetails?.namesAndTalukasAllSchoolsWorkedEarlier : ''] //, Validators.required
