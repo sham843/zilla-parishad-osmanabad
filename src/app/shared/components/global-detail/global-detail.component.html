@@ -19,10 +19,17 @@
 
                             <div class="data-container">
                                 <div class="row mb-3 gy-3">
-                                    <div class="col-sm-4" *ngFor="let head of data.labelHeader; let j=index">
-                                        <span class="data-label" *ngIf="data?.checkbox != head">{{head}} :</span>
-                                        <div class="data-text text-break" *ngIf="data?.checkbox != head">{{
-                                            data?.Obj[data?.labelKey[j]] || '-'}}</div>
+                                    <div class="col-sm-6" *ngFor="let head of data.labelHeader; let j=index">
+                                        <div class="row g-0">
+                                            <div class="col-6 col-sm-5">
+                                                <span class="data-label" *ngIf="data?.checkbox != head">{{head}}</span>
+                                            </div>
+                                            <div class="col-6 col-sm-7">
+                                                <div class="data-text" *ngIf="data?.checkbox != head">
+                                                    :{{data?.Obj[data?.labelKey[j]] || '-'}}
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                     <div class="col-sm-12">
                                         <span class="data-label" *ngIf="data?.checkbox == 'Subject' || data?.checkbox == 'विषय'">{{'Labels.Subject'| translate}}</span>
