@@ -284,7 +284,9 @@
         "dataNotFound":"डेटा उपलब्ध नाही",
         "View" : "दृश्य",
         "ContactNoKendra" : "संपर्क क्रमांक (केंद्र)",
-         "EmailIDkendra" : "ई-मेल आयडी (केंद्र)"
+        "EmailIDkendra" : "ई-मेल आयडी (केंद्र)",
+        "AllTaluka":"सर्व तालुका",
+        "AllVillage":"सर्व गाव"
         
     }
 }
