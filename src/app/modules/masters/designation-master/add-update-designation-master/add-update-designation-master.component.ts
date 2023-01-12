@@ -43,7 +43,7 @@ export class AddUpdateDesignationMasterComponent {
       "id": [0],
       "designationType": ['',[Validators.required, Validators.pattern(this.validation.alphaNumericOnly)]],
       "m_DesignationType": ['',[Validators.required, Validators.pattern('^[-\u0900-\u096F ]+$')]],
-      "designationLevelId": [this.editData ? { value: this.editData.designationLevelId, disabled: this.formDisabled } :'', Validators.required]
+      "designationLevelId": ['', Validators.required]
     }) 
   }
   //#endregion  ---------------------------- End Desiganation-Master Formdata ------------------------------- //
@@ -56,7 +56,7 @@ export class AddUpdateDesignationMasterComponent {
       next: ((res: any) => {
         if (res.statusCode == '200' && res.responseData.length) {
           this.DesiganationLevelData = res.responseData; 
-          this.editFlag ? (this.designationForm.controls['designationLevelId'].setValue(this.editData.designationLevelId)) : '';
+          this.editFlag ? ((this.designationForm.controls['designationLevelId'].setValue(this.editData.designationLevelId)), this.designationForm.controls['designationLevelId'].disable()) : '';
         }
       }), error: (error: any) => {
         this.commonMethod.checkEmptyData(error.statusText) == false ? this.errorHandler.handelError(error.statusCode) : this.commonMethod.showPopup(error.statusText, 1);
@@ -127,6 +127,7 @@ export class AddUpdateDesignationMasterComponent {
       this.service.getHttp().subscribe({     
         next: (res: any) => {
           this.ngxSpinner.hide();
+          this.service.staticData.next('getRefreshStaticdata');
           res.statusCode == 200 ? ( this.commonMethod.showPopup(res.statusMessage, 0)) : this.commonMethod.checkEmptyData(res.statusMessage) == false ? this.errorHandler.handelError(res.statusCode) : this.commonMethod.showPopup(res.statusMessage, 1);
           res.statusCode == 200 ?  this.dialogRef.close('yes') :  this.ngxSpinner.hide();
         },
@@ -150,9 +151,10 @@ export class AddUpdateDesignationMasterComponent {
     this.designationForm.patchValue({
       id: obj.id,
       designationType:obj.designationName,
-      m_DesignationType:obj.m_DesignationType
+      m_DesignationType:obj.m_DesignationType,
+      designationLevelId : obj.designationLevelId
     });
-    this.formData; this.getDesiganationLevel();
+    this.getDesiganationLevel();
   }
   //#endregion -------------------------------------End Desiganation-Master Edit ---------------------------------//
   //#region  ------------------------------------- Desiganation-Master Clear ---------------------------------//

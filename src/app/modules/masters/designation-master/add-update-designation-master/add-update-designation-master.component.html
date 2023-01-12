@@ -12,11 +12,11 @@
         </mat-card-header>
         <mat-card-content class="card-body">
             <div class="row mt-2 gy-2">
-                <div class="col-sm">
+                <div class="col-sm" >
                     <mat-form-field appearance="outline" class="w-100 ">
                         <mat-label>{{'Labels.DesignationLevel' | translate}}</mat-label>
                         <mat-select formControlName="designationLevelId"
-                            (selectionChange)="clearForm('designationLevelId')">
+                         (selectionChange)="clearForm('designationLevelId')">
                             <mat-option *ngFor="let designation of DesiganationLevelData"
                                 [value]="designation.id">{{webStorage.getLangauge() == 'EN' ?
                                 designation.designationLevel : designation.m_DesignationLevel}}</mat-option>                           

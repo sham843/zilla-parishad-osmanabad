@@ -103,10 +103,9 @@ getTableTranslatedData(){
       },
       error: ((err: any) => { this.errors.handelError(err) })
     });
-
   }
   //#endregion -------------------------------------End Designation-Master Table-Data ------------------------------- //
-  childCompInfo(obj: any) {        
+  childCompInfo(obj: any) {    
     switch (obj.label) {
       case 'Pagination':
         this.pageNumber = obj.pageNumber;       

@@ -336,6 +336,7 @@ export class AddUpdateStudentRegistrationComponent {
         next: (res: any) => {
           if (res.statusCode == 200) {
             this.ngxSpinner.hide();
+            this.apiService.staticData.next('getRefreshStaticdata');
             this.commonMethods.showPopup(res.statusMessage, 0);
             this.dialogRef.close('yes')
           } else {
