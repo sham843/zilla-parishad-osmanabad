@@ -36,6 +36,7 @@ export class AddUpdateOfficeUsersComponent implements OnInit {
 
   ngOnInit() {
     this.defaultForm();
+    this.getDistrictDrop();
     // console.log("dataaa",this.data);
     (!this.data) ? (this.getLevelDrop()) : '';
   }
@@ -59,7 +60,7 @@ export class AddUpdateOfficeUsersComponent implements OnInit {
         "designationId": [this.data ? this.data.designationId : null, Validators.required],
         "designationLevelId": [this.data ? this.data.designationLevelId : null,[Validators.required]],
         "stateId": [this.data ? 0 : 0],
-        "districtId": [this.data ? this.data.districtId : null, Validators.required ],
+        "districtId": [{ value: this.data ? this.data.districtId :1 , disabled: true } , Validators.required ],
         "talukaId": [this.data ? this.data.talukaId : null, Validators.required ],
         "userTypeId": [this.webStorageService.getUserTypeId()],
         "subUserTypeId": [this.data ? 0 : 0],
