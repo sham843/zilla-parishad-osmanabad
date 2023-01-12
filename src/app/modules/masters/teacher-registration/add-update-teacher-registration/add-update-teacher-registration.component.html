@@ -58,7 +58,7 @@
                 <div class="col-sm">
                     <mat-form-field appearance="outline" class="w-100">
                         <mat-label>{{'Labels.emailID'| translate}}</mat-label>
-                        <input matInput formControlName="emailId">
+                        <input matInput formControlName="emailId" (keypress)="validation.emailRegex($event)">
                         <mat-error *ngIf="f['emailId'].hasError('pattern') ">{{'Labels.pleaseEnterValidEmailId' |
                             translate }}</mat-error>
                     </mat-form-field>
@@ -69,7 +69,7 @@
                             <button type="button" class="upload-btn"
                                 (click)="uploadImage.click()">{{'Labels.uploadPhoto' | translate}}</button>
                             <input type="file" name="myfile" (change)="imgUpload($event)" [disabled]="uploadImghtml"
-                                #uploadImage />
+                                #uploadImage  accept=".png, .jpg, .jpeg"/>
                         </div>
                         <div class="action-btn" *ngIf="uploadImghtml">
                             <button type="button" mat-icon-button class="btn-icon text-primary" (click)="viewImg()"
@@ -319,7 +319,7 @@
                             <mat-label>{{'Labels.Designation'| translate}}</mat-label>
                             <mat-select formControlName="designationId">
                                 <mat-option *ngFor="let designation of teacherRoleArray"
-                                    [value]="designation.id">{{webStorageS.getLangauge() == 'EN' ?
+                                    [value]="designation.roleIdF">{{webStorageS.getLangauge() == 'EN' ?
                                     designation.roleType : designation.m_RoleType}}</mat-option>
                             </mat-select>
                             <!-- <mat-error *ngIf="td['designationId'].hasError('required')">Designation Is Required</mat-error>                        -->
@@ -446,9 +446,12 @@
                         <mat-form-field appearance="outline" class="w-100">
                             <mat-label> {{'Labels.retirementDate'| translate}}</mat-label>
                             <input matInput [matDatepicker]="RetirementDate"  [min]="maxDate" readonly (click)="RetirementDate.open()" formControlName="retirementDate">
-                            <mat-datepicker-toggle matIconSuffix [for]="RetirementDate"></mat-datepicker-toggle>
-                            <mat-datepicker #RetirementDate></mat-datepicker>
+                            <mat-datepicker-toggle matIconSuffix [for]="RetirementDate"></mat-datepicker-toggle>                           
+                            <mat-datepicker #RetirementDate></mat-datepicker>                              
                         </mat-form-field>
+                        <ng-container *ngIf="teacherRegForm.value.teacherDetails.RetirementDate < maxDate">
+                            <mat-error >Date Is Expired</mat-error>                           
+                       </ng-container>
                     </div>
 
                     <div class="col-sm-4">
