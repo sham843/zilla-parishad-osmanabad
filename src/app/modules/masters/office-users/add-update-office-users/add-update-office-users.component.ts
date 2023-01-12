@@ -174,6 +174,7 @@ export class AddUpdateOfficeUsersComponent implements OnInit {
       this.apiService.setHttp(this.data ? 'PUT' : 'POST', 'zp_osmanabad/Office/'+submitUrl, false, this.officeForm.value, false, 'baseUrl');
       this.apiService.getHttp().subscribe({
         next: (res: any) => {
+          this.apiService.staticData.next('getRefreshStaticdata');
           res.statusCode == "200" ? ( this.commonService.showPopup(res.statusMessage, 0)) : this.commonService.checkEmptyData(res.statusMessage) == false ? this.error.handelError(res.statusCode) : this.commonService.showPopup(res.statusMessage, 1);
           res.statusCode == "200" ?  this.dialogRef.close('Yes') :  this.ngxSpinner.hide();
         },

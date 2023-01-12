@@ -267,22 +267,23 @@ export class AddUpdateSchoolRegistrationComponent {
   onSubmit() {
     let formValue = this.schoolRegForm.value;
 
-    console.log("before Submit condition Img : ", formValue.uploadImage);
+    // console.log("before Submit condition Img : ", formValue.uploadImage);
 
     // formValue.uploadImage ? formValue.uploadImage = this.uploadImg : '';
-    if (this.editFlag == true) {
+    // if (this.editFlag == true) {
       // this.img ? formValue.uploadImage = this.uploadImg :
-         formValue.uploadImage = this.data.uploadImage
-    }
-    else{
+    //      formValue.uploadImage = this.data.uploadImage
+    //      console.log("If Block Img : ", formValue.uploadImage);
+    // }
+    // else{
       // formValue.uploadImage = this.uploadImg;
       formValue.uploadImage = this.schoolRegForm.value.uploadImage;
-
-    }
+      // console.log("Else Block Img : ", formValue.uploadImage);
+    // }
     formValue.schoolDocument = this.imgArray;
 
     // console.log("Submit obj : ", formValue);
-    console.log("onSubmit Img : ", formValue.uploadImage);
+    // console.log("onSubmit Img : ", formValue.uploadImage);
 
     let url = this.editObj ? 'Update' : 'Add'
 
@@ -296,6 +297,7 @@ export class AddUpdateSchoolRegistrationComponent {
       this.apiService.getHttp().subscribe({
         next: (res: any) => {
           this.ngxSpinner.hide();
+          this.apiService.staticData.next('getRefreshStaticdata');
           res.statusCode == 200 ? (this.commonMethod.showPopup(res.statusMessage, 0)) : this.commonMethod.checkEmptyData(res.statusMessage) == false ? this.errors.handelError(res.statusCode) : this.commonMethod.showPopup(res.statusMessage, 1);
           res.statusCode == 200 ? this.dialogRef.close('yes') : this.ngxSpinner.hide();
         },
@@ -316,7 +318,7 @@ export class AddUpdateSchoolRegistrationComponent {
     this.data.uploadImage ? this.schoolRegForm.value.uploadImage = this.data.uploadImage : '';
     this.uploadImg = this.data?.uploadImage
 
-    console.log("onEdit Img : ", this.schoolRegForm.value.uploadImage);
+    // console.log("onEdit Img : ", this.schoolRegForm.value.uploadImage);
     this.data.schoolDocument.map((res: any) => {
       let schoolDocumentObj = {
         "id": res.id,

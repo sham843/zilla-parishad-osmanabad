@@ -74,8 +74,9 @@ export class AddUpdateAgencyRegistrationComponent {
       this.api.setHttp(this.data ? 'put' : 'post', 'zp-osmanabad/Agency/' + (this.data ? 'Update' : 'Add'), false, obj, false, 'baseUrl');
       this.api.getHttp().subscribe({
         next: (res: any) => {
+          this.api.staticData.next('getRefreshStaticdata');
           res.statusCode == 200 ? (this.common.showPopup(res.statusMessage, 0), this.dialogRef.close('Yes'), clear.resetForm(), this.ngxSpinner.hide(), this.defaultForm()) : (this.common.showPopup(res.statusMessage, 1), this.ngxSpinner.hide());
-          res.statusMessage == "Agency_MobileNo Already Exist." ? this.ngxSpinner.hide() : ''
+          res.statusMessage == "MobileNo Already Exist." ? this.ngxSpinner.hide() : ''
         },
         error: ((err: any) => { this.errors.handelError(err) })
       })
