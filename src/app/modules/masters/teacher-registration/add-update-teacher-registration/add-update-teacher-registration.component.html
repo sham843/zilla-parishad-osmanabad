@@ -196,6 +196,9 @@
                             <!-- <mat-error *ngIf="td['educationalQualificationId'].hasError('required')">Educational Qualification Is Required</mat-error> -->
                         </mat-form-field>
                     </div>
+                    <ng-container *ngIf="teacherRegForm.value.teacherDetails.educationalQualificationId == 3  || teacherRegForm.value.teacherDetails.educationalQualificationId == 2">
+
+                   
                     <div class="col-sm-4">
                         <mat-form-field appearance="outline" class="w-100 ">
                             <mat-label>{{'Labels.12thBranch'| translate}}</mat-label>
@@ -207,6 +210,9 @@
                             <!-- <mat-error *ngIf="td['branchId12th'].hasError('required')">12th Branch Is Required</mat-error> -->
                         </mat-form-field>
                     </div>
+                    <ng-container *ngIf="teacherRegForm.value.teacherDetails.educationalQualificationId == 3">
+
+                    
                     <div class="col-sm-4">
                         <mat-form-field appearance="outline" class="w-100 ">
                             <mat-label>{{'Labels.degreeOptionalSubjects'| translate}}</mat-label>
@@ -257,7 +263,9 @@
                                 (keypress)="validation.noFirstSpaceAllow($event);validation.alphabetsWithSpaces($event)">
                         </mat-form-field>
                     </div>
-                </div>
+                </ng-container>
+                </ng-container>
+                </div>            
                 <div class="row">
                     <mat-card-subtitle class="mb-2 fw-bold">{{'Labels.professionalQualification'|
                         translate}}</mat-card-subtitle>
@@ -309,9 +317,9 @@
                         <mat-form-field appearance="outline" class="w-100 ">
                             <mat-label>{{'Labels.Designation'| translate}}</mat-label>
                             <mat-select formControlName="designationId">
-                                <mat-option *ngFor="let designation of designationArray"
+                                <mat-option *ngFor="let designation of teacherRoleArray"
                                     [value]="designation.id">{{webStorageS.getLangauge() == 'EN' ?
-                                    designation.designationType : designation.m_DesignationType}}</mat-option>
+                                    designation.roleType : designation.m_RoleType}}</mat-option>
                             </mat-select>
                             <!-- <mat-error *ngIf="td['designationId'].hasError('required')">Designation Is Required</mat-error>                        -->
                         </mat-form-field>
