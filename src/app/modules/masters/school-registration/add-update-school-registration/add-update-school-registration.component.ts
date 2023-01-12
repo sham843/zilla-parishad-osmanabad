@@ -213,6 +213,7 @@ export class AddUpdateSchoolRegistrationComponent {
       next : (res : any)=>{
         if (res.statusCode == 200) {
           this.uploadImg = res.responseData;
+          this.schoolRegForm.value.uploadImage = this.uploadImg;
           this.commonMethod.showPopup(res.statusMessage, 0);
         }
         else {
@@ -266,17 +267,23 @@ export class AddUpdateSchoolRegistrationComponent {
   onSubmit() {
     let formValue = this.schoolRegForm.value;
 
-    formValue.uploadImage ? formValue.uploadImage = this.uploadImg : '';
+    console.log("before Submit condition Img : ", formValue.uploadImage);
+
+    // formValue.uploadImage ? formValue.uploadImage = this.uploadImg : '';
     if (this.editFlag == true) {
-        this.img ? formValue.uploadImage = this.uploadImg : formValue.uploadImage = this.data.uploadImage
+      // this.img ? formValue.uploadImage = this.uploadImg :
+         formValue.uploadImage = this.data.uploadImage
     }
     else{
-      formValue.uploadImage = this.uploadImg;
+      // formValue.uploadImage = this.uploadImg;
+      formValue.uploadImage = this.schoolRegForm.value.uploadImage;
+
     }
     formValue.schoolDocument = this.imgArray;
 
     // console.log("Submit obj : ", formValue);
-    
+    console.log("onSubmit Img : ", formValue.uploadImage);
+
     let url = this.editObj ? 'Update' : 'Add'
 
     if (!this.schoolRegForm.valid) {
@@ -306,9 +313,10 @@ export class AddUpdateSchoolRegistrationComponent {
     // console.log("Edit obj : ", this.data);
     
     this.editFlag = true;
-    // this.data.uploadImage ? this.schoolRegForm.value.uploadImage = this.data.uploadImage : '';
+    this.data.uploadImage ? this.schoolRegForm.value.uploadImage = this.data.uploadImage : '';
     this.uploadImg = this.data?.uploadImage
 
+    console.log("onEdit Img : ", this.schoolRegForm.value.uploadImage);
     this.data.schoolDocument.map((res: any) => {
       let schoolDocumentObj = {
         "id": res.id,
@@ -328,10 +336,12 @@ export class AddUpdateSchoolRegistrationComponent {
 
   //#region ------------------------------------------------- Clear Img field start here --------------------------------------------//
   clearImg() {
+    console.log("Clear Img : ", this.schoolRegForm.value.uploadImage);
+    
       this.uploadImg = '';
       this.schoolRegForm.value.uploadImage = '';
       this.f['uploadImage'].setValue('');
-      this.editObj.uploadImage = '';
+      // this.editObj.uploadImage = '';
   }
 
   clearMultipleImg(index: any) {
