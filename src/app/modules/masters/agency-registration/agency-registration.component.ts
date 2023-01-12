@@ -28,8 +28,8 @@ export class AgencyRegistrationComponent implements OnInit {
   tableDatasize!: Number;
   searchText = new FormControl('');
   cardViewFlag: boolean = false;
-  displayedheadersEnglish = ['Sr. No.', 'Agency Name', 'Agency Mobile No.', 'Agency Email ID', 'Action'];
-  displayedheadersMarathi = ['अनुक्रमांक', 'एजन्सी नाव', 'मोबाईल क्र.', 'ई-मेल आयडी', 'कृती'];
+  displayedheadersEnglish = ['Sr. No.', 'Name', 'Mobile No.', 'Email ID', 'Action'];
+  displayedheadersMarathi = ['अनुक्रमांक', 'नाव', 'मोबाईल क्र.', 'ई-मेल आयडी', 'कृती'];
   langTypeName: any;
 
   constructor(private dialog: MatDialog, private apiService: ApiService, private ngxSpinner: NgxSpinnerService,
@@ -99,14 +99,14 @@ export class AgencyRegistrationComponent implements OnInit {
       this.agencyReport.push(obj);
     });
     if (this.agencyReport.length) {
-      let keyPDFHeader = ['Sr.No.', "Agency Name", "Agency Mobile No.", "Agency Email ID"];
+      let keyPDFHeader = ['Sr.No.', "Name", "Mobile No.", "Email ID"];
       let ValueData =
         this.agencyReport.reduce(
           (acc: any, obj: any) => [...acc, Object.values(obj).map((value) => value)], []
         );
 
       let objData: any = {
-        'topHedingName': 'Agency Report',
+        'topHedingName': 'Other Registration Report',
         'createdDate':'Created on:'+this.datepipe.transform(new Date(), 'yyyy-MM-dd, h:mm a')
       }
       this.downloadPdfservice.downLoadPdf(keyPDFHeader, ValueData, objData);
