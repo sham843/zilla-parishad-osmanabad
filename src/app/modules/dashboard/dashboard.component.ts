@@ -298,7 +298,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
           show: false
         },
         events: {
-          click: (event: any, chartContext: any, config: any) => {
+          dataPointSelection: (event: any, chartContext: any, config: any) => {
             console.log(event, chartContext)
             this.optionalSubjectindex = config.seriesIndex;
             const index = this.barchartOptions.xaxis.categories.findIndex((i: any) => i == this.selectedbar);
@@ -594,10 +594,9 @@ export class DashboardComponent implements OnInit, AfterViewInit {
       filterSubject.map((z: any) => {
         const subData = {
           name: this.selectedLang == 'English' ?(this.selectedObj.groupId == 1 ? z.optionName : z.question):(this.selectedObj.groupId == 1 ? z.m_OptionName : z.m_Question),
-          data: ([parseFloat(z.totalPercental) |parseFloat( z.percentage)]),
+          data: ([z.totalPercental |z.percentage]),
           dataValue:(z.totalStudent),
           subject:(this.selectedLang == 'English' ?subjectSet[index]: subjectSet_m[index]),
-          totalPercentage:z.totalPercental|z.percentage
         }
         dataObjArray.push(subData);
       })
