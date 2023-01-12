@@ -126,8 +126,7 @@
                             *ngIf="f['m_SchoolName'].hasError('required') || f['m_SchoolName'].hasError('touched')">
                             {{'Labels.schoolNameIsRequired' | translate}}
                         </mat-error> -->
-                        <mat-error
-                            *ngIf="f['m_SchoolName'].hasError('pattern')">
+                        <mat-error *ngIf="f['m_SchoolName'].hasError('pattern')">
                             {{'Labels.schoolNameMarathiIsRequired' | translate}}
                         </mat-error>
                     </mat-form-field>
