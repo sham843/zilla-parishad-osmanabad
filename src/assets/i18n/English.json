@@ -25,9 +25,9 @@
         "AllTaluka":"All Taluka",
         "AllVillage":"All Village",
         "SchoolPhotos":"School Photos",
-        "enterValidSchoolName":"Please Enter valid School Name",
-        "NoteImageFormat":"Note: only accept jpg , jpeg , png format",
-        "NoteImagePdfFormat":"Note: only accept jpg , jpeg , png , pdf format",
+        "enterValidSchoolName":"Please enter valid school name",
+        "NoteImageFormat":"Note: only accept jpg, jpeg, png format",
+        "NoteImagePdfFormat":"Note: only accept jpg, jpeg, png, pdf format",
         "agencyNameIsRequired" : "name is required",
         "contactPersonNameIsRequired" : "Contact person name is required",
         "agencyMobileNumberIsRequired" : "mobile number is required",
@@ -89,7 +89,7 @@
         "villageIsRequired" : "Village is required",
         "schoolIsRequired" : "School is required",
         "schoolNameIsRequired" : "School name is required",
-        "schoolNameMarathiIsRequired" : "School Name(Marathi) is required",
+        "schoolNameMarathiIsRequired" : "Please enter valid school name(Marathi)",
         "schoolTypeDescriptionIsRequired" : " School type description is rsequired",
         "schoolCategoryIsRequired" : "School category is required",
         "schoolManagementIsRequired" : "School management is required",
@@ -285,7 +285,8 @@
         "dataNotFound":"Data not available",
         "View" : "View",
         "ContactNoKendra" : "Contact No.(Kendra)",
-        "EmailIDkendra" : "Email ID (kendra)"
+        "EmailIDkendra" : "Email ID (kendra)",
+        "pleaseEntervalidPercentage" : "Please enter valid percentage"
         
 
     }
