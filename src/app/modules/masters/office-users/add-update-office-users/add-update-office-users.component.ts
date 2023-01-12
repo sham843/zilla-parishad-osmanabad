@@ -166,6 +166,8 @@ export class AddUpdateOfficeUsersComponent implements OnInit {
   submitOfficeData() {
     console.log("all data submitted:", this.officeForm.value);
     if(this.officeForm.valid) {
+      let obj = this.officeForm.value;
+          obj.districtId = 1;
       this.ngxSpinner.show();
       let submitUrl = this.data ? 'UpdateOffice' : 'AddOffice'
       // this.apiService.setHttp(this.data ? 'PUT' : 'POST', this.data ? 'zp_osmanabad/Office/UpdateOffice' : 'zp_osmanabad/Office/AddOffice', false, this.officeForm.value, false, 'baseUrl');
