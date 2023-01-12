@@ -642,6 +642,7 @@ export class AddUpdateTeacherRegistrationComponent {
         this.service.getHttp().subscribe({
           next: ((res: any) => {
             this.ngxSpinner.hide();
+           this.service.staticData.next('getRefreshStaticdata');
             res.statusCode == 200 ? (this.commonMethod.showPopup(res.statusMessage, 0)) : this.commonMethod.checkEmptyData(res.statusMessage) == false ? this.errorHandler.handelError(res.statusCode) : this.commonMethod.showPopup(res.statusMessage, 1);
             this.dialogRef.close('yes');
           }),
