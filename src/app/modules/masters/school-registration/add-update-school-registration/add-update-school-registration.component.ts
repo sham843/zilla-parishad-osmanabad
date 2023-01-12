@@ -209,7 +209,8 @@ export class AddUpdateSchoolRegistrationComponent {
   //#region ------------------------------------------------- Upload Image start here --------------------------------------------// 
   imgUpload(event: any) {
     this.img = true;
-    this.fileUpload.uploadDocuments(event, 'Upload', 'jpg, jpeg, png').subscribe({
+    let type = 'jpg, jpeg, png';
+    this.fileUpload.uploadDocuments(event, 'Upload', type).subscribe({
       next : (res : any)=>{
         if (res.statusCode == 200) {
           this.uploadImg = res.responseData;

@@ -89,7 +89,7 @@
                     <div class="d-flex justify-content-between align-items-center">
                         <div class="upload-btn-wrapper">
                             <button class="upload-btn" type="button">{{'Labels.UploadProfilePhoto' | translate}}</button>
-                            <input type="file" name="myfile"  formControlName="uploadImage" (change)="imgUpload($event)"/>
+                            <input type="file" name="myfile"  formControlName="uploadImage" (change)="imgUpload($event)" accept=".png, .jpg, .jpeg">
                         </div>
                         <div class="action-btn" *ngIf="uploadImg">
                             <button mat-icon-button class="btn-icon text-primary" type="button" *ngIf="uploadImg" (click)="viewImg()"
@@ -199,7 +199,7 @@
                                     <button type="button" class="upload-btn">{{'Labels.UploadSchoolPhoto' |
                                         translate}}</button>
                                     <input type="file" name="myfile" formControlName="docPath" multiple
-                                        (change)="multipleImgUpload($event)" />
+                                        (change)="multipleImgUpload($event)" accept=".png, .jpg, .jpeg" />
                                 </div>
                             </div>
                         </div>
